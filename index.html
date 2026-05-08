@@ -500,28 +500,28 @@ sathya.
 
 <div class="top-filter">
 
-<select>
-<option>All</option>
-<option>Ramsar sites</option>
-<option>Sanctuaries</option>
-<option>National Parks of India</option>
+<select id="categoryFilter">
+<option value="all">All</option>
+<option value="ramsar">Ramsar Sites</option>
+<option value="sanctuaries">Sanctuaries</option>
+<option value="parks">National Parks</option>
 </select>
 
 </div>
 
 <div class="posts-grid">
 
-<a href="ramsarsites.html" class="post-card">
+<a href="ramsarsites.html" class="post-card" data-category="ramsar">
 <span>Ramsar Sites</span>
 <span>→</span>
 </a>
 
-<a href="#" class="post-card">
+<a href="#" class="post-card" data-category="sanctuaries">
 <span>Sanctuaries</span>
 <span>→</span>
 </a>
 
-<a href="#" class="post-card">
+<a href="#" class="post-card" data-category="parks">
 <span>National Parks of India</span>
 <span>→</span>
 </a>
@@ -560,6 +560,33 @@ sidebar.style.left = "-260px";
 }
 
 });
+</script>
+  
+<script>
+
+const filter = document.getElementById("categoryFilter");
+const cards = document.querySelectorAll(".post-card");
+
+filter.addEventListener("change", function(){
+
+const value = this.value;
+
+cards.forEach(card => {
+
+if(value === "all"){
+card.style.display = "flex";
+}
+else if(card.dataset.category === value){
+card.style.display = "flex";
+}
+else{
+card.style.display = "none";
+}
+
+});
+
+});
+
 </script>
 </body>
 </html>
