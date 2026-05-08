@@ -8,6 +8,42 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+  .sidebar{
+position:fixed;
+top:0;
+left:-260px;
+width:250px;
+height:100%;
+background:#111;
+padding-top:80px;
+transition:0.4s;
+z-index:1000;
+border-right:1px solid #1D5b51;
+}
+
+.sidebar a{
+display:block;
+color:white;
+text-decoration:none;
+padding:18px 30px;
+font-size:20px;
+border-bottom:1px solid #222;
+transition:0.3s;
+}
+
+.sidebar a:hover{
+background:#1D5b51;
+}
+
+.menu-btn{
+position:fixed;
+top:20px;
+left:20px;
+font-size:35px;
+color:white;
+cursor:pointer;
+z-index:1100;
+}
 <style>
 
 *{
@@ -139,6 +175,22 @@ text-align:center;
 </head>
 
 <body>
+  <body>
+
+<div class="sidebar" id="sidebar">
+
+<a href="#">Home</a>
+<a href="#">About</a>
+<a href="#">Blog</a>
+<a href="#">Notes</a>
+<a href="#">PYQs</a>
+<a href="#">Contact</a>
+
+</div>
+
+<div class="menu-btn" onclick="toggleMenu()">
+☰
+</div>
 
 <div class="container">
 
