@@ -1,0 +1,128 @@
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* GLOBAL */
+
+body{
+background:#000;
+color:#fff;
+font-family:'Poppins',sans-serif;
+}
+
+/* HEADINGS */
+
+h1,h2,h3,h4,h5,h6{
+color:#1D5B51 !important;
+font-family:'Poppins',sans-serif;
+font-weight:700;
+}
+
+/* TABLE AREA */
+
+.table-box{
+overflow-x:auto;
+margin-top:20px;
+margin-bottom:30px;
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+font-family:'Poppins',sans-serif;
+background:#000;
+color:#fff;
+min-width:900px;
+}
+
+/* TABLE HEADER */
+
+table thead tr{
+background:#000 !important;
+}
+
+table th{
+color:#1D5B51 !important;
+font-weight:700;
+font-size:18px;
+padding:16px;
+border:1px solid #333;
+text-align:left;
+white-space:nowrap;
+background:#000 !important;
+}
+
+/* TABLE BODY */
+
+table td{
+color:#fff !important;
+padding:15px 16px;
+border:1px solid #333;
+font-size:16px;
+line-height:1.7;
+vertical-align:top;
+}
+
+/* ALTERNATE ROW COLORS */
+
+table tbody tr:nth-child(odd){
+background:#000;
+}
+
+table tbody tr:nth-child(even){
+background:#111;
+}
+
+/* HOVER EFFECT */
+
+table tbody tr:hover{
+background:#161616;
+transition:0.3s;
+}
+
+/* STICKY HEADER */
+
+thead th{
+position:sticky;
+top:0;
+z-index:2;
+}
+
+/* SCROLLBAR */
+
+.table-box::-webkit-scrollbar{
+height:8px;
+}
+
+.table-box::-webkit-scrollbar-track{
+background:#111;
+}
+
+.table-box::-webkit-scrollbar-thumb{
+background:#1D5B51;
+border-radius:20px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+table th{
+font-size:15px;
+padding:13px;
+}
+
+table td{
+font-size:14px;
+padding:13px;
+}
+
+h2{
+font-size:24px;
+}
+
+}
+
+</style>
