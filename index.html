@@ -619,6 +619,18 @@ card.style.display = "none";
 
 });
 
+window.addEventListener("load", function(){
+
+if(filter.value === "none"){
+
+cards.forEach(card => {
+card.style.display = "none";
+});
+
+}
+
+});
+
 </script>
 </body>
 </html>
