@@ -538,14 +538,53 @@ top:20px;
 }
 
 }
-  
+
+.pill-menu{
+position:absolute;
+top:78px;
+left:115px;
+
+background:rgba(29,71,64,0.35);
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,0.08);
+
+padding:16px 28px;
+border-radius:999px;
+
+display:none;
+align-items:center;
+gap:28px;
+
+white-space:nowrap;
+}
+
+.pill-menu a{
+color:white;
+text-decoration:none;
+font-size:18px;
+opacity:0.9;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="tree-logo">
-<img src='tree.png' class='tree-img'>
+<div class="tree-logo" onclick="togglePill()">
+
+<img src="tree.png" class="tree-image">
+
+<div class="pill-menu" id="pillMenu">
+
+<a href="#">Home</a>
+<a href="#">Blog</a>
+<a href="#">Notes</a>
+<a href="#">About</a>
+
+</div>
+
 </div>
   
 
@@ -682,6 +721,23 @@ card.style.display = "none";
 }
 
 });
+
+<script>
+
+function togglePill(){
+
+const pill = document.getElementById("pillMenu");
+
+if(pill.style.display === "flex"){
+pill.style.display = "none";
+}
+else{
+pill.style.display = "flex";
+}
+
+}
+
+</script>
 
 </script>
 </body>
