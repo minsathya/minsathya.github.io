@@ -542,70 +542,31 @@ width:185px;
 }
   
 }
-
-.pill-menu{
+.root-pill{
 
 position:absolute;
-top:25px;
-left:150px;
+
+top:110px;
+left:135px;
 
 display:flex;
 align-items:center;
-gap:24px;
+gap:28px;
 
-padding:14px 28px;
+padding:14px 32px;
 
+border:2px solid white;
 border-radius:999px;
 
-background:rgba(29,71,64,0.28);
-
-backdrop-filter:blur(18px);
--webkit-backdrop-filter:blur(18px);
-
-border:1px solid rgba(255,255,255,0.08);
-
-opacity:0;
-transform:scaleX(0.2);
-
-transform-origin:left center;
-
-pointer-events:none;
-
-transition:
-opacity 0.45s ease,
-transform 0.55s cubic-bezier(.22,1,.36,1);
+background:transparent;
 
 }
 
-.pill-menu.show{
-
-opacity:1;
-transform:scaleX(1);
-
-pointer-events:auto;
-
-}
-
-.pill-menu a{
+.root-pill a{
 
 color:white;
 text-decoration:none;
-font-size:17px;
-
-opacity:0;
-
-transform:translateX(-10px);
-
-transition:
-opacity 0.4s ease,
-transform 0.4s ease;
-
-}
-
-.pill-menu.show a{
-
-opacity:1;
-transform:translateX(0);
+font-size:18px;
 
 }
   
@@ -618,7 +579,7 @@ transform:translateX(0);
 
 <img src="tree.png" class="tree-image" onclick="togglePill()">
 
-<div class="pill-menu" id="pillMenu">
+<div class="root-pill">
 
 <a href="index.html">Home</a>
 <a href="sanctuaries.html">Sanctuaries</a>
@@ -626,7 +587,7 @@ transform:translateX(0);
 <a href="asi.html">ASI</a>
 
 </div>
-
+  
 </div>
   
 
@@ -769,13 +730,7 @@ filter.dispatchEvent(new Event("change"));
 
 <script>
 
-function togglePill(){
 
-const pill = document.getElementById("pillMenu");
-
-pill.classList.toggle("show");
-
-}
 
 </script>
 
