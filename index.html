@@ -544,48 +544,86 @@ width:185px;
 }
 
 .pill-menu{
-position:absolute;
-top:-10px;
-left:140px;
 
-background:rgba(29,71,64,0.35);
-backdrop-filter:blur(20px);
--webkit-backdrop-filter:blur(20px);
+position:absolute;
+top:25px;
+left:150px;
+
+display:flex;
+align-items:center;
+gap:24px;
+
+padding:14px 28px;
+
+border-radius:999px;
+
+background:rgba(29,71,64,0.28);
+
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
 
 border:1px solid rgba(255,255,255,0.08);
 
-padding:16px 28px;
-border-radius:999px;
+opacity:0;
+transform:scaleX(0.2);
 
-display:none;
-align-items:center;
-gap:28px;
+transform-origin:left center;
 
-white-space:nowrap;
+pointer-events:none;
+
+transition:
+opacity 0.45s ease,
+transform 0.55s cubic-bezier(.22,1,.36,1);
+
+}
+
+.pill-menu.show{
+
+opacity:1;
+transform:scaleX(1);
+
+pointer-events:auto;
+
 }
 
 .pill-menu a{
+
 color:white;
 text-decoration:none;
-font-size:18px;
-opacity:0.9;
+font-size:17px;
+
+opacity:0;
+
+transform:translateX(-10px);
+
+transition:
+opacity 0.4s ease,
+transform 0.4s ease;
+
 }
 
+.pill-menu.show a{
+
+opacity:1;
+transform:translateX(0);
+
+}
+  
 </style>
 </head>
 
 <body>
 
-<div class="tree-logo" onclick="togglePill()">
+<div class="tree-logo">
 
-<img src="tree.png" class="tree-img">
+<img src="tree.png" class="tree-image" onclick="togglePill()">
 
 <div class="pill-menu" id="pillMenu">
 
-<a href="#">Home</a>
-<a href="#">Blog</a>
-<a href="#">Notes</a>
-<a href="#">About</a>
+<a href="index.html">Home</a>
+<a href="sanctuaries.html">Sanctuaries</a>
+<a href="parks.html">Parks</a>
+<a href="asi.html">ASI</a>
 
 </div>
 
@@ -735,17 +773,11 @@ function togglePill(){
 
 const pill = document.getElementById("pillMenu");
 
-if(pill.style.display === "flex"){
-pill.style.display = "none";
-}
-else{
-pill.style.display = "flex";
-}
+pill.classList.toggle("show");
 
 }
 
 </script>
 
-</script>
 </body>
 </html>
