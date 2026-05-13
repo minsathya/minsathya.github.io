@@ -499,110 +499,10 @@ right:8px;
 }
 
 }
-
-.tree-img{
-position:relative;
-top:-5px;
-left:4px;
-width:210px;
-height:auto;
-display:block;
-z-index:10;
-}
-
-.tree-logo{
-position:absolute;
-top:35px;
-left:35px;
-z-index:10;
-}
-
-@media screen and (max-width:1024px){
-
-.tree-logo{
-left:20px;
-top:20px;
-}
-
-.tree-img{
-width:200px;
-}
-
-}
-
-@media screen and (max-width:600px){
-
-.tree-logo{
-left:10px;
-top:20px;
-}
-
-.tree-img{
-width:185px;
-}
-  
-}
-.root-pill{
-
-position:absolute;
-top:135px;
-left:70px;
-
-height:80px;
-width:120px;
-
-border:4px solid white;
-border-radius:999px;
-
-display:flex;
-align-items:center;
-gap:28px;
-
-overflow:hidden;
-transition:0.4s;
-
-background:none;
-padding:0 40px;
-
-}
-
-.root-pill.show{
-
-width:420px;
-
-}
-  
-.root-pill a{
-
-color:white;
-text-decoration:none;
-font-size:18px;
-
-}
-
-</head>.root-pill.show{
-transform:scaleX(1);
-}
   
 </style>
 
 <body>
-
-<div class="tree-logo">
-
-<img src="tree.png" class="tree-image" onclick="togglePill()">
-
-<div class="root-pill">
-
-<a href="index.html">Home</a>
-<a href="sanctuaries.html">Sanctuaries</a>
-<a href="parks.html">Parks</a>
-<a href="asi.html">ASI</a>
-
-</div>
-  
-</div>
-  
 
 </div>
 
@@ -742,15 +642,6 @@ filter.dispatchEvent(new Event("change"));
 </script>
 
 <script>
-
-const tree = document.querySelector(".tree-image");
-const pill = document.querySelector(".root-pill");
-
-tree.addEventListener("click", ()=>{
-
-pill.classList.toggle("show");
-
-});
 
 </script>
 
