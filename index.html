@@ -499,11 +499,109 @@ right:8px;
 }
 
 }
-  
+
+body{
+background:#162623;
+color:#e7e7e7;
+font-family:sans-serif;
+margin:0;
+padding:40px;
+}
+
+.nav-pill{
+
+display:flex;
+align-items:center;
+
+width:140px;
+overflow:hidden;
+
+padding:14px 18px;
+
+border-radius:999px;
+
+background:rgba(22,38,35,0.82);
+
+backdrop-filter:blur(12px);
+-webkit-backdrop-filter:blur(12px);
+
+border:1px solid rgba(255,255,255,0.06);
+
+transition:all 0.45s ease;
+
+gap:26px;
+}
+
+.nav-pill.open{
+width:520px;
+}
+
+.logo{
+
+font-size:20px;
+font-weight:600;
+cursor:pointer;
+
+white-space:nowrap;
+}
+
+.nav-links{
+
+display:flex;
+gap:24px;
+
+opacity:0;
+transform:translateX(20px);
+
+transition:all 0.35s ease;
+
+pointer-events:none;
+}
+
+.nav-pill.open .nav-links{
+
+opacity:1;
+transform:translateX(0);
+
+pointer-events:auto;
+}
+
+.nav-links a{
+
+color:#e7e7e7;
+text-decoration:none;
+
+font-size:16px;
+
+opacity:0.9;
+transition:0.3s;
+}
+
+.nav-links a:hover{
+opacity:1;
+}
+
 </style>
 
 <body>
 
+<div class="nav-pill" id="navPill">
+
+<div class="logo" onclick="toggleNav()">
+Sathya
+</div>
+
+<div class="nav-links">
+
+<a href="#">Home</a>
+<a href="#">About</a>
+<a href="#">Parks</a>
+<a href="#">ASI</a>
+
+</div>
+
+</div>
+  
 </div>
 
 <div class="sidebar" id="sidebar">
@@ -642,7 +740,13 @@ filter.dispatchEvent(new Event("change"));
 </script>
 
 <script>
+function toggleNav(){
 
+const nav = document.getElementById("navPill");
+
+nav.classList.toggle("open");
+
+}
 </script>
 
 </body>
