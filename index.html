@@ -266,17 +266,18 @@ transform:rotate(180deg);
 
 position:fixed;
 
-top:0;
-right:-280px;
+top:14px;
+right:-300px;
 
-width:240px;
-height:100vh;
+width:260px;
+height:calc(100vh - 28px);
 
 background:#0f0f0f;
 
 border-left:1px solid rgba(255,255,255,0.05);
 
-padding-top:120px;
+border-radius:26px;
+padding-top:110px;
 padding-left:34px;
 padding-right:34px;
 
@@ -284,11 +285,15 @@ transition:left 0.42s cubic-bezier(0.22,1,0.36,1);
 
 z-index:1500;
 will-change:transform;
+
+box-shadow:
+0 0 0 1px rgba(255,255,255,0.02),
+0 20px 60px rgba(0,0,0,0.45);
 }
 
 .sidebar.open{
 
-right:0;
+right:14px;
 }
 
 .sidebar a{
