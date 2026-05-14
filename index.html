@@ -38,6 +38,12 @@ min-height:100vh;
 padding:40px 28px 80px;
 
 overflow-x:hidden;
+  
+-webkit-font-smoothing:antialiased;
+
+-moz-osx-font-smoothing:grayscale;
+
+text-rendering:optimizeLegibility;
 }
 
 /* MAIN */
@@ -320,6 +326,23 @@ color:#efefef;
 
 transform:translateX(4px);
 }
+
+@media(max-width:1024px){
+
+.sidebar{
+
+top:20px;
+
+height:calc(100vh - 40px);
+
+}
+
+.sidebar.open{
+
+right:20px;
+}
+
+}
   
 </style>
 
@@ -338,6 +361,7 @@ sidebar.classList.toggle("open");
 button.classList.toggle("active");
 
 }
+
 
 </script>
 
