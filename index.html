@@ -508,193 +508,16 @@ font-family:poppins;
 margin:0;
 }
 
-.nav-pill{
-
-position:fixed;
-
-top:28px;
-left:50%;
-transform:translateX(-50%);
-
-display:flex;
-align-items:center;
-justify-content:flex-start;
-  
-height:72px;
-width:130px;
-height:56px;
-
-overflow:hidden;
-
-padding:0 26px;
-
-border-radius:999px;
-
-background:#162623;
-
-backdrop-filter:blur(16px);
--webkit-backdrop-filter:blur(16px);
-
-border:1px solid rgba(255,255,255,0.05);
-
-transition:
-
-max width 0.55s cubic-bezier(0.22,1,0,0.36,1),
-
-background 0.3s ease;
-
-padding 0.45s ease;
-
-gap:28px;
-
-box-sizing:border-box;
-}
-
-.nav-pill.open{
-max-width:460px;
-}
 
 
-.logo{
 
-display:flex;
-align-items:center;
 
-font-family:'Poppins',sans-serif;
 
-font-size:22px;
-font-weight:600;
-
-letter-spacing:-0.5px;
-
-cursor:pointer;
-
-white-space:nowrap;
-
-flex-shrink:0;
-
-color:#f1f1f1;
-
-line-height:1;
-
-transform:translateY(-1.5px);
-
-}
-
-.nav-links{
-
-display:flex;
-align-items:center;
-
-height:100%;
-  
-gap:34px;
-
-opacity:0;
-transform:translateX(18px);
-
-transition:
-opacity 0.28 ease, 0.12s,
-transform 0.42s cubic-bezier(0.22,1,0.36,1);
-
-pointer-events:none;
-
-white-space:nowrap;
-}
-
-.nav-pill.open .nav-links{
-
-opacity:1;
-
-transform:translateX(0);
-
-pointer-events:auto;
-}
-
-.nav-links a{
-
-display:flex;
-align-items:center;
-
-height:100%;
-  
-font-family:'Poppins',sans-serif;
-
-color:#d8d8d8;
-
-text-decoration:none;
-
-font-size:16px;
-font-weight:400;
-
-opacity:0.88;
-
-transition:opacity 0.25s ease;
-}
-
-.nav-links a:hover{
-opacity:1;
-}
-
-@media(max-width:768px){
-
-.nav-pill{
-
-top:20px;
-
-width:120px;
-height:52px;
-
-padding:0 22px;
-
-left:50%;
-transform:translateX(-50%);
-}
-
-.nav-pill.open{
-
-width:92vw;
-max-width:420px;
-}
-
-.nav-links{
-
-gap:22px;
-}
-
-.nav-links a{
-
-font-size:15px;
-}
-
-.logo{
-
-font-size:20px;
-}
-}
 
 </style>
 
 <body>
 
-<div class="nav-pill" id="navPill">
-
-<div class="logo" onclick="toggleNav()">
-sathya.
-</div>
-
-<div class="nav-links">
-
-<a href="#">Home</a>
-<a href="#">About</a>
-<a href="#">Parks</a>
-<a href="#">ASI</a>
-
-</div>
-
-</div>
-  
-</div>
 
 <div class="sidebar" id="sidebar">
 
@@ -831,15 +654,7 @@ filter.dispatchEvent(new Event("change"));
 
 </script>
 
-<script>
-function toggleNav(){
 
-const nav = document.getElementById("navPill");
-
-nav.classList.toggle("open");
-
-}
-</script>
 
 </body>
 </html>
