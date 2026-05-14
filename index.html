@@ -230,11 +230,123 @@ font-size:18px;
 
 }
 
+.menu-btn{
+
+position:fixed;
+
+top:28px;
+left:28px;
+
+font-size:28px;
+
+color:#cfcfcf;
+
+cursor:pointer;
+
+z-index:2000;
+
+transition:
+transform 0.35s ease,
+opacity 0.25s ease;
+
+user-select:none;
+}
+
+.menu-btn:hover{
+
+opacity:0.7;
+}
+
+.menu-btn.active{
+
+transform:rotate(180deg);
+}
+
+.sidebar{
+
+position:fixed;
+
+top:0;
+left:-260px;
+
+width:240px;
+height:100vh;
+
+background:#0c0c0c;
+
+border-right:1px solid #2f2f2f;
+
+padding-top:110px;
+padding-left:28px;
+
+transition:left 0.35s cubic-bezier(0.4,0,0.2,1);
+
+z-index:1500;
+}
+
+.sidebar.open{
+
+left:0;
+}
+
+.sidebar a{
+
+display:block;
+
+color:#000000;
+
+text-decoration:none;
+
+font-size:18px;
+
+margin-bottom:28px;
+
+transition:
+transform 0.2s ease,
+color 0.2s ease;
+
+}
+
+.sidebar a:hover{
+
+color:#efefef;
+
+transform:translateX(4px);
+}
+  
 </style>
 
 </head>
 
+<script>
+
+function toggleSidebar(){
+
+const sidebar = document.getElementById("sidebar");
+
+const button = document.querySelector(".menu-btn");
+
+sidebar.classList.toggle("open");
+
+button.classList.toggle("active");
+
+}
+
+</script>
+
 <body>
+
+<div class="menu-btn" onclick="toggleSidebar()">
+↔
+</div>
+
+<div class="sidebar" id="sidebar">
+
+<a href="#">Writing</a>
+<a href="#">Planning</a>
+<a href="#">Growth</a>
+
+</div>
 
 <div class="wrapper">
 
