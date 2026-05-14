@@ -1,1 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>sathya.</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+background:#000000;
+color:#f5f5f5;
+
+font-family:'Poppins',sans-serif;
+
+min-height:100vh;
+
+padding:40px 28px 80px;
+
+overflow-x:hidden;
+}
+
+/* MAIN */
+
+.wrapper{
+max-width:1200px;
+margin:auto;
+}
+
+/* LOGO */
+
+.logo{
+
+font-size:58px;
+font-weight:600;
+
+letter-spacing:-2px;
+
+color:#f5f5f5;
+
+margin-bottom:42px;
+}
+
+/* QUOTE */
+
+.quote{
+
+border-left:2px solid #f5f5f5;
+
+padding-left:22px;
+
+font-size:20px;
+font-weight:400;
+
+line-height:1.7;
+
+color:#e8e8e8;
+
+max-width:900px;
+
+margin-bottom:90px;
+}
+
+/* GRID */
+
+.grid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:56px;
+}
+
+/* CATEGORY */
+
+.category h2{
+
+font-size:42px;
+font-weight:600;
+
+letter-spacing:-1px;
+
+margin-bottom:16px;
+
+color:#f5f5f5;
+}
+
+.line{
+
+height:1px;
+width:100%;
+
+background:#2f2f2f;
+
+margin-bottom:24px;
+}
+
+/* LINKS */
+
+.links{
+
+display:flex;
+flex-direction:column;
+
+gap:16px;
+}
+
+.links a{
+
+text-decoration:none;
+
+color:#e8e8e8;
+
+font-size:24px;
+font-weight:400;
+
+transition:
+transform 0.18s ease,
+opacity 0.18s ease,
+color 0.18s ease;
+
+width:fit-content;
+}
+
+.links a:hover{
+
+transform:translateX(4px);
+
+opacity:1;
+
+color:#ffffff;
+}
+
+/* TABLET */
+
+@media(max-width:1024px){
+
+body{
+padding:34px 24px 70px;
+}
+
+.logo{
+font-size:50px;
+}
+
+.quote{
+
+font-size:18px;
+
+margin-bottom:70px;
+}
+
+.grid{
+
+grid-template-columns:1fr;
+
+gap:52px;
+}
+
+.category h2{
+font-size:38px;
+}
+
+.links a{
+font-size:22px;
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:640px){
+
+body{
+padding:28px 20px 60px;
+}
+
+.logo{
+
+font-size:42px;
+
+margin-bottom:34px;
+}
+
+.quote{
+
+font-size:16px;
+
+padding-left:18px;
+
+line-height:1.6;
+
+margin-bottom:56px;
+}
+
+.grid{
+gap:42px;
+}
+
+.category h2{
+font-size:32px;
+}
+
+.links a{
+font-size:20px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="logo">
+sathya.
+</div>
+
+<div class="quote">
+"The better we get at getting better, the faster we will get better." - Douglas Engelbart
+</div>
+
+<div class="grid">
+
+<!-- WRITING -->
+
+<div class="category">
+
+<h2>Writing</h2>
+
+<div class="line"></div>
+
+<div class="links">
+
+<a href="#">📒 Notebook</a>
+
+<a href="#">📕 Reading list</a>
+
+<a href="#">✍️ Notes & drafts</a>
+
+</div>
+
+</div>
+
+<!-- PLANNING -->
+
+<div class="category">
+
+<h2>Planning</h2>
+
+<div class="line"></div>
+
+<div class="links">
+
+<a href="#">✈️ Travel planner</a>
+
+<a href="#">💸 Simple budget</a>
+
+<a href="#">✔️ Task List</a>
+
+</div>
+
+</div>
+
+<!-- GROWTH -->
+
+<div class="category">
+
+<h2>Growth</h2>
+
+<div class="line"></div>
+
+<div class="links">
+
+<a href="#">⛰️ Goals</a>
+
+<a href="#">☑️ Habit tracker</a>
+
+<a href="#">🗓️ Weekly plan</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
