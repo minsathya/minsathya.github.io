@@ -26,34 +26,6 @@ html{
 scroll-behavior:smooth;
 }
 
-:root{
-
---bg:#000000;
-
---text:#cfcfcf;
-
---title:#efefef;
-
---line:#2f2f2f;
-
---card:#0a0a0a;
-}
-
-/* LIGHT MODE */
-
-body.light-mode{
-
---bg:#cfcfcf;
-
---text:#111111;
-
---title:#000000;
-
---line:rgba(0,0,0,0.12);
-
---card:#d9d9d9;
-}
-
 body{
 
 background:var(--bg);;
@@ -398,74 +370,6 @@ max-width:100%;
 
 }
 
-/* THEME BUTTON */
-
-.theme-btn{
-
-position:fixed;
-
-top:34px;
-right:100px;
-
-width:34px;
-height:34px;
-
-border-radius:50%;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-background:rgba(255,255,255,0.03);
-
-border:1px solid rgba(255,255,255,0.05);
-
-color:#cfcfcf;
-
-font-size:16px;
-
-cursor:pointer;
-
-z-index:2000;
-
-transition:
-background 0.45s cubic-bezier(0.22,1,0.36,1),
-color 0.45s cubic-bezier(0.22,1,0.36,1),
-transform 0.25s ease,
-border 0.45s ease;
-
-backdrop-filter:blur(10px);
-}
-
-.theme-btn:hover{
-
-transform:scale(1.06);
-
-background:rgba(255,255,255,0.05);
-}
-
-/* LIGHT MODE */
-
-body.light-mode{
-
-background:#cfcfcf;
-
-color:#111111;
-
-transition:
-background 0.5s cubic-bezier(0.22,1,0.36,1),
-color 0.5s cubic-bezier(0.22,1,0.36,1);
-}
-
-body.light-mode .theme-btn{
-
-background:rgba(0,0,0,0.04);
-
-border:1px solid rgba(0,0,0,0.05);
-
-color:#111111;
-}
-
 </style>
 
 </head>
@@ -484,22 +388,12 @@ button.classList.toggle("active");
 
 }
 
-function toggleTheme(){
-
-document.body.classList.toggle("light-mode");
-
-}
-
 </script>
 
 <body>
 
 <div class="menu-btn" onclick="toggleSidebar()">
 ⟷
-</div>
-
-<div class="theme-btn" onclick="toggleTheme()">
-◐
 </div>
 
 <div class="sidebar" id="sidebar">
