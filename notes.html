@@ -1,1 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>sathya.</title>
+
+<link rel="icon" type="image/png" href="favicon-v2.png">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5VGX2K64Y4');
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+background:#0b0b0b;
+color:#cfcfcf;
+
+font-family:'Poppins',sans-serif;
+
+transition:
+background 0.55s cubic-bezier(0.22,1,0.36,1),
+color 0.55s cubic-bezier(0.22,1,0.36,1);
+  
+min-height:100vh;
+
+padding:40px 28px 80px;
+
+overflow-x:hidden;
+  
+-webkit-font-smoothing:antialiased;
+
+-moz-osx-font-smoothing:grayscale;
+
+text-rendering:optimizeLegibility;
+}
+
+/* MAIN */
+
+.wrapper{
+max-width:1200px;
+width:100%;
+margin:auto;
+}
+
+/* LOGO */
+
+.logo{
+
+position:relative;
+top:-10px;
+font-size:35px;
+font-weight:600;
+
+letter-spacing:-2px;
+
+color:#efefef;
+
+margin-bottom:42px;
+
+}
+
+.logo a{
+
+color:#efefef;
+
+text-decoration:none;
+
+}
+
+/* SEARCH BAR */
+
+.search-bar{
+
+width:100%;
+max-width:480px;
+
+height:48px;
+
+margin:0 auto 56px;
+
+display:flex;
+align-items:center;
+
+background:#111111;
+
+border:1px solid #2f2f2f;
+
+border-radius:20px;
+
+padding:0 18px;
+
+transition:all .25s ease;
+
+}
+
+.search-bar:hover{
+
+border-color:#3a3a3a;
+
+}
+
+.search-bar:focus-within{
+
+border-color:#555555;
+
+background:#151515;
+
+}
+
+.search-bar input{
+
+flex:1;
+
+background:transparent;
+
+border:none;
+
+outline:none;
+
+color:#cfcfcf;
+
+font-family:'Poppins',sans-serif;
+
+font-size:16px;
+
+}
+
+.search-bar input::placeholder{
+
+color:#7d7d7d;
+
+}
+
+.search-icon{
+
+color:#8a8a8a;
+
+font-size:18px;
+
+user-select:none;
+
+}
+
+/* GRID */
+
+.grid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:56px;
+}
+
+/* CATEGORY */
+
+.category h2{
+
+font-size:30px;
+font-weight:600;
+
+letter-spacing:-1px;
+
+margin-bottom:16px;
+
+color:var(--text);
+}
+
+.line{
+
+height:1px;
+width:100%;
+
+background:#2f2f2f;
+
+margin-bottom:24px;
+}
+
+/* LINKS */
+
+.links{
+
+display:flex;
+flex-direction:column;
+
+gap:16px;
+}
+
+.links a{
+
+text-decoration:none;
+
+color:#cfcfcf;
+
+font-size:18px;
+font-weight:400;
+
+transition:
+transform 0.18s ease,
+opacity 0.18s ease,
+color 0.18s ease;
+
+width:fit-content;
+}
+
+.links a:hover{
+
+transform:translateX(4px);
+
+opacity:1;
+
+color:#efefef;
+}
+
+/* TABLET */
+
+@media(max-width:1024px){
+
+body{
+padding:34px 24px 70px;
+}
+
+.logo{
+font-size:35px;
+}
+
+.grid{
+
+grid-template-columns:1fr;
+
+gap:18px;
+}
+
+.category h2{
+font-size:30px;
+}
+
+.links a{
+font-size:18px;
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:640px){
+
+body{
+padding:28px 20px 60px;
+}
+
+.logo{
+
+font-size:35px;
+
+margin-bottom:34px;
+}
+
+.grid{
+gap:42px;
+}
+
+.category h2{
+font-size:28px;
+}
+
+.links a{
+font-size:18px;
+}
+
+}
+
+.menu-btn{
+
+position:fixed;
+
+top:28px;
+right:40px;
+
+font-size:28px;
+
+color:#cfcfcf;
+
+cursor:pointer;
+
+z-index:2000;
+
+transition:
+transform 0.35s ease,
+opacity 0.25s ease;
+
+user-select:none;
+font-family: 'poppins',sans-serif;
+font-variant-emoji:text;
+}
+
+.menu-btn:hover{
+
+opacity:0.7;
+}
+
+.menu-btn.active{
+
+transform:rotate(180deg);
+}
+
+.sidebar{
+
+position:fixed;
+
+top:20px;
+right:20px;
+
+width:260px;
+height:auto;
+
+background:#1f1f1f;
+
+border:1px solid rgba(255,255,255,0.05);
+
+border-radius:28px;
+
+padding-top:110px;
+padding-bottom:34px;
+
+padding-left:34px;
+padding-right:34px;
+
+transform:translateX(120%);
+
+transition:
+transform 0.45s cubic-bezier(0.22,1,0.36,1);
+
+z-index:1500;
+
+box-shadow:
+0 20px 60px rgba(0,0,0,0.45);
+
+will-change:transform;
+}
+  
+.sidebar.open{
+
+transform:translateX(0);
+}
+
+.sidebar a{
+
+display:block;
+
+color:#cfcfcf;
+
+text-decoration:none;
+
+font-size:18px;
+
+margin-bottom:10px;
+
+transition:
+transform 0.2s ease,
+color 0.2s ease;
+
+}
+
+.sidebar a:hover{
+
+color:#efefef;
+
+transform:translateX(4px);
+}
+
+/* IPAD */
+
+@media(min-width:768px) and (max-width:1024px){
+
+body{
+padding:40px 28px 80px;
+}
+
+.sidebar{
+
+width:250px;
+
+top:18px;
+
+border-radius:28px;
+}
+
+.sidebar.open{
+right:18px;
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:767px){
+
+body{
+padding:28px 18px 60px;
+}
+
+.sidebar{
+
+width:220px;
+
+top:14px;
+
+border-radius:24px;
+}
+
+.sidebar.open{
+right:14px;
+}
+
+}
+
+/* IPAD */
+
+@media(min-width:768px) and (max-width:1024px){
+
+.wrapper{
+
+max-width:92%;
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:767px){
+
+.wrapper{
+
+max-width:100%;
+}
+
+}
+
+/* BREADCRUMB */
+
+.breadcrumb{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+margin-top:6px;
+
+margin-bottom:40px;
+
+font-size:18px;
+
+}
+
+.breadcrumb a{
+
+text-decoration:none;
+
+color:#cfcfcf;
+
+transition:color .2s ease;
+
+}
+
+.breadcrumb a:hover{
+
+color:#efefef;
+
+}
+
+.breadcrumb span{
+
+color:#666666;
+
+}
+
+.breadcrumb p{
+
+color:#9a9a9a;
+
+margin:0;
+
+}/* SUBJECT */
+
+.subject-block{
+
+margin-bottom:42px;
+
+}
+
+.subject-block h2{
+
+font-size:28px;
+
+font-weight:600;
+
+color:#efefef;
+
+margin-bottom:18px;
+
+}
+
+/* TOGGLE */
+
+.toggle{
+
+margin-bottom:16px;
+
+background:#151515;
+
+border:1px solid #2b2b2b;
+
+border-radius:18px;
+
+overflow:hidden;
+
+}
+
+.toggle-title{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+padding:16px 22px;
+
+font-size:18px;
+
+font-weight:500;
+
+color:#cfcfcf;
+
+}
+
+.toggle-content{
+
+padding:0 22px 20px 46px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+}
+
+.toggle-content a{
+
+text-decoration:none;
+
+color:#cfcfcf;
+
+font-size:17px;
+
+transition:.2s;
+
+}
+
+.toggle-content a:hover{
+
+color:#efefef;
+
+transform:translateX(4px);
+
+}
+
+
+</style>
+
+</head>
+
+<script>
+
+function toggleSidebar(){
+
+const sidebar = document.getElementById("sidebar");
+
+const button = document.querySelector(".menu-btn");
+
+sidebar.classList.toggle("open");
+
+button.classList.toggle("active");
+
+}
+/* CLOSE WHEN CLICKING OUTSIDE */
+
+document.addEventListener("click", function(event){
+
+const sidebar = document.getElementById("sidebar");
+
+const button = document.querySelector(".menu-btn");
+
+const clickedInsideSidebar = sidebar.contains(event.target);
+
+const clickedMenuButton = button.contains(event.target);
+
+if(
+
+sidebar.classList.contains("open")
+
+&&
+
+!clickedInsideSidebar
+
+&&
+
+!clickedMenuButton
+
+){
+
+sidebar.classList.remove("open");
+
+button.classList.remove("active");
+
+}
+
+});
+  
+</script>
+
+<body>
+
+<div class="menu-btn" onclick="toggleSidebar()">
+⟷
+</div>
+
+<div class="sidebar" id="sidebar">
+
+<a href="#">Upsc</a>
+<a href="#">Planning</a>
+<a href="#">Growth</a>
+
+</div>
+
+<div class="wrapper">
+
+<div class="logo">
+
+<a href="index.html">sathya.</a>
+
+</div>
+
+<div class="breadcrumb">
+
+<a href="index.html">Home</a>
+
+<span>/</span>
+
+<p>Notes</p>
+
+</div>
+
+<div class="subject-block">
+
+<h2>Notes</h2>
+
+<div class="toggle">
+
+  <div class="toggle-title">
+
+    <span>▾</span>
+
+    <span>Environment</span>
+
+  </div>
+
+  <div class="toggle-content">
+
+    <a href="ramsarsites.html">Ramsar sites</a>
+
+  </div>
+
+</div>
+  
+</div>
+
+</body>
+
+</html>
