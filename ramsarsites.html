@@ -197,7 +197,10 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            cursor: pointer; /* Critical to enable click/touch forwarding outside the card on iPad/iOS Safari */
+            cursor: pointer;
+            /* FIXES THE MOBILE TOUCH/TAP FLASH ISSUE NATIVELY ON SAFARI/CHROME */
+            -webkit-tap-highlight-color: transparent !important;
+            tap-highlight-color: transparent !important;
         }
 
         .modal-card {
@@ -208,7 +211,9 @@
             padding: 32px;
             box-shadow: 0 25px 60px rgba(0,0,0,.45);
             animation: popup .3s cubic-bezier(0.16, 1, 0.3, 1);
-            cursor: default; /* Reset cursor back to normal inside the content box */
+            cursor: default;
+            -webkit-tap-highlight-color: transparent !important;
+            tap-highlight-color: transparent !important;
         }
 
         @keyframes popup {
