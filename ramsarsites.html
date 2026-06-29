@@ -168,18 +168,19 @@
             background-color: rgba(37, 122, 108, 0.12) !important;
         }
 
+        /* STRICTLY PURE WHITE TEXT WITH ABSOLUTELY NO UNDERLINE UNDER ANY CIRCUMSTANCES */
         .site-name {
-            cursor: pointer;
-            color: #ffffff;
-            text-decoration: underline;
-            text-decoration-color: rgba(255, 255, 255, 0.4);
-            transition: 0.2s;
+            cursor: pointer !important;
+            color: #ffffff !important;
+            text-decoration: none !important;
+            border-bottom: none !important;
             font-weight: 500;
         }
 
-        .site-name:hover {
-            color: #4ade80;
-            text-decoration-color: #4ade80;
+        .site-name:hover, .site-name:active, .site-name:focus, tr:hover .site-name {
+            color: #ffffff !important;
+            text-decoration: none !important;
+            border-bottom: none !important;
         }
 
         /* Modal windows */
@@ -196,6 +197,7 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
+            cursor: pointer; /* Critical to enable click/touch forwarding outside the card on iPad/iOS Safari */
         }
 
         .modal-card {
@@ -206,6 +208,7 @@
             padding: 32px;
             box-shadow: 0 25px 60px rgba(0,0,0,.45);
             animation: popup .3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: default; /* Reset cursor back to normal inside the content box */
         }
 
         @keyframes popup {
@@ -695,12 +698,18 @@
             setTimeout(() => modal.style.display = "none", 300);
         }
 
-        window.onclick = function(event) {
-            const modal = document.getElementById("siteModal");
-            if (event.target === modal) {
+        // Native overlay click listener using distinct event paths for laptop, phone, and iPad views
+        document.getElementById("siteModal").addEventListener("click", function(event) {
+            if (event.target === this) {
                 closeSite();
             }
-        }
+        });
+        
+        document.getElementById("siteModal").addEventListener("touchstart", function(event) {
+            if (event.target === this) {
+                closeSite();
+            }
+        }, { passive: true });
     </script>
 </body>
 </html>
