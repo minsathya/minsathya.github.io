@@ -22,6 +22,10 @@
             --row-divider: #1c1c1c;
             --row-hover: rgba(255, 255, 255, 0.015);
             --search-icon-color: #444444;
+
+            /* Premium Matte Olive Header System (Dark Mode) */
+            --header-bg: #131815;
+            --header-border: #222c26;
         }
 
         /* Classy Light Mode Tones (Premium Off-White Gallery Style) */
@@ -34,6 +38,10 @@
             --row-divider: #f2f2f7;
             --row-hover: rgba(0, 0, 0, 0.01);
             --search-icon-color: #999999;
+
+            /* Premium Matte Olive Header System (Light Mode) */
+            --header-bg: #e9ebe6;
+            --header-border: #d4d8cf;
         }
 
         * {
@@ -91,12 +99,23 @@
         
         footer { animation-delay: 0.58s; }
 
-        /* Top Header Navigation */
+        /* Top Header Navigation - Upgraded to Floating Capsule Pill */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background-color: var(--header-bg);
+            border: 1px solid var(--header-border);
+            border-radius: 50px;
+            padding: 16px 32px;
             margin-bottom: 60px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+            transition: background-color 0.6s var(--ease-premium), border-color 0.6s var(--ease-premium), box-shadow 0.6s var(--ease-premium);
+        }
+
+        /* Dark Mode Depth Shadow Adjustment for Header */
+        body:not(.light-mode) header {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         .logo {
@@ -106,7 +125,7 @@
             color: var(--text-main);
             text-decoration: none !important;
             transition: color 0.6s var(--ease-premium);
-            -webkit-tap-highlight-color: transparent !important; /* Erases iPad/iPhone gray box selection */
+            -webkit-tap-highlight-color: transparent !important; /* Erases iPad/iPhone gray selection box */
             tap-highlight-color: transparent !important;         /* Erases Android blue highlight flash */
         }
 
@@ -120,8 +139,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            -webkit-tap-highlight-color: transparent !important; /* Erases iPad/iPhone tap box */
-            tap-highlight-color: transparent !important;         /* Erases Android tap box */
+            -webkit-tap-highlight-color: transparent !important; /* Erases mobile tap box */
+            tap-highlight-color: transparent !important;         /* Erases mobile tap box */
         }
 
         .theme-toggle svg {
@@ -349,20 +368,25 @@
             
             header {
                 margin-bottom: 40px;
+                padding: 14px 24px; /* Slightly more compact layout wrapper on micro devices */
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- Header Block - Now a Unified Matte Olive Floating Capsule -->
     <header>
         <a href="#" class="logo">sathya.</a>
         
+        <!-- Premium Animated Toggle Controller Button -->
         <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
+            <!-- Smooth SVG Sun Vector Element -->
             <svg class="sun-icon" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="4"></circle>
                 <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
             </svg>
+            <!-- Smooth SVG Moon Vector Element -->
             <svg class="moon-icon" viewBox="0 0 24 24">
                 <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
             </svg>
@@ -370,6 +394,7 @@
     </header>
 
     <main>
+        <!-- Search Bar -->
         <div class="search-container">
             <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -377,8 +402,10 @@
             <input type="text" class="search-bar" placeholder="Search...">
         </div>
 
+        <!-- Matrix Canvas Layout Container -->
         <div class="matrix-canvas">
 
+            <!-- Card 1: UPSC -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Upsc</h2>
                 <ul class="document-list">
@@ -390,6 +417,7 @@
                 </ul>
             </div>
 
+            <!-- Card 2: PLANNING -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Planning</h2>
                 <ul class="document-list">
@@ -399,6 +427,7 @@
                 </ul>
             </div>
 
+            <!-- Card 3: GROWTH -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Growth</h2>
                 <ul class="document-list">
@@ -408,6 +437,7 @@
                 </ul>
             </div>
 
+            <!-- Card 4: STUDIES -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Studies</h2>
                 <ul class="document-list">
@@ -417,6 +447,7 @@
                 </ul>
             </div>
 
+            <!-- Card 5: LIFE -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Life</h2>
                 <ul class="document-list">
@@ -426,6 +457,7 @@
                 </ul>
             </div>
 
+            <!-- Card 6: PHOTOGRAPHY -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Photography</h2>
                 <ul class="document-list">
@@ -438,6 +470,7 @@
         </div>
     </main>
 
+    <!-- Grounded Minimal Footer -->
     <footer>
         <div class="footer-links-row">
             <a href="#">About</a>
@@ -451,12 +484,13 @@
         </div>
     </footer>
 
+    <!-- Smart Native Device Sync Engine Script -->
     <script>
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
         const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
 
-        // Clear out old local storage variables completely to run purely on device rules
+        // Clear out old local storage override rules completely to run flawlessly on system hardware hooks
         localStorage.removeItem('dashboard-theme');
 
         function applyTargetPalette() {
@@ -480,7 +514,7 @@
 
         applyTargetPalette();
 
-        // Listen for device control switches live (Sunset/Sunrise/Manual settings changes)
+        // Listen for device control switches live (Sunset/Sunrise/Manual control center adjustments)
         systemLightQuery.addEventListener('change', (e) => {
             sessionStorage.removeItem('dashboard-theme');
             if (e.matches) {
