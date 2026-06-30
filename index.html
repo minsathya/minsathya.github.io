@@ -11,12 +11,11 @@
         :root {
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
-            --text-muted: #555555;
-            --pill-bg: #141414;
-            --pill-border: #222222;
-            --pill-hover-bg: #1c1c1c;
-            --pill-hover-border: #333333;
-            --line-divider: #1a1a1a;
+            --text-muted: #666666;
+            --panel-bg: #121212;
+            --panel-border: #222222;
+            --row-divider: #1c1c1c;
+            --row-hover: rgba(255, 255, 255, 0.02);
             --font-family: 'Poppins', sans-serif;
         }
 
@@ -35,13 +34,13 @@
             flex-direction: column;
             justify-content: space-between;
             padding: 60px 24px;
-            max-width: 900px;
+            max-width: 1140px;
             margin: 0 auto;
             width: 95%;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Minimal Navigation Top Bar */
+        /* Top Header Navigation */
         header {
             display: flex;
             justify-content: space-between;
@@ -64,23 +63,23 @@
             user-select: none;
         }
 
-        /* Minimalist Search Module */
+        /* Centered Sleek Search Input */
         .search-container {
             width: 100%;
-            max-width: 450px;
-            margin: 0 auto 80px auto;
+            max-width: 480px;
+            margin: 0 auto 70px auto;
             position: relative;
         }
 
         .search-bar {
             width: 100%;
-            background-color: transparent;
-            border: 1px solid var(--pill-border);
+            background-color: var(--panel-bg);
+            border: 1px solid var(--panel-border);
             border-radius: 50px;
-            padding: 13px 24px 13px 50px;
+            padding: 14px 24px 14px 52px;
             color: var(--text-main);
             font-family: var(--font-family);
-            font-size: 14.5px;
+            font-size: 15px;
             outline: none;
             transition: border-color 0.2s ease;
         }
@@ -90,93 +89,84 @@
         }
 
         .search-bar::placeholder {
-            color: var(--text-muted);
+            color: #444444;
         }
 
         .search-icon {
             position: absolute;
-            left: 20px;
+            left: 22px;
             top: 50%;
             transform: translateY(-50%);
             width: 15px;
             height: 15px;
-            color: var(--text-muted);
+            color: #444444;
             pointer-events: none;
         }
 
-        /* Elegant Vertical Stream Feed Directory */
-        .stream-directory {
-            display: flex;
-            flex-direction: column;
-            gap: 50px;
-            width: 100%;
-            margin-bottom: 90px;
+        /* Grand 3-Column Capsule Grid */
+        .directory-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-bottom: 80px;
+            align-items: start;
         }
 
-        .stream-section {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
+        /* Large Capsule Panel Containers (No individual word pills) */
+        .capsule-panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 28px; /* Smooth elegant pill-style container corners */
+            padding: 32px 8px 16px 8px; /* Tight side margins for clean row expansions */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
         }
 
-        .stream-title {
-            font-size: 14px;
+        .panel-title {
+            font-size: 20px;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            padding-left: 2px;
-            display: flex;
-            align-items: center;
-            width: 100%;
-        }
-
-        /* Clean, thin structural horizontal rules under section titles */
-        .stream-title::after {
-            content: "";
-            flex-grow: 1;
-            height: 1px;
-            background-color: var(--line-divider);
-            margin-left: 20px;
-        }
-
-        /* Natural, self-sizing wrapped inline pill clouds */
-        .pill-flow {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            width: 100%;
-        }
-
-        .pill-flow li {
-            list-style: none;
-        }
-
-        .pill-flow a {
-            display: inline-flex;
-            align-items: center;
-            background-color: var(--pill-bg);
-            border: 1px solid var(--pill-border);
-            border-radius: 50px;
-            padding: 10px 22px;
+            letter-spacing: -0.3px;
             color: var(--text-main);
+            margin-bottom: 24px;
+            padding: 0 24px;
+        }
+
+        /* Flat Document List Stream */
+        .document-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .document-list li {
+            border-bottom: 1px solid var(--row-divider);
+        }
+
+        .document-list li:last-child {
+            border-bottom: none;
+        }
+
+        .document-list a {
+            display: block;
+            padding: 13px 24px;
+            color: #dddddd;
             text-decoration: none !important;
             font-size: 14.5px;
             font-weight: 400;
-            letter-spacing: -0.1px;
-            transition: background-color 0.15s ease, border-color 0.15s ease;
+            transition: all 0.15s ease;
             -webkit-tap-highlight-color: transparent !important;
         }
 
-        /* Clean micro-interaction response without color flashes or lines */
-        .pill-flow a:hover, .pill-flow a:active {
-            background-color: var(--pill-hover-bg);
-            border-color: var(--pill-hover-border);
-            text-decoration: none !important;
+        /* Soft table-row highlight mimicry from your database engine */
+        .document-list li:hover {
+            background-color: var(--row-hover);
         }
 
-        /* Matte Minimal Base Footer */
+        .document-list li:hover a {
+            color: #ffffff;
+            padding-left: 28px; /* Extremely subtle elegant glide movement */
+        }
+
+        /* Flat Grounded Footer Row */
         footer {
             display: flex;
             flex-direction: column;
@@ -195,7 +185,7 @@
         }
 
         .footer-links-row a {
-            color: #444444;
+            color: var(--text-muted);
             text-decoration: none !important;
             font-size: 14px;
             font-weight: 400;
@@ -207,54 +197,38 @@
         }
 
         .copyright-tag {
-            color: #2a2a2a;
-            font-size: 12px;
+            color: #333333;
+            font-size: 12.5px;
             letter-spacing: 0.2px;
         }
 
-        /* Seamless Mobile Adaptation */
-        @media (max-width: 600px) {
+        /* Sharp Seamless Mobile Scale Overrides */
+        @media (max-width: 900px) {
+            .directory-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .capsule-panel {
+                padding: 28px 4px 12px 4px;
+            }
+            
             body {
-                padding: 40px 16px;
-            }
-
-            header {
-                margin-bottom: 40px;
-            }
-
-            .search-container {
-                margin-bottom: 50px;
-            }
-
-            .stream-directory {
-                gap: 40px;
-            }
-
-            .pill-flow {
-                gap: 8px;
-            }
-
-            .pill-flow a {
-                padding: 9px 18px;
-                font-size: 14px;
-            }
-
-            .footer-links-row {
-                gap: 16px 20px;
+                padding: 40px 20px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Block Component -->
+    <!-- Header Area -->
     <header>
         <a href="#" class="logo">sathya.</a>
         <div class="toggle-icon">↔</div>
     </header>
 
     <main>
-        <!-- Centered Clean Search Module -->
+        <!-- Pill Search Bar Components -->
         <div class="search-container">
             <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -262,13 +236,13 @@
             <input type="text" class="search-bar" placeholder="Search...">
         </div>
 
-        <!-- Master Stream Feed Directory Base -->
-        <div class="stream-directory">
+        <!-- Main Workspace Grid -->
+        <div class="directory-grid">
 
-            <!-- Stream Section: UPSC -->
-            <div class="stream-section">
-                <h2 class="stream-title">Upsc</h2>
-                <ul class="pill-flow">
+            <!-- Capsule Panel: UPSC -->
+            <div class="capsule-panel">
+                <h2 class="panel-title">Upsc</h2>
+                <ul class="document-list">
                     <li><a href="#">Subjects</a></li>
                     <li><a href="#">Current affairs</a></li>
                     <li><a href="#">Ncert's</a></li>
@@ -277,20 +251,20 @@
                 </ul>
             </div>
 
-            <!-- Stream Section: PLANNING -->
-            <div class="stream-section">
-                <h2 class="stream-title">Planning</h2>
-                <ul class="pill-flow">
+            <!-- Capsule Panel: PLANNING -->
+            <div class="capsule-panel">
+                <h2 class="panel-title">Planning</h2>
+                <ul class="document-list">
                     <li><a href="#">Travel planner</a></li>
                     <li><a href="#">Simple budget</a></li>
                     <li><a href="#">Task List</a></li>
                 </ul>
             </div>
 
-            <!-- Stream Section: GROWTH -->
-            <div class="stream-section">
-                <h2 class="stream-title">Growth</h2>
-                <ul class="pill-flow">
+            <!-- Capsule Panel: GROWTH -->
+            <div class="capsule-panel">
+                <h2 class="panel-title">Growth</h2>
+                <ul class="document-list">
                     <li><a href="#">Goals</a></li>
                     <li><a href="#">Habit tracker</a></li>
                     <li><a href="#">Weekly plan</a></li>
@@ -300,7 +274,7 @@
         </div>
     </main>
 
-    <!-- Grounded Flat Footer Area -->
+    <!-- Grounded Footer Base Line -->
     <footer>
         <div class="footer-links-row">
             <a href="#">About</a>
