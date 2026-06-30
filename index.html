@@ -222,11 +222,11 @@
             font-size: 16px;
             padding: 0 16px;
             width: 100%;
-            min-width: 0; /* Direct mobile clipping fix */
+            min-width: 0; 
             transition: color 0.6s var(--ease-premium);
         }
 
-        /* Vector SVG Structural Close & Clear Rules - Fixes alignment across platforms natively */
+        /* Vector SVG Structural Close & Clear Rules */
         .clear-text-btn svg {
             width: 15px;
             height: 15px;
@@ -245,7 +245,7 @@
             transition: stroke 0.6s var(--ease-premium);
         }
 
-        /* High-End Vector Theme Switch Container with Complete Anti-Shivering Safeguards */
+        /* High-End Vector Theme Switch Container with Permanent Laptop GPU Lock */
         .theme-toggle {
             width: 28px;
             height: 28px;
@@ -269,36 +269,37 @@
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
+            transform-origin: center center;
             
-            /* Anti-Shivering Layer Engine Isolation Rules */
+            /* Anti-Shivering Desktop Layer Engine Isolation Rules */
             will-change: transform, opacity;
-            backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            transform-style: preserve-3d;
+            backface-visibility: hidden;
             
             transition: transform 0.6s var(--ease-premium), opacity 0.6s var(--ease-premium), stroke 0.6s var(--ease-premium);
         }
 
-        /* Dark Mode Default State: Moon Visible (with 3D translate safety block) */
+        /* Laptop Fix: Pre-loading translate3d at the front of the transform stack 
+           keeps the GPU composite process permanently active on desktop browsers.
+        */
         .theme-toggle .sun-icon {
             opacity: 0;
-            transform: rotate(-90deg) scale(0.4) translateZ(0);
+            transform: translate3d(0, 0, 0) rotate(-90deg) scale(0.4);
         }
 
         .theme-toggle .moon-icon {
             opacity: 1;
-            transform: rotate(0deg) scale(1) translateZ(0);
+            transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
         }
 
-        /* Light Mode Active State: Sun Visible (with 3D translate safety block) */
         body.light-mode .theme-toggle .sun-icon {
             opacity: 1;
-            transform: rotate(0deg) scale(1) translateZ(0);
+            transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
         }
 
         body.light-mode .theme-toggle .moon-icon {
             opacity: 0;
-            transform: rotate(90deg) scale(0.4) translateZ(0);
+            transform: translate3d(0, 0, 0) rotate(90deg) scale(0.4);
         }
 
         /* Symmetrical Direct Child Matrix Grid */
@@ -429,7 +430,7 @@
             }
         }
 
-        /* TARGETED IPAD SPECIFIC ADJUSTMENT: Scaling up the clear button icon slightly */
+        /* Scaling up the clear button icon slightly for iPads */
         @media (min-width: 701px) and (max-width: 1024px) {
             .clear-text-btn svg {
                 width: 19px;
@@ -600,7 +601,6 @@
         const clearSearchBtn = document.getElementById('clearSearchBtn');
         const searchCoreInput = document.getElementById('searchCoreInput');
 
-        // Clear out old local storage override variables completely to maintain pure runtime device hooks
         localStorage.removeItem('dashboard-theme');
 
         function applyTargetPalette() {
@@ -612,7 +612,6 @@
                     bodyElement.classList.remove('light-mode');
                 }
             } else {
-                // Flawless out-of-the-box hardware layer matching
                 if (systemLightQuery.matches) {
                     bodyElement.classList.add('light-mode');
                 } else {
@@ -623,7 +622,6 @@
 
         applyTargetPalette();
 
-        // Control Center live OS theme tracking listener (Sunset / Manual shifts)
         systemLightQuery.addEventListener('change', (e) => {
             sessionStorage.removeItem('dashboard-theme');
             if (e.matches) {
@@ -633,9 +631,8 @@
             }
         });
 
-        // Manual Vector Icon Click Theme Switcher
         toggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevents layout clash with the parent views
+            e.stopPropagation(); 
             const isCurrentlyLight = bodyElement.classList.contains('light-mode');
             if (isCurrentlyLight) {
                 bodyElement.classList.remove('light-mode');
@@ -648,25 +645,20 @@
 
         // --- Twin-View Interface Controller System ---
 
-        // A. Trigger Search Activation (Fades layer inward smoothly)
         openSearchBtn.addEventListener('click', () => {
             masterHeader.classList.add('search-active');
-            // Mini delay to focus perfectly once layout engine updates
             setTimeout(() => { searchCoreInput.focus(); }, 50);
         });
 
-        // B. Clear Inputs instantly via X vector button click rule
         clearSearchBtn.addEventListener('click', () => {
             searchCoreInput.value = "";
             searchCoreInput.focus();
         });
 
-        // C. Close Search layer via - vector button click rule (Fades layout out smoothly)
         closeSearchBtn.addEventListener('click', () => {
             masterHeader.classList.remove('search-active');
         });
 
-        // Collapse cleanly if user triggers enter actions on blank strings
         searchCoreInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && searchCoreInput.value.trim() === "") {
                 masterHeader.classList.remove('search-active');
