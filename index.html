@@ -17,7 +17,7 @@
             --row-divider: #1c1c1c;
             --row-hover: rgba(255, 255, 255, 0.015);
             --font-family: 'Poppins', sans-serif;
-            --ease-premium: cubic-bezier(0.16, 1, 0.3, 1); /* Ultra-classy deceleration curve */
+            --ease-premium: cubic-bezier(0.16, 1, 0.3, 1); /* Elite deceleration profile */
         }
 
         * {
@@ -35,18 +35,18 @@
             flex-direction: column;
             justify-content: space-between;
             padding: 60px 24px;
-            max-width: 1140px;
+            max-width: 1200px;
             margin: 0 auto;
             width: 95%;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
 
-        /* Pure Opening Animation Keyframes */
+        /* Classy Entry Physics Keyframe Vector */
         @keyframes masterEntrance {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(24px);
             }
             to {
                 opacity: 1;
@@ -54,20 +54,20 @@
             }
         }
 
-        /* Classy Staggered Load Engine */
-        header, .search-container, .left-panel, .right-panel-1, .right-panel-2, footer {
+        /* 100/100 Staggered Liquid Cascade Delays */
+        header, .search-container, .grid-col, footer {
             opacity: 0;
             animation: masterEntrance 1.2s var(--ease-premium) forwards;
         }
 
-        header { animation-delay: 0.05s; }
-        .search-container { animation-delay: 0.15s; }
-        .left-panel { animation-delay: 0.25s; }
-        .right-panel-1 { animation-delay: 0.35s; }
-        .right-panel-2 { animation-delay: 0.45s; }
-        footer { animation-delay: 0.55s; }
+        header { animation-delay: 0.04s; }
+        .search-container { animation-delay: 0.12s; }
+        .col-1 { animation-delay: 0.20s; }
+        .col-2 { animation-delay: 0.28s; }
+        .col-3 { animation-delay: 0.36s; }
+        footer { animation-delay: 0.44s; }
 
-        /* Top Header Navigation */
+        /* Top Navigation Header Bar */
         header {
             display: flex;
             justify-content: space-between;
@@ -95,7 +95,7 @@
             opacity: 0.6;
         }
 
-        /* Centered Search Input Pill */
+        /* Centered Search Pill Component */
         .search-container {
             width: 100%;
             max-width: 480px;
@@ -136,16 +136,23 @@
             pointer-events: none;
         }
 
-        /* Asymmetric Layout Workspace Hub */
-        .workspace-layout {
+        /* Premium 3-Column Workspace Matrix Grid */
+        .matrix-canvas {
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 32px;
             margin-bottom: 80px;
             align-items: start;
         }
 
-        /* Large Premium Capsule Panel */
+        /* Vertical Stack Layer inside each Column */
+        .grid-col {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* Large Capsule Container Panel */
         .capsule-panel {
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
@@ -159,13 +166,6 @@
             border-color: #2b2b2b;
         }
 
-        /* Stack container for the right side panels */
-        .panel-stack-side {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-        }
-
         .panel-title {
             font-size: 20px;
             font-weight: 600;
@@ -175,7 +175,7 @@
             padding: 0 24px;
         }
 
-        /* Flat Structured Rows */
+        /* Flat Reference Data Rows */
         .document-list {
             list-style: none;
             display: flex;
@@ -202,17 +202,17 @@
             -webkit-tap-highlight-color: transparent !important;
         }
 
-        /* Buttery Smooth Silent Row Transition Engine */
+        /* Quiet Silent Row Hover Interactions */
         .document-list li:hover {
             background-color: var(--row-hover);
         }
 
         .document-list li:hover a {
             color: #ffffff;
-            padding-left: 32px; /* Smooth, soft textual glide offset */
+            padding-left: 32px; /* Smooth, micro-glide text displacement */
         }
 
-        /* Flat Grounded Footer Row */
+        /* Grounded Borderless Base Footer Line */
         footer {
             display: flex;
             flex-direction: column;
@@ -248,9 +248,16 @@
             letter-spacing: 0.2px;
         }
 
-        /* Responsive Layout Handling */
-        @media (max-width: 900px) {
-            .workspace-layout {
+        /* Symmetrical Fluid Media Adaptation */
+        @media (max-width: 1000px) {
+            .matrix-canvas {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 28px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .matrix-canvas {
                 grid-template-columns: 1fr;
                 gap: 24px;
             }
@@ -262,19 +269,23 @@
             body {
                 padding: 40px 20px;
             }
+            
+            header {
+                margin-bottom: 40px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Block -->
+    <!-- Platform Header Navigation Block -->
     <header>
         <a href="#" class="logo">sathya.</a>
         <div class="toggle-icon">↔</div>
     </header>
 
     <main>
-        <!-- Search Bar -->
+        <!-- Clean Centered Search Input Component -->
         <div class="search-container">
             <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -282,26 +293,38 @@
             <input type="text" class="search-bar" placeholder="Search...">
         </div>
 
-        <!-- Asymmetric Workspace Layout -->
-        <div class="workspace-layout">
+        <!-- Master Matrix Canvas Layout -->
+        <div class="matrix-canvas">
 
-            <!-- Left Container Block: UPSC -->
-            <div class="capsule-panel left-panel">
-                <h2 class="panel-title">Upsc</h2>
-                <ul class="document-list">
-                    <li><a href="#">Subjects</a></li>
-                    <li><a href="#">Current affairs</a></li>
-                    <li><a href="#">Ncert's</a></li>
-                    <li><a href="#">Csat</a></li>
-                    <li><a href="#">Notes</a></li>
-                </ul>
+            <!-- MATRIX COLUMN 1: Academic Focus Blocks -->
+            <div class="grid-col col-1">
+                <!-- Capsule Panel: UPSC -->
+                <div class="capsule-panel">
+                    <h2 class="panel-title">Upsc</h2>
+                    <ul class="document-list">
+                        <li><a href="#">Subjects</a></li>
+                        <li><a href="#">Current affairs</a></li>
+                        <li><a href="#">Ncert's</a></li>
+                        <li><a href="#">Csat</a></li>
+                        <li><a href="#">Notes</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Capsule Panel: STUDIES -->
+                <div class="capsule-panel">
+                    <h2 class="panel-title">Studies</h2>
+                    <ul class="document-list">
+                        <li><a href="#">Syllabus Hub</a></li>
+                        <li><a href="#">Revision Logs</a></li>
+                        <li><a href="#">Exam Tracking</a></li>
+                    </ul>
+                </div>
             </div>
 
-            <!-- Right Container Stack -->
-            <div class="panel-stack-side">
-                
-                <!-- Right Panel 1: PLANNING -->
-                <div class="capsule-panel right-panel-1">
+            <!-- MATRIX COLUMN 2: Operational Systems Blocks -->
+            <div class="grid-col col-2">
+                <!-- Capsule Panel: PLANNING -->
+                <div class="capsule-panel">
                     <h2 class="panel-title">Planning</h2>
                     <ul class="document-list">
                         <li><a href="#">Travel planner</a></li>
@@ -310,8 +333,21 @@
                     </ul>
                 </div>
 
-                <!-- Right Panel 2: GROWTH -->
-                <div class="capsule-panel right-panel-2">
+                <!-- Capsule Panel: LIFE -->
+                <div class="capsule-panel">
+                    <h2 class="panel-title">Life</h2>
+                    <ul class="document-list">
+                        <li><a href="#">Daily Routine</a></li>
+                        <li><a href="#">Digital Journal</a></li>
+                        <li><a href="#">Health Ledger</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- MATRIX COLUMN 3: Self-Actualization & Production Blocks -->
+            <div class="grid-col col-3">
+                <!-- Capsule Panel: GROWTH -->
+                <div class="capsule-panel">
                     <h2 class="panel-title">Growth</h2>
                     <ul class="document-list">
                         <li><a href="#">Goals</a></li>
@@ -320,12 +356,21 @@
                     </ul>
                 </div>
 
+                <!-- Capsule Panel: PHOTOGRAPHY -->
+                <div class="capsule-panel">
+                    <h2 class="panel-title">Photography</h2>
+                    <ul class="document-list">
+                        <li><a href="#">Visual Gallery</a></li>
+                        <li><a href="#">Gear Setup</a></li>
+                        <li><a href="#">Media Archives</a></li>
+                    </ul>
+                </div>
             </div>
 
         </div>
     </main>
 
-    <!-- Grounded Minimal Footer -->
+    <!-- Base Flat Footer Area -->
     <footer>
         <div class="footer-links-row">
             <a href="#">About</a>
