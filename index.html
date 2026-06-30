@@ -11,13 +11,12 @@
         :root {
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
-            --text-muted: #666666;
-            --grid-line: #1c1c1c;
-            --pill-bg: #121212;
-            --pill-border: #222222;
-            --pill-hover-bg: #161616;
-            --pill-hover-border: #333333;
-            --teal-badge: #1b4740;
+            --text-muted: #555555;
+            --layout-border: #1a1a1a;
+            --pill-bg: rgba(255, 255, 255, 0.03);
+            --pill-border: rgba(255, 255, 255, 0.06);
+            --pill-hover-bg: rgba(255, 255, 255, 0.06);
+            --pill-hover-border: rgba(255, 255, 255, 0.12);
             --font-family: 'Poppins', sans-serif;
         }
 
@@ -36,13 +35,13 @@
             flex-direction: column;
             justify-content: space-between;
             padding: 60px 24px;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             width: 95%;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Top Header Navigation */
+        /* Platform Top Header */
         header {
             display: flex;
             justify-content: space-between;
@@ -65,17 +64,17 @@
             user-select: none;
         }
 
-        /* Centered Sleek Search Input */
+        /* Minimal Centered Search Module */
         .search-container {
             width: 100%;
             max-width: 480px;
-            margin: 0 auto 70px auto;
+            margin: 0 auto 80px auto;
             position: relative;
         }
 
         .search-bar {
             width: 100%;
-            background-color: var(--pill-bg);
+            background-color: transparent;
             border: 1px solid var(--pill-border);
             border-radius: 50px;
             padding: 14px 24px 14px 52px;
@@ -91,7 +90,7 @@
         }
 
         .search-bar::placeholder {
-            color: #444444;
+            color: var(--text-muted);
         }
 
         .search-icon {
@@ -101,98 +100,85 @@
             transform: translateY(-50%);
             width: 15px;
             height: 15px;
-            color: #444444;
+            color: var(--text-muted);
             pointer-events: none;
         }
 
-        /* Unique Architectural Matrix Grid */
-        .matrix-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            border: 1px solid var(--grid-line);
-            border-radius: 16px;
-            background-color: var(--grid-line);
-            gap: 1px; /* Creates sharp 1px interior divider lines natively */
-            overflow: hidden;
+        /* Asymmetric Staggered Workspace Directory */
+        .workspace-hub {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
             margin-bottom: 80px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
         }
 
-        .matrix-cell {
-            background-color: var(--bg-color);
-            padding: 40px 32px;
+        /* Primary Top Panel (Full-Width to destroy "subscription package" vibe) */
+        .primary-block {
+            width: 100%;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--layout-border);
+        }
+
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        /* Fluid layout for the heavy academic items */
+        .fluid-pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* Secondary Split Base Panel */
+        .split-base-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding-top: 40px;
+        }
+
+        .column-pane {
             display: flex;
             flex-direction: column;
         }
 
-        /* Cell Header Configuration with Dark Teal Pills Counter */
-        .cell-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .cell-title {
-            font-size: 20px;
-            font-weight: 600;
-            letter-spacing: -0.3px;
-            color: var(--text-main);
-        }
-
-        .counter-badge {
-            font-size: 12px;
-            font-weight: 600;
-            background-color: var(--teal-badge);
-            color: #ffffff;
-            padding: 4px 12px;
-            border-radius: 50px;
-            letter-spacing: 0.5px;
-        }
-
-        /* Vertical Pill Index Stack */
-        .pill-stack {
+        /* Vertical organically sized pill layouts */
+        .vertical-pill-stack {
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
             gap: 12px;
             list-style: none;
         }
 
-        .pill-stack a {
-            display: flex;
-            justify-content: space-between;
+        /* Unifying Premium Pill System Styles */
+        .pill-link {
+            display: inline-flex;
             align-items: center;
             background-color: var(--pill-bg);
             border: 1px solid var(--pill-border);
-            border-radius: 12px;
-            padding: 14px 20px;
+            border-radius: 50px;
+            padding: 10px 22px;
             color: var(--text-main);
             text-decoration: none !important;
             font-size: 14.5px;
             font-weight: 400;
-            transition: all 0.2s ease;
+            transition: background-color 0.15s ease, border-color 0.15s ease;
             -webkit-tap-highlight-color: transparent !important;
         }
 
-        /* Minimal clean interface response interaction */
-        .pill-stack a:hover {
+        .pill-link:hover {
             background-color: var(--pill-hover-bg);
             border-color: var(--pill-hover-border);
         }
 
-        /* Clean micro chevron indicator inside pills */
-        .pill-arrow {
-            color: #333333;
-            font-size: 12px;
-            transition: transform 0.2s ease, color 0.2s ease;
-        }
-
-        .pill-stack a:hover .pill-arrow {
-            color: var(--text-main);
-            transform: translateX(2px);
-        }
-
-        /* Grounded Borderless Footer Row */
+        /* Grounded Minimalist Base Footer */
         footer {
             display: flex;
             flex-direction: column;
@@ -201,60 +187,69 @@
             width: 100%;
         }
 
-        .footer-links-row {
+        .footer-navigation-links {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 32px;
+            gap: 28px;
             flex-wrap: wrap;
             width: 100%;
         }
 
-        .footer-links-row a {
-            color: var(--text-muted);
+        .footer-navigation-links a {
+            color: #444444;
             text-decoration: none !important;
             font-size: 14px;
             font-weight: 400;
             transition: color 0.2s ease;
         }
 
-        .footer-links-row a:hover {
+        .footer-navigation-links a:hover {
             color: #ffffff;
         }
 
-        .copyright-tag {
+        .copyright-notice-tag {
             color: #333333;
             font-size: 12.5px;
             letter-spacing: 0.2px;
         }
 
-        /* Responsive Matrix Scalings */
-        @media (max-width: 950px) {
-            .matrix-grid {
+        /* Premium Responsive Breakpoint Adaptations */
+        @media (max-width: 768px) {
+            .split-base-grid {
                 grid-template-columns: 1fr;
-                gap: 1px;
+                gap: 40px;
+                padding-top: 32px;
             }
 
-            .matrix-cell {
-                padding: 32px 24px;
+            .primary-block {
+                padding-bottom: 32px;
             }
             
             body {
                 padding: 40px 20px;
+            }
+
+            header {
+                margin-bottom: 40px;
+            }
+
+            .footer-navigation-links {
+                gap: 16px 20px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Block -->
+    <!-- Header Block Area -->
     <header>
         <a href="#" class="logo">sathya.</a>
         <div class="toggle-icon">↔</div>
     </header>
 
     <main>
-        <!-- Centered Pill Search Container -->
+        <!-- Sleek Minimalist Search Bar Component -->
         <div class="search-container">
             <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -262,65 +257,59 @@
             <input type="text" class="search-bar" placeholder="Search...">
         </div>
 
-        <!-- Master Architectural Matrix Grid -->
-        <div class="matrix-grid">
-
-            <!-- Matrix Cell: UPSC -->
-            <div class="matrix-cell">
-                <div class="cell-header">
-                    <h2 class="cell-title">Upsc</h2>
-                    <span class="counter-badge">5 Items</span>
+        <!-- Asymmetric Workspace Directory Layout Base -->
+        <div class="workspace-hub">
+            
+            <!-- Full-Width Dominant Header Section: UPSC (Breaks the subscription box layout entirely) -->
+            <div class="primary-block">
+                <h2 class="section-label">Upsc</h2>
+                <div class="fluid-pill-row">
+                    <a href="#" class="pill-link">Subjects</a>
+                    <a href="#" class="pill-link">Current affairs</a>
+                    <a href="#" class="pill-link">Ncert's</a>
+                    <a href="#" class="pill-link">Csat</a>
+                    <a href="#" class="pill-link">Notes</a>
                 </div>
-                <ul class="pill-stack">
-                    <li><a href="#"><span>Subjects</span><span class="pill-arrow">→</span></a></li>
-                    <li><a href="#"><span>Current affairs</span><span class="pill-arrow">→</span></a></li>
-                    <li><a href="#"><span>Ncert's</span><span class="pill-arrow">→</span></a></li>
-                    <li><a href="#"><span>Csat</span><span class="pill-arrow">→</span></a></li>
-                    <li><a href="#"><span>Notes</span><span class="pill-arrow">→</span></a></li>
-                </ul>
             </div>
 
-            <!-- Matrix Cell: PLANNING -->
-            <div class="matrix-cell">
-                <div class="cell-header">
-                    <h2 class="cell-title">Planning</h2>
-                    <span class="counter-badge">3 Items</span>
+            <!-- Balanced Base Split Panel for Personal/Utility Tracking Lists -->
+            <div class="split-base-grid">
+                
+                <!-- Secondary Column Block: PLANNING -->
+                <div class="column-pane">
+                    <h2 class="section-label">Planning</h2>
+                    <ul class="vertical-pill-stack">
+                        <li><a href="#" class="pill-link">Travel planner</a></li>
+                        <li><a href="#" class="pill-link">Simple budget</a></li>
+                        <li><a href="#" class="pill-link">Task List</a></li>
+                    </ul>
                 </div>
-                <ul class="pill-stack">
-                    <li><a href="#"><span>Travel planner</span><span class="pill-arrow">→</span></a></li>
-                    <li><a href="#"><span>Simple budget</span><span class="pill-arrow">→</span></a></li>
-                    <li><a href="#"><span>Task List</span><span class="pill-arrow">→</span></a></li>
-                </ul>
-            </div>
 
-            <!-- Matrix Cell: GROWTH -->
-            <div class="matrix-cell">
-                <div class="cell-header">
-                    <div class="cell-header" style="width:100%; margin-bottom:0;">
-                        <h2 class="cell-title">Growth</h2>
-                        <span class="counter-badge">3 Items</span>
-                    </div>
+                <!-- Secondary Column Block: GROWTH -->
+                <div class="column-pane">
+                    <h2 class="section-label">Growth</h2>
+                    <ul class="vertical-pill-stack">
+                        <li><a href="#" class="pill-link">Goals</a></li>
+                        <li><a href="#" class="pill-link">Habit tracker</a></li>
+                        <li><a href="#" class="pill-link">Weekly plan</a></li>
+                    </ul>
                 </div>
-                <ul class="pill-stack">
-                    <li><a href="#"><span>Goals</span><span class="pill-arrow">→</span></a></li>
-                    <li><a href="#"><span>Habit tracker</span><span class="pill-arrow">→</span></a></li>
-                    <li><a href="#"><span>Weekly plan</span><span class="pill-arrow">→</span></a></li>
-                </ul>
+
             </div>
 
         </div>
     </main>
 
-    <!-- Footer Area Layout -->
+    <!-- Platform Base Footer -->
     <footer>
-        <div class="footer-links-row">
+        <div class="footer-navigation-links">
             <a href="#">About</a>
             <a href="#">Contact</a>
             <a href="#">Privacy Policy</a>
             <a href="#">Terms & Conditions</a>
             <a href="#">Disclaimer</a>
         </div>
-        <div class="copyright-tag">
+        <div class="copyright-notice-tag">
             &copy; 2026 Sathya. All rights reserved.
         </div>
     </footer>
