@@ -97,17 +97,17 @@
         
         footer { animation-delay: 0.52s; }
 
-        /* Top Header Navigation Shell - Strict Uniform Footprint across Laptop, iPad, and Phone */
+        /* Top Header Navigation Shell - Expanded to Match Image 1 Perfectly */
         header {
             position: relative;
             background-color: var(--header-bg);
             border: 1px solid var(--header-border);
             border-radius: 50px;
-            width: 280px; /* Fixed, balanced baseline dimension */
-            height: 60px;
+            width: 100%; /* Spans full grid width just like original header */
+            height: 72px; /* Generous, premium vertical spacing */
             margin: 0 auto 80px auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
-            overflow: hidden; /* Safely locks views inside the capsule radius */
+            overflow: hidden; /* Safely clips views inside the capsule boundaries */
             transition: background-color 0.6s var(--ease-premium), border-color 0.6s var(--ease-premium), box-shadow 0.6s var(--ease-premium);
         }
 
@@ -126,7 +126,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 24px;
+            padding: 0 32px; /* Spacious internal padding matching Image 1 */
             
             /* Classy, soft fade-and-scale transition engine */
             transition: opacity 0.4s var(--ease-premium), transform 0.4s var(--ease-premium), visibility 0.4s var(--ease-premium);
@@ -160,11 +160,11 @@
         .header-right-cluster, .search-control-cluster {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 20px;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 700;
             letter-spacing: -0.5px;
             color: var(--text-main);
@@ -195,16 +195,16 @@
         }
 
         .icon-btn svg {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             stroke: var(--text-main);
             transition: stroke 0.6s var(--ease-premium);
         }
 
         /* Inside Search Pill Elements */
         .search-static-icon {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             stroke: var(--text-main);
             opacity: 0.4;
             flex-shrink: 0;
@@ -218,20 +218,19 @@
             outline: none;
             color: var(--text-main);
             font-family: 'Poppins', sans-serif;
-            font-size: 14.5px;
-            padding: 0 12px;
-            width: 10px; /* Forces natural flex behaviors inside fixed layouts */
+            font-size: 16px;
+            padding: 0 16px;
             transition: color 0.6s var(--ease-premium);
         }
 
         .clear-text-btn {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 500;
             opacity: 0.4;
         }
 
         .close-search-btn {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 300;
             opacity: 0.7;
             padding-bottom: 2px; /* Precision mechanical visual axis alignment */
@@ -254,8 +253,8 @@
 
         .theme-toggle svg {
             position: absolute;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             fill: none;
             stroke: var(--text-main);
             stroke-width: 2;
@@ -430,17 +429,25 @@
             }
             
             header {
-                margin-bottom: 50px;
+                margin-bottom: 40px;
+                height: 64px; /* Slightly tighter proportional scaling on mobile screens */
+                padding: 0 20px;
+            }
+            
+            .header-inner-view {
+                padding: 0 20px;
+            }
+            
+            .logo {
+                font-size: 22px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Block - Unified Twin View Design Layout -->
     <header id="masterHeader">
         
-        <!-- View Layer A: Default Branding State -->
         <div class="header-inner-view" id="headerMainView">
             <a href="#" class="logo">sathya.</a>
             <div class="header-right-cluster">
@@ -459,7 +466,6 @@
             </div>
         </div>
 
-        <!-- View Layer B: Active Search State (Swallows header inside identical footprint rules) -->
         <div class="header-inner-view" id="headerSearchView">
             <svg class="search-static-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <input type="text" class="search-core-input" id="searchCoreInput" placeholder="Search workspace..." autocomplete="off">
@@ -472,10 +478,8 @@
     </header>
 
     <main>
-        <!-- Matrix Canvas Layout Container -->
         <div class="matrix-canvas">
 
-            <!-- Card 1: UPSC -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Upsc</h2>
                 <ul class="document-list">
@@ -487,7 +491,6 @@
                 </ul>
             </div>
 
-            <!-- Card 2: PLANNING -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Planning</h2>
                 <ul class="document-list">
@@ -497,7 +500,6 @@
                 </ul>
             </div>
 
-            <!-- Card 3: GROWTH -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Growth</h2>
                 <ul class="document-list">
@@ -507,7 +509,6 @@
                 </ul>
             </div>
 
-            <!-- Card 4: STUDIES -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Studies</h2>
                 <ul class="document-list">
@@ -517,7 +518,6 @@
                 </ul>
             </div>
 
-            <!-- Card 5: LIFE -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Life</h2>
                 <ul class="document-list">
@@ -527,7 +527,6 @@
                 </ul>
             </div>
 
-            <!-- Card 6: PHOTOGRAPHY -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Photography</h2>
                 <ul class="document-list">
@@ -540,7 +539,6 @@
         </div>
     </main>
 
-    <!-- Grounded Minimal Footer -->
     <footer>
         <div class="footer-links-row">
             <a href="#">About</a>
@@ -554,7 +552,6 @@
         </div>
     </footer>
 
-    <!-- Smart Native Device Sync & Twin-View Controller Engine -->
     <script>
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
@@ -578,7 +575,6 @@
                     bodyElement.classList.remove('light-mode');
                 }
             } else {
-                // Flawless out-of-the-box hardware layer matching
                 if (systemLightQuery.matches) {
                     bodyElement.classList.add('light-mode');
                 } else {
