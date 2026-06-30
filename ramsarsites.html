@@ -120,7 +120,7 @@
             border-radius: 50px;
             width: 100%; 
             height: 72px; 
-            margin: 0 auto 20px auto; /* Locked 20px space directly above breadcrumbs */
+            margin: 0 auto 20px auto; 
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
             overflow: hidden; 
             transition: background-color 0.6s var(--ease-premium), border-color 0.6s var(--ease-premium), box-shadow 0.6s var(--ease-premium);
@@ -289,7 +289,7 @@
             transform: translate3d(0, 0, 0) rotate(90deg) scale(0.4);
         }
 
-        /* Core Workspace Section Framework */
+        /* Core Layout Architecture Engine */
         main {
             flex-grow: 1; 
             width: 100%;
@@ -302,7 +302,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 20px; /* Locked rhythm: 20px below breadcrumbs */
+            margin-bottom: 20px; 
             font-size: 14.5px;
             font-weight: 500;
             letter-spacing: 0.2px;
@@ -321,7 +321,7 @@
         }
 
         .breadcrumbs .separator {
-            color: var(--panel-border);
+            color: var(--row-divider);
             font-weight: 400;
             user-select: none;
         }
@@ -331,8 +331,9 @@
             opacity: 0.9;
         }
 
-        /* Heading and Premium Containers */
+        /* Heading and containers */
         h2.section-title {
+            font-family: 'Poppins', sans-serif;
             color: var(--text-main);
             font-size: 20px;
             font-weight: 600;
@@ -348,9 +349,9 @@
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 28px;
-            padding: 32px;
+            padding: 32px 24px;
             margin-bottom: 35px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
             transition: border-color 0.6s var(--ease-premium), background-color 0.6s var(--ease-premium);
         }
 
@@ -361,17 +362,16 @@
         .card:hover {
             border-color: #444444;
         }
-
         body.light-mode .card:hover {
             border-color: #b8b8bc;
         }
 
-        /* Premium Adaptive Table Engine */
+        /* Tables and wrapping styling */
         .table-wrap {
             width: 100%;
             overflow-x: auto;
             overflow-y: hidden;
-            border-radius: 16px;
+            border-radius: 12px;
             border: 1px solid var(--panel-border);
             -webkit-overflow-scrolling: touch;
             transition: border-color 0.6s var(--ease-premium);
@@ -389,52 +389,51 @@
         }
 
         .table-wrap::-webkit-scrollbar-track {
-            background: var(--bg-color);
-            transition: background 0.6s var(--ease-premium);
+            background: transparent;
         }
 
         .table-wrap::-webkit-scrollbar-thumb {
-            background: var(--panel-border);
+            background: var(--accent-color);
             border-radius: 20px;
-            transition: background 0.6s var(--ease-premium);
         }
 
-        /* FIXED: Added comprehensive synchronized transition timings to all layout elements */
-        table tbody tr {
-            transition: background-color 0.6s var(--ease-premium);
-        }
-
-        table th, table td {
-            padding: 14px 20px;
-            white-space: nowrap;
-            text-align: left;
-            border: 1px solid var(--panel-border);
-            font-size: 14.5px;
-            transition: border-color 0.6s var(--ease-premium), background-color 0.6s var(--ease-premium), color 0.6s var(--ease-premium);
-        }
-
+        /* PERFORMANCE OPTIMIZED TABLE LAYER SYSTEM */
         table th {
             background: var(--table-header);
             color: #ffffff;
-            font-weight: 600;
+            font-weight: 700;
             position: sticky;
             top: 0;
             z-index: 2;
+            white-space: nowrap;
             user-select: none;
+            padding: 14px 16px;
+            text-align: left;
             border: 1px solid var(--panel-border);
+            font-size: 14px;
+            /* Keeps headers turning on the hardware layer exclusively */
             transition: background-color 0.6s var(--ease-premium), border-color 0.6s var(--ease-premium), color 0.6s var(--ease-premium);
+        }
+
+        table td {
+            padding: 14px 16px;
+            white-space: nowrap;
+            text-align: left;
+            border: 1px solid var(--panel-border);
+            font-size: 14px;
+            /* CORE TRANSITION OPTIMIZATION FIX: Stripped background-color calculation overhead from individual cell threads */
+            transition: border-color 0.6s var(--ease-premium), color 0.6s var(--ease-premium);
         }
 
         table th.sortable {
             cursor: pointer;
-            transition: background-color 0.6s var(--ease-premium), border-color 0.6s var(--ease-premium);
         }
 
         table th.sortable:hover {
             background: var(--table-header-hover);
         }
 
-        /* Alternating striping matched with adaptive theme variables */
+        /* Alternate row coloring handled exclusively on the single row layer grid */
         table tbody tr:nth-child(even) {
             background-color: var(--row-even);
         }
@@ -443,11 +442,14 @@
             background-color: var(--row-odd);
         }
 
+        table tbody tr {
+            transition: background-color 0.6s var(--ease-premium);
+        }
+
         table tbody tr:hover {
             background-color: var(--row-hover) !important;
         }
 
-        /* Strict visual link parameters across active table entries */
         .site-name {
             cursor: pointer !important;
             color: var(--text-main) !important;
@@ -461,7 +463,7 @@
             opacity: 0.6;
         }
 
-        /* Modal window theme tokens configuration overrides */
+        /* Modal windows */
         .modal {
             display: none;
             position: fixed;
@@ -626,7 +628,6 @@
 </head>
 <body>
 
-    <!-- Exact Header Engine Cloned from index.html -->
     <header id="masterHeader">
         <div class="header-inner-view" id="headerMainView">
             <a href="index.html" class="logo">sathya.</a>
@@ -661,7 +662,6 @@
     </header>
 
     <main>
-        <!-- Premium Classy Extended Breadcrumbs Tree -->
         <nav class="breadcrumbs" aria-label="breadcrumb">
             <a href="index.html">Home</a>
             <span class="separator">/</span>
@@ -670,7 +670,6 @@
             <span class="current">Ramsar Sites</span>
         </nav>
 
-        <!-- Main Section: All Sites Table -->
         <div class="card">
             <h2 class="section-title">- Ramsar sites in india 2026</h2>
             <div class="table-wrap">
@@ -788,7 +787,6 @@
             </div>
         </div>
 
-        <!-- Section: Largest Ramsar Sites -->
         <div class="card">
             <h2 class="section-title">- Largest Ramsar Sites in India for UPSC</h2>
             <div class="table-wrap">
@@ -818,7 +816,6 @@
             </div>
         </div>
 
-        <!-- Section: Smallest Ramsar Sites -->
         <div class="card">
             <h2 class="section-title">- Smallest Ramsar Sites in India for UPSC</h2>
             <div class="table-wrap">
@@ -848,7 +845,6 @@
             </div>
         </div>
 
-        <!-- Section: State-wise Distribution -->
         <div class="card">
             <h2 class="section-title">- States with Highest number of Ramsar Sites in India (2026)</h2>
             <div class="table-wrap">
@@ -1011,7 +1007,6 @@
         </div>
     </main>
 
-    <!-- Dedicated Site Details Modal Overlay -->
     <div id="siteModal" class="modal">
         <div class="modal-card">
             <span class="close-btn" onclick="closeSite()">&times;</span>
@@ -1022,7 +1017,6 @@
         </div>
     </div>
 
-    <!-- Grounded Minimal Footer Row -->
     <footer>
         <div class="footer-links-row">
             <a href="#">About</a>
@@ -1036,7 +1030,6 @@
         </div>
     </footer>
 
-    <!-- Smart Native Device Sync & Twin-View Controller Engine -->
     <script>
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
