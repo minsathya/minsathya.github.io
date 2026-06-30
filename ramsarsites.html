@@ -289,7 +289,7 @@
             transform: translate3d(0, 0, 0) rotate(90deg) scale(0.4);
         }
 
-        /* Core Layout Architecture Engine */
+        /* Core Workspace Section Framework */
         main {
             flex-grow: 1; 
             width: 100%;
@@ -321,7 +321,7 @@
         }
 
         .breadcrumbs .separator {
-            color: var(--row-divider);
+            color: var(--panel-border);
             font-weight: 400;
             user-select: none;
         }
@@ -331,7 +331,7 @@
             opacity: 0.9;
         }
 
-        /* Heading and containers */
+        /* Heading and Premium Containers */
         h2.section-title {
             font-family: 'Poppins', sans-serif;
             color: var(--text-main);
@@ -411,18 +411,17 @@
             text-align: left;
             border: 1px solid var(--panel-border);
             font-size: 14px;
-            /* Keeps headers turning on the hardware layer exclusively */
-            transition: background-color 0.6s var(--ease-premium), border-color 0.6s var(--ease-premium), color 0.6s var(--ease-premium);
+            transition: background-color 0.6s var(--ease-premium), border-color 0.6s var(--ease-premium);
         }
 
+        /* FIXED: Stripped all animation threads from individual cells to stop phone/laptop lag */
         table td {
             padding: 14px 16px;
             white-space: nowrap;
             text-align: left;
             border: 1px solid var(--panel-border);
             font-size: 14px;
-            /* CORE TRANSITION OPTIMIZATION FIX: Stripped background-color calculation overhead from individual cell threads */
-            transition: border-color 0.6s var(--ease-premium), color 0.6s var(--ease-premium);
+            transition: none !important; 
         }
 
         table th.sortable {
@@ -433,7 +432,7 @@
             background: var(--table-header-hover);
         }
 
-        /* Alternate row coloring handled exclusively on the single row layer grid */
+        /* Alternate row coloring transitions handled cleanly on the single row layer grid */
         table tbody tr:nth-child(even) {
             background-color: var(--row-even);
         }
