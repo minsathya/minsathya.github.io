@@ -8,7 +8,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Modern Theme Token System */
         :root {
+            /* Smooth Premium Deceleration Curve */
+            --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+            
+            /* Default Dark Mode Tones */
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
             --text-muted: #555555;
@@ -16,8 +21,19 @@
             --panel-border: #222222;
             --row-divider: #1c1c1c;
             --row-hover: rgba(255, 255, 255, 0.015);
-            --font-family: 'Poppins', sans-serif;
-            --ease-premium: cubic-bezier(0.16, 1, 0.3, 1); /* Ultra-classy deceleration curve */
+            --search-icon-color: #444444;
+        }
+
+        /* Classy Light Mode Tones (Premium Off-White Gallery Style) */
+        body.light-mode {
+            --bg-color: #f5f5f7;
+            --text-main: #111111;
+            --text-muted: #a1a1a6;
+            --panel-bg: #ffffff;
+            --panel-border: #e2e2e7;
+            --row-divider: #f2f2f7;
+            --row-hover: rgba(0, 0, 0, 0.01);
+            --search-icon-color: #999999;
         }
 
         * {
@@ -29,7 +45,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: var(--font-family);
+            font-family: 'Poppins', sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -40,6 +56,9 @@
             width: 95%;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            
+            /* Buttery Smooth Silent Theme Transition Engine */
+            transition: background-color 0.6s var(--ease-premium), color 0.6s var(--ease-premium);
         }
 
         /* Pure Opening Animation Keyframes */
@@ -54,7 +73,7 @@
             }
         }
 
-        /* Classy Staggered Load Engine targeting elements directly */
+        /* Staggered Load Engine */
         header, .search-container, .capsule-panel, footer {
             opacity: 0;
             animation: masterEntrance 1.2s var(--ease-premium) forwards;
@@ -63,7 +82,6 @@
         header { animation-delay: 0.04s; }
         .search-container { animation-delay: 0.12s; }
         
-        /* Direct card-by-card staggered opening animation sequence */
         .capsule-panel:nth-child(1) { animation-delay: 0.20s; }
         .capsule-panel:nth-child(2) { animation-delay: 0.26s; }
         .capsule-panel:nth-child(3) { animation-delay: 0.32s; }
@@ -87,18 +105,26 @@
             letter-spacing: -0.5px;
             color: var(--text-main);
             text-decoration: none !important;
+            transition: color 0.6s var(--ease-premium);
         }
 
+        /* Classy Micro-Interactive Switch */
         .toggle-icon {
             font-size: 24px;
             color: var(--text-main);
             cursor: pointer;
             user-select: none;
-            transition: opacity 0.3s var(--ease-premium);
+            display: inline-block;
+            transition: transform 0.6s var(--ease-premium), color 0.6s var(--ease-premium), opacity 0.3s var(--ease-premium);
         }
 
         .toggle-icon:hover {
             opacity: 0.6;
+        }
+
+        /* Soft visual spin animation when toggled */
+        body.light-mode .toggle-icon {
+            transform: rotate(180deg);
         }
 
         /* Centered Search Input Pill */
@@ -116,19 +142,23 @@
             border-radius: 50px;
             padding: 14px 24px 14px 52px;
             color: var(--text-main);
-            font-family: var(--font-family);
+            font-family: 'Poppins', sans-serif;
             font-size: 15px;
             outline: none;
-            transition: border-color 0.4s var(--ease-premium), background-color 0.4s var(--ease-premium);
+            transition: border-color 0.6s var(--ease-premium), background-color 0.6s var(--ease-premium), color 0.6s var(--ease-premium);
         }
 
         .search-bar:focus {
             border-color: #444444;
-            background-color: #151515;
+            background-color: rgba(125,125,125,0.03);
+        }
+
+        body.light-mode .search-bar:focus {
+            border-color: #888888;
         }
 
         .search-bar::placeholder {
-            color: #444444;
+            color: var(--search-icon-color);
         }
 
         .search-icon {
@@ -138,34 +168,44 @@
             transform: translateY(-50%);
             width: 15px;
             height: 15px;
-            color: #444444;
+            color: var(--search-icon-color);
             pointer-events: none;
+            transition: color 0.6s var(--ease-premium);
         }
 
-        /* Symmetrical Direct Child Matrix Canvas */
+        /* Symmetrical Direct Child Matrix Grid */
         .matrix-canvas {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 32px;
             margin-bottom: 80px;
-            align-items: stretch; /* Forces cards in the same row to match height perfectly */
+            align-items: stretch; /* Preserves pixel-perfect automatic height syncs */
         }
 
-        /* Large Premium Capsule Panel */
+        /* Large Premium Capsule Panel Container */
         .capsule-panel {
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 28px;
             padding: 32px 8px 16px 8px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            transition: border-color 0.4s var(--ease-premium);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03);
             display: flex;
             flex-direction: column;
             height: 100%;
+            transition: border-color 0.6s var(--ease-premium), background-color 0.6s var(--ease-premium);
+        }
+
+        /* Dark Mode Depth Shadow Override */
+        body:not(.light-mode) .capsule-panel {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
         .capsule-panel:hover {
-            border-color: #2b2b2b;
+            border-color: #444444;
+        }
+
+        body.light-mode .capsule-panel:hover {
+            border-color: #b8b8bc;
         }
 
         .panel-title {
@@ -175,9 +215,10 @@
             color: var(--text-main);
             margin-bottom: 24px;
             padding: 0 24px;
+            transition: color 0.6s var(--ease-premium);
         }
 
-        /* Flat Structured Rows */
+        /* Flat Reference Data Rows */
         .document-list {
             list-style: none;
             display: flex;
@@ -186,7 +227,7 @@
 
         .document-list li {
             border-bottom: 1px solid var(--row-divider);
-            transition: background-color 0.4s var(--ease-premium);
+            transition: background-color 0.4s var(--ease-premium), border-color 0.6s var(--ease-premium);
         }
 
         .document-list li:last-child {
@@ -196,22 +237,23 @@
         .document-list a {
             display: block;
             padding: 14px 24px;
-            color: #cccccc;
+            color: var(--text-main);
+            opacity: 0.8;
             text-decoration: none !important;
             font-size: 14.5px;
             font-weight: 400;
-            transition: color 0.4s var(--ease-premium), padding-left 0.4s var(--ease-premium);
+            transition: color 0.4s var(--ease-premium), padding-left 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
             -webkit-tap-highlight-color: transparent !important;
         }
 
-        /* Buttery Smooth Silent Row Transition Engine */
+        /* Quiet Silent Row Hover Transitions */
         .document-list li:hover {
             background-color: var(--row-hover);
         }
 
         .document-list li:hover a {
-            color: #ffffff;
-            padding-left: 32px; /* Smooth textual glide */
+            opacity: 1;
+            padding-left: 32px; /* Elegant textual glide adjustment */
         }
 
         /* Flat Grounded Footer Row */
@@ -237,30 +279,32 @@
             text-decoration: none !important;
             font-size: 14px;
             font-weight: 400;
-            transition: color 0.3s var(--ease-premium);
+            transition: color 0.4s var(--ease-premium);
         }
 
         .footer-links-row a:hover {
-            color: #ffffff;
+            color: var(--text-main);
         }
 
         .copyright-tag {
-            color: #333333;
+            color: var(--text-muted);
+            opacity: 0.6;
             font-size: 12.5px;
             letter-spacing: 0.2px;
+            transition: color 0.4s var(--ease-premium);
         }
 
-        /* Responsive Layout Grid Handling for iPad and Mobile */
+        /* Responsive Layout Matrix Handling for iPad and Mobile Viewports */
         @media (max-width: 1024px) {
             .matrix-canvas {
-                grid-template-columns: repeat(2, 1fr); /* Clean 2-column tile layout for iPad */
+                grid-template-columns: repeat(2, 1fr); /* Balanced multi-column layout for iPad orientation */
                 gap: 28px;
             }
         }
 
         @media (max-width: 700px) {
             .matrix-canvas {
-                grid-template-columns: 1fr; /* Clean single column stack for phone viewports */
+                grid-template-columns: 1fr; /* Pure single vertical grid for mobile display rules */
                 gap: 24px;
             }
 
@@ -280,14 +324,12 @@
 </head>
 <body>
 
-    <!-- Header Block -->
     <header>
         <a href="#" class="logo">sathya.</a>
-        <div class="toggle-icon">↔</div>
+        <div class="toggle-icon" id="themeToggleBtn">↔</div>
     </header>
 
     <main>
-        <!-- Search Bar -->
         <div class="search-container">
             <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -295,10 +337,8 @@
             <input type="text" class="search-bar" placeholder="Search...">
         </div>
 
-        <!-- Unified Direct Matrix Canvas Layout -->
         <div class="matrix-canvas">
 
-            <!-- Card 1: UPSC -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Upsc</h2>
                 <ul class="document-list">
@@ -310,7 +350,6 @@
                 </ul>
             </div>
 
-            <!-- Card 2: PLANNING -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Planning</h2>
                 <ul class="document-list">
@@ -320,7 +359,6 @@
                 </ul>
             </div>
 
-            <!-- Card 3: GROWTH -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Growth</h2>
                 <ul class="document-list">
@@ -330,7 +368,6 @@
                 </ul>
             </div>
 
-            <!-- Card 4: STUDIES -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Studies</h2>
                 <ul class="document-list">
@@ -340,7 +377,6 @@
                 </ul>
             </div>
 
-            <!-- Card 5: LIFE -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Life</h2>
                 <ul class="document-list">
@@ -350,7 +386,6 @@
                 </ul>
             </div>
 
-            <!-- Card 6: PHOTOGRAPHY -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Photography</h2>
                 <ul class="document-list">
@@ -363,7 +398,6 @@
         </div>
     </main>
 
-    <!-- Grounded Minimal Footer -->
     <footer>
         <div class="footer-links-row">
             <a href="#">About</a>
@@ -377,5 +411,26 @@
         </div>
     </footer>
 
+    <script>
+        const toggleBtn = document.getElementById('themeToggleBtn');
+        const bodyElement = document.body;
+
+        // 1. Check for manual user storage override, fallback to device hardware state
+        const savedUserTheme = localStorage.getItem('dashboard-theme');
+        const hardwarePrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+
+        if (savedUserTheme === 'light' || (!savedUserTheme && hardwarePrefersLight)) {
+            bodyElement.classList.add('light-mode');
+        }
+
+        // 2. Buttery Smooth Interactive Tap Switch Listener
+        toggleBtn.addEventListener('click', () => {
+            bodyElement.classList.toggle('light-mode');
+            
+            // Persist preference to memory blocks to stay uniform across future reloads
+            const outputThemeSetting = bodyElement.classList.contains('light-mode') ? 'light' : 'dark';
+            localStorage.setItem('dashboard-theme', outputThemeSetting);
+        });
+    </script>
 </body>
 </html>
