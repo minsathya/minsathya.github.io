@@ -106,6 +106,8 @@
             color: var(--text-main);
             text-decoration: none !important;
             transition: color 0.6s var(--ease-premium);
+            -webkit-tap-highlight-color: transparent !important; /* Erases iPad/iPhone gray box selection */
+            tap-highlight-color: transparent !important;         /* Erases Android blue highlight flash */
         }
 
         /* High-End Vector Morphing Switch Container */
@@ -118,6 +120,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            -webkit-tap-highlight-color: transparent !important; /* Erases iPad/iPhone tap box */
+            tap-highlight-color: transparent !important;         /* Erases Android tap box */
         }
 
         .theme-toggle svg {
@@ -351,18 +355,14 @@
 </head>
 <body>
 
-    <!-- Header Block -->
     <header>
         <a href="#" class="logo">sathya.</a>
         
-        <!-- Premium Animated Toggle Controller Button -->
         <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
-            <!-- Smooth SVG Sun Vector Element -->
             <svg class="sun-icon" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="4"></circle>
                 <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
             </svg>
-            <!-- Smooth SVG Moon Vector Element -->
             <svg class="moon-icon" viewBox="0 0 24 24">
                 <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
             </svg>
@@ -370,7 +370,6 @@
     </header>
 
     <main>
-        <!-- Search Bar -->
         <div class="search-container">
             <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -378,10 +377,8 @@
             <input type="text" class="search-bar" placeholder="Search...">
         </div>
 
-        <!-- Matrix Canvas Layout Container -->
         <div class="matrix-canvas">
 
-            <!-- Card 1: UPSC -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Upsc</h2>
                 <ul class="document-list">
@@ -393,7 +390,6 @@
                 </ul>
             </div>
 
-            <!-- Card 2: PLANNING -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Planning</h2>
                 <ul class="document-list">
@@ -403,7 +399,6 @@
                 </ul>
             </div>
 
-            <!-- Card 3: GROWTH -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Growth</h2>
                 <ul class="document-list">
@@ -413,7 +408,6 @@
                 </ul>
             </div>
 
-            <!-- Card 4: STUDIES -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Studies</h2>
                 <ul class="document-list">
@@ -423,7 +417,6 @@
                 </ul>
             </div>
 
-            <!-- Card 5: LIFE -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Life</h2>
                 <ul class="document-list">
@@ -433,7 +426,6 @@
                 </ul>
             </div>
 
-            <!-- Card 6: PHOTOGRAPHY -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Photography</h2>
                 <ul class="document-list">
@@ -446,7 +438,6 @@
         </div>
     </main>
 
-    <!-- Grounded Minimal Footer -->
     <footer>
         <div class="footer-links-row">
             <a href="#">About</a>
@@ -460,17 +451,15 @@
         </div>
     </footer>
 
-    <!-- Smart Native Device Sync Engine Script -->
     <script>
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
         const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
 
-        // Wipe out old long-term local storage cache blocks completely to clear previous testing data locks
+        // Clear out old local storage variables completely to run purely on device rules
         localStorage.removeItem('dashboard-theme');
 
         function applyTargetPalette() {
-            // Use session memory to track manual site overrides dynamically
             const activeSessionOverride = sessionStorage.getItem('dashboard-theme');
             
             if (activeSessionOverride) {
@@ -489,12 +478,10 @@
             }
         }
 
-        // Run hardware calculation checking natively upon load sequences
         applyTargetPalette();
 
-        // Listen for active Control Center device switches live (Sunset/Sunrise/Manual hardware shifts)
+        // Listen for device control switches live (Sunset/Sunrise/Manual settings changes)
         systemLightQuery.addEventListener('change', (e) => {
-            // When user edits their device control settings, wipe the session override lock instantly
             sessionStorage.removeItem('dashboard-theme');
             if (e.matches) {
                 bodyElement.classList.add('light-mode');
