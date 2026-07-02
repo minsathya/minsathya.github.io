@@ -474,7 +474,7 @@
             }
         }
 
-        /* Helper class to position the View More link nicely at the base of the homepage card */
+     /* Helper class to position the View More link nicely at the base of the homepage card */
 .view-more-container {
     display: flex;
     justify-content: center;
@@ -487,14 +487,17 @@
 .view-more-link {
     color: #8a9a86 !important; /* Premium muted accent tone */
     font-weight: 600;
-    text-decoration: none;
+    text-decoration: none !important; /* Forces underline to stay completely gone */
     font-size: 0.95rem;
-    transition: opacity 0.2s ease;
+    display: inline-block;
+    will-change: transform, opacity;
+    /* Uses your custom premium ease curve for the zoom transition physics */
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
 }
 
 .view-more-link:hover {
     opacity: 0.8;
-    text-decoration: underline;
+    text-decoration: none !important; /* Double guard against underline triggers */
 }
         
     </style>
@@ -695,6 +698,22 @@
                 masterHeader.classList.remove('search-active');
             }
         });
+
+// --- Premium View More Click-Zoom Transition Controller ---
+        const viewMoreLink = document.querySelector('.view-more-link');
+        if (viewMoreLink) {
+            viewMoreLink.addEventListener('click', function(e) {
+                e.preventDefault(); // Pauses instant jumping
+                
+                this.style.transform = 'scale(1.2)'; // Swells the link outwards smoothly
+                this.style.opacity = '0.5';         // Soft dim accent indicator
+                
+                setTimeout(() => {
+                    window.location.href = this.getAttribute('href'); // Redirects after 200ms animation finishes
+                }, 200);
+            });
+        }
+        
     </script>
 </body>
 </html>
