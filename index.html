@@ -474,7 +474,7 @@
             }
         }
 
-/* Helper class to position the View More link nicely at the base of the homepage card */
+/* Helper container to position the link at the base of the card */
 .view-more-container {
     display: flex;
     justify-content: center;
@@ -487,13 +487,14 @@
 .view-more-link {
     color: #8a9a86 !important; /* Premium muted accent tone */
     font-weight: 600;
-    text-decoration: none !important; /* Forces underline to stay completely gone */
+    text-decoration: none !important; /* Strict underline guard */
     font-size: 0.95rem;
     display: inline-block;
     will-change: transform, opacity;
-    -webkit-tap-highlight-color: transparent !important;
-    /* Uses a dedicated acceleration curve to eliminate jagged movement */
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    -webkit-tap-highlight-color: transparent !important; /* Kills mobile blue flash */
+    
+    /* Optimized timing: finishes in 180ms so it beats the browser's page-switch freeze */
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s ease;
 }
 
 .view-more-link:hover {
@@ -501,10 +502,10 @@
     text-decoration: none !important;
 }
 
-/* Premium State Trigger: Smoothly swells text without breaking element layout physics */
+/* The Zoom Trigger State */
 .view-more-link.is-zooming {
-    transform: scale(1.18);
-    opacity: 0.4;
+    transform: scale(1.15) !important;
+    opacity: 0.4 !important;
 }
         
     </style>
@@ -706,20 +707,30 @@
             }
         });
 
-// --- Premium View More Click-Zoom Transition Controller ---
+// --- Premium View More Click-Zoom Transition Engine ---
         const viewMoreLink = document.querySelector('.view-more-link');
+        
         if (viewMoreLink) {
             viewMoreLink.addEventListener('click', function(e) {
-                e.preventDefault(); // Pauses instant jumping
+                e.preventDefault(); // Hold the browser back for a split second
                 
-                this.style.transform = 'scale(1.2)'; // Swells the link outwards smoothly
-                this.style.opacity = '0.5';         // Soft dim accent indicator
+                const destination = this.getAttribute('href');
+                this.classList.add('is-zooming'); // Run the ultra-smooth zoom
                 
+                // Wait exactly 200ms for the animation to cleanly finish before changing pages
                 setTimeout(() => {
-                    window.location.href = this.getAttribute('href'); // Redirects after 200ms animation finishes
+                    window.location.href = destination;
                 }, 200);
             });
         }
+
+        // --- Ironclad Back-Button State Reset Controller ---
+        window.addEventListener('pageshow', (event) => {
+            // Forcefully strips the zoom state whenever the page loads or drops out of browser memory cache
+            if (viewMoreLink) {
+                viewMoreLink.classList.remove('is-zooming');
+            }
+        });
         
     </script>
 </body>
