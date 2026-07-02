@@ -722,34 +722,68 @@
             });
         }
 
-        // --- Ironclad Back-Button & Edge-Swipe Reverse Transition Controller ---
+        // --- Ironclad Back-Button & Capsule Smooth Entrance Controller ---
         window.addEventListener('pageshow', (event) => {
+            // 1. TARGET THE 6 CAPSULES (Change '.card' to your actual capsule class name if needed)
+            const capsules = document.querySelectorAll('.card');
+            
+            if (capsules.length > 0) {
+                capsules.forEach(capsule => {
+                    // Instantly lock them invisible and lowered down to absorb the layout jerk
+                    capsule.style.transition = 'none';
+                    capsule.style.webkitTransition = 'none';
+                    capsule.style.opacity = '0';
+                    capsule.style.transform = 'translate3d(0, 20px, 0)';
+                    capsule.style.webkitTransform = 'translate3d(0, 20px, 0)';
+                });
+                
+                // Force a layout calculation to ensure the hidden state is locked
+                document.body.offsetHeight;
+                
+                // Smoothly float up and fade in the capsules right after the page unfreezes
+                requestAnimationFrame(() => {
+                    capsules.forEach(capsule => {
+                        capsule.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ease-out';
+                        capsule.style.webkitTransition = '-webkit-transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ease-out';
+                        capsule.style.opacity = '1';
+                        capsule.style.transform = 'translate3d(0, 0, 0)';
+                        capsule.style.webkitTransform = 'translate3d(0, 0, 0)';
+                    });
+                });
+                
+                // Clean up inline styles after the transition ends so your original CSS styles take back over
+                setTimeout(() => {
+                    capsules.forEach(capsule => {
+                        capsule.style.transition = '';
+                        capsule.style.webkitTransition = '';
+                        capsule.style.opacity = '';
+                        capsule.style.transform = '';
+                        capsule.style.webkitTransform = '';
+                    });
+                }, 550);
+            }
+
+            // 2. VIEW MORE REVERSE ENGINE (Your working swipe-fix code)
             if (viewMoreLink) {
-                // 1. Clean up any leftover forward classes instantly
                 viewMoreLink.classList.remove('is-zooming');
                 
-                // 2. Set starting parameters for the reverse entry state
                 let startScale = 1.6;
                 let endScale = 1.0;
                 let startOpacity = 0;
                 let endOpacity = 1;
-                let duration = 400; // Exact same 400ms speed configuration
+                let duration = 400;
                 let startTime = null;
                 
-                // Setup initial hidden state immediately
                 viewMoreLink.style.transform = `scale(${startScale})`;
                 viewMoreLink.style.opacity = startOpacity;
                 
-                // 3. Pure JS Animation Loop: Pauses during Safari swipe, plays instantly when finger releases
                 function animateReverse(timestamp) {
                     if (!startTime) startTime = timestamp;
                     let elapsed = timestamp - startTime;
                     let progress = Math.min(elapsed / duration, 1);
                     
-                    // Premium Deceleration Curve: Matches your exact ease-out feeling
                     let ease = 1 - Math.pow(1 - progress, 2.2);
                     
-                    // Compute the active frame styles
                     let currentScale = startScale - (startScale - endScale) * ease;
                     let currentOpacity = startOpacity + (endOpacity - startOpacity) * ease;
                     
@@ -759,13 +793,11 @@
                     if (progress < 1) {
                         requestAnimationFrame(animateReverse);
                     } else {
-                        // Animation complete: Clean up inline styles so normal hover effects work perfectly
                         viewMoreLink.style.transform = '';
                         viewMoreLink.style.opacity = '';
                     }
                 }
                 
-                // Queue the animation loop on the browser's paint thread
                 requestAnimationFrame(animateReverse);
             }
         });
