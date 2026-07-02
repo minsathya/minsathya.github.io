@@ -811,29 +811,20 @@
         window.addEventListener('pageshow', (event) => {
             const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
             
-            // 1. HARDWARE COMPOSITE RE-TRIGGER ENGINE (Restores fresh load card transitions smoothly)
+            // 1. DYNAMIC HARDWARE COMPOSITE RE-TRIGGER ENGINE
+            // Replays the beautiful staggered load animations uniformly for ALL cards without creating layout holes
             const layoutElements = document.querySelectorAll('header, .capsule-panel, footer');
             
             if (layoutElements.length > 0) {
                 layoutElements.forEach(el => {
-                    // Safety Guard: Protect the container element from resetting its visibility 
-                    // if it contains the target link running the reverse text landing animation
-                    if (savedTargetUrl) {
-                        if (savedTargetUrl.includes('Footer/') && el.tagName.toLowerCase() === 'footer') return;
-                        if (!savedTargetUrl.includes('Footer/') && el.contains(document.querySelector(`a[href*="${savedTargetUrl.split('#')[0].split('/').pop()}"]`))) return;
-                    }
                     el.style.animation = 'none';
                     el.style.webkitAnimation = 'none';
                 });
                 
-                void document.body.offsetHeight; // Flush hardware layers
+                void document.body.offsetHeight; // Flush hardware registers completely
                 
                 requestAnimationFrame(() => {
                     layoutElements.forEach(el => {
-                        if (savedTargetUrl) {
-                            if (savedTargetUrl.includes('Footer/') && el.tagName.toLowerCase() === 'footer') return;
-                            if (!savedTargetUrl.includes('Footer/') && el.contains(document.querySelector(`a[href*="${savedTargetUrl.split('#')[0].split('/').pop()}"]`))) return;
-                        }
                         el.style.animation = '';
                         el.style.webkitAnimation = '';
                     });
@@ -852,11 +843,11 @@
             });
             
             if (savedTargetUrl) {
-                sessionStorage.removeItem('activeUniversalTargetUrl'); // Clear session tokens
+                sessionStorage.removeItem('activeUniversalTargetUrl'); // Clear session token data
                 
                 let matchedLinkElement = null;
                 
-                // Pure deep string matcher to find exact elements across cross-directory paths perfectly
+                // Pure deep string path matcher to resolve subdirectory transitions cleanly
                 const getCleanPath = (urlStr) => urlStr.split('#')[0].split('?')[0].replace(/\/$/, '');
                 const cleanSaved = getCleanPath(savedTargetUrl);
                 
@@ -868,14 +859,6 @@
                 
                 if (matchedLinkElement) {
                     const targetSpan = matchedLinkElement.querySelector('.kinetic-target');
-                    const parentContainer = matchedLinkElement.closest('.capsule-panel') || matchedLinkElement.closest('footer');
-                    
-                    // Lock the parent container perfectly visible so the text animation isn't covered up
-                    if (parentContainer) {
-                        parentContainer.style.setProperty('animation', 'none', 'important');
-                        parentContainer.style.setProperty('webkitAnimation', 'none', 'important');
-                        parentContainer.style.setProperty('opacity', '1', 'important');
-                    }
                     
                     if (targetSpan) {
                         matchedLinkElement.classList.add('kinetic-animating'); 
@@ -885,19 +868,19 @@
                         let startOpacity = 0;
                         let endOpacity = matchedLinkElement.classList.contains('view-more-link') ? 1 : 0.8;
                         
-                        let duration = 500; // Luxurious, fluid return landing glide track
+                        let duration = 500; // Extended to 500ms for a gorgeous, luxurious return landing glide
                         let startTime = null;
                         
                         targetSpan.style.setProperty('transform', `scale3d(${startScale}, ${startScale}, 1)`, 'important');
                         targetSpan.style.setProperty('opacity', startOpacity, 'important');
                         
-                        // Thread loop layer calculations running completely independent of browser gesture snaps
+                        // Thread-Locked Frame Renderer Loop: Unaffected by mobile viewport snapshots
                         function animateLinkReverse(timestamp) {
                             if (!startTime) startTime = timestamp;
                             let elapsed = timestamp - startTime;
                             let progress = Math.min(elapsed / duration, 1);
                             
-                            // High-End Premium Quintic Deceleration: 1 - (1 - x)^5
+                            // High-End Premium Quintic Ease-Out Tracking Curve Physics: 1 - (1 - x)^5
                             let ease = 1 - Math.pow(1 - progress, 5);
                             
                             let currentScale = startScale - (startScale - endScale) * ease;
@@ -909,17 +892,10 @@
                             if (progress < 1) {
                                 requestAnimationFrame(animateLinkReverse);
                             } else {
-                                // Touchdown target reached perfectly: Flush styles away for normal mouse hovers
+                                // Touchdown target reached softly: Wipe away animation values to reactivate hovers
                                 targetSpan.style.transform = '';
                                 targetSpan.style.opacity = '';
                                 matchedLinkElement.classList.remove('kinetic-animating');
-                                
-                                // Return parent tracking elements to base layout settings safely
-                                if (parentContainer) {
-                                    parentContainer.style.animation = '';
-                                    parentContainer.style.webkitAnimation = '';
-                                    parentContainer.style.opacity = '';
-                                }
                             }
                         }
                         requestAnimationFrame(animateLinkReverse);
