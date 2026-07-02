@@ -487,25 +487,68 @@
 .view-more-link {
     color: #8a9a86 !important; /* Premium muted accent tone */
     font-weight: 600;
-    text-decoration: none !important; /* Strict underline guard */
+    text-decoration: none !important;
     font-size: 0.95rem;
     display: inline-block;
-    will-change: transform, opacity;
-    -webkit-tap-highlight-color: transparent !important; /* Kills mobile blue flash */
-    
-    /* Optimized timing: finishes in 180ms so it beats the browser's page-switch freeze */
-    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s ease;
+    -webkit-tap-highlight-color: transparent !important;
+    transition: opacity 0.3s ease;
 }
 
 .view-more-link:hover {
     opacity: 0.8;
-    text-decoration: none !important;
 }
 
-/* The Zoom Trigger State */
-.view-more-link.is-zooming {
-    transform: scale(1.15) !important;
-    opacity: 0.4 !important;
+/* Cinematic Portal Engine Setup */
+.portal-o {
+    display: inline-block;
+    will-change: transform;
+    transform-origin: center center;
+    /* Uses your system's premium deceleration curve for dramatic speed physics */
+    transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* The Grand Portal Launch Vector Sequence */
+.view-more-link.is-zooming .portal-o {
+    transform: scale(500) translate3d(0, 0, 0); /* Explodes the letter forward to completely eclipse the screen */
+}
+
+/* --- Global Layout Camera Pull-Back Cinematic Effects --- */
+
+/* Fades and scales back header and footer smoothly */
+body.portal-active header,
+body.portal-active footer {
+    opacity: 0;
+    transform: scale(0.94);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Shrinks and dissolves all surrounding timeline cards out of sight */
+body.portal-active .matrix-canvas .capsule-panel {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Smart override: Keeps ONLY the contents card container frame alive while its text fades away */
+body.portal-active .matrix-canvas .capsule-panel:has(.view-more-link) {
+    opacity: 1;
+    transform: scale(1);
+    background-color: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+body.portal-active .matrix-canvas .capsule-panel:has(.view-more-link) .panel-title,
+body.portal-active .matrix-canvas .capsule-panel:has(.view-more-link) .document-list,
+body.portal-active .matrix-canvas .capsule-panel:has(.view-more-link) .view-more-container {
+    border-top-color: transparent;
+}
+
+body.portal-active .matrix-canvas .capsule-panel:has(.view-more-link) .panel-title,
+body.portal-active .matrix-canvas .capsule-panel:has(.view-more-link) .document-list {
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
         
     </style>
@@ -576,7 +619,7 @@
                 </ul>
             </div>
 
-          <!-- Card 3: CONTENTS -->
+         <!-- Card 3: CONTENTS -->
 <div class="capsule-panel animate-fade-in">
     <h2 class="panel-title">Contents</h2>
     <ul class="document-list">
@@ -586,7 +629,8 @@
     </ul>
     <!-- Perfectly centered View More button at the bottom -->
     <div class="view-more-container">
-        <a href="contents.html" class="view-more-link">View more</a>
+        <!-- We wrap the letter 'o' so we can manipulate it independently -->
+        <a href="contents.html" class="view-more-link">View m<span class="portal-o">o</span>re</a>
     </div>
 </div>
             <!-- Card 4: MUST READ -->
@@ -707,26 +751,29 @@
             }
         });
 
-// --- Premium View More Click-Zoom Transition Engine ---
+// --- Premium Cinematic Portal View More Transition Controller ---
         const viewMoreLink = document.querySelector('.view-more-link');
         
         if (viewMoreLink) {
             viewMoreLink.addEventListener('click', function(e) {
-                e.preventDefault(); // Hold the browser back for a split second
+                e.preventDefault(); // Pause standard browser jump execution
                 
                 const destination = this.getAttribute('href');
-                this.classList.add('is-zooming'); // Run the ultra-smooth zoom
                 
-                // Wait exactly 200ms for the animation to cleanly finish before changing pages
+                document.body.classList.add('portal-active'); // Sink background elements out of reality
+                this.classList.add('is-zooming');            // Explode the 'o' forward into space
+                
+                // Holds screen layout open for 600ms for full expansion before loading contents.html
                 setTimeout(() => {
                     window.location.href = destination;
-                }, 200);
+                }, 600);
             });
         }
 
         // --- Ironclad Back-Button State Reset Controller ---
         window.addEventListener('pageshow', (event) => {
-            // Forcefully strips the zoom state whenever the page loads or drops out of browser memory cache
+            // Instantly restores normal layout physics when user navigates backwards
+            document.body.classList.remove('portal-active');
             if (viewMoreLink) {
                 viewMoreLink.classList.remove('is-zooming');
             }
