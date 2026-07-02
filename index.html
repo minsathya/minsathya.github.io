@@ -12,19 +12,19 @@
       gtag('js', new Date());
       gtag('config', 'G-5VGX2K64Y4');
     </script>
-
+    
     <link rel="icon" type="image/png" href="favicon.png">
-
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
     <style>
+        /* Modern Theme Token System */
         :root {
+            /* Smooth Premium Deceleration Curve */
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-hover: cubic-bezier(0.22, 1, 0.36, 1);
-            --ease-portal: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
+            
+            /* Default Dark Mode Tones */
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
             --text-muted: #555555;
@@ -33,18 +33,12 @@
             --row-divider: #1c1c1c;
             --row-hover: rgba(255, 255, 255, 0.015);
 
+            /* Premium Matte Olive Header System (Dark Mode) */
             --header-bg: #131815;
             --header-border: #222c26;
-
-            --accent-link: #8a9a86;
-
-            --hover-scale: 1.06;
-            --click-scale: 1.55;
-            --hover-duration: 340ms;
-            --portal-duration: 420ms;
-            --return-duration: 560ms;
         }
 
+        /* Classy Light Mode Tones (Premium Off-White Gallery Style) */
         body.light-mode {
             --bg-color: #f5f5f7;
             --text-main: #111111;
@@ -54,6 +48,7 @@
             --row-divider: #f2f2f7;
             --row-hover: rgba(0, 0, 0, 0.01);
 
+            /* Premium Matte Olive Header System (Light Mode) */
             --header-bg: #e9ebe6;
             --header-border: #d4d8cf;
         }
@@ -62,15 +57,6 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-        }
-
-        *::selection {
-            background: transparent;
-            color: inherit;
-        }
-
-        html {
-            -webkit-text-size-adjust: 100%;
         }
 
         body {
@@ -87,9 +73,12 @@
             width: 95%;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            
+            /* Buttery Smooth Silent Theme Transition Engine */
             transition: background-color 0.6s var(--ease-premium), color 0.6s var(--ease-premium);
         }
 
+        /* iPad & WebKit Optimization: Swapped to absolute 3D layout vectors to match Windows performance physics */
         @keyframes masterEntrance {
             from {
                 opacity: 0;
@@ -101,81 +90,88 @@
             }
         }
 
-        header,
-        .capsule-panel,
-        footer {
+        /* Staggered Load Engine - Swapped 'forwards' to 'backwards' to unlock smooth transformation layers */
+        header, .capsule-panel, footer {
             opacity: 1;
             will-change: transform, opacity;
             animation: masterEntrance 1.2s var(--ease-premium) backwards;
         }
 
         header { animation-delay: 0.04s; }
+        
+        /* Direct card-by-card staggered wave opening sequence */
         .capsule-panel:nth-child(1) { animation-delay: 0.14s; }
         .capsule-panel:nth-child(2) { animation-delay: 0.20s; }
         .capsule-panel:nth-child(3) { animation-delay: 0.26s; }
         .capsule-panel:nth-child(4) { animation-delay: 0.32s; }
         .capsule-panel:nth-child(5) { animation-delay: 0.38s; }
         .capsule-panel:nth-child(6) { animation-delay: 0.44s; }
+        
         footer { animation-delay: 0.52s; }
 
+        /* Top Header Navigation Shell - Fluid & Perfectly Contained */
         header {
             position: relative;
             background-color: var(--header-bg);
             border: 1px solid var(--header-border);
             border-radius: 50px;
-            width: 100%;
-            height: 72px;
+            width: 100%; 
+            height: 72px; 
             margin: 0 auto 80px auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
-            overflow: hidden;
+            overflow: hidden; 
             transition: background-color 0.6s var(--ease-premium), border-color 0.6s var(--ease-premium), box-shadow 0.6s var(--ease-premium);
         }
 
+        /* Dark Mode Depth Shadow Adjustment for Header */
         body:not(.light-mode) header {
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
+        /* Twin View System Layer Configurations - Hardware Accelerated Lift-and-Shift Reveal */
         .header-inner-view {
             position: absolute;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 32px;
+            padding: 0 32px; 
             will-change: opacity, transform;
             transition: opacity 0.45s var(--ease-premium), transform 0.45s var(--ease-premium);
         }
 
+        /* Premium Cinematic Motion Transition Tuning */
         #headerMainView {
             opacity: 1;
             transform: translateY(0);
             pointer-events: auto;
         }
-
         header.search-active #headerMainView {
             opacity: 0;
-            transform: translateY(-10px);
+            transform: translateY(-10px); 
             pointer-events: none;
         }
 
         #headerSearchView {
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(10px); 
             pointer-events: none;
         }
-
         header.search-active #headerSearchView {
             opacity: 1;
             transform: translateY(0);
             pointer-events: auto;
         }
 
-        .header-right-cluster,
-        .search-control-cluster {
+        /* Twin Layout Edge Clusters - Mirrored Alignment Matrix */
+        .header-right-cluster, .search-control-cluster {
             display: flex;
             align-items: center;
             gap: 20px;
-            flex-shrink: 0;
+            flex-shrink: 0; 
             height: 100%;
         }
 
@@ -187,10 +183,11 @@
             text-decoration: none !important;
             transition: color 0.6s var(--ease-premium);
             flex-shrink: 0;
-            -webkit-tap-highlight-color: transparent;
-            tap-highlight-color: transparent;
+             Grimm-webkit-tap-highlight-color: transparent !important;
+            tap-highlight-color: transparent !important;
         }
 
+        /* Unified Master Structural Controller for All Interactive Action Buttons */
         .ctrl-btn {
             background: none;
             border: none;
@@ -200,21 +197,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 32px;
-            height: 32px;
+            width: 32px;  
+            height: 32px; 
             padding: 0;
             flex-shrink: 0;
             transition: opacity 0.2s var(--ease-premium), color 0.6s var(--ease-premium);
-            -webkit-tap-highlight-color: transparent;
-            tap-highlight-color: transparent;
+            -webkit-tap-highlight-color: transparent !important;
+            tap-highlight-color: transparent !important;
         }
 
         .ctrl-btn:hover {
             opacity: 0.6;
         }
 
-        .ctrl-btn svg,
-        .search-static-icon {
+        /* Unifies the scale vector boundaries across all standard icons */
+        .ctrl-btn svg, .search-static-icon {
             width: 22px;
             height: 22px;
             fill: none;
@@ -225,9 +222,10 @@
             transition: stroke 0.6s var(--ease-premium);
         }
 
+        /* Inside Search Pill Elements */
         .search-static-icon {
             opacity: 0.4;
-            flex-shrink: 0;
+            flex-shrink: 0; 
         }
 
         .search-core-input {
@@ -240,10 +238,11 @@
             font-size: 16px;
             padding: 0 16px;
             width: 100%;
-            min-width: 0;
+            min-width: 0; 
             transition: color 0.6s var(--ease-premium);
         }
 
+        /* Alpha-level transparency variations to match original design weight preferences */
         .clear-text-btn svg {
             opacity: 0.4;
         }
@@ -252,9 +251,10 @@
             opacity: 0.7;
         }
 
+        /* High-End Vector Theme Switch Container with Permanent Laptop GPU Lock */
         .theme-toggle {
-            width: 32px;
-            height: 32px;
+            width: 32px;  
+            height: 32px; 
             position: relative;
             cursor: pointer;
             user-select: none;
@@ -262,8 +262,8 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            -webkit-tap-highlight-color: transparent;
-            tap-highlight-color: transparent;
+            -webkit-tap-highlight-color: transparent !important;
+            tap-highlight-color: transparent !important;
         }
 
         .theme-toggle svg {
@@ -276,9 +276,12 @@
             stroke-linecap: round;
             stroke-linejoin: round;
             transform-origin: center center;
+            
+            /* Anti-Shivering Layer Engine Isolation Rules */
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
+            
             transition: transform 0.6s var(--ease-premium), opacity 0.6s var(--ease-premium), stroke 0.6s var(--ease-premium);
         }
 
@@ -302,14 +305,16 @@
             transform: translate3d(0, 0, 0) rotate(90deg) scale(0.4);
         }
 
+        /* Symmetrical Direct Child Matrix Grid */
         .matrix-canvas {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 32px;
             margin-bottom: 80px;
-            align-items: stretch;
+            align-items: stretch; /* Preserves automatic height syncing */
         }
 
+        /* Large Premium Capsule Panel Container */
         .capsule-panel {
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
@@ -319,14 +324,16 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            transform: translateZ(0);
+            transform: scale(1);
+            
+            /* Strict Mobile Anti-Shaking Hardware Locks */
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
+            
             transition: border-color 0.5s var(--ease-premium), background-color 0.5s var(--ease-premium), transform 0.5s var(--ease-premium);
-            contain: layout paint style;
         }
 
         body:not(.light-mode) .capsule-panel {
@@ -352,6 +359,7 @@
             transition: color 0.6s var(--ease-premium);
         }
 
+        /* Flat Reference Data Rows */
         .document-list {
             list-style: none;
             display: flex;
@@ -367,10 +375,6 @@
             border-bottom: none;
         }
 
-        .document-list li:hover {
-            background-color: var(--row-hover);
-        }
-
         .document-list a {
             display: block;
             padding: 14px 24px;
@@ -379,41 +383,27 @@
             text-decoration: none !important;
             font-size: 14.5px;
             font-weight: 400;
-            transition: color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
             -webkit-tap-highlight-color: transparent !important;
             tap-highlight-color: transparent !important;
-            background: transparent !important;
-            outline: none;
+            
+            /* Cloned Hardware Performance Attributes from View More Snaps */
+            will-change: transform, opacity;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transition: color 0.4s var(--ease-premium), padding-left 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), transform 0.2s ease;
         }
 
-        .footer-links-row a {
-            -webkit-tap-highlight-color: transparent !important;
-            tap-highlight-color: transparent !important;
-            background: transparent !important;
-            outline: none;
+        /* Quiet Silent Row Hover Transitions */
+        .document-list li:hover {
+            background-color: var(--row-hover);
         }
 
-        .view-more-container {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            margin-top: 20px;
-            padding-top: 12px;
-            border-top: 1px dashed #222222;
+        .document-list li:hover a {
+            opacity: 1;
+            padding-left: 32px; 
         }
 
-        .view-more-link {
-            color: var(--accent-link) !important;
-            font-weight: 600;
-            text-decoration: none !important;
-            font-size: 0.95rem;
-            display: inline-block;
-            -webkit-tap-highlight-color: transparent !important;
-            tap-highlight-color: transparent !important;
-            background: transparent !important;
-            outline: none;
-        }
-
+        /* Flat Grounded Footer Row */
         footer {
             display: flex;
             flex-direction: column;
@@ -436,7 +426,15 @@
             text-decoration: none !important;
             font-size: 14px;
             font-weight: 400;
-            transition: color 0.4s var(--ease-premium);
+            display: inline-block;
+            -webkit-tap-highlight-color: transparent !important;
+            tap-highlight-color: transparent !important;
+            
+            /* Cloned Hardware Performance Attributes from View More Snaps */
+            will-change: transform, opacity;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transition: color 0.4s var(--ease-premium), transform 0.2s ease, opacity 0.2s ease;
         }
 
         .footer-links-row a:hover {
@@ -451,161 +449,106 @@
             transition: color 0.4s var(--ease-premium);
         }
 
-        /* ===============================
-           HIGH-END LINK ANIMATION SYSTEM
-           =============================== */
-
-        /*
-            Structure:
-            <a class="portal-link"><span class="portal-link__text">Label</span></a>
-
-            Only the text span animates.
-            So:
-            - no horizontal drift
-            - no row collapse
-            - no card disappearing
-            - grid stays stable
-        */
-
-        .portal-link {
-            position: relative;
-            overflow: visible;
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: manipulation;
-        }
-
-        .portal-link,
-        .portal-link:focus,
-        .portal-link:active,
-        .portal-link:hover {
-            text-decoration: none !important;
-            outline: none;
-            background: transparent !important;
-        }
-
-        .portal-link__text {
-            display: inline-block;
-            position: relative;
-            transform-origin: center center;
-            transform: translateZ(0) scale(1);
-            opacity: 1;
-            will-change: transform, opacity;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            transition:
-                transform var(--hover-duration) var(--ease-hover),
-                opacity var(--hover-duration) linear;
-        }
-
-        /* Hover: only zoom, no fade, no side movement */
-        @media (hover: hover) and (pointer: fine) {
-            .portal-link:hover .portal-link__text,
-            .portal-link:focus-visible .portal-link__text {
-                transform: translateZ(0) scale(var(--hover-scale));
-                opacity: 1;
-            }
-        }
-
-        /* Touch active flash kill */
-        .portal-link,
-        .portal-link *,
-        .ctrl-btn,
-        .theme-toggle,
-        .logo {
-            -webkit-tap-highlight-color: transparent !important;
-            tap-highlight-color: transparent !important;
-        }
-
-        .portal-link:active,
-        .portal-link:focus,
-        .portal-link:visited,
-        .portal-link *:active,
-        .portal-link *:focus {
-            background: transparent !important;
-            outline: none !important;
-            box-shadow: none !important;
-        }
-
-        /* Click / tap opening animation */
-        .portal-link.is-portal-opening .portal-link__text {
-            transition:
-                transform var(--portal-duration) var(--ease-portal),
-                opacity var(--portal-duration) linear !important;
-            transform: translateZ(0) scale(var(--click-scale)) !important;
-            opacity: 0 !important;
-        }
-
-        /* Back navigation reverse landing */
-        .portal-link.is-portal-returning .portal-link__text {
-            transition: none !important;
-        }
-
-        /* prevent row/background flashing */
-        .document-list li.portal-active-row,
-        .document-list li.portal-active-row:hover {
-            background: transparent !important;
-        }
-
-        /* Keep view-more accent on hover/click */
-        .view-more-link.portal-link:hover,
-        .view-more-link.portal-link:focus-visible {
-            color: var(--accent-link) !important;
-        }
-
-        /* Responsive */
+        /* iPad Media Window Customizations */
         @media (max-width: 1024px) {
             .matrix-canvas {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(2, 1fr); 
                 gap: 28px;
             }
         }
 
+        /* Mobile Phone Media Window Customizations */
         @media (max-width: 700px) {
             .matrix-canvas {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; 
                 gap: 24px;
             }
 
             .capsule-panel {
                 padding: 28px 4px 12px 4px;
             }
-
+            
             body {
                 padding: 40px 20px;
             }
-
+            
             header {
                 margin-bottom: 40px;
-                height: 64px;
+                height: 64px; 
             }
-
+            
             .header-inner-view {
-                padding: 0 20px;
+                padding: 0 20px; 
             }
-
+            
             .logo {
                 font-size: 22px;
             }
 
             .search-core-input {
-                padding: 0 12px;
+                padding: 0 12px; 
                 font-size: 15px;
             }
 
-            .header-right-cluster,
-            .search-control-cluster {
-                gap: 16px;
+            .header-right-cluster, .search-control-cluster {
+                gap: 16px; 
             }
         }
+
+/* Helper container to position the link at the base of the card */
+.view-more-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+    padding-top: 12px;
+    border-top: 1px dashed #222222;
+}
+
+.view-more-link {
+    color: #8a9a86 !important; /* Premium muted accent tone */
+    font-weight: 600;
+    text-decoration: none !important; /* Strict underline guard */
+    font-size: 0.95rem;
+    display: inline-block;
+    will-change: transform, opacity;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-tap-highlight-color: transparent !important; /* Kills mobile blue flash */
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.view-more-link:hover {
+    opacity: 0.8;
+    text-decoration: none !important;
+}
+
+/* --- CLONED DYNAMIC HARDWARE TARGET RULES ---
+   Applies the exact forward zoom-out and fade-out transition parameters across all target types identically.
+*/
+.view-more-link.is-zooming,
+.document-list a.is-zooming,
+.footer-links-row a.is-zooming {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s linear !important;
+    transform: scale(1.6) !important; 
+    opacity: 0 !important;          
+}
+
+/* Thread optimization lock layer */
+.kinetic-locked-frame {
+    pointer-events: none !important;
+}
+        
     </style>
 </head>
 <body>
 
     <header id="masterHeader">
+        
         <div class="header-inner-view" id="headerMainView">
             <a href="#" class="logo">sathya.</a>
             <div class="header-right-cluster">
+                <!-- Dark Mode Toggle FIRST -->
                 <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
                     <svg class="sun-icon" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="4"></circle>
@@ -615,35 +558,26 @@
                         <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
                     </svg>
                 </div>
+                <!-- Search Button SECOND -->
                 <button class="ctrl-btn" id="openSearchBtn" aria-label="Open Workspace Search">
-                    <svg viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 </button>
             </div>
         </div>
 
         <div class="header-inner-view" id="headerSearchView">
-            <svg class="search-static-icon" viewBox="0 0 24 24">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
+            <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <input type="text" class="search-core-input" id="searchCoreInput" placeholder="Search..." autocomplete="off">
             <div class="search-control-cluster">
                 <button class="ctrl-btn clear-text-btn" id="clearSearchBtn" aria-label="Clear typed text">
-                    <svg viewBox="0 0 24 24">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
                 <button class="ctrl-btn close-search-btn" id="closeSearchBtn" aria-label="Minimize search pill">
-                    <svg viewBox="0 0 24 24">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
+                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </button>
             </div>
         </div>
+
     </header>
 
     <main>
@@ -652,73 +586,72 @@
             <div class="capsule-panel">
                 <h2 class="panel-title">Upsc</h2>
                 <ul class="document-list">
-                    <li><a href="#" class="portal-link"><span class="portal-link__text">Subjects</span></a></li>
-                    <li><a href="#" class="portal-link"><span class="portal-link__text">Ncert's</span></a></li>
-                    <li><a href="#" class="portal-link"><span class="portal-link__text">Csat</span></a></li>
-                    <li><a href="#" class="portal-link"><span class="portal-link__text">Current affairs</span></a></li>
+                    <li><a href="#">Subjects</a></li>
+                    <li><a href="#">Ncert's</a></li>
+                    <li><a href="#">Csat</a></li>
+                    <li><a href="#">Current affairs</a></li>
                 </ul>
             </div>
 
             <div class="capsule-panel">
                 <h2 class="panel-title">Current affairs</h2>
                 <ul class="document-list">
-                    <li><a href="#" class="portal-link"><span class="portal-link__text">Daily current affairs</span></a></li>
-                    <li><a href="#" class="portal-link"><span class="portal-link__text">Topic-wise current affairs</span></a></li>
+                    <li><a href="#">Daily current affairs</a></li>
+                    <li><a href="#">Topic-wise current affairs</a></li>
                 </ul>
             </div>
 
-            <div class="capsule-panel">
-                <h2 class="panel-title">Contents</h2>
-                <ul class="document-list">
-                    <li><a href="contents.html#art-culture" class="portal-link"><span class="portal-link__text">Art and culture</span></a></li>
-                    <li><a href="contents.html#history" class="portal-link"><span class="portal-link__text">History</span></a></li>
-                    <li><a href="contents.html#indian-society" class="portal-link"><span class="portal-link__text">Indian society</span></a></li>
-                </ul>
-                <div class="view-more-container">
-                    <a href="contents.html" class="view-more-link portal-link">
-                        <span class="portal-link__text">View more</span>
-                    </a>
-                </div>
-            </div>
-
+          <div class="capsule-panel">
+    <h2 class="panel-title">Contents</h2>
+    <ul class="document-list">
+        <li><a href="contents.html#art-culture">Art and culture</a></li>
+        <li><a href="contents.html#history">History</a></li>
+        <li><a href="contents.html#indian-society">Indian society</a></li>
+    </ul>
+    <div class="view-more-container">
+        <a href="contents.html" class="view-more-link">View more</a>
+    </div>
+</div>
             <div class="capsule-panel">
                 <h2 class="panel-title">Must read</h2>
                 <ul class="document-list">
-                    <li><a href="ramsarsites.html" class="portal-link"><span class="portal-link__text">Ramsar sites</span></a></li>
-                    <li><a href="#" class="portal-link"><span class="portal-link__text">Coming up</span></a></li>
+                    <li><a href="ramsarsites.html">Ramsar sites</a></li>
+                    <li><a href="#">Coming up</a></li>
                 </ul>
             </div>
 
             <div class="capsule-panel">
                 <h2 class="panel-title">Chapters</h2>
                 <ul class="document-list">
-                    <li><a href="#" class="portal-link"><span class="portal-link__text">Coming up</span></a></li>
+                    <li><a href="#">Coming up</a></li>
                 </ul>
             </div>
 
             <div class="capsule-panel">
                 <h2 class="panel-title">Essays</h2>
                 <ul class="document-list">
-                    <li><a href="#" class="portal-link"><span class="portal-link__text">Coming up</span></a></li>
+                    <li><a href="#">Coming up</a></li>
                 </ul>
             </div>
 
         </div>
     </main>
 
+    <!-- Grounded Minimal Footer -->
     <footer>
         <div class="footer-links-row">
-            <a href="Footer/about.html" class="portal-link"><span class="portal-link__text">About</span></a>
-            <a href="Footer/contact.html" class="portal-link"><span class="portal-link__text">Contact</span></a>
-            <a href="Footer/privacy.html" class="portal-link"><span class="portal-link__text">Privacy Policy</span></a>
-            <a href="Footer/terms.html" class="portal-link"><span class="portal-link__text">Terms & Conditions</span></a>
-            <a href="Footer/disclaimer.html" class="portal-link"><span class="portal-link__text">Disclaimer</span></a>
+            <a href="Footer/about.html">About</a>
+            <a href="Footer/contact.html">Contact</a>
+            <a href="Footer/privacy.html">Privacy Policy</a>
+            <a href="Footer/terms.html">Terms & Conditions</a>
+            <a href="Footer/disclaimer.html">Disclaimer</a>
         </div>
         <div class="copyright-tag">
             &copy; 2026 Sathya. All rights reserved.
         </div>
     </footer>
 
+    <!-- Smart Native Device Sync & Twin-View Controller Engine -->
     <script>
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
@@ -729,10 +662,6 @@
         const closeSearchBtn = document.getElementById('closeSearchBtn');
         const clearSearchBtn = document.getElementById('clearSearchBtn');
         const searchCoreInput = document.getElementById('searchCoreInput');
-
-        /* ===============================
-           THEME SYSTEM
-           =============================== */
 
         localStorage.removeItem('dashboard-theme');
 
@@ -765,7 +694,7 @@
         });
 
         toggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
+            e.stopPropagation(); 
             const isCurrentlyLight = bodyElement.classList.contains('light-mode');
             if (isCurrentlyLight) {
                 bodyElement.classList.remove('light-mode');
@@ -776,9 +705,7 @@
             }
         });
 
-        /* ===============================
-           HEADER SEARCH SYSTEM
-           =============================== */
+        // --- Twin-View Interface Controller System ---
 
         openSearchBtn.addEventListener('click', () => {
             masterHeader.classList.add('search-active');
@@ -800,143 +727,41 @@
             }
         });
 
-        /* ===============================
-           HIGH-END PORTAL LINK SYSTEM
-           =============================== */
+        // --- Universal Interactive Element Selector Matrix ---
+        const universalTargetLinks = document.querySelectorAll('.matrix-canvas a, footer .footer-links-row a');
 
-        const portalLinks = Array.from(document.querySelectorAll('.portal-link'));
-        const PORTAL_STORAGE_KEY = 'sathyaPortalReturnLink';
-        const PORTAL_DURATION = 420;
-        const RETURN_DURATION = 560;
+        // --- Cloned Forward Tap Engine (Applied to all contents identically) ---
+        universalTargetLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const destination = this.getAttribute('href');
+                if (!destination || destination === '#') return;
+                
+                e.preventDefault(); 
+                
+                // Track the unique URL address to precisely capture it upon page return snap
+                sessionStorage.setItem('activeUniversalTransitionUrl', this.href);
+                this.classList.add('is-zooming'); 
+                
+                setTimeout(() => {
+                    window.location.href = destination;
+                }, 400); // 400ms medium speed timeline matches your original view-more configuration perfectly
+            });
+        });
 
-        function getPortalText(link) {
-            return link.querySelector('.portal-link__text');
-        }
-
-        function getPortalIdentity(link) {
-            const href = link.getAttribute('href') || '';
-            const label = (getPortalText(link)?.textContent || link.textContent || '').trim();
-            return `${href}||${label}`;
-        }
-
-        function setRestingState(link) {
-            const text = getPortalText(link);
-            if (!text) return;
-            text.style.transform = '';
-            text.style.opacity = '';
-            link.classList.remove('is-portal-opening', 'is-portal-returning');
-            const row = link.closest('li');
-            if (row) row.classList.remove('portal-active-row');
-        }
-
-        function triggerPortalOpen(link) {
-            const text = getPortalText(link);
-            if (!text) return;
-            link.classList.add('is-portal-opening');
-            const row = link.closest('li');
-            if (row) row.classList.add('portal-active-row');
-        }
-
-        function animatePortalReturn(link) {
-            const text = getPortalText(link);
-            if (!text) return;
-
-            const row = link.closest('li');
-            if (row) row.classList.add('portal-active-row');
-
-            link.classList.remove('is-portal-opening');
-            link.classList.add('is-portal-returning');
-
-            const startScale = 1.55;
-            const endScale = 1;
-            const startOpacity = 0;
-            const endOpacity = 1;
-            let startTime = null;
-
-            text.style.transform = `translateZ(0) scale(${startScale})`;
-            text.style.opacity = `${startOpacity}`;
-
-            function easeOutQuint(x) {
-                return 1 - Math.pow(1 - x, 5);
-            }
-
-            function frame(timestamp) {
-                if (!startTime) startTime = timestamp;
-                const elapsed = timestamp - startTime;
-                const progress = Math.min(elapsed / RETURN_DURATION, 1);
-                const eased = easeOutQuint(progress);
-
-                const currentScale = startScale - (startScale - endScale) * eased;
-                const currentOpacity = startOpacity + (endOpacity - startOpacity) * eased;
-
-                text.style.transform = `translateZ(0) scale(${currentScale})`;
-                text.style.opacity = `${currentOpacity}`;
-
-                if (progress < 1) {
-                    requestAnimationFrame(frame);
-                } else {
-                    text.style.transform = '';
-                    text.style.opacity = '';
-                    link.classList.remove('is-portal-returning');
-                    if (row) row.classList.remove('portal-active-row');
-                }
-            }
-
-            requestAnimationFrame(frame);
-        }
-
-        function bindPortalLink(link) {
-            const href = link.getAttribute('href');
-
-            // skip empty anchors or non-navigational placeholders
-            if (!href || href.trim() === '#') return;
-
-            link.addEventListener('click', function (e) {
-                // ignore modified clicks / new tabs / downloads
-                if (
-                    e.defaultPrevented ||
-                    e.metaKey ||
-                    e.ctrlKey ||
-                    e.shiftKey ||
-                    e.altKey ||
-                    e.button !== 0 ||
-                    link.target === '_blank' ||
-                    link.hasAttribute('download')
-                ) {
-                    return;
-                }
-
-                e.preventDefault();
-
-                const identity = getPortalIdentity(link);
-                sessionStorage.setItem(PORTAL_STORAGE_KEY, identity);
-
-                triggerPortalOpen(link);
-
-                window.setTimeout(() => {
-                    window.location.href = href;
-                }, PORTAL_DURATION);
-            }, { passive: false });
-        }
-
-        portalLinks.forEach(bindPortalLink);
-
-        /* ===============================
-           BACK / BF CACHE RETURN LANDING
-           =============================== */
-
-        window.addEventListener('pageshow', () => {
-            // Re-trigger main page entrance animations cleanly without grid holes
+        // --- Ironclad Back-Button & Full Component Sync Controller ---
+        window.addEventListener('pageshow', (event) => {
+            
+            // 1. HARDWARE COMPOSITE RE-TRIGGER ENGINE (Restores perfect native load animations without shaking)
             const layoutElements = document.querySelectorAll('header, .capsule-panel, footer');
-
+            
             if (layoutElements.length > 0) {
                 layoutElements.forEach(el => {
                     el.style.animation = 'none';
                     el.style.webkitAnimation = 'none';
                 });
-
+                
                 void document.body.offsetHeight;
-
+                
                 requestAnimationFrame(() => {
                     layoutElements.forEach(el => {
                         el.style.animation = '';
@@ -945,26 +770,75 @@
                 });
             }
 
-            // Reset all portal links first
-            portalLinks.forEach(setRestingState);
-
-            // Then animate only the exact clicked one
-            const storedIdentity = sessionStorage.getItem(PORTAL_STORAGE_KEY);
-            if (!storedIdentity) return;
-
-            const match = portalLinks.find(link => getPortalIdentity(link) === storedIdentity);
-
-            // consume once so random future visits don't replay it
-            sessionStorage.removeItem(PORTAL_STORAGE_KEY);
-
-            if (!match) return;
-
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    animatePortalReturn(match);
-                });
+            // 2. UNIVERSAL CLONED REVERSE INTERACTION MECHANICS MATRIX
+            // Instantly clear trailing visual parameters on incoming display wake to stabilize elements
+            universalTargetLinks.forEach(l => {
+                l.classList.remove('is-zooming');
+                l.classList.remove('kinetic-locked-frame');
+                l.style.transform = '';
+                l.style.opacity = '';
             });
+            
+            const savedTargetUrl = sessionStorage.getItem('activeUniversalTransitionUrl');
+            if (savedTargetUrl) {
+                sessionStorage.removeItem('activeUniversalTransitionUrl'); // Flush storage trace instantly
+                
+                let matchedLinkNode = null;
+                universalTargetLinks.forEach(link => {
+                    if (link.href === savedTargetUrl) {
+                        matchedLinkNode = link;
+                    }
+                });
+                
+                if (matchedLinkNode) {
+                    // 40ms layout window lets device viewport hardware snapshot layers unbind safely before loop fire
+                    setTimeout(() => {
+                        matchedLinkNode.classList.add('kinetic-locked-frame'); 
+                        
+                        let startScale = 1.6;
+                        let endScale = 1.0;
+                        let startOpacity = 0;
+                        
+                        // Maintain original native baseline opacity configurations across distinct element classes
+                        let endOpacity = 0.8;
+                        if (matchedLinkNode.classList.contains('view-more-link')) endOpacity = 1.0;
+                        if (matchedLinkNode.closest('.footer-links-row')) endOpacity = 1.0; 
+                        
+                        matchedLinkNode.style.transform = `scale(${startScale})`;
+                        matchedLinkNode.style.opacity = startOpacity;
+                        
+                        let duration = 500; // Original 500ms relaxed timeline curve
+                        let startTime = null;
+                        
+                        // Executes the exact requested frame animation loop track on the targeted node link
+                        function animateReverse(timestamp) {
+                            if (!startTime) startTime = timestamp;
+                            let elapsed = timestamp - startTime;
+                            let progress = Math.min(elapsed / duration, 1);
+                            
+                            // Premium Quintic Ease-Out Curve Physics Matrix: 1 - (1 - x)^5
+                            let ease = 1 - Math.pow(1 - progress, 5);
+                            
+                            let currentScale = startScale - (startScale - endScale) * ease;
+                            let currentOpacity = startOpacity + (endOpacity - startOpacity) * ease;
+                            
+                            matchedLinkNode.style.transform = `scale(${currentScale})`;
+                            matchedLinkNode.style.opacity = currentOpacity;
+                            
+                            if (progress < 1) {
+                                requestAnimationFrame(animateReverse);
+                            } else {
+                                matchedLinkNode.style.transform = '';
+                                matchedLinkNode.style.opacity = '';
+                                matchedLinkNode.classList.remove('kinetic-locked-frame');
+                            }
+                        }
+                        requestAnimationFrame(animateReverse);
+                    }, 40);
+                }
+            }
         });
+        
     </script>
 </body>
 </html>
