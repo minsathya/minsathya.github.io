@@ -493,8 +493,8 @@
     will-change: transform, opacity;
     -webkit-tap-highlight-color: transparent !important; /* Kills mobile blue flash */
     
-    /* Optimized timing: finishes in 180ms so it beats the browser's page-switch freeze */
-    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s ease;
+    /* Quick speed for normal mouse hover/leave states */
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .view-more-link:hover {
@@ -502,10 +502,12 @@
     text-decoration: none !important;
 }
 
-/* The Zoom Trigger State */
+/* The Zoom Trigger State: Overrides timing to keep it moving indefinitely */
 .view-more-link.is-zooming {
-    transform: scale(1.15) !important;
-    opacity: 0.4 !important;
+    /* 1.2 seconds ensures it is still actively expanding when the browser cuts away */
+    transition: transform 1.2s cubic-bezier(0.1, 0.8, 0.3, 1), opacity 0.4s ease !important;
+    transform: scale(1.4) !important;
+    opacity: 0 !important;
 }
         
     </style>
@@ -712,21 +714,20 @@
         
         if (viewMoreLink) {
             viewMoreLink.addEventListener('click', function(e) {
-                e.preventDefault(); // Hold the browser back for a split second
+                e.preventDefault(); // Pause instant browser hopping
                 
                 const destination = this.getAttribute('href');
-                this.classList.add('is-zooming'); // Run the ultra-smooth zoom
+                this.classList.add('is-zooming'); // Fire the long cinematic zoom
                 
-                // Wait exactly 200ms for the animation to cleanly finish before changing pages
+                // Switches pages at 350ms, catching the text mid-flight while it is still zooming smoothly
                 setTimeout(() => {
                     window.location.href = destination;
-                }, 200);
+                }, 350);
             });
         }
 
         // --- Ironclad Back-Button State Reset Controller ---
         window.addEventListener('pageshow', (event) => {
-            // Forcefully strips the zoom state whenever the page loads or drops out of browser memory cache
             if (viewMoreLink) {
                 viewMoreLink.classList.remove('is-zooming');
             }
