@@ -502,9 +502,39 @@
 
 /* The Synchronized Zoom & Fade Trigger State (Forward Motion) */
 .view-more-link.is-zooming {
-    transition: transform 0.3s cubic-bezier(0.32, 0, 0.67, 0), opacity 0.3s ease-in !important;
-    transform: scale(1.7) !important; 
-    opacity: 0 !important;         
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s linear !important;
+    transform: scale(1.6) !important; 
+    opacity: 0 !important;          
+}
+
+/* The Mirrored Reverse Transition State (Backward Motion) */
+.view-more-link.is-reversing {
+    animation: ipadSafeReverse 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    -webkit-animation: ipadSafeReverse 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Unified 3D Vector Track that forces iPad's hardware graphics card to cooperate */
+@keyframes ipadSafeReverse {
+    0% { 
+        transform: scale3d(1.6, 1.6, 1); 
+        opacity: 0; 
+    }
+    100% { 
+        transform: scale3d(1, 1, 1); 
+        opacity: 1; 
+    }
+}
+
+/* WebKit specific fallback mirror to guarantee older iPadOS versions pick it up */
+@-webkit-keyframes ipadSafeReverse {
+    0% { 
+        -webkit-transform: scale3d(1.6, 1.6, 1); 
+        opacity: 0; 
+    }
+    100% { 
+        -webkit-transform: scale3d(1, 1, 1); 
+        opacity: 1; 
+    }
 }
         
     </style>
@@ -718,43 +748,44 @@
                 
                 setTimeout(() => {
                     window.location.href = destination;
-                }, 300);
+                }, 400);
             });
         }
 
         // --- Ironclad Back-Button Reverse Transition Controller ---
         window.addEventListener('pageshow', (event) => {
             if (viewMoreLink) {
-                // 1. Instantly wipe away the forward zooming state class
+                // 1. Instantly clear out any leftover animation classes
                 viewMoreLink.classList.remove('is-zooming');
+                viewMoreLink.classList.remove('is-reversing');
                 
-                // 2. Force the starting state using inline styles to bypass iPad BFCache rendering bugs
-                viewMoreLink.style.webkitTransition = 'none';
+                // 2. Hard-lock the link at the exact reverse starting frame to block ugly iPad layout flashes
                 viewMoreLink.style.transition = 'none';
-                viewMoreLink.style.webkitTransform = 'scale3d(1.6, 1.6, 1)';
+                viewMoreLink.style.webkitTransition = 'none';
                 viewMoreLink.style.transform = 'scale3d(1.6, 1.6, 1)';
+                viewMoreLink.style.webkitTransform = 'scale3d(1.6, 1.6, 1)';
                 viewMoreLink.style.opacity = '0';
                 
                 // Force a hardware layout recalculation
                 void viewMoreLink.offsetHeight;
                 
-                // 3. Command the iPad hardware to smoothly transition back to normal state
-                requestAnimationFrame(() => {
-                    viewMoreLink.style.webkitTransition = '-webkit-transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s linear';
-                    viewMoreLink.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s linear';
-                    viewMoreLink.style.webkitTransform = 'scale3d(1, 1, 1)';
-                    viewMoreLink.style.transform = 'scale3d(1, 1, 1)';
-                    viewMoreLink.style.opacity = '1';
-                });
-                
-                // 4. Clean up inline properties completely at 400ms so regular hover states work again
+                // 3. Give iPad Safari a clean 40ms window to completely unfreeze its viewport cache thread
                 setTimeout(() => {
-                    viewMoreLink.style.webkitTransition = '';
+                    // Remove temporary style locks completely
                     viewMoreLink.style.transition = '';
-                    viewMoreLink.style.webkitTransform = '';
+                    viewMoreLink.style.webkitTransition = '';
                     viewMoreLink.style.transform = '';
+                    viewMoreLink.style.webkitTransform = '';
                     viewMoreLink.style.opacity = '';
-                }, 400);
+                    
+                    // Trigger the perfect reverse transition class smoothly
+                    viewMoreLink.classList.add('is-reversing');
+                }, 40);
+                
+                // 4. Strip the class at 440ms (40ms delay + 400ms duration) so normal hovers work perfectly again
+                setTimeout(() => {
+                    viewMoreLink.classList.remove('is-reversing');
+                }, 440);
             }
         });
         
