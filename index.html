@@ -424,7 +424,7 @@
         }
 
         .footer-links-row a {
-            color: var(--text-muted);
+            color: var(--text-muted) !important;
             text-decoration: none !important;
             font-size: 14px;
             font-weight: 400;
@@ -433,7 +433,7 @@
         }
 
         .footer-links-row a:hover {
-            color: var(--text-main);
+            color: var(--text-main) !important;
         }
 
         .copyright-tag {
@@ -501,7 +501,7 @@
 }
 
 .view-more-link {
-    color: #8a9a86 !important; /* Premium muted accent tone */
+    color: #8a9a86 !important; /* Premium muted accent tone restored */
     font-weight: 600;
     text-decoration: none !important; /* Strict underline guard */
     font-size: 0.95rem;
@@ -530,9 +530,20 @@
 }
 
 .capsule-panel a:hover .kinetic-target,
-.view-more-link:hover .kinetic-target,
+.view-more-link:hover .kinetic-target {
+    transform: scale3d(1.06, 1.06, 1);
+}
+
+.footer-links-row a .kinetic-target {
+    color: var(--text-muted) !important; /* Strictly protect footer tone */
+}
 .footer-links-row a:hover .kinetic-target {
     transform: scale3d(1.06, 1.06, 1);
+    color: var(--text-main) !important;
+}
+
+.view-more-link .kinetic-target {
+    color: #8a9a86 !important; /* Strictly protect view more green tone */
 }
 
 /* Lockout state used while JavaScript thread animations take full control */
@@ -551,14 +562,11 @@
 </head>
 <body>
 
-    <!-- Header Block - Unified Twin View Wide Design Layout -->
     <header id="masterHeader">
         
-        <!-- View Layer A: Default Branding State -->
         <div class="header-inner-view" id="headerMainView">
             <a href="#" class="logo">sathya.</a>
             <div class="header-right-cluster">
-                <!-- Dark Mode Toggle FIRST -->
                 <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
                     <svg class="sun-icon" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="4"></circle>
@@ -568,14 +576,12 @@
                         <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
                     </svg>
                 </div>
-                <!-- Search Button SECOND -->
                 <button class="ctrl-btn" id="openSearchBtn" aria-label="Open Workspace Search">
                     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 </button>
             </div>
         </div>
 
-        <!-- View Layer B: Active Search State -->
         <div class="header-inner-view" id="headerSearchView">
             <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <input type="text" class="search-core-input" id="searchCoreInput" placeholder="Search..." autocomplete="off">
@@ -592,10 +598,8 @@
     </header>
 
     <main>
-        <!-- Matrix Canvas Layout Container -->
         <div class="matrix-canvas">
 
-            <!-- Card 1: UPSC -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Upsc</h2>
                 <ul class="document-list">
@@ -606,7 +610,6 @@
                 </ul>
             </div>
 
-            <!-- Card 2: CURRENT AFFAIRS -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Current affairs</h2>
                 <ul class="document-list">
@@ -615,20 +618,17 @@
                 </ul>
             </div>
 
-          <!-- Card 3: CONTENTS -->
-<div class="capsule-panel">
+          <div class="capsule-panel">
     <h2 class="panel-title">Contents</h2>
     <ul class="document-list">
         <li><a href="contents.html#art-culture">Art and culture</a></li>
         <li><a href="contents.html#history">History</a></li>
         <li><a href="contents.html#indian-society">Indian society</a></li>
     </ul>
-    <!-- Perfectly centered View More button at the bottom -->
     <div class="view-more-container">
         <a href="contents.html" class="view-more-link">View more</a>
     </div>
 </div>
-            <!-- Card 4: MUST READ -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Must read</h2>
                 <ul class="document-list">
@@ -637,7 +637,6 @@
                 </ul>
             </div>
 
-            <!-- Card 5: CHAPTERS -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Chapters</h2>
                 <ul class="document-list">
@@ -645,7 +644,6 @@
                 </ul>
             </div>
 
-            <!-- Card 6: ESSAYS -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Essays</h2>
                 <ul class="document-list">
@@ -656,7 +654,6 @@
         </div>
     </main>
 
-    <!-- Grounded Minimal Footer -->
     <footer>
         <div class="footer-links-row">
             <a href="Footer/about.html">About</a>
@@ -670,7 +667,6 @@
         </div>
     </footer>
 
-    <!-- Smart Native Device Sync & Twin-View Controller Engine -->
     <script>
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
@@ -773,12 +769,12 @@
                 if (innerSpan) {
                     this.classList.add('kinetic-animating'); 
                     
-                    // Instant Snappy Transitions: Shortened to 200ms for hyper-responsive touch execution
+                    // Balanced Premium Transition Timeline: Restored to 400ms medium cinematic duration
                     let startScale = this.matches(':hover') ? 1.06 : 1.0;
                     let endScale = 1.6;
                     let startOpacity = 1.0;
                     let endOpacity = 0;
-                    let duration = 200; 
+                    let duration = 400; 
                     let startTime = null;
                     
                     function animateForward(timestamp) {
@@ -786,7 +782,7 @@
                         let elapsed = timestamp - startTime;
                         let progress = Math.min(elapsed / duration, 1);
                         
-                        let ease = Math.pow(progress, 2.5); // Fast, premium responsive drop curve
+                        let ease = Math.pow(progress, 2.5); // Smooth forward deceleration path
                         
                         let currentScale = startScale + (endScale - startScale) * ease;
                         let currentOpacity = startOpacity - (startOpacity - endOpacity) * ease;
@@ -811,8 +807,8 @@
         window.addEventListener('pageshow', (event) => {
             const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
             
-            // 1. DYNAMIC HARDWARE COMPOSITE RE-TRIGGER ENGINE
-            // Replays the beautiful staggered load animations uniformly for ALL cards without creating layout holes
+            // 1. UNIFORM COMPOSITE RE-TRIGGER ENGINE
+            // Replays entrance sequences for ALL grid components identically, preventing blank structural holes
             const layoutElements = document.querySelectorAll('header, .capsule-panel, footer');
             
             if (layoutElements.length > 0) {
@@ -821,7 +817,7 @@
                     el.style.webkitAnimation = 'none';
                 });
                 
-                void document.body.offsetHeight; // Flush hardware registers completely
+                void document.body.offsetHeight; // Purge layout memory tree
                 
                 requestAnimationFrame(() => {
                     layoutElements.forEach(el => {
@@ -832,7 +828,7 @@
             }
 
             // 2. UNIVERSAL TARGETED REVERSE GLIDE RECOVERY ENGINE
-            // Clear all lingering style overrides instantly to reset canvas layout baseline context
+            // Instant cleanup of tracking states on incoming page display wake
             interactiveLinks.forEach(l => {
                 l.classList.remove('kinetic-animating');
                 const span = l.querySelector('.kinetic-target');
@@ -843,16 +839,13 @@
             });
             
             if (savedTargetUrl) {
-                sessionStorage.removeItem('activeUniversalTargetUrl'); // Clear session token data
+                sessionStorage.removeItem('activeUniversalTargetUrl'); // Release tracking registry
                 
                 let matchedLinkElement = null;
                 
-                // Pure deep string path matcher to resolve subdirectory transitions cleanly
-                const getCleanPath = (urlStr) => urlStr.split('#')[0].split('?')[0].replace(/\/$/, '');
-                const cleanSaved = getCleanPath(savedTargetUrl);
-                
+                // Pure Strict String Matching: Ensures sections like contents.html#history match cleanly by absolute route
                 interactiveLinks.forEach(link => {
-                    if (getCleanPath(link.href) === cleanSaved) {
+                    if (link.href === savedTargetUrl) {
                         matchedLinkElement = link;
                     }
                 });
@@ -861,44 +854,47 @@
                     const targetSpan = matchedLinkElement.querySelector('.kinetic-target');
                     
                     if (targetSpan) {
-                        matchedLinkElement.classList.add('kinetic-animating'); 
-                        
-                        let startScale = 1.6;
-                        let endScale = 1.0;
-                        let startOpacity = 0;
-                        let endOpacity = matchedLinkElement.classList.contains('view-more-link') ? 1 : 0.8;
-                        
-                        let duration = 500; // Extended to 500ms for a gorgeous, luxurious return landing glide
-                        let startTime = null;
-                        
-                        targetSpan.style.setProperty('transform', `scale3d(${startScale}, ${startScale}, 1)`, 'important');
-                        targetSpan.style.setProperty('opacity', startOpacity, 'important');
-                        
-                        // Thread-Locked Frame Renderer Loop: Unaffected by mobile viewport snapshots
-                        function animateLinkReverse(timestamp) {
-                            if (!startTime) startTime = timestamp;
-                            let elapsed = timestamp - startTime;
-                            let progress = Math.min(elapsed / duration, 1);
+                        // High-End Optimization: Micro 40ms delay allows WebKit swiping layers to decouple safely
+                        setTimeout(() => {
+                            matchedLinkElement.classList.add('kinetic-animating'); 
                             
-                            // High-End Premium Quintic Ease-Out Tracking Curve Physics: 1 - (1 - x)^5
-                            let ease = 1 - Math.pow(1 - progress, 5);
+                            let startScale = 1.6;
+                            let endScale = 1.0;
+                            let startOpacity = 0;
+                            let endOpacity = matchedLinkElement.classList.contains('view-more-link') ? 1 : 0.8;
                             
-                            let currentScale = startScale - (startScale - endScale) * ease;
-                            let currentOpacity = startOpacity + (endOpacity - startOpacity) * ease;
+                            let duration = 500; // 500ms allows for an exquisite, luxurious return landing glide
+                            let startTime = null;
                             
-                            targetSpan.style.setProperty('transform', `scale3d(${currentScale}, ${currentScale}, 1)`, 'important');
-                            targetSpan.style.setProperty('opacity', currentOpacity, 'important');
+                            targetSpan.style.setProperty('transform', `scale3d(${startScale}, ${startScale}, 1)`, 'important');
+                            targetSpan.style.setProperty('opacity', startOpacity, 'important');
                             
-                            if (progress < 1) {
-                                requestAnimationFrame(animateLinkReverse);
-                            } else {
-                                // Touchdown target reached softly: Wipe away animation values to reactivate hovers
-                                targetSpan.style.transform = '';
-                                targetSpan.style.opacity = '';
-                                matchedLinkElement.classList.remove('kinetic-animating');
+                            // Pure Thread Calculators bypass edge-swipe visualization locks effortlessly
+                            function animateLinkReverse(timestamp) {
+                                if (!startTime) startTime = timestamp;
+                                let elapsed = timestamp - startTime;
+                                let progress = Math.min(elapsed / duration, 1);
+                                
+                                // High-End Premium Quintic Ease-Out Tracking Curve Physics: 1 - (1 - x)^5
+                                let ease = 1 - Math.pow(1 - progress, 5);
+                                
+                                let currentScale = startScale - (startScale - endScale) * ease;
+                                let currentOpacity = startOpacity + (endOpacity - startOpacity) * ease;
+                                
+                                targetSpan.style.setProperty('transform', `scale3d(${currentScale}, ${currentScale}, 1)`, 'important');
+                                targetSpan.style.setProperty('opacity', currentOpacity, 'important');
+                                
+                                if (progress < 1) {
+                                    requestAnimationFrame(animateLinkReverse);
+                               } else {
+                                    // Touchdown target reached perfectly: Flush styles away for normal mouse hovers
+                                    targetSpan.style.transform = '';
+                                    targetSpan.style.opacity = '';
+                                    matchedLinkElement.classList.remove('kinetic-animating');
+                                }
                             }
-                        }
-                        requestAnimationFrame(animateLinkReverse);
+                            requestAnimationFrame(animateLinkReverse);
+                        }, 40);
                     }
                 }
             }
