@@ -487,74 +487,25 @@
 .view-more-link {
     color: #8a9a86 !important; /* Premium muted accent tone */
     font-weight: 600;
-    text-decoration: none !important;
+    text-decoration: none !important; /* Strict underline guard */
     font-size: 0.95rem;
     display: inline-block;
-    -webkit-tap-highlight-color: transparent !important; /* Total mobile blue flash ban */
-    transition: opacity 0.2s ease;
+    will-change: transform, opacity;
+    -webkit-tap-highlight-color: transparent !important; /* Kills mobile blue flash */
+    
+    /* Optimized timing: finishes in 180ms so it beats the browser's page-switch freeze */
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s ease;
 }
 
 .view-more-link:hover {
     opacity: 0.8;
+    text-decoration: none !important;
 }
 
-/* Structural Anchor that locks onto the physical boundaries of the text font */
-.portal-o-container {
-    position: relative;
-    display: inline-block;
-    vertical-align: baseline;
-}
-
-/* 3D Hardware Accelerated Portal Ring */
-.gpu-portal-ring {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 125%; 
-    height: 125%;
-    pointer-events: none;
-    z-index: 9999;
-    
-    /* Strict GPU Layer Isolation Rules for WebKit & Blink Engine Stability */
-    will-change: transform;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    
-    /* Using translate3d instantly forces laptops and mobile chips to allocate physical VRAM */
-    transform: translate3d(-50%, -50%, 0) scale(0);
-    -webkit-transform: translate3d(-50%, -50%, 0) scale(0);
-    
-    /* Premium cinematic layout deceleration curve */
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    -webkit-transition: -webkit-transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.gpu-portal-ring circle {
-    fill: var(--bg-color);   /* Inner core color matches theme background (#0b0b0b) */
-    stroke: #8a9a86;         /* Premium olive perimeter loop line */
-    stroke-width: 2.5px;     /* Keeps the loop completely sharp across massive displays */
-}
-
-/* The Grand Portal Expansion: Shoots the ring past the outer margins of any viewport */
-body.portal-active .gpu-portal-ring {
-    transform: translate3d(-50%, -50%, 0) scale(280);
-    -webkit-transform: translate3d(-50%, -50%, 0) scale(280);
-}
-
-/* --- Global Layout Environment Modifiers --- */
-
-/* Smoothly collapses background elements into space to accentuate the ring velocity */
-body.portal-active header,
-body.portal-active footer,
-body.portal-active .matrix-canvas .capsule-panel {
-    opacity: 0;
-    transform: translate3d(0, 0, 0) scale(0.96);
-    -webkit-transform: translate3d(0, 0, 0) scale(0.96);
-    transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-body.portal-active {
-    overflow: hidden; /* Stops mobile bouncing/scrolling during transit */
+/* The Zoom Trigger State */
+.view-more-link.is-zooming {
+    transform: scale(1.15) !important;
+    opacity: 0.4 !important;
 }
         
     </style>
@@ -625,22 +576,19 @@ body.portal-active {
                 </ul>
             </div>
 
-       <!-- Card 3: CONTENTS -->
-            <div class="capsule-panel animate-fade-in">
-                <h2 class="panel-title">Contents</h2>
-                <ul class="document-list">
-                    <li><a href="contents.html#art-culture">Art and culture</a></li>
-                    <li><a href="contents.html#history">History</a></li>
-                    <li><a href="contents.html#indian-society">Indian society</a></li>
-                </ul>
-                <div class="view-more-container">
-                    <!-- Cross-device baseline alignment anchor -->
-                    <a href="contents.html" class="view-more-link">
-                        View m<span class="portal-o-container">o<svg class="gpu-portal-ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" vector-effect="non-scaling-stroke" /></svg></span>re
-                    </a>
-                </div>
-            </div>
-            
+          <!-- Card 3: CONTENTS -->
+<div class="capsule-panel animate-fade-in">
+    <h2 class="panel-title">Contents</h2>
+    <ul class="document-list">
+        <li><a href="contents.html#art-culture">Art and culture</a></li>
+        <li><a href="contents.html#history">History</a></li>
+        <li><a href="contents.html#indian-society">Indian society</a></li>
+    </ul>
+    <!-- Perfectly centered View More button at the bottom -->
+    <div class="view-more-container">
+        <a href="contents.html" class="view-more-link">View more</a>
+    </div>
+</div>
             <!-- Card 4: MUST READ -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Must read</h2>
@@ -759,27 +707,29 @@ body.portal-active {
             }
         });
 
-// --- Premium GPU Cross-Device Cinematic Portal Controller ---
+// --- Premium View More Click-Zoom Transition Engine ---
         const viewMoreLink = document.querySelector('.view-more-link');
         
         if (viewMoreLink) {
             viewMoreLink.addEventListener('click', function(e) {
-                e.preventDefault(); // Prevents instant page jumps that cut off rendering threads
+                e.preventDefault(); // Hold the browser back for a split second
                 
                 const destination = this.getAttribute('href');
-                document.body.classList.add('portal-active'); // Fire the full-screen cinematic sequence
+                this.classList.add('is-zooming'); // Run the ultra-smooth zoom
                 
-                // Grants the GPU thread exactly 650ms to finish the scaling sweep before redirection
+                // Wait exactly 200ms for the animation to cleanly finish before changing pages
                 setTimeout(() => {
                     window.location.href = destination;
-                }, 650);
+                }, 200);
             });
         }
 
         // --- Ironclad Back-Button State Reset Controller ---
         window.addEventListener('pageshow', (event) => {
-            // Wipes the slate clean instantly if user navigates backwards via system gestures
-            document.body.classList.remove('portal-active');
+            // Forcefully strips the zoom state whenever the page loads or drops out of browser memory cache
+            if (viewMoreLink) {
+                viewMoreLink.classList.remove('is-zooming');
+            }
         });
         
     </script>
