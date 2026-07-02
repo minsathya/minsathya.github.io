@@ -474,7 +474,7 @@
             }
         }
 
-  /* Helper class to position the View More link nicely at the base of the homepage card */
+/* Helper class to position the View More link nicely at the base of the homepage card */
 .view-more-container {
     display: flex;
     justify-content: center;
@@ -491,17 +491,20 @@
     font-size: 0.95rem;
     display: inline-block;
     will-change: transform, opacity;
-    
-    /* Kills the ugly mobile blue tap flash box completely */
     -webkit-tap-highlight-color: transparent !important;
-    
-    /* Uses your custom premium ease curve for the zoom transition physics */
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+    /* Uses a dedicated acceleration curve to eliminate jagged movement */
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
 }
 
 .view-more-link:hover {
     opacity: 0.8;
-    text-decoration: none !important; /* Double guard against underline triggers */
+    text-decoration: none !important;
+}
+
+/* Premium State Trigger: Smoothly swells text without breaking element layout physics */
+.view-more-link.is-zooming {
+    transform: scale(1.18);
+    opacity: 0.4;
 }
         
     </style>
