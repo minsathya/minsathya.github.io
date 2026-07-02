@@ -368,7 +368,7 @@
             transition: background-color 0.4s var(--ease-premium), border-color 0.6s var(--ease-premium);
         }
 
-        /* HARD LOCKED TRANSPARENCY: Wipes out dark grey capsule tap backgrounds on all devices */
+        /* HARD LOCKED TRANSPARENCY: Wipes out grey capsule hover/tap backgrounds entirely */
         .document-list li:hover,
         .document-list li:active,
         .document-list li:focus {
@@ -390,15 +390,20 @@
             transition: color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
         }
 
-        /* Removed padding-left movement entirely to lock text straight on hover */
+        /* PURGED PADDING SHIFT: Locks text completely still horizontally on cursor hover */
         .document-list li:hover a {
             opacity: 1 !important;
         }
 
-        /* Ironclad Guardrail: Isolates padding styles during kinetic execution transitions */
-        .document-list li a.kinetic-active,
-        .document-list li:hover a.kinetic-active {
-            padding-left: 24px !important;
+        /* --- HARD INTERACTIVE STATE GUARD LOCKS ---
+           Forces every clickable link to inherit its correct structural color codes 
+           and block browser dark grey/black background flashes upon tap execution.
+        */
+        .capsule-panel a:active, .capsule-panel a:focus, .capsule-panel a:visited,
+        .view-more-link:active, .view-more-link:focus, .view-more-link:visited,
+        .footer-links-row a:active, .footer-links-row a:focus, .footer-links-row a:visited {
+            background-color: transparent !important;
+            color: inherit !important;
         }
 
         /* Flat Grounded Footer Row */
@@ -518,6 +523,7 @@
 .kinetic-target {
     display: inline-block !important;
     transform-origin: center center !important; 
+    color: inherit !important; /* Force complete ancestral color dominance to kill grey/black flashes */
     will-change: transform, opacity !important;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -530,23 +536,33 @@
 .capsule-panel a:hover .kinetic-target,
 .view-more-link:hover .kinetic-target,
 .footer-links-row a:hover .kinetic-target {
-    transform: scale3d(1.06, 1.06, 1) !important;
+    transform: scale3d(1.06, 1.06, 1);
 }
 
-/* Shuts off hover interactions during tap sequence transitions to prevent shivering */
-.kinetic-active .kinetic-target {
+/* Absolute Lockout state used while JavaScript thread animations take full control */
+.kinetic-animating {
     pointer-events: none !important;
+    opacity: 1 !important;
+}
+
+.kinetic-animating .kinetic-target {
+    /* Kill layout hover transitions completely so JS can render perfectly crisp frames */
+    transition: none !important;
+    -webkit-transition: none !important;
 }
         
     </style>
 </head>
 <body>
 
+    <!-- Header Block - Unified Twin View Wide Design Layout -->
     <header id="masterHeader">
         
+        <!-- View Layer A: Default Branding State -->
         <div class="header-inner-view" id="headerMainView">
             <a href="#" class="logo">sathya.</a>
             <div class="header-right-cluster">
+                <!-- Dark Mode Toggle FIRST -->
                 <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
                     <svg class="sun-icon" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="4"></circle>
@@ -556,12 +572,14 @@
                         <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
                     </svg>
                 </div>
+                <!-- Search Button SECOND -->
                 <button class="ctrl-btn" id="openSearchBtn" aria-label="Open Workspace Search">
                     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 </button>
             </div>
         </div>
 
+        <!-- View Layer B: Active Search State -->
         <div class="header-inner-view" id="headerSearchView">
             <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <input type="text" class="search-core-input" id="searchCoreInput" placeholder="Search..." autocomplete="off">
@@ -578,8 +596,10 @@
     </header>
 
     <main>
+        <!-- Matrix Canvas Layout Container -->
         <div class="matrix-canvas">
 
+            <!-- Card 1: UPSC -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Upsc</h2>
                 <ul class="document-list">
@@ -590,6 +610,7 @@
                 </ul>
             </div>
 
+            <!-- Card 2: CURRENT AFFAIRS -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Current affairs</h2>
                 <ul class="document-list">
@@ -598,17 +619,20 @@
                 </ul>
             </div>
 
-          <div class="capsule-panel">
+          <!-- Card 3: CONTENTS -->
+<div class="capsule-panel">
     <h2 class="panel-title">Contents</h2>
     <ul class="document-list">
         <li><a href="contents.html#art-culture">Art and culture</a></li>
         <li><a href="contents.html#history">History</a></li>
         <li><a href="contents.html#indian-society">Indian society</a></li>
     </ul>
+    <!-- Perfectly centered View More button at the bottom -->
     <div class="view-more-container">
         <a href="contents.html" class="view-more-link">View more</a>
     </div>
 </div>
+            <!-- Card 4: MUST READ -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Must read</h2>
                 <ul class="document-list">
@@ -617,6 +641,7 @@
                 </ul>
             </div>
 
+            <!-- Card 5: CHAPTERS -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Chapters</h2>
                 <ul class="document-list">
@@ -624,6 +649,7 @@
                 </ul>
             </div>
 
+            <!-- Card 6: ESSAYS -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Essays</h2>
                 <ul class="document-list">
@@ -634,6 +660,7 @@
         </div>
     </main>
 
+    <!-- Grounded Minimal Footer -->
     <footer>
         <div class="footer-links-row">
             <a href="Footer/about.html">About</a>
@@ -647,6 +674,7 @@
         </div>
     </footer>
 
+    <!-- Smart Native Device Sync & Twin-View Controller Engine -->
     <script>
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
@@ -736,26 +764,25 @@
             }
         });
 
-        // --- Master Universal Kinetic Click-Zoom Loop Engine ---
+        // --- Master Universal Kinetic Click-Zoom Engine ---
         interactiveLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
                 if (!destination || destination === '#') return;
                 
-                e.preventDefault(); // Suspend viewport layout pops
-                
-                // Track standard absolute URL string parameters safely inside session limits
+                e.preventDefault(); 
                 sessionStorage.setItem('activeUniversalTargetUrl', this.href);
                 
                 const innerSpan = this.querySelector('.kinetic-target');
                 if (innerSpan) {
-                    this.classList.add('kinetic-active'); // Fire horizontal position freeze shield
+                    this.classList.add('kinetic-animating'); 
                     
-                    let startScale = 1.0;
-                    let endScale = 1.5;
-                    let startOpacity = 1;
+                    // Capture starting frame context cleanly (whether cursor is hovering at 1.06 or at rest)
+                    let startScale = this.matches(':hover') ? 1.06 : 1.0;
+                    let endScale = 1.6;
+                    let startOpacity = 1.0;
                     let endOpacity = 0;
-                    let duration = 350; // Ultra high-speed entrance fade
+                    let duration = 400; // Premium forward sweep duration
                     let startTime = null;
                     
                     function animateForward(timestamp) {
@@ -763,13 +790,14 @@
                         let elapsed = timestamp - startTime;
                         let progress = Math.min(elapsed / duration, 1);
                         
-                        let ease = Math.pow(progress, 3); // High-velocity zoom acceleration curve
+                        // Cubic ease-in forward tracking acceleration trajectory
+                        let ease = Math.pow(progress, 3);
                         
                         let currentScale = startScale + (endScale - startScale) * ease;
                         let currentOpacity = startOpacity - (startOpacity - endOpacity) * ease;
                         
-                        innerSpan.style.transform = `scale3d(${currentScale}, ${currentScale}, 1)`;
-                        innerSpan.style.opacity = currentOpacity;
+                        innerSpan.style.setProperty('transform', `scale3d(${currentScale}, ${currentScale}, 1)`, 'important');
+                        innerSpan.style.setProperty('opacity', currentOpacity, 'important');
                         
                         if (progress < 1) {
                             requestAnimationFrame(animateForward);
@@ -787,9 +815,8 @@
         // --- Ironclad Page-Show Master Controller Pipeline ---
         window.addEventListener('pageshow', (event) => {
             
-            // 1. HARDWARE COMPOSITE RE-TRIGGER ENGINE (Restores perfect native load animations without shaking)
+            // 1. HARDWARE COMPOSITE RE-TRIGGER ENGINE (Restores fresh load animations smoothly)
             const layoutElements = document.querySelectorAll('header, .capsule-panel, footer');
-            const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
             
             if (layoutElements.length > 0) {
                 layoutElements.forEach(el => {
@@ -797,7 +824,7 @@
                     el.style.webkitAnimation = 'none';
                 });
                 
-                void document.body.offsetHeight; // Purge hardware memory cache layers
+                void document.body.offsetHeight; // Flush hardware registers completely
                 
                 requestAnimationFrame(() => {
                     layoutElements.forEach(el => {
@@ -808,24 +835,22 @@
             }
 
             // 2. UNIVERSAL TARGETED REVERSE GLIDE RECOVERY ENGINE
-            // Instantly clear trailing parameters and clear inline style mutations on clean canvas entry
+            // Clear all lingering style overrides instantly to reset canvas layout baseline context
             interactiveLinks.forEach(l => {
-                l.classList.remove('kinetic-active');
+                l.classList.remove('kinetic-animating');
                 const span = l.querySelector('.kinetic-target');
                 if (span) {
                     span.style.transform = '';
                     span.style.opacity = '';
-                    span.style.transition = '';
-                    span.style.webkitTransition = '';
                 }
             });
             
+            const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
             if (savedTargetUrl) {
-                sessionStorage.removeItem('activeUniversalTargetUrl'); // Clear tracking session data
+                sessionStorage.removeItem('activeUniversalTargetUrl'); // Clear session token data
                 
                 let matchedLinkElement = null;
                 
-                // Normalize and compare absolute URL locations to map components accurately
                 interactiveLinks.forEach(link => {
                     try {
                         if (new URL(link.href).href === new URL(savedTargetUrl).href) {
@@ -842,47 +867,43 @@
                     const targetSpan = matchedLinkElement.querySelector('.kinetic-target');
                     
                     if (targetSpan) {
-                        matchedLinkElement.classList.add('kinetic-active'); // Enforce padding override shield
+                        matchedLinkElement.classList.add('kinetic-animating'); 
                         
-                        let startScale = 1.5;
+                        let startScale = 1.6;
                         let endScale = 1.0;
                         let startOpacity = 0;
                         let endOpacity = matchedLinkElement.classList.contains('view-more-link') ? 1 : 0.8;
                         
-                        let duration = 500; // 500ms provides a gorgeous, buttery soft deceleration glide
+                        let duration = 500; // Extended to 500ms for a gorgeous, luxurious return landing glide
                         let startTime = null;
                         
-                        targetSpan.style.transition = 'none';
-                        targetSpan.style.webkitTransition = 'none';
+                        targetSpan.style.setProperty('transform', `scale3d(${startScale}, ${startScale}, 1)`, 'important');
+                        targetSpan.style.setProperty('opacity', startOpacity, 'important');
                         
-                        targetSpan.style.transform = `scale3d(${startScale}, ${startScale}, 1)`;
-                        targetSpan.style.opacity = startOpacity;
-                        
-                        // Pure JS Loop: Executes flawlessly behind iOS gesture snapshots
+                        // Thread-Locked Frame Renderer Loop: Unaffected by mobile safari screen tracking blocks
                         function animateLinkReverse(timestamp) {
                             if (!startTime) startTime = timestamp;
                             let elapsed = timestamp - startTime;
                             let progress = Math.min(elapsed / duration, 1);
                             
-                            // High-End Premium Quintic Ease-Out Tracking Curve: 1 - (1 - x)^5
+                            // High-End Premium Quintic Ease-Out Tracking Curve Physics: 1 - (1 - x)^5
                             let ease = 1 - Math.pow(1 - progress, 5);
                             
                             let currentScale = startScale - (startScale - endScale) * ease;
                             let currentOpacity = startOpacity + (endOpacity - startOpacity) * ease;
                             
-                            targetSpan.style.transform = `scale3d(${currentScale}, ${currentScale}, 1)`;
-                            targetSpan.style.opacity = currentOpacity;
+                            targetSpan.style.setProperty('transform', `scale3d(${currentScale}, ${currentScale}, 1)`, 'important');
+                            targetSpan.style.setProperty('opacity', currentOpacity, 'important');
                             
                             if (progress < 1) {
                                 requestAnimationFrame(animateLinkReverse);
                             } else {
-                                // Touchdown target reached perfectly: Flush styles away for normal mouse hover functions
+                                // Destination reached softly: Wipe away all tracking styles to reactivate normal hover layers
                                 targetSpan.style.transform = '';
                                 targetSpan.style.opacity = '';
-                                matchedLinkElement.classList.remove('kinetic-active');
+                                matchedLinkElement.classList.remove('kinetic-animating');
                             }
                         }
-                        
                         requestAnimationFrame(animateLinkReverse);
                     }
                 }
