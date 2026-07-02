@@ -325,7 +325,14 @@
             flex-direction: column;
             height: 100%;
             transform: scale(1);
-            /* Added transform mapping to transitions here for smooth layout physics */
+            
+            /* Strict Mobile Anti-Shaking Hardware Compositor Locks */
+            will-change: transform, opacity;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            
             transition: border-color 0.5s var(--ease-premium), background-color 0.5s var(--ease-premium), transform 0.5s var(--ease-premium);
         }
 
@@ -376,7 +383,15 @@
             text-decoration: none !important;
             font-size: 14.5px;
             font-weight: 400;
-            transition: color 0.4s var(--ease-premium), padding-left 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
+            
+            /* Anti-Text Shivering Hardware Layer Definitions */
+            will-change: transform, opacity;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            
+            transition: color 0.4s var(--ease-premium), padding-left 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), transform 0.2s ease;
             -webkit-tap-highlight-color: transparent !important;
         }
 
@@ -413,7 +428,14 @@
             text-decoration: none !important;
             font-size: 14px;
             font-weight: 400;
-            transition: color 0.4s var(--ease-premium);
+            display: inline-block;
+            
+            /* Anti-Shivering Hardware Layer Locks */
+            will-change: transform, opacity;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            
+            transition: color 0.4s var(--ease-premium), transform 0.2s ease, opacity 0.2s ease;
         }
 
         .footer-links-row a:hover {
@@ -491,6 +513,10 @@
     font-size: 0.95rem;
     display: inline-block;
     will-change: transform, opacity;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
     -webkit-tap-highlight-color: transparent !important; /* Kills mobile blue flash */
     transition: transform 0.2s ease, opacity 0.2s ease;
 }
@@ -500,10 +526,11 @@
     text-decoration: none !important;
 }
 
-/* The Synchronized Zoom & Fade Trigger State (Forward Motion) */
-.view-more-link.is-zooming {
+/* Universal Synchronized Zoom & Fade State (Forward Motion Engine) */
+.capsule-panel a.is-zooming-link, 
+footer .footer-links-row a.is-zooming-link {
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s linear !important;
-    transform: scale(1.6) !important; 
+    transform: scale(1.4) !important; 
     opacity: 0 !important;          
 }
         
@@ -567,7 +594,7 @@
                 </ul>
             </div>
 
-          <div class="capsule-panel animate-fade-in">
+          <div class="capsule-panel">
     <h2 class="panel-title">Contents</h2>
     <ul class="document-list">
         <li><a href="contents.html#art-culture">Art and culture</a></li>
@@ -691,124 +718,106 @@
             }
         });
 
-        // --- Premium View More Click-Zoom Transition Engine ---
-        const viewMoreLink = document.querySelector('.view-more-link');
+        // --- Master Universal Kinetic Link Engine ---
+        const interactiveLinks = document.querySelectorAll('.capsule-panel a, footer .footer-links-row a');
         
-        if (viewMoreLink) {
-            viewMoreLink.addEventListener('click', function(e) {
-                e.preventDefault(); // Hold back abrupt browser jumping
-                
-                // Track that the click transition is strictly coming from View More
-                sessionStorage.setItem('viewMoreActiveTransition', 'true');
-                
+        interactiveLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
-                this.classList.add('is-zooming'); // Fire forward fade/zoom timeline
+                if (!destination || destination === '#') return;
+                
+                e.preventDefault(); // Suspend layout jumping
+                
+                // Track the unique URL string of the clicked target link
+                sessionStorage.setItem('activeUniversalTargetUrl', destination);
+                
+                this.classList.add('is-zooming-link'); // Run cinematic forward timelines
                 
                 setTimeout(() => {
                     window.location.href = destination;
                 }, 400);
             });
-        }
+        });
 
-        // --- Ironclad Back-Button & Full Component Sync Controller ---
+        // --- Ironclad Page-Show Master Controller Pipeline ---
         window.addEventListener('pageshow', (event) => {
             
-            // 1. REVERSE CAPSULE ENTRANCE ENGINE (Restores fresh-load entry on back/swipe)
-            const capsules = document.querySelectorAll('.capsule-panel');
+            // 1. HARDWARE COMPOSITE RE-TRIGGER ENGINE (Restores perfect native load animations without shaking)
+            const layoutElements = document.querySelectorAll('header, .capsule-panel, footer');
             
-            if (capsules.length > 0) {
-                capsules.forEach(capsule => {
-                    // Instantly hide and lower them before layout parsing to absorb the WebKit layout jerk
-                    capsule.style.transition = 'none';
-                    capsule.style.webkitTransition = 'none';
-                    capsule.style.opacity = '0';
-                    capsule.style.transform = 'translate3d(0, 30px, 0)';
-                    capsule.style.webkitTransform = 'translate3d(0, 30px, 0)';
+            if (layoutElements.length > 0) {
+                layoutElements.forEach(el => {
+                    el.style.animation = 'none';
+                    el.style.webkitAnimation = 'none';
                 });
                 
-                // Force an immediate layout hardware calculation reflow to save the starting frame
-                void document.body.offsetHeight;
+                void document.body.offsetHeight; // Reset memory caches completely
                 
-                // Smoothly cascade all 6 capsules together into place using a premium micro-stagger
                 requestAnimationFrame(() => {
-                    capsules.forEach((capsule, index) => {
-                        capsule.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease-out';
-                        capsule.style.webkitTransition = '-webkit-transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease-out';
-                        capsule.style.transitionDelay = `${index * 25}ms`;
-                        capsule.style.webkitTransitionDelay = `${index * 25}ms`;
-                        
-                        capsule.style.opacity = '1';
-                        capsule.style.transform = 'translate3d(0, 0, 0)';
-                        capsule.style.webkitTransform = 'translate3d(0, 0, 0)';
+                    layoutElements.forEach(el => {
+                        el.style.animation = '';
+                        el.style.webkitAnimation = '';
                     });
                 });
-                
-                // Erase temporary inline layouts once arrival sequence fully finishes
-                setTimeout(() => {
-                    capsules.forEach(capsule => {
-                        capsule.style.transition = '';
-                        capsule.style.webkitTransition = '';
-                        capsule.style.transitionDelay = '';
-                        capsule.style.webkitTransitionDelay = '';
-                        capsule.style.opacity = '';
-                        capsule.style.transform = '';
-                        capsule.style.webkitTransform = '';
-                    });
-                }, 1000);
             }
 
-            // 2. PREMIUM HIGH-FIDELITY VIEW MORE REVERSE ENGINE
-            if (viewMoreLink) {
-                // Instantly strip any leftover forward animation classes
-                viewMoreLink.classList.remove('is-zooming');
+            // 2. UNIVERSAL TARGETED REVERSE GLIDE ENGINE
+            const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
+            
+            // Instantly clear any trailing forward animation tracking classes
+            interactiveLinks.forEach(l => l.classList.remove('is-zooming-link'));
+            
+            if (savedTargetUrl) {
+                sessionStorage.removeItem('activeUniversalTargetUrl'); // Clear memory vault
                 
-                // Verify if the user left the homepage through this exact element link
-                const wasViewMoreClicked = sessionStorage.getItem('viewMoreActiveTransition') === 'true';
+                // Match the exact link element across the entire DOM tree via loop-matching
+                let matchedLinkElement = null;
+                interactiveLinks.forEach(link => {
+                    if (link.getAttribute('href') === savedTargetUrl) {
+                        matchedLinkElement = link;
+                    }
+                });
                 
-                if (wasViewMoreClicked) {
-                    // Burn the tracker flag immediately so it won't fire during other component movements
-                    sessionStorage.removeItem('viewMoreActiveTransition');
-                    
-                    let startScale = 1.6;
+                if (matchedLinkElement) {
+                    let startScale = 1.4;
                     let endScale = 1.0;
                     let startOpacity = 0;
-                    let endOpacity = 1;
-                    let duration = 500; // 500ms allows for an exquisite, relaxed transition timeline
+                    
+                    // Parse native resting layout opacity variables dynamically
+                    let restingOpacity = matchedLinkElement.classList.contains('view-more-link') ? 1 : 0.8;
+                    
+                    let duration = 500; // Expanded to 500ms for a more premium, relaxed deceleration
                     let startTime = null;
                     
-                    // Enforce precise baseline layout parameters
-                    viewMoreLink.style.transform = `scale(${startScale})`;
-                    viewMoreLink.style.opacity = startOpacity;
+                    // Lock starting boundaries
+                    matchedLinkElement.style.transform = `scale(${startScale})`;
+                    matchedLinkElement.style.opacity = startOpacity;
                     
-                    // Pure JS Thread-Locked Loop: Bypasses iOS snapshot caching freezes effortlessly
-                    function animateReverse(timestamp) {
+                    // Pure JS Thread Loop: Bypasses mobile swipe snapshot freezings effortlessly
+                    function animateLinkReverse(timestamp) {
                         if (!startTime) startTime = timestamp;
                         let elapsed = timestamp - startTime;
                         let progress = Math.min(elapsed / duration, 1);
                         
-                        // Premium Quintic Ease-Out Curve Physics Matrix: 1 - (1 - x)^5
+                        // Premium Quintic Ease-Out Equation: 1 - (1 - x)^5
                         let ease = 1 - Math.pow(1 - progress, 5);
                         
                         let currentScale = startScale - (startScale - endScale) * ease;
-                        let currentOpacity = startOpacity + (endOpacity - startOpacity) * ease;
+                        let currentOpacity = startOpacity + (restingOpacity - startOpacity) * ease;
                         
-                        viewMoreLink.style.transform = `scale(${currentScale})`;
-                        viewMoreLink.style.opacity = currentOpacity;
+                        matchedLinkElement.style.transform = `scale(${currentScale})`;
+                        matchedLinkElement.style.opacity = currentOpacity;
                         
                         if (progress < 1) {
-                            requestAnimationFrame(animateReverse);
+                            requestAnimationFrame(animateLinkReverse);
                         } else {
-                            // Destination reached elegantly: Clean styles up for standard pointer hovers
-                            viewMoreLink.style.transform = '';
-                            viewMoreLink.style.opacity = '';
+                            // Target reached smoothly: Scrub styles away for standard mouse-hovers
+                            matchedLinkElement.style.transform = '';
+                            matchedLinkElement.style.opacity = '';
                         }
                     }
                     
-                    requestAnimationFrame(animateReverse);
-                } else {
-                    // Guardrail Isolation: Arriving from somewhere else. Force standard resting styles.
-                    viewMoreLink.style.transform = '';
-                    viewMoreLink.style.opacity = '';
+                    requestAnimationFrame(animateLinkReverse);
                 }
             }
         });
