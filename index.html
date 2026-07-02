@@ -492,10 +492,7 @@
     display: inline-block;
     will-change: transform, opacity;
     -webkit-tap-highlight-color: transparent !important; /* Kills mobile blue flash */
-    
-    /* The Native Transition Engine: Pauses during swipes, plays instantly when released */
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s linear;
-    -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s linear;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .view-more-link:hover {
@@ -503,7 +500,7 @@
     text-decoration: none !important;
 }
 
-/* The Synchronized Zoom & Fade Trigger State (Forward Motion) - UNTOUCHED */
+/* The Synchronized Zoom & Fade Trigger State (Forward Motion) */
 .view-more-link.is-zooming {
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s linear !important;
     transform: scale(1.6) !important; 
@@ -725,33 +722,51 @@
             });
         }
 
-        // --- Ironclad Back-Button Reverse Transition Controller ---
+        // --- Ironclad Back-Button & Edge-Swipe Reverse Transition Controller ---
         window.addEventListener('pageshow', (event) => {
             if (viewMoreLink) {
-                // 1. Instantly freeze the text at its expanded, invisible forward state.
-                // This shields the element and prevents visual flashing during gesture slides.
-                viewMoreLink.style.transition = 'none';
-                viewMoreLink.style.webkitTransition = 'none';
-                viewMoreLink.style.transform = 'scale3d(1.6, 1.6, 1)';
-                viewMoreLink.style.webkitTransform = 'scale3d(1.6, 1.6, 1)';
-                viewMoreLink.style.opacity = '0';
+                // 1. Clean up any leftover forward classes instantly
+                viewMoreLink.classList.remove('is-zooming');
                 
-                // Force a layout recalculation to lock the frozen snapshot state
-                void viewMoreLink.offsetHeight;
+                // 2. Set starting parameters for the reverse entry state
+                let startScale = 1.6;
+                let endScale = 1.0;
+                let startOpacity = 0;
+                let endOpacity = 1;
+                let duration = 400; // Exact same 400ms speed configuration
+                let startTime = null;
                 
-                // 2. A crisp 50ms macro-task delay gives Safari's gesture layer 
-                // plenty of time to safely hand rendering control back to the main layout thread
-                setTimeout(() => {
-                    // Revert back to the base stylesheet layout rules
-                    viewMoreLink.classList.remove('is-zooming');
+                // Setup initial hidden state immediately
+                viewMoreLink.style.transform = `scale(${startScale})`;
+                viewMoreLink.style.opacity = startOpacity;
+                
+                // 3. Pure JS Animation Loop: Pauses during Safari swipe, plays instantly when finger releases
+                function animateReverse(timestamp) {
+                    if (!startTime) startTime = timestamp;
+                    let elapsed = timestamp - startTime;
+                    let progress = Math.min(elapsed / duration, 1);
                     
-                    // Release the inline style locks so the native CSS transition kicks in perfectly
-                    viewMoreLink.style.transition = '';
-                    viewMoreLink.style.webkitTransition = '';
-                    viewMoreLink.style.transform = '';
-                    viewMoreLink.style.webkitTransform = '';
-                    viewMoreLink.style.opacity = '';
-                }, 50);
+                    // Premium Deceleration Curve: Matches your exact ease-out feeling
+                    let ease = 1 - Math.pow(1 - progress, 2.2);
+                    
+                    // Compute the active frame styles
+                    let currentScale = startScale - (startScale - endScale) * ease;
+                    let currentOpacity = startOpacity + (endOpacity - startOpacity) * ease;
+                    
+                    viewMoreLink.style.transform = `scale(${currentScale})`;
+                    viewMoreLink.style.opacity = currentOpacity;
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animateReverse);
+                    } else {
+                        // Animation complete: Clean up inline styles so normal hover effects work perfectly
+                        viewMoreLink.style.transform = '';
+                        viewMoreLink.style.opacity = '';
+                    }
+                }
+                
+                // Queue the animation loop on the browser's paint thread
+                requestAnimationFrame(animateReverse);
             }
         });
         
