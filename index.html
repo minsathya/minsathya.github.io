@@ -502,28 +502,39 @@
 
 /* The Synchronized Zoom & Fade Trigger State (Forward Motion) */
 .view-more-link.is-zooming {
-    /* Fast 300ms timeline with an accelerating curve so it never slows down */
     transition: transform 0.3s cubic-bezier(0.32, 0, 0.67, 0), opacity 0.3s ease-in !important;
     transform: scale(1.7) !important; 
-    opacity: 0 !important; /* Completely vanished at exactly 300ms */         
+    opacity: 0 !important;         
 }
 
-/* The Mirrored Reverse Transition State (Backward Motion) */
+/* The Mirrored Reverse Transition State (Backward Motion) - FIXED FOR IPAD */
 .view-more-link.is-reversing {
-    /* Uses identical timing definitions running through specialized keyframe tracks */
-    animation: reverseTransform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
-               reverseOpacity 0.4s linear forwards;
+    animation: ipadSafeReverse 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    -webkit-animation: ipadSafeReverse 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
-/* Math vectors to smoothly collapse the text footprint backward */
-@keyframes reverseTransform {
-    0% { transform: scale(1.6); }
-    100% { transform: scale(1); }
+/* Unified 3D Vector Track that forces iPad's hardware graphics card to cooperate */
+@keyframes ipadSafeReverse {
+    0% { 
+        transform: scale3d(1.6, 1.6, 1); 
+        opacity: 0; 
+    }
+    100% { 
+        transform: scale3d(1, 1, 1); 
+        opacity: 1; 
+    }
 }
 
-@keyframes reverseOpacity {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+/* WebKit specific fallback mirror to guarantee older iPadOS versions pick it up */
+@-webkit-keyframes ipadSafeReverse {
+    0% { 
+        -webkit-transform: scale3d(1.6, 1.6, 1); 
+        opacity: 0; 
+    }
+    100% { 
+        -webkit-transform: scale3d(1, 1, 1); 
+        opacity: 1; 
+    }
 }
         
     </style>
