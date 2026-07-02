@@ -511,14 +511,11 @@
 </head>
 <body>
 
-    <!-- Header Block - Unified Twin View Wide Design Layout -->
     <header id="masterHeader">
         
-        <!-- View Layer A: Default Branding State -->
         <div class="header-inner-view" id="headerMainView">
             <a href="#" class="logo">sathya.</a>
             <div class="header-right-cluster">
-                <!-- Dark Mode Toggle FIRST -->
                 <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
                     <svg class="sun-icon" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="4"></circle>
@@ -528,14 +525,12 @@
                         <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
                     </svg>
                 </div>
-                <!-- Search Button SECOND -->
                 <button class="ctrl-btn" id="openSearchBtn" aria-label="Open Workspace Search">
                     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 </button>
             </div>
         </div>
 
-        <!-- View Layer B: Active Search State -->
         <div class="header-inner-view" id="headerSearchView">
             <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <input type="text" class="search-core-input" id="searchCoreInput" placeholder="Search..." autocomplete="off">
@@ -552,10 +547,8 @@
     </header>
 
     <main>
-        <!-- Matrix Canvas Layout Container -->
         <div class="matrix-canvas">
 
-            <!-- Card 1: UPSC -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Upsc</h2>
                 <ul class="document-list">
@@ -566,7 +559,6 @@
                 </ul>
             </div>
 
-            <!-- Card 2: CURRENT AFFAIRS -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Current affairs</h2>
                 <ul class="document-list">
@@ -575,20 +567,17 @@
                 </ul>
             </div>
 
-          <!-- Card 3: CONTENTS -->
-<div class="capsule-panel animate-fade-in">
+          <div class="capsule-panel animate-fade-in">
     <h2 class="panel-title">Contents</h2>
     <ul class="document-list">
         <li><a href="contents.html#art-culture">Art and culture</a></li>
         <li><a href="contents.html#history">History</a></li>
         <li><a href="contents.html#indian-society">Indian society</a></li>
     </ul>
-    <!-- Perfectly centered View More button at the bottom -->
     <div class="view-more-container">
         <a href="contents.html" class="view-more-link">View more</a>
     </div>
 </div>
-            <!-- Card 4: MUST READ -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Must read</h2>
                 <ul class="document-list">
@@ -597,7 +586,6 @@
                 </ul>
             </div>
 
-            <!-- Card 5: CHAPTERS -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Chapters</h2>
                 <ul class="document-list">
@@ -605,7 +593,6 @@
                 </ul>
             </div>
 
-            <!-- Card 6: ESSAYS -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Essays</h2>
                 <ul class="document-list">
@@ -616,7 +603,6 @@
         </div>
     </main>
 
-    <!-- Grounded Minimal Footer -->
     <footer>
         <div class="footer-links-row">
             <a href="Footer/about.html">About</a>
@@ -630,7 +616,6 @@
         </div>
     </footer>
 
-    <!-- Smart Native Device Sync & Twin-View Controller Engine -->
     <script>
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
@@ -706,12 +691,15 @@
             }
         });
 
-// --- Premium View More Click-Zoom Transition Engine ---
+        // --- Premium View More Click-Zoom Transition Engine ---
         const viewMoreLink = document.querySelector('.view-more-link');
         
         if (viewMoreLink) {
             viewMoreLink.addEventListener('click', function(e) {
                 e.preventDefault(); // Hold back abrupt browser jumping
+                
+                // Track that the click transition is strictly coming from View More
+                sessionStorage.setItem('viewMoreActiveTransition', 'true');
                 
                 const destination = this.getAttribute('href');
                 this.classList.add('is-zooming'); // Fire forward fade/zoom timeline
@@ -722,83 +710,106 @@
             });
         }
 
-        // --- Ironclad Back-Button & Capsule Smooth Entrance Controller ---
+        // --- Ironclad Back-Button & Full Component Sync Controller ---
         window.addEventListener('pageshow', (event) => {
-            // 1. TARGET THE 6 CAPSULES (Change '.card' to your actual capsule class name if needed)
-            const capsules = document.querySelectorAll('.card');
+            
+            // 1. REVERSE CAPSULE ENTRANCE ENGINE (Restores fresh-load entry on back/swipe)
+            const capsules = document.querySelectorAll('.capsule-panel');
             
             if (capsules.length > 0) {
                 capsules.forEach(capsule => {
-                    // Instantly lock them invisible and lowered down to absorb the layout jerk
+                    // Instantly hide and lower them before layout parsing to absorb the WebKit layout jerk
                     capsule.style.transition = 'none';
                     capsule.style.webkitTransition = 'none';
                     capsule.style.opacity = '0';
-                    capsule.style.transform = 'translate3d(0, 20px, 0)';
-                    capsule.style.webkitTransform = 'translate3d(0, 20px, 0)';
+                    capsule.style.transform = 'translate3d(0, 30px, 0)';
+                    capsule.style.webkitTransform = 'translate3d(0, 30px, 0)';
                 });
                 
-                // Force a layout calculation to ensure the hidden state is locked
-                document.body.offsetHeight;
+                // Force an immediate layout hardware calculation reflow to save the starting frame
+                void document.body.offsetHeight;
                 
-                // Smoothly float up and fade in the capsules right after the page unfreezes
+                // Smoothly cascade all 6 capsules together into place using a premium micro-stagger
                 requestAnimationFrame(() => {
-                    capsules.forEach(capsule => {
-                        capsule.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ease-out';
-                        capsule.style.webkitTransition = '-webkit-transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ease-out';
+                    capsules.forEach((capsule, index) => {
+                        capsule.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease-out';
+                        capsule.style.webkitTransition = '-webkit-transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease-out';
+                        capsule.style.transitionDelay = `${index * 25}ms`;
+                        capsule.style.webkitTransitionDelay = `${index * 25}ms`;
+                        
                         capsule.style.opacity = '1';
                         capsule.style.transform = 'translate3d(0, 0, 0)';
                         capsule.style.webkitTransform = 'translate3d(0, 0, 0)';
                     });
                 });
                 
-                // Clean up inline styles after the transition ends so your original CSS styles take back over
+                // Erase temporary inline layouts once arrival sequence fully finishes
                 setTimeout(() => {
                     capsules.forEach(capsule => {
                         capsule.style.transition = '';
                         capsule.style.webkitTransition = '';
+                        capsule.style.transitionDelay = '';
+                        capsule.style.webkitTransitionDelay = '';
                         capsule.style.opacity = '';
                         capsule.style.transform = '';
                         capsule.style.webkitTransform = '';
                     });
-                }, 550);
+                }, 1000);
             }
 
-            // 2. VIEW MORE REVERSE ENGINE (Your working swipe-fix code)
+            // 2. PREMIUM HIGH-FIDELITY VIEW MORE REVERSE ENGINE
             if (viewMoreLink) {
+                // Instantly strip any leftover forward animation classes
                 viewMoreLink.classList.remove('is-zooming');
                 
-                let startScale = 1.6;
-                let endScale = 1.0;
-                let startOpacity = 0;
-                let endOpacity = 1;
-                let duration = 400;
-                let startTime = null;
+                // Verify if the user left the homepage through this exact element link
+                const wasViewMoreClicked = sessionStorage.getItem('viewMoreActiveTransition') === 'true';
                 
-                viewMoreLink.style.transform = `scale(${startScale})`;
-                viewMoreLink.style.opacity = startOpacity;
-                
-                function animateReverse(timestamp) {
-                    if (!startTime) startTime = timestamp;
-                    let elapsed = timestamp - startTime;
-                    let progress = Math.min(elapsed / duration, 1);
+                if (wasViewMoreClicked) {
+                    // Burn the tracker flag immediately so it won't fire during other component movements
+                    sessionStorage.removeItem('viewMoreActiveTransition');
                     
-                    let ease = 1 - Math.pow(1 - progress, 2.2);
+                    let startScale = 1.6;
+                    let endScale = 1.0;
+                    let startOpacity = 0;
+                    let endOpacity = 1;
+                    let duration = 500; // 500ms allows for an exquisite, relaxed transition timeline
+                    let startTime = null;
                     
-                    let currentScale = startScale - (startScale - endScale) * ease;
-                    let currentOpacity = startOpacity + (endOpacity - startOpacity) * ease;
+                    // Enforce precise baseline layout parameters
+                    viewMoreLink.style.transform = `scale(${startScale})`;
+                    viewMoreLink.style.opacity = startOpacity;
                     
-                    viewMoreLink.style.transform = `scale(${currentScale})`;
-                    viewMoreLink.style.opacity = currentOpacity;
-                    
-                    if (progress < 1) {
-                        requestAnimationFrame(animateReverse);
-                    } else {
-                        viewMoreLink.style.transform = '';
-                        viewMoreLink.style.opacity = '';
+                    // Pure JS Thread-Locked Loop: Bypasses iOS snapshot caching freezes effortlessly
+                    function animateReverse(timestamp) {
+                        if (!startTime) startTime = timestamp;
+                        let elapsed = timestamp - startTime;
+                        let progress = Math.min(elapsed / duration, 1);
+                        
+                        // Premium Quintic Ease-Out Curve Physics Matrix: 1 - (1 - x)^5
+                        let ease = 1 - Math.pow(1 - progress, 5);
+                        
+                        let currentScale = startScale - (startScale - endScale) * ease;
+                        let currentOpacity = startOpacity + (endOpacity - startOpacity) * ease;
+                        
+                        viewMoreLink.style.transform = `scale(${currentScale})`;
+                        viewMoreLink.style.opacity = currentOpacity;
+                        
+                        if (progress < 1) {
+                            requestAnimationFrame(animateReverse);
+                        } else {
+                            // Destination reached elegantly: Clean styles up for standard pointer hovers
+                            viewMoreLink.style.transform = '';
+                            viewMoreLink.style.opacity = '';
+                        }
                     }
+                    
+                    requestAnimationFrame(animateReverse);
+                } else {
+                    // Guardrail Isolation: Arriving from somewhere else. Force standard resting styles.
+                    viewMoreLink.style.transform = '';
+                    viewMoreLink.style.opacity = '';
                 }
-                
-                requestAnimationFrame(animateReverse);
             }
         });
         
