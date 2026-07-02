@@ -500,12 +500,12 @@
     text-decoration: none !important;
 }
 
-/* The Zoom Trigger State: Constantly accelerates into the page transition */
+/* The Synchronized Zoom & Fade Trigger State */
 .view-more-link.is-zooming {
-    /* Pure Ease-In curve means it gathers speed and never hits an early slowdown wall */
-    transition: transform 0.8s cubic-bezier(0.32, 0, 0.67, 0) !important;
-    transform: scale(2) !important; /* Larger scale makes the forward rush obvious */
-    opacity: 1 !important;
+    /* Tied perfectly to 0.4 seconds. Linear opacity ensures a smooth, steady fade-out */
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s linear !important;
+    transform: scale(1.6) !important; /* Continuous steady expansion */
+    opacity: 0 !important;          /* Hits complete invisibility exactly at 400ms */
 }
         
     </style>
@@ -712,15 +712,15 @@
         
         if (viewMoreLink) {
             viewMoreLink.addEventListener('click', function(e) {
-                e.preventDefault(); // Hold the browser back from a jerky page jump
+                e.preventDefault(); // Hold the browser back from jumping early
                 
                 const destination = this.getAttribute('href');
-                this.classList.add('is-zooming'); // Trigger the accelerating zoom
+                this.classList.add('is-zooming'); // Start the shared zoom/fade timeline
                 
-                // Cuts to the next page at 250ms while the text is actively gaining speed
+                // Fires exactly at 400ms—the precise moment the animation finishes fading out
                 setTimeout(() => {
                     window.location.href = destination;
-                }, 250);
+                }, 400);
             });
         }
 
