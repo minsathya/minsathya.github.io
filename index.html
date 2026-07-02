@@ -502,10 +502,10 @@
 
 /* The Synchronized Zoom & Fade Trigger State (Forward Motion) */
 .view-more-link.is-zooming {
-    /* Extended to 0.8s so the animation keeps moving past the page jump point */
-    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s linear !important;
-    transform: scale(1.8) !important; /* Slightly larger scale to sustain the momentum */
-    opacity: 0 !important;          
+    /* Fast 300ms timeline with an accelerating curve so it never slows down */
+    transition: transform 0.3s cubic-bezier(0.32, 0, 0.67, 0), opacity 0.3s ease-in !important;
+    transform: scale(1.7) !important; 
+    opacity: 0 !important; /* Completely vanished at exactly 300ms */         
 }
 
 /* The Mirrored Reverse Transition State (Backward Motion) */
@@ -735,13 +735,13 @@
                 const destination = this.getAttribute('href');
                 this.classList.add('is-zooming'); // Fire forward fade/zoom timeline
                 
-                /* Switches the page link at 350ms. At this exact millisecond, 
-                   the text is still right in the middle of its fluid 0.8s zoom 
-                   and fade path, ensuring it never freezes or looks stuck.
+                /* Tunnels to the next page at exactly 300ms. This perfectly mirrors 
+                   the CSS transition finish line, ensuring the text is fully faded 
+                   out right when the page cut occurs.
                 */
                 setTimeout(() => {
                     window.location.href = destination;
-                }, 350);
+                }, 300);
             });
         }
 
