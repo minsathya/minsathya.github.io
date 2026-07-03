@@ -24,8 +24,9 @@
         :root {
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
             
-            /* Nature-Inspired Grayscale Timelapse Curves */
+            /* Continuous Exposure Dissolve Tokens */
             --dusk-curve: cubic-bezier(0.25, 1, 0.5, 1);
+            --dusk-duration: 0.8s;
             
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
@@ -39,6 +40,13 @@
             --header-border: #222c26;
             
             --bullet-color: #444444;
+
+            /* Celestial Toggle Token Canvas Variables */
+            --toggle-pill-bg: #121212;
+            --toggle-pill-border: #222222;
+            --sun-color: #ffffff;
+            --orbit-line: rgba(255, 255, 255, 0.08);
+            --star-opacity: 1;
 
             /* Vertical cascade parameters matching master optimization */
             --cascade-distance: 24px;
@@ -59,6 +67,13 @@
             --header-border: #d4d8cf;
             
             --bullet-color: #b8b8bc;
+
+            /* Light Mode Celestial Overrides */
+            --toggle-pill-bg: #ffffff;
+            --toggle-pill-border: #e2e2e7;
+            --sun-color: #111111;
+            --orbit-line: rgba(0, 0, 0, 0.06);
+            --star-opacity: 0;
         }
 
         * {
@@ -84,8 +99,22 @@
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             
-            /* Layer 1: Sky exposure dissolves instantly over 800ms */
-            transition: background-color 800ms var(--dusk-curve);
+            /* Root Level Environmental Blending Pass */
+            transition: background-color var(--dusk-duration) var(--dusk-curve), color var(--dusk-duration) var(--dusk-curve);
+        }
+
+        /* Continuous Exposure Variable Mapping Pass to Prevent Frame Flashing */
+        header, .wide-capsule, .logo, .ctrl-btn, .ctrl-btn svg, 
+        .search-static-icon, .search-core-input, .breadcrumb-nav, 
+        .breadcrumb-nav a, .breadcrumb-separator, .breadcrumb-current, 
+        .page-main-heading, .wide-panel-title, .sub-section-title, 
+        .topics-column-grid li::before, .topics-column-grid a, 
+        footer .footer-links-row a, .copyright-tag {
+            transition: background-color var(--dusk-duration) var(--dusk-curve),
+                        border-color var(--dusk-duration) var(--dusk-curve),
+                        color var(--dusk-duration) var(--dusk-curve),
+                        stroke var(--dusk-duration) var(--dusk-curve),
+                        box-shadow var(--dusk-duration) var(--dusk-curve);
         }
 
         @keyframes masterEntrance {
@@ -138,9 +167,6 @@
             margin: 0 auto 60px auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
             overflow: hidden; 
-            
-            /* Layer 2: Structural bases wait 120ms before blending colors */
-            transition: background-color 680ms var(--dusk-curve) 120ms, border-color 680ms var(--dusk-curve) 120ms, box-shadow 680ms var(--dusk-curve) 120ms;
         }
 
         body:not(.light-mode) header {
@@ -201,31 +227,19 @@
         }
 
         @keyframes skyfallExit {
-            0% {
-                transform: translate3d(0, 0, 0);
-                opacity: 1;
-            }
-            100% {
-                transform: translate3d(0, var(--cascade-distance), 0);
-                opacity: 0;
-            }
+            0% { transform: translate3d(0, 0, 0); opacity: 1; }
+            100% { transform: translate3d(0, var(--cascade-distance), 0); opacity: 0; }
         }
 
         @keyframes skyfallEntry {
-            0% {
-                transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0);
-                opacity: 0;
-            }
-            100% {
-                transform: translate3d(0, 0, 0);
-                opacity: 1;
-            }
+            0% { transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0); opacity: 0; }
+            100% { transform: translate3d(0, 0, 0); opacity: 1; }
         }
 
         .header-right-cluster, .search-control-cluster {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 24px;
             flex-shrink: 0; 
             height: 100%;
         }
@@ -237,9 +251,6 @@
             color: var(--text-main);
             text-decoration: none !important;
             flex-shrink: 0;
-            
-            /* Layer 3: High-contrast details linger for 240ms before adapting */
-            transition: color 560ms var(--dusk-curve) 240ms;
         }
 
         .ctrl-btn {
@@ -255,7 +266,7 @@
             height: 32px; 
             padding: 0;
             flex-shrink: 0;
-            transition: opacity 0.2s var(--ease-premium), color 560ms var(--dusk-curve) 240ms;
+            transition: opacity 0.2s var(--ease-premium);
         }
 
         .ctrl-btn:hover { opacity: 0.6; }
@@ -268,13 +279,82 @@
             stroke-width: 2.2;
             stroke-linecap: round;
             stroke-linejoin: round;
-            transition: stroke 560ms var(--dusk-curve) 240ms;
         }
 
         .search-static-icon {
             opacity: 0.4;
             flex-shrink: 0; 
         }
+
+        /* ==========================================================
+           CELESTIAL ORBITAL TOGGLE PILL FRAMEWORK
+           ========================================================== */
+        .theme-toggle-pill {
+            width: 58px;
+            height: 32px;
+            border-radius: 30px;
+            background-color: var(--toggle-pill-bg);
+            border: 1px solid var(--toggle-pill-border);
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            will-change: transform;
+            transition: background-color var(--dusk-duration) var(--dusk-curve), border-color var(--dusk-duration) var(--dusk-curve);
+        }
+
+        .celestial-window-svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            inset: 0;
+        }
+
+        /* Cosmic Space Engine Asset Layers */
+        .space-stars {
+            fill: #ffffff;
+            opacity: var(--star-opacity);
+            transition: opacity var(--dusk-duration) var(--dusk-curve);
+        }
+
+        .orbital-track {
+            fill: none;
+            stroke: var(--orbit-line);
+            stroke-width: 1;
+            transform-origin: 29px 16px;
+            transition: stroke var(--dusk-duration) var(--dusk-curve), transform var(--dusk-duration) var(--dusk-curve);
+        }
+
+        .sun-body {
+            fill: var(--sun-color);
+            transform-origin: 29px 16px;
+            will-change: transform, opacity;
+            transition: fill var(--dusk-duration) var(--dusk-curve), transform var(--dusk-duration) var(--dusk-curve), opacity var(--dusk-duration) var(--dusk-curve);
+        }
+
+        .earth-body, .moon-body {
+            fill: var(--sun-color);
+            transform-origin: 29px 16px;
+            will-change: transform;
+            transition: fill var(--dusk-duration) var(--dusk-curve), transform var(--dusk-duration) var(--dusk-curve);
+        }
+
+        /* Dynamic Clockwise Cosmic Transition Logic Map */
+        body.light-mode .orbital-track { transform: rotate(0deg); }
+        body:not(.light-mode) .orbital-track { transform: rotate(180deg); }
+
+        body.light-mode .sun-body { transform: translate(0px, 0px) scale(1); opacity: 1; }
+        body:not(.light-mode) .sun-body { transform: translate(0px, 0px) scale(0.65); opacity: 0.15; }
+
+        body.light-mode .earth-body { transform: rotate(0deg); }
+        body:not(.light-mode) .earth-body { transform: rotate(180deg); }
+
+        /* The Moon glides directly over the Sun anchor point during nightfall */
+        body.light-mode .moon-body { transform: rotate(0deg) scale(1); }
+        body:not(.light-mode) .moon-body { transform: rotate(232deg) translate(9.5px, 0px) scale(2.2); }
 
         .search-core-input {
             flex-grow: 1;
@@ -287,52 +367,14 @@
             padding: 0 16px;
             width: 100%;
             min-width: 0; 
-            
-            /* Hardware isolation engine locks input cursor sub-pixels */
             will-change: transform, opacity;
             transform: translate3d(0, 0, 0);
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            transition: color 560ms var(--dusk-curve) 240ms;
         }
 
         .clear-text-btn svg { opacity: 0.4; }
         .close-search-btn svg { opacity: 0.7; }
-
-        .theme-toggle {
-            width: 32px;  
-            height: 32px; 
-            position: relative;
-            cursor: pointer;
-            user-select: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .theme-toggle svg {
-            position: absolute;
-            width: 22px;
-            height: 22px;
-            fill: none;
-            stroke: var(--text-main);
-            stroke-width: 2.2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transform-origin: center center;
-            will-change: transform, opacity;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            
-            /* Vector spin operates at native device refresh speeds; vector stroke updates with the highlights */
-            transition: transform 0.6s var(--ease-premium), opacity 560ms var(--dusk-curve) 240ms, stroke 560ms var(--dusk-curve) 240ms;
-        }
-
-        .theme-toggle .sun-icon { opacity: 0; transform: translate3d(0, 0, 0) rotate(-90deg) scale(0.4); }
-        .theme-toggle .moon-icon { opacity: 1; transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
-        body.light-mode .theme-toggle .sun-icon { opacity: 1; transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
-        body.light-mode .theme-toggle .moon-icon { opacity: 0; transform: translate3d(0, 0, 0) rotate(90deg) scale(0.4); }
 
         /* Minimal Breadcrumbs Infrastructure (Locked 400 Weight / 15px Size) */
         .breadcrumb-nav {
@@ -348,19 +390,16 @@
         .breadcrumb-nav a {
             color: var(--text-muted) !important;
             text-decoration: none !important;
-            transition: color 560ms var(--dusk-curve) 240ms;
         }
 
         .breadcrumb-separator {
             color: var(--text-muted);
             opacity: 0.4;
-            transition: color 560ms var(--dusk-curve) 240ms;
         }
 
         .breadcrumb-current {
             color: var(--text-main);
             opacity: 0.8;
-            transition: color 560ms var(--dusk-curve) 240ms;
         }
 
         /* Wide Stack Content Architecture Engine */
@@ -379,7 +418,6 @@
             color: var(--text-main);
             margin-bottom: 12px;
             padding-left: 8px;
-            transition: color 560ms var(--dusk-curve) 240ms;
         }
 
         .wide-capsule {
@@ -397,13 +435,7 @@
             backface-visibility: hidden;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
-            
-            /* Layer 2: Capsule tiles wait 120ms to match environmental twilight changes */
-            transition: border-color 680ms var(--dusk-curve) 120ms, background-color 680ms var(--dusk-curve) 120ms, transform 0.5s var(--ease-premium);
-        }
-
-        body:not(.light-mode) .wide-capsule {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transition: transform 0.5s var(--ease-premium);
         }
 
         .wide-capsule:hover {
@@ -420,7 +452,6 @@
             letter-spacing: -0.3px;
             color: var(--text-main);
             margin-bottom: 28px;
-            transition: color 560ms var(--dusk-curve) 240ms;
         }
 
         /* Dual Section Content Divider Rules */
@@ -431,7 +462,6 @@
             letter-spacing: 1px;
             color: var(--text-muted);
             margin: 24px 0 20px 0;
-            transition: color 560ms var(--dusk-curve) 240ms;
         }
         .wide-capsule :first-child + .sub-section-title {
             margin-top: 0px;
@@ -459,7 +489,6 @@
             left: 0;
             color: var(--bullet-color);
             font-size: 16px;
-            transition: color 560ms var(--dusk-curve) 240ms;
         }
 
         .topics-column-grid li:hover::before {
@@ -473,7 +502,7 @@
             text-decoration: none !important;
             font-size: 15.5px;
             font-weight: 400;
-            transition: color 560ms var(--dusk-curve) 240ms, opacity 0.4s var(--ease-premium);
+            transition: opacity 0.4s var(--ease-premium);
         }
 
         .topics-column-grid li:hover a {
@@ -508,7 +537,6 @@
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            transition: color 560ms var(--dusk-curve) 240ms;
         }
 
         .footer-links-row a:hover {
@@ -520,7 +548,6 @@
             opacity: 0.6;
             font-size: 12.5px;
             letter-spacing: 0.2px;
-            transition: color 560ms var(--dusk-curve) 240ms;
         }
 
         /* Universal Text Expansion Layer */
@@ -543,7 +570,7 @@
             transform: scale3d(1.06, 1.06, 1) translate3d(4px, 0, 0) !important;
         }
 
-        .footer-links-row a .nav-text { color: var(--text-muted) !important; transition: color 560ms var(--dusk-curve) 240ms; }
+        .footer-links-row a .nav-text { color: var(--text-muted) !important; }
         .footer-links-row a:hover .nav-text { color: var(--text-main) !important; }
 
         /* Calibrated 1.3 Premium Micro-Pop Portal Zoom Trigger */
@@ -569,7 +596,7 @@
             .header-inner-view { padding: 0 20px; }
             .logo { font-size: 22px; }
             .search-core-input { padding: 0 12px; font-size: 15px; }
-            .header-right-cluster, .search-control-cluster { gap: 16px; }
+            .header-right-cluster { gap: 16px; }
             
             .wide-capsule { padding: 32px 24px; border-radius: 24px; }
             .topics-column-grid { grid-template-columns: 1fr; gap: 14px 0; } 
@@ -583,15 +610,23 @@
         <div class="header-inner-view" id="headerMainView">
             <a href="index.html" class="logo">sathya.</a>
             <div class="header-right-cluster">
-                <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
-                    <svg class="sun-icon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="4"></circle>
-                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
-                    </svg>
-                    <svg class="moon-icon" viewBox="0 0 24 24">
-                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                
+                <div class="theme-toggle-pill" id="themeToggleBtn" aria-label="Trigger environmental eclipse transition">
+                    <svg class="celestial-window-svg" viewBox="0 0 58 32">
+                        <g class="space-stars">
+                            <circle cx="12" cy="8" r="0.6"/>
+                            <circle cx="48" cy="10" r="0.5"/>
+                            <circle cx="42" cy="24" r="0.7"/>
+                            <circle cx="16" cy="22" r="0.5"/>
+                        </g>
+                        <circle class="orbital-track" cx="29" cy="16" r="9.5"/>
+                        <circle class="orbital-track" cx="29" cy="16" r="15"/>
+                        <circle class="sun-body" cx="29" cy="16" r="4.5"/>
+                        <circle class="earth-body" cx="44" cy="16" r="1.5"/>
+                        <circle class="moon-body" cx="38.5" cy="16" r="1"/>
                     </svg>
                 </div>
+
                 <button class="ctrl-btn" id="openSearchBtn" aria-label="Open Workspace Search">
                     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 </button>
@@ -865,8 +900,6 @@
         openSearchBtn.addEventListener('click', () => {
             masterHeader.classList.remove('state-main');
             masterHeader.classList.add('state-search');
-            
-            // iPad synchronous execution token pops keyboard instantly with 0ms delay
             searchCoreInput.focus({ preventScroll: true });
         });
 
@@ -912,7 +945,6 @@
                 sessionStorage.setItem('activeUniversalTargetUrl', this.href);
                 this.classList.add('is-zooming');
 
-                // Tightened to exactly 260ms for immediate performance speed
                 setTimeout(() => {
                     window.location.href = destination;
                 }, 260);
@@ -948,7 +980,6 @@
                         setTimeout(() => {
                             matchedLinkElement.classList.add('kinetic-locked-frame');
 
-                            // Calibrated 1.3 parameters for clean back-navigation curves
                             let startScale = 1.3;
                             let endScale = 1.0;
                             let startOpacity = 0;
@@ -957,7 +988,7 @@
                             if (matchedLinkElement.closest('footer')) endOpacity = 0.4;
                             if (matchedLinkElement.classList.contains('logo')) endOpacity = 1.0;
 
-                            let duration = 280; // Snappy entry pull
+                            let duration = 280; 
                             let startTime = null;
 
                             targetSpan.style.setProperty('transform', `scale(${startScale})`, 'important');
@@ -973,7 +1004,6 @@
                                 let currentScale = startScale - (startScale - endScale) * ease;
                                 let currentOpacity = startOpacity + (endOpacity - startOpacity) * ease;
 
-                                // Respect list horizontal transformation layer during reverse slide math pass safely
                                 if (matchedLinkElement.closest('.topics-column-grid') && progress === 1) {
                                     targetSpan.style.transform = '';
                                 } else {
