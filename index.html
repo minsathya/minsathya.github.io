@@ -32,8 +32,10 @@
             --header-bg: #1a231e;
             --header-border: #222c26;
             
-            /* Tightened drop distance to protect text cursor calculations */
-            --cascade-distance: 30px;
+            /* Clean, tight vertical drop distance */
+            --cascade-distance: 24px;
+            --cascade-duration-exit: 0.2s;
+            --cascade-duration-entry: 0.28s;
         }
 
         body.light-mode {
@@ -111,7 +113,7 @@
         }
 
         /* ==========================================================
-           SEQUENTIAL CASCADE SYSTEM (CLEAN WATERFALL REVAMP)
+           SEQUENTIAL ZERO-COLLISION WATERFALL SYSTEM
            ========================================================== */
         .header-inner-view {
             position: absolute;
@@ -141,33 +143,33 @@
             z-index: 1;
         }
 
-        /* --- STATE: OPENING SEARCH --- */
-        /* Main content drops out through floor instantly */
+        /* --- STATE: OPENING SEARCH (Sequential Hand-off) --- */
+        /* Phase 1: Main content drops out cleanly first */
         header.state-search #headerMainView {
-            animation: skyfallExit 0.25s cubic-bezier(0.4, 0, 1, 1) forwards;
+            animation: skyfallExit var(--cascade-duration-exit) ease-in forwards;
             pointer-events: none;
         }
-        /* Search content drops from ceiling gracefully right behind it */
+        /* Phase 2: Search content drops down from top only AFTER main is gone */
         header.state-search #headerSearchView {
-            animation: skyfallEntry 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 0.12s;
+            animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: var(--cascade-duration-exit);
             pointer-events: auto;
         }
 
-        /* --- STATE: CLOSING SEARCH --- */
-        /* Search content drops out through floor instantly */
+        /* --- STATE: CLOSING SEARCH (Sequential Hand-off) --- */
+        /* Phase 1: Search content drops out cleanly first */
         header.state-main #headerSearchView {
-            animation: skyfallExit 0.25s cubic-bezier(0.4, 0, 1, 1) forwards;
+            animation: skyfallExit var(--cascade-duration-exit) ease-in forwards;
             pointer-events: none;
         }
-        /* Main content drops down from ceiling cleanly without colliding */
+        /* Phase 2: Main content drops down from top only AFTER search is gone */
         header.state-main #headerMainView {
-            animation: skyfallEntry 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 0.12s;
+            animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: var(--cascade-duration-exit);
             pointer-events: auto;
         }
 
-        /* Unidirectional Sequential Cascades */
+        /* Continuous Gravity Cascade Paths */
         @keyframes skyfallExit {
             0% {
                 transform: translate3d(0, 0, 0);
@@ -613,18 +615,18 @@
         });
 
         /* ==========================================================
-           SEQUENTIAL RE-ENGINEERED CONTROLS
+           SEQUENTIAL RE-ENGINEERED CONTROLS — TIMING PERFECTED
            ========================================================== */
         openSearchBtn.addEventListener('click', () => {
             masterHeader.classList.remove('state-main');
             masterHeader.classList.add('state-search');
             
-            // Precision Switch: Focus delayed by exactly 80ms.
-            // This allows the container to settle past its high velocity 
-            // drop zone so the browser maps the text cursor perfectly.
+            // Precision Switch Fix: Delayed by exactly 240ms to fire 
+            // the moment the search container settles into its final home position. 
+            // This ensures the browser draws the input cursor perfectly inline without glitches.
             setTimeout(() => {
                 searchCoreInput.focus();
-            }, 80);
+            }, 240);
         });
 
         clearSearchBtn.addEventListener('click', () => {
