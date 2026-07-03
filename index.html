@@ -141,8 +141,13 @@
             justify-content: space-between;
             padding: 0 32px; 
             will-change: opacity, transform;
-            /* Luxury Train Glide: Extended to 0.95s with a highly customized soft deceleration curve */
+            /* CLOSING ANIMATION: The exact one you liked, kept perfectly intact for returning */
             transition: opacity 0.75s ease-in-out, transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* OPENING ANIMATION: Specifically targeted to be slower, softer, with no sudden brakes */
+        header.search-active .header-inner-view {
+            transition: opacity 0.85s ease-in-out, transform 1.3s cubic-bezier(0.25, 1, 0.4, 1);
         }
 
         /* TRACK 1: The original header content getting pushed left out of bounds */
