@@ -32,7 +32,7 @@
             --header-bg: #1a231e;
             --header-border: #222c26;
             
-            /* Clean, tight vertical drop distance */
+            /* Vertical cascade configuration */
             --cascade-distance: 24px;
             --cascade-duration-exit: 0.2s;
             --cascade-duration-entry: 0.28s;
@@ -113,7 +113,7 @@
         }
 
         /* ==========================================================
-           SEQUENTIAL ZERO-COLLISION WATERFALL SYSTEM
+           SEQUENTIAL ZERO-COLLISION WATERFALL SYSTEM (FIXED)
            ========================================================== */
         .header-inner-view {
             position: absolute;
@@ -143,33 +143,32 @@
             z-index: 1;
         }
 
-        /* --- STATE: OPENING SEARCH (Sequential Hand-off) --- */
-        /* Phase 1: Main content drops out cleanly first */
+        /* --- STATE: OPENING SEARCH --- */
+        /* Main drops out floor instantly */
         header.state-search #headerMainView {
-            animation: skyfallExit var(--cascade-duration-exit) ease-in forwards;
+            animation: skyfallExit var(--cascade-duration-exit) ease-in both;
             pointer-events: none;
         }
-        /* Phase 2: Search content drops down from top only AFTER main is gone */
+        /* Search stays hidden up at ceiling during delay, then drops down */
         header.state-search #headerSearchView {
-            animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both;
             animation-delay: var(--cascade-duration-exit);
             pointer-events: auto;
         }
 
-        /* --- STATE: CLOSING SEARCH (Sequential Hand-off) --- */
-        /* Phase 1: Search content drops out cleanly first */
+        /* --- STATE: CLOSING SEARCH --- */
+        /* Search drops out floor instantly */
         header.state-main #headerSearchView {
-            animation: skyfallExit var(--cascade-duration-exit) ease-in forwards;
+            animation: skyfallExit var(--cascade-duration-exit) ease-in both;
             pointer-events: none;
         }
-        /* Phase 2: Main content drops down from top only AFTER search is gone */
+        /* Main stays completely invisible at ceiling during delay, then drops down cleanly */
         header.state-main #headerMainView {
-            animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both;
             animation-delay: var(--cascade-duration-exit);
             pointer-events: auto;
         }
 
-        /* Continuous Gravity Cascade Paths */
         @keyframes skyfallExit {
             0% {
                 transform: translate3d(0, 0, 0);
@@ -615,15 +614,13 @@
         });
 
         /* ==========================================================
-           SEQUENTIAL RE-ENGINEERED CONTROLS — TIMING PERFECTED
+           SEQUENTIAL RE-ENGINEERED CONTROLS — FIXED FORWARD / REVERSE
            ========================================================== */
         openSearchBtn.addEventListener('click', () => {
             masterHeader.classList.remove('state-main');
             masterHeader.classList.add('state-search');
             
-            // Precision Switch Fix: Delayed by exactly 240ms to fire 
-            // the moment the search container settles into its final home position. 
-            // This ensures the browser draws the input cursor perfectly inline without glitches.
+            // Focus triggers precisely as the entry finishes sliding inside
             setTimeout(() => {
                 searchCoreInput.focus();
             }, 240);
