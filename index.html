@@ -32,7 +32,7 @@
             --header-bg: #1a231e;
             --header-border: #222c26;
             
-            /* Vertical cascade configuration */
+            /* Tight vertical cascade parameters */
             --cascade-distance: 24px;
             --cascade-duration-exit: 0.2s;
             --cascade-duration-entry: 0.28s;
@@ -113,7 +113,7 @@
         }
 
         /* ==========================================================
-           SEQUENTIAL ZERO-COLLISION WATERFALL SYSTEM (FIXED)
+           SEQUENTIAL ZERO-COLLISION WATERFALL SYSTEM
            ========================================================== */
         .header-inner-view {
             position: absolute;
@@ -144,12 +144,10 @@
         }
 
         /* --- STATE: OPENING SEARCH --- */
-        /* Main drops out floor instantly */
         header.state-search #headerMainView {
             animation: skyfallExit var(--cascade-duration-exit) ease-in both;
             pointer-events: none;
         }
-        /* Search stays hidden up at ceiling during delay, then drops down */
         header.state-search #headerSearchView {
             animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both;
             animation-delay: var(--cascade-duration-exit);
@@ -157,12 +155,10 @@
         }
 
         /* --- STATE: CLOSING SEARCH --- */
-        /* Search drops out floor instantly */
         header.state-main #headerSearchView {
             animation: skyfallExit var(--cascade-duration-exit) ease-in both;
             pointer-events: none;
         }
-        /* Main stays completely invisible at ceiling during delay, then drops down cleanly */
         header.state-main #headerMainView {
             animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both;
             animation-delay: var(--cascade-duration-exit);
@@ -256,6 +252,7 @@
             padding: 0 16px;
             width: 100%;
             min-width: 0;
+            will-change: transform;
             transition: color 0.6s var(--ease-premium);
         }
 
@@ -614,16 +611,16 @@
         });
 
         /* ==========================================================
-           SEQUENTIAL RE-ENGINEERED CONTROLS — FIXED FORWARD / REVERSE
+           IPAD SYNCHRONOUS KEYBOARD OVERRIDE
            ========================================================== */
         openSearchBtn.addEventListener('click', () => {
             masterHeader.classList.remove('state-main');
             masterHeader.classList.add('state-search');
             
-            // Focus triggers precisely as the entry finishes sliding inside
-            setTimeout(() => {
-                searchCoreInput.focus();
-            }, 240);
+            // iPad/iOS keyboard fix: .focus() is executed completely 
+            // synchronously (at 0ms) directly inside the user click loop.
+            // This satisfies iOS security tokens and pops the keyboard instantly.
+            searchCoreInput.focus();
         });
 
         clearSearchBtn.addEventListener('click', () => {
