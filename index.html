@@ -38,12 +38,12 @@
             --header-bg: #1a231e;
             --header-border: #222c26;
 
-            /* The Train Track Math: Pixel-perfect distance for the right icon to travel to the left icon's spot */
+            /* The Train Track Math */
             --track-slide: calc(-100% + 91px);
             --track-slide-reverse: calc(100% - 91px);
         }
 
-        /* Classy Light Mode Tones (Premium Off-White Gallery Style) */
+        /* Classy Light Mode Tones */
         body.light-mode {
             --bg-color: #f5f5f7;
             --text-main: #111111;
@@ -52,13 +52,10 @@
             --panel-border: #e2e2e7;
             --row-divider: #f2f2f7;
             --row-hover: rgba(0, 0, 0, 0.01);
-
-            /* Premium Matte Olive Header System (Light Mode) */
             --header-bg: #e9ebe6;
             --header-border: #d4d8cf;
         }
 
-        /* Wipes out highlights and dark overlays on touch */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -81,21 +78,12 @@
             width: 95%;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            
-            /* Buttery Smooth Theme Toggle Transition */
             transition: background-color 0.6s var(--ease-premium), color 0.6s var(--ease-premium);
         }
 
-        /* entrance animation for first visit layout load */
         @keyframes masterEntrance {
-            from {
-                opacity: 0;
-                transform: translate3d(0, 24px, 0);
-            }
-            to {
-                opacity: 1;
-                transform: translate3d(0, 0, 0);
-            }
+            from { opacity: 0; transform: translate3d(0, 24px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
         header, .capsule-panel, footer {
@@ -126,9 +114,7 @@
             transition: background-color 0.6s var(--ease-premium), border-color 0.6s var(--ease-premium), box-shadow 0.6s var(--ease-premium);
         }
 
-        body:not(.light-mode) header {
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        }
+        body:not(.light-mode) header { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); }
 
         .header-inner-view {
             position: absolute;
@@ -141,16 +127,15 @@
             justify-content: space-between;
             padding: 0 32px; 
             will-change: opacity, transform;
-            /* CLOSING ANIMATION: The exact one you liked, kept perfectly intact for returning */
-            transition: opacity 0.75s ease-in-out, transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+            /* CLOSING: Smooth glide */
+            transition: opacity 0.75s ease-out, transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        /* OPENING ANIMATION: Specifically targeted to be slower, softer, with no sudden brakes */
+        /* OPENING: Ultra-soft, extended glide */
         header.search-active .header-inner-view {
-            transition: opacity 0.85s ease-in-out, transform 1.3s cubic-bezier(0.25, 1, 0.4, 1);
+            transition: opacity 1.2s cubic-bezier(0.2, 0, 0, 1), transform 1.4s cubic-bezier(0.15, 0.9, 0.2, 1);
         }
 
-        /* TRACK 1: The original header content getting pushed left out of bounds */
         #headerMainView {
             opacity: 1;
             transform: translate3d(0, 0, 0);
@@ -162,7 +147,6 @@
             pointer-events: none;
         }
 
-        /* TRACK 2: The search pill content riding in from the right to lock into place */
         #headerSearchView {
             opacity: 0;
             transform: translate3d(var(--track-slide-reverse), 0, 0); 
@@ -331,7 +315,6 @@
             transition: color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
         }
 
-        /* REQ 2: Strict transparency blocks any grey box overlay on hover or tap */
         .document-list li:hover, .document-list li:active, .document-list li:focus,
         .matrix-canvas a:hover, .matrix-canvas a:active, .matrix-canvas a:focus,
         .view-more-link:hover, .view-more-link:active, .view-more-link:focus {
@@ -339,7 +322,6 @@
             background: transparent !important;
         }
 
-        /* REQ 1: Horizontal shift removed completely. Text is perfectly straight */
         .document-list li:hover a { opacity: 1 !important; padding-left: 24px !important; }
 
         footer { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
@@ -362,7 +344,6 @@
         @media (max-width: 1024px) { .matrix-canvas { grid-template-columns: repeat(2, 1fr); gap: 28px; } }
         @media (max-width: 700px) {
             :root {
-                /* Recalculated exact mathematical distance for mobile padding dimensions */
                 --track-slide: calc(-100% + 67px);
                 --track-slide-reverse: calc(100% - 67px);
             }
@@ -380,7 +361,6 @@
         .view-more-link { color: #8a9a86 !important; font-weight: 600; text-decoration: none !important; font-size: 0.95rem; display: inline-block; will-change: transform, opacity; -webkit-backface-visibility: hidden; backface-visibility: hidden; transition: opacity 0.2s ease; }
         .view-more-link:hover { opacity: 0.8; text-decoration: none !important; }
 
-        /* The Isolated Center-Core Text Frame Mesh */
         .nav-text {
             display: inline-block !important;
             transform-origin: center center !important; 
@@ -388,7 +368,6 @@
             transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
         }
 
-        /* REQ 1 (Hover State): Subtle 1.06x zoom expanding perfectly straight out from center axis. NO fading. */
         .matrix-canvas a:hover .nav-text,
         .view-more-link:hover .nav-text,
         .footer-links-row a:hover .nav-text {
@@ -399,7 +378,6 @@
         .footer-links-row a:hover .nav-text { color: var(--text-main) !important; }
         .view-more-link .nav-text { color: #8a9a86 !important; }
 
-        /* REQ 2 (Tap State): Fades out cleanly while zooming up to 1.6x over 400ms medium speed */
         .matrix-canvas a.is-zooming .nav-text,
         .view-more-link.is-zooming .nav-text,
         .footer-links-row a.is-zooming .nav-text {
@@ -585,7 +563,6 @@
 
         const universalTargetLinks = document.querySelectorAll('.matrix-canvas a, footer .footer-links-row a');
 
-        // Wrapping characters inside center-centered frames
         universalTargetLinks.forEach(link => {
             if (!link.querySelector('.nav-text')) {
                 const wrapper = document.createElement('span');
@@ -612,7 +589,6 @@
             });
         });
 
-        // REQ 3: Landing controller pipeline
         window.addEventListener('pageshow', (event) => {
             universalTargetLinks.forEach(l => {
                 l.classList.remove('is-zooming');
@@ -656,7 +632,6 @@
                             targetSpan.style.setProperty('transform', `scale(${startScale})`, 'important');
                             targetSpan.style.setProperty('opacity', startOpacity, 'important');
                             
-                            // Re-runs reverse math exclusively on text span
                             function animateReverse(timestamp) {
                                 if (!startTime) startTime = timestamp;
                                 let elapsed = timestamp - startTime;
