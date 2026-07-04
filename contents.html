@@ -55,12 +55,13 @@
         }
 
         body.light-mode {
-            --bg-color: #f5f5f7;
+            /* Premium Organic Sage Ash Ecosystem Tokens */
+            --bg-color: #ebebe4;              /* Anti-glare Sage Ash Backdrop */
             --text-main: #111111;
             --text-muted: #a1a1a6;
-            --panel-bg: #ffffff;
-            --panel-border: #e2e2e7;
-            --row-divider: #f2f2f7;
+            --panel-bg: #fdfdfb;              /* High-Contrast Soft Milk White Cards */
+            --panel-border: #d8d8d0;          /* Muted Earth Border Accents */
+            --row-divider: #e2e2da;
             --row-hover: rgba(0, 0, 0, 0.01);
             
             --bullet-color: #b8b8bc;
@@ -161,7 +162,7 @@
             overflow: hidden; 
         }
 
-        /* Only morph container color values when search view is open in light mode */
+        /* Smoothly blend container profile when search is active in Light Mode */
         body.light-mode header.state-search {
             background-color: #e9ebe6 !important;
             border: 1px solid #d4d8cf !important;
@@ -316,7 +317,6 @@
             inset: 0;
         }
 
-        /* Stars are always visible inside the resting navigation bar setup */
         .space-stars {
             fill: #ffffff;
             opacity: 0.35 !important;
