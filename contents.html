@@ -45,7 +45,7 @@
             --sun-color: #ffa200;             
             --moon-color: #dededf;            
             --earth-color: #2b9cd3;           
-            --orbit-line: rgba(255, 255, 255, 0.65); 
+            --orbit-line: rgba(255, 255, 255, 0.85); /* Highly luminous track line visible from 1 meter */
             --corona-glow: drop-shadow(0 0 8px rgba(255, 162, 0, 0.45)); 
 
             /* Vertical cascade parameters matching master optimization */
@@ -72,7 +72,7 @@
             --sun-color: #ffa200;             
             --moon-color: #cbd0d4;            
             --earth-color: #2b9cd3;           
-            --orbit-line: rgba(0, 0, 0, 0.55); 
+            --orbit-line: rgba(0, 0, 0, 0.75); /* High-contrast sharp charcoal track line visible from 1 meter */
             --corona-glow: drop-shadow(0 0 3px rgba(255, 162, 0, 0.15));
         }
 
@@ -357,7 +357,7 @@
             transition: fill var(--dusk-duration) var(--dusk-curve);
         }
 
-        /* Precision Micro Mask Slice: Positions tool to shave off exactly 30% of the moon circle in Light Mode */
+        /* Precision Micro Mask Slice: Shaves away exactly 30% of the moon circle from the left in Light Mode */
         .moon-mask-blade {
             transition: transform var(--dusk-duration) var(--dusk-curve);
         }
@@ -367,7 +367,7 @@
         }
 
         body:not(.light-mode) .moon-mask-blade {
-            transform: translate(-3px, 0px); /* Smoothly slides blade away for an immaculate full dark-mode circle */
+            transform: translate(-4px, 0px); /* Slides cutter completely clear for an immaculate full dark-mode circle */
         }
 
         /* Space System Matrix Driver Transforms (Relative to absolute coordinate matrix map) */
@@ -635,10 +635,10 @@
                 <div class="theme-toggle-void" id="themeToggleBtn" aria-label="Trigger environmental transition">
                     <svg class="celestial-window-svg" viewBox="0 0 40 40">
                         <defs>
-                            <!-- Advanced Absolute Vector Blade Mask: Cuts exactly 30% out of the Moon hemisphere -->
+                            <!-- Advanced Absolute Vector Blade Mask Engine: Projecting outside to cx="39.5" -->
                             <mask id="moon-crescent-engine">
-                                <circle cx="34" cy="20" r="1.1" fill="#ffffff" />
-                                <circle class="moon-mask-blade" cx="32.46" cy="20" r="1.1" fill="#000000" />
+                                <circle cx="39.5" cy="20" r="1.1" fill="#ffffff" />
+                                <circle class="moon-mask-blade" cx="38.05" cy="20" r="1.1" fill="#000000" />
                             </mask>
                         </defs>
 
@@ -662,9 +662,9 @@
                             <!-- Pure Solid Ocean Blue Earth (Scientifically larger than Moon) -->
                             <circle class="earth-circle" cx="34" cy="20" r="2.8"/>
                             
-                            <!-- Moon Satellite Group revolving locally on Earth's dark hemisphere -->
+                            <!-- Moon Satellite Group revolving locally outside of Earth's body -->
                             <g class="moon-system">
-                                <circle class="moon-sphere" cx="34" cy="20" r="1.1" mask="url(#moon-crescent-engine)"/>
+                                <circle class="moon-sphere" cx="39.5" cy="20" r="1.1" mask="url(#moon-crescent-engine)"/>
                             </g>
                         </g>
                     </svg>
@@ -726,7 +726,7 @@
             <h3 class="sub-section-title">World History</h3>
             <ul class="topics-column-grid">
                 <li><a href="#">Industrial Revolution</a></li>
-                <li><a href="#">Colonization & Decolonization</a></li>
+                <li><a href="#">Colonization & DecColonization</a></li>
                 <li><a href="#">World Wars</a></li>
                 <li><a href="#">Political Philosophies</a></li>
             </ul>
