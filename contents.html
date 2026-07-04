@@ -94,7 +94,7 @@
         .breadcrumb-nav a, .breadcrumb-separator, .breadcrumb-current, 
         .page-main-heading, .wide-panel-title, .sub-section-title, 
         .topics-column-grid li::before, .topics-column-grid a, 
-        footer .footer-links-row a, .copyright-tag, .celestial-icon {
+        footer .footer-links-row a, .copyright-tag, .celestial-svg {
             transition: background-color var(--dusk-duration) var(--dusk-curve),
                         border-color var(--dusk-duration) var(--dusk-curve),
                         color var(--dusk-duration) var(--dusk-curve),
@@ -258,11 +258,13 @@
             position: relative;
             overflow: hidden;
             will-change: transform;
-            touch-action: manipulation; 
-            transition: opacity 0.2s var(--ease-premium);
+            touch-action: manipulation;
         }
 
-        .ctrl-btn:hover { opacity: 0.6; }
+        /* LOCKED INTERFACE STABILITY - Absolutely no translate/scale motion on hover near icon */
+        .theme-toggle-void {
+            transition: none !important;
+        }
 
         #headerMainView .ctrl-btn svg {
             stroke: #ffffff !important;
@@ -295,72 +297,72 @@
         }
 
         /* ==========================================================
-           MINIMAL CELESTIAL MORPHING TOGGLE SYSTEM
+           MINIMALIST MECHANICAL WATCH-FACE CELESTIAL ICON
            ========================================================== */
-        .celestial-icon {
+        .celestial-svg {
             width: 24px;
             height: 24px;
             fill: none;
-            stroke: #ffffff; /* Sits permanently in white layout profile inside header views */
-            stroke-width: 2.3; /* Premium broad lines parameter */
+            stroke: #ffffff; /* Locked crisp white profile stroke lines */
+            stroke-width: 2.3; /* Bold premium geometry lines */
             stroke-linecap: round;
             stroke-linejoin: round;
-            will-change: transform;
-            transition: transform 0.5s var(--ease-premium);
         }
 
-        /* Gentle rotational roll on the master frame block */
-        .theme-toggle-void:hover .celestial-icon {
-            transform: rotate(15deg);
-        }
-
+        /* The Sun Outer Rays Shell */
         .sun-ray {
             transform-origin: 12px 12px;
             will-change: transform, opacity;
-            transition: transform 0.24s cubic-bezier(0.4, 0, 0.2, 1), 
-                        opacity 0.2s linear;
+            transition: transform 0.16s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.14s linear;
         }
 
-        /* ACTION: Staggered Ray Retraction Collapse (Clockwise wave layout) */
+        /* Retract and disappear rays instantly when tapped to transition to Moon */
         body:not(.light-mode) .sun-ray {
             transform: scale(0);
             opacity: 0;
+            transition-delay: 0s !important;
         }
 
-        body:not(.light-mode) .ray-1 { transition-delay: 0s; }
-        body:not(.light-mode) .ray-2 { transition-delay: 0.02s; }
-        body:not(.light-mode) .ray-3 { transition-delay: 0.04s; }
-        body:not(.light-mode) .ray-4 { transition-delay: 0.06s; }
-        body:not(.light-mode) .ray-5 { transition-delay: 0.08s; }
-        body:not(.light-mode) .ray-6 { transition-delay: 0.10s; }
-        body:not(.light-mode) .ray-7 { transition-delay: 0.12s; }
-        body:not(.light-mode) .ray-8 { transition-delay: 0.14s; }
-
-        /* REVERSE: Reverse wave delays returning back to light mode (Sun state) */
-        body.light-mode .ray-1 { transition-delay: 0.14s; }
-        body.light-mode .ray-2 { transition-delay: 0.12s; }
-        body.light-mode .ray-3 { transition-delay: 0.10s; }
-        body.light-mode .ray-4 { transition-delay: 0.08s; }
-        body.light-mode .ray-5 { transition-delay: 0.06s; }
-        body.light-mode .ray-6 { transition-delay: 0.04s; }
-        body.light-mode .ray-7 { transition-delay: 0.02s; }
-        body.light-mode .ray-8 { transition-delay: 0s; }
-
-        /* The organic vector sliding cut mask shape definition */
-        .moon-mask-cutter {
-            will-change: transform;
-            transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+        /* 1 to 2 O'Clock segment handler */
+        .clock-gap-segment {
+            will-change: transform, opacity;
+            transform-origin: 12px 12px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.24s ease;
         }
 
-        /* In light mode (Sun), slide cutter clear out of bounds */
-        body.light-mode .moon-mask-cutter {
-            transform: translate(12px, -3px);
+        /* Detach and fade out the 1-2 o'clock slice smoothly right after rays disappear */
+        body:not(.light-mode) .clock-gap-segment {
+            transform: scale(0.6) rotate(15deg);
+            opacity: 0;
+            transition-delay: 0.12s;
         }
 
-        /* In dark mode (Moon), intersect core circle right after rays clear */
-        body:not(.light-mode) .moon-mask-cutter {
-            transform: translate(5px, -1.5px);
-            transition-delay: 0.14s;
+        /* 6 to 9 O'Clock crescent spreading body path */
+        .moon-crescent-body {
+            will-change: d, stroke-width;
+            transition: d 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Moon State: Morph the left/bottom wall outward into the sweeping bold crescent profile */
+        body:not(.light-mode) .moon-crescent-body {
+            d: path("M 15.5 5.5 A 7.2 7.2 0 1 0 18.5 14.5 A 5.2 5.2 0 0 1 15.5 5.5 Z");
+            fill: #ffffff; /* Fills up to create the true solid crescent shape */
+            transition-delay: 0.12s;
+        }
+
+        /* Return path variables when switching back to light mode (Sun state) */
+        body.light-mode .moon-crescent-body {
+            d: path("M 12 17.2 A 5.2 5.2 0 1 1 12.01 17.2");
+            fill: none;
+            transition-delay: 0s;
+        }
+
+        body.light-mode .clock-gap-segment {
+            transition-delay: 0.2s;
+        }
+
+        body.light-mode .sun-ray {
+            transition-delay: 0.32s;
         }
 
         .search-core-input {
@@ -575,7 +577,7 @@
             transform: scale3d(1.06, 1.06, 1) !important;
         }
 
-        .topics-column-grid li:hover .nav-text {
+        .topics-column-grid li :hover .nav-text {
             transform: scale3d(1.06, 1.06, 1) translate3d(4px, 0, 0) !important;
         }
 
@@ -619,27 +621,26 @@
             <span class="logo">sathya.</span>
             <div class="header-right-cluster">
                 
+                <!-- Fixed Mechanical Watch-Face Toggle Slot -->
                 <div class="theme-toggle-void" id="themeToggleBtn" aria-label="Trigger celestial environment transition">
-                    <svg class="celestial-icon" viewBox="0 0 24 24">
-                        <defs>
-                            <mask id="celestial-moon-cutter">
-                                <rect x="0" y="0" width="24" height="24" fill="#ffffff" />
-                                <circle class="moon-mask-cutter" cx="12" cy="12" r="5.2" fill="#000000" />
-                            </mask>
-                        </defs>
-
+                    <svg class="celestial-svg" viewBox="0 0 24 24">
+                        <!-- Outer Ray Elements Configuration -->
                         <g>
-                            <line class="sun-ray ray-1" x1="12" y1="6" x2="12" y2="3" />
-                            <line class="sun-ray ray-2" x1="16.24" y1="7.76" x2="18.36" y2="5.64" />
-                            <line class="sun-ray ray-3" x1="18" y1="12" x2="21" y2="12" />
-                            <line class="sun-ray ray-4" x1="16.24" y1="16.24" x2="18.36" y2="18.36" />
-                            <line class="sun-ray ray-5" x1="12" y1="18" x2="12" y2="21" />
-                            <line class="sun-ray ray-6" x1="7.76" y1="16.24" x2="5.64" y2="18.36" />
-                            <line class="sun-ray ray-7" x1="6" y1="12" x2="3" y2="12" />
-                            <line class="sun-ray ray-8" x1="7.76" y1="7.76" x2="5.64" y2="5.64" />
+                            <line class="sun-ray ray-1" x1="12" y1="5.5" x2="12" y2="2" />
+                            <line class="sun-ray ray-2" x1="16.6" y1="7.4" x2="19.1" y2="4.9" />
+                            <line class="sun-ray ray-3" x1="18.5" y1="12" x2="22" y2="12" />
+                            <line class="sun-ray ray-4" x1="16.6" y1="16.6" x2="19.1" y2="19.1" />
+                            <line class="sun-ray ray-5" x1="12" y1="18.5" x2="12" y2="22" />
+                            <line class="sun-ray ray-6" x1="7.4" y1="16.6" x2="4.9" y2="19.1" />
+                            <line class="sun-ray ray-7" x1="5.5" y1="12" x2="2" y2="12" />
+                            <line class="sun-ray ray-8" x1="7.4" y1="7.4" x2="4.9" y2="4.9" />
                         </g>
 
-                        <circle cx="12" cy="12" r="5.2" mask="url(#celestial-moon-cutter)" fill="none" stroke="currentColor" />
+                        <!-- Detachable 1 to 2 O'Clock Segment Path -->
+                        <path class="clock-gap-segment" d="M 15.7 8.3 A 5.2 5.2 0 0 1 17.2 12" fill="none" stroke="currentColor" />
+
+                        <!-- Core 6 to 9 O'Clock Spreading Crescent Body Path (Fill is none in Sun state) -->
+                        <path class="moon-crescent-body" d="M 12 17.2 A 5.2 5.2 0 1 1 12.01 17.2" fill="none" stroke="currentColor" />
                     </svg>
                 </div>
 
