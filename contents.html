@@ -45,7 +45,7 @@
             --sun-color: #ffa200;             
             --moon-color: #dededf;            
             --earth-color: #2b9cd3;           
-            --orbit-line: rgba(255, 255, 255, 0.85); /* Highly luminous track line visible from 1 meter */
+            --orbit-line: rgba(255, 255, 255, 0.65); 
             --corona-glow: drop-shadow(0 0 8px rgba(255, 162, 0, 0.45)); 
 
             /* Vertical cascade parameters matching master optimization */
@@ -72,7 +72,7 @@
             --sun-color: #ffa200;             
             --moon-color: #cbd0d4;            
             --earth-color: #2b9cd3;           
-            --orbit-line: rgba(0, 0, 0, 0.75); /* High-contrast sharp charcoal track line visible from 1 meter */
+            --orbit-line: rgba(0, 0, 0, 0.55); 
             --corona-glow: drop-shadow(0 0 3px rgba(255, 162, 0, 0.15));
         }
 
@@ -173,7 +173,7 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
-        /* Stable Static Title Configuration (Insulated from Portal Interactivity) */
+        /* Stable Static Title Configuration */
         .logo {
             font-size: 26px;
             font-weight: 600;
@@ -274,7 +274,7 @@
             position: relative;
             overflow: hidden;
             will-change: transform;
-            touch-action: manipulation; /* Eradicates the iPad Safari 300ms latency tap lag completely */
+            touch-action: manipulation; /* Eradicates iPad tap latency delay */
             transition: opacity 0.2s var(--ease-premium);
         }
 
@@ -298,6 +298,10 @@
         /* ==========================================================
            CELESTIAL ORBITAL TOGGLE (REAL SPACE PHYSICS ENGINE)
            ========================================================== */
+        .theme-toggle-void {
+            touch-action: manipulation;
+        }
+
         .celestial-window-svg {
             width: 100%;
             height: 100%;
@@ -345,9 +349,9 @@
             transition: fill var(--dusk-duration) var(--dusk-curve);
         }
 
-        /* Moon Satellite System Group revolving locally around moving Earth center coordinates (34,20) */
+        /* Moon Satellite System Group revolving locally around moving Earth center coordinates (32,20) */
         .moon-system {
-            transform-origin: 34px 20px;
+            transform-origin: 32px 20px;
             will-change: transform;
             transition: transform var(--dusk-duration) var(--dusk-curve);
         }
@@ -631,18 +635,15 @@
             <span class="logo">sathya.</span>
             <div class="header-right-cluster">
                 
-                <!-- Zero-Jump Inline Floating Science Instrument Dock (Aligned exactly with Search X coordinate) -->
                 <div class="theme-toggle-void" id="themeToggleBtn" aria-label="Trigger environmental transition">
                     <svg class="celestial-window-svg" viewBox="0 0 40 40">
                         <defs>
-                            <!-- Advanced Absolute Vector Blade Mask Engine: Projecting outside to cx="39.5" -->
                             <mask id="moon-crescent-engine">
-                                <circle cx="39.5" cy="20" r="1.1" fill="#ffffff" />
-                                <circle class="moon-mask-blade" cx="38.05" cy="20" r="1.1" fill="#000000" />
+                                <circle cx="37" cy="20" r="1.1" fill="#ffffff" />
+                                <circle class="moon-mask-blade" cx="35.7" cy="20" r="1.1" fill="#000000" />
                             </mask>
                         </defs>
 
-                        <!-- Space Dust Star Node Pass -->
                         <g class="space-stars">
                             <circle cx="8" cy="6" r="0.5"/>
                             <circle cx="32" cy="8" r="0.4"/>
@@ -650,21 +651,16 @@
                             <circle cx="10" cy="30" r="0.4"/>
                         </g>
 
-                        <!-- High Contrast Trajectory Tracks Around Sun -->
-                        <circle class="orbital-track-sun" cx="20" cy="20" r="14"/>
+                        <circle class="orbital-track-sun" cx="20" cy="20" r="12"/>
                         
-                        <!-- Fixed Deep Golden Sun Anchor Core (#ffa200) -->
                         <circle class="sun-body" cx="20" cy="20" r="4.5"/>
                         
-                        <!-- Real-Science Earth-Moon System Unit -->
                         <g class="earth-system">
                             
-                            <!-- Pure Solid Ocean Blue Earth (Scientifically larger than Moon) -->
-                            <circle class="earth-circle" cx="34" cy="20" r="2.8"/>
+                            <circle class="earth-circle" cx="32" cy="20" r="2.8"/>
                             
-                            <!-- Moon Satellite Group revolving locally outside of Earth's body -->
                             <g class="moon-system">
-                                <circle class="moon-sphere" cx="39.5" cy="20" r="1.1" mask="url(#moon-crescent-engine)"/>
+                                <circle class="moon-sphere" cx="37" cy="20" r="1.1" mask="url(#moon-crescent-engine)"/>
                             </g>
                         </g>
                     </svg>
@@ -726,7 +722,7 @@
             <h3 class="sub-section-title">World History</h3>
             <ul class="topics-column-grid">
                 <li><a href="#">Industrial Revolution</a></li>
-                <li><a href="#">Colonization & DecColonization</a></li>
+                <li><a href="#">Colonization & Decolonization</a></li>
                 <li><a href="#">World Wars</a></li>
                 <li><a href="#">Political Philosophies</a></li>
             </ul>
