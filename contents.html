@@ -42,11 +42,11 @@
             --bullet-color: #444444;
 
             /* External Solar System Container Tokens (Dark Mode) */
-            --toggle-outer-bg: #000000;       /* Solid Black Outer System in Dark Mode */
+            --toggle-outer-bg: #000000;       
             --toggle-outer-border: #222c26;
-            --sun-color: #ffffff;             /* Pure White Sun */
-            --moon-color: #dededf;            /* Cosmic Off-White Moon */
-            --earth-color: #2b9cd3;           /* Vibrant Ocean Blue Earth */
+            --sun-color: #ffffff;             
+            --moon-color: #dededf;            
+            --earth-color: #2b9cd3;           
             --star-opacity: 1;
             --corona-glow: drop-shadow(0 0 8px rgba(255, 255, 255, 0.95)); 
 
@@ -71,7 +71,7 @@
             --bullet-color: #b8b8bc;
 
             /* External Solar System Container Tokens (Light Mode) */
-            --toggle-outer-bg: #ffffff;       /* Solid Pure White Outer System in Light Mode */
+            --toggle-outer-bg: #ffffff;       
             --toggle-outer-border: #d4d8cf;
             --sun-color: #ffffff;             
             --moon-color: #cdd0d4;            
@@ -299,10 +299,10 @@
         }
 
         /* ==========================================================
-           EXTERNAL ROYAL CELESTIAL DOCK FRAMEWORK (MARKING 2 GENERATION)
+           EXTERNAL ROYAL CELESTIAL DOCK FRAMEWORK
            ========================================================== */
         .theme-toggle-outer-ring {
-            width: 72px;  /* Fully expanded footprint utilizing reclaimed header grid layout spaces */
+            width: 72px;  
             height: 72px; 
             border-radius: 50%;
             background-color: var(--toggle-outer-bg);
@@ -345,7 +345,7 @@
         }
 
         body.light-mode .sun-body {
-            fill: #e8a838; /* Core turns solid solar radiant amber-gold under light mode rules */
+            fill: #e8a838; 
         }
 
         /* Custom mechanical alignment markers for the star anchor */
@@ -365,7 +365,7 @@
             opacity: 0; 
         }
 
-        /* Earth blueprint rotation track framework (Borderless Vector Void) */
+        /* Earth blueprint rotation track framework (Flawless Solid Profile) */
         .earth-track {
             transform-origin: 36px 36px;
             will-change: transform;
@@ -377,17 +377,7 @@
             transition: fill var(--dusk-duration) var(--dusk-curve);
         }
 
-        .earth-axis {
-            stroke: #ffffff;
-            stroke-width: 0.6;
-            opacity: 0.4;
-            transition: stroke var(--dusk-duration) var(--dusk-curve);
-        }
-        body.light-mode .earth-axis {
-            stroke: #111111;
-        }
-
-        /* Moon eclipse orbital engine tracker framework (Borderless Vector Void) */
+        /* Moon eclipse orbital engine tracker framework */
         .moon-track {
             transform-origin: 36px 36px;
             will-change: transform;
@@ -406,7 +396,7 @@
         }
 
         body:not(.light-mode) .moon-sphere {
-            fill: #000000; /* Moon absorbs layout values cleanly during true total eclipse pass */
+            fill: #1a231e; /* Flawlessly matches the green header canvas behind it */
         }
 
         .moon-crater {
@@ -415,7 +405,7 @@
             transition: fill var(--dusk-duration) var(--dusk-curve);
         }
 
-        /* 180-Degree Tidal Orbit Vector Logic Drivers (Calculated at 36,36 Center Scale Coordinates) */
+        /* 180-Degree Tidal Orbit Vector Logic Drivers */
         body.light-mode .earth-track { transform: rotate(0deg); }
         body:not(.light-mode) .earth-track { transform: rotate(180deg); }
 
@@ -423,7 +413,6 @@
         body:not(.light-mode) .moon-track { transform: rotate(235deg); }
 
         body.light-mode .moon-body { transform: translate(0px, 0px) scale(1); }
-        /* Moon glides coordinates inwards towards center (52 to 36 -> -16px translation drop) and scales out */
         body:not(.light-mode) .moon-body { transform: translate(-16px, 0px) scale(2.8); }
 
         body.light-mode .sun-body { transform: translate(0px, 0px) scale(1.1); opacity: 1; }
@@ -676,7 +665,6 @@
             .topics-column-grid { grid-template-columns: 1fr; gap: 14px 0; } 
             .wide-panel-title { margin-bottom: 20px; font-size: 18px; }
             
-            /* Responsive footprint scaling configurations for the external dial button */
             .theme-toggle-outer-ring { width: 64px; height: 64px; }
             .sun-body { transform-origin: 32px 32px; }
             .earth-track { transform-origin: 32px 32px; }
@@ -730,10 +718,7 @@
                 <circle class="sun-body" cx="36" cy="36" r="6"/>
                 
                 <g class="earth-track">
-                    <g class="earth-inner-group">
-                        <circle class="earth-circle" cx="64" cy="36" r="3.2"/>
-                        <line class="earth-axis" x1="63" y1="32.5" x2="65" y2="39.5"/>
-                    </g>
+                    <circle class="earth-circle" cx="64" cy="36" r="3.2"/>
                 </g>
                 
                 <g class="moon-track">
@@ -1021,7 +1006,7 @@
         });
 
         /* ==========================================================
-           KINETIC PORTAL INTERACTION ENGINE (RE-CALIBRATED)
+           KINETIC PORTAL INTERACTION ENGINE
            ========================================================== */
         const universalTargetLinks = document.querySelectorAll('.contents-container a, .breadcrumb-nav a, footer .footer-links-row a, .logo');
 
