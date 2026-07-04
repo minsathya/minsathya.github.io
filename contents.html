@@ -24,9 +24,9 @@
         :root {
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
             
-            /* Cinematic Twilight Cross-Fade Configuration */
-            --dusk-curve: cubic-bezier(0.33, 1, 0.68, 1);
-            --dusk-duration: 0.9s;
+            /* Clean Breath Core Speeds */
+            --breath-curve: cubic-bezier(0.25, 1, 0.5, 1);
+            --breath-duration: 0.4s;
             
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
@@ -65,7 +65,6 @@
             --row-hover: rgba(0, 0, 0, 0.01);
             
             --bullet-color: #b8b8bc;
-            --corona-glow: drop-shadow(0 0 3px rgba(255, 162, 0, 0.15));
         }
 
         * {
@@ -91,30 +90,47 @@
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             
-            /* Root Level Environmental Blending Pass */
-            transition: background-color var(--dusk-duration) var(--dusk-curve), color var(--dusk-duration) var(--dusk-curve);
+            /* Hardware-accelerated base timeline transition pass */
+            transition: background-color var(--breath-duration) var(--breath-curve);
         }
 
-        /* Continuous Exposure Universal Transition Mapping: Eradicates Frame Flashing */
-        header, .wide-capsule, .ctrl-btn, .ctrl-btn svg, 
+        /* Continuous Exposure Layout Mapping: Locks elements to unified transition timelines */
+        .wide-capsule, .ctrl-btn, .ctrl-btn svg, 
         .search-static-icon, .search-core-input, .breadcrumb-nav, 
         .breadcrumb-nav a, .breadcrumb-separator, .breadcrumb-current, 
         .page-main-heading, .wide-panel-title, .sub-section-title, 
         .topics-column-grid li::before, .topics-column-grid a, 
         footer .footer-links-row a, .copyright-tag, .sun-body, .moon-sphere, .earth-circle, .orbital-track-sun {
-            transition: background-color var(--dusk-duration) var(--dusk-curve),
-                        border-color var(--dusk-duration) var(--dusk-curve),
-                        color var(--dusk-duration) var(--dusk-curve),
-                        stroke var(--dusk-duration) var(--dusk-curve),
-                        fill var(--dusk-duration) var(--dusk-curve),
-                        filter var(--dusk-duration) var(--dusk-curve),
-                        box-shadow var(--dusk-duration) var(--dusk-curve);
+            transition: background-color var(--breath-duration) var(--breath-curve),
+                        border-color var(--breath-duration) var(--breath-curve),
+                        color var(--breath-duration) var(--breath-curve),
+                        stroke var(--breath-duration) var(--breath-curve),
+                        fill var(--breath-duration) var(--breath-curve),
+                        filter var(--breath-duration) var(--breath-curve),
+                        box-shadow var(--breath-duration) var(--breath-curve);
+        }
+
+        /* ==========================================================
+           THE CLEAN BREATH DISSOLVE CORE ENGINE
+           ========================================================== */
+        main, footer, .breadcrumb-nav {
+            will-change: opacity;
+            opacity: 1;
+            transition: opacity var(--breath-duration) var(--breath-curve);
+        }
+
+        /* The Out-Breath state: Dims canvas components smoothly to completely mask the background paint swap */
+        body.theme-breathing main,
+        body.theme-breathing footer,
+        body.theme-breathing .breadcrumb-nav {
+            opacity: 0.35 !important;
+            transition: opacity 0.18s var(--breath-curve) !important;
         }
 
         @keyframes masterEntrance {
             from {
                 opacity: 0;
-                transform: translate3d(0, 24px, 0);
+                transform: translate3三(0, 24px, 0);
             }
             to {
                 opacity: 1;
@@ -163,6 +179,7 @@
             margin: 0 auto 60px auto;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2) !important; 
             overflow: hidden; 
+            transition: background-color var(--breath-duration) var(--breath-curve), border-color var(--breath-duration) var(--breath-curve), box-shadow var(--breath-duration) var(--breath-curve);
         }
 
         /* Smoothly blend container profile when search is active in Light Mode */
@@ -339,7 +356,7 @@
             fill: #ffa200 !important;
             transform-origin: 20px 20px;
             will-change: transform, filter;
-            filter: var(--corona-glow);
+            filter: drop-shadow(0 0 8px rgba(255, 162, 0, 0.45)) !important;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
@@ -353,7 +370,7 @@
             backface-visibility: hidden;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
-            transition: transform var(--dusk-duration) var(--dusk-curve);
+            transition: transform var(--breath-duration) var(--breath-curve);
         }
 
         /* Pure Solid Ocean Blue Earth dot profile */
@@ -370,7 +387,7 @@
             backface-visibility: hidden;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
-            transition: transform var(--dusk-duration) var(--dusk-curve);
+            transition: transform var(--breath-duration) var(--breath-curve);
         }
 
         /* High-visibility deep off-white moon body */
@@ -380,7 +397,7 @@
 
         /* Precision Micro Mask Slice: Shaves away exactly 30% of the moon circle from the left in Light Mode */
         .moon-mask-blade {
-            transition: transform var(--dusk-duration) var(--dusk-curve);
+            transition: transform var(--breath-duration) var(--breath-curve);
         }
 
         body.light-mode .moon-mask-blade {
@@ -928,7 +945,7 @@
                 currentRotationDegrees = 180;
             }
             
-            // Apply absolute hardware layer positions seamlessly on entry initialization
+            // Apply absolute positions seamlessly on initialization
             document.querySelector('.earth-system').style.transform = `rotate(${currentRotationDegrees}deg)`;
             document.querySelector('.moon-system').style.transform = `rotate(${currentRotationDegrees}deg)`;
         }
@@ -937,35 +954,52 @@
 
         systemLightQuery.addEventListener('change', (e) => {
             sessionStorage.removeItem('dashboard-theme');
-            if (e.matches) {
-                bodyElement.classList.add('light-mode');
-                currentRotationDegrees += 180;
-            } else {
-                bodyElement.classList.remove('light-mode');
-                currentRotationDegrees += 180;
-            }
-            document.querySelector('.earth-system').style.transform = `rotate(${currentRotationDegrees}deg)`;
-            document.querySelector('.moon-system').style.transform = `rotate(${currentRotationDegrees}deg)`;
+            
+            bodyElement.classList.add('theme-breathing');
+            currentRotationDegrees += 180;
+            
+            setTimeout(() => {
+                if (e.matches) {
+                    bodyElement.classList.add('light-mode');
+                } else {
+                    bodyElement.classList.remove('light-mode');
+                }
+                document.querySelector('.earth-system').style.transform = `rotate(${currentRotationDegrees}deg)`;
+                document.querySelector('.moon-system').style.transform = `rotate(${currentRotationDegrees}deg)`;
+            }, 180);
+
+            setTimeout(() => {
+                bodyElement.classList.remove('theme-breathing');
+            }, 420);
         });
 
         toggleBtn.addEventListener('click', (e) => {
             e.stopPropagation(); 
             
-            const isCurrentlyLight = bodyElement.classList.contains('light-mode');
+            // Step 1: Breathe out (Dim canvas contents dynamically)
+            bodyElement.classList.add('theme-breathing');
             
             // Advance the degrees forward completely (+180) to produce the infinite continuous forward orbit
             currentRotationDegrees += 180;
-            
-            if (isCurrentlyLight) {
-                bodyElement.classList.remove('light-mode');
-                sessionStorage.setItem('dashboard-theme', 'dark');
-            } else {
-                bodyElement.classList.add('light-mode');
-                sessionStorage.setItem('dashboard-theme', 'light');
-            }
-            
             document.querySelector('.earth-system').style.transform = `rotate(${currentRotationDegrees}deg)`;
             document.querySelector('.moon-system').style.transform = `rotate(${currentRotationDegrees}deg)`;
+            
+            // Step 2: Swap color palettes hidden underneath the transition mask half-way
+            setTimeout(() => {
+                const isCurrentlyLight = bodyElement.classList.contains('light-mode');
+                if (isCurrentlyLight) {
+                    bodyElement.classList.remove('light-mode');
+                    sessionStorage.setItem('dashboard-theme', 'dark');
+                } else {
+                    bodyElement.classList.add('light-mode');
+                    sessionStorage.setItem('dashboard-theme', 'light');
+                }
+            }, 180);
+            
+            // Step 3: Breathe in (Bring the interface back to full contrast under the new look)
+            setTimeout(() => {
+                bodyElement.classList.remove('theme-breathing');
+            }, 420);
         });
 
         /* ==========================================================
