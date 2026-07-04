@@ -24,9 +24,9 @@
         :root {
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
             
-            /* Continuous Exposure Dissolve Tokens */
-            --dusk-curve: cubic-bezier(0.25, 1, 0.5, 1);
-            --dusk-duration: 0.8s;
+            /* Cinematic Twilight Cross-Fade Configuration */
+            --dusk-curve: cubic-bezier(0.33, 1, 0.68, 1);
+            --dusk-duration: 0.9s;
             
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
@@ -65,6 +65,7 @@
             --row-hover: rgba(0, 0, 0, 0.01);
             
             --bullet-color: #b8b8bc;
+            --corona-glow: drop-shadow(0 0 3px rgba(255, 162, 0, 0.15));
         }
 
         * {
@@ -94,17 +95,19 @@
             transition: background-color var(--dusk-duration) var(--dusk-curve), color var(--dusk-duration) var(--dusk-curve);
         }
 
-        /* Continuous Exposure Variable Mapping Pass to Prevent Frame Flashing */
+        /* Continuous Exposure Universal Transition Mapping: Eradicates Frame Flashing */
         header, .wide-capsule, .ctrl-btn, .ctrl-btn svg, 
         .search-static-icon, .search-core-input, .breadcrumb-nav, 
         .breadcrumb-nav a, .breadcrumb-separator, .breadcrumb-current, 
         .page-main-heading, .wide-panel-title, .sub-section-title, 
         .topics-column-grid li::before, .topics-column-grid a, 
-        footer .footer-links-row a, .copyright-tag {
+        footer .footer-links-row a, .copyright-tag, .sun-body, .moon-sphere, .earth-circle, .orbital-track-sun {
             transition: background-color var(--dusk-duration) var(--dusk-curve),
                         border-color var(--dusk-duration) var(--dusk-curve),
                         color var(--dusk-duration) var(--dusk-curve),
                         stroke var(--dusk-duration) var(--dusk-curve),
+                        fill var(--dusk-duration) var(--dusk-curve),
+                        filter var(--dusk-duration) var(--dusk-curve),
                         box-shadow var(--dusk-duration) var(--dusk-curve);
         }
 
@@ -336,7 +339,7 @@
             fill: #ffa200 !important;
             transform-origin: 20px 20px;
             will-change: transform, filter;
-            filter: drop-shadow(0 0 8px rgba(255, 162, 0, 0.45)) !important;
+            filter: var(--corona-glow);
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
@@ -350,7 +353,7 @@
             backface-visibility: hidden;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
-            transition: transform var(--dusk-duration) var(--ease-premium);
+            transition: transform var(--dusk-duration) var(--dusk-curve);
         }
 
         /* Pure Solid Ocean Blue Earth dot profile */
@@ -367,7 +370,7 @@
             backface-visibility: hidden;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
-            transition: transform var(--dusk-duration) var(--ease-premium);
+            transition: transform var(--dusk-duration) var(--dusk-curve);
         }
 
         /* High-visibility deep off-white moon body */
@@ -948,10 +951,6 @@
         toggleBtn.addEventListener('click', (e) => {
             e.stopPropagation(); 
             
-            // Add a temporary hardware rendering throttle layer to prevent shadow filter hiccups on iPad
-            const sunNode = document.querySelector('.sun-body');
-            sunNode.style.filter = 'none';
-            
             const isCurrentlyLight = bodyElement.classList.contains('light-mode');
             
             // Advance the degrees forward completely (+180) to produce the infinite continuous forward orbit
@@ -967,11 +966,6 @@
             
             document.querySelector('.earth-system').style.transform = `rotate(${currentRotationDegrees}deg)`;
             document.querySelector('.moon-system').style.transform = `rotate(${currentRotationDegrees}deg)`;
-            
-            // Smoothly ease the clean drop-shadow filtering back in once the execution settles
-            setTimeout(() => {
-                sunNode.style.filter = '';
-            }, 750);
         });
 
         /* ==========================================================
