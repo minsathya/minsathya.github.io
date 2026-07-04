@@ -42,12 +42,12 @@
             --bullet-color: #444444;
 
             /* Floating Transparent Celestial Tokens (Dark Mode) */
-            --sun-color: #ffa200;             /* Custom Vibrant Golden Sun */
+            --sun-color: #ffa200;             /* Perfect Gold Sun Core */
             --moon-color: #dededf;            /* Soft Cosmic Off-White Moon */
-            --earth-color: #2b9cd3;           /* Vibrant Ocean Blue Earth */
-            --orbit-line: rgba(255, 255, 255, 0.25); /* Muted Off-White Lines */
-            --earth-shadow-opacity: 0.15;     /* Reduced overlay drastically for high contrast visibility */
-            --corona-glow: drop-shadow(0 0 8px rgba(255, 162, 0, 0.4)); 
+            --earth-color: #2b9cd3;           /* Vivid Ocean Blue Earth */
+            --orbit-line: rgba(255, 255, 255, 0.25); /* Muted Off-White Lines for Visibility */
+            --earth-shadow-opacity: 0.15;     /* Low opacity shadow overlay for crystal clear visibility */
+            --corona-glow: drop-shadow(0 0 8px rgba(255, 162, 0, 0.35)); 
 
             /* Vertical cascade parameters matching master optimization */
             --cascade-distance: 24px;
@@ -70,11 +70,11 @@
             --bullet-color: #b8b8bc;
 
             /* Floating Transparent Celestial Tokens (Light Mode) */
-            --sun-color: #ffa200;             /* Maintained Golden Sun */
+            --sun-color: #ffa200;             
             --moon-color: #cbd0d4;            
             --earth-color: #2b9cd3;           
-            --orbit-line: rgba(0, 0, 0, 0.15); /* Clean Muted Black Lines */
-            --earth-shadow-opacity: 0;        /* Pure vivid day-lit Earth */
+            --orbit-line: rgba(0, 0, 0, 0.15); /* High Contrast Muted Black Lines */
+            --earth-shadow-opacity: 0;        
             --corona-glow: drop-shadow(0 0 3px rgba(0, 0, 0, 0.04));
         }
 
@@ -289,7 +289,7 @@
         }
 
         /* ==========================================================
-           CELESTIAL ORBITAL TOGGLE (FLOATING TRANSPARENT WITH GUIDES)
+           CELESTIAL ORBITAL TOGGLE (REAL ASTROPHYSICS ENGINE)
            ========================================================== */
         .theme-toggle-void {
             width: 44px;  
@@ -321,17 +321,27 @@
 
         body.light-mode .space-stars { opacity: 0; }
 
-        /* Highly calibrated mechanical dashed trajectory lines */
-        .orbital-track {
+        /* Flawless trajectory guide track vectors centered perfectly around the Sun (22,22) */
+        .orbital-track-sun {
             fill: none;
             stroke: var(--orbit-line);
             stroke-width: 0.8;
             stroke-dasharray: 2 3;
             transform-origin: 22px 22px;
-            transition: stroke var(--dusk-duration) var(--dusk-curve), transform var(--dusk-duration) var(--dusk-curve);
+            transition: stroke var(--dusk-duration) var(--dusk-curve);
         }
 
-        /* Luminous Golden Sun Core */
+        /* Local trajectory guide track vector centered perfectly around Earth (35,22) */
+        .orbital-track-earth {
+            fill: none;
+            stroke: var(--orbit-line);
+            stroke-width: 0.6;
+            stroke-dasharray: 1.5 2;
+            transform-origin: 35px 22px;
+            transition: stroke var(--dusk-duration) var(--dusk-curve);
+        }
+
+        /* Fixed Luminous Golden Sun Core */
         .sun-body {
             fill: var(--sun-color);
             transform-origin: 22px 22px;
@@ -340,8 +350,8 @@
             transition: fill var(--dusk-duration) var(--dusk-curve), filter var(--dusk-duration) var(--dusk-curve);
         }
 
-        /* Solid Ocean Blue Earth Node Layout */
-        .earth-track {
+        /* Flawless Earth-Moon UNIT rotating cleanly around the Sun center (22,22) */
+        .earth-moon-unit {
             transform-origin: 22px 22px;
             will-change: transform;
             transition: transform var(--dusk-duration) var(--dusk-curve);
@@ -358,15 +368,9 @@
             transition: opacity var(--dusk-duration) var(--dusk-curve);
         }
 
-        /* Cosmic White Moon Node Layout */
-        .moon-track {
-            transform-origin: 22px 22px;
-            will-change: transform;
-            transition: transform var(--dusk-duration) var(--dusk-curve);
-        }
-
-        .moon-body {
-            transform-origin: 41px 22px;
+        /* Independent Moon Node revolving tightly around Earth center coordinates (35,22) */
+        .moon-local-orbit {
+            transform-origin: 35px 22px;
             will-change: transform;
             transition: transform var(--dusk-duration) var(--dusk-curve);
         }
@@ -376,18 +380,13 @@
             transition: fill var(--dusk-duration) var(--dusk-curve);
         }
 
-        /* Dynamic Clockwise Rotational Alignments (Centered exactly at 22,22) */
-        body.light-mode .orbital-track { transform: rotate(0deg); }
-        body:not(.light-mode) .orbital-track { transform: rotate(180deg); }
+        /* Real-Life Physical Space Transformations */
+        body.light-mode .earth-moon-unit { transform: rotate(0deg); }
+        body:not(.light-mode) .earth-moon-unit { transform: rotate(180deg); }
 
-        body.light-mode .earth-track { transform: rotate(0deg); }
-        body:not(.light-mode) .earth-track { transform: rotate(180deg); }
-
-        body.light-mode .moon-track { transform: rotate(0deg); }
-        body:not(.light-mode) .moon-track { transform: rotate(235deg); }
-
-        body.light-mode .moon-body { transform: translate(0px, 0px) scale(1); }
-        body:not(.light-mode) .moon-body { transform: translate(-5px, 0px) scale(1.6); }
+        /* Moon handles a synchronized loop to stay on Earth's night side naturally */
+        body.light-mode .moon-local-orbit { transform: rotate(0deg); }
+        body:not(.light-mode) .moon-local-orbit { transform: rotate(180deg); }
 
         .search-core-input {
             flex-grow: 1;
@@ -635,14 +634,13 @@
             .topics-column-grid { grid-template-columns: 1fr; gap: 14px 0; } 
             .wide-panel-title { margin-bottom: 20px; font-size: 18px; }
             
+            /* Responsive layout adjustments for the 44px coordinate matrix */
             .theme-toggle-void { width: 36px; height: 36px; }
             .sun-body { transform-origin: 18px 18px; }
-            .orbital-track { transform-origin: 18px 18px; }
-            .earth-track { transform-origin: 18px 18px; }
-            .moon-track { transform-origin: 18px 18px; }
-            .moon-body { transform-origin: 28px 18px; }
-            body.light-mode .moon-body { transform: translate(0px, 0px) scale(1); }
-            body:not(.light-mode) .moon-body { transform: translate(-5px, 0px) scale(1.6); }
+            .orbital-track-sun { transform-origin: 18px 18px; }
+            .earth-moon-unit { transform-origin: 18px 18px; }
+            .orbital-track-earth { transform-origin: 29px 18px; }
+            .moon-local-orbit { transform-origin: 29px 18px; }
         }
     </style>
 </head>
@@ -662,19 +660,21 @@
                             <circle cx="12" cy="32" r="0.4"/>
                         </g>
 
-                        <circle class="orbital-track" cx="22" cy="22" r="14"/>
-                        <circle class="orbital-track" cx="22" cy="22" r="19"/>
+                        <circle class="orbital-track-sun" cx="22" cy="22" r="13"/>
                         
-                        <circle class="sun-body" cx="22" cy="22" r="4.5"/>
+                        <circle class="sun-body" cx="22" cy="22" r="4.2"/>
                         
-                        <g class="earth-track">
-                            <circle class="earth-circle" cx="36" cy="22" r="2.4"/>
-                            <circle class="earth-night-overlay" cx="36" cy="22" r="2.4"/>
-                        </g>
-                        
-                        <g class="moon-track">
-                            <g class="moon-body">
-                                <circle class="moon-sphere" cx="41" cy="22" r="1.4"/>
+                        <g class="earth-moon-unit">
+                            
+                            <circle class="orbital-track-earth" cx="35" cy="22" r="4.2" />
+                            
+                            <g class="earth-local-group">
+                                <circle class="earth-circle" cx="35" cy="22" r="2.4"/>
+                                <circle class="earth-night-overlay" cx="35" cy="22" r="2.4"/>
+                            </g>
+                            
+                            <g class="moon-local-orbit">
+                                <circle class="moon-sphere" cx="39.2" cy="22" r="1.1"/>
                             </g>
                         </g>
                     </svg>
