@@ -88,7 +88,7 @@
                         color var(--dusk-duration) var(--dusk-curve);
         }
 
-        /* HARD-LOCKED PERFECT SYNCHRONIZATION RUNTIME: Forced to change at the exact same millisecond */
+        /* HARD-LOCKED PERFECT SYNCHRONIZATION RUNTIME */
         header, .wide-capsule, .ctrl-btn, .ctrl-btn svg, 
         .search-static-icon, .search-core-input, .breadcrumb-nav, 
         .breadcrumb-nav a, .breadcrumb-separator, .breadcrumb-current, 
@@ -157,14 +157,12 @@
             overflow: hidden; 
         }
 
-        /* Smoothly blend container profile when search is active in Light Mode */
         body.light-mode header.state-search {
             background-color: #e9ebe6 !important;
             border: 1px solid #d4d8cf !important;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02) !important;
         }
 
-        /* Stable Permanent White Navigation Logo */
         #headerMainView .logo {
             font-size: 26px;
             font-weight: 600;
@@ -239,7 +237,6 @@
             100% { transform: translate3d(0, 0, 0); opacity: 1; }
         }
 
-        /* Master Geometry Sync Shell for Pixel-Perfect X Button Realignment */
         .header-right-cluster, .search-control-cluster {
             display: flex;
             align-items: center;
@@ -248,7 +245,6 @@
             height: 100%;
         }
 
-        /* Identical target dimensions across active modules prevents frame layout stuttering */
         .ctrl-btn, .theme-toggle-void {
             background: none;
             border: none;
@@ -270,7 +266,6 @@
 
         .ctrl-btn:hover { opacity: 0.6; }
 
-        /* Lock Main rest buttons vectors strictly to white */
         #headerMainView .ctrl-btn svg {
             stroke: #ffffff !important;
             width: 24px;
@@ -281,7 +276,6 @@
             stroke-linejoin: round;
         }
 
-        /* Dynamic coloring maps purely within Search Overlay parameters */
         #headerSearchView .ctrl-btn svg, .search-static-icon {
             width: 24px; 
             height: 24px;
@@ -303,7 +297,7 @@
         }
 
         /* ==========================================================
-           HYPER-FOCUSED 3D EARTH INTEGRATION STYLING
+           ADAPTIVE 3D EARTH STYLING ENGINE
            ========================================================== */
         .celestial-window-svg {
             width: 100%;
@@ -312,7 +306,6 @@
             inset: 0;
         }
 
-        /* Smoothly interpolate day/night shadow overlay opacity on change */
         #terminatorOverlay {
             opacity: 0;
             will-change: opacity;
@@ -321,6 +314,10 @@
         
         body:not(.light-mode) #terminatorOverlay {
             opacity: 1;
+        }
+
+        .geo-view {
+            transition: opacity 0.3s ease;
         }
 
         .search-core-input {
@@ -350,7 +347,7 @@
         .clear-text-btn svg { opacity: 0.4; }
         .close-search-btn svg { opacity: 0.7; }
 
-        /* Minimal Breadcrumbs Infrastructure (Locked 400 Weight / 15px Size) */
+        /* Minimal Breadcrumbs Infrastructure */
         .breadcrumb-nav {
             display: flex;
             align-items: center;
@@ -410,7 +407,6 @@
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
             
-            /* ISOLATED TRACK SYSTEM: Isolates structural transformations cleanly from global color variables clock */
             transition: transform 0.5s var(--ease-premium),
                         background-color var(--dusk-duration) var(--dusk-curve),
                         border-color var(--dusk-duration) var(--dusk-curve);
@@ -432,7 +428,6 @@
             margin-bottom: 28px;
         }
 
-        /* Dual Section Content Divider Rules */
         .sub-section-title {
             font-size: 13px;
             font-weight: 600;
@@ -445,7 +440,6 @@
             margin-top: 0px;
         }
 
-        /* Side-By-Side Parallel Vertical Lists Grid Framework */
         .topics-column-grid {
             list-style: none;
             display: grid;
@@ -460,7 +454,6 @@
             align-items: center;
         }
 
-        /* Premium Custom Content Bullet Vector Engine */
         .topics-column-grid li::before {
             content: "•";
             position: absolute;
@@ -488,7 +481,6 @@
             color: var(--text-main);
         }
 
-        /* Footer Layout Vector Shell */
         footer {
             display: flex;
             flex-direction: column;
@@ -528,7 +520,6 @@
             letter-spacing: 0.2px;
         }
 
-        /* Universal Text Expansion Layer */
         .nav-text {
             display: inline-block !important;
             transform-origin: center center !important;
@@ -541,7 +532,6 @@
             transform: scale3d(1.06, 1.06, 1) !important;
         }
 
-        /* Apply structural base line shifts for side sliders safely nested */
         .topics-column-grid li:hover .nav-text {
             transform: scale3d(1.06, 1.06, 1) translate3d(4px, 0, 0) !important;
         }
@@ -549,7 +539,6 @@
         .footer-links-row a .nav-text { color: var(--text-muted) !important; }
         .footer-links-row a:hover .nav-text { color: var(--text-main) !important; }
 
-        /* Calibrated 1.3 Premium Micro-Pop Portal Zoom Trigger */
         .breadcrumb-nav a.is-zooming .nav-text,
         .topics-column-grid a.is-zooming .nav-text,
         footer .footer-links-row a.is-zooming .nav-text {
@@ -564,7 +553,6 @@
             -webkit-transition: none !important;
         }
 
-        /* Mobile Responsive Window Shifts */
         @media (max-width: 700px) {
             body { padding: 40px 20px; }
             header { margin-bottom: 40px; height: 64px; }
@@ -588,40 +576,69 @@
             <span class="logo">sathya.</span>
             <div class="header-right-cluster">
                 
+                <!-- Smart Adaptive 3D Earth Toggle Widget -->
                 <div class="theme-toggle-void" id="themeToggleBtn" aria-label="Trigger global environmental transition">
                     <svg class="celestial-window-svg" viewBox="0 0 40 40">
                         <defs>
-                            <clipPath id="earth-shere-clip">
+                            <!-- Spherical Planet Clipping Boundaries -->
+                            <clipPath id="earth-sphere-clip">
                                 <circle cx="20" cy="20" r="16" />
                             </clipPath>
                             
+                            <!-- 3D Matte Radial Volumetric Shading Overlay -->
                             <radialGradient id="earth-3d-shading" cx="30%" cy="30%" r="70%">
                                 <stop offset="60%" stop-color="#000000" stop-opacity="0" />
                                 <stop offset="100%" stop-color="#000000" stop-opacity="0.5" />
                             </radialGradient>
                             
+                            <!-- Natural, Tilted, Heavily Feathered Atmospheric Day/Night Split -->
                             <linearGradient id="day-night-split" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="35%" stop-color="#000000" stop-opacity="0" />
-                                <stop offset="55%" stop-color="#000000" stop-opacity="0.35" />
-                                <stop offset="80%" stop-color="#000000" stop-opacity="0.75" />
+                                <stop offset="58%" stop-color="#000000" stop-opacity="0.35" />
+                                <stop offset="85%" stop-color="#000000" stop-opacity="0.75" />
                             </linearGradient>
                         </defs>
 
+                        <!-- Symmetrical Spinning 3D Earth Structure Group Shell -->
                         <g id="earthGlobeGroup" style="transform-origin: 20px 20px; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);">
                             
+                            <!-- Deep Ocean Blue Base -->
                             <circle cx="20" cy="20" r="16" fill="#2b9cd3" />
                             
-                            <g clip-path="url(#earth-shere-clip)">
-                                <path d="M 5,14 Q 12,5 20,6 Q 28,5 35,12 Q 35,16 31,18 Q 27,15 24,15 L 22,21 L 20,22 L 18,15 Q 12,15 7,16 Z" fill="#6ba374" />
-                                <path d="M 4,17 Q 10,17 11,21 Q 14,27 10,33 Q 6,33 3,24 Z" fill="#6ba374" />
-                                <path d="M 27,27 Q 31,25 34,28 Q 32,34 28,32 Z" fill="#6ba374" />
+                            <!-- Dynamic Localized Map Shell Layer -->
+                            <g clip-path="url(#earth-sphere-clip)">
+                                
+                                <!-- VIEW 1: INDIA / ASIA CENTERED (Default Face) -->
+                                <g id="geo-asia" class="geo-view">
+                                    <path d="M 5,14 Q 12,5 20,6 Q 28,5 35,12 Q 35,16 31,18 Q 27,15 24,15 L 22,21 L 20,22 L 18,15 Q 12,15 7,16 Z" fill="#6ba374" />
+                                    <path d="M 4,17 Q 10,17 11,21 Q 14,27 10,33 Q 6,33 3,24 Z" fill="#6ba374" />
+                                    <path d="M 27,27 Q 31,25 34,28 Q 32,34 28,32 Z" fill="#6ba374" />
+                                </g>
+
+                                <!-- VIEW 2: AMERICAS CENTERED (Triggers for US / Canada / South America) -->
+                                <g id="geo-americas" class="geo-view" style="display: none;">
+                                    <path d="M 6,8 Q 14,9 18,14 Q 19,19 15,22 L 13,27 L 15,34 L 11,35 Q 7,27 7,20 Z" fill="#6ba374" /> <!-- North America -->
+                                    <path d="M 14,23 Q 20,24 23,28 Q 21,34 16,36 Q 13,32 14,27 Z" fill="#6ba374" /> <!-- South America -->
+                                    <path d="M 31,12 Q 35,15 36,20 Q 33,24 30,18 Z" fill="#6ba374" /> <!-- Far Edge Western Europe fringe -->
+                                </g>
+
+                                <!-- VIEW 3: AFRICA / EUROPE CENTERED (Triggers for Africa / UK / Europe) -->
+                                <g id="geo-africa" class="geo-view" style="display: none;">
+                                    <path d="M 12,6 Q 22,5 29,8 Q 28,14 24,15 Q 16,14 11,11 Z" fill="#6ba374" /> <!-- Europe -->
+                                    <path d="M 11,12 Q 18,11 25,16 Q 27,23 23,31 Q 18,35 15,32 Q 11,26 11,18 Z" fill="#6ba374" /> <!-- Africa -->
+                                    <path d="M 26,14 Q 31,13 34,17 L 31,22 Z" fill="#6ba374" /> <!-- Middle East Fringe -->
+                                </g>
+                                
                             </g>
                             
+                            <!-- 3D Matte Spherical Shadow Volume Overlay -->
                             <circle cx="20" cy="20" r="16" fill="url(#earth-3d-shading)" pointer-events="none" />
                             
+                            <!-- Feathered Day/Night Terminator Shading Overlay -->
                             <circle id="terminatorOverlay" cx="20" cy="20" r="16" fill="url(#day-night-split)" pointer-events="none" />
                         </g>
                         
+                        <!-- Thin Ambient Space Haze Glow Rim -->
                         <circle cx="20" cy="20" r="16.5" fill="none" stroke="#ffffff" stroke-width="1" stroke-opacity="0.15" pointer-events="none" />
                     </svg>
                 </div>
@@ -856,6 +873,39 @@
 
         localStorage.removeItem('dashboard-theme');
 
+        /* ==========================================================
+           SILENT INTELLIGENT GEOLOCATION SYSTEM
+           ========================================================== */
+        async function runSmartGeoPrecision() {
+            try {
+                // Silently request localized metrics (No permission popups required)
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                
+                const continent = data.continent_code; // e.g., "NA" (North America), "AF" (Africa), "AS" (Asia)
+                const country = data.country_code;     // e.g., "US", "IN", "ZA"
+
+                // Clear all map states first
+                document.querySelectorAll('.geo-view').forEach(view => view.style.display = 'none');
+
+                if (continent === 'NA' || continent === 'SA') {
+                    // Visitor is in the Americas -> Show US Face
+                    document.getElementById('geo-americas').style.display = 'block';
+                } else if (continent === 'AF' || country === 'GB' || country === 'FR' || country === 'DE') {
+                    // Visitor is in Africa or Europe -> Show Africa Face
+                    document.getElementById('geo-africa').style.display = 'block';
+                } else {
+                    // Visitor is in India / Asia / everywhere else -> Default India Face
+                    document.getElementById('geo-asia').style.display = 'block';
+                }
+            } catch (err) {
+                console.log("Network lookup isolated or blocked. Preserving India default base frame.");
+            }
+        }
+
+        // Initialize spatial detection engine instantly on thread load
+        runSmartGeoPrecision();
+
         function applyTargetPalette() {
             const activeSessionOverride = sessionStorage.getItem('dashboard-theme');
             let determineLightState = systemLightQuery.matches;
@@ -871,7 +921,6 @@
                 earthRotationMetric = 360;
             }
             
-            // Render initialized axis values smoothly on start
             document.getElementById('earthGlobeGroup').style.transform = `rotate(${earthRotationMetric}deg)`;
         }
 
@@ -893,7 +942,7 @@
             
             const isCurrentlyLight = bodyElement.classList.contains('light-mode');
             
-            // Advance the degrees forward completely (+360 deg) for a full, ultra-smooth spinning roll
+            // Advance axis rotation metrics forward (+360 deg) for immediate responsive feedback loop
             earthRotationMetric += 360;
             
             if (isCurrentlyLight) {
