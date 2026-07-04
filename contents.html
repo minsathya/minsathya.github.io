@@ -42,10 +42,11 @@
             --bullet-color: #444444;
 
             /* Floating Transparent Celestial Tokens (Dark Mode) */
-            --sun-color: #ffa200;             /* Custom Vibrant Golden Sun */
-            --moon-color: #dededf;            /* Soft Cosmic Off-White Moon */
-            --earth-color: #2b9cd3;           /* Vibrant Ocean Blue Earth */
-            --orbit-line: rgba(255, 255, 255, 0.35); /* Enhanced line visibility for Dark Mode */
+            --sun-color: #ffa200;             
+            --moon-color: #dededf;            
+            --earth-color: #2b9cd3;           
+            --orbit-line: rgba(255, 255, 255, 0.55); /* Boosted line brightness for maximum dark mode visibility */
+            --earth-shadow-opacity: 0.15;     
             --corona-glow: drop-shadow(0 0 6px rgba(255, 162, 0, 0.3)); 
 
             /* Vertical cascade parameters matching master optimization */
@@ -72,7 +73,8 @@
             --sun-color: #ffa200;             
             --moon-color: #cbd0d4;            
             --earth-color: #2b9cd3;           
-            --orbit-line: rgba(0, 0, 0, 0.3); /* High contrast, clear visibility charcoal lines */
+            --orbit-line: rgba(0, 0, 0, 0.45); /* Darkened line crispness for maximum light mode visibility */
+            --earth-shadow-opacity: 0;        
             --corona-glow: drop-shadow(0 0 2px rgba(0, 0, 0, 0.02));
         }
 
@@ -319,22 +321,23 @@
 
         body.light-mode .space-stars { opacity: 0; }
 
-        /* Fine-dashed celestial trajectory blueprint tracks linked to theme rules */
+        /* Widen guide track vectors centered perfectly around the Sun (22,22) */
         .orbital-track-sun {
             fill: none;
             stroke: var(--orbit-line);
-            stroke-width: 0.8;
+            stroke-width: 0.9;
             stroke-dasharray: 2 3.5;
             transform-origin: 22px 22px;
             transition: stroke var(--dusk-duration) var(--dusk-curve);
         }
 
+        /* Local trajectory guide track vector centered perfectly around expanded Earth coordinates (36,22) */
         .orbital-track-earth {
             fill: none;
             stroke: var(--orbit-line);
-            stroke-width: 0.6;
+            stroke-width: 0.7;
             stroke-dasharray: 1.5 2.5;
-            transform-origin: 34px 22px;
+            transform-origin: 36px 22px;
             transition: stroke var(--dusk-duration) var(--dusk-curve);
         }
 
@@ -347,7 +350,7 @@
             transition: fill var(--dusk-duration) var(--dusk-curve), filter var(--dusk-duration) var(--dusk-curve);
         }
 
-        /* The Integrated Earth System (Sweeps 180° around the center Sun coordinates 22,22) */
+        /* Earth System sweeps exactly 180° around the fixed center coordinate box (22,22) */
         .earth-system {
             transform-origin: 22px 22px;
             will-change: transform;
@@ -359,9 +362,15 @@
             transition: fill var(--dusk-duration) var(--dusk-curve);
         }
 
-        /* The Isolated Moon System (Revolves locally around Earth coordinates 34,22) */
+        .earth-night-overlay {
+            fill: #000000;
+            opacity: var(--earth-shadow-opacity);
+            transition: opacity var(--dusk-duration) var(--dusk-curve);
+        }
+
+        /* Moon System revolves locally around Earth coordinates (36,22) */
         .moon-system {
-            transform-origin: 34px 22px;
+            transform-origin: 36px 22px;
             will-change: transform;
             transition: transform var(--dusk-duration) var(--dusk-curve);
         }
@@ -371,11 +380,10 @@
             transition: fill var(--dusk-duration) var(--dusk-curve);
         }
 
-        /* Synchronized Real Space Physics Transformations */
+        /* Synchronized Space Physics Matrix Transformations - Absolute coordinates locked to preserve layout scaling */
         body.light-mode .earth-system { transform: rotate(0deg); }
         body:not(.light-mode) .earth-system { transform: rotate(180deg); }
 
-        /* The Moon naturally glides along its orbital cycle to position on the dark hemisphere */
         body.light-mode .moon-system { transform: rotate(0deg); }
         body:not(.light-mode) .moon-system { transform: rotate(145deg); }
 
@@ -625,12 +633,8 @@
             .topics-column-grid { grid-template-columns: 1fr; gap: 14px 0; } 
             .wide-panel-title { margin-bottom: 20px; font-size: 18px; }
             
+            /* Responsive footprint scale - Removed manual origin overrides so coordinates auto-scale perfectly */
             .theme-toggle-void { width: 36px; height: 36px; }
-            .sun-body { transform-origin: 18px 18px; }
-            .orbital-track-sun { transform-origin: 18px 18px; }
-            .earth-system { transform-origin: 18px 18px; }
-            .orbital-track-earth { transform-origin: 28px 18px; }
-            .moon-system { transform-origin: 28px 18px; }
         }
     </style>
 </head>
@@ -652,8 +656,8 @@
                             <circle cx="12" cy="32" r="0.4"/>
                         </g>
 
-                        <!-- Global Trajectory Track Around Sun -->
-                        <circle class="orbital-track-sun" cx="22" cy="22" r="12"/>
+                        <!-- Expanded Global Trajectory Track Around Sun -->
+                        <circle class="orbital-track-sun" cx="22" cy="22" r="14"/>
                         
                         <!-- Fixed Luminous Golden Sun Anchor Node (#ffa200) -->
                         <circle class="sun-body" cx="22" cy="22" r="4.2"/>
@@ -661,15 +665,15 @@
                         <!-- Real-Science Earth System (Rotates around center Sun 22,22) -->
                         <g class="earth-system">
                             
-                            <!-- Local Dotted Orbit Vector (Loops directly around Earth at 34,22) -->
-                            <circle class="orbital-track-earth" cx="34" cy="22" r="4.5" />
+                            <!-- Widen Local Dotted Orbit Vector (Loops directly around Earth at 36,22) -->
+                            <circle class="orbital-track-earth" cx="36" cy="22" r="4.5" />
                             
                             <!-- Pure Solid Vivid Ocean Blue Earth Dot -->
-                            <circle class="earth-circle" cx="34" cy="22" r="2.2"/>
+                            <circle class="earth-circle" cx="36" cy="22" r="2.2"/>
                             
-                            <!-- Moon Satellite Group (Revolves around moving Earth coordinates 34,22) -->
+                            <!-- Moon Satellite Group (Revolves around moving Earth coordinates 36,22) -->
                             <g class="moon-system">
-                                <circle class="moon-sphere" cx="38.5" cy="22" r="1.0"/>
+                                <circle class="moon-sphere" cx="40.5" cy="22" r="1.0"/>
                             </g>
                         </g>
                     </svg>
