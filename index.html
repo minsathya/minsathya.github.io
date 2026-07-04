@@ -72,7 +72,9 @@
             width: 95%;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            transition: background-color 0.6s var(--ease-premium), color 0.6s var(--ease-premium);
+            
+            /* SYNCHRONIZED: Premium Anti-Flash Breathing Color Clock Transition Matrix */
+            transition: background-color 0.8s var(--ease-premium), color 0.8s var(--ease-premium);
         }
 
         @keyframes masterEntrance {
@@ -105,7 +107,9 @@
             margin: 0 auto 80px auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
             overflow: hidden;
-            transition: background-color 0.6s var(--ease-premium), border-color 0.6s var(--ease-premium), box-shadow 0.6s var(--ease-premium);
+            
+            /* SYNCHRONIZED: Header Fluid Dissolve Configuration */
+            transition: background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
         }
 
         body:not(.light-mode) header {
@@ -143,7 +147,6 @@
             z-index: 1;
         }
 
-        /* --- STATE: OPENING SEARCH --- */
         header.state-search #headerMainView {
             animation: skyfallExit var(--cascade-duration-exit) ease-in both;
             pointer-events: none;
@@ -154,7 +157,6 @@
             pointer-events: auto;
         }
 
-        /* --- STATE: CLOSING SEARCH --- */
         header.state-main #headerSearchView {
             animation: skyfallExit var(--cascade-duration-exit) ease-in both;
             pointer-events: none;
@@ -166,25 +168,13 @@
         }
 
         @keyframes skyfallExit {
-            0% {
-                transform: translate3d(0, 0, 0);
-                opacity: 1;
-            }
-            100% {
-                transform: translate3d(0, var(--cascade-distance), 0);
-                opacity: 0;
-            }
+            0% { transform: translate3d(0, 0, 0); opacity: 1; }
+            100% { transform: translate3d(0, var(--cascade-distance), 0); opacity: 0; }
         }
 
         @keyframes skyfallEntry {
-            0% {
-                transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0);
-                opacity: 0;
-            }
-            100% {
-                transform: translate3d(0, 0, 0);
-                opacity: 1;
-            }
+            0% { transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0); opacity: 0; }
+            100% { transform: translate3d(0, 0, 0); opacity: 1; }
         }
 
         .header-right-cluster,
@@ -202,7 +192,7 @@
             letter-spacing: -0.5px;
             color: var(--text-main);
             text-decoration: none !important;
-            transition: color 0.6s var(--ease-premium);
+            transition: color 0.8s var(--ease-premium);
             flex-shrink: 0;
         }
 
@@ -219,7 +209,7 @@
             height: 32px;
             padding: 0;
             flex-shrink: 0;
-            transition: opacity 0.2s var(--ease-premium), color 0.6s var(--ease-premium);
+            transition: opacity 0.2s var(--ease-premium), color 0.8s var(--ease-premium);
         }
 
         .ctrl-btn:hover { opacity: 0.6; }
@@ -233,7 +223,7 @@
             stroke-width: 2.2;
             stroke-linecap: round;
             stroke-linejoin: round;
-            transition: stroke 0.6s var(--ease-premium);
+            transition: stroke 0.8s var(--ease-premium);
         }
 
         .search-static-icon {
@@ -252,18 +242,19 @@
             padding: 0 16px;
             width: 100%;
             min-width: 0;
-            
-            /* Hardware isolation layer prevents caret rounding jitter on iPadOS */
             will-change: transform, opacity;
             transform: translate3d(0, 0, 0);
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            transition: color 0.6s var(--ease-premium);
+            transition: color 0.8s var(--ease-premium);
         }
 
         .clear-text-btn svg { opacity: 0.4; }
         .close-search-btn svg { opacity: 0.7; }
 
+        /* ==========================================================
+           CELESTIAL CROSS-DISSOLVE FADE TOGGLE STYLING
+           ========================================================== */
         .theme-toggle {
             width: 32px;
             height: 32px;
@@ -289,7 +280,7 @@
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            transition: transform 0.6s var(--ease-premium), opacity 0.6s var(--ease-premium), stroke 0.6s var(--ease-premium);
+            transition: transform 0.8s var(--ease-premium), opacity 0.8s var(--ease-premium), stroke 0.8s var(--ease-premium);
         }
 
         .theme-toggle .sun-icon { opacity: 0; transform: translate3d(0, 0, 0) rotate(-90deg) scale(0.4); }
@@ -320,7 +311,9 @@
             backface-visibility: hidden;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
-            transition: border-color 0.5s var(--ease-premium), background-color 0.5s var(--ease-premium), transform 0.5s var(--ease-premium);
+            
+            /* SYNCHRONIZED: Panels Synchronized Slow-Breathing Color Matrix Configuration */
+            transition: border-color 0.8s var(--ease-premium), background-color 0.8s var(--ease-premium), transform 0.5s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
         }
 
         body:not(.light-mode) .capsule-panel { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
@@ -334,11 +327,11 @@
             color: var(--text-main);
             margin-bottom: 24px;
             padding: 0 24px;
-            transition: color 0.6s var(--ease-premium);
+            transition: color 0.8s var(--ease-premium);
         }
 
         .document-list { list-style: none; display: flex; flex-direction: column; }
-        .document-list li { border-bottom: 1px solid var(--row-divider); }
+        .document-list li { border-bottom: 1px solid var(--row-divider); transition: border-color 0.8s var(--ease-premium); }
         .document-list li:last-child { border-bottom: none; }
 
         .document-list a {
@@ -352,7 +345,7 @@
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            transition: color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
+            transition: color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), padding 0.4s var(--ease-premium);
         }
 
         .document-list li:hover,
@@ -368,7 +361,7 @@
             background: transparent !important;
         }
 
-        .document-list li:hover a { opacity: 1 !important; padding-left: 24px !important; }
+        .document-list li:hover a { opacity: 1 !important; padding-left: 28px !important; }
 
         footer { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
         .footer-links-row { display: flex; justify-content: center; align-items: center; gap: 32px; flex-wrap: wrap; width: 100%; }
@@ -386,7 +379,7 @@
         }
 
         .footer-links-row a:hover { color: var(--text-main) !important; }
-        .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; letter-spacing: 0.2px; transition: color 0.4s var(--ease-premium); }
+        .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; letter-spacing: 0.2px; transition: color 0.8s var(--ease-premium); }
 
         @media (max-width: 1024px) {
             .matrix-canvas { grid-template-columns: repeat(2, 1fr); gap: 28px; }
@@ -409,7 +402,8 @@
             width: 100%;
             margin-top: 20px;
             padding-top: 12px;
-            border-top: 1px dashed #222222;
+            border-top: 1px dashed var(--row-divider);
+            transition: border-color 0.8s var(--ease-premium);
         }
 
         .view-more-link {
@@ -443,7 +437,6 @@
         .footer-links-row a:hover .nav-text { color: var(--text-main) !important; }
         .view-more-link .nav-text { color: #8a9a86 !important; }
 
-        /* Calibrated 1.3 Premium Micro-Pop Portal Zoom Trigger */
         .matrix-canvas a.is-zooming .nav-text,
         .view-more-link.is-zooming .nav-text,
         .footer-links-row a.is-zooming .nav-text {
@@ -622,8 +615,6 @@
         openSearchBtn.addEventListener('click', () => {
             masterHeader.classList.remove('state-main');
             masterHeader.classList.add('state-search');
-            
-            // iPad/iOS keyboard bypass rule tracks direct synchronous token focus parameters safely
             searchCoreInput.focus({ preventScroll: true });
         });
 
@@ -647,7 +638,7 @@
         /* ==========================================================
            LINK PORTAL ANIMATION — RE-CALIBRATED TO SNAP 1.3 MICRO-POP
            ========================================================== */
-        const universalTargetLinks = document.querySelectorAll('.matrix-canvas a, footer .footer-links-row a');
+        const universalTargetLinks = document.querySelectorAll('.matrix-canvas a, .view-more-link, footer .footer-links-row a');
 
         universalTargetLinks.forEach(link => {
             if (!link.querySelector('.nav-text')) {
@@ -669,7 +660,6 @@
                 sessionStorage.setItem('activeUniversalTargetUrl', this.href);
                 this.classList.add('is-zooming');
 
-                // Tightened to exactly 260ms for immediate clean redirect
                 setTimeout(() => {
                     window.location.href = destination;
                 }, 260);
@@ -705,7 +695,6 @@
                         setTimeout(() => {
                             matchedLinkElement.classList.add('kinetic-locked-frame');
 
-                            // Calibrated 1.3 micro parameters for backward physics execution pass
                             let startScale = 1.3;
                             let endScale = 1.0;
                             let startOpacity = 0;
@@ -714,7 +703,7 @@
                             if (matchedLinkElement.classList.contains('view-more-link')) endOpacity = 1.0;
                             if (matchedLinkElement.closest('footer')) endOpacity = 0.4;
 
-                            let duration = 280; // Snappy pull back duration
+                            let duration = 280; 
                             let startTime = null;
 
                             targetSpan.style.setProperty('transform', `scale(${startScale})`, 'important');
