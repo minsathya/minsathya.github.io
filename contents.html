@@ -297,7 +297,7 @@
         }
 
         /* ==========================================================
-           ADAPTIVE REALISTIC 3D EARTH STYLING ENGINE
+           ADAPTIVE HYPER-REALISTIC PHOTOREAL EARTH STYLING ENGINE
            ========================================================== */
         .celestial-window-svg {
             width: 100%;
@@ -576,68 +576,140 @@
             <span class="logo">sathya.</span>
             <div class="header-right-cluster">
                 
+                <!-- Smart Adaptive Real-Contoured 3D Earth Toggle Widget -->
                 <div class="theme-toggle-void" id="themeToggleBtn" aria-label="Trigger global environmental transition">
                     <svg class="celestial-window-svg" viewBox="0 0 40 40">
                         <defs>
+                            <!-- Spherical Planet Clipping Boundaries -->
                             <clipPath id="earth-sphere-clip">
                                 <circle cx="20" cy="20" r="16" />
                             </clipPath>
+
+                            <!-- Satellite-Style Oceanic Depth Gradient Matrix -->
+                            <radialGradient id="photoreal-ocean" cx="40%" cy="40%" r="60%">
+                                <stop offset="0%" stop-color="#1b4985" />
+                                <stop offset="65%" stop-color="#0f2b54" />
+                                <stop offset="100%" stop-color="#051329" />
+                            </radialGradient>
                             
+                            <!-- Multi-Stop Natural Satellite Terrain Gradients (Blending Lush Vegetation, Mountain Textures, and Arid Slopes) -->
+                            <linearGradient id="terrain-asia" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#2d5e39" />
+                                <stop offset="45%" stop-color="#417d50" />
+                                <stop offset="70%" stop-color="#8a7648" />
+                                <stop offset="100%" stop-color="#baa46e" />
+                            </linearGradient>
+
+                            <linearGradient id="terrain-americas" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#1e4d2b" />
+                                <stop offset="35%" stop-color="#3d734a" />
+                                <stop offset="65%" stop-color="#59553b" />
+                                <stop offset="100%" stop-color="#2b5935" />
+                            </linearGradient>
+
+                            <linearGradient id="terrain-africa" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#c29d53" />
+                                <stop offset="30%" stop-color="#8c7038" />
+                                <stop offset="60%" stop-color="#3b6e43" />
+                                <stop offset="100%" stop-color="#1e4225" />
+                            </linearGradient>
+
+                            <!-- Atmospheric Cloud Blur Filter Engine -->
+                            <filter id="cloud-blur" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="0.6" />
+                            </filter>
+                            
+                            <!-- Photoreal Volumetric Curved Ambient Core Shade -->
                             <radialGradient id="earth-3d-shading" cx="35%" cy="35%" r="65%">
-                                <stop offset="55%" stop-color="#000000" stop-opacity="0" />
-                                <stop offset="100%" stop-color="#000000" stop-opacity="0.6" />
+                                <stop offset="50%" stop-color="#000000" stop-opacity="0" />
+                                <stop offset="85%" stop-color="#000000" stop-opacity="0.45" />
+                                <stop offset="100%" stop-color="#000000" stop-opacity="0.85" />
                             </radialGradient>
 
-                            <radialGradient id="earth-specular-gloss" cx="30%" cy="30%" r="40%">
-                                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35" />
+                            <!-- Photoreal Dynamic Glass Specular Lens Highlight Reflection -->
+                            <radialGradient id="earth-specular-gloss" cx="28%" cy="28%" r="45%">
+                                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45" />
+                                <stop offset="50%" stop-color="#ffffff" stop-opacity="0.08" />
                                 <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
                             </radialGradient>
                             
+                            <!-- Beautifully Smooth, Cinematic Tilted Day/Night Shroud Gradient -->
                             <linearGradient id="day-night-split" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="38%" stop-color="#000000" stop-opacity="0" />
-                                <stop offset="58%" stop-color="#000000" stop-opacity="0.45" />
-                                <stop offset="88%" stop-color="#000000" stop-opacity="0.82" />
+                                <stop offset="35%" stop-color="#000000" stop-opacity="0" />
+                                <stop offset="55%" stop-color="#000000" stop-opacity="0.55" />
+                                <stop offset="85%" stop-color="#000000" stop-opacity="0.94" />
                             </linearGradient>
                         </defs>
 
+                        <!-- Symmetrical Spinning 3D Earth Structure Group Shell -->
                         <g id="earthGlobeGroup" style="transform-origin: 20px 20px; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);">
                             
-                            <circle cx="20" cy="20" r="16" fill="#1d56a3" />
+                            <!-- Photoreal Multi-Tone Deep Ocean Foundation -->
+                            <circle cx="20" cy="20" r="16" fill="url(#photoreal-ocean)" />
                             
+                            <!-- Clipped High-Fidelity Geography Engine -->
                             <g clip-path="url(#earth-sphere-clip)">
                                 
+                                <!-- VIEW 1: INDIA / ASIA CENTERED (Default Frame) -->
                                 <g id="geo-asia" class="geo-view">
-                                    <path d="M 4,13 c 3,-3 6,-5 11,-5 c 4,0 6,-2 9,-1 c 3,1 6,0 9,3 c 2,2 4,6 2,9 c -1,1 -3,1 -3,-1 c -1,-2 -3,-1 -3,2 c 0,2 -2,2 -2,4 c -1,1 -1,2 -2,0 c -1,-2 -2,-1 -1,2 c 0,1 -1,2 -1,-1 c 0,-2 -2,-4 -2,0 L 21,24 L 20,25.5 L 18.5,23.8 c -0.6,-1 -1.4,-1.8 -1.5,-3 c -0.1,-1.2 -1.2,-1.5 -2.5,-1.2 c -1.5,0.4 -2.2,-0.8 -3.2,-1.8 c -1,-1 -2.2,-1.2 -3.3,-1.2 z" fill="#5fa36d" />
-                                    <path d="M 24,19 c 1,0.5 2,1.5 2,2.5 c 0.5,1.5 -0.5,2.5 1,3 c 1,0.5 2,-0.5 2.5,1 c 0.5,1 -0.5,2 -1,2.5 z" fill="#5fa36d" />
-                                    <circle cx="20.5" cy="27" r="0.6" fill="#5fa36d" />
-                                    <path d="M 27,31 c 3,-2 6,0 9,1 c 0,2 -2,4 -5,4 c -3,0 -4,-3 -4,-5 z" fill="#5fa36d" />
-                                    <path d="M 4,18 c 2,1 3,3 4,5 c 1,3 0,6 -2,8 c -1.5,1.5 -2,0 -2.5,-2 z" fill="#5fa36d" />
+                                    <!-- Hyper-Detailed Eurasian Landmass Profile with Arabia and crisp downward Indian Subcontinent Peninsula Triangle -->
+                                    <path d="M 4,13 c 3,-3 6,-5 11,-5 c 4,0 6,-2 9,-1 c 3,1 6,0 9,3 c 2,2 4,6 2,9 c -1,1 -3,1 -3,-1 c -1,-2 -3,-1 -3,2 c 0,2 -2,2 -2,4 c -1,1 -1,2 -2,0 c -1,-2 -2,-1 -1,2 c 0,1 -1,2 -1,-1 c 0,-2 -2,-4 -2,0 L 21,24 L 20,25.5 L 18.5,23.8 c -0.6,-1 -1.4,-1.8 -1.5,-3 c -0.1,-1.2 -1.2,-1.5 -2.5,-1.2 c -1.5,0.4 -2.2,-0.8 -3.2,-1.8 c -1,-1 -2.2,-1.2 -3.3,-1.2 z" fill="url(#terrain-asia)" />
+                                    <path d="M 24,19 c 1,0.5 2,1.5 2,2.5 c 0.5,1.5 -0.5,2.5 1,3 c 1,0.5 2,-0.5 2.5,1 c 0.5,1 -0.5,2 -1,2.5 z" fill="url(#terrain-asia)" />
+                                    <!-- Sri Lanka Micro-Vector Node -->
+                                    <circle cx="20.5" cy="27" r="0.6" fill="#417d50" />
+                                    <!-- Northern Edge of Australia -->
+                                    <path d="M 27,31 c 3,-2 6,0 9,1 c 0,2 -2,4 -5,4 c -3,0 -4,-3 -4,-5 z" fill="url(#terrain-asia)" />
+                                    <!-- Africa East Coast Fringe -->
+                                    <path d="M 4,18 c 2,1 3,3 4,5 c 1,3 0,6 -2,8 c -1.5,1.5 -2,0 -2.5,-2 z" fill="url(#terrain-africa)" />
                                 </g>
 
+                                <!-- VIEW 2: AMERICAS CENTERED (Triggers for US / Canada / South America) -->
                                 <g id="geo-americas" class="geo-view" style="display: none;">
-                                    <path d="M 4,9 c 3,0 6,1 9,1 c 2,0 4,2 6,4 c 1.5,2 0.5,4 -1,5 c -1.5,1 -2.5,3 -1,5 c 1,1.5 0.5,3 -1.5,4 c -1.5,-1 -1,-3 -2.5,-3.5 c -1.5,-0.5 -1,-2.5 -2.5,-3 c -1.5,-0.5 -2.5,-2.5 -3,-4.5 z" fill="#5fa36d" />
-                                    <path d="M 13,27 Q 14,29 15,31 L 13,31 Z" fill="#5fa36d" />
-                                    <path d="M 13,30 c 4,0.5 7,2 9,5 c 1,1.5 0,3.5 -3,4.5 c -3,1 -5,-2.5 -6,-5 c -1,-2.5 0,-4.5 0,-4.5 z" fill="#5fa36d" />
-                                    <path d="M 33,10 c 2,1 3,3 3,5 c 0,2 -2,3 -3,1 c -1,-2 -1,-5 0,-6 z" fill="#5fa36d" />
+                                    <!-- Detailed North America contouring California, Gulf, and Florida splits -->
+                                    <path d="M 4,9 c 3,0 6,1 9,1 c 2,0 4,2 6,4 c 1.5,2 0.5,4 -1,5 c -1.5,1 -2.5,3 -1,5 c 1,1.5 0.5,3 -1.5,4 c -1.5,-1 -1,-3 -2.5,-3.5 c -1.5,-0.5 -1,-2.5 -2.5,-3 c -1.5,-0.5 -2.5,-2.5 -3,-4.5 z" fill="url(#terrain-americas)" />
+                                    <path d="M 13,27 Q 14,29 15,31 L 13,31 Z" fill="url(#terrain-americas)" />
+                                    <!-- South America Tapering Mass matching the layout of Screenshot 2026-07-04 202847.png -->
+                                    <path d="M 13,30 c 4,0.5 7,2 9,5 c 1,1.5 0,3.5 -3,4.5 c -3,1 -5,-2.5 -6,-5 c -1,-2.5 0,-4.5 0,-4.5 z" fill="url(#terrain-americas)" />
+                                    <!-- Western Europe Edge visible on far right rim -->
+                                    <path d="M 33,10 c 2,1 3,3 3,5 c 0,2 -2,3 -3,1 c -1,-2 -1,-5 0,-6 z" fill="url(#terrain-asia)" />
                                 </g>
 
+                                <!-- VIEW 3: AFRICA / EUROPE CENTERED (Triggers for Africa / UK / Europe) -->
                                 <g id="geo-africa" class="geo-view" style="display: none;">
-                                    <path d="M 8,9 c 4,-2 9,-2 13,0 c 2,1 5,0 7,2 c -1,2 -3,2 -5,1 c -2,-1 -4,1 -6,1 c -2,0 -4,1 -5,3 c -1,-1 -3,-1 -4,-4 c -0.5,-1 0,-2 0,-3 z" fill="#5fa36d" />
-                                    <path d="M 9,14 c 4,-1 9,1 12,4 c 2.5,2.5 4,5 2.5,8 c -1.5,3 -1,6 -3,9 c -2,3 -4,3 -6,1 c -2,-2 -3,-5 -3,-8 c 0,-3 -2,-5 -3.5,-7 c -1.5,-2.5 0,-5.5 1,-7 z" fill="#5fa36d" />
-                                    <path d="M 23,16 c 3,-1 5,1 7,2 c 0.5,2 -1,4 -2,5 c -1.5,1.5 -3,0.5 -4,-1 c -1,-1.5 -2.5,-3 -1,-6 z" fill="#5fa36d" />
-                                    <path d="M 23,31 c 0.5,-1 1,-2 1,-3 c 0.5,1 0,2.5 -0.5,3.5 z" fill="#5fa36d" />
+                                    <!-- Europe and Mediterranean Threshold layout -->
+                                    <path d="M 8,9 c 4,-2 9,-2 13,0 c 2,1 5,0 7,2 c -1,2 -3,2 -5,1 c -2,-1 -4,1 -6,1 c -2,0 -4,1 -5,3 c -1,-1 -3,-1 -4,-4 c -0.5,-1 0,-2 0,-3 z" fill="url(#terrain-asia)" />
+                                    <!-- Proportioned Africa Block tracing the bulge and horn layout accurately -->
+                                    <path d="M 9,14 c 4,-1 9,1 12,4 c 2.5,2.5 4,5 2.5,8 c -1.5,3 -1,6 -3,9 c -2,3 -4,3 -6,1 c -2,-2 -3,-5 -3,-8 c 0,-3 -2,-5 -3.5,-7 c -1.5,-2.5 0,-5.5 1,-7 z" fill="url(#terrain-africa)" />
+                                    <!-- Saudi Arabia Peninsula -->
+                                    <path d="M 23,16 c 3,-1 5,1 7,2 c 0.5,2 -1,4 -2,5 c -1.5,1.5 -3,0.5 -4,-1 c -1,-1.5 -2.5,-3 -1,-6 z" fill="url(#terrain-africa)" />
+                                    <!-- Madagascar Island Node -->
+                                    <path d="M 23,31 c 0.5,-1 1,-2 1,-3 c 0.5,1 0,2.5 -0.5,3.5 z" fill="url(#terrain-africa)" />
                                 </g>
                                 
+                                <!-- PHOTOREAL LAYER: Whispy Atmospheric Cloud Vector Overlays (Soft White Blurs) -->
+                                <g filter="url(#cloud-blur)" opacity="0.48" pointer-events="none">
+                                    <!-- Swirling global weather bands crossing oceans and continents naturally -->
+                                    <path d="M 5,12 q 8,-4 16,-1 q 5,2 12,-3" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+                                    <path d="M 3,24 q 10,3 15,-4 q 7,-5 16,1" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" />
+                                    <path d="M 10,32 q 8,-1 14,-6 q 4,-1 9,2" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" />
+                                    <circle cx="21" cy="15" r="3" fill="#ffffff" opacity="0.3" />
+                                    <circle cx="12" cy="26" r="4" fill="#ffffff" opacity="0.25" />
+                                </g>
+
                             </g>
                             
+                            <!-- Volumetric Core Dimensional Shading Overlay Layer -->
                             <circle cx="20" cy="20" r="16" fill="url(#earth-3d-shading)" pointer-events="none" />
 
+                            <!-- Glass Lens Specular Highlight Reflection Layer -->
                             <circle cx="20" cy="20" r="16" fill="url(#earth-specular-gloss)" pointer-events="none" />
                             
+                            <!-- Feathered Cosmic Twilight Day/Night Terminator Shading Overlay -->
                             <circle id="terminatorOverlay" cx="20" cy="20" r="16" fill="url(#day-night-split)" pointer-events="none" />
                         </g>
                         
-                        <circle cx="20" cy="20" r="16.5" fill="none" stroke="#ffffff" stroke-width="0.8" stroke-opacity="0.18" pointer-events="none" />
+                        <!-- Luminous Outer Space Atmosphere Aura Halo Edge Rim -->
+                        <circle cx="20" cy="20" r="16.4" fill="none" stroke="#6b9ee3" stroke-width="0.8" stroke-opacity="0.25" pointer-events="none" />
                     </svg>
                 </div>
 
@@ -866,7 +938,6 @@
         const clearSearchBtn = document.getElementById('clearSearchBtn');
         const searchCoreInput = document.getElementById('searchCoreInput');
 
-        // Infinite 360-Degree Forward Axis Spin Tracker
         let earthRotationMetric = 0;
 
         localStorage.removeItem('dashboard-theme');
@@ -876,32 +947,26 @@
            ========================================================== */
         async function runSmartGeoPrecision() {
             try {
-                // Silently request localized metrics (No permission popups required)
                 const res = await fetch('https://ipapi.co/json/');
                 const data = await res.json();
                 
-                const continent = data.continent_code; // e.g., "NA" (North America), "AF" (Africa), "AS" (Asia)
-                const country = data.country_code;     // e.g., "US", "IN", "ZA"
+                const continent = data.continent_code; 
+                const country = data.country_code;     
 
-                // Clear all map states first
                 document.querySelectorAll('.geo-view').forEach(view => view.style.display = 'none');
 
                 if (continent === 'NA' || continent === 'SA') {
-                    // Visitor is in the Americas -> Show US Face
                     document.getElementById('geo-americas').style.display = 'block';
                 } else if (continent === 'AF' || country === 'GB' || country === 'FR' || country === 'DE') {
-                    // Visitor is in Africa or Europe -> Show Africa Face
                     document.getElementById('geo-africa').style.display = 'block';
                 } else {
-                    // Visitor is in India / Asia / everywhere else -> Default India Face
                     document.getElementById('geo-asia').style.display = 'block';
                 }
             } catch (err) {
-                console.log("Network lookup isolated or blocked. Preserving India default base frame.");
+                console.log("Network lookup isolated. Preserving India default base frame.");
             }
         }
 
-        // Initialize spatial detection engine instantly on thread load
         runSmartGeoPrecision();
 
         function applyTargetPalette() {
@@ -939,8 +1004,6 @@
             e.stopPropagation(); 
             
             const isCurrentlyLight = bodyElement.classList.contains('light-mode');
-            
-            // Advance axis rotation metrics forward (+360 deg) for a full cinematic roll
             earthRotationMetric += 360;
             
             if (isCurrentlyLight) {
@@ -1080,6 +1143,7 @@
                                 }
                             }
 
+                            document.getElementById('earthGlobeGroup').style.transform = `rotate(${earthRotationMetric}deg)`;
                             requestAnimationFrame(animateReverse);
                         }, 40);
                     }
