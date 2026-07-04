@@ -45,10 +45,10 @@
             --toggle-pill-bg: #090d0a;
             --toggle-pill-border: #222c26;
             --sun-color: #ffffff;
-            --satellite-color: #a1a1a6; /* Brushed Metallic Silver */
-            --orbit-line: rgba(255, 255, 255, 0.16); /* Enhanced Track Definition */
+            --satellite-color: #a1a1a6; 
+            --orbit-line: rgba(255, 255, 255, 0.16); 
             --star-opacity: 1;
-            --corona-glow: drop-shadow(0 0 6px rgba(255, 255, 255, 0.85)); /* High-Exposure Corona Ring */
+            --corona-glow: drop-shadow(0 0 6px rgba(255, 255, 255, 0.85)); 
 
             /* Vertical cascade parameters matching master optimization */
             --cascade-distance: 24px;
@@ -71,11 +71,11 @@
             --bullet-color: #b8b8bc;
 
             /* Upgraded Premium Celestial Toggle Design Tokens (Light Mode) */
-            --toggle-pill-bg: #f2f4ef; /* Pristine Observatory Carved Ivory */
+            --toggle-pill-bg: #f2f4ef; 
             --toggle-pill-border: #d4d8cf;
-            --sun-color: #ffffff; /* Luminous High-Contrast Sun Disk */
-            --satellite-color: #444444; /* Matte Mechanical Charcoal */
-            --orbit-line: rgba(0, 0, 0, 0.12); /* Clean Astronomical Map Blueprint Lines */
+            --sun-color: #ffffff; 
+            --satellite-color: #444444; 
+            --orbit-line: rgba(0, 0, 0, 0.14); 
             --star-opacity: 0;
             --corona-glow: drop-shadow(0 0 2px rgba(0, 0, 0, 0.05));
         }
@@ -307,7 +307,7 @@
             justify-content: center;
             flex-shrink: 0;
             will-change: transform;
-            transition: background-color var(--dusk-duration) var(--dusk-curve), border-color var(--dusk-duration) var(--dusk-curve);
+            transition: background-color var(--toggle-pill-bg) var(--dusk-curve), border-color var(--dusk-duration) var(--dusk-curve);
         }
 
         .celestial-window-svg {
@@ -317,22 +317,23 @@
             inset: 0;
         }
 
-        /* Cosmic Space Engine Asset Layers */
         .space-stars {
             fill: #ffffff;
             opacity: var(--star-opacity);
             transition: opacity var(--dusk-duration) var(--dusk-curve);
         }
 
+        /* Re-calibrated dashed blueprint maps lines */
         .orbital-track {
             fill: none;
             stroke: var(--orbit-line);
-            stroke-width: 1;
+            stroke-width: 0.8;
+            stroke-dasharray: 2 3;
             transform-origin: 29px 16px;
             transition: stroke var(--dusk-duration) var(--dusk-curve), transform var(--dusk-duration) var(--dusk-curve);
         }
 
-        /* The Sun Anchor Core with Solar Corona Filters Enabled */
+        /* Sun Core Node Filters and Ticks mapping pass */
         .sun-body {
             fill: var(--sun-color);
             transform-origin: 29px 16px;
@@ -342,18 +343,71 @@
         }
 
         body.light-mode .sun-body {
-            /* Pure high-contrast solid gold-core profile for light mode */
             fill: #e8a838; 
         }
 
-        .earth-body, .moon-body {
-            fill: var(--satellite-color);
-            transform-origin: 29px 16px;
-            will-change: transform;
-            transition: fill var(--dusk-duration) var(--dusk-curve), transform var(--dusk-duration) var(--dusk-curve);
+        .sun-tick {
+            stroke: var(--sun-color);
+            stroke-width: 0.6;
+            opacity: 0.4;
+            transition: opacity var(--dusk-duration) var(--dusk-curve), stroke var(--dusk-duration) var(--dusk-curve);
         }
 
-        /* Dynamic Clockwise Cosmic Transition Logic Map */
+        body.light-mode .sun-tick {
+            stroke: #e8a838;
+            opacity: 0.6;
+        }
+
+        body:not(.light-mode) .sun-tick {
+            opacity: 0; /* Solar ticks vanish cleanly during true total eclipse */
+        }
+
+        /* Earth blueprint assets layer mappings */
+        .earth-body {
+            transform-origin: 29px 16px;
+            will-change: transform;
+            transition: transform var(--dusk-duration) var(--dusk-curve);
+        }
+
+        .earth-body circle {
+            fill: var(--satellite-color);
+            transition: fill var(--dusk-duration) var(--dusk-curve);
+        }
+
+        .earth-axis {
+            stroke: var(--satellite-color);
+            stroke-width: 0.5;
+            opacity: 0.6;
+            transition: stroke var(--dusk-duration) var(--dusk-curve);
+        }
+
+        /* Moon blueprint assets crater mapping layer */
+        .moon-body {
+            transform-origin: 29px 16px;
+            will-change: transform;
+            transition: transform var(--dusk-duration) var(--dusk-curve);
+        }
+
+        .moon-sphere {
+            fill: var(--satellite-color);
+            transition: fill var(--dusk-duration) var(--dusk-curve);
+        }
+
+        body.light-mode .moon-sphere {
+            fill: #5c635e; 
+        }
+
+        body:not(.light-mode) .moon-sphere {
+            fill: #161a17; /* Dark structural obsidian finish during eclipse */
+        }
+
+        .moon-crater {
+            fill: var(--toggle-pill-bg);
+            opacity: 0.5;
+            transition: fill var(--dusk-duration) var(--dusk-curve);
+        }
+
+        /* Clockwise Geocentric Vector Loops Transformation Engines */
         body.light-mode .orbital-track { transform: rotate(0deg); }
         body:not(.light-mode) .orbital-track { transform: rotate(180deg); }
 
@@ -363,9 +417,8 @@
         body.light-mode .earth-body { transform: rotate(0deg); }
         body:not(.light-mode) .earth-body { transform: rotate(180deg); }
 
-        /* The Moon glides directly over the Sun anchor point during nightfall */
-        body.light-mode .moon-body { transform: rotate(0deg) scale(1); fill: #5c635e; }
-        body:not(.light-mode) .moon-body { transform: rotate(232deg) translate(9.5px, 0px) scale(2.2); fill: #121212; }
+        body.light-mode .moon-body { transform: rotate(0deg) scale(1); }
+        body:not(.light-mode) .moon-body { transform: rotate(232deg) translate(9.5px, 0px) scale(2.2); }
 
         .search-core-input {
             flex-grow: 1;
@@ -632,9 +685,23 @@
                         </g>
                         <circle class="orbital-track" cx="29" cy="16" r="9.5"/>
                         <circle class="orbital-track" cx="29" cy="16" r="15"/>
+                        
+                        <line class="sun-tick" x1="29" y1="9.5" x2="29" y2="10.5" />
+                        <line class="sun-tick" x1="29" y1="21.5" x2="29" y2="22.5" />
+                        <line class="sun-tick" x1="22.5" y1="16" x2="23.5" y2="16" />
+                        <line class="sun-tick" x1="34.5" y1="16" x2="35.5" y2="16" />
                         <circle class="sun-body" cx="29" cy="16" r="4.5"/>
-                        <circle class="earth-body" cx="44" cy="16" r="2"/>
-                        <circle class="moon-body" cx="38.5" cy="16" r="1.3"/>
+                        
+                        <g class="earth-body">
+                            <circle cx="44" cy="16" r="2"/>
+                            <line class="earth-axis" x1="43.2" y1="14" x2="44.8" y2="18"/>
+                        </g>
+                        
+                        <g class="moon-body">
+                            <circle class="moon-sphere" cx="38.5" cy="16" r="1.3"/>
+                            <circle class="moon-crater" cx="37.9" cy="15.3" r="0.25"/>
+                            <circle class="moon-crater" cx="39.1" cy="16.5" r="0.2"/>
+                        </g>
                     </svg>
                 </div>
 
