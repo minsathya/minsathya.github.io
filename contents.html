@@ -45,7 +45,7 @@
             --sun-color: #ffa200;             
             --moon-color: #dededf;            
             --earth-color: #2b9cd3;           
-            --orbit-line: rgba(255, 255, 255, 0.85); /* Highly luminous track line visible from 1 meter */
+            --orbit-line: rgba(255, 255, 255, 0.65); 
             --corona-glow: drop-shadow(0 0 8px rgba(255, 162, 0, 0.45)); 
 
             /* Vertical cascade parameters matching master optimization */
@@ -72,7 +72,7 @@
             --sun-color: #ffa200;             
             --moon-color: #cbd0d4;            
             --earth-color: #2b9cd3;           
-            --orbit-line: rgba(0, 0, 0, 0.75); /* High-contrast sharp charcoal track line visible from 1 meter */
+            --orbit-line: rgba(0, 0, 0, 0.55); 
             --corona-glow: drop-shadow(0 0 3px rgba(255, 162, 0, 0.15));
         }
 
@@ -171,6 +171,18 @@
 
         body:not(.light-mode) header {
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Stable Static Title Configuration */
+        .logo {
+            font-size: 26px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            text-decoration: none !important;
+            flex-shrink: 0;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         /* ==========================================================
@@ -345,7 +357,18 @@
             transition: fill var(--dusk-duration) var(--dusk-curve);
         }
 
-        /* Clean Real Space System Alignment - Keeps Moon safely in the open gap away from all lines */
+        /* Clean Real-Space Crescent Mask Overlay: Slices out 30% of the Moon in Light Mode smoothly */
+        .moon-phase-overlay {
+            fill: var(--header-bg);
+            opacity: 0;
+            transition: fill var(--dusk-duration) var(--dusk-curve), opacity var(--dusk-duration) var(--dusk-curve);
+        }
+
+        body.light-mode .moon-phase-overlay {
+            opacity: 1;
+        }
+
+        /* Space System Matrix Driver Transforms (Relative to absolute coordinate matrix map) */
         body.light-mode .earth-system { transform: rotate(0deg); }
         body:not(.light-mode) .earth-system { transform: rotate(180deg); }
 
@@ -556,8 +579,7 @@
 
         .breadcrumb-nav a:hover .nav-text,
         .topics-column-grid a:hover .nav-text,
-        .footer-links-row a:hover .nav-text,
-        .logo:hover .nav-text {
+        .footer-links-row a:hover .nav-text {
             transform: scale3d(1.06, 1.06, 1) !important;
         }
 
@@ -572,8 +594,7 @@
         /* Calibrated 1.3 Premium Micro-Pop Portal Zoom Trigger */
         .breadcrumb-nav a.is-zooming .nav-text,
         .topics-column-grid a.is-zooming .nav-text,
-        .footer-links-row a.is-zooming .nav-text,
-        .logo.is-zooming .nav-text {
+        .footer-links-row a.is-zooming .nav-text {
             transition: transform 0.26s cubic-bezier(0.215, 0.61, 0.355, 1), opacity 0.26s linear !important;
             transform: scale3d(1.3, 1.3, 1) !important;
             opacity: 0 !important;
@@ -607,13 +628,11 @@
 
     <header id="masterHeader">
         <div class="header-inner-view" id="headerMainView">
-            <a href="index.html" class="logo">sathya.</a>
+            <span class="logo">sathya.</span>
             <div class="header-right-cluster">
                 
-                <!-- Zero-Jump Inline Floating Science Instrument Dock (Aligned exactly with Search X coordinate) -->
                 <div class="theme-toggle-void" id="themeToggleBtn" aria-label="Trigger environmental transition">
                     <svg class="celestial-window-svg" viewBox="0 0 40 40">
-                        <!-- Space Dust Star Node Pass -->
                         <g class="space-stars">
                             <circle cx="8" cy="6" r="0.5"/>
                             <circle cx="32" cy="8" r="0.4"/>
@@ -621,21 +640,17 @@
                             <circle cx="10" cy="30" r="0.4"/>
                         </g>
 
-                        <!-- High Contrast Trajectory Tracks Around Sun -->
                         <circle class="orbital-track-sun" cx="20" cy="20" r="14"/>
                         
-                        <!-- Fixed Deep Golden Sun Anchor Core (#ffa200) -->
                         <circle class="sun-body" cx="20" cy="20" r="4.5"/>
                         
-                        <!-- Real-Science Earth-Moon System Unit -->
                         <g class="earth-system">
                             
-                            <!-- Pure Solid Ocean Blue Earth (Scientifically larger than Moon) -->
                             <circle class="earth-circle" cx="34" cy="20" r="2.8"/>
                             
-                            <!-- Moon Satellite Group revolving locally on Earth's dark hemisphere -->
                             <g class="moon-system">
                                 <circle class="moon-sphere" cx="39.5" cy="20" r="1.1"/>
+                                <circle class="moon-phase-overlay" cx="38.7" cy="20" r="1.2"/>
                             </g>
                         </g>
                     </svg>
@@ -937,7 +952,7 @@
         /* ==========================================================
            KINETIC PORTAL INTERACTION ENGINE
            ========================================================== */
-        const universalTargetLinks = document.querySelectorAll('.contents-container a, .breadcrumb-nav a, footer .footer-links-row a, .logo');
+        const universalTargetLinks = document.querySelectorAll('.contents-container a, .breadcrumb-nav a, footer .footer-links-row a');
 
         universalTargetLinks.forEach(link => {
             if (!link.querySelector('.nav-text')) {
@@ -1000,7 +1015,6 @@
 
                             let endOpacity = 0.75;
                             if (matchedLinkElement.closest('footer')) endOpacity = 0.4;
-                            if (matchedLinkElement.classList.contains('logo')) endOpacity = 1.0;
 
                             let duration = 280; 
                             let startTime = null;
