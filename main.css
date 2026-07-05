@@ -235,3 +235,62 @@ footer { display: flex; flex-direction: column; align-items: center; gap: 24px; 
     .header-inner-view { padding: 0 20px; }
     .logo { font-size: 22px; }
 }
+
+/* ==========================================================
+   MISSING CARD LINKS & DOCUMENT LIST PATCH
+   ========================================================== */
+.panel-title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    color: var(--text-main);
+    margin-bottom: 24px;
+    padding: 0 24px;
+    transition: color 0.8s var(--ease-premium);
+}
+
+.document-list { 
+    list-style: none !important; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+.document-list li { 
+    border-bottom: 1px solid var(--row-divider); 
+    transition: border-color 0.8s var(--ease-premium); 
+    list-style-type: none !important;
+}
+
+.document-list li:last-child { 
+    border-bottom: none; 
+}
+
+.document-list a {
+    display: block;
+    padding: 14px 24px;
+    color: var(--text-main) !important;
+    opacity: 0.8;
+    text-decoration: none !important;
+    font-size: 14.5px;
+    font-weight: 400;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transition: color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), padding 0.4s var(--ease-premium);
+}
+
+/* Ensure visited states don't turn purple */
+.document-list a:visited {
+    color: var(--text-main) !important;
+}
+
+.document-list li:hover a { 
+    opacity: 1 !important; 
+    padding-left: 28px !important; 
+}
+
+.document-list li:hover,
+.document-list li:active,
+.document-list li:focus {
+    background-color: transparent !important;
+    background: transparent !important;
+}
