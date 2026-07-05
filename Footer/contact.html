@@ -5,17 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - sathya.</title>
 
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-5VGX2K64Y4');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5VGX2K64Y4');
+    </script>
 
     <link rel="icon" type="image/png" href="../favicon.png">
-     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -461,7 +459,6 @@
 </head>
 <body>
 
-    <!-- Exact Header Engine Cloned from index.html -->
     <header id="masterHeader">
         <div class="header-inner-view" id="headerMainView">
             <a href="../index.html" class="logo">sathya.</a>
@@ -496,12 +493,9 @@
     </header>
 
     <main>
-        <!-- Premium Intelligent Breadcrumb Engine Hook -->
         <nav class="breadcrumbs" id="dynamicBreadcrumbNav" aria-label="breadcrumb">
-            <!-- JavaScript builds this out dynamically on execution -->
-        </nav>
+            </nav>
 
-        <!-- Single Stretched Classy Focused Capsule -->
         <div class="capsule-panel">
             <h1 class="panel-title">Contact</h1>
             <div class="prose-text">
@@ -512,7 +506,6 @@
         </div>
     </main>
 
-    <!-- Grounded Minimal Footer (Direct Neighbors Routing Mapping) -->
     <footer>
         <div class="footer-links-row">
             <a href="about.html">About</a>
@@ -526,7 +519,6 @@
         </div>
     </footer>
 
-    <!-- Smart Native Device Sync & Twin-View Controller Engine -->
     <script>
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
@@ -600,28 +592,20 @@
             }
         });
 
-        // --- Intelligent Referrer Breadcrumb Engine ---
+        // --- Upgraded Dynamic Referrer Breadcrumb Engine ---
         (function buildDynamicBreadcrumbs() {
             const container = document.getElementById('dynamicBreadcrumbNav');
             const referrer = document.referrer.toLowerCase();
             
-            let trail = [];
+            let trail = [{ name: 'Home', url: '../index.html' }];
 
+            // Checks exactly where you clicked from without guessing fake steps
             if (referrer.includes('ramsarsites.html')) {
-                trail = [
-                    { name: 'Home', url: '../index.html' },
-                    { name: 'Notes', url: '../notes.html' },
-                    { name: 'Ramsar Sites', url: '../ramsarsites.html' }
-                ];
+                trail.push({ name: 'Ramsar Sites', url: '../ramsarsites.html' });
+            } else if (referrer.includes('contents.html')) {
+                trail.push({ name: 'Contents', url: '../contents.html' });
             } else if (referrer.includes('notes.html')) {
-                trail = [
-                    { name: 'Home', url: '../index.html' },
-                    { name: 'Notes', url: '../notes.html' }
-                ];
-            } else {
-                trail = [
-                    { name: 'Home', url: '../index.html' }
-                ];
+                trail.push({ name: 'Notes', url: '../notes.html' });
             }
 
             let htmlMarkup = '';
