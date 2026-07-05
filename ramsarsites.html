@@ -23,6 +23,52 @@
      <link rel="stylesheet" href="main.css">
      
     <style>
+        /* Modern Theme Token System */
+        :root {
+            --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+            
+            --bg-color: #0b0b0b;
+            --text-main: #ffffff;
+            --text-muted: #555555;
+            --panel-bg: #121212;
+            --panel-border: #222222;
+            --row-divider: #1c1c1c;
+            --row-hover: rgba(255, 255, 255, 0.015);
+
+            --header-bg: #1a231e;
+            --header-border: #222c26;
+
+            --table-header: #1b4740;
+            --table-header-hover: #1d5b51;
+            --accent-color: #257a6c;
+            --row-even: #111111;
+            --row-odd: #000000;
+
+            /* Vertical cascade parameters matching master optimization */
+            --cascade-distance: 24px;
+            --cascade-duration-exit: 0.2s;
+            --cascade-duration-entry: 0.28s;
+        }
+
+        body.light-mode {
+            --bg-color: #ebebe4;
+            --text-main: #111111;
+            --text-muted: #a1a1a6;
+            --panel-bg: #ffffff;
+            --panel-border: #e2e2e7;
+            --row-divider: #f2f2f7;
+            --row-hover: rgba(0, 0, 0, 0.01);
+
+            --header-bg: #e9ebe6;
+            --header-border: #d4d8cf;
+
+            --table-header: #215c52;
+            --table-header-hover: #2a7366;
+            --accent-color: #2d8a77;
+            --row-even: #fafafa;
+            --row-odd: #ffffff;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -687,10 +733,10 @@
             <span class="separator">/</span>
             <span class="current">Ramsar Sites</span>
         </nav>
-          
+         
 
         <div class="card">
-            <h2 class="section-title">- Ramsar sites in india 2026</h2>
+            <h2 class="section-title"> Ramsar sites in india 2026</h2>
             <div class="table-wrap">
                 <table id="mainRamsarTable">
                     <thead>
@@ -807,7 +853,7 @@
         </div>
 
         <div class="card">
-            <h2 class="section-title">- Largest Ramsar Sites in India for UPSC</h2>
+            <h2 class="section-title"> Largest Ramsar Sites in India for UPSC</h2>
             <div class="table-wrap">
                 <table>
                     <thead>
@@ -836,7 +882,7 @@
         </div>
 
         <div class="card">
-            <h2 class="section-title">- Smallest Ramsar Sites in India for UPSC</h2>
+            <h2 class="section-title"> Smallest Ramsar Sites in India for UPSC</h2>
             <div class="table-wrap">
                 <table>
                     <thead>
@@ -865,7 +911,7 @@
         </div>
 
         <div class="card">
-            <h2 class="section-title">- States with Highest number of Ramsar Sites in India (2026)</h2>
+            <h2 class="section-title"> States with Highest number of Ramsar Sites in India (2026)</h2>
             <div class="table-wrap">
                 <table>
                     <thead>
@@ -1101,7 +1147,7 @@
         });
 
         /* ==========================================================
-            STABILIZED IPAD TRANSITION CONTROLS
+           STABILIZED IPAD TRANSITION CONTROLS
            ========================================================== */
         openSearchBtn.addEventListener('click', () => {
             masterHeader.classList.remove('state-main');
@@ -1129,7 +1175,7 @@
         });
 
         /* ==========================================================
-            KINETIC PORTAL INTERACTION ENGINE (RE-CALIBRATED)
+           KINETIC PORTAL INTERACTION ENGINE (RE-CALIBRATED)
            ========================================================== */
         const universalTargetLinks = document.querySelectorAll('.breadcrumbs a, footer .footer-links-row a, .logo');
 
@@ -1306,3 +1352,4 @@
     </script>
 </body>
 </html>
+
