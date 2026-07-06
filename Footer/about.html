@@ -33,7 +33,7 @@
             --row-hover: rgba(255, 255, 255, 0.015);
 
             /* Premium Matte Olive Header System (Dark Mode) */
-            --header-bg: #1a231e;
+            --header-bg: #131815;
             --header-border: #222c26;
         }
 
@@ -77,11 +77,11 @@
             transition: background-color 0.6s var(--ease-premium), color 0.6s var(--ease-premium);
         }
 
-        /* iPad & WebKit Optimization: Absolute 3D layout vectors to match Windows performance physics */
-        @keyframes masterEntrance {
+        /* iPad & WebKit Optimization: Skyfall Entrance System Core Vectors */
+        @keyframes skyfallEntrance {
             from {
                 opacity: 0;
-                transform: translate3d(0, 24px, 0);
+                transform: translate3d(0, -20px, 0);
             }
             to {
                 opacity: 1;
@@ -89,11 +89,11 @@
             }
         }
 
-        /* Staggered Load Engine */
+        /* Synchronized Staggered Skyfall Load Engine */
         header, .breadcrumbs, .capsule-panel, footer {
             opacity: 0;
             will-change: transform, opacity;
-            animation: masterEntrance 1.2s var(--ease-premium) forwards;
+            animation: skyfallEntrance 1.2s var(--ease-premium) forwards;
         }
 
         header { animation-delay: 0.04s; }
@@ -448,6 +448,7 @@
 </head>
 <body>
 
+    <!-- Cloned Unified Twin View Design Header -->
     <header id="masterHeader">
         <div class="header-inner-view" id="headerMainView">
             <a href="../index.html" class="logo">sathya.</a>
@@ -482,9 +483,12 @@
     </header>
 
     <main>
+        <!-- Dynamic Breadcrumb Engine Container -->
         <nav class="breadcrumbs" id="dynamicBreadcrumbNav" aria-label="breadcrumb">
-            </nav>
+            <!-- Rendered cleanly via upgraded script loop below -->
+        </nav>
 
+        <!-- Single Stretched Classy Focused Capsule -->
         <div class="capsule-panel">
             <h1 class="panel-title">About</h1>
             <div class="prose-text">
@@ -494,6 +498,7 @@
         </div>
     </main>
 
+    <!-- Grounded Minimal Footer (Direct Subfolder Routing Mapping) -->
     <footer>
         <div class="footer-links-row">
             <a href="about.html" class="active-footer-page">About</a>
@@ -507,6 +512,7 @@
         </div>
     </footer>
 
+    <!-- Smart Native Device Sync & Twin-View Controller Engine -->
     <script>
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
@@ -604,7 +610,6 @@
             
             container.innerHTML = htmlMarkup;
         })();
-        
     </script>
 </body>
 </html>
