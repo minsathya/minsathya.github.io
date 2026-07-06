@@ -35,6 +35,11 @@
             /* Premium Matte Olive Header System (Dark Mode) */
             --header-bg: #1a231e;
             --header-border: #222c26;
+            
+            /* Vertical cascade parameters from index.html */
+            --cascade-distance: 24px;
+            --cascade-duration-exit: 0.2s;
+            --cascade-duration-entry: 0.28s;
         }
 
         /* Classy Light Mode Tones (Premium Off-White Gallery Style) */
@@ -56,6 +61,8 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent !important;
+            tap-highlight-color: transparent !important;
         }
 
         body {
@@ -73,33 +80,27 @@
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             
-            /* Buttery Smooth Theme Transition Engine */
-            transition: background-color 0.6s var(--ease-premium), color 0.6s var(--ease-premium);
+            /* SYNCHRONIZED: Premium Anti-Flash Breathing Color Clock Transition Matrix */
+            transition: background-color 0.8s var(--ease-premium), color 0.8s var(--ease-premium);
         }
 
-        /* iPad & WebKit Optimization: Absolute 3D layout vectors to match Windows performance physics */
+        /* Cloned Keyframe Logic Directly from index.html */
         @keyframes masterEntrance {
-            from {
-                opacity: 0;
-                transform: translate3d(0, 24px, 0);
-            }
-            to {
-                opacity: 1;
-                transform: translate3d(0, 0, 0);
-            }
+            from { opacity: 0; transform: translate3d(0, 24px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
-        /* Staggered Load Engine */
+        /* CLONED: Initial Opacity 1 + Backwards Fill Mode Sequence */
         header, .breadcrumbs, .capsule-panel, footer {
-            opacity: 0;
+            opacity: 1;
             will-change: transform, opacity;
-            animation: masterEntrance 1.2s var(--ease-premium) forwards;
+            animation: masterEntrance 1.2s var(--ease-premium) backwards;
         }
 
         header { animation-delay: 0.04s; }
-        .breadcrumbs { animation-delay: 0.10s; } 
-        .capsule-panel { animation-delay: 0.16s; }
-        footer { animation-delay: 0.26s; }
+        .breadcrumbs { animation-delay: 0.14s; } 
+        .capsule-panel { animation-delay: 0.22s; }
+        footer { animation-delay: 0.32s; }
 
         /* Top Header Navigation Shell */
         header {
@@ -112,48 +113,70 @@
             margin: 0 auto 20px auto; 
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
             overflow: hidden; 
-            transition: background-color 0.6s var(--ease-premium), border-color 0.6s var(--ease-premium), box-shadow 0.6s var(--ease-premium);
+            transition: background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
         }
 
         body:not(.light-mode) header {
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
-        /* Twin View System Layer Configurations */
+        /* Twin View System Layer Configurations - index.html Spec */
         .header-inner-view {
             position: absolute;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100%;
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 32px; 
-            will-change: opacity, transform;
-            transition: opacity 0.45s var(--ease-premium), transform 0.45s var(--ease-premium);
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
 
         #headerMainView {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate3d(0, 0, 0);
             pointer-events: auto;
-        }
-        header.search-active #headerMainView {
-            opacity: 0;
-            transform: translateY(-10px); 
-            pointer-events: none;
+            z-index: 2;
         }
 
         #headerSearchView {
             opacity: 0;
-            transform: translateY(10px); 
+            transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        header.state-search #headerMainView {
+            animation: skyfallExit var(--cascade-duration-exit) ease-in both;
             pointer-events: none;
         }
-        header.search-active #headerSearchView {
-            opacity: 1;
-            transform: translateY(0);
+        header.state-search #headerSearchView {
+            animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation-delay: var(--cascade-duration-exit);
             pointer-events: auto;
+        }
+
+        header.state-main #headerSearchView {
+            animation: skyfallExit var(--cascade-duration-exit) ease-in both;
+            pointer-events: none;
+        }
+        header.state-main #headerMainView {
+            animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation-delay: var(--cascade-duration-exit);
+            pointer-events: auto;
+        }
+
+        @keyframes skyfallExit {
+            0% { transform: translate3d(0, 0, 0); opacity: 1; }
+            100% { transform: translate3d(0, var(--cascade-distance), 0); opacity: 0; }
+        }
+
+        @keyframes skyfallEntry {
+            0% { transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0); opacity: 0; }
+            100% { transform: translate3d(0, 0, 0); opacity: 1; }
         }
 
         .header-right-cluster, .search-control-cluster {
@@ -170,10 +193,8 @@
             letter-spacing: -0.5px;
             color: var(--text-main);
             text-decoration: none !important;
-            transition: color 0.6s var(--ease-premium);
+            transition: color 0.8s var(--ease-premium);
             flex-shrink: 0;
-            -webkit-tap-highlight-color: transparent !important;
-            tap-highlight-color: transparent !important;
         }
 
         .ctrl-btn {
@@ -189,9 +210,7 @@
             height: 32px; 
             padding: 0;
             flex-shrink: 0;
-            transition: opacity 0.2s var(--ease-premium), color 0.6s var(--ease-premium);
-            -webkit-tap-highlight-color: transparent !important;
-            tap-highlight-color: transparent !important;
+            transition: opacity 0.2s var(--ease-premium), color 0.8s var(--ease-premium);
         }
 
         .ctrl-btn:hover {
@@ -206,7 +225,7 @@
             stroke-width: 2.2;
             stroke-linecap: round;
             stroke-linejoin: round;
-            transition: stroke 0.6s var(--ease-premium);
+            transition: stroke 0.8s var(--ease-premium);
         }
 
         .search-static-icon {
@@ -225,7 +244,11 @@
             padding: 0 16px;
             width: 100%;
             min-width: 0; 
-            transition: color 0.6s var(--ease-premium);
+            will-change: transform, opacity;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: color 0.8s var(--ease-premium);
         }
 
         .clear-text-btn svg { opacity: 0.4; }
@@ -241,8 +264,6 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            -webkit-tap-highlight-color: transparent !important;
-            tap-highlight-color: transparent !important;
         }
 
         .theme-toggle svg {
@@ -258,7 +279,7 @@
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            transition: transform 0.6s var(--ease-premium), opacity 0.6s var(--ease-premium), stroke 0.6s var(--ease-premium);
+            transition: transform 0.8s var(--ease-premium), opacity 0.8s var(--ease-premium), stroke 0.8s var(--ease-premium);
         }
 
         .theme-toggle .sun-icon {
@@ -302,7 +323,6 @@
             color: var(--text-muted);
             text-decoration: none !important;
             transition: color 0.4s var(--ease-premium);
-            -webkit-tap-highlight-color: transparent !important;
         }
 
         .breadcrumbs a:hover {
@@ -329,7 +349,7 @@
             margin-bottom: 80px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
             width: 100%;
-            transition: border-color 0.6s var(--ease-premium), background-color 0.6s var(--ease-premium);
+            transition: border-color 0.8s var(--ease-premium), background-color 0.8s var(--ease-premium);
         }
 
         body:not(.light-mode) .capsule-panel {
@@ -342,7 +362,7 @@
             letter-spacing: -0.4px;
             color: var(--text-main);
             margin-bottom: 24px;
-            transition: color 0.6s var(--ease-premium);
+            transition: color 0.8s var(--ease-premium);
         }
 
         /* Premium Minimal Prose Typography Formatting */
@@ -352,7 +372,7 @@
             color: var(--text-main);
             opacity: 0.85;
             font-weight: 400;
-            transition: color 0.6s var(--ease-premium);
+            transition: color 0.8s var(--ease-premium);
         }
 
         .prose-text p {
@@ -383,20 +403,23 @@
         }
 
         .footer-links-row a {
-            color: var(--text-muted);
+            color: var(--text-muted) !important;
             text-decoration: none !important;
             font-size: 14px;
             font-weight: 400;
+            display: inline-block;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
             transition: color 0.4s var(--ease-premium);
         }
 
         .footer-links-row a:hover {
-            color: var(--text-main);
+            color: var(--text-main) !important;
         }
 
-        /* Highlight Active Tab State */
         .footer-links-row a.active-footer-page {
-            color: var(--text-main);
+            color: var(--text-main) !important;
             font-weight: 500;
             pointer-events: none;
         }
@@ -406,8 +429,28 @@
             opacity: 0.6;
             font-size: 12.5px;
             letter-spacing: 0.2px;
-            transition: color 0.4s var(--ease-premium);
+            transition: color 0.8s var(--ease-premium);
         }
+
+        /* Unified Micro-Pop Scaler Text Style Rules from index.html */
+        .nav-text {
+            display: inline-block !important;
+            transform-origin: center center !important;
+            will-change: transform, opacity !important;
+            transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
+        }
+
+        .footer-links-row a:hover .nav-text { color: var(--text-main) !important; transform: scale3d(1.06, 1.06, 1) !important; }
+        .footer-links-row a.active-footer-page .nav-text { color: var(--text-main) !important; }
+
+        .footer-links-row a.is-zooming .nav-text {
+            transition: transform 0.26s cubic-bezier(0.215, 0.61, 0.355, 1), opacity 0.26s linear !important;
+            transform: scale3d(1.3, 1.3, 1) !important;
+            opacity: 0 !important;
+        }
+
+        .kinetic-locked-frame { pointer-events: none !important; }
+        .kinetic-locked-frame .nav-text { transition: none !important; -webkit-transition: none !important; }
 
         /* Responsive Viewport Optimizations */
         @media (max-width: 700px) {
@@ -419,7 +462,7 @@
                 border-radius: 20px;
             }
             header {
-                margin-bottom: 16px; 
+                margin-bottom: 20px; 
                 height: 64px; 
             }
             .header-inner-view {
@@ -448,7 +491,7 @@
 </head>
 <body>
 
-    <!-- Exact Header Engine Cloned from index.html -->
+    <!-- Cloned Unified Twin View Design Header -->
     <header id="masterHeader">
         <div class="header-inner-view" id="headerMainView">
             <a href="../index.html" class="logo">sathya.</a>
@@ -456,7 +499,7 @@
                 <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
                     <svg class="sun-icon" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="4"></circle>
-                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                        <path d="M12 2v2M12 20v2M4.93(4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
                     </svg>
                     <svg class="moon-icon" viewBox="0 0 24 24">
                         <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
@@ -485,22 +528,21 @@
     <main>
         <!-- Dynamic Breadcrumb Engine Container -->
         <nav class="breadcrumbs" id="dynamicBreadcrumbNav" aria-label="breadcrumb">
-            <!-- Rendered cleanly via upgraded script loop below -->
+            <!-- Rendered cleanly via script loop below -->
         </nav>
 
         <!-- Single Stretched Classy Focused Capsule -->
         <div class="capsule-panel">
             <h1 class="panel-title">Privacy Policy</h1>
             <div class="prose-text">
-                <p>Your privacy is important to us. This website is committed to protecting your personal information.</p>
-                <p>We do not collect personal information unless you choose to contact us by email. Any information you provide will only be used to respond to your message.</p>
-                <p>This website may use third-party services, such as Google AdSense or Google Analytics, which may use cookies to improve user experience. Their use of data is governed by their own privacy policies.</p>
-                <p>This Privacy Policy may be updated from time to time. Any changes will be posted on this page.</p>
+                <p>Your privacy is important to me. This Privacy Policy document outlines the types of personal information that is received and collected by this website and how it is used.</p>
+                <p>This website uses Google Analytics to track visitor interactions and optimize educational content layout engines. This service tracks information such as your IP address, browser type, and page view timings, but does not identify you personally or collect sensitive personal data.</p>
+                <p>Cookies may be used to store preferences, such as your selected color palette theme option (Dark Mode or Light Mode), to provide a consistent and premium user experience on subsequent visits.</p>
             </div>
         </div>
     </main>
 
-    <!-- Grounded Minimal Footer -->
+    <!-- Grounded Minimal Footer Row -->
     <footer>
         <div class="footer-links-row">
             <a href="about.html">About</a>
@@ -566,11 +608,11 @@
             }
         });
 
-        // --- Twin-View Interface Controller System ---
-
+        // --- Stabilized iPad Search Transition Controls from index.html ---
         openSearchBtn.addEventListener('click', () => {
-            masterHeader.classList.add('search-active');
-            setTimeout(() => { searchCoreInput.focus(); }, 50);
+            masterHeader.classList.remove('state-main');
+            masterHeader.classList.add('state-search');
+            searchCoreInput.focus({ preventScroll: true });
         });
 
         clearSearchBtn.addEventListener('click', () => {
@@ -579,12 +621,113 @@
         });
 
         closeSearchBtn.addEventListener('click', () => {
-            masterHeader.classList.remove('search-active');
+            masterHeader.classList.remove('state-search');
+            masterHeader.classList.add('state-main');
         });
 
         searchCoreInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && searchCoreInput.value.trim() === "") {
-                masterHeader.classList.remove('search-active');
+                masterHeader.classList.remove('state-search');
+                masterHeader.classList.add('state-main');
+            }
+        });
+
+        // --- Link Portal Micro-Pop Zoom Engine from index.html ---
+        const universalTargetLinks = document.querySelectorAll('.footer-links-row a');
+
+        universalTargetLinks.forEach(link => {
+            if (!link.querySelector('.nav-text')) {
+                const wrapper = document.createElement('span');
+                wrapper.className = 'nav-text';
+                while (link.firstChild) {
+                    wrapper.appendChild(link.firstChild);
+                }
+                link.appendChild(wrapper);
+            }
+        });
+
+        universalTargetLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const destination = this.getAttribute('href');
+                if (!destination || destination === '#' || this.classList.contains('active-footer-page')) return;
+
+                e.preventDefault();
+                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
+                this.classList.add('is-zooming');
+
+                setTimeout(() => {
+                    window.location.href = destination;
+                }, 260);
+            });
+        });
+
+        window.addEventListener('pageshow', () => {
+            universalTargetLinks.forEach(l => {
+                l.classList.remove('is-zooming');
+                l.classList.remove('kinetic-locked-frame');
+                const span = l.querySelector('.nav-text');
+                if (span) {
+                    span.style.transform = '';
+                    span.style.opacity = '';
+                }
+            });
+
+            const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
+            if (savedTargetUrl) {
+                sessionStorage.removeItem('activeUniversalTargetUrl');
+
+                let matchedLinkElement = null;
+                universalTargetLinks.forEach(link => {
+                    if (link.href === savedTargetUrl) {
+                        matchedLinkElement = link;
+                    }
+                });
+
+                if (matchedLinkElement) {
+                    const targetSpan = matchedLinkElement.querySelector('.nav-text');
+
+                    if (targetSpan) {
+                        setTimeout(() => {
+                            matchedLinkElement.classList.add('kinetic-locked-frame');
+
+                            let startScale = 1.3;
+                            let endScale = 1.0;
+                            let startOpacity = 0;
+                            let endOpacity = 0.4;
+                            if (matchedLinkElement.classList.contains('active-footer-page')) endOpacity = 1.0;
+
+                            let duration = 280; 
+                            let startTime = null;
+
+                            targetSpan.style.setProperty('transform', `scale(${startScale})`, 'important');
+                            targetSpan.style.setProperty('opacity', startOpacity, 'important');
+
+                            function animateReverse(timestamp) {
+                                if (!startTime) startTime = timestamp;
+                                let elapsed = timestamp - startTime;
+                                let progress = Math.min(elapsed / duration, 1);
+
+                                let ease = 1 - Math.pow(1 - progress, 2.2);
+
+                                let currentScale = startScale - (startScale - endScale) * ease;
+                                let currentOpacity = startOpacity + (endOpacity - startOpacity) * ease;
+
+                                targetSpan.style.setProperty('transform', `scale(${currentScale})`, 'important');
+                                targetSpan.style.setProperty('opacity', currentOpacity, 'important');
+
+                                if (progress < 1) {
+                                    requestAnimationFrame(animateReverse);
+                                } else {
+                                    targetSpan.style.transform = '';
+                                    targetSpan.style.opacity = '';
+                                    matchedLinkElement.classList.remove('kinetic-locked-frame');
+                                }
+                            }
+
+                            requestAnimationFrame(animateReverse);
+                        }, 40);
+                    }
+                }
             }
         });
 
@@ -595,7 +738,6 @@
             
             let trail = [{ name: 'Home', url: '../index.html' }];
 
-            // Checks exactly where you clicked from without guessing fake steps
             if (referrer.includes('ramsarsites.html')) {
                 trail.push({ name: 'Ramsar Sites', url: '../ramsarsites.html' });
             } else if (referrer.includes('contents.html')) {
