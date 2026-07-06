@@ -731,26 +731,30 @@
             }
         });
 
-        // --- Upgraded Dynamic Referrer Breadcrumb Engine ---
+       // --- Upgraded Dynamic Referrer Breadcrumb Engine (Fully Automated) ---
         (function buildDynamicBreadcrumbs() {
             const container = document.getElementById('dynamicBreadcrumbNav');
-            const referrer = document.referrer.toLowerCase();
+            const referrer = document.referrer;
             
             let trail = [{ name: 'Home', url: '../index.html' }];
 
-            if (referrer.includes('ramsarsites.html')) {
-                trail.push({ name: 'Ramsar Sites', url: '../ramsarsites.html' });
-            } else if (referrer.includes('contents.html')) {
-                trail.push({ name: 'Contents', url: '../contents.html' });
-            } else if (referrer.includes('notes.html')) {
-                trail.push({ name: 'Notes', url: '../notes.html' });
+            if (referrer && !referrer.includes('index.html')) {
+                const pageFile = referrer.substring(referrer.lastIndexOf('/') + 1).split('#')[0];
+                
+                if (pageFile && pageFile.includes('.html')) {
+                    let pageLabel = pageFile.replace('.html', '');
+                    pageLabel = pageLabel.charAt(0).toUpperCase() + pageLabel.slice(1);
+                    if (pageLabel === "Ramsarsites") pageLabel = "Ramsar Sites";
+                    
+                    trail.push({ name: pageLabel, url: `../${pageFile}` });
+                }
             }
 
             let htmlMarkup = '';
             trail.forEach(step => {
                 htmlMarkup += `<a href="${step.url}">${step.name}</a><span class="separator">/</span>`;
             });
-            htmlMarkup += `<span class="current">Privacy Policy</span>`;
+            htmlMarkup += `<span class="current">${document.querySelector('.breadcrumbs .current').innerText}</span>`;
             
             container.innerHTML = htmlMarkup;
         })();
