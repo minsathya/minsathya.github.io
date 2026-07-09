@@ -209,7 +209,7 @@
         .site-name:hover { opacity: 0.6; }
 
         /* ==========================================================
-           IPAD BULLETPROOF VISIBILITY FIX (Zero Display: None!)
+           IPAD BULLETPROOF VISIBILITY FIX (With Wait Interpolation)
            ========================================================== */
         .modal {
             display: flex; /* Always structural on screen */
@@ -227,13 +227,18 @@
             tap-highlight-color: transparent !important;
             
             will-change: opacity, visibility;
-            transition: opacity 0.4s var(--ease-premium), visibility 0.4s var(--ease-premium);
+            
+            /* SAFARI FIX: When closing, wait 0.4s BEFORE turning visibility off */
+            transition: opacity 0.4s var(--ease-premium), visibility 0s linear 0.4s;
         }
 
         .modal.active {
             visibility: visible;
             pointer-events: auto;
             opacity: 1;
+            
+            /* SAFARI FIX: When opening, turn visibility ON instantly (0s delay), then fade opacity */
+            transition: opacity 0.4s var(--ease-premium), visibility 0s linear 0s;
         }
 
         .modal-card {
@@ -901,7 +906,7 @@
             rows.forEach(row => tbody.appendChild(row));
         }
 
-        /* SUPER CLEAN IPAD-SAFE JAVASCRIPT WITH TIMEOUT */
+        /* IPAD-SAFE JAVASCRIPT WITH EXTENDED 50ms TIMEOUT */
         function openSite(site) {
             const modal = document.getElementById("siteModal");
             const title = document.getElementById("modalTitle");
@@ -923,10 +928,10 @@
             // 1. Force the iPad to calculate the new text layout first
             void modal.offsetWidth; 
             
-            // 2. Give the iPad a 10-millisecond breath before animating
+            // 2. Give the iPad a 50-millisecond breath before animating
             setTimeout(() => {
                 modal.classList.add("active");
-            }, 10);
+            }, 50);
         }
 
         function closeSite() {
