@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramsar Sites - sathya.</title>
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
+     <title>Ramsar Sites - sathya.</title>
+       
+     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -223,13 +223,14 @@
         .site-name:hover { opacity: 0.6; }
 
         /* ==========================================================
-           IPAD BULLETPROOF VISIBILITY FIX (Zero Display: None!)
+           THE HOLY GRAIL PURE CSS MODAL
+           No display:none. No JS timeouts. Flawless on iPad & WebKit.
            ========================================================== */
         .modal {
             display: flex; /* Always structural on screen */
-            visibility: hidden; /* Hidden from eyes and clicks */
-            pointer-events: none; /* Blocks touches while hidden */
-            opacity: 0;
+            visibility: hidden; /* Removes from screen readers & clicks */
+            opacity: 0; /* Visually hidden */
+            pointer-events: none; /* Hard block on touches */
             
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -240,14 +241,17 @@
             -webkit-tap-highlight-color: transparent !important;
             tap-highlight-color: transparent !important;
             
-            will-change: opacity, visibility;
-            transition: opacity 0.4s var(--ease-premium), visibility 0.4s var(--ease-premium);
+            /* WHEN CLOSING: Fade opacity for 0.4s, and wait 0.4s BEFORE hiding visibility */
+            transition: opacity 0.4s var(--ease-premium), visibility 0s linear 0.4s;
         }
 
         .modal.active {
             visibility: visible;
-            pointer-events: auto;
             opacity: 1;
+            pointer-events: auto;
+            
+            /* WHEN OPENING: Instantly visible (0s), then smoothly fade opacity */
+            transition: opacity 0.4s var(--ease-premium), visibility 0s linear 0s;
         }
 
         .modal-card {
@@ -259,19 +263,18 @@
             box-shadow: 0 25px 60px rgba(0,0,0,.3);
             cursor: default;
             
-            opacity: 0;
+            /* Deep Zoom Start */
             transform: scale(0.6); 
             
-            will-change: transform, opacity;
+            will-change: transform;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            transform-style: preserve-3d;
             
-            transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+            transition: transform 0.4s var(--ease-premium), background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
         }
 
         .modal.active .modal-card {
-            opacity: 1;
+            /* Full Zoom End */
             transform: scale(1);
         }
 
@@ -913,7 +916,12 @@
             rows.forEach(row => tbody.appendChild(row));
         }
 
-        /* SUPER CLEAN IPAD-SAFE JAVASCRIPT */
+        /* ==========================================================
+           THE FINAL APPLE-SAFE JAVASCRIPT
+           Absolutely NO display: none. NO JavaScript timeouts.
+           Completely clean execution.
+           ========================================================== */
+
         function openSite(site) {
             const modal = document.getElementById("siteModal");
             const title = document.getElementById("modalTitle");
@@ -932,13 +940,13 @@
                 `;
             }
             
-            // Just add the class! CSS visibility handles everything now perfectly on all devices.
+            // Just add the class! CSS visibility handles EVERYTHING.
             modal.classList.add("active");
         }
 
         function closeSite() {
-            const modal = document.getElementById("siteModal");
-            modal.classList.remove("active");
+            // Just remove the class! CSS visibility waits exactly 0.4s to hide automatically.
+            document.getElementById("siteModal").classList.remove("active");
         }
 
         document.getElementById("siteModal").addEventListener("click", function(event) {
