@@ -209,27 +209,37 @@
         .site-name:hover { opacity: 0.6; }
 
         /* ==========================================================
-           IPAD FINAL FIX: Display None/Flex managed entirely by JS timeouts
+           THE ULTIMATE APPLE/SAFARI MODAL FIX
+           Completely removes display:none and JS timers.
+           Uses a CSS Z-Index Matrix to guarantee smooth closes.
            ========================================================== */
         .modal {
-            display: none; /* JS controls this now */
+            display: flex; /* Always structural on screen */
             opacity: 0;
+            pointer-events: none; /* Blocks touches completely while hidden */
+            z-index: -1; /* Hides it behind the actual website content */
             
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, .4);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             justify-content: center; align-items: center;
-            z-index: 9999; cursor: pointer;
+            cursor: pointer;
             -webkit-tap-highlight-color: transparent !important;
             tap-highlight-color: transparent !important;
             
             will-change: opacity;
-            transition: opacity 0.4s var(--ease-premium);
+            /* When closing: wait EXACTLY 0.4s for opacity fade before hiding behind z-index -1 */
+            transition: opacity 0.4s var(--ease-premium), z-index 0s linear 0.4s;
         }
 
         .modal.active {
             opacity: 1;
+            pointer-events: auto;
+            z-index: 9999; /* Brings to front instantly */
+            
+            /* When opening: trigger z-index instantly (0s), then fade opacity smoothly */
+            transition: opacity 0.4s var(--ease-premium), z-index 0s linear 0s;
         }
 
         .modal-card {
@@ -242,7 +252,8 @@
             cursor: default;
             
             opacity: 0;
-            transform: scale3d(0.6, 0.6, 1); /* Deep background */
+            /* HARDWARE BOOST FOR IPAD/MOBILE using scale3d */
+            transform: scale3d(0.6, 0.6, 1); 
             
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
@@ -254,7 +265,8 @@
 
         .modal.active .modal-card {
             opacity: 1;
-            transform: scale3d(1, 1, 1); /* Pull forward */
+            /* Zooms to full size straight on */
+            transform: scale3d(1, 1, 1);
         }
 
         .close-btn { float: right; font-size: 28px; cursor: pointer; color: var(--text-muted); line-height: 1; transition: color 0.4s var(--ease-premium); }
@@ -896,19 +908,14 @@
         }
 
         /* ----------------------------------------------------
-           ULTIMATE SAFARI FIX: Managed entirely by JS timeouts
-           to bypass Apple's broken visibility engine. 
+           ULTIMATE APPLE/IPAD CLEAN JAVASCRIPT
+           Absolutely no display timers. Fully offloaded to CSS.
            ---------------------------------------------------- */
         
-        let modalTimeout; // Variable to safely lock double-clicks
-
         function openSite(site) {
             const modal = document.getElementById("siteModal");
             const title = document.getElementById("modalTitle");
             const content = document.getElementById("modalContent");
-
-            // Stop any closing animations currently happening
-            clearTimeout(modalTimeout);
 
             if (site === "kolleru") {
                 title.innerHTML = "Kolleru Lake";
@@ -923,32 +930,15 @@
                 `;
             }
             
-            // 1. Unhide it but keep it transparent
-            modal.style.display = "flex"; 
-            
-            // 2. Force Safari to acknowledge the element exists
-            void modal.offsetWidth; 
-            
-            // 3. Give the iPad a 50ms pause before starting the animation
-            setTimeout(() => {
-                modal.classList.add("active");
-            }, 50);
+            // Just add the active class. The CSS matrix handles the rest.
+            modal.classList.add("active");
         }
 
         function closeSite() {
             const modal = document.getElementById("siteModal");
             
-            // Prevent the iPad "double tap" bug from running this twice
-            if (!modal.classList.contains("active")) return; 
-            
-            // 1. Start the smooth fade/shrink animation
+            // Just remove the active class. The CSS matrix handles the fade-out and push-to-back.
             modal.classList.remove("active");
-            
-            // 2. Wait exactly 400ms for the animation to finish, THEN hide it completely
-            clearTimeout(modalTimeout);
-            modalTimeout = setTimeout(() => {
-                modal.style.display = "none";
-            }, 400); 
         }
 
         document.getElementById("siteModal").addEventListener("click", function(event) {
