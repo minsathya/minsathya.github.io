@@ -209,11 +209,14 @@
         .site-name:hover { opacity: 0.6; }
 
         /* ==========================================================
-           FIXED FULL-HARDWARE ACCELERATED MODAL ANIMATION (3D ZOOM)
+           IPAD BULLETPROOF VISIBILITY FIX (Zero Display: None!)
            ========================================================== */
         .modal {
-            display: none;
+            display: flex; /* Always structural on screen */
+            visibility: hidden; /* Hidden from eyes and clicks */
+            pointer-events: none; /* Blocks touches while hidden */
             opacity: 0;
+            
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, .4);
@@ -223,12 +226,13 @@
             -webkit-tap-highlight-color: transparent !important;
             tap-highlight-color: transparent !important;
             
-            /* HARDWARE BOOST FOR IPAD/MOBILE: */
-            will-change: opacity;
-            transition: opacity 0.4s var(--ease-premium);
+            will-change: opacity, visibility;
+            transition: opacity 0.4s var(--ease-premium), visibility 0.4s var(--ease-premium);
         }
 
         .modal.active {
+            visibility: visible;
+            pointer-events: auto;
             opacity: 1;
         }
 
@@ -242,9 +246,8 @@
             cursor: default;
             
             opacity: 0;
-            transform: scale(0.6); /* Starts deep in the background */
+            transform: scale(0.6); 
             
-            /* HARDWARE BOOST FOR IPAD/MOBILE: */
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
@@ -255,7 +258,7 @@
 
         .modal.active .modal-card {
             opacity: 1;
-            transform: scale(1); /* Zooms to full size straight on */
+            transform: scale(1);
         }
 
         .close-btn { float: right; font-size: 28px; cursor: pointer; color: var(--text-muted); line-height: 1; transition: color 0.4s var(--ease-premium); }
@@ -896,6 +899,7 @@
             rows.forEach(row => tbody.appendChild(row));
         }
 
+        /* SUPER CLEAN IPAD-SAFE JAVASCRIPT */
         function openSite(site) {
             const modal = document.getElementById("siteModal");
             const title = document.getElementById("modalTitle");
@@ -914,21 +918,13 @@
                 `;
             }
             
-            // 1. Bring it to the screen (invisible but ready)
-            modal.style.display = "flex";
-            
-            // 2. The Bulletproof Apple-Style GPU Frame Sync
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    modal.classList.add("active");
-                });
-            });
+            // Just add the class! CSS visibility handles everything now perfectly on all devices.
+            modal.classList.add("active");
         }
 
         function closeSite() {
             const modal = document.getElementById("siteModal");
             modal.classList.remove("active");
-            setTimeout(() => modal.style.display = "none", 400); 
         }
 
         document.getElementById("siteModal").addEventListener("click", function(event) {
@@ -942,7 +938,7 @@
                 closeSite();
             }
         }, { passive: true });
-        
+         
     </script>
 </body>
 </html>
