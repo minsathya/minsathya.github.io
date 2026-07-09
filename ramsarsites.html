@@ -913,10 +913,16 @@
                     <p style="opacity: 0.8; font-size: 14px; margin-top: 4px;">Largest freshwater lake in India and an important habitat for migratory birds.</p>
                 `;
             }
-         }
+            
+            // 1. Bring it to the screen (invisible but ready)
             modal.style.display = "flex";
-            void modal.offsetWidth; /* This forces the browser to pause and read the small size */
-            modal.classList.add("active");
+            
+            // 2. The Bulletproof Apple-Style GPU Frame Sync
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal.classList.add("active");
+                });
+            });
         }
 
         function closeSite() {
@@ -936,6 +942,7 @@
                 closeSite();
             }
         }, { passive: true });
+         
     </script>
 </body>
 </html>
