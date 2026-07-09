@@ -40,6 +40,7 @@
             --row-even: #111111;
             --row-odd: #000000;
 
+            /* Vertical cascade parameters matching master optimization */
             --cascade-distance: 24px;
             --cascade-duration-exit: 0.2s;
             --cascade-duration-entry: 0.28s;
@@ -208,11 +209,14 @@
         .site-name:hover { opacity: 0.6; }
 
         /* ==========================================================
-           REVERTED TO LAPTOP PREFERRED CSS (Display None + Active)
+           THE HOLY GRAIL PURE CSS MODAL
+           No display:none. No JS timeouts. Flawless on iPad & WebKit.
            ========================================================== */
         .modal {
-            display: none; /* Controlled cleanly by JS */
-            opacity: 0;
+            display: flex; /* Always structural on screen */
+            visibility: hidden; /* Removes from screen readers & clicks */
+            opacity: 0; /* Visually hidden */
+            pointer-events: none; /* Hard block on touches */
             
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -223,11 +227,17 @@
             -webkit-tap-highlight-color: transparent !important;
             tap-highlight-color: transparent !important;
             
-            transition: opacity 0.4s var(--ease-premium);
+            /* WHEN CLOSING: Fade opacity for 0.4s, and wait 0.4s BEFORE hiding visibility */
+            transition: opacity 0.4s var(--ease-premium), visibility 0s linear 0.4s;
         }
 
         .modal.active {
+            visibility: visible;
             opacity: 1;
+            pointer-events: auto;
+            
+            /* WHEN OPENING: Instantly visible (0s), then smoothly fade opacity */
+            transition: opacity 0.4s var(--ease-premium), visibility 0s linear 0s;
         }
 
         .modal-card {
@@ -239,16 +249,19 @@
             box-shadow: 0 25px 60px rgba(0,0,0,.3);
             cursor: default;
             
-            opacity: 0;
-            transform: scale(0.6); /* Deep zoom starting point */
+            /* Deep Zoom Start */
+            transform: scale(0.6); 
             
-            will-change: transform, opacity;
-            transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            
+            transition: transform 0.4s var(--ease-premium), background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
         }
 
         .modal.active .modal-card {
-            opacity: 1;
-            transform: scale(1); /* Brings forward */
+            /* Full Zoom End */
+            transform: scale(1);
         }
 
         .close-btn { float: right; font-size: 28px; cursor: pointer; color: var(--text-muted); line-height: 1; transition: color 0.4s var(--ease-premium); }
@@ -890,13 +903,10 @@
         }
 
         /* ==========================================================
-           IPAD DETECTOR & SPLIT LOGIC 
-           Ensures Laptop stays exactly as you liked it, 
-           and forces iPad to obey the transition completely.
+           THE FINAL APPLE-SAFE JAVASCRIPT
+           Absolutely NO display: none. NO JavaScript timeouts.
+           Completely clean execution.
            ========================================================== */
-        
-        // 1. Detect if the user is on an iPad, iPhone, or Mac Safari
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
 
         function openSite(site) {
             const modal = document.getElementById("siteModal");
@@ -916,62 +926,26 @@
                 `;
             }
             
-            if (isIOS) {
-                // IPAD LOGIC:
-                modal.style.display = "flex";
-                void modal.offsetWidth; // Force Apple GPU to read the new display state
-                requestAnimationFrame(() => {
-                    modal.classList.add("active");
-                });
-            } else {
-                // LAPTOP/ANDROID LOGIC (Exactly as you liked it before):
-                modal.style.display = "flex";
-                setTimeout(() => {
-                    modal.classList.add("active");
-                }, 10);
-            }
+            // Just add the class! CSS visibility handles EVERYTHING.
+            modal.classList.add("active");
         }
 
         function closeSite() {
-            const modal = document.getElementById("siteModal");
-            if (!modal.classList.contains("active")) return;
-            
-            // Trigger the fade-out instantly
-            modal.classList.remove("active");
-
-            if (isIOS) {
-                // IPAD LOGIC: Force iPad to wait for the CSS animation to mathematically finish
-                const handleTransitionEnd = function(e) {
-                    // Make sure we are listening to the modal itself finishing
-                    if (e.target === modal) {
-                        modal.style.display = "none";
-                        modal.removeEventListener('transitionend', handleTransitionEnd);
-                    }
-                };
-                modal.addEventListener('transitionend', handleTransitionEnd);
-                
-                // Absolute backup safety timer just in case iOS freezes the event
-                setTimeout(() => {
-                    if (!modal.classList.contains("active")) {
-                        modal.style.display = "none";
-                        modal.removeEventListener('transitionend', handleTransitionEnd);
-                    }
-                }, 450);
-
-            } else {
-                // LAPTOP/ANDROID LOGIC (Exactly as you liked it before):
-                setTimeout(() => {
-                    modal.style.display = "none";
-                }, 400);
-            }
+            // Just remove the class! CSS visibility waits exactly 0.4s to hide automatically.
+            document.getElementById("siteModal").classList.remove("active");
         }
 
-        // Keep standard click. I removed the 'touchstart' to prevent Apple "Ghost Clicking" double-fires!
         document.getElementById("siteModal").addEventListener("click", function(event) {
             if (event.target === this) {
                 closeSite();
             }
         });
+        
+        document.getElementById("siteModal").addEventListener("touchstart", function(event) {
+            if (event.target === this) {
+                closeSite();
+            }
+        }, { passive: true });
          
     </script>
 </body>
