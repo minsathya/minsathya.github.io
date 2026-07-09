@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramsar Sites - sathya.</title>
+    
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -10,10 +14,20 @@
       gtag('config', 'G-5VGX2K64Y4');
     </script>
 
-    <link rel="icon" type="image/png" href="favicon.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramsar Sites in India 2026 - UPSC Notes</title>
+    <link id="favicon" rel="icon" type="image/png" href="favicon-light.png">
+
+<script>
+  const favicon = document.getElementById('favicon');
+  const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
+  
+  function updateFavicon(e) {
+    favicon.href = e.matches ? 'favicon-dark.png' : 'favicon-light.png';
+  }
+  
+  updateFavicon(darkMode);
+  darkMode.addEventListener('change', updateFavicon);
+</script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
