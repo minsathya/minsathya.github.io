@@ -757,18 +757,41 @@
             }
         });
 
-  <script>
-  const container = document.getElementById('dynamicBreadcrumbNav');
-  
-  // Change the name inside the quotes to match the page (e.g., "Contact", "Privacy Policy")
-  const currentPageName = "Contact"; 
-  
-  container.innerHTML = `
-    <a href="../index.html">Home</a>
-    <span class="separator">/</span>
-    <span class="current">${Contact}</span>
-  `;
-</script>
+    // --- Fixed Dynamic Breadcrumb Engine ---
+(function buildDynamicBreadcrumbs() {
+    const container = document.getElementById('dynamicBreadcrumbNav');
+    const referrer = document.referrer;
+    
+    // This is the name of the page you are on
+    const currentPageName = "Contact"; 
+    
+    let trail = [{ name: 'Home', url: '../index.html' }];
+
+    // This checks where the user came from
+    if (referrer && !referrer.includes('index.html')) {
+        const pageFile = referrer.substring(referrer.lastIndexOf('/') + 1).split('#')[0];
+        
+        if (pageFile && pageFile.includes('.html')) {
+            let pageLabel = pageFile.replace('.html', '');
+            pageLabel = pageLabel.charAt(0).toUpperCase() + pageLabel.slice(1);
+            if (pageLabel === "Ramsarsites") pageLabel = "Ramsar Sites";
+            
+            
+            trail.push({ name: pageLabel, url: pageFile });
+        }
+    }
+
+    // This creates the links
+    let htmlMarkup = '';
+    trail.forEach(step => {
+        htmlMarkup += `<a href="${step.url}">${step.name}</a><span class="separator">/</span>`;
+    });
+    
+    // This adds the current page name correctly
+    htmlMarkup += `<span class="current">${currentPageName}</span>`;
+    
+    container.innerHTML = htmlMarkup;
+})();
     </script>
 </body>
 </html>
