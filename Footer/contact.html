@@ -757,33 +757,40 @@
             }
         });
 
-    // --- Upgraded Dynamic Referrer Breadcrumb Engine (Fully Automated) ---
-        (function buildDynamicBreadcrumbs() {
-            const container = document.getElementById('dynamicBreadcrumbNav');
-            const referrer = document.referrer;
-            
-            let trail = [{ name: 'Home', url: '../index.html' }];
+    // --- Fixed Dynamic Breadcrumb Engine ---
+(function buildDynamicBreadcrumbs() {
+    const container = document.getElementById('dynamicBreadcrumbNav');
+    const referrer = document.referrer;
+    
+    // This is the name of the page you are on
+    const currentPageName = "About"; 
+    
+    let trail = [{ name: 'Home', url: '../index.html' }];
 
-            if (referrer && !referrer.includes('index.html')) {
-                const pageFile = referrer.substring(referrer.lastIndexOf('/') + 1).split('#')[0];
-                
-                if (pageFile && pageFile.includes('.html')) {
-                    let pageLabel = pageFile.replace('.html', '');
-                    pageLabel = pageLabel.charAt(0).toUpperCase() + pageLabel.slice(1);
-                    if (pageLabel === "Ramsarsites") pageLabel = "Ramsar Sites";
-                    
-                    trail.push({ name: pageLabel, url: `../${pageFile}` });
-                }
-            }
-
-            let htmlMarkup = '';
-            trail.forEach(step => {
-                htmlMarkup += `<a href="${step.url}">${step.name}</a><span class="separator">/</span>`;
-            });
-            htmlMarkup += `<span class="current">${document.querySelector('.breadcrumbs .current').innerText}</span>`;
+    // This checks where the user came from
+    if (referrer && !referrer.includes('index.html')) {
+        const pageFile = referrer.substring(referrer.lastIndexOf('/') + 1).split('#')[0];
+        
+        if (pageFile && pageFile.includes('.html')) {
+            let pageLabel = pageFile.replace('.html', '');
+            pageLabel = pageLabel.charAt(0).toUpperCase() + pageLabel.slice(1);
+            if (pageLabel === "Ramsarsites") pageLabel = "Ramsar Sites";
             
-            container.innerHTML = htmlMarkup;
-        })();
+            trail.push({ name: pageLabel, url: `../${pageFile}` });
+        }
+    }
+
+    // This creates the links
+    let htmlMarkup = '';
+    trail.forEach(step => {
+        htmlMarkup += `<a href="${step.url}">${step.name}</a><span class="separator">/</span>`;
+    });
+    
+    // This adds the current page name correctly
+    htmlMarkup += `<span class="current">${currentPageName}</span>`;
+    
+    container.innerHTML = htmlMarkup;
+})();
     </script>
 </body>
 </html>
