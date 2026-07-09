@@ -40,7 +40,6 @@
             --row-even: #111111;
             --row-odd: #000000;
 
-            /* Vertical cascade parameters matching master optimization */
             --cascade-distance: 24px;
             --cascade-duration-exit: 0.2s;
             --cascade-duration-entry: 0.28s;
@@ -208,15 +207,12 @@
         .site-name { cursor: pointer !important; color: var(--text-main) !important; text-decoration: none !important; border-bottom: none !important; font-weight: 500; transition: color 0.8s var(--ease-premium); }
         .site-name:hover { opacity: 0.6; }
 
-        /* ==========================================================
-           THE HOLY GRAIL PURE CSS MODAL
-           No display:none. No JS timeouts. Flawless on iPad & WebKit.
-           ========================================================== */
+        /* PURE CSS MODAL - ZERO JS TIMERS */
         .modal {
-            display: flex; /* Always structural on screen */
-            visibility: hidden; /* Removes from screen readers & clicks */
-            opacity: 0; /* Visually hidden */
-            pointer-events: none; /* Hard block on touches */
+            display: flex; 
+            visibility: hidden; 
+            opacity: 0; 
+            pointer-events: none; 
             
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -227,7 +223,6 @@
             -webkit-tap-highlight-color: transparent !important;
             tap-highlight-color: transparent !important;
             
-            /* WHEN CLOSING: Fade opacity for 0.4s, and wait 0.4s BEFORE hiding visibility */
             transition: opacity 0.4s var(--ease-premium), visibility 0s linear 0.4s;
         }
 
@@ -235,8 +230,6 @@
             visibility: visible;
             opacity: 1;
             pointer-events: auto;
-            
-            /* WHEN OPENING: Instantly visible (0s), then smoothly fade opacity */
             transition: opacity 0.4s var(--ease-premium), visibility 0s linear 0s;
         }
 
@@ -249,7 +242,7 @@
             box-shadow: 0 25px 60px rgba(0,0,0,.3);
             cursor: default;
             
-            /* Deep Zoom Start */
+            opacity: 0;
             transform: scale(0.6); 
             
             will-change: transform;
@@ -260,7 +253,6 @@
         }
 
         .modal.active .modal-card {
-            /* Full Zoom End */
             transform: scale(1);
         }
 
@@ -331,11 +323,8 @@
     </header>
 
     <main>
-        <nav class="breadcrumbs" aria-label="breadcrumb">
-            <a href="index.html">Home</a>
-            <span class="separator">/</span>
-            <span class="current">Ramsar Sites</span>
-        </nav>
+        <!-- AUTOMATED BREADCRUMBS CONTAINER (Empty by design) -->
+        <nav class="breadcrumbs" id="autoBreadcrumbs" aria-label="breadcrumb"></nav>
          
         <div class="card">
             <h2 class="section-title"> Ramsar sites in india 2026</h2>
@@ -772,7 +761,83 @@
             }
         });
 
-        const universalTargetLinks = document.querySelectorAll('.breadcrumbs a, footer .footer-links-row a, .logo');
+        /* ==========================================================
+           AUTOMATED JOURNEY BREADCRUMBS SCRIPT
+           ========================================================== */
+        function buildAutomatedJourney() {
+            const breadcrumbNav = document.getElementById('autoBreadcrumbs');
+            if (!breadcrumbNav) return;
+
+            let currentPath = window.location.pathname;
+            let niceTitle = document.title.split('-')[0].trim(); 
+            
+            if (currentPath === '/' || currentPath.includes('index.html')) {
+                niceTitle = "Home";
+            }
+
+            let journey = JSON.parse(sessionStorage.getItem('userJourney')) || [];
+
+            if (journey.length === 0 && niceTitle !== "Home") {
+                journey.push({ path: '/index.html', title: 'Home' });
+            }
+
+            let existingIndex = journey.findIndex(step => step.path === currentPath);
+
+            if (existingIndex !== -1) {
+                journey = journey.slice(0, existingIndex + 1);
+            } else {
+                journey.push({ path: currentPath, title: niceTitle });
+            }
+
+            sessionStorage.setItem('userJourney', JSON.stringify(journey));
+
+            breadcrumbNav.innerHTML = '';
+
+            journey.forEach((step, index) => {
+                if (index === journey.length - 1) {
+                    const span = document.createElement('span');
+                    span.className = 'current';
+                    span.textContent = step.title;
+                    breadcrumbNav.appendChild(span);
+                } else {
+                    const a = document.createElement('a');
+                    a.href = step.path;
+                    
+                    const navText = document.createElement('span');
+                    navText.className = 'nav-text';
+                    navText.textContent = step.title;
+                    a.appendChild(navText);
+                    
+                    // Attach your kinetic zoom effect directly to the dynamic link!
+                    a.addEventListener('click', function(e) {
+                        const destination = this.getAttribute('href');
+                        if (!destination || destination === '#' || destination.startsWith('#')) return;
+
+                        e.preventDefault();
+                        sessionStorage.setItem('activeUniversalTargetUrl', this.href);
+                        this.classList.add('is-zooming');
+
+                        setTimeout(() => {
+                            window.location.href = destination;
+                        }, 260);
+                    });
+
+                    breadcrumbNav.appendChild(a);
+
+                    const separator = document.createElement('span');
+                    separator.className = 'separator';
+                    separator.textContent = ' / ';
+                    breadcrumbNav.appendChild(separator);
+                }
+            });
+        }
+
+        // Run the dynamic builder right away
+        document.addEventListener('DOMContentLoaded', buildAutomatedJourney);
+
+
+        // Attach zoom effects to fixed links (Notice .breadcrumbs a is removed so it doesn't conflict!)
+        const universalTargetLinks = document.querySelectorAll('footer .footer-links-row a, .logo');
 
         universalTargetLinks.forEach(link => {
             if (!link.querySelector('.nav-text')) {
@@ -801,7 +866,9 @@
         });
 
         window.addEventListener('pageshow', () => {
-            universalTargetLinks.forEach(l => {
+            // Apply un-zoom to all possible links including dynamic ones
+            const allLinks = document.querySelectorAll('a');
+            allLinks.forEach(l => {
                 l.classList.remove('is-zooming');
                 l.classList.remove('kinetic-locked-frame');
                 const span = l.querySelector('.nav-text');
@@ -816,7 +883,7 @@
                 sessionStorage.removeItem('activeUniversalTargetUrl');
 
                 let matchedLinkElement = null;
-                universalTargetLinks.forEach(link => {
+                allLinks.forEach(link => {
                     if (link.href === savedTargetUrl) {
                         matchedLinkElement = link;
                     }
@@ -902,11 +969,11 @@
             rows.forEach(row => tbody.appendChild(row));
         }
 
-        /* ==========================================================
+        /* ----------------------------------------------------
            THE FINAL APPLE-SAFE JAVASCRIPT
            Absolutely NO display: none. NO JavaScript timeouts.
            Completely clean execution.
-           ========================================================== */
+           ---------------------------------------------------- */
 
         function openSite(site) {
             const modal = document.getElementById("siteModal");
