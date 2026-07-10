@@ -109,7 +109,7 @@
             to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
-        header, .breadcrumbs, .card, footer {
+        header, .breadcrumbs, .instruction-text, .card, footer {
             opacity: 0;
             will-change: transform, opacity;
             animation: masterEntrance 1.2s var(--ease-premium) forwards;
@@ -117,10 +117,11 @@
 
         header { animation-delay: 0.04s; }
         .breadcrumbs { animation-delay: 0.10s; } 
-        .card:nth-child(2) { animation-delay: 0.16s; }
-        .card:nth-child(3) { animation-delay: 0.22s; }
-        .card:nth-child(4) { animation-delay: 0.28s; }
-        .card:nth-child(5) { animation-delay: 0.34s; }
+        .instruction-text { animation-delay: 0.12s; } 
+        .card:nth-child(3) { animation-delay: 0.16s; }
+        .card:nth-child(4) { animation-delay: 0.22s; }
+        .card:nth-child(5) { animation-delay: 0.28s; }
+        .card:nth-child(6) { animation-delay: 0.34s; }
         footer { animation-delay: 0.44s; }
 
         header {
@@ -191,10 +192,21 @@
 
         main { flex-grow: 1; width: 100%; display: flex; flex-direction: column; }
 
-        .breadcrumbs { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; font-size: 15px; font-weight: 400; letter-spacing: 0.2px; padding: 0 8px; }
+        .breadcrumbs { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; font-size: 15px; font-weight: 400; letter-spacing: 0.2px; padding: 0 8px; }
         .breadcrumbs a { color: var(--text-muted) !important; text-decoration: none !important; transition: color 0.4s var(--ease-premium); }
         .breadcrumbs .separator { color: var(--panel-border); font-weight: 400; user-select: none; }
         .breadcrumbs .current { color: var(--text-main); opacity: 0.9; transition: color 0.8s var(--ease-premium); }
+
+        /* --- THE NEW INSTRUCTION TEXT CSS --- */
+        .instruction-text {
+            font-size: 14.5px;
+            font-weight: 500; /* Medium bold - perfect balance */
+            color: var(--text-muted);
+            padding: 0 8px;
+            margin-bottom: 28px;
+            letter-spacing: 0.2px;
+            transition: color 0.8s var(--ease-premium);
+        }
 
         h2.section-title { font-family: 'Poppins', sans-serif; color: var(--text-main); font-size: 20px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; transition: color 0.8s var(--ease-premium); }
         
@@ -270,7 +282,8 @@
             .logo { font-size: 22px; }
             .search-core-input { padding: 0 12px; font-size: 15px; }
             .header-right-cluster, .search-control-cluster { gap: 16px; }
-            .breadcrumbs { margin-bottom: 24px; padding: 0 4px; }
+            .breadcrumbs { margin-bottom: 8px; padding: 0 4px; }
+            .instruction-text { margin-bottom: 24px; padding: 0 4px; font-size: 14px; }
             table th, table td { padding: 12px 14px; font-size: 13.5px; }
             .modal-card { padding: 24px; border-radius: 20px; }
             .modal h2 { font-size: 20px; }
@@ -313,9 +326,12 @@
             <span class="separator">/</span>
             <span class="current">Ramsar Sites</span>
         </nav>
+        
+        <!-- NEW INSTRUCTION TEXT ADDED HERE -->
+        <div class="instruction-text">Tap on Ramsar site names to know more</div>
          
         <div class="card">
-            <h2 class="section-title"> Ramsar sites in india 2026</h2>
+            <h2 class="section-title"> Updated Ramsar sites in india 2026</h2>
             <div class="table-wrap">
                 <table id="mainRamsarTable">
                     <thead>
