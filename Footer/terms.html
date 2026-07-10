@@ -758,12 +758,23 @@
 
     // This checks where the user came from
     if (referrer && !referrer.includes('index.html')) {
-        const pageFile = referrer.substring(referrer.lastIndexOf('/') + 1).split('#')[0];
+        let pageFile = referrer.substring(referrer.lastIndexOf('/') + 1).split('#')[0];
         
         if (pageFile && pageFile.includes('.html')) {
             let pageLabel = pageFile.replace('.html', '');
             pageLabel = pageLabel.charAt(0).toUpperCase() + pageLabel.slice(1);
             if (pageLabel === "Ramsarsites") pageLabel = "Ramsar Sites";
+
+            // THE REVERSE FOLDER-TRAP FIX:
+            // This page lives inside /Footer/. If the referrer is NOT
+            // inside /Footer/, it's a root-level page (contents.html,
+            // ramsarsites.html, subjects.html, etc), so the link needs
+            // "../" to climb back up out of this folder. If the
+            // referrer IS inside /Footer/, it's a sibling page in this
+            // same folder, so the bare filename is already correct.
+            if (!referrer.includes('/Footer/')) {
+                pageFile = '../' + pageFile;
+            }
             
             trail.push({ name: pageLabel, url: pageFile });
         }
