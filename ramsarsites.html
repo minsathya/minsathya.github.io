@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramsar Sites - sathya.</title>
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
+     <title>Ramsar Sites - sathya.</title>
+       
+     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -14,7 +14,7 @@
       gtag('config', 'G-5VGX2K64Y4');
     </script>
 
-    <link id="favicon" rel="icon" type="image/png" href="favicon-light.png">
+   <link id="favicon" rel="icon" type="image/png" href="favicon-light.png">
 
 <script>
   const favicon = document.getElementById('favicon');
@@ -54,6 +54,7 @@
             --row-even: #111111;
             --row-odd: #000000;
 
+            /* Vertical cascade parameters matching master optimization */
             --cascade-distance: 24px;
             --cascade-duration-exit: 0.2s;
             --cascade-duration-entry: 0.28s;
@@ -221,12 +222,15 @@
         .site-name { cursor: pointer !important; color: var(--text-main) !important; text-decoration: none !important; border-bottom: none !important; font-weight: 500; transition: color 0.8s var(--ease-premium); }
         .site-name:hover { opacity: 0.6; }
 
-        /* PURE CSS MODAL - FIXED THE OPACITY BLUR BUG! */
+        /* ==========================================================
+           THE HOLY GRAIL PURE CSS MODAL
+           No display:none. No JS timeouts. Flawless on iPad & WebKit.
+           ========================================================== */
         .modal {
-            display: flex; 
-            visibility: hidden; 
-            opacity: 0; 
-            pointer-events: none; 
+            display: flex; /* Always structural on screen */
+            visibility: hidden; /* Removes from screen readers & clicks */
+            opacity: 0; /* Visually hidden */
+            pointer-events: none; /* Hard block on touches */
             
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -237,6 +241,7 @@
             -webkit-tap-highlight-color: transparent !important;
             tap-highlight-color: transparent !important;
             
+            /* WHEN CLOSING: Fade opacity for 0.4s, and wait 0.4s BEFORE hiding visibility */
             transition: opacity 0.4s var(--ease-premium), visibility 0s linear 0.4s;
         }
 
@@ -244,6 +249,8 @@
             visibility: visible;
             opacity: 1;
             pointer-events: auto;
+            
+            /* WHEN OPENING: Instantly visible (0s), then smoothly fade opacity */
             transition: opacity 0.4s var(--ease-premium), visibility 0s linear 0s;
         }
 
@@ -256,19 +263,19 @@
             box-shadow: 0 25px 60px rgba(0,0,0,.3);
             cursor: default;
             
-            opacity: 0; /* Box hides properly when closed */
+            /* Deep Zoom Start */
             transform: scale(0.6); 
             
             will-change: transform;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             
-            transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+            transition: transform 0.4s var(--ease-premium), background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
         }
 
         .modal.active .modal-card {
+            /* Full Zoom End */
             transform: scale(1);
-            opacity: 1; /* FIXED: The white box now actually appears alongside the blur! */
         }
 
         .close-btn { float: right; font-size: 28px; cursor: pointer; color: var(--text-muted); line-height: 1; transition: color 0.4s var(--ease-premium); }
@@ -338,8 +345,11 @@
     </header>
 
     <main>
-        <!-- The container for your newly adapted breadcrumb script -->
-        <nav class="breadcrumbs" id="dynamicBreadcrumbNav" aria-label="breadcrumb"></nav>
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+            <a href="index.html">Home</a>
+            <span class="separator">/</span>
+            <span class="current">Ramsar Sites</span>
+        </nav>
          
         <div class="card">
             <h2 class="section-title"> Ramsar sites in india 2026</h2>
@@ -776,55 +786,6 @@
             }
         });
 
-        /* ==========================================================
-           YOUR FIXED DYNAMIC BREADCRUMB SCRIPT (FOR MAIN PAGES)
-           ========================================================== */
-        (function buildDynamicBreadcrumbs() {
-            const container = document.getElementById('dynamicBreadcrumbNav');
-            if (!container) return;
-
-            const referrer = document.referrer;
-            
-            // This is the name of the page you are on
-            const currentPageName = "Ramsar Sites"; 
-            
-            // Notice: No '../' because this is for the main folder!
-            let trail = [{ name: 'Home', url: 'index.html' }];
-
-            // This checks where the user came from
-            if (referrer && !referrer.includes('index.html') && referrer !== "") {
-                let pageFile = referrer.substring(referrer.lastIndexOf('/') + 1).split('#')[0];
-                
-                if (pageFile && pageFile.includes('.html') && pageFile !== 'ramsarsites.html') {
-                    let pageLabel = pageFile.replace('.html', '');
-                    pageLabel = pageLabel.charAt(0).toUpperCase() + pageLabel.slice(1);
-                    
-                    // Format cleanup
-                    if (pageLabel === "Ramsarsites") pageLabel = "Ramsar Sites";
-                    
-                    // THE FOLDER TRAP FIX: 
-                    // If the user came FROM a footer page, add 'Footer/' so it looks in the right place!
-                    if (referrer.includes('/Footer/')) {
-                        pageFile = 'Footer/' + pageFile;
-                    }
-                    
-                    trail.push({ name: pageLabel, url: pageFile });
-                }
-            }
-
-            // This creates the links with your beautiful hover effect spans!
-            let htmlMarkup = '';
-            trail.forEach(step => {
-                htmlMarkup += `<a href="${step.url}"><span class="nav-text">${step.name}</span></a><span class="separator"> / </span>`;
-            });
-            
-            // This adds the current page name correctly
-            htmlMarkup += `<span class="current">${currentPageName}</span>`;
-            
-            container.innerHTML = htmlMarkup;
-        })();
-
-        // Re-attach kinetic zoom effects to breadcrumbs and footer
         const universalTargetLinks = document.querySelectorAll('.breadcrumbs a, footer .footer-links-row a, .logo');
 
         universalTargetLinks.forEach(link => {
@@ -955,9 +916,11 @@
             rows.forEach(row => tbody.appendChild(row));
         }
 
-        /* ----------------------------------------------------
+        /* ==========================================================
            THE FINAL APPLE-SAFE JAVASCRIPT
-           ---------------------------------------------------- */
+           Absolutely NO display: none. NO JavaScript timeouts.
+           Completely clean execution.
+           ========================================================== */
 
         function openSite(site) {
             const modal = document.getElementById("siteModal");
@@ -977,10 +940,12 @@
                 `;
             }
             
+            // Just add the class! CSS visibility handles EVERYTHING.
             modal.classList.add("active");
         }
 
         function closeSite() {
+            // Just remove the class! CSS visibility waits exactly 0.4s to hide automatically.
             document.getElementById("siteModal").classList.remove("active");
         }
 
