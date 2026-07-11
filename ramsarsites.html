@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Ramsar Sites - sathya.</title>
+    <title>Ramsar Sites - sathya.</title>
        
-     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-5VGX2K64Y4');
     </script>
 
-   <link id="favicon" rel="icon" type="image/png" href="favicon-light.png">
+    <!-- Absolute path configuration for consistent cross-folder resolution -->
+    <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png">
 
-<script>
-  const favicon = document.getElementById('favicon');
-  const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
-  
-  function updateFavicon(e) {
-    favicon.href = e.matches ? 'favicon-dark.png' : 'favicon-light.png';
-  }
-  
-  updateFavicon(darkMode);
-  darkMode.addEventListener('change', updateFavicon);
-</script>
+    <script>
+      const favicon = document.getElementById('favicon');
+      const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      function updateFavicon(e) {
+        favicon.href = e.matches ? '/favicon-dark.png' : '/favicon-light.png';
+      }
+      
+      updateFavicon(darkMode);
+      darkMode.addEventListener('change', updateFavicon);
+    </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -197,11 +197,10 @@
         .breadcrumbs .separator { color: var(--panel-border); font-weight: 400; user-select: none; }
         .breadcrumbs .current { color: var(--text-main); opacity: 0.9; transition: color 0.8s var(--ease-premium); }
 
-        /* --- THE UPDATED INSTRUCTION TEXT CSS --- */
         .instruction-text {
             font-size: 17px;
             font-weight: 500;
-            color: var(--text-main); /* Protects readability in Light Mode! */
+            color: var(--text-main); 
             padding: 8px 8px;
             margin-bottom: 13px;
             letter-spacing: 0.2px;
@@ -294,7 +293,7 @@
 
     <header id="masterHeader">
         <div class="header-inner-view" id="headerMainView">
-            <a href="index.html" class="logo">sathya.</a>
+            <a href="/index.html" class="logo">sathya.</a>
             <div class="header-right-cluster">
                 <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
                     <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
@@ -323,7 +322,6 @@
     <main>
         <nav class="breadcrumbs" id="dynamicBreadcrumbNav" aria-label="breadcrumb"></nav>
         
-        <!-- INSTRUCTION TEXT WITH BOLD DOT ADDED HERE -->
         <div class="instruction-text">&bull; Tap on Ramsar site names to know more</div>
          
         <div class="card">
@@ -676,11 +674,11 @@
 
     <footer>
         <div class="footer-links-row">
-          <a href="Footer/about.html">About</a>
-            <a href="Footer/contact.html">Contact</a>
-            <a href="Footer/privacy.html">Privacy Policy</a>
-            <a href="Footer/terms.html">Terms & Conditions</a>
-            <a href="Footer/disclaimer.html">Disclaimer</a>
+            <a href="/Footer/about.html">About</a>
+            <a href="/Footer/contact.html">Contact</a>
+            <a href="/Footer/privacy.html">Privacy Policy</a>
+            <a href="/Footer/terms.html">Terms & Conditions</a>
+            <a href="/Footer/disclaimer.html">Disclaimer</a>
         </div>
         <div class="copyright-tag">
             &copy; 2026 Sathya. All rights reserved.
@@ -688,21 +686,14 @@
     </footer>
 
     <script>
-        /* ==========================================================
-           DYNAMIC BREADCRUMB TRAIL ENGINE (Option A: truncates on
-           revisit instead of growing forever). Runs first so the
-           breadcrumb links exist in the DOM before the kinetic
-           portal engine below wraps/binds them.
-           ========================================================== */
+        // --- Synchronized Dynamic Breadcrumb Engine (Option A: Truncate Path Setup) ---
         (function buildDynamicBreadcrumbs() {
             const container = document.getElementById('dynamicBreadcrumbNav');
             if (!container) return;
 
-            const PAGE_PREFIX = "";
-            const CURRENT_PAGE = { name: "Ramsar Sites", path: "ramsarsites.html" };
-            const SEPARATOR_CLASS = "separator";
-            const CURRENT_CLASS = "current";
-            const HOME_PAGE = { name: "Home", path: "index.html" };
+            // Property synchronization fix ('path' metric mapping across global matrix)
+            const CURRENT_PAGE = { name: "Ramsar Sites", path: "/ramsarsites.html" };
+            const HOME_PAGE = { name: "Home", path: "/index.html" };
 
             let trail = [];
             try {
@@ -712,10 +703,12 @@
                 trail = [];
             }
 
+            // Ensure structural home anchor node state
             if (trail.length === 0 || trail[0].path !== HOME_PAGE.path) {
                 trail = [HOME_PAGE];
             }
 
+            // Option A: check index to execute step truncation rules
             const existingIndex = trail.findIndex(step => step.path === CURRENT_PAGE.path);
             if (existingIndex !== -1) {
                 trail = trail.slice(0, existingIndex + 1);
@@ -729,11 +722,10 @@
 
             let htmlMarkup = '';
             trail.forEach((step, i) => {
-                const href = PAGE_PREFIX + step.path;
                 if (i === trail.length - 1) {
-                    htmlMarkup += `<span class="${CURRENT_CLASS}">${step.name}</span>`;
+                    htmlMarkup += `<span class="current">${step.name}</span>`;
                 } else {
-                    htmlMarkup += `<a href="${href}">${step.name}</a><span class="${SEPARATOR_CLASS}">/</span>`;
+                    htmlMarkup += `<a href="${step.path}">${step.name}</a><span class="separator">/</span>`;
                 }
             });
 
@@ -813,6 +805,7 @@
             }
         });
 
+        // --- Link Portal Micro-Pop Zoom Engine Expanded Targets ---
         const universalTargetLinks = document.querySelectorAll('.breadcrumbs a, footer .footer-links-row a, .logo');
 
         universalTargetLinks.forEach(link => {
@@ -944,7 +937,7 @@
         }
 
         /* ==========================================================
-           RAMSAR DATA DICTIONARY - ALL 99 SITES
+            RAMSAR DATA DICTIONARY - ALL 99 SITES
            ========================================================== */
         const ramsarData = {
             "s1": { name: "Kolleru Lake", state: "Andhra Pradesh", year: "2002", area: "901 km²", district: "Krishna–Godavari Delta", imp: "One of India's largest freshwater lakes, flood buffer between Krishna & Godavari, major migratory bird habitat, rich fisheries", thr: "Aquaculture, encroachment, pollution, invasive weeds, siltation" },
@@ -1012,7 +1005,7 @@
             "s63": { name: "Khecheopalri Wetland", state: "Sikkim", year: "2024", area: "0.04 km²", district: "West Sikkim", imp: "Sacred Himalayan lake, rich biodiversity, supports endemic flora and fauna, important cultural and ecological site", thr: "Siltation, tourism, catchment degradation, invasive vegetation" },
             "s64": { name: "Point Calimere Wildlife and bird Sanctuary", state: "Tamil Nadu", year: "2002", area: "385 km²", district: "Nagapattinam district", imp: "Coastal wetland with mangroves, mudflats and salt marshes, major migratory bird habitat, Blackbuck and flamingo habitat", thr: "Coastal erosion, invasive Prosopis, pollution, habitat degradation" },
             "s65": { name: "Koonthankulam Bird Sanctuary", state: "Tamil Nadu", year: "2021", area: "1.29 km²", district: "Tirunelveli district", imp: "One of South India's largest breeding grounds for resident and migratory birds, community-protected wetland", thr: "Water scarcity, habitat disturbance, pollution, invasive plants" },
-            "s66": { name: "Chitrangudi Bird Sanctuary", state: "Tamil Nadu", year: "2021", area: "2.60 km²", district: "Ramanathapuram district", imp: "Important nesting colony for herons, egrets and storks, supports rich wetland biodiversity", thr: "Water shortage, pollution, human disturbance, invasive vegetation" },
+            "s66": { name: "Chitrangudi Bird Sanctuary", state: "Tamil Nadu", year: "2021", area: "2.60 km²", district: "Ramanathapuram district", imp: "Important nesting colony for herons, egrets and storks, supports rich wetland biodiversity", thr: "Water shadow, pollution, human disturbance, invasive vegetation" },
             "s67": { name: "Karikili Bird Sanctuary", state: "Tamil Nadu", year: "2022", area: "0.61 km²", district: "Ramanathapuram district", imp: "Shallow freshwater wetland, important breeding and wintering habitat for waterbirds, rich aquatic biodiversity", thr: "Water scarcity, siltation, pollution, invasive weeds" },
             "s68": { name: "Pichavaram Mangroves", state: "Tamil Nadu", year: "2022", area: "14.78 km²", district: "Cuddalore district", imp: "One of India's largest mangrove ecosystems, estuarine biodiversity, nursery for fish and crustaceans, coastal protection", thr: "Pollution, shrimp farming, habitat degradation, climate change" },
             "s69": { name: "Pallikaranai Marsh reserve forest", state: "Tamil Nadu", year: "2022", area: "13.17 km²", district: "Chennai", imp: "One of the last natural urban wetlands in South India, flood mitigation, rich bird diversity, groundwater recharge", thr: "Urban encroachment, sewage, solid waste dumping, invasive species" },
