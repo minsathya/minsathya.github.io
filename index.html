@@ -13,19 +13,19 @@
       gtag('config', 'G-5VGX2K64Y4');
     </script>
     
-    <link id="favicon" rel="icon" type="image/png" href="favicon-light.png">
+    <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png">
 
-<script>
-  const favicon = document.getElementById('favicon');
-  const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
-  
-  function updateFavicon(e) {
-    favicon.href = e.matches ? 'favicon-dark.png' : 'favicon-light.png';
-  }
-  
-  updateFavicon(darkMode);
-  darkMode.addEventListener('change', updateFavicon);
-</script>
+    <script>
+      const favicon = document.getElementById('favicon');
+      const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      function updateFavicon(e) {
+        favicon.href = e.matches ? '/favicon-dark.png' : '/favicon-light.png';
+      }
+      
+      updateFavicon(darkMode);
+      darkMode.addEventListener('change', updateFavicon);
+    </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -127,9 +127,7 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
-        /* ==========================================================
-           SEQUENTIAL ZERO-COLLISION WATERFALL SYSTEM
-           ========================================================== */
+        /* Twin View Header System Setup */
         .header-inner-view {
             position: absolute;
             inset: 0;
@@ -263,9 +261,6 @@
         .clear-text-btn svg { opacity: 0.4; }
         .close-search-btn svg { opacity: 0.7; }
 
-        /* ==========================================================
-           CELESTIAL CROSS-DISSOLVE FADE TOGGLE STYLING
-           ========================================================== */
         .theme-toggle {
             width: 32px;
             height: 32px;
@@ -322,8 +317,6 @@
             backface-visibility: hidden;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
-            
-            /* SYNCHRONIZED: Panels Synchronized Slow-Breathing Color Matrix Configuration */
             transition: border-color 0.8s var(--ease-premium), background-color 0.8s var(--ease-premium), transform 0.5s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
         }
 
@@ -354,7 +347,6 @@
             font-size: 14.5px;
             font-weight: 400;
             will-change: transform, opacity;
-            -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             transition: color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), padding 0.4s var(--ease-premium);
         }
@@ -384,7 +376,6 @@
             font-weight: 400;
             display: inline-block;
             will-change: transform, opacity;
-            -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             transition: color 0.4s var(--ease-premium);
         }
@@ -424,7 +415,6 @@
             font-size: 0.95rem;
             display: inline-block;
             will-change: transform, opacity;
-            -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             transition: opacity 0.2s ease;
         }
@@ -440,7 +430,8 @@
 
         .matrix-canvas a:hover .nav-text,
         .view-more-link:hover .nav-text,
-        .footer-links-row a:hover .nav-text {
+        .footer-links-row a:hover .nav-text,
+        .logo:hover .nav-text {
             transform: scale3d(1.06, 1.06, 1) !important;
         }
 
@@ -450,7 +441,8 @@
 
         .matrix-canvas a.is-zooming .nav-text,
         .view-more-link.is-zooming .nav-text,
-        .footer-links-row a.is-zooming .nav-text {
+        .footer-links-row a.is-zooming .nav-text,
+        .logo.is-zooming .nav-text {
             transition: transform 0.26s cubic-bezier(0.215, 0.61, 0.355, 1), opacity 0.26s linear !important;
             transform: scale3d(1.3, 1.3, 1) !important;
             opacity: 0 !important;
@@ -467,7 +459,7 @@
 
     <header id="masterHeader">
         <div class="header-inner-view" id="headerMainView">
-            <a href="#" class="logo">sathya.</a>
+            <a href="/index.html" class="logo">sathya.</a>
             <div class="header-right-cluster">
                 <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
                     <svg class="sun-icon" viewBox="0 0 24 24">
@@ -503,7 +495,7 @@
             <div class="capsule-panel">
                 <h2 class="panel-title">Upsc</h2>
                 <ul class="document-list">
-                    <li><a href="subjects.html">Subjects</a></li>
+                    <li><a href="/subjects.html">Subjects</a></li>
                     <li><a href="#">Ncert's</a></li>
                     <li><a href="#">Csat</a></li>
                     <li><a href="#">Current affairs</a></li>
@@ -521,19 +513,20 @@
             <div class="capsule-panel">
                 <h2 class="panel-title">Contents</h2>
                 <ul class="document-list">
-                    <li><a href="contents.html#art-culture">Art and culture</a></li>
-                    <li><a href="contents.html#history">History</a></li>
-                    <li><a href="contents.html#indian-society">Indian society</a></li>
+                    <li><a href="/contents.html#art-culture">Art and culture</a></li>
+                    <li><a href="/contents.html#history">History</a></li>
+                    <li><a href="/contents.html#indian-society">Indian society</a></li>
                 </ul>
                 <div class="view-more-container">
-                    <a href="contents.html" class="view-more-link">View more</a>
+                    <a href="/contents.html" class="view-more-link">View more</a>
                 </div>
             </div>
 
             <div class="capsule-panel">
                 <h2 class="panel-title">Must read</h2>
                 <ul class="document-list">
-                    <li><a href="ramsarsites.html">Ramsar sites</a></li>
+                    <li><a href="/ramsarsites.html">Ramsar sites</a></li>
+                    <li><a href="#">Coming up</a></li>
                     <li><a href="#">Coming up</a></li>
                 </ul>
             </div>
@@ -556,11 +549,11 @@
 
     <footer>
         <div class="footer-links-row">
-            <a href="Footer/about.html">About</a>
-            <a href="Footer/contact.html">Contact</a>
-            <a href="Footer/privacy.html">Privacy Policy</a>
-            <a href="Footer/terms.html">Terms & Conditions</a>
-            <a href="Footer/disclaimer.html">Disclaimer</a>
+            <a href="/Footer/about.html">About</a>
+            <a href="/Footer/contact.html">Contact</a>
+            <a href="/Footer/privacy.html">Privacy Policy</a>
+            <a href="/Footer/terms.html">Terms & Conditions</a>
+            <a href="/Footer/disclaimer.html">Disclaimer</a>
         </div>
         <div class="copyright-tag">
             &copy; 2026 Sathya. All rights reserved.
@@ -568,6 +561,20 @@
     </footer>
 
     <script>
+        // --- Universal Persistent Master Breadcrumb Engine (Homepage Reset Optimization) ---
+        (function buildDynamicBreadcrumbs() {
+            const searchPath = window.location.pathname;
+            const HOME_PATH = "/index.html";
+
+            // Whenever user navigates or maps back to the homepage, force flush state back to Home base anchor node
+            if (searchPath === HOME_PATH || searchPath === "/") {
+                const structuralHomeState = [{ name: "Home", path: HOME_PATH }];
+                try {
+                    sessionStorage.setItem('breadcrumbTrail', JSON.stringify(structuralHomeState));
+                } catch (e) {}
+            }
+        })();
+
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
         const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
@@ -577,8 +584,6 @@
         const closeSearchBtn = document.getElementById('closeSearchBtn');
         const clearSearchBtn = document.getElementById('clearSearchBtn');
         const searchCoreInput = document.getElementById('searchCoreInput');
-
-        localStorage.removeItem('dashboard-theme');
 
         function applyTargetPalette() {
             const activeSessionOverride = sessionStorage.getItem('dashboard-theme');
@@ -620,9 +625,6 @@
             }
         });
 
-        /* ==========================================================
-           STABILIZED IPAD TRANSITION CONTROLS
-           ========================================================== */
         openSearchBtn.addEventListener('click', () => {
             masterHeader.classList.remove('state-main');
             masterHeader.classList.add('state-search');
@@ -646,10 +648,7 @@
             }
         });
 
-        /* ==========================================================
-           LINK PORTAL ANIMATION — RE-CALIBRATED TO SNAP 1.3 MICRO-POP
-           ========================================================== */
-        const universalTargetLinks = document.querySelectorAll('.matrix-canvas a, .view-more-link, footer .footer-links-row a');
+        const universalTargetLinks = document.querySelectorAll('.matrix-canvas a, .view-more-link, footer .footer-links-row a, .logo');
 
         universalTargetLinks.forEach(link => {
             if (!link.querySelector('.nav-text')) {
@@ -665,7 +664,7 @@
         universalTargetLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
-                if (!destination || destination === '#') return;
+                if (!destination || destination === '#' || destination.startsWith('#')) return;
 
                 e.preventDefault();
                 sessionStorage.setItem('activeUniversalTargetUrl', this.href);
@@ -713,6 +712,7 @@
                             let endOpacity = 0.8;
                             if (matchedLinkElement.classList.contains('view-more-link')) endOpacity = 1.0;
                             if (matchedLinkElement.closest('footer')) endOpacity = 0.4;
+                            if (matchedLinkElement.classList.contains('logo')) endOpacity = 1.0;
 
                             let duration = 280; 
                             let startTime = null;
