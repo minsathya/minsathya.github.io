@@ -222,7 +222,7 @@
         .table-wrap::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 20px; }
 
         table th { background: var(--table-header); color: #ffffff; font-weight: 700; position: sticky; top: 0; z-index: 2; white-space: nowrap; user-select: none; padding: 14px 16px; text-align: left; border: 1px solid var(--panel-border); font-size: 14px; transition: background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium); }
-        table td { padding: 14px 16px; white-space: nowrap; text-align: left; border: 1px solid var(--panel-border); font-size: 14px; transition: border-color 0.8s var(--ease-premium); }
+        table td { padding: 14px 16px; white-space: nowrap; text-align: left; border: 1px solid var(--panel-border); font-size: 14px; transition: border-color 0.8s var(--ease-premium); line-height: 1.8; }
         table th.sortable { cursor: pointer; }
         table th.sortable:hover { background: var(--table-header-hover); }
         table tbody tr:nth-child(even) { background-color: var(--row-even); }
@@ -475,16 +475,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>1</td><td>Sundarban Wetland</td><td>West Bengal</td><td>2019</td><td>4230</td></tr>
-                        <tr><td>2</td><td>Kazhuveli Bird Sanctuary</td><td>Tamil Nadu</td><td>2024</td><td>1513</td></tr>
-                        <tr><td>3</td><td>Vembanad-Kol Wetland</td><td>Kerala</td><td>2002</td><td>1512</td></tr>
-                        <tr><td>4</td><td>Chilika Lake</td><td>Odisha</td><td>1981</td><td>1165</td></tr>
-                        <tr><td>5</td><td>Satkosia Gorge</td><td>Odisha</td><td>2021</td><td>981</td></tr>
-                        <tr><td>6</td><td>Kolleru Lake</td><td>Andhra Pradesh</td><td>2002</td><td>901</td></tr>
-                        <tr><td>7</td><td>Hirakud Reservoir</td><td>Odisha</td><td>2021</td><td>654</td></tr>
-                        <tr><td>8</td><td>Bhitarkanika Mangroves</td><td>Odisha</td><td>2002</td><td>650</td></tr>
-                        <tr><td>9</td><td>Gulf of Mannar Marine Biosphere Reserve</td><td>Tamil Nadu</td><td>2022</td><td>526</td></tr>
-                        <tr><td>10</td><td>Point Calimere Wildlife and Bird Sanctuary</td><td>Tamil Nadu</td><td>2002</td><td>385</td></tr>
+                        <tr><td>1</td><td><span class="site-name" onclick="openSite('s99')">Sundarban Wetland</span></td><td>West Bengal</td><td>2019</td><td>4230</td></tr>
+                        <tr><td>2</td><td><span class="site-name" onclick="openSite('s80')">Kazhuveli Bird Sanctuary</span></td><td>Tamil Nadu</td><td>2024</td><td>1513</td></tr>
+                        <tr><td>3</td><td><span class="site-name" onclick="openSite('s33')">Vembanad-Kol Wetland</span></td><td>Kerala</td><td>2002</td><td>1512</td></tr>
+                        <tr><td>4</td><td><span class="site-name" onclick="openSite('s46')">Chilika Lake</span></td><td>Odisha</td><td>1981</td><td>1165</td></tr>
+                        <tr><td>5</td><td><span class="site-name" onclick="openSite('s48')">Satkosia Gorge</span></td><td>Odisha</td><td>2021</td><td>981</td></tr>
+                        <tr><td>6</td><td><span class="site-name" onclick="openSite('s1')">Kolleru Lake</span></td><td>Andhra Pradesh</td><td>2002</td><td>901</td></tr>
+                        <tr><td>7</td><td><span class="site-name" onclick="openSite('s50')">Hirakud Reservoir</span></td><td>Odisha</td><td>2021</td><td>654</td></tr>
+                        <tr><td>8</td><td><span class="site-name" onclick="openSite('s47')">Bhitarkanika Mangroves</span></td><td>Odisha</td><td>2002</td><td>650</td></tr>
+                        <tr><td>9</td><td><span class="site-name" onclick="openSite('s70')">Gulf of Mannar Marine Biosphere Reserve</span></td><td>Tamil Nadu</td><td>2022</td><td>526</td></tr>
+                        <tr><td>10</td><td><span class="site-name" onclick="openSite('s64')">Point Calimere Wildlife and Bird Sanctuary</span></td><td>Tamil Nadu</td><td>2002</td><td>385</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -504,16 +504,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>1</td><td>Renuka Lake</td><td>Himachal Pradesh</td><td>2005</td><td>0.2</td></tr>
-                        <tr><td>2</td><td>Vembannur Wetland Complex</td><td>Tamil Nadu</td><td>2022</td><td>0.19–0.2</td></tr>
-                        <tr><td>3</td><td>Vedanthangal Bird Sanctuary</td><td>Tamil Nadu</td><td>2022</td><td>0.4</td></tr>
-                        <tr><td>4</td><td>Nanda Lake</td><td>Goa</td><td>2022</td><td>0.42</td></tr>
-                        <tr><td>5</td><td>Udhayamarthandapuram Bird Sanctuary</td><td>Tamil Nadu</td><td>2022</td><td>0.44–0.45</td></tr>
-                        <tr><td>6</td><td>Chandra Taal</td><td>Himachal Pradesh</td><td>2005</td><td>0.49</td></tr>
-                        <tr><td>7</td><td>Vellode Bird Sanctuary</td><td>Tamil Nadu</td><td>2022</td><td>0.77</td></tr>
-                        <tr><td>8</td><td>Koonthankulam Bird Sanctuary</td><td>Tamil Nadu</td><td>2021</td><td>0.72–0.8</td></tr>
-                        <tr><td>9</td><td>Suchindram Theroor Wetland Complex</td><td>Tamil Nadu</td><td>2022</td><td>~0.9</td></tr>
-                        <tr><td>10</td><td>Patna Bird Sanctuary</td><td>Uttar Pradesh</td><td>2019</td><td>~1.0–1.1</td></tr>
+                        <tr><td>1</td><td><span class="site-name" onclick="openSite('s20')">Renuka Lake</span></td><td>Himachal Pradesh</td><td>2005</td><td>0.2</td></tr>
+                        <tr><td>2</td><td><span class="site-name" onclick="openSite('s71')">Vembannur Wetland Complex</span></td><td>Tamil Nadu</td><td>2022</td><td>0.19–0.2</td></tr>
+                        <tr><td>3</td><td><span class="site-name" onclick="openSite('s74')">Vedanthangal Bird Sanctuary</span></td><td>Tamil Nadu</td><td>2022</td><td>0.4</td></tr>
+                        <tr><td>4</td><td><span class="site-name" onclick="openSite('s15')">Nanda Lake</span></td><td>Goa</td><td>2022</td><td>0.42</td></tr>
+                        <tr><td>5</td><td><span class="site-name" onclick="openSite('s73')">Udhayamarthandapuram Bird Sanctuary</span></td><td>Tamil Nadu</td><td>2022</td><td>0.44–0.45</td></tr>
+                        <tr><td>6</td><td><span class="site-name" onclick="openSite('s19')">Chandra Taal</span></td><td>Himachal Pradesh</td><td>2005</td><td>0.49</td></tr>
+                        <tr><td>7</td><td><span class="site-name" onclick="openSite('s72')">Vellode Bird Sanctuary</span></td><td>Tamil Nadu</td><td>2022</td><td>0.77</td></tr>
+                        <tr><td>8</td><td><span class="site-name" onclick="openSite('s65')">Koonthankulam Bird Sanctuary</span></td><td>Tamil Nadu</td><td>2021</td><td>0.72–0.8</td></tr>
+                        <tr><td>9</td><td><span class="site-name" onclick="openSite('s75')">Suchindram Theroor Wetland Complex</span></td><td>Tamil Nadu</td><td>2022</td><td>~0.9</td></tr>
+                        <tr><td>10</td><td><span class="site-name" onclick="openSite('s95')">Patna Bird Sanctuary</span></td><td>Uttar Pradesh</td><td>2019</td><td>~1.0–1.1</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -537,26 +537,26 @@
                             <td>Tamil Nadu</td>
                             <td>20</td>
                             <td>
-                                Kazhuveli Bird Sanctuary (2024)<br>
-                                Nanjarayan Bird Sanctuary (2024)<br>
-                                Karaivetti Bird Sanctuary (2024)<br>
-                                Longwood Shola Reserve Forest (2024)<br>
-                                Sakkarakottai Bird Sanctuary (2024)<br>
-                                Therthangal Bird Sanctuary (2024)<br>
-                                Chitrangudi Bird Sanctuary (2021)<br>
-                                Gulf of Mannar Marine Biosphere Reserve (2022)<br>
-                                Kanjirankulam Bird Sanctuary (2022)<br>
-                                Karikili Bird Sanctuary (2022)<br>
-                                Koonthankulam Bird Sanctuary (2021)<br>
-                                Pallikaranai Marsh Reserve Forest (2022)<br>
-                                Pichavaram Mangrove (2022)<br>
-                                Point Calimere Wildlife & Bird Sanctuary (2002)<br>
-                                Suchindram Theroor Wetland Complex (2022)<br>
-                                Udayamarthandapuram Bird Sanctuary (2022)<br>
-                                Vaduvur Bird Sanctuary (2022)<br>
-                                Vedanthangal Bird Sanctuary (2022)<br>
-                                Vellode Bird Sanctuary (2022)<br>
-                                Vembannur Wetland Complex (2022)
+                                <span class="site-name" onclick="openSite('s80')">Kazhuveli Bird Sanctuary</span> (2024)<br>
+                                <span class="site-name" onclick="openSite('s81')">Nanjarayan Bird Sanctuary</span> (2024)<br>
+                                <span class="site-name" onclick="openSite('s78')">Karaivetti Bird Sanctuary</span> (2024)<br>
+                                <span class="site-name" onclick="openSite('s79')">Longwood Shola Reserve Forest</span> (2024)<br>
+                                <span class="site-name" onclick="openSite('s82')">Sakkarakottai Bird Sanctuary</span> (2024)<br>
+                                <span class="site-name" onclick="openSite('s83')">Therthangal Bird Sanctuary</span> (2024)<br>
+                                <span class="site-name" onclick="openSite('s66')">Chitrangudi Bird Sanctuary</span> (2021)<br>
+                                <span class="site-name" onclick="openSite('s70')">Gulf of Mannar Marine Biosphere Reserve</span> (2022)<br>
+                                <span class="site-name" onclick="openSite('s77')">Kanjirankulam Bird Sanctuary</span> (2022)<br>
+                                <span class="site-name" onclick="openSite('s67')">Karikili Bird Sanctuary</span> (2022)<br>
+                                <span class="site-name" onclick="openSite('s65')">Koonthankulam Bird Sanctuary</span> (2021)<br>
+                                <span class="site-name" onclick="openSite('s69')">Pallikaranai Marsh Reserve Forest</span> (2022)<br>
+                                <span class="site-name" onclick="openSite('s68')">Pichavaram Mangrove</span> (2022)<br>
+                                <span class="site-name" onclick="openSite('s64')">Point Calimere Wildlife & Bird Sanctuary</span> (2002)<br>
+                                <span class="site-name" onclick="openSite('s75')">Suchindram Theroor Wetland Complex</span> (2022)<br>
+                                <span class="site-name" onclick="openSite('s73')">Udayamarthandapuram Bird Sanctuary</span> (2022)<br>
+                                <span class="site-name" onclick="openSite('s76')">Vaduvur Bird Sanctuary</span> (2022)<br>
+                                <span class="site-name" onclick="openSite('s74')">Vedanthangal Bird Sanctuary</span> (2022)<br>
+                                <span class="site-name" onclick="openSite('s72')">Vellode Bird Sanctuary</span> (2022)<br>
+                                <span class="site-name" onclick="openSite('s71')">Vembannur Wetland Complex</span> (2022)
                             </td>
                         </tr>
                         <tr>
@@ -564,17 +564,17 @@
                             <td>Uttar Pradesh</td>
                             <td>11</td>
                             <td>
-                                Upper Ganga River (2005)<br>
-                                Nawabganj Bird Sanctuary (2019)<br>
-                                Saman Bird Sanctuary (2019)<br>
-                                Samaspur Bird Sanctuary (2019)<br>
-                                Sandi Bird Sanctuary (2019)<br>
-                                Sarsai Nawar Jheel (2019)<br>
-                                Parvati Arga Bird Sanctuary (2019)<br>
-                                Sur Sarovar (2020)<br>
-                                Haiderpur Wetland (2021)<br>
-                                Bakhira Wildlife Sanctuary (2021)<br>
-                                Samaspur Bird Sanctuary (2019)
+                                <span class="site-name" onclick="openSite('s85')">Upper Ganga River</span> (2005)<br>
+                                <span class="site-name" onclick="openSite('s86')">Nawabganj Bird Sanctuary</span> (2019)<br>
+                                <span class="site-name" onclick="openSite('s88')">Saman Bird Sanctuary</span> (2019)<br>
+                                <span class="site-name" onclick="openSite('s89')">Samaspur Bird Sanctuary</span> (2019)<br>
+                                <span class="site-name" onclick="openSite('s90')">Sandi Bird Sanctuary</span> (2019)<br>
+                                <span class="site-name" onclick="openSite('s91')">Sarsai Nawar Jheel</span> (2019)<br>
+                                <span class="site-name" onclick="openSite('s87')">Parvati Arga Bird Sanctuary</span> (2019)<br>
+                                <span class="site-name" onclick="openSite('s92')">Sur Sarovar</span> (2020)<br>
+                                <span class="site-name" onclick="openSite('s93')">Haiderpur Wetland</span> (2021)<br>
+                                <span class="site-name" onclick="openSite('s94')">Bakhira Wildlife Sanctuary</span> (2021)<br>
+                                <span class="site-name" onclick="openSite('s89')">Samaspur Bird Sanctuary</span> (2019)
                             </td>
                         </tr>
                         <tr>
@@ -582,12 +582,12 @@
                             <td>Bihar</td>
                             <td>6</td>
                             <td>
-                                Kanwar Lake / Kabar Tal (2020)<br>
-                                Nagi Bird Sanctuary (2023)<br>
-                                Nakti Bird Sanctuary (2023)<br>
-                                Gogabeel Lake (2025)<br>
-                                Udaipur Lake (2025)<br>
-                                Kabar Tal Wetland (2020)
+                                <span class="site-name" onclick="openSite('s3')">Kanwar Lake / Kabar Tal</span> (2020)<br>
+                                <span class="site-name" onclick="openSite('s4')">Nagi Bird Sanctuary</span> (2023)<br>
+                                <span class="site-name" onclick="openSite('s5')">Nakti Bird Sanctuary</span> (2023)<br>
+                                <span class="site-name" onclick="openSite('s8')">Gogabeel Lake</span> (2025)<br>
+                                <span class="site-name" onclick="openSite('s7')">Udaipur Lake</span> (2025)<br>
+                                <span class="site-name" onclick="openSite('s3')">Kabar Tal Wetland</span> (2020)
                             </td>
                         </tr>
                         <tr>
@@ -595,12 +595,12 @@
                             <td>Odisha</td>
                             <td>6</td>
                             <td>
-                                Chilika Lake (1981)<br>
-                                Bhitarkanika Mangroves (2002)<br>
-                                Satkosia Gorge (2021)<br>
-                                Hirakud Reservoir (2021)<br>
-                                Ansupa Lake (2021)<br>
-                                Tampara Lake (2021)
+                                <span class="site-name" onclick="openSite('s46')">Chilika Lake</span> (1981)<br>
+                                <span class="site-name" onclick="openSite('s47')">Bhitarkanika Mangroves</span> (2002)<br>
+                                <span class="site-name" onclick="openSite('s48')">Satkosia Gorge</span> (2021)<br>
+                                <span class="site-name" onclick="openSite('s50')">Hirakud Reservoir</span> (2021)<br>
+                                <span class="site-name" onclick="openSite('s51')">Ansupa Lake</span> (2021)<br>
+                                <span class="site-name" onclick="openSite('s49')">Tampara Lake</span> (2021)
                             </td>
                         </tr>
                         <tr>
@@ -608,12 +608,12 @@
                             <td>Punjab</td>
                             <td>6</td>
                             <td>
-                                Harike Wetland (1990)<br>
-                                Kanjli Wetland (2002)<br>
-                                Ropar Wetland (2002)<br>
-                                Beas Conservation Reserve (2019)<br>
-                                Keshopur-Miani Community Reserve (2019)<br>
-                                Nangal Wildlife Sanctuary (2019)
+                                <span class="site-name" onclick="openSite('s52')">Harike Wetland</span> (1990)<br>
+                                <span class="site-name" onclick="openSite('s53')">Kanjli Wetland</span> (2002)<br>
+                                <span class="site-name" onclick="openSite('s54')">Ropar Wetland</span> (2002)<br>
+                                <span class="site-name" onclick="openSite('s55')">Beas Conservation Reserve</span> (2019)<br>
+                                <span class="site-name" onclick="openSite('s56')">Keshopur-Miani Community Reserve</span> (2019)<br>
+                                <span class="site-name" onclick="openSite('s57')">Nangal Wildlife Sanctuary</span> (2019)
                             </td>
                         </tr>
                         <tr>
@@ -621,11 +621,11 @@
                             <td>Gujarat</td>
                             <td>5</td>
                             <td>
-                                Nalsarovar Lake (2012)<br>
-                                Thol Lake Wildlife Sanctuary (2021)<br>
-                                Wadhvana Wetland (2021)<br>
-                                Khijadiya Bird Sanctuary (2021)<br>
-                                Chhari-Dhand Wetland (2025)
+                                <span class="site-name" onclick="openSite('s10')">Nalsarovar Lake</span> (2012)<br>
+                                <span class="site-name" onclick="openSite('s12')">Thol Lake Wildlife Sanctuary</span> (2021)<br>
+                                <span class="site-name" onclick="openSite('s11')">Wadhvana Wetland</span> (2021)<br>
+                                <span class="site-name" onclick="openSite('s13')">Khijadiya Bird Sanctuary</span> (2021)<br>
+                                <span class="site-name" onclick="openSite('s14')">Chhari-Dhand Wetland</span> (2025)
                             </td>
                         </tr>
                         <tr>
@@ -633,9 +633,9 @@
                             <td>Rajasthan</td>
                             <td>5</td>
                             <td>
-                                Keoladeo National Park (1981)<br>
-                                Sambhar Lake (1990)<br>
-                                Menar Wetland Complex (2025)<br>
+                                <span class="site-name" onclick="openSite('s58')">Keoladeo National Park</span> (1981)<br>
+                                <span class="site-name" onclick="openSite('s59')">Sambhar Lake</span> (1990)<br>
+                                <span class="site-name" onclick="openSite('s60')">Menar Wetland Complex</span> (2025)<br>
                                 Tal Chhapar Sanctuary (2021)<br>
                                 Naliya Grasslands (2021)
                             </td>
@@ -645,11 +645,11 @@
                             <td>Madhya Pradesh</td>
                             <td>5</td>
                             <td>
-                                Bhoj Wetlands (2002)<br>
-                                Sirpur Wetland (2022)<br>
-                                Sakhya Sagar (2022)<br>
-                                Yashwant Sagar (2022)<br>
-                                Tawa Reservoir (2024)
+                                <span class="site-name" onclick="openSite('s36')">Bhoj Wetlands</span> (2002)<br>
+                                <span class="site-name" onclick="openSite('s37')">Sirpur Wetland</span> (2022)<br>
+                                <span class="site-name" onclick="openSite('s38')">Sakhya Sagar</span> (2022)<br>
+                                <span class="site-name" onclick="openSite('s39')">Yashwant Sagar</span> (2022)<br>
+                                <span class="site-name" onclick="openSite('s40')">Tawa Reservoir</span> (2024)
                             </td>
                         </tr>
                         <tr>
@@ -657,11 +657,11 @@
                             <td>Jammu & Kashmir</td>
                             <td>5</td>
                             <td>
-                                Wular Lake (1990)<br>
-                                Hokersar Wetland (2005)<br>
-                                Surinsar–Mansar Lakes (2005)<br>
-                                Tso Moriri (2002)<br>
-                                Hygam Wetland (2022)
+                                <span class="site-name" onclick="openSite('s21')">Wular Lake</span> (1990)<br>
+                                <span class="site-name" onclick="openSite('s23')">Hokersar Wetland</span> (2005)<br>
+                                <span class="site-name" onclick="openSite('s22')">Surinsar–Mansar Lakes</span> (2005)<br>
+                                <span class="site-name" onclick="openSite('s35')">Tso Moriri</span> (2002)<br>
+                                <span class="site-name" onclick="openSite('s24')">Hygam Wetland</span> (2022)
                             </td>
                         </tr>
                         <tr>
@@ -669,10 +669,10 @@
                             <td>Karnataka</td>
                             <td>4</td>
                             <td>
-                                Ranganathittu Bird Sanctuary (2022)<br>
-                                Magadi Kere Conservation Reserve (2023)<br>
-                                Aghanashini Estuary (2023)<br>
-                                Ankasamudra Bird Conservation Reserve (2023)
+                                <span class="site-name" onclick="openSite('s27')">Ranganathittu Bird Sanctuary</span> (2022)<br>
+                                <span class="site-name" onclick="openSite('s30')">Magadi Kere Conservation Reserve</span> (2023)<br>
+                                <span class="site-name" onclick="openSite('s29')">Aghanashini Estuary</span> (2023)<br>
+                                <span class="site-name" onclick="openSite('s28')">Ankasamudra Bird Conservation Reserve</span> (2023)
                             </td>
                         </tr>
                     </tbody>
