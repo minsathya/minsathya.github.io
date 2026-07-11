@@ -13,21 +13,20 @@
       gtag('config', 'G-5VGX2K64Y4');
     </script>
 
-  <!-- Use "../" to tell the browser to look in the main folder -->
-<link id="favicon" rel="icon" type="image/png" href="../favicon-light.png">
+    <!-- Absolute paths for the favicon so it loads perfectly everywhere -->
+    <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png">
 
-<script>
-  const favicon = document.getElementById('favicon');
-  const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
-  
-  function updateFavicon(e) {
-    // Also update these paths with ../
-    favicon.href = e.matches ? '../favicon-dark.png' : '../favicon-light.png';
-  }
-  
-  updateFavicon(darkMode);
-  darkMode.addEventListener('change', updateFavicon);
-</script>
+    <script>
+      const favicon = document.getElementById('favicon');
+      const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      function updateFavicon(e) {
+        favicon.href = e.matches ? '/favicon-dark.png' : '/favicon-light.png';
+      }
+      
+      updateFavicon(darkMode);
+      darkMode.addEventListener('change', updateFavicon);
+    </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -335,13 +334,13 @@
         }
 
         .breadcrumbs a {
-            color: var(--text-muted);
+            color: var(--text-muted) !important;
             text-decoration: none !important;
             transition: color 0.4s var(--ease-premium);
         }
 
         .breadcrumbs a:hover {
-            color: var(--text-main);
+            color: var(--text-main) !important;
         }
 
         .breadcrumbs .separator {
@@ -455,10 +454,10 @@
             transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
         }
 
-        .footer-links-row a:hover .nav-text { color: var(--text-main) !important; transform: scale3d(1.06, 1.06, 1) !important; }
+        .breadcrumbs a:hover .nav-text, .footer-links-row a:hover .nav-text, .logo:hover .nav-text { color: var(--text-main) !important; transform: scale3d(1.06, 1.06, 1) !important; }
         .footer-links-row a.active-footer-page .nav-text { color: var(--text-main) !important; }
 
-        .footer-links-row a.is-zooming .nav-text {
+        .breadcrumbs a.is-zooming .nav-text, .footer-links-row a.is-zooming .nav-text, .logo.is-zooming .nav-text {
             transition: transform 0.26s cubic-bezier(0.215, 0.61, 0.355, 1), opacity 0.26s linear !important;
             transform: scale3d(1.3, 1.3, 1) !important;
             opacity: 0 !important;
@@ -508,7 +507,7 @@
 
     <header id="masterHeader">
         <div class="header-inner-view" id="headerMainView">
-            <a href="../index.html" class="logo">sathya.</a>
+            <a href="/index.html" class="logo">sathya.</a>
             <div class="header-right-cluster">
                 <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
                     <svg class="sun-icon" viewBox="0 0 24 24">
@@ -540,8 +539,7 @@
     </header>
 
     <main>
-        <nav class="breadcrumbs" id="dynamicBreadcrumbNav" aria-label="breadcrumb">
-            </nav>
+        <nav class="breadcrumbs" id="dynamicBreadcrumbNav" aria-label="breadcrumb"></nav>
 
         <div class="capsule-panel">
             <h1 class="panel-title">About</h1>
@@ -554,11 +552,11 @@
 
     <footer>
         <div class="footer-links-row">
-            <a href="about.html" class="active-footer-page">About</a>
-            <a href="contact.html">Contact</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms & Conditions</a>
-            <a href="disclaimer.html">Disclaimer</a>
+            <a href="/Footer/about.html" class="active-footer-page">About</a>
+            <a href="/Footer/contact.html">Contact</a>
+            <a href="/Footer/privacy.html">Privacy Policy</a>
+            <a href="/Footer/terms.html">Terms & Conditions</a>
+            <a href="/Footer/disclaimer.html">Disclaimer</a>
         </div>
         <div class="copyright-tag">
             &copy; 2026 Sathya. All rights reserved.
@@ -566,6 +564,52 @@
     </footer>
 
     <script>
+        // --- Fixed Dynamic Breadcrumb Engine (Option A structural absolute path mapping) ---
+        (function buildDynamicBreadcrumbs() {
+            const container = document.getElementById('dynamicBreadcrumbNav');
+            if (!container) return;
+
+            // Aligned configuration settings
+            const CURRENT_PAGE = { name: "About", url: "/Footer/about.html" };
+            const HOME_PAGE = { name: "Home", url: "/index.html" };
+
+            let trail = [];
+            try {
+                const stored = sessionStorage.getItem('breadcrumbTrail');
+                trail = stored ? JSON.parse(stored) : [];
+            } catch (e) {
+                trail = [];
+            }
+
+            // Enforce structural home anchor node state
+            if (trail.length === 0 || trail[0].url !== HOME_PAGE.url) {
+                trail = [HOME_PAGE];
+            }
+
+            // Truncation calculation index parsing
+            const existingIndex = trail.findIndex(step => step.url === CURRENT_PAGE.url);
+            if (existingIndex !== -1) {
+                trail = trail.slice(0, existingIndex + 1);
+            } else {
+                trail.push(CURRENT_PAGE);
+            }
+
+            try {
+                sessionStorage.setItem('breadcrumbTrail', JSON.stringify(trail));
+            } catch (e) { /* fail-silent fallback override */ }
+
+            let htmlMarkup = '';
+            trail.forEach((step, i) => {
+                if (i === trail.length - 1) {
+                    htmlMarkup += `<span class="current">${step.name}</span>`;
+                } else {
+                    htmlMarkup += `<a href="${step.url}">${step.name}</a><span class="separator">/</span>`;
+                }
+            });
+            
+            container.innerHTML = htmlMarkup;
+        })();
+
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
         const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
@@ -616,7 +660,6 @@
             }
         });
 
-        // --- Stabilized iPad Search Transition Controls from index.html ---
         openSearchBtn.addEventListener('click', () => {
             masterHeader.classList.remove('state-main');
             masterHeader.classList.add('state-search');
@@ -640,8 +683,8 @@
             }
         });
 
-        // --- Link Portal Micro-Pop Zoom Engine from index.html ---
-        const universalTargetLinks = document.querySelectorAll('.footer-links-row a');
+        // --- Link Portal Micro-Pop Zoom Engine Expanded Targets ---
+        const universalTargetLinks = document.querySelectorAll('.breadcrumbs a, .footer-links-row a, .logo');
 
         universalTargetLinks.forEach(link => {
             if (!link.querySelector('.nav-text')) {
@@ -702,7 +745,9 @@
                             let endScale = 1.0;
                             let startOpacity = 0;
                             let endOpacity = 0.4;
-                            if (matchedLinkElement.classList.contains('active-footer-page')) endOpacity = 1.0;
+                            if (matchedLinkElement.closest('footer') && matchedLinkElement.classList.contains('active-footer-page')) endOpacity = 1.0;
+                            if (matchedLinkElement.classList.contains('logo')) endOpacity = 1.0;
+                            if (matchedLinkElement.closest('.breadcrumbs')) endOpacity = 0.75;
 
                             let duration = 280; 
                             let startTime = null;
@@ -721,7 +766,7 @@
                                 let currentOpacity = startOpacity + (endOpacity - startOpacity) * ease;
 
                                 targetSpan.style.setProperty('transform', `scale(${currentScale})`, 'important');
-                                targetSpan.style.setProperty('opacity', currentOpacity, 'important');
+                                targetSpan.style.setProperty('setProperty', currentOpacity, 'important');
 
                                 if (progress < 1) {
                                     requestAnimationFrame(animateReverse);
@@ -738,53 +783,6 @@
                 }
             }
         });
-
-    // --- Fixed Dynamic Breadcrumb Engine ---
-(function buildDynamicBreadcrumbs() {
-    const container = document.getElementById('dynamicBreadcrumbNav');
-    const referrer = document.referrer;
-    
-    // This is the name of the page you are on
-    const currentPageName = "About"; 
-    
-    let trail = [{ name: 'Home', url: '../index.html' }];
-
-    // This checks where the user came from
-    if (referrer && !referrer.includes('index.html')) {
-        let pageFile = referrer.substring(referrer.lastIndexOf('/') + 1).split('#')[0];
-        
-        if (pageFile && pageFile.includes('.html')) {
-            let pageLabel = pageFile.replace('.html', '');
-            pageLabel = pageLabel.charAt(0).toUpperCase() + pageLabel.slice(1);
-            if (pageLabel === "Ramsarsites") pageLabel = "Ramsar Sites";
-
-            // THE REVERSE FOLDER-TRAP FIX:
-            // This page lives inside /Footer/. If the referrer is NOT
-            // inside /Footer/, it's a root-level page (contents.html,
-            // ramsarsites.html, subjects.html, index.html's siblings,
-            // etc), so the link needs "../" to climb back up out of
-            // this folder. If the referrer IS inside /Footer/, it's a
-            // sibling page in this same folder, so the bare filename
-            // is already correct and needs no prefix.
-            if (!referrer.includes('/Footer/')) {
-                pageFile = '../' + pageFile;
-            }
-            
-            trail.push({ name: pageLabel, url: pageFile });
-        }
-    }
-
-    // This creates the links
-    let htmlMarkup = '';
-    trail.forEach(step => {
-        htmlMarkup += `<a href="${step.url}">${step.name}</a><span class="separator">/</span>`;
-    });
-    
-    // This adds the current page name correctly
-    htmlMarkup += `<span class="current">${currentPageName}</span>`;
-    
-    container.innerHTML = htmlMarkup;
-})();
     </script>
 </body>
 </html>
