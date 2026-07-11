@@ -254,10 +254,32 @@
 
         .close-btn { float: right; font-size: 28px; cursor: pointer; color: var(--text-muted); line-height: 1; transition: color 0.4s var(--ease-premium); }
         .close-btn:hover { color: var(--text-main); }
+
+        /* Synchronized Text Layout Adjustments inside Modal Viewports */
+        .modal h2 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.4px;
+            margin-bottom: 28px; /* Roomy gap beneath header */
+            color: var(--text-main);
+            transition: color 0.8s var(--ease-premium);
+        }
+        .modal p {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 12px;
+            color: var(--text-main);
+            opacity: 0.85;
+            transition: color 0.8s var(--ease-premium);
+        }
+        .modal strong {
+            font-weight: 500; /* Softened medium font weight across labels */
+            color: var(--text-main);
+        }
         
         footer { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; flex-shrink: 0; margin-top: 40px; }
         .footer-links-row { display: flex; justify-content: center; align-items: center; gap: 32px; flex-wrap: wrap; width: 100%; }
-        .footer-links-row a { color: var(--text-muted) !important; text-decoration: none !important; font-size: 14px; font-weight: 400; display: inline-block; will-change: transform, opacity; backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: color 0.4s var(--ease-premium); }
+        .footer-links-row a { color: var(--text-muted) !important; text-decoration: none !important; font-size: 14px; font-weight: 400; display: inline-block; will-change: transform, opacity; -webkit-backface-visibility: hidden; backface-visibility: hidden; transition: color 0.4s var(--ease-premium); }
         .footer-links-row a:hover { color: var(--text-main) !important; }
         .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; letter-spacing: 0.2px; transition: color 0.8s var(--ease-premium); }
 
@@ -281,7 +303,7 @@
             .instruction-text { margin-bottom: 13px; padding: 0 4px; font-size: 15px; }
             table th, table td { padding: 12px 14px; font-size: 13.5px; }
             .modal-card { padding: 24px; border-radius: 20px; }
-            .modal h2 { font-size: 20px; }
+            .modal h2 { font-size: 20px; margin-bottom: 20px; }
         }
     </style>
 </head>
@@ -682,16 +704,34 @@
     </footer>
 
     <script>
-        // --- 100% Fully Automatic Bulletproof Breadcrumb Engine ---
+        // --- Universal Persistent Master Breadcrumb Engine ---
         (function buildDynamicBreadcrumbs() {
             const container = document.getElementById('dynamicBreadcrumbNav');
             if (!container) return;
 
-            // Automatically pull clean absolute identity tracks straight from the address bar
+            // 1. Auto-detect the exact path from the browser address bar
             const searchPath = window.location.pathname;
-            const CURRENT_PAGE_NAME = "Ramsar Sites";
             const HOME_PATH = "/index.html";
 
+            // 2. Global Map to ensure pristine display names across your brand
+            const pageNames = {
+                "/index.html": "Home",
+                "/ramsarsites.html": "Ramsar Sites",
+                "/Footer/about.html": "About",
+                "/Footer/contact.html": "Contact",
+                "/Footer/privacy.html": "Privacy Policy",
+                "/Footer/terms.html": "Terms & Conditions",
+                "/Footer/disclaimer.html": "Disclaimer"
+            };
+
+            // Auto-resolve display name or fallback to clean capitalized string
+            let currentPageName = pageNames[searchPath];
+            if (!currentPageName) {
+                const filename = searchPath.substring(searchPath.lastIndexOf('/') + 1).replace('.html', '');
+                currentPageName = filename.charAt(0).toUpperCase() + filename.slice(1);
+            }
+
+            // 3. Pull persistent session storage memory
             let trail = [];
             try {
                 const stored = sessionStorage.getItem('breadcrumbTrail');
@@ -700,20 +740,20 @@
                 trail = [];
             }
 
-            // Sync the structural home anchor node state accurately 
+            // Enforce structural Home base node anchor state
             if (trail.length === 0 || (trail[0].path !== HOME_PATH && trail[0].path !== "/")) {
                 trail = [{ name: "Home", path: HOME_PATH }];
             }
 
-            // Option A Truncation Array Calculation Engine
+            // 4. Check if current page is already in our chain
             const existingIndex = trail.findIndex(step => step.path === searchPath);
+            
             if (existingIndex !== -1) {
-                trail = trail.slice(0, existingIndex + 1);
+                // Keep the current sequence intact, no truncation on forward path tracking
+                // If it already exists, we leave the array completely untouched to fulfill your order requirement!
             } else {
-                if (searchPath === HOME_PATH || searchPath === "/") {
-                    trail = [{ name: "Home", path: HOME_PATH }];
-                } else {
-                    trail.push({ name: CURRENT_PAGE_NAME, path: searchPath });
+                if (searchPath !== HOME_PATH && searchPath !== "/") {
+                    trail.push({ name: currentPageName, path: searchPath });
                 }
             }
 
@@ -721,14 +761,21 @@
                 sessionStorage.setItem('breadcrumbTrail', JSON.stringify(trail));
             } catch (e) {}
 
+            // 5. Dynamic Rendering & Live Highlight Matrix
             let htmlMarkup = '';
-            trail.forEach((step, i) => {
-                if (i === trail.length - 1) {
-                    htmlMarkup += `<span class="current">${step.name}</span>`;
+            trail.forEach((step) => {
+                // If this step matches the page you are on, render it highlighted (no link)
+                if (step.path === searchPath) {
+                    htmlMarkup += `<span class="current">${step.name}</span><span class="separator">/</span>`;
                 } else {
                     htmlMarkup += `<a href="${step.path}">${step.name}</a><span class="separator">/</span>`;
                 }
             });
+
+            // Clean up trailing slash decoration at the end of the string
+            if (htmlMarkup.endsWith('<span class="separator">/</span>')) {
+                htmlMarkup = htmlMarkup.slice(0, -'<span class="separator">/</span>'.length);
+            }
 
             container.innerHTML = htmlMarkup;
         })();
@@ -988,7 +1035,7 @@
             "s49": { name: "Tampara Lake", state: "Odisha", year: "2021", area: "3.04 km²", district: "Ganjam district", imp: "Coastal freshwater lagoon, migratory bird habitat, supports fisheries and wetland biodiversity", thr: "Encroachment, pollution, siltation, invasive aquatic weeds" },
             "s50": { name: "Hirakud Reservoir", state: "Odisha", year: "2021", area: "654 km²", district: "Sambalpur district", imp: "One of India's largest man-made reservoirs, flood control, irrigation, fisheries, important waterbird habitat", thr: "Siltation, pollution, water-level fluctuations, invasive species" },
             "s51": { name: "Ansupa Lake", state: "Odisha", year: "2021", area: "2.31 km²", district: "Cuttack district", imp: "Odisha's largest freshwater oxbow lake, important migratory bird habitat, rich aquatic biodiversity, floodplain ecosystem", thr: "Siltation, encroachment, pollution, invasive aquatic weeds" },
-            "s52": { name: "Harike Wetland", state: "Punjab", year: "1990", area: "41 km²", district: "Beas–Sutlej confluence", imp: "Largest wetland in North India, confluence of Beas & Sutlej, major migratory bird habitat, rich fish diversity", thr: "Pollution, siltation, water hyacinth, encroachment, industrial effluents" },
+            "s52": { name: "Harike Wetland", state: "Punjab", year: "1990", area: "41 km²", district: "Beas–Sutlej confluence", imp: "Largest wetland in North India, confluence of Beas & Sutlej, major migratory bird habitat, rich fish diversity", thr: "Pollution, siltation, water housing, encroachment, industrial effluents" },
             "s53": { name: "Kanjli Lake", state: "Punjab", year: "2002", area: "1.83 km²", district: "Kapurthala district", imp: "Smallest Ramsar Site in Punjab, Beas River wetland, important bird habitat, supports fisheries", thr: "Pollution, invasive weeds, siltation, human disturbance" },
             "s54": { name: "Ropar Lake", state: "Punjab", year: "2002", area: "13.65 km²", district: "Rupnagar district", imp: "Riverine wetland on Sutlej, supports migratory birds, groundwater recharge, rich aquatic biodiversity", thr: "Industrial pollution, sewage, siltation, invasive aquatic plants" },
             "s55": { name: "Beas Conservation Reserve", state: "Punjab", year: "2019", area: "64.29 km²", district: "Beas river stretch", imp: "Stretch of Beas River, habitat for Indus River Dolphin, Smooth-coated Otter, rich riverine biodiversity", thr: "Sand mining, pollution, overfishing, habitat degradation" },
