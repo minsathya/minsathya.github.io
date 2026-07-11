@@ -261,7 +261,7 @@
 
         footer { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; flex-shrink: 0; margin-top: 40px; }
         .footer-links-row { display: flex; justify-content: center; align-items: center; gap: 32px; flex-wrap: wrap; width: 100%; }
-        .footer-links-row a { color: var(--text-muted) !important; text-decoration: none !important; font-size: 14px; font-weight: 400; display: inline-block; will-change: transform, opacity; -webkit-backface-visibility: hidden; backface-visibility: hidden; transition: color 0.4s var(--ease-premium); }
+        .footer-links-row a { color: var(--text-muted) !important; text-decoration: none !important; font-size: 14px; font-weight: 400; display: inline-block; will-change: transform, opacity; backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: color 0.4s var(--ease-premium); }
         .footer-links-row a:hover { color: var(--text-main) !important; }
         .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; letter-spacing: 0.2px; transition: color 0.8s var(--ease-premium); }
 
@@ -686,14 +686,15 @@
     </footer>
 
     <script>
-        // --- Synchronized Dynamic Breadcrumb Engine (Option A: Truncate Path Setup) ---
+        // --- 100% Fully Automatic Bulletproof Breadcrumb Engine ---
         (function buildDynamicBreadcrumbs() {
             const container = document.getElementById('dynamicBreadcrumbNav');
             if (!container) return;
 
-            // Property keys synced cleanly across the master codebase
-            const CURRENT_PAGE = { name: "Ramsar Sites", path: "/ramsarsites.html" };
-            const HOME_PAGE = { name: "Home", path: "/index.html" };
+            // Automatically pull clean absolute identity tracks straight from the address bar
+            const searchPath = window.location.pathname;
+            const CURRENT_PAGE_NAME = "Ramsar Sites";
+            const HOME_PATH = "/index.html";
 
             let trail = [];
             try {
@@ -703,20 +704,26 @@
                 trail = [];
             }
 
-            if (trail.length === 0 || trail[0].path !== HOME_PAGE.path) {
-                trail = [HOME_PAGE];
+            // Sync the structural home anchor node state accurately 
+            if (trail.length === 0 || (trail[0].path !== HOME_PATH && trail[0].path !== "/")) {
+                trail = [{ name: "Home", path: HOME_PATH }];
             }
 
-            const existingIndex = trail.findIndex(step => step.path === CURRENT_PAGE.path);
+            // Option A Truncation Array Calculation Engine
+            const existingIndex = trail.findIndex(step => step.path === searchPath);
             if (existingIndex !== -1) {
                 trail = trail.slice(0, existingIndex + 1);
             } else {
-                trail.push(CURRENT_PAGE);
+                if (searchPath === HOME_PATH || searchPath === "/") {
+                    trail = [{ name: "Home", path: HOME_PATH }];
+                } else {
+                    trail.push({ name: CURRENT_PAGE_NAME, path: searchPath });
+                }
             }
 
             try {
                 sessionStorage.setItem('breadcrumbTrail', JSON.stringify(trail));
-            } catch (e) { /* ignore */ }
+            } catch (e) {}
 
             let htmlMarkup = '';
             trail.forEach((step, i) => {
@@ -820,17 +827,6 @@
             link.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
                 if (!destination || destination === '#' || destination.startsWith('#')) return;
-
-                // Truncate breadcrumb trail when a breadcrumb itself is clicked
-                if (this.closest('.breadcrumbs')) {
-                    try {
-                        const trail = JSON.parse(sessionStorage.getItem('breadcrumbTrail') || '[]');
-                        const idx = trail.findIndex(item => item.path === destination);
-                        if (idx !== -1) {
-                            sessionStorage.setItem('breadcrumbTrail', JSON.stringify(trail.slice(0, idx + 1)));
-                        }
-                    } catch(e){}
-                }
 
                 e.preventDefault();
                 sessionStorage.setItem('activeUniversalTargetUrl', this.href);
