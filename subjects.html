@@ -267,16 +267,26 @@
             </div>
         </div>
 
-        <div class="header-inner-view" id="headerSearchView">
-            <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" class="search-core-input" id="searchCoreInput" placeholder="Search..." autocomplete="off">
-            <div class="search-control-cluster">
-                <button class="ctrl-btn" id="clearSearchBtn"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-                <button class="ctrl-btn" id="closeSearchBtn"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
-            </div>
-        </div>
-    </header>
+       <form class="header-inner-view" id="headerSearchView" action="search.html" method="GET">
+    <!-- 1. The search icon is now a clickable submit button -->
+    <button type="submit" aria-label="Submit search" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: inherit; display: flex; align-items: center; justify-content: center;">
+        <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    </button>
 
+    <!-- 2. Added enterkeyhint="search" to optimize virtual keyboards -->
+    <input type="text" class="search-core-input" id="searchCoreInput" name="q" placeholder="Search..." autocomplete="off" enterkeyhint="search">
+    
+    <div class="search-control-cluster">
+        <button type="button" class="ctrl-btn clear-text-btn" id="clearSearchBtn" aria-label="Clear typed text">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <button type="button" class="ctrl-btn close-search-btn" id="closeSearchBtn" aria-label="Minimize search pill">
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
+    </div>
+</form>
+</header>
+    
     <main class="subjects-container">
         <!-- Re-labeled and hooked directly to our automatic layout matrix -->
         <nav class="breadcrumb-nav" id="dynamicBreadcrumbNav" aria-label="breadcrumb"></nav>
