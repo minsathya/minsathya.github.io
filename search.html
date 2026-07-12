@@ -26,7 +26,7 @@
         html, body {
             width: 100%;
             height: 100vh;
-            overflow: hidden; /* Fixes mobile desktop scaling display bugs */
+            overflow: hidden; /* Fixes mobile scaling & locks page inside screen limits */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -67,7 +67,7 @@
             .back-home-btn:hover { color: #1c1c1c; }
         }
 
-        /* Smooth Homepage Entry Animation Wrapper */
+        /* Smooth Entry Animation Wrapper */
         .workspace-animate-frame {
             display: flex;
             flex-direction: column;
@@ -75,7 +75,7 @@
             justify-content: center;
             text-align: center;
             width: 100%;
-            max-width: 480px; /* Tight bounds to fit mobile profiles beautifully */
+            max-width: 480px; 
             padding: 24px;
             
             opacity: 0;
@@ -118,7 +118,7 @@
             margin-bottom: 36px;
         }
 
-        /* Capsule Pill Components Styling */
+        /* Capsule Pill Styling Profiles */
         .capsule-panel {
             display: inline-flex;
             align-items: center;
@@ -158,7 +158,7 @@
         <h1 class="status-title" id="statusTitle">Search</h1>
         <div class="search-subtitle" id="queryTarget">Showing results for: ""</div>
         
-        <div class="status-message" id="statusMessage">Scanning page content...</div>
+        <div class="status-message" id="statusMessage">Evaluating search target...</div>
         
         <div class="capsule-container" id="capsuleContainer"></div>
 
@@ -166,25 +166,128 @@
     </div>
 
     <script>
-        // 1. Theme Synced Favicon Handling Setup
+        // 1. Theme Synced Favicon Manager
         const favicon = document.getElementById('favicon');
         const darkModeMatcher = window.matchMedia('(prefers-color-scheme: dark)');
         function updateFavicon(e) { favicon.href = e.matches ? '/favicon-dark.png' : '/favicon-light.png'; }
         darkModeMatcher.addEventListener('change', updateFavicon);
         updateFavicon(darkModeMatcher);
 
-        // 2. Automated AI Assistant Live Network Crawler Registry
-        // Drop any new file path names in this array to automatically expand indexing
-        const targetPagesIndex = [
-            { title: "Ramsar Sites", url: "ramsarsites.html" },
-            { title: "Subjects", url: "subjects.html" },
-            { title: "Contents", url: "contents.html" }
-        ];
-
-        // Structural Grammatical Common Connector Words Filter List
+        // 2. Strict Common Connector Guard Words
         const commonFilterWords = new Set(["the", "and", "they", "them", "here", "this", "that", "with", "from", "your", "their"]);
 
-        async function processAutomatedSearch() {
+        // 3. High Volume Generic Word Registry (Prevents anchors & sets custom subtitle)
+        const highVolumeWords = new Set(["district", "history", "geography", "polity", "economy", "science", "environment", "art", "culture", "society", "wetland", "lake", "sanctuary", "reserve", "forest", "national park", "mission"]);
+
+        // 4. Manual Word List Registry System
+        const siteSearchIndex = [
+            {
+                title: "Subjects",
+                url: "subjects.html",
+                words: [
+                    "subjects", "art and culture", "history", "indian society", "geography", "polity", 
+                    "social justice", "governance", "international relations", "economy", 
+                    "science and technology", "environment", "disaster management", "internal security"
+                ]
+            },
+            {
+                title: "Contents",
+                url: "contents.html",
+                words: [
+                    "contents", "art and culture", "dances", "literature", "art forms", "folk songs", 
+                    "architecture", "history", "indian history", "ancient history", "freedom struggle", 
+                    "medieval history", "post-independence", "modern history", "world history", 
+                    "industrial revolution", "colonization & decolonization", "world wars", 
+                    "political philosophies", "indian society", "salient features of indian society", 
+                    "urbanization", "diversity of india", "effects of globalization", 
+                    "role of women & organizations", "social empowerment & communalism", 
+                    "poverty & developmental issues", "geography", "indian geography", 
+                    "physiography & relief", "soils & vegetation", "river systems & drainage", 
+                    "economic & human geography", "climate & monsoons", "world geography", 
+                    "geomorphology", "major natural regions", "climatology", "distribution of key resources", 
+                    "oceanography", "polity", "constitutional framework", "local government", 
+                    "system of government", "judiciary", "central government", 
+                    "constitutional & non-constitutional bodies", "state government", "social justice", 
+                    "welfare schemes for vulnerable sections", "education system", 
+                    "mechanisms, laws & institutions", "human resources", "health sector issues", 
+                    "issues relating to poverty & hunger", "governance", "important aspects of governance", 
+                    "citizens charters", "transparency & accountability", "role of civil services in a democracy", 
+                    "e-governance applications & models", "international relations", "india and its neighborhood", 
+                    "effect of policies of developed countries", "bilateral, regional & global groupings", 
+                    "important international institutions", "economy", "indian economy & issues relating to planning", 
+                    "government budgeting", "mobilization of resources", "land reforms in india", 
+                    "growth, development & employment", "infrastructure & investment models", "inclusive growth", 
+                    "science and technology", "developments & everyday applications", "it, space & computers", 
+                    "achievements of indians in sci-tech", "robotics & nanotech", "indigenization of technology", 
+                    "biotechnology & ipr issues", "environment", "conservation & biodiversity", 
+                    "climate change mitigation", "environmental pollution & degradation", 
+                    "environmental impact assessment (eia)", "disaster management", "disaster profiles of india", 
+                    "mitigation strategies", "vulnerability & risk assessment", "ndma guidelines & frameworks", 
+                    "internal security", "linkages between development & extremism", "money laundering & its prevention", 
+                    "role of external state & non-state actors", "border area management & security forces", 
+                    "cyber security challenges", "ngos"
+                ]
+            },
+            {
+                title: "Ramsar Sites",
+                url: "ramsarsites.html",
+                words: [
+                    "ramsar sites in india 2026", "kolleru lake", "andhra pradesh", "krishna–godavari delta", 
+                    "deepor beel", "assam", "near guwahati", "kabartal wetland", "bihar", "begusarai district", 
+                    "nagi bird sanctuary", "jamui district", "nakti bird sanctuary", "gokul jalashay", 
+                    "west champaran", "udaipur jheel", "gogabil lake", "katihar district", "kopra jalashay", 
+                    "chhattisgarh", "balodabazar district", "nalsarovar bird sanctuary", "gujarat", 
+                    "ahmedabad district", "wadhvana wetland", "vadodara district", "thol lake wildlife sanctuary", 
+                    "mehsana district", "khijadia wildlife sanctuary", "jamnagar district", "chhari dhand", 
+                    "kutch district", "nanda lake", "goa", "north goa", "sultanpur national park", "haryana", 
+                    "gurugram district", "bhindawas wildlife sanctuary", "jjhajjar district", "pong dam lake", 
+                    "himachal pradesh", "kangra district", "chandertal wetland", "lahaul–spiti", "renuka wetland", 
+                    "sirmaur district", "wular lake", "jammu & kashmir", "bandipora district", "surinsar–mansar lakes", 
+                    "near jammu", "hokera wetland", "srinagar district", "hygam wetland conservation reserve", 
+                    "baramulla district", "shallabugh wetland conservation reserve", "ganderbal district", 
+                    "udhwa lake bird sanctuary", "jharkhand", "sahibganj district", "ranganathittu bird sanctuary", 
+                    "karnataka", "mandya district", "ankasamudra bird conservation reserve", "ballari district", 
+                    "aghanashini estuary", "uttara kannada", "magadi kere conservation reserve", "gadag district", 
+                    "ashtamudi wetland", "kerala", "kollam district", "sasthamkotta lake", "vembanad-kol wetland", 
+                    "alappuzha–rottayam", "tso kar wetland complex", "ladakh", "changthang region", "tsomoriri lake", 
+                    "changthang plateau", "bhoj wetlands", "madhya pradesh", "bhopal", "sirpur wetland", 
+                    "indore district", "sakhya sagar", "shivpuri district", "yashwant sagar", "tawa reservoir", 
+                    "narmadapuram district", "nandur madhameshwar", "maharashtra", "nashik district", "lonar lake", 
+                    "buldhana district", "thane creek", "mumbai–thane", "loktak lake", "manipur", "bishnupur district", 
+                    "pala wetland", "mizoram", "siaha district", "chilika lake", "odisha", "puri–khordha–ganjam", 
+                    "bhitarkanika mangroves", "kendrapara district", "satkosia gorge", "angul district", 
+                    "tampara lake", "ganjam district", "hirakud reservoir", "sambalpur district", "ansupa lake", 
+                    "cuttack district", "harike wetland", "punjab", "beas–sutlej confluence", "kanjli lake", 
+                    "kapurthala district", "ropar lake", "rupnagar district", "beas conservation reserve", 
+                    "beas river stretch", "keshopur-miani reserve", "gurdaspur district", "nangal wildlife sanctuary", 
+                    "keoladeo ghana national park", "rajasthan", "bharatpur district", "sambhar lake", 
+                    "jaipur–nagaur", "menar wetland complex", "udaipur district", "khichan wetland", "phalodi", 
+                    "siliserh lake", "alwar district", "khecheopalri wetland", "sikkim", "west sikkim", 
+                    "point calimere wildlife and bird sanctuary", "tamil nadu", "nagapattinam district", 
+                    "koonthankulam bird sanctuary", "tirunelveli district", "chitrangudi bird sanctuary", 
+                    "ramanathapuram district", "karikili bird sanctuary", "pichavaram mangroves", "cuddalore district", 
+                    "pallikaranai marsh reserve forest", "chennai", "gulf of mannar marine biosphere reserve", 
+                    "ramanathapuram–thoothukudi", "vembannur wetland", "kanyakumari district", "vellode bird sanctuary", 
+                    "erode district", "udhayamarthandapuram bird sanctuary", "tiruvarur district", 
+                    "vedanthangal bird sanctuary", "chengalpattu district", "suchindram–theroor wetland", 
+                    "vaduvur bird sanctuary", "kanjirankulam bird sanctuary", "karaivetti bird sanctuary", 
+                    "ariyalur district", "longwood shola reserve forest", "nilgiris district", "kazhuveli bird sanctuary", 
+                    "villupuram district", "nanjarayan bird sanctuary", "tiruppur district", "sakkarakottai bird sanctuary", 
+                    "therthangal bird sanctuary", "sivaganga district", "rudrasagar lake", "tripura", "west tripura", 
+                    "upper ganga river", "uttar pradesh", "brijghat–narora", "nawabganj bird sanctuary", 
+                    "unnao district", "parvati arga bird sanctuary", "gonda district", "saman bird sanctuary", 
+                    "mainpuri district", "samaspur bird sanctuary", "raebareli district", "sandi bird sanctuary", 
+                    "hardoi district", "sarsai nawar jheel", "etawah district", "sur sarovar (keetham lake)", 
+                    "agra district", "haiderpur wetland", "bijnor district", "bakhira wildlife sanctuary", 
+                    "sant kabir nagar", "patna bird sanctuary", "etah district", "sheikha jheel bird sanctuary", 
+                    "aligarh", "asan conservation reserve", "uttarakhand", "dehradun district", 
+                    "east calcutta wetlands", "kolkata region", "sundarban wetland", "ganga–brahmauputra delta", 
+                    "largest ramsar sites", "smallest ramsar sites", "states with highest number of ramsar sites"
+                ]
+            }
+        ];
+
+        function executeManualSearchEngine() {
             const urlParams = new URLSearchParams(window.location.search);
             let rawQuery = urlParams.get('q') || '';
             rawQuery = rawQuery.replace(/\+/g, ' ').trim();
@@ -197,7 +300,7 @@
 
             const cleanQuery = rawQuery.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").trim();
 
-            // Condition Check A: Single Letters or Half-Word validation checks (< 4 chars)
+            // Guard Rule A: Single Letters or Half-Words Validation (< 4 characters)
             if (cleanQuery.length < 4) {
                 titleEl.textContent = "Not found";
                 msgEl.textContent = "Please enter full word to know";
@@ -205,7 +308,7 @@
                 return;
             }
 
-            // Condition Check B: Common Word filtering execution rule
+            // Guard Rule B: Grammatical Connector Filters
             if (commonFilterWords.has(cleanQuery)) {
                 titleEl.textContent = "Not found";
                 msgEl.textContent = "these are common words so please try other words";
@@ -213,93 +316,55 @@
                 return;
             }
 
-            let searchMatchesList = [];
+            // Evaluation Loop: Scan the strictly curated manual keyword list arrays
+            let matchedPages = [];
+            const isGenericMassWord = highVolumeWords.has(cleanQuery);
 
-            // Condition Check C: Live Scraper Scanner Engine execution loop
-            try {
-                const scanOperations = targetPagesIndex.map(async (page) => {
-                    const fetchResponse = await fetch(page.url);
-                    if (!fetchResponse.ok) return;
-                    
-                    const sourceHTML = await fetchResponse.text();
-                    
-                    // Creates an internal parsing document window box to scrape clean text content strips
-                    const documentParser = new DOMParser();
-                    const cleanDoc = documentParser.parseFromString(sourceHTML, 'text/html');
-                    
-                    // Completely strips stylesheet tags, raw scripts, and navigation bars to prevent code leakage
-                    cleanDoc.querySelectorAll('script, style, nav, header, footer').forEach(node => node.remove());
-                    
-                    const pureContentText = cleanDoc.body.textContent.toLowerCase();
-                    
-                    // Compute word occurrances count precisely
-                    const textTokensList = pureContentText.split(/\s+/);
-                    let occurrenceCounter = 0;
-                    
-                    textTokensList.forEach(token => {
-                        if (token.includes(cleanQuery) || cleanQuery.includes(token)) {
-                            occurrenceCounter++;
-                        }
-                    });
+            for (const page of siteSearchIndex) {
+                const containsMatch = page.words.some(keyword => keyword.includes(cleanQuery));
+                if (containsMatch) {
+                    matchedPages.push(page);
+                }
+            }
 
-                    if (occurrenceCounter > 0) {
-                        searchMatchesList.push({
-                            title: page.title,
-                            url: page.url,
-                            matchesCount: occurrenceCounter
-                        });
-                    }
-                });
-
-                await Promise.all(scanOperations);
-
-                // 3. Render Module Distribution Core Interface logic
-                if (searchMatchesList.length > 0) {
-                    titleEl.textContent = "Found";
-                    
-                    // Determine if the search query word matches generic mass counts (like "district" or "mission")
-                    const hasHighVolumeMatches = searchMatchesList.some(item => item.matchesCount > 3);
-
-                    if (hasHighVolumeMatches) {
-                        msgEl.textContent = searchMatchesList.length === 1 
-                            ? "but many words are there in this page" 
-                            : "but many words are there in these pages";
-                    } else {
-                        msgEl.textContent = searchMatchesList.length === 1 
-                            ? "it is available in this page" 
-                            : "it is available in these pages";
-                    }
-
-                    containerEl.innerHTML = searchMatchesList.map(page => {
-                        // Drop text highlighters completely if the query matches multi-line targets
-                        const finalDestinationURL = hasHighVolumeMatches 
-                            ? page.url 
-                            : `${page.url}#:~:text=${encodeURIComponent(rawQuery)}`;
-
-                        return `
-                            <a href="${finalDestinationURL}" class="capsule-panel">
-                                <span>${page.title}</span>
-                                <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                            </a>
-                        `;
-                    }).join('');
-
+            // Interface Content Renderer Engine
+            if (matchedPages.length > 0) {
+                titleEl.textContent = "Found";
+                
+                if (isGenericMassWord) {
+                    msgEl.textContent = matchedPages.length === 1 
+                        ? "but many words are there in this page" 
+                        : "but many words are there in these pages";
                 } else {
-                    titleEl.textContent = "Not found";
-                    msgEl.textContent = "The word you're searching is not available here";
-                    containerEl.innerHTML = "";
+                    msgEl.textContent = matchedPages.length === 1 
+                        ? "it is available in this page" 
+                        : "it is available in these pages";
                 }
 
-            } catch (networkError) {
+                containerEl.innerHTML = matchedPages.map(page => {
+                    // Suppress text anchors completely if the checked term is generic/high volume
+                    const destinationLink = isGenericMassWord 
+                        ? page.url 
+                        : `${page.url}#:~:text=${encodeURIComponent(rawQuery)}`;
+
+                    return `
+                        <a href="${destinationLink}" class="capsule-panel">
+                            <span>${page.title}</span>
+                            <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </a>
+                    `;
+                }).join('');
+
+            } else {
                 titleEl.textContent = "Not found";
                 msgEl.textContent = "The word you're searching is not available here";
                 containerEl.innerHTML = "";
             }
         }
 
-        // Initialize Smooth Loading Canvas Sequences
-        window.addEventListener('DOMContentLoaded', async () => {
-            await processAutomatedSearch();
+        // Trigger Smooth Workspace Loader
+        window.addEventListener('DOMContentLoaded', () => {
+            executeManualSearchEngine();
             
             setTimeout(() => {
                 document.getElementById('searchWorkspace').classList.add('is-initialized');
