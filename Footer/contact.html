@@ -278,7 +278,7 @@
             <a href="/Footer/about.html">About</a>
             <a href="/Footer/contact.html" class="active-footer-page">Contact</a>
             <a href="/Footer/privacy.html">Privacy Policy</a>
-            <a href="/Footer/terms.html">Terms & Conditions</a>
+            <a href="/Footer/terms.html">Terms &amp; Conditions</a>
             <a href="/Footer/disclaimer.html">Disclaimer</a>
         </div>
         <div class="copyright-tag">
@@ -328,17 +328,38 @@
                 trail = [{ name: "Home", path: HOME_PATH }];
             }
 
-            // 4. Check if current page is already in our chain
-            const existingIndex = trail.findIndex(step => step.path === searchPath);
-            
-            if (existingIndex === -1) {
-                // New page visited? Append it straight to the end of your long trail sequence
+            // 4. Smart "Slice & Clean" Truncation Logic
+            // Check if the user just clicked over straight from the Homepage to completely clean the path
+            let cameFromHome = false;
+            if (document.referrer) {
+                try {
+                    const refUrl = new URL(document.referrer);
+                    cameFromHome = refUrl.pathname === HOME_PATH || refUrl.pathname === "/";
+                } catch (e) {
+                    cameFromHome = document.referrer.endsWith(HOME_PATH) || document.referrer.endsWith("/");
+                }
+            }
+
+            if (cameFromHome) {
+                // Instantly wipe memory clean and reset back to Home -> Current Page
+                trail = [{ name: "Home", path: HOME_PATH }];
                 if (searchPath !== HOME_PATH && searchPath !== "/") {
                     trail.push({ name: currentPageName, path: searchPath });
                 }
-            } 
-            // IF it already exists, we leave the array completely untouched! 
-            // This stops truncation and preserves the exact order you requested.
+            } else {
+                // If moving within inner pages, check if the current page already exists in the memory array
+                const existingIndex = trail.findIndex(step => step.path === searchPath);
+                
+                if (existingIndex !== -1) {
+                    // Backtracking: Chop off the tail of the history trail completely!
+                    trail = trail.slice(0, existingIndex + 1);
+                } else {
+                    // Forward Tracking: Append the new entry to the end of the line
+                    if (searchPath !== HOME_PATH && searchPath !== "/") {
+                        trail.push({ name: currentPageName, path: searchPath });
+                    }
+                }
+            }
 
             try {
                 sessionStorage.setItem('breadcrumbTrail', JSON.stringify(trail));
