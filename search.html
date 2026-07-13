@@ -370,6 +370,22 @@
                 document.getElementById('searchWorkspace').classList.add('is-initialized');
             }, 60);
         });
+
+        // High-End Shield: Event Delegation to instantly shield and bypass iPadOS transition cache corruption
+        document.addEventListener('click', function(e) {
+            const targetLink = e.target.closest('a');
+            if (!targetLink) return;
+
+            const destination = targetLink.getAttribute('href');
+            if (destination && destination.includes(':~:text=')) {
+                // Instantly halt any third-party or inherited transition engines from animating this layout
+                e.preventDefault();
+                sessionStorage.removeItem('activeUniversalTargetUrl');
+                
+                // Force a direct hardware navigation step to clear the WebKit background snapshot matrix
+                window.location.href = destination;
+            }
+        });
     </script>
 </body>
 </html>
