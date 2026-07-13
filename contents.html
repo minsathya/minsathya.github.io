@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contents - sathya.</title>
 
-    <!-- Universal iPad stabilization: disables motion instantly if landing from a search highlight -->
+    <!-- Universal iPad stabilization: catches text fragments instantly before document draw -->
     <script>
       if (window.location.href.includes(':~:text=')) {
         document.documentElement.classList.add('instant-landing');
@@ -285,14 +285,14 @@
             .wide-panel-title { margin-bottom: 20px; font-size: 18px; }
         }
 
-        /* Hard override to eliminate scroll fighting on mobile engines */
-        html.instant-landing *,
+        /* Targeted iPad stabilization rule: strips delay/opacity constraints on search landing */
         html.instant-landing header, 
         html.instant-landing .breadcrumb-nav, 
         html.instant-landing .page-main-heading,
         html.instant-landing .wide-capsule, 
         html.instant-landing footer {
             animation: none !important;
+            opacity: 1 !important;
             transform: none !important;
         }
     </style>
@@ -314,14 +314,10 @@
         </div>
 
         <form class="header-inner-view" id="headerSearchView" action="search.html" method="GET">
-            <!-- 1. The search icon is now a clickable submit button -->
             <button type="submit" aria-label="Submit search" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: inherit; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                 <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </button>
-
-            <!-- 2. Added enterkeyhint="search" to optimize virtual keyboards -->
             <input type="text" class="search-core-input" id="searchCoreInput" name="q" placeholder="Search..." autocomplete="off" enterkeyhint="search">
-            
             <div class="search-control-cluster">
                 <button type="button" class="ctrl-btn clear-text-btn" id="clearSearchBtn" aria-label="Clear typed text">
                     <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -483,7 +479,7 @@
                 <li><a href="#">Conservation & Biodiversity</a></li>
                 <li><a href="#">Climate Change Mitigation</a></li>
                 <li><a href="#">Environmental Pollution & Degradation</a></li>
-                <li><a href="#">Environmental Impact Assessment (E EIA)</a></li>
+                <li><a href="#">Environmental Impact Assessment (EIA)</a></li>
             </ul>
         </div>
 
@@ -565,7 +561,7 @@
             const existingIndex = trail.findIndex(step => step.path === searchPath);
             
             if (existingIndex !== -1) {
-                // Trail enforcement complete
+                // Keep trail layout safe
             } else {
                 if (searchPath !== HOME_PATH && searchPath !== "/") {
                     trail.push({ name: currentPageName, path: searchPath });
@@ -658,7 +654,6 @@
             masterHeader.classList.add('state-main');
         });
 
-        // Form submit validator targets virtual keyboards cleanly without empty query glitches
         masterHeader.addEventListener('submit', (e) => {
             if (searchCoreInput.value.trim() === "") {
                 e.preventDefault();
