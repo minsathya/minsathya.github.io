@@ -249,6 +249,31 @@
             .wide-capsule { padding: 32px 20px; border-radius: 24px; }
             .topics-vertical-stack a { padding: 14px 0 14px 32px; font-size: 15px; }
         }
+
+        /* DEVICE-SAFE INLINE UNDERLINE PULSE SYSTEM */
+        .activated-word-target {
+            display: inline !important;
+            position: relative !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            border: none !important;
+            background: transparent !important;
+            border-bottom: 2.5px solid var(--text-main) !important;
+            will-change: border-color, box-shadow;
+            animation: infiniteUnderlinePulse 1.8s infinite ease-in-out; 
+        }
+
+        @keyframes infiniteUnderlinePulse {
+            0%, 100% {
+                border-bottom-color: rgba(37, 122, 108, 0.3) !important;
+                box-shadow: none;
+            }
+            50% {
+                border-bottom-color: var(--text-main) !important;
+                box-shadow: 0 4px 10px rgba(37, 122, 108, 0.35);
+            }
+        }
     </style>
 </head>
 <body>
@@ -329,11 +354,9 @@
             const container = document.getElementById('dynamicBreadcrumbNav');
             if (!container) return;
 
-            // 1. Auto-detect the exact path from the browser address bar
             const searchPath = window.location.pathname;
             const HOME_PATH = "/index.html";
 
-            // 2. Global Map to ensure pristine display names across your brand
             const pageNames = {
                 "/index.html": "Home",
                 "/subjects.html": "Subjects",
@@ -345,14 +368,12 @@
                 "/Footer/disclaimer.html": "Disclaimer"
             };
 
-            // Auto-resolve display name or fallback to clean capitalized string
             let currentPageName = pageNames[searchPath];
             if (!currentPageName) {
                 const filename = searchPath.substring(searchPath.lastIndexOf('/') + 1).replace('.html', '');
                 currentPageName = filename.charAt(0).toUpperCase() + filename.slice(1);
             }
 
-            // 3. Pull persistent session storage memory
             let trail = [];
             try {
                 const stored = sessionStorage.getItem('breadcrumbTrail');
@@ -361,18 +382,13 @@
                 trail = [];
             }
 
-            // Enforce structural Home base node anchor state
             if (trail.length === 0 || (trail[0].path !== HOME_PATH && trail[0].path !== "/")) {
                 trail = [{ name: "Home", path: HOME_PATH }];
             }
 
-            // 4. Check if current page is already in our chain
             const existingIndex = trail.findIndex(step => step.path === searchPath);
             
-            if (existingIndex !== -1) {
-                // Keep the current sequence intact, no truncation on forward path tracking
-                // IF it already exists, we leave the array completely untouched to fulfill your order requirement!
-            } else {
+            if (existingIndex === -1) {
                 if (searchPath !== HOME_PATH && searchPath !== "/") {
                     trail.push({ name: currentPageName, path: searchPath });
                 }
@@ -382,7 +398,6 @@
                 sessionStorage.setItem('breadcrumbTrail', JSON.stringify(trail));
             } catch (e) {}
 
-            // 5. Dynamic Rendering & Live Highlight Matrix (Matching page CSS tokens)
             let htmlMarkup = '';
             trail.forEach((step) => {
                 if (step.path === searchPath) {
@@ -392,7 +407,6 @@
                 }
             });
 
-            // Clean up trailing slash decoration at the end of the string
             if (htmlMarkup.endsWith('<span class="breadcrumb-separator">/</span>')) {
                 htmlMarkup = htmlMarkup.slice(0, -'<span class="breadcrumb-separator">/</span>'.length);
             }
@@ -439,15 +453,17 @@
         clearSearchBtn.addEventListener('click', () => { searchCoreInput.value = ""; searchCoreInput.focus(); });
         closeSearchBtn.addEventListener('click', () => { masterHeader.classList.remove('state-search'); masterHeader.classList.add('state-main'); });
 
-        // Link Portal Micro-Pop Zoom Engine (Wired with dynamic elements & logo references)
         const dynamicPortalLinks = document.querySelectorAll('.topics-vertical-stack a, .breadcrumb-nav a, footer .footer-links-row a, .logo');
-        dynamicPortalLinks.forEach(link => {
-            if (!link.querySelector('.nav-text')) {
-                const wrapper = document.createElement('span'); wrapper.className = 'nav-text';
-                while (link.firstChild) { wrapper.appendChild(link.firstChild); }
-                link.appendChild(wrapper);
-            }
-        });
+        function executeLayoutSpans() {
+            dynamicPortalLinks.forEach(link => {
+                if (!link.querySelector('.nav-text')) {
+                    const wrapper = document.createElement('span'); wrapper.className = 'nav-text';
+                    while (link.firstChild) { wrapper.appendChild(link.firstChild); }
+                    link.appendChild(wrapper);
+                }
+            });
+        }
+        executeLayoutSpans();
 
         dynamicPortalLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -467,6 +483,79 @@
                 const span = l.querySelector('.nav-text');
                 if (span) { span.style.transform = ''; span.style.opacity = ''; }
             });
+        });
+
+        // --- Universal Drop-In Text Node Highlight & 10-Second Self-Destruct Engine ---
+        window.addEventListener('load', () => {
+            let rawTargetQuery = '';
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                rawTargetQuery = urlParams.get('shq') || urlParams.get('q');
+                
+                if (!rawTargetQuery && document.referrer) {
+                    const referenceViewUrl = new URL(document.referrer);
+                    rawTargetQuery = referenceViewUrl.searchParams.get('q') || referenceViewUrl.searchParams.get('shq');
+                }
+            } catch (e) {}
+
+            if (!rawTargetQuery) return;
+
+            const cleanTargetQuery = rawTargetQuery.trim().toLowerCase();
+            if (cleanTargetQuery.length === 0) return;
+
+            function executeGlobalTextHighlight(node, searchText) {
+                if (node.nodeType === 3) { 
+                    const nodeRawValue = node.nodeValue;
+                    const nodeLowerValue = nodeRawValue.toLowerCase();
+                    
+                    if (nodeLowerValue.includes(searchText)) {
+                        const safetyRegexPattern = searchText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                        const globalRegexMatcher = new RegExp(`(${safetyRegexPattern})`, 'gi');
+                        
+                        const elementContainer = document.createElement('span');
+                        elementContainer.innerHTML = nodeRawValue.replace(globalRegexMatcher, '<span class="activated-word-target">$1</span>');
+                        
+                        const fragment = document.createDocumentFragment();
+                        while (elementContainer.firstChild) {
+                            fragment.appendChild(elementContainer.firstChild);
+                        }
+                        node.parentNode.insertBefore(fragment, node);
+                        node.parentNode.removeChild(node);
+                    }
+                } else if (node.nodeType === 1 && node.childNodes) {
+                    if (node.tagName === 'SCRIPT' || node.tagName === 'STYLE' || node.tagName === 'HEADER' || node.tagName === 'FOOTER') return;
+                    
+                    for (let i = node.childNodes.length - 1; i >= 0; i--) {
+                        executeGlobalTextHighlight(node.childNodes[i], searchText);
+                    }
+                }
+            }
+
+            const mainStudyDashboard = document.querySelector('main');
+            if (mainStudyDashboard) {
+                executeGlobalTextHighlight(mainStudyDashboard, cleanTargetQuery);
+
+                // Instantly snaps viewport and smoothly centers the target match found on page
+                setTimeout(() => {
+                    const primaryFocusMatch = document.querySelector('.activated-word-target');
+                    if (primaryFocusMatch) {
+                        primaryFocusMatch.scrollIntoView({
+                            block: 'center',
+                            behavior: 'smooth'
+                        });
+                    }
+                }, 320);
+
+                // 10-SECOND SELF-DESTRUCT TIMER: Cleans out highlight wraps completely to prevent visual reading strain
+                setTimeout(() => {
+                    const activeHighlightSpans = document.querySelectorAll('.activated-word-target');
+                    activeHighlightSpans.forEach(span => {
+                        const directTextContentNode = document.createTextNode(span.textContent);
+                        span.parentNode.replaceChild(directTextContentNode, span);
+                    });
+                    mainStudyDashboard.normalize();
+                }, 10000);
+            }
         });
     </script>
 </body>
