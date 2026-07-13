@@ -176,7 +176,7 @@
         // 2. Strict Common Connector Guard Words
         const commonFilterWords = new Set(["the", "and", "they", "them", "here", "this", "that", "with", "from", "your", "their"]);
 
-        // 3. High Volume Generic Word Registry (Prevents anchors & sets custom subtitle)
+        // 3. High Volume Generic Word Registry
         const highVolumeWords = new Set(["district", "history", "geography", "polity", "economy", "science", "environment", "art", "culture", "society", "wetland", "lake", "sanctuary", "reserve", "forest", "national park", "mission"]);
 
         // 4. Manual Word List Registry System
@@ -252,7 +252,7 @@
                     "alappuzha–rottayam", "tso kar wetland complex", "ladakh", "changthang region", "tsomoriri lake", 
                     "changthang plateau", "bhoj wetlands", "madhya pradesh", "bhopal", "sirpur wetland", 
                     "indore district", "sakhya sagar", "shivpuri district", "yashwant sagar", "tawa reservoir", 
-                    "narmadapuram district", "nandur madhameshwar", "maharashtra", "nashik district", "lonar lake", 
+                    "narmadapuram district", "narmadapuram district", "nandur madhameshwar", "maharashtra", "nashik district", "lonar lake", 
                     "buldhana district", "thane creek", "mumbai–thane", "loktak lake", "manipur", "bishnupur district", 
                     "pala wetland", "mizoram", "siaha district", "chilika lake", "odisha", "puri–khordha–ganjam", 
                     "bhitarkanika mangroves", "kendrapara district", "satkosia gorge", "angul district", 
@@ -300,7 +300,6 @@
 
             const cleanQuery = rawQuery.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").trim();
 
-            // Guard Rule A: Single Letters or Half-Words Validation (< 4 characters)
             if (cleanQuery.length < 4) {
                 titleEl.textContent = "Not found";
                 msgEl.textContent = "Please enter full word to know";
@@ -308,7 +307,6 @@
                 return;
             }
 
-            // Guard Rule B: Grammatical Connector Filters
             if (commonFilterWords.has(cleanQuery)) {
                 titleEl.textContent = "Not found";
                 msgEl.textContent = "these are common words so please try other words";
@@ -316,7 +314,6 @@
                 return;
             }
 
-            // Evaluation Loop: Scan the strictly curated manual keyword list arrays
             let matchedPages = [];
             const isGenericMassWord = highVolumeWords.has(cleanQuery);
 
@@ -327,7 +324,6 @@
                 }
             }
 
-            // Interface Content Renderer Engine
             if (matchedPages.length > 0) {
                 titleEl.textContent = "Found";
                 
@@ -342,11 +338,40 @@
                 }
 
                 containerEl.innerHTML = matchedPages.map(page => {
-                    // CLAUDE FIX: Injects safe query variable parameter (?tf=1) BEFORE the hash text segment fragment
-                    // This lets the landing page know it came from search even if Safari hides the fragment link string
-                    const destinationLink = isGenericMassWord 
-                        ? page.url 
-                        : `${page.url}?tf=1#:~:text=${encodeURIComponent(rawQuery)}`;
+                    let destinationLink = page.url;
+
+                    // Stable Section Jump Director System
+                    // Instantly matches your typed word directly to the stable container IDs on your destination page
+                    if (page.url === "contents.html") {
+                        const word = cleanQuery;
+                        if (word.includes("art") || word.includes("dance") || word.includes("literat") || word.includes("song") || word.includes("architect")) {
+                            destinationLink += "#art-culture";
+                        } else if (word.includes("histor") || word.includes("war") || word.includes("revolut") || word.includes("colon")) {
+                            destinationLink += "#history";
+                        } else if (word.includes("societ") || word.includes("urban") || word.includes("diver") || word.includes("global") || word.includes("women") || word.includes("povert")) {
+                            destinationLink += "#indian-society";
+                        } else if (word.includes("geograph") || word.includes("soil") || word.includes("river") || word.includes("climat") || word.includes("monsoon") || word.includes("ocean")) {
+                            destinationLink += "#geography";
+                        } else if (word.includes("scheme") || word.includes("educat") || word.includes("health") || word.includes("vulner") || word.includes("hunger")) {
+                            destinationLink += "#social-justice";
+                        } else if (word.includes("democr") || word.includes("e-govern") || word.includes("account") || word.includes("transpar") || word.includes("charter")) {
+                            destinationLink += "#governance";
+                        } else if (word.includes("polit") || word.includes("constitut") || word.includes("judiciar") || word.includes("state") || word.includes("central")) {
+                            destinationLink += "#polity";
+                        } else if (word.includes("relation") || word.includes("neighbor") || word.includes("bilater") || word.includes("group") || word.includes("institut")) {
+                            destinationLink += "#international-relations";
+                        } else if (word.includes("econom") || word.includes("budget") || word.includes("resourc") || word.includes("reform") || word.includes("grow") || word.includes("invest")) {
+                            destinationLink += "#economy";
+                        } else if (word.includes("sci") || word.includes("tech") || word.includes("space") || word.includes("comput") || word.includes("robot") || word.includes("nano") || word.includes("biotech")) {
+                            destinationLink += "#science-technology";
+                        } else if (word.includes("environ") || word.includes("conserv") || word.includes("biodiver") || word.includes("pollut") || word.includes("eia")) {
+                            destinationLink += "#environment";
+                        } else if (word.includes("disaster") || word.includes("mitigat") || word.includes("risk") || word.includes("ndma")) {
+                            destinationLink += "#disaster-management";
+                        } else if (word.includes("securit") || word.includes("extrem") || word.includes("launder") || word.includes("cyber") || word.includes("border")) {
+                            destinationLink += "#internal-security";
+                        }
+                    }
 
                     return `
                         <a href="${destinationLink}" class="capsule-panel">
