@@ -75,7 +75,7 @@
             justify-content: center;
             text-align: center;
             width: 100%;
-            max-width: 480px; 
+            max-width: 640px; 
             padding: 24px;
             
             opacity: 0;
@@ -109,6 +109,7 @@
             padding: 0 10px;
         }
 
+        /* Phone layout default style: Stacked one down one */
         .capsule-container {
             display: flex;
             flex-direction: column;
@@ -122,12 +123,14 @@
         .capsule-panel {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             padding: 14px 32px;
             border-radius: 40px;
             font-size: 15px;
             font-weight: 500;
             cursor: pointer;
+            white-space: nowrap;
             transition: transform 0.2s ease;
         }
 
@@ -149,6 +152,27 @@
             font-size: 14px;
             font-weight: 400;
             transition: color 0.2s ease;
+        }
+
+        /* PREMIUM RESPONSIVE ADAPTATION ENGINE (Laptop and iPad Grid Control) */
+        @media (min-width: 701px) {
+            /* Handles 2 or 3 capsules perfectly side-by-side */
+            .capsule-container.multi-layout-side-by-side {
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 16px !important;
+            }
+
+            /* Handles exactly 4 capsules into a flawless 2x2 symmetry block */
+            .capsule-container.grid-layout-2x2 {
+                display: grid !important;
+                grid-template-columns: repeat(2, auto) !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 16px !important;
+            }
         }
     </style>
 </head>
@@ -298,7 +322,7 @@
             "governance": "#governance", "important aspects of governance": "#governance", "citizens charters": "#governance", "transparency & accountability": "#governance", "role of civil services in a democracy": "#governance", "e-governance applications & models": "#governance",
             "international relations": "#international-relations", "india and its neighborhood": "#international-relations", "effect of policies of developed countries": "#international-relations", "bilateral, regional & global groupings": "#international-relations", "important international institutions": "#international-relations",
             "economy": "#economy", "indian economy & issues relating to planning": "#economy", "government budgeting": "#economy", "mobilization of resources": "#economy", "land reforms in india": "#economy", "growth, development & employment": "#economy", "infrastructure & investment models": "#economy", "inclusive growth": "#economy",
-            "science and technology": "#science-technology", "developments & everyday applications": "#science-technology", "it, space & computers": "#science-technology", "achievements of indians in sci-tech": "#science-technology", "robotics & nanotech": "#science-technology", "indigenization of technology": "#science-technology", "biotechnology & ipr issues": "#science-technology",
+            "science and technology": "#science-technology", "developments & everyday applications": "#science-technology", "it, space & computers": "#science-technology", "achievements of indians in sci-tech": "#science-technology", "robotics & nanotech": "#nanotech", "indigenization of technology": "#science-technology", "biotechnology & ipr issues": "#science-technology",
             "environment": "#environment", "conservation & biodiversity": "#environment", "climate change mitigation": "#environment", "environmental pollution & degradation": "#environment", "environmental impact assessment (eia)": "#environment",
             "disaster management": "#disaster-management", "disaster profiles of india": "#disaster-management", "mitigation strategies": "#disaster-management", "vulnerability & risk assessment": "#disaster-management", "ndma guidelines & frameworks": "#disaster-management",
             "internal security": "#internal-security", "linkages between development & extremism": "#internal-security", "money laundering & its prevention": "#internal-security", "role of external state & non-state actors": "#internal-security", "border area management & security forces": "#internal-security", "cyber security challenges": "#internal-security", "ngos": "#internal-security"
@@ -315,7 +339,7 @@
             const msgEl = document.getElementById('statusMessage');
             const containerEl = document.getElementById('capsuleContainer');
 
-            // FIX: Preserves the character matrix framework sequence for direct '&' mappings
+            // Cleans formatting text layer variables but strictly preserves the special '&' operator matrix
             const cleanQuery = rawQuery.toLowerCase().replace(/[.,\/#!$%\^\*;:{}=\-_`~()]/g, "").trim();
 
             if (cleanQuery.length < 4) {
@@ -342,12 +366,11 @@
                 }
             }
 
-            // INSTANT AUTO-ROUTING ENGAGEMENT: Checks for exactly 1 unique matching target page layout boundary
+            // INSTANT BYPASS ROUTER: Fires if exactly 1 destination page holds the layout data matrix matches
             if (matchedPages.length === 1) {
                 let singleDestinationPage = matchedPages[0];
                 let secureLandingRedirectUrl = singleDestinationPage.url;
 
-                // Process absolute section anchors specifically for contents.html maps
                 if (singleDestinationPage.url === "contents.html") {
                     const matchingKeyword = singleDestinationPage.words.find(keyword => keyword.includes(cleanQuery));
                     if (matchingKeyword && sectionMapping[matchingKeyword]) {
@@ -356,16 +379,14 @@
                         secureLandingRedirectUrl += `?shq=${encodeURIComponent(rawQuery)}`;
                     }
                 } else {
-                    // Inject tracking parameters for data structures/tables natively
                     secureLandingRedirectUrl += `?shq=${encodeURIComponent(rawQuery)}`;
                 }
 
-                // Completely skip search initialization display and route location instantly
                 window.location.replace(secureLandingRedirectUrl);
                 return;
             }
 
-            // MULTI-CHOICE SELECTION SYSTEM (Runs if minimum 2 pages contain the search string layout)
+            // MULTI-RESULT SELECTION UI: Executes if minimum 2 pages matched the layout strings
             if (matchedPages.length > 0) {
                 titleEl.textContent = "Found";
                 
@@ -377,6 +398,16 @@
                     msgEl.textContent = matchedPages.length === 1 
                         ? "it is available in this page" 
                         : "it is available in these pages";
+                }
+
+                // Clean old layout parameters before appending the adaptive layout metrics
+                containerEl.className = "capsule-container";
+
+                // INJECTS RESPONSIVE GRID MODIFIERS: Handles adaptive layouts across different devices
+                if (matchedPages.length === 4) {
+                    containerEl.classList.add("grid-layout-2x2");
+                } else if (matchedPages.length > 1) {
+                    containerEl.classList.add("multi-layout-side-by-side");
                 }
 
                 containerEl.innerHTML = matchedPages.map(page => {
@@ -412,7 +443,6 @@
         window.addEventListener('DOMContentLoaded', () => {
             executeManualSearchEngine();
             
-            // Delays initial block visibility slightly if a redirect command triggers an early route return
             setTimeout(() => {
                 const activeFrameNode = document.getElementById('searchWorkspace');
                 if (activeFrameNode) {
