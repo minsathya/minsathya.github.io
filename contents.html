@@ -7,9 +7,8 @@
 
     <!-- Universal iPad stabilization: catches text fragments instantly before document draw -->
     <script>
-      if (window.location.href.includes(':~:text=')) {
+      if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
         document.documentElement.classList.add('instant-landing');
-      window.__TEXT_FRAGMENT_LANDING__ = true;
       }
     </script>
 
@@ -286,16 +285,26 @@
             .wide-panel-title { margin-bottom: 20px; font-size: 18px; }
         }
 
-        /* Targeted iPad stabilization rule: strips delay/opacity constraints on search landing */
-        html.instant-landing *,
-        html.instant-landing *::before,
-        html.instant-landing *::after{
-            animation:none !important;
-            transition:none !important;
-            transform:none !important;
-            opacity:1 !important;
-            will-change:auto !important;
-            scroll-behavior:auto !important;
+        /* Targeted iPad stabilization rule: strips delay/opacity constraints and transition paints on search landing */
+        html.instant-landing header, 
+        html.instant-landing .breadcrumb-nav, 
+        html.instant-landing .page-main-heading,
+        html.instant-landing .wide-capsule, 
+        html.instant-landing footer {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+            will-change: auto !important;
+        }
+
+        html.instant-landing,
+        html.instant-landing body,
+        html.instant-landing main,
+        html.instant-landing header,
+        html.instant-landing .wide-capsule,
+        html.instant-landing * {
+            transition: none !important;
+            transition-duration: 0s !important;
         }
     </style>
 </head>
@@ -666,20 +675,28 @@
 
         const universalTargetLinks = document.querySelectorAll('.contents-container a, .breadcrumb-nav a, footer .footer-links-row a, .logo');
 
-        if (!window.__TEXT_FRAGMENT_LANDING__) {
-        universalTargetLinks.forEach(link => {
-            if (!link.querySelector('.nav-text')) {
-                const wrapper = document.createElement('span');
-                wrapper.className = 'nav-text';
-                while (link.firstChild) {
-                    wrapper.appendChild(link.firstChild);
+        // Layout Mutation Engine wrapping anchors securely inside a function block
+        function executeLayoutSpans() {
+            universalTargetLinks.forEach(link => {
+                if (!link.querySelector('.nav-text')) {
+                    const wrapper = document.createElement('span');
+                    wrapper.className = 'nav-text';
+                    while (link.firstChild) {
+                        wrapper.appendChild(link.firstChild);
+                    }
+                    link.appendChild(wrapper);
                 }
-                link.appendChild(wrapper);
-            }
-        });
+            });
         }
 
-        if (!window.__TEXT_FRAGMENT_LANDING__) {
+        // Advanced Shield Strategy: Delays layout mutations heavily if text fragments are active
+        // This stops DOM restructuring from confusing WebKit while it computes target words
+        if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
+            setTimeout(executeLayoutSpans, 1500);
+        } else {
+            executeLayoutSpans();
+        }
+
         universalTargetLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
@@ -695,10 +712,7 @@
             });
         });
 
-        }
-
         window.addEventListener('pageshow', () => {
-            if (window.__TEXT_FRAGMENT_LANDING__) return;
             universalTargetLinks.forEach(l => {
                 l.classList.remove('is-zooming');
                 l.classList.remove('kinetic-locked-frame');
@@ -710,7 +724,7 @@
             });
 
             // HIGH-END SHIELD: Instantly blocks layout engine reverse animation cycles on search fragment landing
-            if (window.location.href.includes(':~:text=')) {
+            if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
                 sessionStorage.removeItem('activeUniversalTargetUrl');
                 return;
             }
