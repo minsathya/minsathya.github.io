@@ -107,6 +107,21 @@
             transition: background-color 0.8s var(--ease-premium), color 0.8s var(--ease-premium);
         }
 
+        @media (max-width: 700px) {
+            body { padding: 40px 20px; }
+            .card { padding: 24px 16px; border-radius: 20px; }
+            header { margin-bottom: 40px; height: 64px; }
+            .header-inner-view { padding: 0 20px; }
+            .logo { font-size: 22px; }
+            .search-core-input { padding: 0 12px; font-size: 15px; }
+            .header-right-cluster, .search-control-cluster { gap: 16px; }
+            .breadcrumbs { margin-bottom: 8px; padding: 0 4px; }
+            .instruction-text { margin-bottom: 13px; padding: 0 4px; font-size: 15px; }
+            table th, table td { padding: 12px 14px; font-size: 13.5px; }
+            .modal-card { padding: 24px; border-radius: 20px; }
+            .modal h2 { font-size: 20px; margin-bottom: 20px; }
+        }
+
         @keyframes masterEntrance {
             from { opacity: 0; transform: translate3d(0, 24px, 0); }
             to { opacity: 1; transform: translate3d(0, 0, 0); }
@@ -264,7 +279,7 @@
             font-size: 24px;
             font-weight: 600;
             letter-spacing: -0.4px;
-            margin-bottom: 28px; /* Roomy gap beneath header */
+            margin-bottom: 28px; 
             color: var(--text-main);
             transition: color 0.8s var(--ease-premium);
         }
@@ -277,7 +292,7 @@
             transition: color 0.8s var(--ease-premium);
         }
         .modal strong {
-            font-weight: 500; /* Softened medium font weight across labels */
+            font-weight: 500; 
             color: var(--text-main);
         }
         
@@ -294,21 +309,6 @@
         .breadcrumbs a.is-zooming .nav-text, .footer-links-row a.is-zooming .nav-text, .logo.is-zooming .nav-text { transition: transform 0.26s cubic-bezier(0.215, 0.61, 0.355, 1), opacity 0.26s linear !important; transform: scale3d(1.3, 1.3, 1) !important; opacity: 0 !important; }
         .kinetic-locked-frame { pointer-events: none !important; }
         .kinetic-locked-frame .nav-text { transition: none !important; -webkit-transition: none !important; }
-
-        @media (max-width: 700px) {
-            body { padding: 40px 20px; }
-            .card { padding: 24px 16px; border-radius: 20px; }
-            header { margin-bottom: 40px; height: 64px; }
-            .header-inner-view { padding: 0 20px; }
-            .logo { font-size: 22px; }
-            .search-core-input { padding: 0 12px; font-size: 15px; }
-            .header-right-cluster, .search-control-cluster { gap: 16px; }
-            .breadcrumbs { margin-bottom: 8px; padding: 0 4px; }
-            .instruction-text { margin-bottom: 13px; padding: 0 4px; font-size: 15px; }
-            table th, table td { padding: 12px 14px; font-size: 13.5px; }
-            .modal-card { padding: 24px; border-radius: 20px; }
-            .modal h2 { font-size: 20px; margin-bottom: 20px; }
-        }
 
         /* Pristine Copy-Paste Micro Border Frame Pulse Animation */
         .activated-word-target {
@@ -360,12 +360,10 @@
         </div>
 
        <form class="header-inner-view" id="headerSearchView" action="search.html" method="GET">
-    <!-- 1. The search icon is now a clickable submit button -->
     <button type="submit" aria-label="Submit search" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: inherit; display: flex; align-items: center; justify-content: center;">
         <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
     </button>
 
-    <!-- 2. Added enterkeyhint="search" to optimize virtual keyboards -->
     <input type="text" class="search-core-input" id="searchCoreInput" name="q" placeholder="Search..." autocomplete="off" enterkeyhint="search">
     
     <div class="search-control-cluster">
@@ -751,11 +749,9 @@
             const container = document.getElementById('dynamicBreadcrumbNav');
             if (!container) return;
 
-            // 1. Auto-detect the exact path from the browser address bar
             const searchPath = window.location.pathname;
             const HOME_PATH = "/index.html";
 
-            // 2. Global Map to ensure pristine display names across your brand
             const pageNames = {
                 "/index.html": "Home",
                 "/ramsarsites.html": "Ramsar Sites",
@@ -766,14 +762,12 @@
                 "/Footer/disclaimer.html": "Disclaimer"
             };
 
-            // Auto-resolve display name or fallback to clean capitalized string
             let currentPageName = pageNames[searchPath];
             if (!currentPageName) {
                 const filename = searchPath.substring(searchPath.lastIndexOf('/') + 1).replace('.html', '');
                 currentPageName = filename.charAt(0).toUpperCase() + filename.slice(1);
             }
 
-            // 3. Pull persistent session storage memory
             let trail = [];
             try {
                 const stored = sessionStorage.getItem('breadcrumbTrail');
@@ -782,18 +776,13 @@
                 trail = [];
             }
 
-            // Enforce structural Home base node anchor state
             if (trail.length === 0 || (trail[0].path !== HOME_PATH && trail[0].path !== "/")) {
                 trail = [{ name: "Home", path: HOME_PATH }];
             }
 
-            // 4. Check if current page is already in our chain
             const existingIndex = trail.findIndex(step => step.path === searchPath);
             
-            if (existingIndex !== -1) {
-                // Keep the current sequence intact, no truncation on forward path tracking
-                // If it already exists, we leave the array completely untouched to fulfill your order requirement!
-            } else {
+            if (existingIndex === -1) {
                 if (searchPath !== HOME_PATH && searchPath !== "/") {
                     trail.push({ name: currentPageName, path: searchPath });
                 }
@@ -803,10 +792,8 @@
                 sessionStorage.setItem('breadcrumbTrail', JSON.stringify(trail));
             } catch (e) {}
 
-            // 5. Dynamic Rendering & Live Highlight Matrix
             let htmlMarkup = '';
             trail.forEach((step) => {
-                // If this step matches the page you are on, render it highlighted (no link)
                 if (step.path === searchPath) {
                     htmlMarkup += `<span class="current">${step.name}</span><span class="separator">/</span>`;
                 } else {
@@ -814,7 +801,6 @@
                 }
             });
 
-            // Clean up trailing slash decoration at the end of the string
             if (htmlMarkup.endsWith('<span class="separator">/</span>')) {
                 htmlMarkup = htmlMarkup.slice(0, -'<span class="separator">/</span>'.length);
             }
@@ -1167,7 +1153,7 @@
             if (event.target === this) closeSite();
         }, { passive: true });
         
-        // --- Universal Drop-In Search Parameter Scanner & Center-Scroll Engine ---
+        // --- Universal High-End Text Node Multi-Match Highlight & Scroll Engine ---
         window.addEventListener('load', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const rawTargetQuery = urlParams.get('shq');
@@ -1176,38 +1162,46 @@
             const cleanTargetQuery = rawTargetQuery.trim().toLowerCase();
             if (cleanTargetQuery.length === 0) return;
 
-            // Securely maps content nodes across table row arrays without disrupting cell click paths
-            const scanTargets = document.querySelectorAll('table td, table th, .site-name');
-            let perfectMatchElement = null;
-
-            for (const cell of scanTargets) {
-                if (cell.textContent.toLowerCase().includes(cleanTargetQuery)) {
-                    perfectMatchElement = cell;
-                    if (cell.classList.contains('site-name')) {
-                        break; // Stop immediately to prioritize anchor site tags
+            // Deep clean-scanner loops backwards through raw text components to map ALL matches securely
+            function executeGlobalTextHighlight(node, searchText) {
+                if (node.nodeType === 3) { // Pure Text Node layer match
+                    const nodeRawValue = node.nodeValue;
+                    const nodeLowerValue = nodeRawValue.toLowerCase();
+                    
+                    if (nodeLowerValue.includes(searchText)) {
+                        const safetyRegexPattern = searchText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                        const globalRegexMatcher = new RegExp(`(${safetyRegexPattern})`, 'gi');
+                        
+                        const elementContainer = document.createElement('span');
+                        elementContainer.innerHTML = nodeRawValue.replace(globalRegexMatcher, '<span class="activated-word-target">$1</span>');
+                        
+                        while (elementContainer.firstChild) {
+                            node.parentNode.insertBefore(elementContainer.firstChild, node);
+                        }
+                        node.parentNode.removeChild(node);
+                    }
+                } else if (node.nodeType === 1 && node.childNodes && !node.classList.contains('activated-word-target')) {
+                    // Backwards iteration logic ensures dynamic cell additions never break internal structure index limits
+                    for (let i = node.childNodes.length - 1; i >= 0; i--) {
+                        executeGlobalTextHighlight(node.childNodes[i], searchText);
                     }
                 }
             }
 
-            if (perfectMatchElement) {
-                const innerDataMarkup = perfectMatchElement.innerHTML;
-                const escapeRegexPattern = rawTargetQuery.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-                const searchRegexMatch = new RegExp(`(${escapeRegexPattern})`, 'gi');
+            const mainStudyDashboard = document.querySelector('main');
+            if (mainStudyDashboard) {
+                executeGlobalTextHighlight(mainStudyDashboard, cleanTargetQuery);
 
-                // Clean check limits injection behavior specifically outside nested interactive structure blocks
-                if (!innerDataMarkup.includes('<span') || perfectMatchElement.classList.contains('site-name')) {
-                    perfectMatchElement.innerHTML = innerDataMarkup.replace(searchRegexMatch, '<span class="activated-word-target">$1</span>');
-
-                    setTimeout(() => {
-                        const dynamicFocusTarget = perfectMatchElement.querySelector('.activated-word-target');
-                        if (dynamicFocusTarget) {
-                            dynamicFocusTarget.scrollIntoView({
-                                block: 'center',
-                                behavior: 'smooth'
-                            });
-                        }
-                    }, 320);
-                }
+                // Instantly snaps viewport and smoothly centers the very first occurrence found on page
+                setTimeout(() => {
+                    const primaryFocusMatch = document.querySelector('.activated-word-target');
+                    if (primaryFocusMatch) {
+                        primaryFocusMatch.scrollIntoView({
+                            block: 'center',
+                            behavior: 'smooth'
+                        });
+                    }
+                }, 320);
             }
         });
     </script>
