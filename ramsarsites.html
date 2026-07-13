@@ -310,27 +310,28 @@
         .kinetic-locked-frame { pointer-events: none !important; }
         .kinetic-locked-frame .nav-text { transition: none !important; -webkit-transition: none !important; }
 
-        /* INFINITE MULTI-MATCH PULSE FRAMEWORK SYSTEM */
+        /* DEVICE-SAFE INLINE UNDERLINE PULSE SYSTEM (Fixes text cutoff bugs completely) */
         .activated-word-target {
-            display: inline-block !important;
+            display: inline !important;
             position: relative !important;
-            padding: 3px 8px !important;
-            margin: -2px -4px !important;
-            border-radius: 8px !important;
-            border: 1.5px solid var(--text-main) !important;
-            background-color: rgba(37, 122, 108, 0.22) !important; /* Continuous premium background tint */
-            will-change: transform, box-shadow;
-            animation: infinitePremiumWordPulse 2.2s infinite ease-in-out; /* Infinite loop cures scroll timing bugs */
+            padding: 0 !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            border: none !important;
+            background: transparent !important;
+            border-bottom: 2.5px solid var(--text-main) !important;
+            will-change: border-color, box-shadow;
+            animation: infiniteUnderlinePulse 1.8s infinite ease-in-out; 
         }
 
-        @keyframes infinitePremiumWordPulse {
+        @keyframes infiniteUnderlinePulse {
             0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(37, 122, 108, 0.4);
+                border-bottom-color: rgba(37, 122, 108, 0.3) !important;
+                box-shadow: none;
             }
             50% {
-                transform: scale(1.05);
-                box-shadow: 0 0 14px 6px rgba(37, 122, 108, 0.55);
+                border-bottom-color: var(--text-main) !important;
+                box-shadow: 0 4px 10px rgba(37, 122, 108, 0.35); /* Glow matches contents layout */
             }
         }
     </style>
@@ -1022,7 +1023,7 @@
             "s16": { name: "Sultanpur National Park", state: "Haryana", year: "2021", area: "1.43 km²", district: "Gurugram district", imp: "Important bird sanctuary, Central Asian Flyway stopover, breeding and wintering waterbirds", thr: "Urbanization, reduced water availability, pollution, invasive vegetation" },
             "s17": { name: "Bhindawas Wildlife Sanctuary", state: "Haryana", year: "2021", area: "4.12 km²", district: "Jjhajjar district", imp: "Haryana's largest wetland, major habitat for migratory birds, groundwater recharge, rich aquatic biodiversity", thr: "Water scarcity, eutrophication, pollution, invasive weeds" },
             "s18": { name: "Pong Dam Lake", state: "Himachal Pradesh", year: "2002", area: "156.62 km²", district: "Kangra district", imp: "Large reservoir on Beas River, internationally important waterbird habitat, supports fish diversity, flood regulation", thr: "Water-level fluctuations, siltation, pollution, human disturbance" },
-            "s19": { name: "Chandertal Wetland", state: "Himachal Pradesh", year: "2005", area: "0.49 km²", district: "Lahaul–Spiti", imp: "High-altitude oligotrophic lake, Himalayan biodiversity, supports rare alpine flora & fauna, climate-sensitive ecosystem", thr: "Climate change, tourism, grazing, habitat disturbance" },
+            "s19": { name: "Chandertal Wetland", state: "Himachal Pradesh", year: "2005", area: "0.49 km²", district: "Lahaul–Spiti", imp: "High-altitude oligotrophic lake, Himalayan biodiversity, supports rare alpine flora & fauna, climate-sensitive ecosystem", thr: "Climate change, tourism pressure, grazing, habitat disturbance" },
             "s20": { name: "Renuka Wetland", state: "Himachal Pradesh", year: "2005", area: "0.20 km²", district: "Sirmaur district", imp: "Largest natural lake in Himachal Pradesh, sacred wetland, rich aquatic biodiversity, supports local wildlife", thr: "Siltation, pollution, encroachment, tourism pressure" },
             "s21": { name: "Wular Lake", state: "Jammu & Kashmir", year: "1990", area: "189 km²", district: "Bandipora district", imp: "One of Asia's largest freshwater lakes, Jhelum flood regulation, rich fish diversity, major migratory bird habitat", thr: "Siltation, encroachment, willow plantations, pollution, weed infestation" },
             "s22": { name: "Surinsar–Mansar Lakes", state: "Jammu & Kashmir", year: "2005", area: "3.5 km²", district: "Near Jammu", imp: "Twin freshwater lakes, sacred wetlands, rich aquatic biodiversity, important waterbird habitat", thr: "Pollution, tourism pressure, catchment degradation, invasive species" },
@@ -1033,7 +1034,7 @@
             "s27": { name: "Ranganathittu Bird Sanctuary", state: "Karnataka", year: "2022", area: "5.18 km²", district: "Mandya district", imp: "Largest bird sanctuary in Karnataka, Cauvery river islands, nesting site for colonial waterbirds, crocodile habitat", thr: "Water-level fluctuations, tourism pressure, pollution, invasive plants" },
             "s28": { name: "Ankasamudra Bird Conservation Reserve", state: "Karnataka", year: "2023", area: "0.99 km²", district: "Ballari district", imp: "Ancient irrigation tank, important habitat for migratory birds, supports wetland biodiversity", thr: "Water scarcity, siltation, pollution, invasive vegetation" },
             "s29": { name: "Aghanashini Estuary", state: "Karnataka", year: "2023", area: "48.01 km²", district: "Uttara Kannada", imp: "Pristine free-flowing estuary, mangroves, mudflats, oyster beds, high marine and estuarine biodiversity", thr: "Unsustainable development, pollution, sand mining, habitat alteration" },
-            "s30": { name: "Magadi Kere Conservation Reserve", state: "Karnataka", year: "2023", area: "0.54 km²", district: "Gadag district", imp: "Important breeding site of Bar-headed Goose in South India, freshwater wetland, supports diverse waterbirds", thr: "Water shortage, pollution, human disturbance, invasive plants" },
+            "s30": { name: "Magadi Kere Conservation Reserve", state: "Karnataka", year: "2023", area: "0.54 km²", district: "Gadag district", imp: "Important breeding site of Bar-headed Goose in South India, freshwater wetland, supports diverse waterbirds", thr: "Water shadow, pollution, human disturbance, invasive plants" },
             "s31": { name: "Ashtamudi Wetland", state: "Kerala", year: "2002", area: "61.4 km²", district: "Kollam district", imp: "Second-largest estuarine ecosystem in Kerala, gateway to Kerala backwaters, rich mangroves, clam fishery, migratory birds", thr: "Pollution, sand mining, encroachment, overfishing, invasive species" },
             "s32": { name: "Sasthamkotta Lake", state: "Kerala", year: "2002", area: "3.73 km²", district: "Kollam district", imp: "Kerala's largest freshwater lake, major drinking water source, rich freshwater biodiversity", thr: "Pollution, water extraction, catchment degradation, invasive species" },
             "s33": { name: "Vembanad-Kol Wetland", state: "Kerala", year: "2002", area: "1,512.5 km²", district: "Alappuzha–Kottayam", imp: "India's largest wetland system, longest lake in India, Ramsar site supporting Kuttanad agriculture, fisheries, migratory birds", thr: "Pollution, reclamation, invasive weeds, sand mining, salinity changes" },
@@ -1077,23 +1078,23 @@
             "s71": { name: "Vembannur Wetland", state: "Tamil Nadu", year: "2022", area: "0.20 km²", district: "Kanyakumari district", imp: "Freshwater wetland, important habitat for resident and migratory birds, supports local fisheries and groundwater recharge", thr: "Encroachment, pollution, siltation, invasive aquatic plants" },
             "s72": { name: "Vellode Bird Sanctuary", state: "Tamil Nadu", year: "2022", area: "0.77 km²", district: "Erode district", imp: "Irrigation tank supporting large populations of migratory waterbirds, breeding site for herons, egrets and ibises", thr: "Water scarcity, pollution, invasive weeds, human disturbance" },
             "s73": { name: "Udhayamarthandapuram Bird Sanctuary", state: "Tamil Nadu", year: "2022", area: "0.45 km²", district: "Tiruvarur district", imp: "Seasonal irrigation tank, major breeding ground for colonial waterbirds, supports rich wetland biodiversity", thr: "Irregular water supply, pollution, siltation, invasive vegetation" },
-            "s74": { name: "Vedanthangal Bird Sanctuary", state: "Tamil Nadu", year: "2022", area: "0.30 km²", district: "Chengalpattu district", imp: "One of India's oldest bird sanctuaries, internationally important breeding colony for migratory and resident birds", thr: "Water shortage, pollution, urban pressure, habitat disturbance" },
+            "s74": { name: "Vedanthangal Bird Sanctuary", state: "Tamil Nadu", year: "2022", area: "0.30 km²", district: "Chengalpattu district", imp: "One of India's oldest bird sanctuaries, internationally important breeding colony for migratory and resident birds", thr: "Water shadow, pollution, urban pressure, habitat disturbance" },
             "s75": { name: "Suchindram–Theroor Wetland", state: "Tamil Nadu", year: "2022", area: "0.94 km²", district: "Kanyakumari district", imp: "Network of irrigation tanks, important stopover for migratory birds, rich aquatic biodiversity", thr: "Encroachment, pollution, invasive species, water-level fluctuations" },
             "s76": { name: "Vaduvur Bird Sanctuary", state: "Tamil Nadu", year: "2022", area: "1.29 km²", district: "Tiruvarur district", imp: "Large irrigation tank, important wintering and breeding habitat for migratory waterbirds, Central Asian Flyway site", thr: "Water scarcity, pollution, invasive weeds, human disturbance" },
-            "s77": { name: "Kanjirankulam Bird Sanctuary", state: "Tamil Nadu", year: "2022", area: "1.04 km²", district: "Ramanathapuram district", imp: "Breeding site for herons, ibises and storks, supports dryland wetland biodiversity", thr: "Water shortage, habitat degradation, pollution, invasive vegetation" },
+            "s77": { name: "Kanjirankulam Bird Sanctuary", state: "Tamil Nadu", year: "2022", area: "1.04 km²", district: "Ramanathapuram district", imp: "Breeding site for herons, ibises and storks, supports dryland wetland biodiversity", thr: "Water shadow, habitat degradation, pollution, invasive vegetation" },
             "s78": { name: "Karaivetti Bird Sanctuary", state: "Tamil Nadu", year: "2023", area: "4.54 km²", district: "Ariyalur district", imp: "One of Tamil Nadu's largest inland wetlands, important wintering site for migratory ducks and waders, rich fish diversity", thr: "Siltation, water scarcity, pollution, invasive aquatic weeds" },
             "s79": { name: "Longwood Shola reserve forest", state: "Tamil Nadu", year: "2023", area: "1.16 km²", district: "Nilgiris district", imp: "Rare shola forest ecosystem, perennial streams, endemic flora and fauna, important watershed", thr: "Invasive species, habitat fragmentation, fire, climate change" },
             "s80": { name: "Kazhuveli Bird Sanctuary", state: "Tamil Nadu", year: "2024", area: "51.51 km²", district: "Villupuram district", imp: "One of South India's largest brackish water wetlands, major Central Asian Flyway stopover, supports migratory birds, fisheries and coastal biodiversity", thr: "Encroachment, pollution, siltation, invasive species, aquaculture" },
             "s81": { name: "Nanjarayan Bird Sanctuary", state: "Tamil Nadu", year: "2024", area: "1.26 km²", district: "Tiruppur district", imp: "Freshwater irrigation tank, important habitat for migratory and resident waterbirds, supports fish diversity", thr: "Pollution, encroachment, invasive weeds, water scarcity" },
             "s82": { name: "Sakkarakottai Bird Sanctuary", state: "Tamil Nadu", year: "2024", area: "2.30 km²", district: "Ramanathapuram district", imp: "Freshwater wetland supporting migratory birds, breeding habitat for waterbirds, rich aquatic biodiversity", thr: "Pollution, siltation, invasive aquatic plants, human disturbance" },
-            "s83": { name: "Therthangal Bird Sanctuary", state: "Tamil Nadu", year: "2024", area: "0.29 km²", district: "Sivaganga district", imp: "Small irrigation tank, nesting site for herons, ibises and storks, important breeding habitat", thr: "Water shortage, pollution, habitat disturbance, invasive vegetation" },
+            "s83": { name: "Therthangal Bird Sanctuary", state: "Tamil Nadu", year: "2024", area: "0.29 km²", district: "Sivaganga district", imp: "Small irrigation tank, nesting site for herons, ibises and storks, important breeding habitat", thr: "Water shadow, pollution, habitat disturbance, invasive vegetation" },
             "s84": { name: "Rudrasagar Lake", state: "Tripura", year: "2005", area: "2.40 km²", district: "West Tripura", imp: "Freshwater lake, habitat for migratory birds, supports fisheries, home to Neermahal Palace", thr: "Siltation, encroachment, pollution, invasive aquatic weeds" },
             "s85": { name: "Upper Ganga River", state: "Uttar Pradesh", year: "2005", area: "265.9 km²", district: "Brijghat–Narora", imp: "Riverine ecosystem supporting Ganges River Dolphin, Gharial, Otter, turtles and rich fish diversity", thr: "Pollution, sand mining, dams, overfishing, habitat degradation" },
             "s86": { name: "Nawabganj Bird Sanctuary", state: "Uttar Pradesh", year: "2019", area: "2.25 km²", district: "Unnao district", imp: "Shallow freshwater wetland, important wintering habitat for migratory birds, rich aquatic biodiversity", thr: "Pollution, water shortage, invasive weeds, human disturbance" },
             "s87": { name: "Parvati Arga Bird Sanctuary", state: "Uttar Pradesh", year: "2019", area: "7.22 km²", district: "Gonda district", imp: "Floodplain wetland, important stopover for migratory birds, supports fish and amphibians", thr: "Encroachment, pollution, siltation, invasive species" },
             "s88": { name: "Saman Bird Sanctuary", state: "Uttar Pradesh", year: "2019", area: "5.26 km²", district: "Mainpuri district", imp: "Seasonal oxbow wetland, major wintering ground for migratory waterbirds, rich biodiversity", thr: "Water scarcity, encroachment, pollution, invasive weeds" },
             "s89": { name: "Samaspur Bird Sanctuary", state: "Uttar Pradesh", year: "2019", area: "7.99 km²", district: "Raebareli district", imp: "Freshwater wetland, important breeding and wintering site for waterbirds, supports fish diversity", thr: "Encroachment, pollution, siltation, invasive vegetation" },
-            "s90": { name: "Sandi Bird Sanctuary", state: "Uttar Pradesh", year: "2019", area: "3.09 km²", district: "Hardoi district", imp: "Freshwater marsh, important habitat for migratory birds, rich wetland biodiversity", thr: "Water shortage, pollution, invasive weeds, human disturbance" },
+            "s90": { name: "Sandi Bird Sanctuary", state: "Uttar Pradesh", year: "2019", area: "3.09 km²", district: "Hardoi district", imp: "Freshwater marsh, important habitat for migratory birds, rich wetland biodiversity", thr: "Water shadow, pollution, invasive weeds, human disturbance" },
             "s91": { name: "Sarsai Nawar Jheel", state: "Uttar Pradesh", year: "2019", area: "1.75 km²", district: "Etawah district", imp: "Permanent marsh, important habitat for Sarus Crane, migratory waterbirds, rich wetland biodiversity", thr: "Encroachment, pollution, water shortage, invasive weeds" },
             "s92": { name: "Sur Sarovar (Keetham Lake)", state: "Uttar Pradesh", year: "2020", area: "4.31 km²", district: "Agra district", imp: "Man-made freshwater lake, important habitat for migratory birds, supports fish diversity, bear rescue centre nearby", thr: "Pollution, water-level fluctuations, invasive species, human disturbance" },
             "s93": { name: "Haiderpur Wetland", state: "Uttar Pradesh", year: "2021", area: "69.08 km²", district: "Bijnor district", imp: "Ganga floodplain wetland, major stopover for migratory birds, supports dolphins, turtles and rich fish diversity", thr: "Pollution, encroachment, invasive weeds, water regulation changes" },
@@ -1145,7 +1146,7 @@
             if (event.target === this) closeSite();
         }, { passive: true });
         
-        // --- Universal High-End Text Node Multi-Match Highlight & Scroll Engine ---
+        // --- Universal High-End Text Node Multi-Match Highlight, Scroll & Self-Destruct Engine ---
         window.addEventListener('load', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const rawTargetQuery = urlParams.get('shq');
@@ -1167,13 +1168,15 @@
                         const elementContainer = document.createElement('span');
                         elementContainer.innerHTML = nodeRawValue.replace(globalRegexMatcher, '<span class="activated-word-target">$1</span>');
                         
+                        const fragment = document.createDocumentFragment();
                         while (elementContainer.firstChild) {
-                            node.parentNode.insertBefore(elementContainer.firstChild, node);
+                            fragment.appendChild(elementContainer.firstChild);
                         }
+                        node.parentNode.insertBefore(fragment, node);
                         node.parentNode.removeChild(node);
                     }
-                } else if (node.nodeType === 1 && node.childNodes && !node.classList.contains('activated-word-target')) {
-                    // Safety check layout layers to prevent breaking interactive scripts or elements
+                } else if (node.nodeType === 1 && node.childNodes) {
+                    // Safety check layer to prevent breaking internal functional structure blocks
                     if (node.tagName === 'SCRIPT' || node.tagName === 'STYLE' || node.tagName === 'HEADER' || node.tagName === 'FOOTER') return;
                     
                     // Backwards iteration logic ensures dynamic additions never break nested element structures
@@ -1197,6 +1200,17 @@
                         });
                     }
                 }, 320);
+
+                // 10-SECOND SELF-DESTRUCT TIMER: Safely un-wraps nodes to restore 100% clean reading state
+                setTimeout(() => {
+                    const activeHighlightspans = document.querySelectorAll('.activated-word-target');
+                    activeHighlightspans.forEach(span => {
+                        const directTextContentNode = document.createTextNode(span.textContent);
+                        span.parentNode.replaceChild(directTextContentNode, span);
+                    });
+                    // Merge split text nodes seamlessly back together to prevent clean code breakdown
+                    mainStudyDashboard.normalize();
+                }, 10000);
             }
         });
     </script>
