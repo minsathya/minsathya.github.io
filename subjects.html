@@ -88,6 +88,17 @@
             transition: background-color 0.8s var(--ease-premium), color 0.8s var(--ease-premium);
         }
 
+        @media (max-width: 700px) {
+            body { padding: 40px 20px; }
+            header { margin-bottom: 40px; height: 64px; }
+            .header-inner-view { padding: 0 20px; }
+            .logo { font-size: 22px; }
+            .search-core-input { padding: 0 12px; font-size: 15px; }
+            .header-right-cluster { gap: 16px; }
+            .wide-capsule { padding: 32px 20px; border-radius: 24px; }
+            .topics-vertical-stack a { padding: 14px 0 14px 32px; font-size: 15px; }
+        }
+
         @keyframes masterEntrance {
             from { opacity: 0; transform: translate3d(0, 24px, 0); }
             to { opacity: 1; transform: translate3d(0, 0, 0); }
@@ -239,17 +250,6 @@
         .kinetic-locked-frame { pointer-events: none !important; }
         .kinetic-locked-frame .nav-text { transition: none !important; }
 
-        @media (max-width: 700px) {
-            body { padding: 40px 20px; }
-            header { margin-bottom: 40px; height: 64px; }
-            .header-inner-view { padding: 0 20px; }
-            .logo { font-size: 22px; }
-            .search-core-input { padding: 0 12px; font-size: 15px; }
-            .header-right-cluster { gap: 16px; }
-            .wide-capsule { padding: 32px 20px; border-radius: 24px; }
-            .topics-vertical-stack a { padding: 14px 0 14px 32px; font-size: 15px; }
-        }
-
         /* DEVICE-SAFE INLINE UNDERLINE PULSE SYSTEM */
         .activated-word-target {
             display: inline !important;
@@ -342,7 +342,7 @@
             <a href="/Footer/about.html">About</a>
             <a href="/Footer/contact.html">Contact</a>
             <a href="/Footer/privacy.html">Privacy Policy</a>
-            <a href="/Footer/terms.html">Terms & Conditions</a>
+            <a href="/Footer/terms.html">Terms &amp; Conditions</a>
             <a href="/Footer/disclaimer.html">Disclaimer</a>
         </div>
         <div class="copyright-tag">&copy; 2026 Sathya. All rights reserved.</div>
@@ -386,11 +386,35 @@
                 trail = [{ name: "Home", path: HOME_PATH }];
             }
 
-            const existingIndex = trail.findIndex(step => step.path === searchPath);
-            
-            if (existingIndex === -1) {
+            // 4. Smart "Slice & Clean" Truncation Logic
+            let cameFromHome = false;
+            if (document.referrer) {
+                try {
+                    const refUrl = new URL(document.referrer);
+                    cameFromHome = refUrl.pathname === HOME_PATH || refUrl.pathname === "/";
+                } catch (e) {
+                    cameFromHome = document.referrer.endsWith(HOME_PATH) || document.referrer.endsWith("/");
+                }
+            }
+
+            if (cameFromHome) {
+                // Instantly wipe memory clean and reset back to Home -> Current Page
+                trail = [{ name: "Home", path: HOME_PATH }];
                 if (searchPath !== HOME_PATH && searchPath !== "/") {
                     trail.push({ name: currentPageName, path: searchPath });
+                }
+            } else {
+                // If moving within inner pages, check if the current page already exists in the memory array
+                const existingIndex = trail.findIndex(step => step.path === searchPath);
+                
+                if (existingIndex !== -1) {
+                    // Backtracking: Chop off the tail of the history trail completely!
+                    trail = trail.slice(0, existingIndex + 1);
+                } else {
+                    // Forward Tracking: Append the new entry to the end of the line
+                    if (searchPath !== HOME_PATH && searchPath !== "/") {
+                        trail.push({ name: currentPageName, path: searchPath });
+                    }
                 }
             }
 
