@@ -315,7 +315,8 @@
             const msgEl = document.getElementById('statusMessage');
             const containerEl = document.getElementById('capsuleContainer');
 
-            const cleanQuery = rawQuery.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").trim();
+            // FIX: Removed the '&' character from the exclusion regex so it is completely preserved
+            const cleanQuery = rawQuery.toLowerCase().replace(/[.,\/#!$%\^\*;:{}=\-_`~()]/g, "").trim();
 
             if (cleanQuery.length < 4) {
                 titleEl.textContent = "Not found";
@@ -357,12 +358,18 @@
                 containerEl.innerHTML = matchedPages.map(page => {
                     let destinationLink = page.url;
 
-                    // Absolute Direct Mapping Engine
+                    // Absolute Direct Mapping Engine for contents.html major blocks
                     if (page.url === "contents.html") {
                         const matchingKeyword = page.words.find(keyword => keyword.includes(cleanQuery));
                         if (matchingKeyword && sectionMapping[matchingKeyword]) {
                             destinationLink += sectionMapping[matchingKeyword];
+                        } else {
+                            // Fallback if specific word doesn't match a structural layout hash anchor block
+                            destinationLink += `?shq=${encodeURIComponent(rawQuery)}`;
                         }
+                    } else {
+                        // FIX: Safely routes ramsarsites.html and all other sub-pages using universal query parameters
+                        destinationLink += `?shq=${encodeURIComponent(rawQuery)}`;
                     }
 
                     return `
