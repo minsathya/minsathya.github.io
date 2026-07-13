@@ -315,7 +315,7 @@
             const msgEl = document.getElementById('statusMessage');
             const containerEl = document.getElementById('capsuleContainer');
 
-            // FIX: Removed the '&' character from the exclusion regex so it is completely preserved
+            // FIX: Preserves the character matrix framework sequence for direct '&' mappings
             const cleanQuery = rawQuery.toLowerCase().replace(/[.,\/#!$%\^\*;:{}=\-_`~()]/g, "").trim();
 
             if (cleanQuery.length < 4) {
@@ -342,6 +342,30 @@
                 }
             }
 
+            // INSTANT AUTO-ROUTING ENGAGEMENT: Checks for exactly 1 unique matching target page layout boundary
+            if (matchedPages.length === 1) {
+                let singleDestinationPage = matchedPages[0];
+                let secureLandingRedirectUrl = singleDestinationPage.url;
+
+                // Process absolute section anchors specifically for contents.html maps
+                if (singleDestinationPage.url === "contents.html") {
+                    const matchingKeyword = singleDestinationPage.words.find(keyword => keyword.includes(cleanQuery));
+                    if (matchingKeyword && sectionMapping[matchingKeyword]) {
+                        secureLandingRedirectUrl += sectionMapping[matchingKeyword];
+                    } else {
+                        secureLandingRedirectUrl += `?shq=${encodeURIComponent(rawQuery)}`;
+                    }
+                } else {
+                    // Inject tracking parameters for data structures/tables natively
+                    secureLandingRedirectUrl += `?shq=${encodeURIComponent(rawQuery)}`;
+                }
+
+                // Completely skip search initialization display and route location instantly
+                window.location.replace(secureLandingRedirectUrl);
+                return;
+            }
+
+            // MULTI-CHOICE SELECTION SYSTEM (Runs if minimum 2 pages contain the search string layout)
             if (matchedPages.length > 0) {
                 titleEl.textContent = "Found";
                 
@@ -358,17 +382,14 @@
                 containerEl.innerHTML = matchedPages.map(page => {
                     let destinationLink = page.url;
 
-                    // Absolute Direct Mapping Engine for contents.html major blocks
                     if (page.url === "contents.html") {
                         const matchingKeyword = page.words.find(keyword => keyword.includes(cleanQuery));
                         if (matchingKeyword && sectionMapping[matchingKeyword]) {
                             destinationLink += sectionMapping[matchingKeyword];
                         } else {
-                            // Fallback if specific word doesn't match a structural layout hash anchor block
                             destinationLink += `?shq=${encodeURIComponent(rawQuery)}`;
                         }
                     } else {
-                        // FIX: Safely routes ramsarsites.html and all other sub-pages using universal query parameters
                         destinationLink += `?shq=${encodeURIComponent(rawQuery)}`;
                     }
 
@@ -391,8 +412,12 @@
         window.addEventListener('DOMContentLoaded', () => {
             executeManualSearchEngine();
             
+            // Delays initial block visibility slightly if a redirect command triggers an early route return
             setTimeout(() => {
-                document.getElementById('searchWorkspace').classList.add('is-initialized');
+                const activeFrameNode = document.getElementById('searchWorkspace');
+                if (activeFrameNode) {
+                    activeFrameNode.classList.add('is-initialized');
+                }
             }, 60);
         });
     </script>
