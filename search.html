@@ -342,10 +342,11 @@
                 }
 
                 containerEl.innerHTML = matchedPages.map(page => {
-                    // Suppress text anchors completely if the checked term is generic/high volume
+                    // CLAUDE FIX: Injects safe query variable parameter (?tf=1) BEFORE the hash text segment fragment
+                    // This lets the landing page know it came from search even if Safari hides the fragment link string
                     const destinationLink = isGenericMassWord 
                         ? page.url 
-                        : `${page.url}#:~:text=${encodeURIComponent(rawQuery)}`;
+                        : `${page.url}?tf=1#:~:text=${encodeURIComponent(rawQuery)}`;
 
                     return `
                         <a href="${destinationLink}" class="capsule-panel">
