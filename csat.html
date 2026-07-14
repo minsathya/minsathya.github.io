@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSAT</title>
+
+    <!-- Universal iPad stabilization: catches text fragments instantly before document draw -->
+    <script>
+      if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
+        document.documentElement.classList.add('instant-landing');
+      }
+    </script>
+
+    <meta name="description" content="This page contains all the CSAT subjects and topics.">
+    <meta name="keywords" content="UPSC CSAT syllabus, Aptitude, Logical Reasoning, Data Interpretation, CSAT topics">
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5VGX2K64Y4');
+    </script>
+    
+    <!-- Absolute paths for the favicon so it loads perfectly everywhere -->
+    <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png">
+
+    <script>
+      const favicon = document.getElementById('favicon');
+      const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      function updateFavicon(e) {
+        favicon.href = e.matches ? '/favicon-dark.png' : '/favicon-light.png';
+      }
+      
+      updateFavicon(darkMode);
+      darkMode.addEventListener('change', updateFavicon);
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Unified Token System Mapped Directly From index.html */
+        :root {
+            /* Smooth Premium Deceleration Curve */
+            --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+            --bg-color: #0b0b0b;
+            --text-main: #ffffff;
+            --text-muted: #555555;
+            --panel-bg: #121212;
+            --panel-border: #222222;
+            --row-divider: #1c1c1c;
+            --row-hover: rgba(255, 255, 255, 0.015);
+            --header-bg: #1a231e;
+            --header-border: #222c26;
+            
+            /* Vertical cascade parameters */
+            --cascade-distance: 24px;
+            --cascade-duration-exit: 0.2s;
+            --cascade-duration-entry: 0.28s;
+        }
+
+        body.light-mode {
+            --bg-color: #ebebe4;
+            --text-main: #111111;
+            --text-muted: #a1a1a6;
+            --panel-bg: #ffffff;
+            --panel-border: #e2e2e7;
+            --row-divider: #f2f2f7;
+            --row-hover: rgba(0, 0, 0, 0.01);
+            --header-bg: #e9ebe6;
+            --header-border: #d4d8cf;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent !important;
+            tap-highlight-color: transparent !important;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 60px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 95%;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            
+            /* Anti-Flash Breathing Color Clock Transition Matrix */
+            transition: background-color 0.8s var(--ease-premium), color 0.8s var(--ease-premium);
+        }
+
+        @keyframes masterEntrance {
+            from { opacity: 0; transform: translate3d(0, 24px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+
+        header, .wide-capsule, footer, .breadcrumb-nav, .page-main-heading {
+            opacity: 1;
+            will-change: transform, opacity;
+            animation: masterEntrance 1.2s var(--ease-premium) backwards;
+        }
+
+        header { animation-delay: 0.04s; }
+        .breadcrumb-nav { animation-delay: 0.08s; }
+        .page-main-heading { animation-delay: 0.12s; }
+        
+        /* Staggered Content Cascade Engine */
+        .wide-capsule:nth-of-type(1) { animation-delay: 0.16s; }
+        .wide-capsule:nth-of-type(2) { animation-delay: 0.20s; }
+        .wide-capsule:nth-of-type(3) { animation-delay: 0.24s; }
+        footer { animation-delay: 0.36s; }
+
+        /* Premium Micro-Zoom Target Pulse */
+        @keyframes capsuleHighlightPulse {
+            0% { transform: scale(1); }
+            30% { transform: scale(1.015); border-color: var(--text-main); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); }
+            100% { transform: scale(1); }
+        }
+
+        .wide-capsule.activated-target {
+            animation: capsuleHighlightPulse 1s var(--ease-premium) both;
+        }
+
+        /* Top Header Navigation Shell */
+        header {
+            position: relative;
+            background-color: var(--header-bg);
+            border: 1px solid var(--header-border);
+            border-radius: 50px;
+            width: 100%;
+            height: 72px;
+            margin: 0 auto 60px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            transition: background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+        }
+
+        body:not(.light-mode) header { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); }
+
+        .header-inner-view {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 32px; will-change: transform, opacity;
+            backface-visibility: hidden; -webkit-backface-visibility: hidden;
+        }
+
+        #headerMainView { opacity: 1; transform: translate3d(0, 0, 0); pointer-events: auto; z-index: 2; }
+        #headerSearchView { opacity: 0; transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0); pointer-events: none; z-index: 1; }
+
+        header.state-search #headerMainView { animation: skyfallExit var(--cascade-duration-exit) ease-in both; pointer-events: none; }
+        header.state-search #headerSearchView { animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: var(--cascade-duration-exit); pointer-events: auto; }
+        header.state-main #headerSearchView { animation: skyfallExit var(--cascade-duration-exit) ease-in both; pointer-events: none; }
+        header.state-main #headerMainView { animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: var(--cascade-duration-exit); pointer-events: auto; }
+
+        @keyframes skyfallExit { 0% { transform: translate3d(0, 0, 0); opacity: 1; } 100% { transform: translate3d(0, var(--cascade-distance), 0); opacity: 0; } }
+        @keyframes skyfallEntry { 0% { transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0); opacity: 0; } 100% { transform: translate3d(0, 0, 0); opacity: 1; } }
+
+        .header-right-cluster, .search-control-cluster { display: flex; align-items: center; gap: 20px; flex-shrink: 0; height: 100%; }
+        .logo { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; color: var(--text-main); text-decoration: none !important; transition: color 0.8s var(--ease-premium); flex-shrink: 0; }
+        .ctrl-btn { background: none; border: none; outline: none; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; flex-shrink: 0; transition: opacity 0.2s var(--ease-premium), color 0.8s var(--ease-premium); }
+        .ctrl-btn:hover { opacity: 0.6; }
+        .ctrl-btn svg, .search-static-icon { width: 22px; height: 22px; fill: none; stroke: var(--text-main); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.8s var(--ease-premium); }
+        .search-static-icon { opacity: 0.4; flex-shrink: 0; }
+        .search-core-input { flex-grow: 1; background: transparent; border: none; outline: none; color: var(--text-main); font-family: 'Poppins', sans-serif; font-size: 16px; padding: 0 16px; width: 100%; min-width: 0; will-change: transform, opacity; transform: translate3d(0, 0, 0); backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: color 0.8s var(--ease-premium); }
+
+        .clear-text-btn svg { opacity: 0.4; }
+        .close-search-btn svg { opacity: 0.7; }
+
+        .theme-toggle { width: 32px; height: 32px; position: relative; cursor: pointer; user-select: none; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .theme-toggle svg { position: absolute; width: 22px; height: 22px; fill: none; stroke: var(--text-main); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transform-origin: center center; will-change: transform, opacity; -webkit-backface-visibility: hidden; backface-visibility: hidden; transition: transform 0.8s var(--ease-premium), opacity 0.8s var(--ease-premium), stroke 0.8s var(--ease-premium); }
+        .theme-toggle .sun-icon { opacity: 0; transform: translate3d(0, 0, 0) rotate(-90deg) scale(0.4); }
+        .theme-toggle .moon-icon { opacity: 1; transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle .sun-icon { opacity: 1; transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle .moon-icon { opacity: 0; transform: translate3d(0, 0, 0) rotate(90deg) scale(0.4); }
+
+        /* High-End Classy Breadcrumb System */
+        .breadcrumb-nav { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 400; margin-bottom: 8px; padding-left: 8px; flex-wrap: wrap; row-gap: 8px; }
+        .breadcrumb-nav a, .breadcrumb-nav a:visited { color: var(--text-muted) !important; }
+        .breadcrumb-nav a { color: var(--text-muted) !important; text-decoration: none !important; transition: color 0.4s var(--ease-premium); }
+        .breadcrumb-separator { color: var(--text-muted); opacity: 0.4; user-select: none; }
+        .breadcrumb-current { color: var(--text-main); opacity: 0.8; }
+
+        /* Wide Stack Content Architecture Engine */
+        .contents-container { display: flex; flex-direction: column; gap: 32px; margin-bottom: 80px; width: 100%; }
+        .page-main-heading { font-size: 24px; font-weight: 600; letter-spacing: -0.5px; color: var(--text-main); margin-bottom: 12px; padding-left: 8px; transition: color 0.8s var(--ease-premium); }
+
+        .wide-capsule {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 28px;
+            padding: 40px 48px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            transform: scale(1);
+            will-change: transform, opacity;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            transition: border-color 0.8s var(--ease-premium), background-color 0.8s var(--ease-premium), transform 0.5s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+        }
+
+        body:not(.light-mode) .wide-capsule { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+        .wide-capsule:hover { border-color: #1E1E1E; }
+        body.light-mode .wide-capsule:hover { border-color: #b8b8bc; }
+
+        .wide-panel-title { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; color: var(--text-main); margin-bottom: 28px; transition: color 0.8s var(--ease-premium); }
+        
+        /* Updated to 1fr layout: Single column stack, one down one to all */
+        .topics-column-grid { list-style: none; display: grid; grid-template-columns: 1fr; gap: 0px 64px; }
+        .topics-column-grid li { border-bottom: 1px solid var(--row-divider); display: flex; align-items: center; transition: border-color 0.8s var(--ease-premium); }
+        .topics-column-grid li:last-child { border-bottom: none; }
+
+        .topics-column-grid a {
+            display: block;
+            width: 100%;
+            padding: 14px 0 14px 16px;
+            color: var(--text-main);
+            opacity: 0.8;
+            text-decoration: none !important;
+            font-size: 15.5px;
+            font-weight: 400;
+            position: relative;
+            transition: color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), padding 0.4s var(--ease-premium);
+        }
+
+        .topics-column-grid a::before { content: "•"; position: absolute; left: 0; color: var(--text-muted); font-size: 16px; top: 50%; transform: translateY(-50%); transition: color 0.4s var(--ease-premium); }
+        .topics-column-grid li:hover a { opacity: 1 !important; padding-left: 20px !important; }
+        .topics-column-grid li:hover a::before { color: var(--text-main); }
+
+        footer { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
+        .footer-links-row { display: flex; justify-content: center; align-items: center; gap: 32px; flex-wrap: wrap; width: 100%; }
+        .footer-links-row a { color: var(--text-muted) !important; text-decoration: none !important; font-size: 14px; font-weight: 400; display: inline-block; will-change: transform, opacity; -webkit-backface-visibility: hidden; backface-visibility: hidden; transition: color 0.4s var(--ease-premium); }
+        .footer-links-row a:hover { color: var(--text-main) !important; }
+        .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; letter-spacing: 0.2px; transition: color 0.8s var(--ease-premium); }
+
+        .nav-text { display: inline-block !important; transform-origin: center center !important; will-change: transform, opacity !important; transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium); }
+        .contents-container a:hover .nav-text, .breadcrumb-nav a:hover .nav-text, .footer-links-row a:hover .nav-text, .logo:hover .nav-text { transform: scale3d(1.06, 1.06, 1) !important; }
+        
+        .footer-links-row a .nav-text { color: var(--text-muted) !important; }
+        .footer-links-row a:hover .nav-text { color: var(--text-main) !important; }
+
+        .contents-container a.is-zooming .nav-text, .breadcrumb-nav a.is-zooming .nav-text, .footer-links-row a.is-zooming .nav-text, .logo.is-zooming .nav-text { 
+            transition: transform 0.26s cubic-bezier(0.215, 0.61, 0.355, 1), opacity 0.26s linear !important; 
+            transform: scale3d(1.3, 1.3, 1) !important; 
+            opacity: 0 !important; 
+        }
+        .kinetic-locked-frame { pointer-events: none !important; }
+        .kinetic-locked-frame .nav-text { transition: none !important; -webkit-transition: none !important; }
+
+        @media (max-width: 700px) {
+            body { padding: 40px 20px; }
+            header { margin-bottom: 40px; height: 64px; }
+            .header-inner-view { padding: 0 20px; }
+            .logo { font-size: 22px; }
+            .search-core-input { padding: 0 12px; font-size: 15px; }
+            .header-right-cluster { gap: 16px; }
+            .wide-capsule { padding: 32px 24px; border-radius: 24px; }
+        }
+
+        html.instant-landing header, 
+        html.instant-landing .breadcrumb-nav, 
+        html.instant-landing .page-main-heading,
+        html.instant-landing .wide-capsule, 
+        html.instant-landing footer {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+            will-change: auto !important;
+        }
+
+        html.instant-landing,
+        html.instant-landing body,
+        html.instant-landing main,
+        html.instant-landing header,
+        html.instant-landing .wide-capsule,
+        html.instant-landing * {
+            transition: none !important;
+            transition-duration: 0s !important;
+        }
+
+        /* DEVICE-SAFE INLINE UNDERLINE PULSE SYSTEM */
+        .activated-word-target {
+            display: inline !important;
+            position: relative !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            border: none !important;
+            background: transparent !important;
+            border-bottom: 2.5px solid var(--text-main) !important;
+            will-change: border-color, box-shadow;
+            animation: infiniteUnderlinePulse 1.8s infinite ease-in-out; 
+        }
+
+        @keyframes infiniteUnderlinePulse {
+            0%, 100% {
+                border-bottom-color: rgba(37, 122, 108, 0.3) !important;
+                box-shadow: none;
+            }
+            50% {
+                border-bottom-color: var(--text-main) !important;
+                box-shadow: 0 4px 10px rgba(37, 122, 108, 0.35);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="masterHeader">
+        <div class="header-inner-view" id="headerMainView">
+            <a href="/index.html" class="logo">sathya.</a>
+            <div class="header-right-cluster">
+                <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+                </div>
+                <button class="ctrl-btn" id="openSearchBtn" aria-label="Open Workspace Search">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+            </div>
+        </div>
+
+        <form class="header-inner-view" id="headerSearchView" action="search.html" method="GET">
+            <button type="submit" aria-label="Submit search" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: inherit; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
+            <input type="text" class="search-core-input" id="searchCoreInput" name="q" placeholder="Search..." autocomplete="off" enterkeyhint="search">
+            <div class="search-control-cluster">
+                <button type="button" class="ctrl-btn clear-text-btn" id="clearSearchBtn" aria-label="Clear typed text">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <button type="button" class="ctrl-btn close-search-btn" id="closeSearchBtn" aria-label="Minimize search pill">
+                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+            </div>
+        </form>
+    </header>
+
+    <main class="contents-container">
+        
+        <nav class="breadcrumb-nav" id="dynamicBreadcrumbNav" aria-label="breadcrumb"></nav>
+
+        <h1 class="page-main-heading">CSAT</h1>
+
+        <!-- Capsule 1: Aptitude -->
+        <div class="wide-capsule" id="aptitude">
+            <h2 class="wide-panel-title">Aptitude</h2>
+            <ul class="topics-column-grid">
+                <li><a href="#">Percentages</a></li>
+                <li><a href="#">Profit &amp; Loss</a></li>
+                <li><a href="#">Simple &amp; Compound Interest</a></li>
+                <li><a href="#">Averages</a></li>
+                <li><a href="#">Alligations &amp; Mixtures</a></li>
+                <li><a href="#">Ages</a></li>
+                <li><a href="#">Ratio &amp; Proportion</a></li>
+                <li><a href="#">Time &amp; Distance</a></li>
+                <li><a href="#">Boats &amp; Streams</a></li>
+                <li><a href="#">Permutations &amp; Combinations</a></li>
+                <li><a href="#">Probability</a></li>
+                <li><a href="#">Mensuration</a></li>
+                <li><a href="#">LCM &amp; HCF</a></li>
+            </ul>
+        </div>
+
+        <!-- Capsule 2: Reasoning -->
+        <div class="wide-capsule" id="reasoning">
+            <h2 class="wide-panel-title">Reasoning</h2>
+            <ul class="topics-column-grid">
+                <li><a href="#">Passages (Comprehension)</a></li>
+                <li><a href="#">Communication Logic</a></li>
+                <li><a href="#">Reading Situational Statements</a></li>
+                <li><a href="#">Situational Judgment (Case Studies)</a></li>
+                <li><a href="#">Administrative Action Choices</a></li>
+                <li><a href="#">Syllogism</a></li>
+                <li><a href="#">Blood Relations</a></li>
+                <li><a href="#">Seating Arrangement</a></li>
+                <li><a href="#">Logical Puzzles</a></li>
+                <li><a href="#">Coding &amp; Decoding</a></li>
+                <li><a href="#">Direction Sense</a></li>
+                <li><a href="#">Coded Inequalities</a></li>
+                <li><a href="#">Number / Letter Series</a></li>
+                <li><a href="#">Analogy</a></li>
+                <li><a href="#">Odd One Out</a></li>
+                <li><a href="#">Cubes &amp; Colours</a></li>
+                <li><a href="#">Clocks &amp; Calendars</a></li>
+            </ul>
+        </div>
+
+        <!-- Capsule 3: Data Interpretation -->
+        <div class="wide-capsule" id="data-interpretation">
+            <h2 class="wide-panel-title">Data Interpretation</h2>
+            <ul class="topics-column-grid">
+                <li><a href="#">Data Tables</a></li>
+                <li><a href="#">Bar Graphs</a></li>
+                <li><a href="#">Line Charts</a></li>
+                <li><a href="#">Pie Charts</a></li>
+                <li><a href="#">Caselets (Data in paragraphs)</a></li>
+                <li><a href="#">Data Sufficiency (Checking if info is enough to solve)</a></li>
+            </ul>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="footer-links-row">
+            <a href="/Footer/about.html">About</a>
+            <a href="/Footer/contact.html">Contact</a>
+            <a href="/Footer/privacy.html">Privacy Policy</a>
+            <a href="/Footer/terms.html">Terms &amp; Conditions</a>
+            <a href="/Footer/disclaimer.html">Disclaimer</a>
+        </div>
+        <div class="copyright-tag">
+            &copy; 2026 Sathya. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // --- Universal Persistent Master Breadcrumb Engine ---
+        (function buildDynamicBreadcrumbs() {
+            const container = document.getElementById('dynamicBreadcrumbNav');
+            if (!container) return;
+
+            const searchPath = window.location.pathname;
+            const HOME_PATH = "/index.html";
+
+            const pageNames = {
+                "/index.html": "Home",
+                "/contents.html": "Contents",
+                "/csat.html": "CSAT",
+                "/subjects.html": "Subjects",
+                "/ramsarsites.html": "Ramsar Sites",
+                "/Footer/about.html": "About",
+                "/Footer/contact.html": "Contact",
+                "/Footer/privacy.html": "Privacy Policy",
+                "/Footer/terms.html": "Terms & Conditions",
+                "/Footer/disclaimer.html": "Disclaimer"
+            };
+
+            let currentPageName = pageNames[searchPath];
+            if (!currentPageName) {
+                const filename = searchPath.substring(searchPath.lastIndexOf('/') + 1).replace('.html', '');
+                currentPageName = filename.charAt(0).toUpperCase() + filename.slice(1);
+            }
+
+            let trail = [];
+            try {
+                const stored = sessionStorage.getItem('breadcrumbTrail');
+                trail = stored ? JSON.parse(stored) : [];
+            } catch (e) {
+                trail = [];
+            }
+
+            if (trail.length === 0 || (trail[0].path !== HOME_PATH && trail[0].path !== "/")) {
+                trail = [{ name: "Home", path: HOME_PATH }];
+            }
+
+            // Smart "Slice & Clean" Truncation Logic
+            let cameFromHome = false;
+            if (document.referrer) {
+                try {
+                    const refUrl = new URL(document.referrer);
+                    cameFromHome = refUrl.pathname === HOME_PATH || refUrl.pathname === "/";
+                } catch (e) {
+                    cameFromHome = document.referrer.endsWith(HOME_PATH) || document.referrer.endsWith("/");
+                }
+            }
+
+            if (cameFromHome) {
+                // Instantly wipe memory clean and reset back to Home -> Current Page
+                trail = [{ name: "Home", path: HOME_PATH }];
+                if (searchPath !== HOME_PATH && searchPath !== "/") {
+                    trail.push({ name: currentPageName, path: searchPath });
+                }
+            } else {
+                // If moving within inner pages, check if the current page already exists in the memory array
+                const existingIndex = trail.findIndex(step => step.path === searchPath);
+                
+                if (existingIndex !== -1) {
+                    // Backtracking: Chop off the tail of the history trail completely!
+                    trail = trail.slice(0, existingIndex + 1);
+                } else {
+                    // Forward Tracking: Append the new entry to the end of the line
+                    if (searchPath !== HOME_PATH && searchPath !== "/") {
+                        trail.push({ name: currentPageName, path: searchPath });
+                    }
+                }
+            }
+
+            try {
+                sessionStorage.setItem('breadcrumbTrail', JSON.stringify(trail));
+            } catch (e) {}
+
+            let htmlMarkup = '';
+            trail.forEach((step) => {
+                if (step.path === searchPath) {
+                    htmlMarkup += `<span class="breadcrumb-current">${step.name}</span><span class="breadcrumb-separator">/</span>`;
+                } else {
+                    htmlMarkup += `<a href="${step.path}">${step.name}</a><span class="breadcrumb-separator">/</span>`;
+                }
+            });
+
+            if (htmlMarkup.endsWith('<span class="breadcrumb-separator">/</span>')) {
+                htmlMarkup = htmlMarkup.slice(0, -'<span class="breadcrumb-separator">/</span>'.length);
+            }
+
+            container.innerHTML = htmlMarkup;
+        })();
+
+        const toggleBtn = document.getElementById('themeToggleBtn');
+        const bodyElement = document.body;
+        const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
+
+        const masterHeader = document.getElementById('masterHeader');
+        const openSearchBtn = document.getElementById('openSearchBtn');
+        const closeSearchBtn = document.getElementById('closeSearchBtn');
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+        const searchCoreInput = document.getElementById('searchCoreInput');
+
+        function applyTargetPalette() {
+            const activeSessionOverride = sessionStorage.getItem('dashboard-theme');
+            if (activeSessionOverride) {
+                if (activeSessionOverride === 'light') {
+                    bodyElement.classList.add('light-mode');
+                } else {
+                    bodyElement.classList.remove('light-mode');
+                }
+            } else {
+                if (systemLightQuery.matches) {
+                    bodyElement.classList.add('light-mode');
+                } else {
+                    bodyElement.classList.remove('light-mode');
+                }
+            }
+        }
+
+        applyTargetPalette();
+
+        systemLightQuery.addEventListener('change', (e) => {
+            sessionStorage.removeItem('dashboard-theme');
+            if (e.matches) {
+                bodyElement.classList.add('light-mode');
+            } else {
+                bodyElement.classList.remove('light-mode');
+            }
+        });
+
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isCurrentlyLight = bodyElement.classList.contains('light-mode');
+            if (isCurrentlyLight) {
+                bodyElement.classList.remove('light-mode');
+                sessionStorage.setItem('dashboard-theme', 'dark');
+            } else {
+                bodyElement.classList.add('light-mode');
+                sessionStorage.setItem('dashboard-theme', 'light');
+            }
+        });
+
+        openSearchBtn.addEventListener('click', () => {
+            masterHeader.classList.remove('state-main');
+            masterHeader.classList.add('state-search');
+            searchCoreInput.focus({ preventScroll: true });
+        });
+
+        clearSearchBtn.addEventListener('click', () => {
+            searchCoreInput.value = "";
+            searchCoreInput.focus();
+        });
+
+        closeSearchBtn.addEventListener('click', () => {
+            masterHeader.classList.remove('state-search');
+            masterHeader.classList.add('state-main');
+        });
+
+        masterHeader.addEventListener('submit', (e) => {
+            if (searchCoreInput.value.trim() === "") {
+                e.preventDefault();
+                masterHeader.classList.remove('state-search');
+                masterHeader.classList.add('state-main');
+            }
+        });
+
+        const universalTargetLinks = document.querySelectorAll('.contents-container a, .breadcrumb-nav a, footer .footer-links-row a, .logo');
+
+        // Layout Mutation Engine wrapping anchors securely inside a function block
+        function executeLayoutSpans() {
+            universalTargetLinks.forEach(link => {
+                if (!link.querySelector('.nav-text')) {
+                    const wrapper = document.createElement('span');
+                    wrapper.className = 'nav-text';
+                    while (link.firstChild) {
+                        wrapper.appendChild(link.firstChild);
+                    }
+                    link.appendChild(wrapper);
+                }
+            });
+        }
+
+        // Advanced Shield Strategy: Delays layout mutations heavily if text fragments are active
+        if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
+            setTimeout(executeLayoutSpans, 1500);
+        } else {
+            executeLayoutSpans();
+        }
+
+        universalTargetLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const destination = this.getAttribute('href');
+                if (!destination || destination === '#' || destination.startsWith('#')) return;
+
+                e.preventDefault();
+                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
+                this.classList.add('is-zooming');
+
+                setTimeout(() => {
+                    window.location.href = destination;
+                }, 260);
+            });
+        });
+
+        window.addEventListener('pageshow', () => {
+            universalTargetLinks.forEach(l => {
+                l.classList.remove('is-zooming');
+                l.classList.remove('kinetic-locked-frame');
+                const span = l.querySelector('.nav-text');
+                if (span) {
+                    span.style.transform = '';
+                    span.style.opacity = '';
+                }
+            });
+
+            if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
+                sessionStorage.removeItem('activeUniversalTargetUrl');
+                return;
+            }
+
+            const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
+            if (savedTargetUrl) {
+                sessionStorage.removeItem('activeUniversalTargetUrl');
+
+                let matchedLinkElement = null;
+                universalTargetLinks.forEach(link => {
+                    if (link.href === savedTargetUrl) {
+                        matchedLinkElement = link;
+                    }
+                });
+
+                if (matchedLinkElement) {
+                    const targetSpan = matchedLinkElement.querySelector('.nav-text');
+
+                    if (targetSpan) {
+                        setTimeout(() => {
+                            matchedLinkElement.classList.add('kinetic-locked-frame');
+
+                            let startScale = 1.3;
+                            let endScale = 1.0;
+                            let startOpacity = 0;
+
+                            let endOpacity = 0.8;
+                            if (matchedLinkElement.closest('footer')) endOpacity = 0.4;
+                            if (matchedLinkElement.classList.contains('logo')) endOpacity = 1.0;
+
+                            let duration = 280; 
+                            let startTime = null;
+
+                            targetSpan.style.setProperty('transform', `scale(${startScale})`, 'important');
+                            targetSpan.style.setProperty('opacity', startOpacity, 'important');
+
+                            function animateReverse(timestamp) {
+                                if (!startTime) startTime = timestamp;
+                                let elapsed = timestamp - startTime;
+                                let progress = Math.min(elapsed / duration, 1);
+
+                                let ease = 1 - Math.pow(1 - progress, 2.2);
+
+                                let currentScale = startScale - (startScale - endScale) * ease;
+                                let currentOpacity = startOpacity + (endOpacity - startOpacity) * ease;
+
+                                targetSpan.style.setProperty('transform', `scale(${currentScale})`, 'important');
+                                targetSpan.style.setProperty('opacity', currentOpacity, 'important');
+
+                                if (progress < 1) {
+                                    requestAnimationFrame(animateReverse);
+                                } else {
+                                    targetSpan.style.transform = '';
+                                    targetSpan.style.opacity = '';
+                                    matchedLinkElement.classList.remove('kinetic-locked-frame');
+                                }
+                            }
+
+                            requestAnimationFrame(animateReverse);
+                        }, 40);
+                    }
+                }
+            }
+        });
+
+        /* ==========================================================
+            DYNAMIC SMOOTH CENTER-SCROLL & ZOOM CONTROLLER
+           ========================================================== */
+        function clearAndScrollToHashTarget() {
+            const activeHash = window.location.hash;
+            if (!activeHash) return;
+
+            const targetedCapsule = document.querySelector(activeHash);
+            if (targetedCapsule && targetedCapsule.classList.contains('wide-capsule')) {
+                
+                setTimeout(() => {
+                    targetedCapsule.scrollIntoView({
+                        block: 'center',
+                        behavior: 'smooth'
+                    });
+
+                    targetedCapsule.classList.remove('activated-target');
+                    void targetedCapsule.offsetWidth; 
+                    targetedCapsule.classList.add('activated-target');
+                }, 150); 
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash) {
+                window.scrollTo(0, 0); 
+                setTimeout(clearAndScrollToHashTarget, 50);
+            }
+        });
+        window.addEventListener('hashchange', clearAndScrollToHashTarget);
+
+        // --- Universal Drop-In Text Node Highlight & 10-Second Self-Destruct Engine ---
+        window.addEventListener('load', () => {
+            let rawTargetQuery = '';
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                rawTargetQuery = urlParams.get('shq') || urlParams.get('q');
+                
+                if (!rawTargetQuery && document.referrer) {
+                    const referenceViewUrl = new URL(document.referrer);
+                    rawTargetQuery = referenceViewUrl.searchParams.get('q') || referenceViewUrl.searchParams.get('shq');
+                }
+            } catch (e) {}
+
+            if (!rawTargetQuery) return;
+
+            const cleanTargetQuery = rawTargetQuery.trim().toLowerCase();
+            if (cleanTargetQuery.length === 0) return;
+
+            function executeGlobalTextHighlight(node, searchText) {
+                if (node.nodeType === 3) { 
+                    const nodeRawValue = node.nodeValue;
+                    const nodeLowerValue = nodeRawValue.toLowerCase();
+                    
+                    if (nodeLowerValue.includes(searchText)) {
+                        const safetyRegexPattern = searchText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                        const globalRegexMatcher = new RegExp(`(${safetyRegexPattern})`, 'gi');
+                        
+                        const elementContainer = document.createElement('span');
+                        elementContainer.innerHTML = nodeRawValue.replace(globalRegexMatcher, '<span class="activated-word-target">$1</span>');
+                        
+                        const fragment = document.createDocumentFragment();
+                        while (elementContainer.firstChild) {
+                            fragment.appendChild(elementContainer.firstChild);
+                        }
+                        node.parentNode.insertBefore(fragment, node);
+                        node.parentNode.removeChild(node);
+                    }
+                } else if (node.nodeType === 1 && node.childNodes) {
+                    if (node.tagName === 'SCRIPT' || node.tagName === 'STYLE' || node.tagName === 'HEADER' || node.tagName === 'FOOTER') return;
+                    
+                    for (let i = node.childNodes.length - 1; i >= 0; i--) {
+                        executeGlobalTextHighlight(node.childNodes[i], searchText);
+                    }
+                }
+            }
+
+            const mainStudyDashboard = document.querySelector('main');
+            if (mainStudyDashboard) {
+                executeGlobalTextHighlight(mainStudyDashboard, cleanTargetQuery);
+
+                // 10-SECOND SELF-DESTRUCT TIMER
+                setTimeout(() => {
+                    const activeHighlightSpans = document.querySelectorAll('.activated-word-target');
+                    activeHighlightSpans.forEach(span => {
+                        const directTextContentNode = document.createTextNode(span.textContent);
+                        span.parentNode.replaceChild(directTextContentNode, span);
+                    });
+                    mainStudyDashboard.normalize();
+                }, 10000);
+            }
+        });
+    </script>
+</body>
+</html>
