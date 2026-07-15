@@ -12,8 +12,8 @@
       }
     </script>
 
-    <meta name="description" content="Master tracking dashboard for UPSC CSE Current Affairs covering comprehensive syllabus parameters.">
-    <meta name="keywords" content="UPSC current affairs, Civil Services Examination, Current affairs syllabus, Prelims tracker, Mains current affairs, UPSC micro syllabus">
+    <meta name="description" content="Current Affairs syllabus for upsc, Current Affairs syllabus for upsc cse.">
+    <meta name="keywords" content="UPSC current affairs, Civil Services Examination, Current affairs syllabus, Prelims tracker, Mains current affairs, Currrent affairs syllabus for upsc.">
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
     <script>
@@ -249,15 +249,16 @@
             transition: color 0.8s var(--ease-premium); 
         }
 
-        /* Merged Pill-Button Component Framework */
+        /* Hard-Aligned Poppins Micro-Capsule Button Component */
         .capsule-toggle-btn {
+            font-family: 'Poppins', sans-serif !important;
             background-color: transparent;
             border: 1px solid var(--panel-border);
             color: var(--text-main);
-            padding: 8px 20px;
+            padding: 8px 22px;
             font-size: 13.5px;
             font-weight: 500;
-            border-radius: inherit;
+            border-radius: 12px; /* Proportional curved edge language matching main capsule */
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -282,11 +283,11 @@
             display: block;
         }
 
-        /* Pure CSS Buttery Expansion Mechanics System */
+        /* Bi-Directional Perfectly Symmetrical Expansion Mechanical Grid */
         .capsule-content-wrapper {
             display: grid;
             grid-template-rows: 0fr;
-            transition: grid-template-rows 0.5s var(--ease-premium);
+            transition: grid-template-rows 0.45s var(--ease-premium);
             overflow: hidden;
             width: 100%;
         }
@@ -298,15 +299,14 @@
         .capsule-content-inner {
             min-height: 0;
             opacity: 0;
-            transform: translate3d(0, -12px, 0);
-            transition: opacity 0.3s var(--ease-premium), transform 0.4s var(--ease-premium);
+            transform: translate3d(0, -8px, 0);
+            transition: opacity 0.4s var(--ease-premium), transform 0.4s var(--ease-premium);
             width: 100%;
         }
 
         .wide-capsule.is-expanded .capsule-content-inner {
             opacity: 1;
             transform: translate3d(0, 0, 0);
-            transition-delay: 0.08s;
         }
 
         .sub-section-title { 
@@ -393,7 +393,7 @@
             .wide-capsule { padding: 24px 24px; border-radius: 24px; }
             .wide-panel-title { font-size: 18px; }
             .topics-vertical-stack a { font-size: 14.5px; padding: 12px 0 12px 20px; }
-            .capsule-toggle-btn { padding: 6px 14px; font-size: 12.5px; }
+            .capsule-toggle-btn { padding: 6px 16px; font-size: 12.5px; border-radius: 10px; }
         }
 
         html.instant-landing header, 
@@ -1448,7 +1448,7 @@
             container.innerHTML = htmlMarkup;
         })();
 
-        // --- Interactive Accordion Capsule Engine with Focus Scroll Correction ---
+        // --- Interactive Accordion Capsule Engine with Bidirectional Speed Correction ---
         document.querySelectorAll('.wide-capsule').forEach(capsule => {
             const toggleButtons = capsule.querySelectorAll('.capsule-toggle-btn');
             
@@ -1458,12 +1458,14 @@
                     const isOpen = capsule.classList.contains('is-expanded');
                     
                     if (isOpen) {
+                        // Close capsule first to let the CSS transition complete smoothly
                         capsule.classList.remove('is-expanded');
                         capsule.querySelectorAll('.toggle-text').forEach(t => t.textContent = 'View');
                         
-                        // If closed using bottom pill, pull screen smoothly back to top header boundary
+                        // Execute smooth tracking if closed from the bottom to prevent layout jumping
                         if (btn.classList.contains('bottom-btn')) {
-                            capsule.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            const headerOffset = capsule.getBoundingClientRect().top + window.scrollY - 80;
+                            window.scrollTo({ top: headerOffset, behavior: 'smooth' });
                         }
                     } else {
                         capsule.classList.add('is-expanded');
