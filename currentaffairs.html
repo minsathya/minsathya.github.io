@@ -254,14 +254,12 @@
             background-color: transparent;
             border: 1px solid var(--panel-border);
             color: var(--text-main);
-            padding: 8px 0;
+            padding: 0;
             width: 84px;
             height: 42px;
             border-radius: 12px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: block;
             position: relative;
             overflow: hidden;
             
@@ -293,32 +291,35 @@
             border-color: var(--panel-border) !important;
         }
 
-        /* Fluid Inner Text Layer Matrix - Smooth Symmetrical Skyfall Fall-Down Motion */
+        /* Fixed Width Skyfall Text Layer Frame - Hardware Accelerated Anchors for iPad WebKit Stabil stabilization */
         .btn-txt-frame {
-            position: relative;
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: block;
             pointer-events: none;
         }
 
         .txt-view, .txt-hide {
             position: absolute;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            top: 50%;
             font-size: 13.5px;
             font-weight: 500;
             font-family: 'Poppins', sans-serif !important;
-            transition: opacity 0.38s cubic-bezier(0.16, 1, 0.3, 1), transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: opacity, transform;
         }
 
-        /* Skyfall Drop-Down Coordinates Mapping Vector */
-        .txt-view { opacity: 1; transform: translate3d(0, 0, 0); }
-        .txt-hide { opacity: 0; transform: translate3d(0, -12px, 0); }
+        /* Skyfall Drop-Down Coordinated Vector Framework */
+        .txt-view { opacity: 1; transform: translate3d(0, -50%, 0); }
+        .txt-hide { opacity: 0; transform: translate3d(0, -130%, 0); }
 
-        .wide-capsule.is-expanded .txt-view { opacity: 0; transform: translate3d(0, 12px, 0); }
-        .wide-capsule.is-expanded .txt-hide { opacity: 1; transform: translate3d(0, 0, 0); }
+        .wide-capsule.is-expanded .txt-view { opacity: 0; transform: translate3d(0, 30%, 0); }
+        .wide-capsule.is-expanded .txt-hide { opacity: 1; transform: translate3d(0, -50%, 0); }
 
         .capsule-divider {
             border: none;
@@ -332,7 +333,7 @@
             display: block;
         }
 
-        /* Balanced Layout Fixed-Speed Symmetrical Expansion Matrix */
+        /* Symmetrical Height Containment Mechanics Matrix */
         .capsule-content-wrapper {
             display: grid;
             grid-template-rows: 0fr;
@@ -347,16 +348,15 @@
             grid-template-rows: 1fr;
         }
 
+        /* Strict Structural Isolation Engine - Completely Kills Layout Compression and Flickers */
         .capsule-content-inner {
-            min-height: 0;
+            min-height: max-content !important; /* Forces layout tracking to stay frozen during card collapse */
+            width: 100%;
             opacity: 0;
             transform: translate3d(0, -6px, 0);
             transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
-            width: 100%;
-            overflow: hidden;
             
-            /* Anti-Flicker Hardware Accelerated Layout Masking Pinned Vectors */
-            contain: layout paint;
+            contain: content !important; /* Blocks iPad graphics engine from calculating internal content line boxes */
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             transform: translateZ(0);
@@ -381,7 +381,7 @@
         .capsule-content-inner > :first-child { margin-top: 4px; }
         .sub-section-guide-note { font-size: 13.5px; font-style: italic; color: var(--text-muted); margin: -8px 0 16px 4px; }
 
-        /* Pure Vertical Column "One Down One" Micro Stack Layout Engine */
+        /* Pure Vertical Column Stack Layout Engine */
         .topics-vertical-stack { list-style: none; display: flex; flex-direction: column; width: 100%; }
         .topics-vertical-stack li { border-bottom: 1px solid var(--row-divider); display: flex; align-items: center; transition: border-color 0.8s var(--ease-premium); width: 100%; }
         .topics-vertical-stack li:last-child { border-bottom: none; }
@@ -776,7 +776,7 @@
                         <li><a href="#">Roads</a></li>
                         <li><a href="#">Railways</a></li>
                         <li><a href="#">Ports</a></li>
-                        <li><a href="#">Airports</a></li>
+                        <li><a href="#">Air airports</a></li>
                         <li><a href="#">Logistics</a></li>
                         <li><a href="#">Inland waterways</a></li>
                     </ul>
@@ -1507,7 +1507,7 @@
             container.innerHTML = htmlMarkup;
         })();
 
-        // --- Frame-Locked Scroll Synchronization Loop Logic ---
+        // --- Hardware-Accelerated Layout Pinned Rollup Thread Engine ---
         document.querySelectorAll('.wide-capsule').forEach(capsule => {
             const toggleButtons = capsule.querySelectorAll('.capsule-toggle-btn');
             
@@ -1518,33 +1518,16 @@
                     
                     if (isOpen) {
                         if (btn.classList.contains('bottom-btn')) {
-                            // Bottom Trigger: Locks layout to top element using high-frequency manual translation track
-                            const startScrollY = window.scrollY;
-                            const targetAnchorTop = capsule.offsetTop - 40;
-                            capsule.classList.remove('is-expanded');
+                            // Captures static document coordinates beforehand to bypass layout thrashing calculations
+                            const anchorCoordinate = capsule.offsetTop - 40;
                             
-                            let startTime = null;
-                            const duration = 460; // Exact match to CSS cross-grid contraction speeds
-                            
-                            function scrollSync(timestamp) {
-                                if (!startTime) startTime = timestamp;
-                                let elapsed = timestamp - startTime;
-                                let progress = Math.min(elapsed / duration, 1);
-                                
-                                // Perfect quadratic deceleration curve matches scrolling behavior naturally
-                                let ease = 1 - Math.pow(1 - progress, 3);
-                                
-                                window.scrollTo(0, startScrollY + (targetAnchorTop - startScrollY) * ease);
-                                
-                                if (progress < 1) {
-                                    requestAnimationFrame(scrollSync);
-                                }
-                            }
-                            requestAnimationFrame(scrollSync);
-                        } else {
-                            // Top Trigger: Collapse structurally
-                            capsule.classList.remove('is-expanded');
+                            // Native composited smoothing avoids loop delays across laptops, iPads, and phone displays
+                            window.scrollTo({
+                                top: anchorCoordinate,
+                                behavior: 'smooth'
+                            });
                         }
+                        capsule.classList.remove('is-expanded');
                     } else {
                         capsule.classList.add('is-expanded');
                     }
