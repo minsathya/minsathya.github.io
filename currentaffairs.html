@@ -333,28 +333,38 @@
             display: block;
         }
 
-        /* Dynamic Linear Height Core Mask - Completely Eliminates iPad Layout Quirks */
+        /* ==========================================================
+           CSS-GRID ACCORDION ENGINE (0fr <-> 1fr technique)
+           Replaces the old JS-measured pixel-height animation.
+           This animates to natural content height with ZERO
+           JavaScript layout reads (no scrollHeight, no offsetHeight,
+           no transitionend height:auto swap) — eliminating the
+           layout-thrashing that caused the iPad stutter, and the
+           intrinsic-sizing fight that caused the text reflow flicker.
+           ========================================================== */
         .capsule-content-wrapper {
-            height: 0;
-            overflow: hidden;
-            transition: height 0.44s cubic-bezier(0.16, 1, 0.3, 1);
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.44s cubic-bezier(0.16, 1, 0.3, 1);
             width: 100%;
-            will-change: height;
             contain: layout;
+        }
+
+        .wide-capsule.is-expanded .capsule-content-wrapper {
+            grid-template-rows: 1fr;
         }
 
         /* Rigid Layout Structural Mask - Completely Freezes Text Wrapping / Eliminates Content Flickers */
         .capsule-content-inner {
-            min-height: max-content !important; /* Locks layout size tracking bounds */
+            min-height: 0; /* REQUIRED for the grid track to actually reach 0fr — grid items default to min-height:auto, which would otherwise force the same intrinsic-sizing fight the old max-content rule caused */
+            overflow: hidden; /* clips content as the grid row track shrinks */
             width: 100%;
             opacity: 0;
             transform: translate3d(0, -6px, 0);
             transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             
-            contain: content !important; /* Shields child nodes from WebKit recalculation passes during collapse */
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            transform: translateZ(0);
             will-change: transform, opacity;
         }
 
@@ -1502,52 +1512,41 @@
             container.innerHTML = htmlMarkup;
         })();
 
-        // --- Hardware-Accelerated Dynamic Linear Height Accordion Thread Engine ---
+        /* ==========================================================
+           ACCORDION ENGINE — REBUILT
+           No JS height measurement at all (no scrollHeight, no
+           offsetHeight, no transitionend height:auto swap). The CSS
+           grid-template-rows: 0fr <-> 1fr technique on
+           .capsule-content-wrapper now owns the entire open/close
+           animation. This is what eliminates the layout-thrashing
+           that caused the iPad stutter, and the intrinsic-sizing
+           fight (against the old min-height:max-content) that
+           caused the text reflow flicker.
+
+           The only JS responsibility left is the scroll anchor for
+           the "ghost drop" bug — and it's now applied BEFORE the
+           collapse, synchronously, not after. That's the actual fix:
+           the browser's own scroll-clamping logic runs the instant
+           a document shrinks, so by the time any post-hoc scrollTo()
+           correction fires, the damage (a hard clamp to the new
+           document bottom) has already happened. Pre-positioning the
+           scroll to a safe value before the collapse means the
+           clamp never has anything out-of-bounds to correct.
+           ========================================================== */
         document.querySelectorAll('.wide-capsule').forEach(capsule => {
             const toggleButtons = capsule.querySelectorAll('.capsule-toggle-btn');
-            const wrapper = capsule.querySelector('.capsule-content-wrapper');
-            
-            if (wrapper) wrapper.style.height = '0px';
 
             toggleButtons.forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     const isOpen = capsule.classList.contains('is-expanded');
-                    
+
                     if (isOpen) {
-                        // Capture static layout parameters before mutating heights
-                        const currentScrollTop = window.scrollY;
-                        const targetAnchorTop = capsule.offsetTop - 40;
-                        
-                        // Force structural lock layout values prior to rollup collapse execution
-                        if (wrapper.style.height === 'auto' || !wrapper.style.height) {
-                            wrapper.style.height = wrapper.scrollHeight + 'px';
-                            void wrapper.offsetHeight; 
-                        }
-                        
-                        wrapper.style.height = '0px';
+                        const targetAnchorTop = Math.max(capsule.offsetTop - 40, 0);
+                        window.scrollTo(0, targetAnchorTop);
                         capsule.classList.remove('is-expanded');
-                        
-                        if (btn.classList.contains('bottom-btn')) {
-                            // Native smooth layout anchoring locks eyes onto capsule top seamlessly
-                            window.scrollTo({
-                                top: targetAnchorTop,
-                                behavior: 'smooth'
-                            });
-                        }
                     } else {
-                        // Set exact dynamic inner content boundary height
-                        wrapper.style.height = wrapper.scrollHeight + 'px';
                         capsule.classList.add('is-expanded');
-                        
-                        // Transition cleanup swaps explicit pixels to auto for fluid cross-device orientation
-                        const onExpandTransitionEnd = function(event) {
-                            if (event.propertyName === 'height' && capsule.classList.contains('is-expanded')) {
-                                wrapper.style.height = 'auto';
-                                wrapper.removeEventListener('transitionend', onExpandTransitionEnd);
-                            }
-                        };
-                        wrapper.addEventListener('transitionend', onExpandTransitionEnd);
                     }
                 });
             });
