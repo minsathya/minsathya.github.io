@@ -333,30 +333,31 @@
             display: block;
         }
 
-        /* GPU Composited Pure Native Layout Mask - Driven by 100% stable hardware layers to prevent iPad stutter lags */
+        /* Pure Hardware Layer Mask: Luxuriously smooth, zero-thrash deceleration transition */
         .capsule-content-wrapper {
             height: 0px;
             overflow: hidden;
             display: block;
             width: 100%;
             will-change: height;
-            transition: height 0.42s cubic-bezier(0.16, 1, 0.3, 1);
-            contain: layout;
+            transition: height 0.58s cubic-bezier(0.16, 1, 0.3, 1);
+            contain: layout paint;
         }
 
-        /* Rigid Layout Structural Mask - Completely Freezes Text Wrapping / Eliminates Content Flickers */
+        /* Rigid Content Core - Freezes Layout Bounds completely to solve the Text Wrapping Flicker Bug on WebKit */
         .capsule-content-inner {
             width: 100%;
             display: block;
             opacity: 0;
-            transform: translate3d(0, -10px, 0);
-            transition: opacity 0.26s cubic-bezier(0.16, 1, 0.3, 1), transform 0.36s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translate3d(0, -12px, 0);
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
             
-            contain: content !important; /* Locks layout down to completely isolate child text node calculations */
+            /* Ultimate WebKit GPU Promotion Layer Lock */
+            will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             transform: translateZ(0);
-            will-change: transform, opacity;
+            contain: layout paint style !important;
         }
 
         .wide-capsule.is-expanded .capsule-content-inner {
@@ -1515,35 +1516,30 @@
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     const isOpen = capsule.classList.contains('is-expanded');
-                    const isBottomBtn = btn.classList.contains('bottom-btn');
+                    const targetScrollY = capsule.offsetTop - 40;
                     
                     if (isOpen) {
-                        const contentHeight = inner.scrollHeight;
-                        const startScrollY = window.scrollY;
-                        
-                        // Freeze heights cleanly to prevent CSS from reading variable auto bounds
-                        wrapper.style.height = contentHeight + 'px';
-                        void wrapper.offsetHeight; // Singular reflow check outside active animation frames
+                        // CLOSING MECHANIC
+                        // Concurrently update the window offset to lock perspective onto the capsule header perfectly
+                        window.scrollTo({
+                            top: Math.max(targetScrollY, 0),
+                            behavior: 'smooth'
+                        });
+
+                        // Set explicit snapshot pixel frame metrics to cleanly guide the ease-out transition
+                        wrapper.style.height = inner.scrollHeight + 'px';
+                        void wrapper.offsetHeight; // Forces a single clean visual parse pass
                         
                         wrapper.style.height = '0px';
                         capsule.classList.remove('is-expanded');
-                        
-                        // If closed via bottom button, native scroll offsets shift in sync to preserve absolute grid perspective
-                        if (isBottomBtn) {
-                            const targetScrollY = Math.max(startScrollY - contentHeight, 0);
-                            window.scrollTo({
-                                top: targetScrollY,
-                                behavior: 'smooth'
-                            });
-                        }
                     } else {
-                        // Expand cleanly via CSS compositing tracks
+                        // OPENING MECHANIC
                         capsule.classList.add('is-expanded');
                         wrapper.style.height = inner.scrollHeight + 'px';
                         
                         const handleExpandEnd = (event) => {
                             if (event.propertyName === 'height' && capsule.classList.contains('is-expanded')) {
-                                wrapper.style.height = 'auto';
+                                wrapper.style.height = 'auto'; // Fluid cleanup boundaries
                                 wrapper.removeEventListener('transitionend', handleExpandEnd);
                             }
                         };
