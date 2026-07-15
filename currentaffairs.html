@@ -232,7 +232,6 @@
         .wide-capsule:hover { border-color: #1E1E1E; }
         body.light-mode .wide-capsule:hover { border-color: #b8b8bc; }
 
-        /* Layout Component Headers and Toggles Matrix */
         .capsule-header-row {
             display: flex;
             justify-content: space-between;
@@ -249,20 +248,25 @@
             transition: color 0.8s var(--ease-premium); 
         }
 
-        /* Hard-Aligned Poppins Micro-Capsule Button Component */
+        /* Hard-Aligned Poppins Capsule Badge Button Frame - Stripped of Bright Outline/Flashes */
         .capsule-toggle-btn {
             font-family: 'Poppins', sans-serif !important;
             background-color: transparent;
             border: 1px solid var(--panel-border);
             color: var(--text-main);
-            padding: 8px 22px;
-            font-size: 13.5px;
-            font-weight: 500;
-            border-radius: 12px; /* Proportional curved edge language matching main capsule */
+            padding: 8px 0;
+            width: 84px;
+            height: 42px;
+            border-radius: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
+            outline: none !important;
+            box-shadow: none !important;
+            -webkit-tap-highlight-color: transparent !important;
             transition: border-color 0.4s var(--ease-premium), background-color 0.4s var(--ease-premium);
         }
         
@@ -270,6 +274,42 @@
             background-color: var(--row-hover);
             border-color: var(--text-muted);
         }
+
+        /* Fully Eliminates Glossy Tap and Active Highlight States */
+        .capsule-toggle-btn:focus, .capsule-toggle-btn:active {
+            outline: none !important;
+            box-shadow: none !important;
+            background-color: transparent !important;
+            border-color: var(--panel-border) !important;
+        }
+        
+        body.light-mode .capsule-toggle-btn:focus, body.light-mode .capsule-toggle-btn:active {
+            border-color: var(--panel-border) !important;
+        }
+
+        /* Fluid Inner Text Layer Matrix - Replaces Flash with Buttery Cross-Fade */
+        .btn-txt-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .txt-view, .txt-hide {
+            position: absolute;
+            font-size: 13.5px;
+            font-weight: 500;
+            transition: opacity 0.35s var(--ease-premium), transform 0.35s var(--ease-premium);
+            will-change: opacity, transform;
+        }
+
+        .txt-view { opacity: 1; transform: translate3d(0, 0, 0); }
+        .txt-hide { opacity: 0; transform: translate3d(0, 6px, 0); }
+
+        .wide-capsule.is-expanded .txt-view { opacity: 0; transform: translate3d(0, -6px, 0); }
+        .wide-capsule.is-expanded .txt-hide { opacity: 1; transform: translate3d(0, 0, 0); }
 
         .capsule-divider {
             border: none;
@@ -283,13 +323,14 @@
             display: block;
         }
 
-        /* Bi-Directional Perfectly Symmetrical Expansion Mechanical Grid */
+        /* Fixed-Speed Mechanical Architecture Matrix */
         .capsule-content-wrapper {
             display: grid;
             grid-template-rows: 0fr;
-            transition: grid-template-rows 0.45s var(--ease-premium);
+            transition: grid-template-rows 0.45s cubic-bezier(0.25, 1, 0.5, 1);
             overflow: hidden;
             width: 100%;
+            will-change: grid-template-rows;
         }
 
         .wide-capsule.is-expanded .capsule-content-wrapper {
@@ -322,7 +363,7 @@
         .capsule-content-inner > :first-child { margin-top: 4px; }
         .sub-section-guide-note { font-size: 13.5px; font-style: italic; color: var(--text-muted); margin: -8px 0 16px 4px; }
 
-        /* Pure Vertical Column "One Down One" Micro Stack Layout Engine */
+        /* Pure Vertical Column Stack Layout Engine */
         .topics-vertical-stack { list-style: none; display: flex; flex-direction: column; width: 100%; }
         .topics-vertical-stack li { border-bottom: 1px solid var(--row-divider); display: flex; align-items: center; transition: border-color 0.8s var(--ease-premium); width: 100%; }
         .topics-vertical-stack li:last-child { border-bottom: none; }
@@ -340,7 +381,6 @@
             transition: color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), padding 0.4s var(--ease-premium);
         }
 
-        /* Premium Deep-Cut Styled Middle Dot Interface Elements */
         .topics-vertical-stack a::before { 
             content: "·"; 
             position: absolute; 
@@ -393,7 +433,8 @@
             .wide-capsule { padding: 24px 24px; border-radius: 24px; }
             .wide-panel-title { font-size: 18px; }
             .topics-vertical-stack a { font-size: 14.5px; padding: 12px 0 12px 20px; }
-            .capsule-toggle-btn { padding: 6px 16px; font-size: 12.5px; border-radius: 10px; }
+            .capsule-toggle-btn { width: 72px; height: 38px; border-radius: 10px; }
+            .txt-view, .txt-hide { font-size: 12.5px; }
         }
 
         html.instant-landing header, 
@@ -485,7 +526,7 @@
         <div class="wide-capsule" id="polity-governance">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">1. Polity & Governance</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -624,7 +665,7 @@
                     </ul>
                     
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -634,7 +675,7 @@
         <div class="wide-capsule" id="economy">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">2. Economy</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -742,7 +783,7 @@
                     </ul>
                     
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -752,7 +793,7 @@
         <div class="wide-capsule" id="environment">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">3. Environment</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -838,7 +879,7 @@
                     </ul>
                     
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -848,7 +889,7 @@
         <div class="wide-capsule" id="science-technology">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">4. Science & Technology</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -934,7 +975,7 @@
                     </ul>
                     
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -944,7 +985,7 @@
         <div class="wide-capsule" id="geography">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">5. Geography</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -989,7 +1030,7 @@
                     </ul>
                     
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -999,7 +1040,7 @@
         <div class="wide-capsule" id="international-relations">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">6. International Relations</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -1044,7 +1085,7 @@
                     </ul>
                     
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -1054,7 +1095,7 @@
         <div class="wide-capsule" id="agriculture">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">7. Agriculture</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -1075,7 +1116,7 @@
                         <li><a href="#">Pollinators</a></li>
                     </ul>
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -1085,7 +1126,7 @@
         <div class="wide-capsule" id="art-culture">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">8. Art & Culture</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -1107,7 +1148,7 @@
                         <li><a href="#">Cultural institutions</a></li>
                     </ul>
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -1117,7 +1158,7 @@
         <div class="wide-capsule" id="history">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">9. History</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -1132,7 +1173,7 @@
                         <li><a href="#">Freedom movement personalities</a></li>
                     </ul>
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -1142,7 +1183,7 @@
         <div class="wide-capsule" id="defence-internal-security">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">10. Defence & Internal Security</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -1160,7 +1201,7 @@
                         <li><a href="#">Space security</a></li>
                     </ul>
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -1170,7 +1211,7 @@
         <div class="wide-capsule" id="disaster-management">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">11. Disaster Management</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -1191,7 +1232,7 @@
                         <li><a href="#">Early warning systems</a></li>
                     </ul>
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -1201,7 +1242,7 @@
         <div class="wide-capsule" id="social-issues">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">12. Social Issues</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -1222,7 +1263,7 @@
                         <li><a href="#">Census-related developments</a></li>
                     </ul>
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -1232,7 +1273,7 @@
         <div class="wide-capsule" id="government-reports-indices">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">13. Government Reports & Indices</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -1265,7 +1306,7 @@
                     </ul>
                     
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -1275,7 +1316,7 @@
         <div class="wide-capsule" id="awards-personalities">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">14. Awards & Personalities</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -1288,7 +1329,7 @@
                         <li><a href="#">Obituaries of nationally or internationally important personalities</a></li>
                     </ul>
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -1298,7 +1339,7 @@
         <div class="wide-capsule" id="places-news">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">15. Places in News</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -1315,7 +1356,7 @@
                         <li><a href="#">Why it is in the news</a></li>
                     </ul>
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -1325,7 +1366,7 @@
         <div class="wide-capsule" id="miscellaneous">
             <div class="capsule-header-row">
                 <h2 class="wide-panel-title">16. Miscellaneous</h2>
-                <button class="capsule-toggle-btn top-btn"><span class="toggle-text">View</span></button>
+                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
             </div>
             <hr class="capsule-divider">
             <div class="capsule-content-wrapper">
@@ -1340,7 +1381,7 @@
                         <li><a href="#">Major scientific prizes and recognitions</a></li>
                     </ul>
                     <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn"><span class="toggle-text">Hide</span></button>
+                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
                     </div>
                 </div>
             </div>
@@ -1448,7 +1489,7 @@
             container.innerHTML = htmlMarkup;
         })();
 
-        // --- Interactive Accordion Capsule Engine with Bidirectional Speed Correction ---
+        // --- Hardware-Accelerated Accordion Module with Frame-Locked Offset Logic ---
         document.querySelectorAll('.wide-capsule').forEach(capsule => {
             const toggleButtons = capsule.querySelectorAll('.capsule-toggle-btn');
             
@@ -1458,18 +1499,18 @@
                     const isOpen = capsule.classList.contains('is-expanded');
                     
                     if (isOpen) {
-                        // Close capsule first to let the CSS transition complete smoothly
-                        capsule.classList.remove('is-expanded');
-                        capsule.querySelectorAll('.toggle-text').forEach(t => t.textContent = 'View');
+                        // Capture absolute mathematical offset coordinates BEFORE modifying layouts
+                        const targetAnchorTop = capsule.offsetTop - 40;
                         
-                        // Execute smooth tracking if closed from the bottom to prevent layout jumping
-                        if (btn.classList.contains('bottom-btn')) {
-                            const headerOffset = capsule.getBoundingClientRect().top + window.scrollY - 80;
-                            window.scrollTo({ top: headerOffset, behavior: 'smooth' });
-                        }
+                        capsule.classList.remove('is-expanded');
+                        
+                        // Locks the viewport seamlessly to the header tracking point across laptop/iPad/mobile
+                        window.scrollTo({
+                            top: targetAnchorTop,
+                            behavior: 'smooth'
+                        });
                     } else {
                         capsule.classList.add('is-expanded');
-                        capsule.querySelectorAll('.toggle-text').forEach(t => t.textContent = 'Hide');
                     }
                 });
             });
