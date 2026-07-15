@@ -333,25 +333,26 @@
             display: block;
         }
 
-        /* Pure Geometric Layout Mask Container — CSS Transitions are REMOVED here to prevent conflict lags in JS threads */
+        /* GPU Composited Pure Native Layout Mask - Driven by 100% stable hardware layers to prevent iPad stutter lags */
         .capsule-content-wrapper {
             height: 0px;
             overflow: hidden;
             display: block;
             width: 100%;
             will-change: height;
-            contain: layout paint;
+            transition: height 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+            contain: layout;
         }
 
-        /* Rigid Content Core - Freezes Layout Bounds completely to solve the Text Wrapping Flicker Bug on WebKit */
+        /* Rigid Layout Structural Mask - Completely Freezes Text Wrapping / Eliminates Content Flickers */
         .capsule-content-inner {
             width: 100%;
             display: block;
             opacity: 0;
-            transform: translate3d(0, -8px, 0);
-            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translate3d(0, -10px, 0);
+            transition: opacity 0.26s cubic-bezier(0.16, 1, 0.3, 1), transform 0.36s cubic-bezier(0.16, 1, 0.3, 1);
             
-            contain: layout paint style !important;
+            contain: content !important; /* Locks layout down to completely isolate child text node calculations */
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             transform: translateZ(0);
@@ -1514,55 +1515,40 @@
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     const isOpen = capsule.classList.contains('is-expanded');
-                    
-                    if (capsule.animationFrameId) {
-                        cancelAnimationFrame(capsule.animationFrameId);
-                    }
-
-                    // Strict Layout Performance Strategy: Geometric boundaries are read exactly ONCE here
-                    const startHeight = isOpen ? wrapper.offsetHeight : 0;
-                    const targetHeight = isOpen ? 0 : inner.scrollHeight;
-                    const startScrollY = window.scrollY;
                     const isBottomBtn = btn.classList.contains('bottom-btn');
                     
-                    const duration = 380; // Optimized snappy responsive transition matrix
-                    let startTime = null;
-
-                    if (!isOpen) {
+                    if (isOpen) {
+                        const contentHeight = inner.scrollHeight;
+                        const startScrollY = window.scrollY;
+                        
+                        // Freeze heights cleanly to prevent CSS from reading variable auto bounds
+                        wrapper.style.height = contentHeight + 'px';
+                        void wrapper.offsetHeight; // Singular reflow check outside active animation frames
+                        
+                        wrapper.style.height = '0px';
+                        capsule.classList.remove('is-expanded');
+                        
+                        // If closed via bottom button, native scroll offsets shift in sync to preserve absolute grid perspective
+                        if (isBottomBtn) {
+                            const targetScrollY = Math.max(startScrollY - contentHeight, 0);
+                            window.scrollTo({
+                                top: targetScrollY,
+                                behavior: 'smooth'
+                            });
+                        }
+                    } else {
+                        // Expand cleanly via CSS compositing tracks
                         capsule.classList.add('is-expanded');
-                    }
-
-                    function animateAccordion(timestamp) {
-                        if (!startTime) startTime = timestamp;
-                        const elapsed = timestamp - startTime;
-                        const progress = Math.min(elapsed / duration, 1);
+                        wrapper.style.height = inner.scrollHeight + 'px';
                         
-                        // Clean Cubic Deceleration Vector
-                        const ease = 1 - Math.pow(1 - progress, 3);
-                        
-                        const currentHeight = startHeight + (targetHeight - startHeight) * ease;
-                        wrapper.style.height = currentHeight + 'px';
-                        
-                        // Frame-Synchronized Scroll Anchor Lock: Subtly alters scroll offsets step-for-step 
-                        // with height updates so elements below stay frozen inside the user's viewports
-                        if (isOpen && isBottomBtn) {
-                            const deltaHeight = startHeight - currentHeight;
-                            window.scrollTo(0, Math.max(startScrollY - deltaHeight, 0));
-                        }
-
-                        if (progress < 1) {
-                            capsule.animationFrameId = requestAnimationFrame(animateAccordion);
-                        } else {
-                            if (isOpen) {
-                                wrapper.style.height = '0px';
-                                capsule.classList.remove('is-expanded');
-                            } else {
-                                wrapper.style.height = 'auto'; // Reverts to auto for client device window rotations
+                        const handleExpandEnd = (event) => {
+                            if (event.propertyName === 'height' && capsule.classList.contains('is-expanded')) {
+                                wrapper.style.height = 'auto';
+                                wrapper.removeEventListener('transitionend', handleExpandEnd);
                             }
-                            capsule.animationFrameId = null;
-                        }
+                        };
+                        wrapper.addEventListener('transitionend', handleExpandEnd);
                     }
-                    capsule.animationFrameId = requestAnimationFrame(animateAccordion);
                 });
             });
         });
