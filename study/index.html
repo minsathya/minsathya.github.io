@@ -433,16 +433,19 @@
             transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
         }
 
-        .matrix-canvas a:hover .nav-text,
-        .view-more-link:hover .nav-text,
-        .footer-links-row a:hover .nav-text,
-        .logo:hover .nav-text {
-            transform: scale3d(1.06, 1.06, 1) !important;
-        }
-
         .footer-links-row a .nav-text { color: var(--text-muted); }
         .footer-links-row a:hover .nav-text { color: var(--text-main); }
         .view-more-link .nav-text { color: #8a9a86; }
+
+        /* Zoom on hover ONLY for real mouse pointers (Laptop/Desktop). Touch screens will NOT trigger this. */
+        @media (hover: hover) and (pointer: fine) {
+            .matrix-canvas a:hover .nav-text,
+            .view-more-link:hover .nav-text,
+            .footer-links-row a:hover .nav-text,
+            .logo:hover .nav-text {
+                transform: scale3d(1.06, 1.06, 1) !important;
+            }
+        }
 
         /* --- GPU-Accelerated Continuous Fluid Wave Engine --- */
         @keyframes fluidWave {
@@ -696,12 +699,6 @@
                 sessionStorage.setItem('activeUniversalTargetUrl', this.href);
 
                 universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
-
-                // Smoothly ease word zoom back to normal during the 750ms wave so iPad saves scale(1) in BFCache
-                const span = this.querySelector('.nav-text');
-                if (span) {
-                    span.style.transform = 'scale3d(1, 1, 1)';
-                }
 
                 this.classList.add('is-wave-loading');
 
