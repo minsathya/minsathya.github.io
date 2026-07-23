@@ -13,14 +13,14 @@
       gtag('config', 'G-5VGX2K64Y4');
     </script>
 
-    <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png">
+    <link id="favicon" rel="icon" type="image/png" href="../../favicon-light.png">
 
     <script>
       const favicon = document.getElementById('favicon');
       const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
       
       function updateFavicon(e) {
-        favicon.href = e.matches ? '/favicon-dark.png' : '/favicon-light.png';
+        favicon.href = e.matches ? '../../favicon-dark.png' : '../../favicon-light.png';
       }
       
       updateFavicon(darkMode);
@@ -240,24 +240,22 @@
             </div>
         </div>
 
-          <form class="header-inner-view" id="headerSearchView" action="../search.html" method="GET">
-    <!-- 1. The search icon is now a clickable submit button -->
-    <button type="submit" aria-label="Submit search" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: inherit; display: flex; align-items: center; justify-content: center;">
-        <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-    </button>
+        <form class="header-inner-view" id="headerSearchView" action="/study/search.html" method="GET">
+            <button type="submit" aria-label="Submit search" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: inherit; display: flex; align-items: center; justify-content: center;">
+                <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
 
-    <!-- 2. Added enterkeyhint="search" to optimize virtual keyboards -->
-    <input type="text" class="search-core-input" id="searchCoreInput" name="q" placeholder="Search..." autocomplete="off" enterkeyhint="search">
-    
-    <div class="search-control-cluster">
-        <button type="button" class="ctrl-btn clear-text-btn" id="clearSearchBtn" aria-label="Clear typed text">
-            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-        <button type="button" class="ctrl-btn close-search-btn" id="closeSearchBtn" aria-label="Minimize search pill">
-            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-        </button>
-    </div>
-</form>
+            <input type="text" class="search-core-input" id="searchCoreInput" name="q" placeholder="Search..." autocomplete="off" enterkeyhint="search">
+            
+            <div class="search-control-cluster">
+                <button type="button" class="ctrl-btn clear-text-btn" id="clearSearchBtn" aria-label="Clear typed text">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <button type="button" class="ctrl-btn close-search-btn" id="closeSearchBtn" aria-label="Minimize search pill">
+                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+            </div>
+        </form>
     </header>
 
     <main>
@@ -275,11 +273,11 @@
 
     <footer>
         <div class="footer-links-row">
-        <a href="/study/Footer/about.html">About</a>
-        <a href="/study/Footer/contact.html">Contact</a>
-        <a href="/study/Footer/privacy.html">Privacy Policy</a>
-        <a href="/study/Footer/terms.html">Terms &amp; Conditions</a>
-        <a href="/study/Footer/disclaimer.html">Disclaimer</a>
+            <a href="/study/Footer/about.html">About</a>
+            <a href="/study/Footer/contact.html" class="active-footer-page">Contact</a>
+            <a href="/study/Footer/privacy.html">Privacy Policy</a>
+            <a href="/study/Footer/terms.html">Terms &amp; Conditions</a>
+            <a href="/study/Footer/disclaimer.html">Disclaimer</a>
         </div>
         <div class="copyright-tag">
             &copy; 2026 Sathya. All rights reserved.
@@ -292,29 +290,31 @@
             const container = document.getElementById('dynamicBreadcrumbNav');
             if (!container) return;
 
-            // 1. Auto-detect the exact path from the browser address bar
             const searchPath = window.location.pathname;
-            const HOME_PATH = "/index.html";
+            const HOME_PATH = "/study/index.html";
 
-            // 2. Global Map to ensure pristine display names across your brand
             const pageNames = {
-                "/index.html": "Home",
-                "/ramsarsites.html": "Ramsar Sites",
-                "/Footer/about.html": "About",
-                "/Footer/contact.html": "Contact",
-                "/Footer/privacy.html": "Privacy Policy",
-                "/Footer/terms.html": "Terms & Conditions",
-                "/Footer/disclaimer.html": "Disclaimer"
+                "/study/index.html": "Home",
+                "/study/contents.html": "Contents",
+                "/study/csat.html": "CSAT",
+                "/study/ncert.html": "NCERT",
+                "/study/subjects.html": "Subjects",
+                "/study/currentaffairs.html": "Current Affairs",
+                "/study/ramsarsites.html": "Ramsar Sites",
+                "/study/search.html": "Search",
+                "/study/Footer/about.html": "About",
+                "/study/Footer/contact.html": "Contact",
+                "/study/Footer/privacy.html": "Privacy Policy",
+                "/study/Footer/terms.html": "Terms & Conditions",
+                "/study/Footer/disclaimer.html": "Disclaimer"
             };
 
-            // Auto-resolve display name or fallback to clean capitalized string
             let currentPageName = pageNames[searchPath];
             if (!currentPageName) {
                 const filename = searchPath.substring(searchPath.lastIndexOf('/') + 1).replace('.html', '');
                 currentPageName = filename.charAt(0).toUpperCase() + filename.slice(1);
             }
 
-            // 3. Pull persistent session storage memory
             let trail = [];
             try {
                 const stored = sessionStorage.getItem('breadcrumbTrail');
@@ -323,41 +323,19 @@
                 trail = [];
             }
 
-            // Enforce structural Home base node anchor state
-            if (trail.length === 0 || (trail[0].path !== HOME_PATH && trail[0].path !== "/")) {
+            if (trail.length === 0 || (trail[0].path !== HOME_PATH && trail[0].path !== "/study/")) {
                 trail = [{ name: "Home", path: HOME_PATH }];
             }
 
-            // 4. Smart "Slice & Clean" Truncation Logic
-            // Check if the user just clicked over straight from the Homepage to completely clean the path
-            let cameFromHome = false;
-            if (document.referrer) {
-                try {
-                    const refUrl = new URL(document.referrer);
-                    cameFromHome = refUrl.pathname === HOME_PATH || refUrl.pathname === "/";
-                } catch (e) {
-                    cameFromHome = document.referrer.endsWith(HOME_PATH) || document.referrer.endsWith("/");
-                }
-            }
+            const existingIndex = trail.findIndex(step => step.path === searchPath);
 
-            if (cameFromHome) {
-                // Instantly wipe memory clean and reset back to Home -> Current Page
-                trail = [{ name: "Home", path: HOME_PATH }];
-                if (searchPath !== HOME_PATH && searchPath !== "/") {
-                    trail.push({ name: currentPageName, path: searchPath });
-                }
+            if (existingIndex !== -1) {
+                // Backtracking: Chop off everything after this page
+                trail = trail.slice(0, existingIndex + 1);
             } else {
-                // If moving within inner pages, check if the current page already exists in the memory array
-                const existingIndex = trail.findIndex(step => step.path === searchPath);
-                
-                if (existingIndex !== -1) {
-                    // Backtracking: Chop off the tail of the history trail completely!
-                    trail = trail.slice(0, existingIndex + 1);
-                } else {
-                    // Forward Tracking: Append the new entry to the end of the line
-                    if (searchPath !== HOME_PATH && searchPath !== "/") {
-                        trail.push({ name: currentPageName, path: searchPath });
-                    }
+                // Forward Tracking: Append the current page to the chain
+                if (searchPath !== HOME_PATH && searchPath !== "/study/") {
+                    trail.push({ name: currentPageName, path: searchPath });
                 }
             }
 
@@ -365,10 +343,8 @@
                 sessionStorage.setItem('breadcrumbTrail', JSON.stringify(trail));
             } catch (e) {}
 
-            // 5. Dynamic Rendering & Live Highlight Matrix
             let htmlMarkup = '';
             trail.forEach((step) => {
-                // If this step matches the page you are on, render it highlighted (no link)
                 if (step.path === searchPath) {
                     htmlMarkup += `<span class="current">${step.name}</span><span class="separator">/</span>`;
                 } else {
@@ -376,7 +352,6 @@
                 }
             });
 
-            // Clean up trailing slash decoration at the end of the string
             if (htmlMarkup.endsWith('<span class="separator">/</span>')) {
                 htmlMarkup = htmlMarkup.slice(0, -'<span class="separator">/</span>'.length);
             }
