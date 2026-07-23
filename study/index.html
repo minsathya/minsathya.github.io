@@ -445,30 +445,34 @@
             100% { background-position: -200% 0; }
         }
 
+        /* Dark Mode: Text starts and stays #ffffff, wave beam travels as crisp #868686 */
         .matrix-canvas a.is-wave-loading .nav-text,
         .view-more-link.is-wave-loading .nav-text,
         .footer-links-row a.is-wave-loading .nav-text,
         .logo.is-wave-loading .nav-text {
-            background: linear-gradient(90deg, #868686 0%, #868686 35%, #ffffff 50%, #868686 65%, #868686 100%);
+            background: linear-gradient(90deg, #ffffff 0%, #ffffff 30%, #868686 50%, #ffffff 70%, #ffffff 100%);
             background-size: 200% 100%;
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: fluidWave 1.2s infinite linear !important;
+            animation: fluidWave 0.85s infinite linear !important;
             transform: none !important;
             opacity: 1 !important;
         }
 
+        /* Light Mode: Text starts and stays #111111, wave beam travels as distinct #8a8a8e */
         body.light-mode .matrix-canvas a.is-wave-loading .nav-text,
         body.light-mode .view-more-link.is-wave-loading .nav-text,
         body.light-mode .footer-links-row a.is-wave-loading .nav-text,
         body.light-mode .logo.is-wave-loading .nav-text {
-            background: linear-gradient(90deg, #a1a1a6 0%, #a1a1a6 35%, #111111 50%, #a1a1a6 65%, #a1a1a6 100%);
+            background: linear-gradient(90deg, #111111 0%, #111111 30%, #8a8a8e 50%, #111111 70%, #111111 100%);
             background-size: 200% 100%;
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: fluidWave 1.2s infinite linear !important;
+            animation: fluidWave 0.85s infinite linear !important;
+            transform: none !important;
+            opacity: 1 !important;
         }
 
         .kinetic-locked-frame { pointer-events: none !important; }
@@ -693,13 +697,13 @@
                 // Reset any active wave classes on other links
                 universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
 
-                // Activate continuous fluid wave sweep on clicked link
+                // Activate fluid wave sweep on clicked link
                 this.classList.add('is-wave-loading');
 
-                // Trigger navigation smoothly
+                // 220ms delay ensures the wave is cleanly visible before navigating
                 setTimeout(() => {
                     window.location.href = destination;
-                }, 40);
+                }, 220);
             });
         });
 
