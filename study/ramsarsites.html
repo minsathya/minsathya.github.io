@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Ramsar Sites - sathya.</title>
+    <title>Ramsar Sites - sathya.</title>
 
-     <meta name="description" content="This is where I have categorised all the Ramsar Sites in India for UPSC CSE study. You can explore their locations, total area, and environmental threats here.">
-     <meta name="keywords" content="Ramsar sites in India, Updated ramsar sites in india, Wetlands UPSC, Environment notes, Ramsar sites list, UPSC CSE, Geography notes">
+    <meta name="description" content="This is where I have categorised all the Ramsar Sites in India for UPSC CSE study. You can explore their locations, total area, and environmental threats here.">
+    <meta name="keywords" content="Ramsar sites in India, Updated ramsar sites in india, Wetlands UPSC, Environment notes, Ramsar sites list, UPSC CSE, Geography notes">
     
-     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -17,19 +17,20 @@
       gtag('config', 'G-5VGX2K64Y4');
     </script>
 
-   <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png">
+    <!-- Relative paths for files inside /study/ -->
+    <link id="favicon" rel="icon" type="image/png" href="../favicon-light.png">
 
-<script>
-  const favicon = document.getElementById('favicon');
-  const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
-  
-  function updateFavicon(e) {
-    favicon.href = e.matches ? '/favicon-dark.png' : '/favicon-light.png';
-  }
-  
-  updateFavicon(darkMode);
-  darkMode.addEventListener('change', updateFavicon);
-</script>
+    <script>
+      const favicon = document.getElementById('favicon');
+      const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      function updateFavicon(e) {
+        favicon.href = e.matches ? '../favicon-dark.png' : '../favicon-light.png';
+      }
+      
+      updateFavicon(darkMode);
+      darkMode.addEventListener('change', updateFavicon);
+    </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -274,7 +275,6 @@
         .close-btn { float: right; font-size: 28px; cursor: pointer; color: var(--text-muted); line-height: 1; transition: color 0.4s var(--ease-premium); }
         .close-btn:hover { color: var(--text-main); }
 
-        /* Synchronized Text Layout Adjustments inside Modal Viewports */
         .modal h2 {
             font-size: 24px;
             font-weight: 600;
@@ -310,7 +310,6 @@
         .kinetic-locked-frame { pointer-events: none !important; }
         .kinetic-locked-frame .nav-text { transition: none !important; -webkit-transition: none !important; }
 
-        /* DEVICE-SAFE INLINE UNDERLINE PULSE SYSTEM (Fixes text cutoff bugs completely) */
         .activated-word-target {
             display: inline !important;
             position: relative !important;
@@ -331,7 +330,7 @@
             }
             50% {
                 border-bottom-color: var(--text-main) !important;
-                box-shadow: 0 4px 10px rgba(37, 122, 108, 0.35); /* Glow matches contents layout */
+                box-shadow: 0 4px 10px rgba(37, 122, 108, 0.35);
             }
         }
     </style>
@@ -340,7 +339,7 @@
 
     <header id="masterHeader">
         <div class="header-inner-view" id="headerMainView">
-            <a href="/index.html" class="logo">sathya.</a>
+            <a href="/study/index.html" class="logo">sathya.</a>
             <div class="header-right-cluster">
                 <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
                     <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
@@ -352,23 +351,23 @@
             </div>
         </div>
 
-       <form class="header-inner-view" id="headerSearchView" action="search.html" method="GET">
-    <button type="submit" aria-label="Submit search" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: inherit; display: flex; align-items: center; justify-content: center;">
-        <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-    </button>
+        <form class="header-inner-view" id="headerSearchView" action="/study/search.html" method="GET">
+            <button type="submit" aria-label="Submit search" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: inherit; display: flex; align-items: center; justify-content: center;">
+                <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
 
-    <input type="text" class="search-core-input" id="searchCoreInput" name="q" placeholder="Search..." autocomplete="off" enterkeyhint="search">
-    
-    <div class="search-control-cluster">
-        <button type="button" class="ctrl-btn clear-text-btn" id="clearSearchBtn" aria-label="Clear typed text">
-            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-        <button type="button" class="ctrl-btn close-search-btn" id="closeSearchBtn" aria-label="Minimize search pill">
-            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-        </button>
-    </div>
-</form>
-</header>
+            <input type="text" class="search-core-input" id="searchCoreInput" name="q" placeholder="Search..." autocomplete="off" enterkeyhint="search">
+            
+            <div class="search-control-cluster">
+                <button type="button" class="ctrl-btn clear-text-btn" id="clearSearchBtn" aria-label="Clear typed text">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <button type="button" class="ctrl-btn close-search-btn" id="closeSearchBtn" aria-label="Minimize search pill">
+                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+            </div>
+        </form>
+    </header>
 
     <main>
         <nav class="breadcrumbs" id="dynamicBreadcrumbNav" aria-label="breadcrumb"></nav>
@@ -725,11 +724,11 @@
 
     <footer>
         <div class="footer-links-row">
-            <a href="/Footer/about.html">About</a>
-            <a href="/Footer/contact.html">Contact</a>
-            <a href="/Footer/privacy.html">Privacy Policy</a>
-            <a href="/Footer/terms.html">Terms &amp; Conditions</a>
-            <a href="/Footer/disclaimer.html">Disclaimer</a>
+            <a href="/study/Footer/about.html">About</a>
+            <a href="/study/Footer/contact.html">Contact</a>
+            <a href="/study/Footer/privacy.html">Privacy Policy</a>
+            <a href="/study/Footer/terms.html">Terms &amp; Conditions</a>
+            <a href="/study/Footer/disclaimer.html">Disclaimer</a>
         </div>
         <div class="copyright-tag">
             &copy; 2026 Sathya. All rights reserved.
@@ -743,16 +742,21 @@
             if (!container) return;
 
             const searchPath = window.location.pathname;
-            const HOME_PATH = "/index.html";
+            const HOME_PATH = "/study/index.html";
 
             const pageNames = {
-                "/index.html": "Home",
-                "/ramsarsites.html": "Ramsar Sites",
-                "/Footer/about.html": "About",
-                "/Footer/contact.html": "Contact",
-                "/Footer/privacy.html": "Privacy Policy",
-                "/Footer/terms.html": "Terms & Conditions",
-                "/Footer/disclaimer.html": "Disclaimer"
+                "/study/index.html": "Home",
+                "/study/contents.html": "Contents",
+                "/study/csat.html": "CSAT",
+                "/study/ncert.html": "NCERT",
+                "/study/currentaffairs.html": "Current Affairs",
+                "/study/subjects.html": "Subjects",
+                "/study/ramsarsites.html": "Ramsar Sites",
+                "/study/Footer/about.html": "About",
+                "/study/Footer/contact.html": "Contact",
+                "/study/Footer/privacy.html": "Privacy Policy",
+                "/study/Footer/terms.html": "Terms & Conditions",
+                "/study/Footer/disclaimer.html": "Disclaimer"
             };
 
             let currentPageName = pageNames[searchPath];
@@ -769,37 +773,32 @@
                 trail = [];
             }
 
-            if (trail.length === 0 || (trail[0].path !== HOME_PATH && trail[0].path !== "/")) {
+            if (trail.length === 0 || (trail[0].path !== HOME_PATH && trail[0].path !== "/study/")) {
                 trail = [{ name: "Home", path: HOME_PATH }];
             }
 
-            // 4. Smart "Slice & Clean" Truncation Logic
             let cameFromHome = false;
             if (document.referrer) {
                 try {
                     const refUrl = new URL(document.referrer);
-                    cameFromHome = refUrl.pathname === HOME_PATH || refUrl.pathname === "/";
+                    cameFromHome = refUrl.pathname === HOME_PATH || refUrl.pathname === "/study/";
                 } catch (e) {
-                    cameFromHome = document.referrer.endsWith(HOME_PATH) || document.referrer.endsWith("/");
+                    cameFromHome = document.referrer.endsWith(HOME_PATH) || document.referrer.endsWith("/study/");
                 }
             }
 
             if (cameFromHome) {
-                // Instantly wipe memory clean and reset back to Home -> Current Page
                 trail = [{ name: "Home", path: HOME_PATH }];
-                if (searchPath !== HOME_PATH && searchPath !== "/") {
+                if (searchPath !== HOME_PATH && searchPath !== "/study/") {
                     trail.push({ name: currentPageName, path: searchPath });
                 }
             } else {
-                // If moving within inner pages, check if the current page already exists in the memory array
                 const existingIndex = trail.findIndex(step => step.path === searchPath);
                 
                 if (existingIndex !== -1) {
-                    // Backtracking: Chop off the tail of the history trail completely!
                     trail = trail.slice(0, existingIndex + 1);
                 } else {
-                    // Forward Tracking: Append the new entry to the end of the line
-                    if (searchPath !== HOME_PATH && searchPath !== "/") {
+                    if (searchPath !== HOME_PATH && searchPath !== "/study/") {
                         trail.push({ name: currentPageName, path: searchPath });
                     }
                 }
@@ -1179,9 +1178,8 @@
             const cleanTargetQuery = rawTargetQuery.trim().toLowerCase();
             if (cleanTargetQuery.length === 0) return;
 
-            // Deep clean-scanner loops backwards through raw text components to map ALL matches securely cross-platform
             function executeGlobalTextHighlight(node, searchText) {
-                if (node.nodeType === 3) { // Pure Text Node layer match
+                if (node.nodeType === 3) {
                     const nodeRawValue = node.nodeValue;
                     const nodeLowerValue = nodeRawValue.toLowerCase();
                     
@@ -1200,10 +1198,8 @@
                         node.parentNode.removeChild(node);
                     }
                 } else if (node.nodeType === 1 && node.childNodes) {
-                    // Safety check layer to prevent breaking internal functional structure blocks
                     if (node.tagName === 'SCRIPT' || node.tagName === 'STYLE' || node.tagName === 'HEADER' || node.tagName === 'FOOTER') return;
                     
-                    // Backwards iteration logic ensures dynamic additions never break nested element structures
                     for (let i = node.childNodes.length - 1; i >= 0; i--) {
                         executeGlobalTextHighlight(node.childNodes[i], searchText);
                     }
@@ -1214,7 +1210,6 @@
             if (mainStudyDashboard) {
                 executeGlobalTextHighlight(mainStudyDashboard, cleanTargetQuery);
 
-                // Instantly snaps viewport and smoothly centers the very first occurrence found on page layout matrices
                 setTimeout(() => {
                     const primaryFocusMatch = document.querySelector('.activated-word-target');
                     if (primaryFocusMatch) {
@@ -1225,14 +1220,12 @@
                     }
                 }, 320);
 
-                // 10-SECOND SELF-DESTRUCT TIMER: Safely un-wraps nodes to restore 100% clean reading state
                 setTimeout(() => {
                     const activeHighlightspans = document.querySelectorAll('.activated-word-target');
                     activeHighlightspans.forEach(span => {
                         const directTextContentNode = document.createTextNode(span.textContent);
                         span.parentNode.replaceChild(directTextContentNode, span);
                     });
-                    // Merge split text nodes seamlessly back together to prevent clean code breakdown
                     mainStudyDashboard.normalize();
                 }, 10000);
             }
