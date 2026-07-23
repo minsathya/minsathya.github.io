@@ -527,7 +527,7 @@
         </form>
     </header>
     
-    <main>
+    <main id="mainContainer">
         <div class="matrix-canvas">
             <div class="capsule-panel">
                 <h2 class="panel-title">Upsc</h2>
@@ -679,60 +679,88 @@
             }
         });
 
-        const universalTargetLinks = document.querySelectorAll('.matrix-canvas a, .view-more-link, footer .footer-links-row a, .logo');
+        // --- Continuous Unbroken Wave Navigation Engine (PJAX Swap) ---
+        function attachLinkListeners() {
+            const universalTargetLinks = document.querySelectorAll('.matrix-canvas a, .view-more-link, footer .footer-links-row a, .logo');
 
-        universalTargetLinks.forEach(link => {
-            if (!link.querySelector('.nav-text')) {
-                const wrapper = document.createElement('span');
-                wrapper.className = 'nav-text';
-                while (link.firstChild) {
-                    wrapper.appendChild(link.firstChild);
+            universalTargetLinks.forEach(link => {
+                if (!link.querySelector('.nav-text')) {
+                    const wrapper = document.createElement('span');
+                    wrapper.className = 'nav-text';
+                    while (link.firstChild) {
+                        wrapper.appendChild(link.firstChild);
+                    }
+                    link.appendChild(wrapper);
                 }
-                link.appendChild(wrapper);
-            }
-        });
 
-        universalTargetLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const destination = this.getAttribute('href');
-                if (!destination || destination === '#' || destination.startsWith('#')) return;
+                link.addEventListener('click', async function(e) {
+                    const destination = this.getAttribute('href');
+                    if (!destination || destination === '#' || destination.startsWith('#')) return;
 
-                e.preventDefault();
-                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
+                    e.preventDefault();
 
-                // Reset any active wave classes on other links
-                universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
+                    // Start fluid wave instantly
+                    universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
+                    this.classList.add('is-wave-loading');
 
-                // Activate fluid wave sweep immediately
-                this.classList.add('is-wave-loading');
+                    const minWaveDuration = new Promise(resolve => setTimeout(resolve, 220));
 
-                // Pre-download destination in background so navigation is instant & never freezes wave
-                const minWaveDuration = new Promise(resolve => setTimeout(resolve, 180));
-                const pageFetch = fetch(destination).catch(() => {});
+                    try {
+                        const [_, response] = await Promise.all([
+                            minWaveDuration,
+                            fetch(destination)
+                        ]);
 
-                Promise.all([minWaveDuration, pageFetch]).then(() => {
-                    window.location.href = destination;
+                        if (!response.ok) throw new Error('Network error');
+
+                        const html = await response.text();
+                        const parser = new DOMParser();
+                        const newDoc = parser.parseFromString(html, 'text/html');
+
+                        // Update title and replace main content cleanly
+                        document.title = newDoc.title;
+                        const newMain = newDoc.querySelector('#mainContainer') || newDoc.querySelector('main');
+                        const currentMain = document.querySelector('#mainContainer') || document.querySelector('main');
+
+                        if (newMain && currentMain) {
+                            currentMain.innerHTML = newMain.innerHTML;
+                        } else {
+                            document.body.innerHTML = newDoc.body.innerHTML;
+                        }
+
+                        // Push new URL to browser history
+                        window.history.pushState({}, '', destination);
+                        window.scrollTo(0, 0);
+
+                        // Re-bind listeners on the newly loaded DOM
+                        attachLinkListeners();
+                    } catch (err) {
+                        // Safe fallback if server fails
+                        window.location.href = destination;
+                    }
                 });
             });
-        });
+        }
 
-        window.addEventListener('pageshow', () => {
-            universalTargetLinks.forEach(l => {
-                l.classList.remove('is-wave-loading');
-                l.classList.remove('kinetic-locked-frame');
-                const span = l.querySelector('.nav-text');
-                if (span) {
-                    span.style.transform = '';
-                    span.style.opacity = '';
-                    span.style.background = '';
-                    span.style.webkitBackgroundClip = '';
-                    span.style.webkitTextFillColor = '';
+        attachLinkListeners();
+
+        // Handle Browser Back / Forward buttons cleanly
+        window.addEventListener('popstate', async () => {
+            try {
+                const response = await fetch(window.location.href);
+                const html = await response.text();
+                const parser = new DOMParser();
+                const newDoc = parser.parseFromString(html, 'text/html');
+                document.title = newDoc.title;
+                const newMain = newDoc.querySelector('#mainContainer') || newDoc.querySelector('main');
+                const currentMain = document.querySelector('#mainContainer') || document.querySelector('main');
+
+                if (newMain && currentMain) {
+                    currentMain.innerHTML = newMain.innerHTML;
                 }
-            });
-
-            const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
-            if (savedTargetUrl) {
-                sessionStorage.removeItem('activeUniversalTargetUrl');
+                attachLinkListeners();
+            } catch (err) {
+                window.location.reload();
             }
         });
     </script>
