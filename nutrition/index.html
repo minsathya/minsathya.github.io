@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition - sathya.</title>
+
+    <script>
+      if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
+        document.documentElement.classList.add('instant-landing');
+      }
+    </script>
+
+    <meta name="description" content="Personalized daily food plan, macro tracking, and comprehensive 50-nutrient analysis dashboard.">
+    <meta name="keywords" content="Nutrition, Macro Tracker, Daily Meals, Micro Nutrients, Sathya Nutrition">
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5VGX2K64Y4');
+    </script>
+    
+    <link id="favicon" rel="icon" type="image/png" href="../favicon-light.png">
+
+    <script>
+      const favicon = document.getElementById('favicon');
+      const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
+      function updateFavicon(e) {
+        favicon.href = e.matches ? '../favicon-dark.png' : '../favicon-light.png';
+      }
+      updateFavicon(darkMode);
+      darkMode.addEventListener('change', updateFavicon);
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+            --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+            --bg-color: #0b0b0b;
+            --text-main: #ffffff;
+            --text-muted: #555555;
+            --panel-bg: #121212;
+            --panel-border: #222222;
+            --row-divider: #1c1c1c;
+            --header-bg: #1a231e;
+            --header-border: #222c26;
+            
+            --cascade-distance: 24px;
+            --cascade-duration-exit: 0.2s;
+            --cascade-duration-entry: 0.28s;
+        }
+
+        body.light-mode {
+            --bg-color: #ebebe4;
+            --text-main: #111111;
+            --text-muted: #a1a1a6;
+            --panel-bg: #ffffff;
+            --panel-border: #e2e2e7;
+            --row-divider: #f2f2f7;
+            --header-bg: #e9ebe6;
+            --header-border: #d4d8cf;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent !important;
+            tap-highlight-color: transparent !important;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 60px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 95%;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
+        }
+
+        @keyframes masterEntrance {
+            from { opacity: 0; transform: translate3d(0, 24px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+
+        header, .wide-capsule, footer, .breadcrumb-nav, .page-main-heading {
+            opacity: 1;
+            will-change: transform, opacity;
+            animation: masterEntrance 1.2s var(--ease-smooth) backwards;
+        }
+
+        header { animation-delay: 0.04s; }
+        .breadcrumb-nav { animation-delay: 0.08s; }
+        .page-main-heading { animation-delay: 0.12s; }
+        .wide-capsule:nth-of-type(1) { animation-delay: 0.16s; }
+        .wide-capsule:nth-of-type(2) { animation-delay: 0.20s; }
+        footer { animation-delay: 0.32s; }
+
+        header {
+            position: relative;
+            background-color: var(--header-bg);
+            border: 1px solid var(--header-border);
+            border-radius: 50px;
+            width: 100%;
+            height: 72px;
+            margin: 0 auto 60px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth);
+        }
+
+        body:not(.light-mode) header { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); }
+
+        .header-inner-view {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 32px;
+        }
+
+        #headerMainView { opacity: 1; transform: translate3d(0, 0, 0); z-index: 2; }
+        #headerSearchView { opacity: 0; transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0); pointer-events: none; z-index: 1; }
+
+        header.state-search #headerMainView { animation: skyfallExit var(--cascade-duration-exit) ease-in both; pointer-events: none; }
+        header.state-search #headerSearchView { animation: skyfallEntry var(--cascade-duration-entry) var(--ease-smooth) both; animation-delay: var(--cascade-duration-exit); pointer-events: auto; }
+        header.state-main #headerSearchView { animation: skyfallExit var(--cascade-duration-exit) ease-in both; pointer-events: none; }
+        header.state-main #headerMainView { animation: skyfallEntry var(--cascade-duration-entry) var(--ease-smooth) both; animation-delay: var(--cascade-duration-exit); pointer-events: auto; }
+
+        @keyframes skyfallExit { 0% { transform: translate3d(0, 0, 0); opacity: 1; } 100% { transform: translate3d(0, var(--cascade-distance), 0); opacity: 0; } }
+        @keyframes skyfallEntry { 0% { transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0); opacity: 0; } 100% { transform: translate3d(0, 0, 0); opacity: 1; } }
+
+        .header-right-cluster, .search-control-cluster { display: flex; align-items: center; gap: 20px; height: 100%; }
+        .logo { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; color: var(--text-main); text-decoration: none !important; transition: color 0.8s var(--ease-smooth); }
+        .ctrl-btn { background: none; border: none; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; transition: opacity 0.2s var(--ease-smooth); }
+        .ctrl-btn:hover { opacity: 0.6; }
+        .ctrl-btn svg, .search-static-icon { width: 22px; height: 22px; fill: none; stroke: var(--text-main); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+        .search-static-icon { opacity: 0.4; }
+        .search-core-input { flex-grow: 1; background: transparent; border: none; outline: none; color: var(--text-main); font-family: 'Poppins', sans-serif; font-size: 16px; padding: 0 16px; width: 100%; }
+
+        .theme-toggle { width: 32px; height: 32px; position: relative; cursor: pointer; user-select: none; display: flex; align-items: center; justify-content: center; }
+        .theme-toggle svg { position: absolute; top: 50%; left: 50%; width: 22px; height: 22px; fill: none; stroke: var(--text-main); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.8s var(--ease-smooth), opacity 0.8s var(--ease-smooth); }
+        .theme-toggle .sun-icon { opacity: 0; transform: translate(-50%, -50%) rotate(-90deg) scale(0.4); }
+        .theme-toggle .moon-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle .sun-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle .moon-icon { opacity: 0; transform: translate(-50%, -50%) rotate(90deg) scale(0.4); }
+
+        .breadcrumb-nav { display: flex; align-items: center; gap: 8px; font-size: 15px; margin-bottom: 8px; padding-left: 8px; }
+        .breadcrumb-nav a { color: var(--text-muted) !important; text-decoration: none !important; }
+        .breadcrumb-separator { color: var(--text-muted); opacity: 0.4; }
+        .breadcrumb-current { color: var(--text-main); opacity: 0.8; }
+
+        .contents-container { display: flex; flex-direction: column; gap: 32px; margin-bottom: 80px; width: 100%; }
+        .page-main-heading { font-size: 24px; font-weight: 600; letter-spacing: -0.5px; color: var(--text-main); margin-bottom: 12px; padding-left: 8px; }
+
+        .wide-capsule {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 28px;
+            padding: 40px 48px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            transition: transform 0.55s var(--ease-smooth), box-shadow 0.55s var(--ease-smooth), border-color 0.55s var(--ease-smooth);
+        }
+
+        body:not(.light-mode) .wide-capsule { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+
+        @media (hover: hover) and (pointer: fine) {
+            .wide-capsule:hover { 
+                border-color: #1E1E1E; 
+                transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
+                box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+            }
+            body.light-mode .wide-capsule:hover { border-color: #b8b8bc; box-shadow: 0 16px 32px rgba(0, 0, 0, 0.09); }
+        }
+
+        .wide-capsule.is-capsule-lifted {
+            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
+            border-color: #1E1E1E !important;
+        }
+
+        .wide-panel-title { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; color: var(--text-main); margin-bottom: 24px; }
+        
+        .topics-column-grid { list-style: none; display: flex; flex-direction: column; width: 100%; }
+        .topics-column-grid li { border-bottom: 1px solid var(--row-divider); display: flex; align-items: center; width: 100%; }
+        .topics-column-grid li:last-child { border-bottom: none; }
+
+        .topics-column-grid a {
+            display: block; width: 100%; padding: 16px 0 16px 20px;
+            color: var(--text-main); opacity: 0.85; text-decoration: none !important;
+            font-size: 16px; font-weight: 500; position: relative;
+            transition: color 0.4s var(--ease-smooth), padding 0.4s var(--ease-smooth);
+        }
+
+        .topics-column-grid a::before { content: "•"; position: absolute; left: 0; color: var(--text-muted); font-size: 18px; top: 50%; transform: translateY(-50%); }
+        .topics-column-grid li:hover a { opacity: 1 !important; padding-left: 24px !important; }
+
+        footer { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
+        .footer-links-row { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; width: 100%; }
+        .footer-links-row a { color: var(--text-muted) !important; text-decoration: none !important; font-size: 14px; }
+        .footer-links-row a:hover { color: var(--text-main) !important; }
+        .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; }
+
+        .nav-text { display: inline-block !important; white-space: nowrap !important; transition: transform 0.4s var(--ease-smooth); }
+
+        @keyframes fluidWave { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        a.is-wave-loading .nav-text {
+            background-image: linear-gradient(90deg, #ffffff 0%, #ffffff 25%, #555555 50%, #ffffff 75%, #ffffff 100%) !important;
+            background-size: 200% 100% !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            animation: fluidWave 0.75s infinite linear !important;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 40px 20px; }
+            header { margin-bottom: 40px; height: 64px; }
+            .header-inner-view { padding: 0 20px; }
+            .wide-capsule { padding: 32px 24px; border-radius: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="masterHeader">
+        <div class="header-inner-view" id="headerMainView">
+            <a href="/study/index.html" class="logo">sathya.</a>
+            <div class="header-right-cluster">
+                <div class="theme-toggle" id="themeToggleBtn">
+                    <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </div>
+                <button class="ctrl-btn" id="openSearchBtn">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+            </div>
+        </div>
+
+        <form class="header-inner-view" id="headerSearchView" action="/study/search.html" method="GET">
+            <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer; color: inherit;">
+                <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
+            <input type="text" class="search-core-input" id="searchCoreInput" name="q" placeholder="Search..." autocomplete="off">
+            <div class="search-control-cluster">
+                <button type="button" class="ctrl-btn" id="clearSearchBtn"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                <button type="button" class="ctrl-btn" id="closeSearchBtn"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+            </div>
+        </form>
+    </header>
+
+    <main class="contents-container">
+        <nav class="breadcrumb-nav" id="dynamicBreadcrumbNav"></nav>
+        <h1 class="page-main-heading">Nutrition</h1>
+
+        <!-- THE "MM" CAPSULE -->
+        <div class="wide-capsule" id="mm-capsule">
+            <h2 class="wide-panel-title">MM</h2>
+            <ul class="topics-column-grid">
+                <li><a href="/nutrition/mm.html">My Meal &amp; Daily Nutrient Tracker</a></li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links-row">
+            <a href="/study/Footer/about.html">About</a>
+            <a href="/study/Footer/contact.html">Contact</a>
+            <a href="/study/Footer/privacy.html">Privacy Policy</a>
+            <a href="/study/Footer/terms.html">Terms &amp; Conditions</a>
+            <a href="/study/Footer/disclaimer.html">Disclaimer</a>
+        </div>
+        <div class="copyright-tag">&copy; 2026 Sathya. All rights reserved.</div>
+    </footer>
+
+    <script>
+        (function buildDynamicBreadcrumbs() {
+            const container = document.getElementById('dynamicBreadcrumbNav');
+            if (!container) return;
+            container.innerHTML = `<a href="/study/index.html">Home</a><span class="breadcrumb-separator">/</span><span class="breadcrumb-current">Nutrition</span>`;
+        })();
+
+        const toggleBtn = document.getElementById('themeToggleBtn');
+        const bodyElement = document.body;
+        const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
+
+        function applyTargetPalette() {
+            const activeSessionOverride = sessionStorage.getItem('dashboard-theme');
+            if (activeSessionOverride) {
+                bodyElement.classList.toggle('light-mode', activeSessionOverride === 'light');
+            } else {
+                bodyElement.classList.toggle('light-mode', systemLightQuery.matches);
+            }
+        }
+        applyTargetPalette();
+
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isLight = bodyElement.classList.toggle('light-mode');
+            sessionStorage.setItem('dashboard-theme', isLight ? 'light' : 'dark');
+        });
+
+        const masterHeader = document.getElementById('masterHeader');
+        document.getElementById('openSearchBtn').addEventListener('click', () => {
+            masterHeader.classList.add('state-search');
+            document.getElementById('searchCoreInput').focus();
+        });
+        document.getElementById('closeSearchBtn').addEventListener('click', () => masterHeader.classList.remove('state-search'));
+        document.getElementById('clearSearchBtn').addEventListener('click', () => {
+            document.getElementById('searchCoreInput').value = '';
+        });
+
+        const universalTargetLinks = document.querySelectorAll('.contents-container a, .breadcrumb-nav a, footer .footer-links-row a, .logo');
+
+        function executeLayoutSpans() {
+            universalTargetLinks.forEach(link => {
+                if (!link.querySelector('.nav-text')) {
+                    const wrapper = document.createElement('span');
+                    wrapper.className = 'nav-text';
+                    while (link.firstChild) wrapper.appendChild(link.firstChild);
+                    link.appendChild(wrapper);
+                }
+            });
+        }
+        executeLayoutSpans();
+
+        universalTargetLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const destination = this.getAttribute('href');
+                if (!destination || destination === '#') return;
+                e.preventDefault();
+                const parentCapsule = this.closest('.wide-capsule');
+                if (parentCapsule) parentCapsule.classList.add('is-capsule-lifted');
+                this.classList.add('is-wave-loading');
+                setTimeout(() => { window.location.href = destination; }, 750);
+            });
+        });
+
+        window.addEventListener('pageshow', () => {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    document.querySelectorAll('.wide-capsule').forEach(p => p.classList.remove('is-capsule-lifted'));
+                    universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
+                });
+            });
+        });
+    </script>
+</body>
+</html>
