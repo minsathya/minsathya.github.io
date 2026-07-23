@@ -42,9 +42,10 @@
             --text-muted: #555555;
             --panel-bg: #121212;
             --panel-border: #222222;
-            --header-line: #222c26;
+            --header-bg: #1a231e;
+            --header-border: #25332b;
             
-            --cascade-distance: 24px;
+            --cascade-distance: 20px;
             --cascade-duration-exit: 0.2s;
             --cascade-duration-entry: 0.28s;
         }
@@ -55,7 +56,8 @@
             --text-muted: #a1a1a6;
             --panel-bg: #ffffff;
             --panel-border: #e2e2e7;
-            --header-line: #d4d8cf;
+            --header-bg: #e9ebe6;
+            --header-border: #d4d8cf;
         }
 
         * {
@@ -74,7 +76,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 20px 24px 60px 24px;
+            padding: 24px 24px 60px 24px;
             max-width: 1200px;
             margin: 0 auto;
             width: 95%;
@@ -98,33 +100,22 @@
         main { animation-delay: 0.16s; }
         footer { animation-delay: 0.28s; }
 
-        /* Frameless Header with Soft-Faded Underline */
+        /* Pure Floating Pill Header */
         header {
             position: relative;
-            background: transparent;
+            background-color: var(--header-bg);
+            border: 1px solid var(--header-border);
+            border-radius: 999px; /* Continuous organic pill curvature */
             width: 100%;
-            height: 72px;
+            height: 64px;
             margin: 0 auto 60px auto;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
             overflow: hidden;
+            transition: background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
         }
 
-        /* Underline with soft gradient end-caps */
-        header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 1.5px;
-            background: linear-gradient(
-                90deg, 
-                transparent 0%, 
-                var(--header-line) 8%, 
-                var(--header-line) 92%, 
-                transparent 100%
-            );
-            border-radius: 100px;
-            transition: background 0.8s var(--ease-premium);
+        body.light-mode header {
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
         }
 
         /* Inner View Alignment */
@@ -136,7 +127,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 16px;
+            padding: 0 28px;
             will-change: transform, opacity;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
@@ -191,13 +182,13 @@
         .search-control-cluster {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 18px;
             flex-shrink: 0;
             height: 100%;
         }
 
         .logo {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 600;
             letter-spacing: -0.5px;
             color: var(--text-main);
@@ -226,8 +217,8 @@
 
         .ctrl-btn svg,
         .search-static-icon {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             fill: none;
             stroke: var(--text-main);
             stroke-width: 2.2;
@@ -248,8 +239,8 @@
             outline: none;
             color: var(--text-main);
             font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            padding: 0 16px;
+            font-size: 15px;
+            padding: 0 14px;
             width: 100%;
             min-width: 0;
             will-change: transform, opacity;
@@ -277,8 +268,8 @@
 
         .theme-toggle svg {
             position: absolute;
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             fill: none;
             stroke: var(--text-main);
             stroke-width: 2.2;
@@ -319,12 +310,12 @@
         }
 
         @media (max-width: 700px) {
-            body { padding: 12px 16px 40px 16px; }
-            header { margin-bottom: 40px; height: 64px; }
-            .header-inner-view { padding: 0 8px; }
-            .logo { font-size: 22px; }
-            .search-core-input { padding: 0 8px; font-size: 15px; }
-            .header-right-cluster { gap: 16px; }
+            body { padding: 16px 16px 40px 16px; }
+            header { margin-bottom: 40px; height: 58px; }
+            .header-inner-view { padding: 0 20px; }
+            .logo { font-size: 21px; }
+            .search-core-input { padding: 0 6px; font-size: 14.5px; }
+            .header-right-cluster { gap: 14px; }
         }
     </style>
 </head>
