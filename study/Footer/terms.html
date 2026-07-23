@@ -34,10 +34,8 @@
     <style>
         /* Modern Theme Token System */
         :root {
-            /* Smooth Premium Deceleration Curve */
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
             
-            /* Default Dark Mode Tones */
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
             --text-muted: #555555;
@@ -46,17 +44,14 @@
             --row-divider: #1c1c1c;
             --row-hover: rgba(255, 255, 255, 0.015);
 
-            /* Premium Matte Olive Header System (Dark Mode) */
             --header-bg: #1a231e;
             --header-border: #222c26;
             
-            /* Vertical cascade parameters from index.html */
             --cascade-distance: 24px;
             --cascade-duration-exit: 0.2s;
             --cascade-duration-entry: 0.28s;
         }
 
-        /* Classy Light Mode Tones (Premium Off-White Gallery Style) */
         body.light-mode {
             --bg-color: #ebebe4;
             --text-main: #111111;
@@ -66,7 +61,6 @@
             --row-divider: #f2f2f7;
             --row-hover: rgba(0, 0, 0, 0.01);
 
-            /* Premium Matte Olive Header System (Light Mode) */
             --header-bg: #e9ebe6;
             --header-border: #d4d8cf;
         }
@@ -86,25 +80,21 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Halts uneven vertical stretching */
+            justify-content: flex-start;
             padding: 60px 24px;
             max-width: 1200px;
             margin: 0 auto;
             width: 95%;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            
-            /* SYNCHRONIZED: Premium Anti-Flash Breathing Color Clock Transition Matrix */
             transition: background-color 0.8s var(--ease-premium), color 0.8s var(--ease-premium);
         }
 
-        /* Cloned Keyframe Logic Directly from index.html */
         @keyframes masterEntrance {
             from { opacity: 0; transform: translate3d(0, 24px, 0); }
             to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
-        /* CLONED: Initial Opacity 1 + Backwards Fill Mode Sequence */
         header, .breadcrumbs, .capsule-panel, footer {
             opacity: 1;
             will-change: transform, opacity;
@@ -116,7 +106,6 @@
         .capsule-panel { animation-delay: 0.22s; }
         footer { animation-delay: 0.32s; }
 
-        /* Top Header Navigation Shell */
         header {
             position: relative;
             background-color: var(--header-bg);
@@ -134,7 +123,6 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
-        /* Twin View System Layer Configurations - index.html Spec */
         .header-inner-view {
             position: absolute;
             inset: 0;
@@ -247,7 +235,6 @@
             flex-shrink: 0; 
         }
 
-        /* Fixed Theme Toggle Architectural Constraints Layout */
         .theme-toggle {
             width: 32px;
             height: 32px;
@@ -256,7 +243,7 @@
             justify-content: center;
             position: relative;
             cursor: pointer;
-            flex-shrink: 0; /* Bulletproof shield against collapsing */
+            flex-shrink: 0;
             transition: opacity 0.2s var(--ease-premium);
         }
 
@@ -266,6 +253,8 @@
 
         .theme-toggle svg {
             position: absolute;
+            top: 50%;
+            left: 50%;
             width: 22px;
             height: 22px;
             fill: none;
@@ -273,18 +262,16 @@
             stroke-width: 2.2;
             stroke-linecap: round;
             stroke-linejoin: round;
-            transform-origin: center center;
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             transition: transform 0.8s var(--ease-premium), opacity 0.8s var(--ease-premium), stroke 0.8s var(--ease-premium);
         }
 
-        /* Dynamic Visibility Palette Toggle State Machine Engine */
-        .theme-toggle .sun-icon { opacity: 0; transform: translate3d(0, 0, 0) rotate(-90deg) scale(0.4); }
-        .theme-toggle .moon-icon { opacity: 1; transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
-        body.light-mode .theme-toggle .sun-icon { opacity: 1; transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
-        body.light-mode .theme-toggle .moon-icon { opacity: 0; transform: translate3d(0, 0, 0) rotate(90deg) scale(0.4); }
+        .theme-toggle .sun-icon { opacity: 0; transform: translate(-50%, -50%) rotate(-90deg) scale(0.4); }
+        .theme-toggle .moon-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle .sun-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle .moon-icon { opacity: 0; transform: translate(-50%, -50%) rotate(90deg) scale(0.4); }
 
         .search-core-input {
             flex-grow: 1;
@@ -307,7 +294,6 @@
         .clear-text-btn svg { opacity: 0.4; }
         .close-search-btn svg { opacity: 0.7; }
 
-        /* Core Layout Architecture Engine */
         main {
             flex-grow: 1; 
             width: 100%;
@@ -315,7 +301,6 @@
             flex-direction: column;
         }
 
-        /* High-End Classy Breadcrumb System */
         .breadcrumbs {
             display: flex;
             align-items: center;
@@ -351,7 +336,6 @@
             opacity: 0.9;
         }
 
-        /* Large Stretched Editorial Container */
         .capsule-panel {
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
@@ -376,7 +360,6 @@
             transition: color 0.8s var(--ease-premium);
         }
 
-        /* Premium Minimal Prose Typography Formatting */
         .prose-text {
             font-size: 16px;
             line-height: 1.8;
@@ -394,7 +377,6 @@
             margin-bottom: 0;
         }
 
-        /* Flat Grounded Footer Row */
         footer {
             display: flex;
             flex-direction: column;
@@ -443,27 +425,62 @@
             transition: color 0.8s var(--ease-premium);
         }
 
-        /* Unified Micro-Pop Scaler Text Style Rules from index.html */
         .nav-text {
             display: inline-block !important;
+            white-space: nowrap !important;
             transform-origin: center center !important;
-            will-change: transform, opacity !important;
+            will-change: transform, opacity, background-position !important;
             transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
         }
 
-        .footer-links-row a:hover .nav-text { color: var(--text-main) !important; transform: scale3d(1.06, 1.06, 1) !important; }
+        .footer-links-row a .nav-text { color: var(--text-muted); }
+        .footer-links-row a:hover .nav-text { color: var(--text-main); }
         .footer-links-row a.active-footer-page .nav-text { color: var(--text-main) !important; }
 
-        .footer-links-row a.is-zooming .nav-text {
-            transition: transform 0.26s cubic-bezier(0.215, 0.61, 0.355, 1), opacity 0.26s linear !important;
-            transform: scale3d(1.3, 1.3, 1) !important;
-            opacity: 0 !important;
+        /* Zoom on hover ONLY for real mouse pointers (Laptop/Desktop). Touch screens will NOT trigger this. */
+        @media (hover: hover) and (pointer: fine) {
+            .breadcrumbs a:hover .nav-text,
+            .footer-links-row a:hover .nav-text,
+            .logo:hover .nav-text {
+                transform: scale3d(1.06, 1.06, 1) !important;
+            }
+        }
+
+        /* --- GPU-Accelerated Continuous Fluid Wave Engine --- */
+        @keyframes fluidWave {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Continuous Hardware-Accelerated Wave Sweep */
+        a.is-wave-loading .nav-text {
+            background-image: linear-gradient(90deg, #ffffff 0%, #ffffff 25%, #555555 50%, #ffffff 75%, #ffffff 100%) !important;
+            background-size: 200% 100% !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+            animation: fluidWave 0.75s infinite linear !important;
+            will-change: background-position, transform !important;
+            opacity: 1 !important;
+        }
+
+        /* Light Mode Fluid Wave Engine */
+        body.light-mode a.is-wave-loading .nav-text {
+            background-image: linear-gradient(90deg, #111111 0%, #111111 25%, #8a8a8e 50%, #111111 75%, #111111 100%) !important;
+            background-size: 200% 100% !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+            animation: fluidWave 0.75s infinite linear !important;
+            will-change: background-position, transform !important;
+            opacity: 1 !important;
         }
 
         .kinetic-locked-frame { pointer-events: none !important; }
         .kinetic-locked-frame .nav-text { transition: none !important; -webkit-transition: none !important; }
 
-        /* Responsive Viewport Optimizations */
         @media (max-width: 700px) {
             body {
                 padding: 40px 20px;
@@ -502,7 +519,6 @@
 </head>
 <body>
 
-    <!-- Repaired & Fully Activated Twin View Design Header Component -->
     <header id="masterHeader">
         <div class="header-inner-view" id="headerMainView">
             <a href="/study/index.html" class="logo">sathya.</a>
@@ -522,7 +538,6 @@
             </div>
         </div>
 
-        <!-- Upgraded Form Shell Jumps Out of Subfolder into Main Search Memory -->
         <form class="header-inner-view" id="headerSearchView" action="/study/search.html" method="GET">
             <button type="submit" aria-label="Submit search" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: inherit; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                 <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -540,12 +555,8 @@
     </header>
 
     <main>
-        <!-- Dynamic Breadcrumb Engine Container -->
-        <nav class="breadcrumbs" id="dynamicBreadcrumbNav" aria-label="breadcrumb">
-            <!-- Rendered cleanly via script loop below -->
-        </nav>
+        <nav class="breadcrumbs" id="dynamicBreadcrumbNav" aria-label="breadcrumb"></nav>
 
-        <!-- Single Stretched Classy Focused Capsule -->
         <div class="capsule-panel">
             <h1 class="panel-title">Terms &amp; Conditions</h1>
             <div class="prose-text">
@@ -556,7 +567,6 @@
         </div>
     </main>
 
-    <!-- Grounded Minimal Footer Row -->
     <footer>
         <div class="footer-links-row">
             <a href="/study/Footer/about.html">About</a>
@@ -570,7 +580,6 @@
         </div>
     </footer>
 
-    <!-- Smart Native Device Sync & Twin-View Controller Engine -->
     <script>
         // --- Universal Persistent Master Breadcrumb Engine ---
         (function buildDynamicBreadcrumbs() {
@@ -617,10 +626,8 @@
             const existingIndex = trail.findIndex(step => step.path === searchPath);
 
             if (existingIndex !== -1) {
-                // Backtracking: Chop off everything after this page
                 trail = trail.slice(0, existingIndex + 1);
             } else {
-                // Forward Tracking: Append current page to chain
                 if (searchPath !== HOME_PATH && searchPath !== "/study/") {
                     trail.push({ name: currentPageName, path: searchPath });
                 }
@@ -740,83 +747,38 @@
 
                 e.preventDefault();
                 sessionStorage.setItem('activeUniversalTargetUrl', this.href);
-                this.classList.add('is-zooming');
+
+                universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
+
+                this.classList.add('is-wave-loading');
 
                 setTimeout(() => {
                     window.location.href = destination;
-                }, 260);
+                }, 750);
             });
         });
 
         window.addEventListener('pageshow', () => {
+            if (document.activeElement && document.activeElement.blur) {
+                document.activeElement.blur();
+            }
+
             universalTargetLinks.forEach(l => {
-                l.classList.remove('is-zooming');
+                l.classList.remove('is-wave-loading');
                 l.classList.remove('kinetic-locked-frame');
                 const span = l.querySelector('.nav-text');
                 if (span) {
                     span.style.transform = '';
                     span.style.opacity = '';
+                    span.style.background = '';
+                    span.style.webkitBackgroundClip = '';
+                    span.style.webkitTextFillColor = '';
                 }
             });
 
             const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
             if (savedTargetUrl) {
                 sessionStorage.removeItem('activeUniversalTargetUrl');
-
-                let matchedLinkElement = null;
-                universalTargetLinks.forEach(link => {
-                    if (link.href === savedTargetUrl) {
-                        matchedLinkElement = link;
-                    }
-                });
-
-                if (matchedLinkElement) {
-                    const targetSpan = matchedLinkElement.querySelector('.nav-text');
-
-                    if (targetSpan) {
-                        setTimeout(() => {
-                            matchedLinkElement.classList.add('kinetic-locked-frame');
-
-                            let startScale = 1.3;
-                            let endScale = 1.0;
-                            let startOpacity = 0;
-                            let endOpacity = 0.4;
-                            if (matchedLinkElement.closest('footer') && matchedLinkElement.classList.contains('active-footer-page')) endOpacity = 1.0;
-                            if (matchedLinkElement.classList.contains('logo')) endOpacity = 1.0;
-                            if (matchedLinkElement.closest('.breadcrumbs')) endOpacity = 0.75;
-
-                            let duration = 280; 
-                            let startTime = null;
-
-                            targetSpan.style.setProperty('transform', `scale(${startScale})`, 'important');
-                            targetSpan.style.setProperty('opacity', startOpacity, 'important');
-
-                            function animateReverse(timestamp) {
-                                if (!startTime) startTime = timestamp;
-                                let elapsed = timestamp - startTime;
-                                let progress = Math.min(elapsed / duration, 1);
-
-                                let ease = 1 - Math.pow(1 - progress, 2.2);
-
-                                let currentScale = startScale - (startScale - endScale) * ease;
-                                let currentOpacity = startOpacity + (endOpacity - startOpacity) * ease;
-
-                                targetSpan.style.setProperty('transform', `scale(${currentScale})`, 'important');
-                                targetSpan.style.setProperty('opacity', currentOpacity, 'important');
-
-                                if (progress < 1) {
-                                    requestAnimationFrame(animateReverse);
-                                } else {
-                                    targetSpan.style.transform = '';
-                                    targetSpan.style.opacity = '';
-                                    matchedLinkElement.classList.remove('kinetic-locked-frame');
-                                }
-                            }
-
-                            requestAnimationFrame(animateReverse);
-                        }, 40);
-                    }
-                }
             }
         });
     </script>
