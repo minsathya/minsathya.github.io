@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Meal - sathya.</title>
+
+    <script>
+      if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
+        document.documentElement.classList.add('instant-landing');
+      }
+    </script>
+
+    <meta name="description" content="Daily Meal Tracker and 50 Nutrient Dashboard for Sathya.">
+    <link id="favicon" rel="icon" type="image/png" href="../favicon-light.png">
+
+    <script>
+      const favicon = document.getElementById('favicon');
+      const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
+      function updateFavicon(e) { favicon.href = e.matches ? '../favicon-dark.png' : '../favicon-light.png'; }
+      updateFavicon(darkMode);
+      darkMode.addEventListener('change', updateFavicon);
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+            --bg-color: #0b0b0b;
+            --text-main: #ffffff;
+            --text-muted: #555555;
+            --panel-bg: #121212;
+            --panel-border: #222222;
+            --row-divider: #1c1c1c;
+            --header-bg: #1a231e;
+            --header-border: #222c26;
+            --accent-green: #a2e0a0;
+            --bar-track: #1c241e;
+        }
+
+        body.light-mode {
+            --bg-color: #ebebe4;
+            --text-main: #111111;
+            --text-muted: #a1a1a6;
+            --panel-bg: #ffffff;
+            --panel-border: #e2e2e7;
+            --row-divider: #f2f2f7;
+            --header-bg: #e9ebe6;
+            --header-border: #d4d8cf;
+            --accent-green: #257a6c;
+            --bar-track: #d8e4dc;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent !important; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 60px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 95%;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
+        }
+
+        @keyframes masterEntrance {
+            from { opacity: 0; transform: translate3d(0, 24px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+
+        header, .wide-capsule, .day-switcher-capsule, footer, .breadcrumb-nav {
+            will-change: transform, opacity;
+            animation: masterEntrance 1.2s var(--ease-smooth) backwards;
+        }
+
+        header {
+            position: relative;
+            background-color: var(--header-bg);
+            border: 1px solid var(--header-border);
+            border-radius: 50px;
+            width: 100%;
+            height: 72px;
+            margin: 0 auto 40px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth);
+        }
+
+        .header-inner-view {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 32px;
+        }
+
+        .logo { font-size: 26px; font-weight: 600; color: var(--text-main); text-decoration: none !important; }
+        .ctrl-btn { background: none; border: none; color: var(--text-main); cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
+        .ctrl-btn svg { width: 22px; height: 22px; fill: none; stroke: var(--text-main); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+        .theme-toggle { width: 32px; height: 32px; position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .theme-toggle svg { position: absolute; width: 22px; height: 22px; fill: none; stroke: var(--text-main); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.8s var(--ease-smooth), opacity 0.8s var(--ease-smooth); }
+        .theme-toggle .sun-icon { opacity: 0; transform: translate(-50%, -50%) rotate(-90deg) scale(0.4); top:50%; left:50%; }
+        .theme-toggle .moon-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); top:50%; left:50%; }
+        body.light-mode .theme-toggle .sun-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle .moon-icon { opacity: 0; transform: translate(-50%, -50%) rotate(90deg) scale(0.4); }
+
+        .breadcrumb-nav { display: flex; align-items: center; gap: 8px; font-size: 15px; margin-bottom: 24px; padding-left: 8px; }
+        .breadcrumb-nav a { color: var(--text-muted) !important; text-decoration: none !important; }
+        .breadcrumb-separator { color: var(--text-muted); opacity: 0.4; }
+        .breadcrumb-current { color: var(--text-main); opacity: 0.8; }
+
+        /* DAY SWITCHER CAPSULE: Sun Mon Tue Wed Thu Fri Sat */
+        .day-switcher-capsule {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 50px;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            width: 100%;
+        }
+
+        .day-pill {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 10px 22px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s var(--ease-smooth);
+        }
+
+        .day-pill:hover { color: var(--text-main); }
+
+        .day-pill.active {
+            background-color: var(--header-bg);
+            border-color: var(--accent-green);
+            color: var(--text-main);
+            box-shadow: 0 0 15px rgba(162, 224, 160, 0.15);
+        }
+
+        .contents-container { display: flex; flex-direction: column; gap: 32px; margin-bottom: 80px; width: 100%; }
+
+        /* WIDE CAPSULE DASHBOARD CARDS */
+        .wide-capsule {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 28px;
+            padding: 36px 44px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            transition: transform 0.55s var(--ease-smooth), box-shadow 0.55s var(--ease-smooth), border-color 0.55s var(--ease-smooth);
+        }
+
+        body:not(.light-mode) .wide-capsule { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+
+        .capsule-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .capsule-title {
+            font-size: 19px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .capsule-title svg { width: 22px; height: 22px; stroke: var(--accent-green); fill: none; stroke-width: 2; }
+
+        /* FOOD CHECKLIST GRID */
+        .food-checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px 32px;
+        }
+
+        .food-item-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--row-divider);
+            padding: 14px 20px;
+            border-radius: 18px;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s var(--ease-smooth), border-color 0.3s var(--ease-smooth);
+        }
+
+        .food-item-checkbox:hover { border-color: var(--panel-border); }
+
+        .food-item-checkbox input[type="checkbox"] { display: none; }
+
+        .custom-check-box {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--text-muted);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s var(--ease-smooth);
+            flex-shrink: 0;
+        }
+
+        .custom-check-box svg { width: 14px; height: 14px; stroke: #0b0b0b; stroke-width: 3; fill: none; opacity: 0; transition: opacity 0.2s; }
+
+        .food-item-checkbox input:checked + .custom-check-box {
+            background-color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .food-item-checkbox input:checked + .custom-check-box svg { opacity: 1; }
+
+        .food-name { font-size: 15.5px; font-weight: 500; color: var(--text-main); }
+        .food-qty { font-size: 13.5px; color: var(--text-muted); margin-left: 6px; }
+
+        /* MACROS & NUTRIENTS PROGRESS BARS */
+        .macros-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .macro-card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .macro-top-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .macro-val { color: var(--text-muted); font-size: 13px; }
+        .macro-badge {
+            background-color: rgba(162, 224, 160, 0.1);
+            color: var(--accent-green);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .progress-track {
+            height: 8px;
+            background-color: var(--bar-track);
+            border-radius: 10px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--accent-green);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.8s var(--ease-smooth);
+        }
+
+        /* ACCORDIONS FOR 50 NUTRIENTS */
+        .accordion-header {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .accordion-toggle-icon {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 2;
+            transition: transform 0.4s var(--ease-smooth);
+        }
+
+        .accordion-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px 40px;
+            margin-top: 10px;
+        }
+
+        .accordion-content.collapsed { display: none; }
+
+        footer { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
+        .footer-links-row { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; width: 100%; }
+        .footer-links-row a { color: var(--text-muted) !important; text-decoration: none !important; font-size: 14px; }
+        .footer-links-row a:hover { color: var(--text-main) !important; }
+        .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; }
+
+        @media (max-width: 900px) {
+            .macros-grid { grid-template-columns: repeat(2, 1fr); }
+            .accordion-content { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 40px 20px; }
+            header { margin-bottom: 30px; height: 64px; }
+            .day-switcher-capsule { overflow-x: auto; padding: 8px 12px; gap: 8px; justify-content: flex-start; }
+            .day-pill { padding: 8px 16px; font-size: 14px; }
+            .food-checklist-grid { grid-template-columns: 1fr; }
+            .macros-grid { grid-template-columns: 1fr; }
+            .wide-capsule { padding: 28px 20px; border-radius: 22px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="masterHeader">
+        <div class="header-inner-view">
+            <a href="/study/index.html" class="logo">sathya.</a>
+            <div class="header-right-cluster">
+                <div class="theme-toggle" id="themeToggleBtn">
+                    <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="contents-container">
+        <nav class="breadcrumb-nav">
+            <a href="/study/index.html">Home</a><span class="breadcrumb-separator">/</span>
+            <a href="/nutrition/index.html">Nutrition</a><span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">MM</span>
+        </nav>
+
+        <!-- DAY SWITCHER (STARTS WITH SUN) -->
+        <div class="day-switcher-capsule" id="daySwitcher">
+            <button class="day-pill" data-day="0">Sun</button>
+            <button class="day-pill" data-day="1">Mon</button>
+            <button class="day-pill" data-day="2">Tue</button>
+            <button class="day-pill" data-day="3">Wed</button>
+            <button class="day-pill" data-day="4">Thu</button>
+            <button class="day-pill" data-day="5">Fri</button>
+            <button class="day-pill" data-day="6">Sat</button>
+        </div>
+
+        <!-- TODAY'S MEAL PLATE -->
+        <div class="wide-capsule">
+            <div class="capsule-header-row">
+                <h2 class="capsule-title">
+                    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path><path d="M12 6a6 6 0 1 0 6 6 6 6 0 0 0-6-6z"></path></svg>
+                    TODAY’S MEAL PLATE <span id="activeDayText" style="color:var(--text-muted); font-size:16px;">(Today)</span>
+                </h2>
+            </div>
+            <div class="food-checklist-grid" id="foodGrid">
+                <!-- Checkboxes populated dynamically by JS based on selected day -->
+            </div>
+        </div>
+
+        <!-- CORE MACROS SUMMARY -->
+        <div class="wide-capsule">
+            <div class="capsule-header-row">
+                <h2 class="capsule-title">
+                    <svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                    CORE MACROS SUMMARY
+                </h2>
+            </div>
+            <div class="macros-grid">
+                <div class="macro-card">
+                    <div class="macro-top-label"><span>Calories</span><span class="macro-badge" id="calBadge">0%</span></div>
+                    <div class="macro-val" id="calVal">0 / 2200 kcal</div>
+                    <div class="progress-track"><div class="progress-fill" id="calBar"></div></div>
+                </div>
+                <div class="macro-card">
+                    <div class="macro-top-label"><span>Protein</span><span class="macro-badge" id="proteinBadge">0%</span></div>
+                    <div class="macro-val" id="proteinVal">0g / 95g</div>
+                    <div class="progress-track"><div class="progress-fill" id="proteinBar"></div></div>
+                </div>
+                <div class="macro-card">
+                    <div class="macro-top-label"><span>Carbs</span><span class="macro-badge" id="carbsBadge">0%</span></div>
+                    <div class="macro-val" id="carbsVal">0g / 275g</div>
+                    <div class="progress-track"><div class="progress-fill" id="carbsBar"></div></div>
+                </div>
+                <div class="macro-card">
+                    <div class="macro-top-label"><span>Fats</span><span class="macro-badge" id="fatsBadge">0%</span></div>
+                    <div class="macro-val" id="fatsVal">0g / 73g</div>
+                    <div class="progress-track"><div class="progress-fill" id="fatsBar"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESSENTIAL MINERALS ACCORDION -->
+        <div class="wide-capsule">
+            <div class="capsule-header-row accordion-header" onclick="toggleAccordion('mineralsDrawer', 'mineralsIcon')">
+                <h2 class="capsule-title">
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    ESSENTIAL MINERALS
+                </h2>
+                <svg class="accordion-toggle-icon" id="mineralsIcon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="accordion-content" id="mineralsDrawer">
+                <div class="macro-card">
+                    <div class="macro-top-label"><span>Iron</span><span class="macro-badge" id="ironBadge">0%</span></div>
+                    <div class="macro-val" id="ironVal">0 / 18 mg</div>
+                    <div class="progress-track"><div class="progress-fill" id="ironBar"></div></div>
+                </div>
+                <div class="macro-card">
+                    <div class="macro-top-label"><span>Calcium</span><span class="macro-badge" id="calciumBadge">0%</span></div>
+                    <div class="macro-val" id="calciumVal">0 / 1000 mg</div>
+                    <div class="progress-track"><div class="progress-fill" id="calciumBar"></div></div>
+                </div>
+                <div class="macro-card">
+                    <div class="macro-top-label"><span>Zinc</span><span class="macro-badge" id="zincBadge">0%</span></div>
+                    <div class="macro-val" id="zincVal">0 / 15 mg</div>
+                    <div class="progress-track"><div class="progress-fill" id="zincBar"></div></div>
+                </div>
+                <div class="macro-card">
+                    <div class="macro-top-label"><span>Potassium</span><span class="macro-badge" id="potassiumBadge">0%</span></div>
+                    <div class="macro-val" id="potassiumVal">0 / 3500 mg</div>
+                    <div class="progress-track"><div class="progress-fill" id="potassiumBar"></div></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links-row">
+            <a href="/study/Footer/about.html">About</a>
+            <a href="/study/Footer/contact.html">Contact</a>
+            <a href="/study/Footer/privacy.html">Privacy Policy</a>
+            <a href="/study/Footer/terms.html">Terms &amp; Conditions</a>
+            <a href="/study/Footer/disclaimer.html">Disclaimer</a>
+        </div>
+        <div class="copyright-tag">&copy; 2026 Sathya. All rights reserved.</div>
+    </footer>
+
+    <script>
+        // Sample Weekly Foods Mapping
+        const weeklyMenu = {
+            0: [{ name: 'Sprouted Moong', qty: '100g', cal: 105, pro: 14, carb: 19, fat: 1, fe: 4, ca: 80, zn: 2, k: 480 }, { name: 'Curd', qty: '200g', cal: 120, pro: 8, carb: 10, fat: 6, fe: 0.2, ca: 240, zn: 1, k: 300 }],
+            1: [{ name: 'Peanuts', qty: '50g', cal: 280, pro: 13, carb: 8, fat: 24, fe: 2.3, ca: 45, zn: 1.8, k: 350 }, { name: 'Toor Dal', qty: '200g', cal: 230, pro: 15, carb: 40, fat: 2, fe: 3.1, ca: 70, zn: 2.2, k: 600 }],
+            2: [{ name: 'Chana Masala', qty: '180g', cal: 260, pro: 12, carb: 38, fat: 6, fe: 4.2, ca: 90, zn: 2.5, k: 520 }, { name: 'Cooked Rice', qty: '150g', cal: 195, pro: 4, carb: 43, fat: 0.5, fe: 0.8, ca: 20, zn: 0.8, k: 50 }],
+            3: [{ name: 'Paneer', qty: '100g', cal: 265, pro: 18, carb: 3, fat: 20, fe: 0.5, ca: 480, zn: 2.1, k: 120 }, { name: 'Roti', qty: '2 pcs', cal: 180, pro: 6, carb: 36, fat: 2, fe: 2.0, ca: 30, zn: 1.2, k: 180 }],
+            4: [{ name: 'Soya Chunks', qty: '50g', cal: 170, pro: 26, carb: 13, fat: 0.5, fe: 10, ca: 120, zn: 2.4, k: 850 }, { name: 'Curd', qty: '200g', cal: 120, pro: 8, carb: 10, fat: 6, fe: 0.2, ca: 240, zn: 1, k: 300 }],
+            5: [{ name: 'Rajma Curry', qty: '150g', cal: 210, pro: 11, carb: 35, fat: 3, fe: 3.8, ca: 70, zn: 1.9, k: 600 }, { name: 'Peanuts', qty: '50g', cal: 280, pro: 13, carb: 8, fat: 24, fe: 2.3, ca: 45, zn: 1.8, k: 350 }, { name: 'Toor Dal', qty: '200g', cal: 230, pro: 15, carb: 40, fat: 2, fe: 3.1, ca: 70, zn: 2.2, k: 600 }, { name: 'Cooked Rice', qty: '150g', cal: 195, pro: 4, carb: 43, fat: 0.5, fe: 0.8, ca: 20, zn: 0.8, k: 50 }],
+            6: [{ name: 'Mixed Fruit Bowl', qty: '200g', cal: 130, pro: 2, carb: 31, fat: 0.5, fe: 0.6, ca: 40, zn: 0.4, k: 400 }, { name: 'Milk', qty: '250ml', cal: 150, pro: 8, carb: 12, fat: 8, fe: 0.1, ca: 300, zn: 1.0, k: 380 }]
+        };
+
+        const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        let currentSelectedDay = new Date().getDay(); // Default to today
+
+        function renderDay(dayIdx) {
+            currentSelectedDay = dayIdx;
+            document.querySelectorAll('.day-pill').forEach(pill => {
+                pill.classList.toggle('active', parseInt(pill.dataset.day) === dayIdx);
+            });
+            document.getElementById('activeDayText').innerText = `(${dayNames[dayIdx]})`;
+
+            const foodGrid = document.getElementById('foodGrid');
+            foodGrid.innerHTML = '';
+
+            const items = weeklyMenu[dayIdx] || [];
+            items.forEach((item, idx) => {
+                const label = document.createElement('label');
+                label.className = 'food-item-checkbox';
+                label.innerHTML = `
+                    <input type="checkbox" data-idx="${idx}" checked onchange="recalculateTotals()">
+                    <div class="custom-check-box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                    <span class="food-name">${item.name}<span class="food-qty">– ${item.qty}</span></span>
+                `;
+                foodGrid.appendChild(label);
+            });
+
+            recalculateTotals();
+        }
+
+        function recalculateTotals() {
+            const items = weeklyMenu[currentSelectedDay] || [];
+            const checkboxes = document.querySelectorAll('#foodGrid input[type="checkbox"]');
+
+            let totals = { cal: 0, pro: 0, carb: 0, fat: 0, fe: 0, ca: 0, zn: 0, k: 0 };
+
+            checkboxes.forEach((cb, idx) => {
+                if (cb.checked) {
+                    const f = items[idx];
+                    totals.cal += f.cal; totals.pro += f.pro; totals.carb += f.carb; totals.fat += f.fat;
+                    totals.fe += f.fe; totals.ca += f.ca; totals.zn += f.zn; totals.k += f.k;
+                }
+            });
+
+            updateBar('cal', totals.cal, 2200, 'kcal');
+            updateBar('protein', totals.pro, 95, 'g');
+            updateBar('carbs', totals.carb, 275, 'g');
+            updateBar('fats', totals.fat, 73, 'g');
+
+            updateBar('iron', totals.fe, 18, 'mg');
+            updateBar('calcium', totals.ca, 1000, 'mg');
+            updateBar('zinc', totals.zn, 15, 'mg');
+            updateBar('potassium', totals.k, 3500, 'mg');
+        }
+
+        function updateBar(id, val, target, unit) {
+            const pct = Math.min(Math.round((val / target) * 100), 100);
+            document.getElementById(`${id}Val`).innerText = `${val.toFixed(val % 1 ? 1 : 0)} / ${target} ${unit}`;
+            document.getElementById(`${id}Badge`).innerText = `${pct}%`;
+            document.getElementById(`${id}Bar`).style.width = `${pct}%`;
+        }
+
+        document.querySelectorAll('.day-pill').forEach(pill => {
+            pill.addEventListener('click', () => renderDay(parseInt(pill.dataset.day)));
+        });
+
+        function toggleAccordion(drawerId, iconId) {
+            const drawer = document.getElementById(drawerId);
+            const icon = document.getElementById(iconId);
+            const isCollapsed = drawer.classList.toggle('collapsed');
+            icon.style.transform = isCollapsed ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+
+        // Theme Toggle Engine
+        const toggleBtn = document.getElementById('themeToggleBtn');
+        const bodyElement = document.body;
+        toggleBtn.addEventListener('click', () => {
+            const isLight = bodyElement.classList.toggle('light-mode');
+            sessionStorage.setItem('dashboard-theme', isLight ? 'light' : 'dark');
+        });
+        if (sessionStorage.getItem('dashboard-theme') === 'light') bodyElement.classList.add('light-mode');
+
+        // Init page
+        renderDay(currentSelectedDay);
+    </script>
+</body>
+</html>
