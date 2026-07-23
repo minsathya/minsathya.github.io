@@ -271,11 +271,12 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            overflow: visible !important;
         }
 
         .theme-toggle svg {
             position: absolute;
+            inset: 0;
+            margin: auto;
             width: 22px;
             height: 22px;
             fill: none;
@@ -283,9 +284,7 @@
             stroke-width: 2.2;
             stroke-linecap: round;
             stroke-linejoin: round;
-            transform-origin: center center;
-            transform-box: fill-box;
-            overflow: visible !important;
+            transform-origin: 50% 50%;
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
