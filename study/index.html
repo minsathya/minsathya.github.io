@@ -16,14 +16,15 @@
       gtag('config', 'G-5VGX2K64Y4');
     </script>
     
-    <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png">
+    <!-- Relative paths for files inside /study/ -->
+    <link id="favicon" rel="icon" type="image/png" href="../favicon-light.png">
 
     <script>
       const favicon = document.getElementById('favicon');
       const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
       
       function updateFavicon(e) {
-        favicon.href = e.matches ? '/favicon-dark.png' : '/favicon-light.png';
+        favicon.href = e.matches ? '../favicon-dark.png' : '../favicon-light.png';
       }
       
       updateFavicon(darkMode);
@@ -462,7 +463,7 @@
 
     <header id="masterHeader">
         <div class="header-inner-view" id="headerMainView">
-            <a href="/index.html" class="logo">sathya.</a>
+            <a href="/study/index.html" class="logo">sathya.</a>
             <div class="header-right-cluster">
                 <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
                     <svg class="sun-icon" viewBox="0 0 24 24">
@@ -479,35 +480,33 @@
             </div>
         </div>
 
-     <form class="header-inner-view" id="headerSearchView" action="search.html" method="GET">
-    <!-- 1. The search icon is now a clickable submit button -->
-    <button type="submit" aria-label="Submit search" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: inherit; display: flex; align-items: center; justify-content: center;">
-        <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-    </button>
+        <form class="header-inner-view" id="headerSearchView" action="/study/search.html" method="GET">
+            <button type="submit" aria-label="Submit search" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: inherit; display: flex; align-items: center; justify-content: center;">
+                <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
 
-    <!-- 2. Added enterkeyhint="search" to optimize virtual keyboards -->
-    <input type="text" class="search-core-input" id="searchCoreInput" name="q" placeholder="Search..." autocomplete="off" enterkeyhint="search">
-    
-    <div class="search-control-cluster">
-        <button type="button" class="ctrl-btn clear-text-btn" id="clearSearchBtn" aria-label="Clear typed text">
-            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-        <button type="button" class="ctrl-btn close-search-btn" id="closeSearchBtn" aria-label="Minimize search pill">
-            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-        </button>
-    </div>
-</form>
-</header>
+            <input type="text" class="search-core-input" id="searchCoreInput" name="q" placeholder="Search..." autocomplete="off" enterkeyhint="search">
+            
+            <div class="search-control-cluster">
+                <button type="button" class="ctrl-btn clear-text-btn" id="clearSearchBtn" aria-label="Clear typed text">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <button type="button" class="ctrl-btn close-search-btn" id="closeSearchBtn" aria-label="Minimize search pill">
+                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+            </div>
+        </form>
+    </header>
     
     <main>
         <div class="matrix-canvas">
             <div class="capsule-panel">
                 <h2 class="panel-title">Upsc</h2>
                 <ul class="document-list">
-                    <li><a href="/subjects.html">Subjects</a></li>
-                    <li><a href="/ncert.html">Ncert</a></li>
-                    <li><a href="/csat.html">Csat</a></li>
-                    <li><a href="/currentaffairs.html">Current affairs</a></li>
+                    <li><a href="/study/subjects.html">Subjects</a></li>
+                    <li><a href="/study/ncert.html">Ncert</a></li>
+                    <li><a href="/study/csat.html">Csat</a></li>
+                    <li><a href="/study/currentaffairs.html">Current affairs</a></li>
                 </ul>
             </div>
 
@@ -522,19 +521,19 @@
             <div class="capsule-panel">
                 <h2 class="panel-title">Contents</h2>
                 <ul class="document-list">
-                    <li><a href="/contents.html#art-culture">Art and culture</a></li>
-                    <li><a href="/contents.html#history">History</a></li>
-                    <li><a href="/contents.html#indian-society">Indian society</a></li>
+                    <li><a href="/study/contents.html#art-culture">Art and culture</a></li>
+                    <li><a href="/study/contents.html#history">History</a></li>
+                    <li><a href="/study/contents.html#indian-society">Indian society</a></li>
                 </ul>
                 <div class="view-more-container">
-                    <a href="/contents.html" class="view-more-link">View more</a>
+                    <a href="/study/contents.html" class="view-more-link">View more</a>
                 </div>
             </div>
 
             <div class="capsule-panel">
                 <h2 class="panel-title">Must read</h2>
                 <ul class="document-list">
-                    <li><a href="/ramsarsites.html">Ramsar sites</a></li>
+                    <li><a href="/study/ramsarsites.html">Ramsar sites</a></li>
                     <li><a href="#">Coming up</a></li>
                 </ul>
             </div>
@@ -557,11 +556,11 @@
 
     <footer>
         <div class="footer-links-row">
-          <a href="/study/Footer/about.html">About</a>
-          <a href="/study/Footer/contact.html">Contact</a>
-          <a href="/study/Footer/privacy.html">Privacy Policy</a>
-          <a href="/study/Footer/terms.html">Terms &amp; Conditions</a>
-          <a href="/study/Footer/disclaimer.html">Disclaimer</a>
+            <a href="/study/Footer/about.html">About</a>
+            <a href="/study/Footer/contact.html">Contact</a>
+            <a href="/study/Footer/privacy.html">Privacy Policy</a>
+            <a href="/study/Footer/terms.html">Terms &amp; Conditions</a>
+            <a href="/study/Footer/disclaimer.html">Disclaimer</a>
         </div>
         <div class="copyright-tag">
             &copy; 2026 Sathya. All rights reserved.
@@ -572,10 +571,9 @@
         // --- Universal Persistent Master Breadcrumb Engine (Homepage Reset Optimization) ---
         (function buildDynamicBreadcrumbs() {
             const searchPath = window.location.pathname;
-            const HOME_PATH = "/index.html";
+            const HOME_PATH = "/study/index.html";
 
-            // Whenever user navigates or maps back to the homepage, force flush state back to Home base anchor node
-            if (searchPath === HOME_PATH || searchPath === "/") {
+            if (searchPath === HOME_PATH || searchPath === "/study/" || searchPath === "/study/index.html") {
                 const structuralHomeState = [{ name: "Home", path: HOME_PATH }];
                 try {
                     sessionStorage.setItem('breadcrumbTrail', JSON.stringify(structuralHomeState));
