@@ -6,7 +6,7 @@
     <title>Search - sathya.</title>
     
     <!-- Dynamic Favicon Link Component -->
-    <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png">
+    <link id="favicon" rel="icon" type="image/png" href="../favicon-light.png">
     
     <!-- Poppins Font Integration -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -156,7 +156,6 @@
 
         /* PREMIUM RESPONSIVE ADAPTATION ENGINE (Laptop and iPad Grid Control) */
         @media (min-width: 701px) {
-            /* Handles 2 or 3 capsules perfectly side-by-side */
             .capsule-container.multi-layout-side-by-side {
                 flex-direction: row !important;
                 flex-wrap: wrap !important;
@@ -165,7 +164,6 @@
                 gap: 16px !important;
             }
 
-            /* Handles exactly 4 capsules into a flawless 2x2 symmetry block */
             .capsule-container.grid-layout-2x2 {
                 display: grid !important;
                 grid-template-columns: repeat(2, auto) !important;
@@ -186,28 +184,36 @@
         
         <div class="capsule-container" id="capsuleContainer"></div>
 
-        <a href="index.html" class="back-home-btn">← Back to Home</a>
+        <a href="/study/index.html" class="back-home-btn">← Back to Home</a>
     </div>
 
     <script>
         // 1. Theme Synced Favicon Manager
         const favicon = document.getElementById('favicon');
         const darkModeMatcher = window.matchMedia('(prefers-color-scheme: dark)');
-        function updateFavicon(e) { favicon.href = e.matches ? '/favicon-dark.png' : '/favicon-light.png'; }
+        function updateFavicon(e) { favicon.href = e.matches ? '../favicon-dark.png' : '../favicon-light.png'; }
         darkModeMatcher.addEventListener('change', updateFavicon);
         updateFavicon(darkModeMatcher);
 
-        // 2. Strict Common Connector Guard Words
+        // 2. Nutrition Keywords Registry for Intelligent Cross-Portal Redirection
+        const nutritionKeywords = new Set([
+            "nutrition", "food", "recipe", "recipes", "protein", "diet", "calories", "calorie", 
+            "eggless", "cake", "meal", "meals", "sugar", "snack", "snacks", "cooking", "fat", 
+            "carbs", "carbohydrate", "vitamin", "vitamins", "breakfast", "lunch", "dinner",
+            "baking", "oven", "grams", "ingridients", "banana", "chocolate", "oats"
+        ]);
+
+        // 3. Strict Common Connector Guard Words
         const commonFilterWords = new Set(["the", "and", "they", "them", "here", "this", "that", "with", "from", "your", "their"]);
 
-        // 3. High Volume Generic Word Registry
+        // 4. High Volume Generic Word Registry
         const highVolumeWords = new Set(["district", "history", "geography", "polity", "economy", "science", "environment", "art", "culture", "society", "wetland", "lake", "sanctuary", "reserve", "forest", "national park", "mission"]);
 
-        // 4. Manual Word List Registry System
+        // 5. Study Portal Search Index
         const siteSearchIndex = [
             {
                 title: "Subjects",
-                url: "subjects.html",
+                url: "/study/subjects.html",
                 words: [
                     "subjects", "art and culture", "history", "indian society", "geography", "polity", 
                     "social justice", "governance", "international relations", "economy", 
@@ -216,7 +222,7 @@
             },
             {
                 title: "Contents",
-                url: "contents.html",
+                url: "/study/contents.html",
                 words: [
                     "contents", "art and culture", "dances", "literature", "art forms", "folk songs", 
                     "architecture", "history", "indian history", "ancient history", "freedom struggle", 
@@ -253,8 +259,55 @@
                 ]
             },
             {
+                title: "CSAT",
+                url: "/study/csat.html",
+                words: [
+                    "csat", "aptitude", "percentages", "profit & loss", "simple & compound interest", "averages",
+                    "alligations & mixtures", "ages", "ratio & proportion", "time & distance", "boats & streams",
+                    "permutations & combinations", "probability", "mensuration", "lcm & hcf", "reasoning",
+                    "passages", "comprehension", "communication logic", "situational judgment", "syllogism",
+                    "blood relations", "seating arrangement", "logical puzzles", "coding & decoding",
+                    "direction sense", "coded inequalities", "number series", "letter series", "analogy",
+                    "data interpretation", "bar graphs", "line charts", "pie charts", "data tables"
+                ]
+            },
+            {
+                title: "NCERT",
+                url: "/study/ncert.html",
+                words: [
+                    "ncert", "class 06", "class 07", "class 08", "class 09", "class 10", "class 11", "class 12",
+                    "social & political life", "understanding society", "introducing sociology", "indian society",
+                    "our past", "india and contemporary world", "themes in world history", "r.s.sharma", "satish chandra",
+                    "bipin chandra", "arjun dev", "the earth our habitat", "our environment", "resource and development",
+                    "contemporary india", "fundamentals of physical geography", "india-physical environment",
+                    "fundamentals of human geography", "india-people and economy", "democratic politics",
+                    "indian constitution at work", "political theory", "contemporary world politics",
+                    "an introduction to indian art", "living craft traditions of india", "science",
+                    "understanding economic development", "indian economic development", "introductory microeconomics",
+                    "introductory macroeconomics", "psychology"
+                ]
+            },
+            {
+                title: "Current Affairs",
+                url: "/study/currentaffairs.html",
+                words: [
+                    "current affairs", "polity & governance", "bills", "acts", "ordinances", "supremecourt judgments",
+                    "highcourt judgments", "electoral reforms", "one nation one election", "anti-defection",
+                    "government schemes", "welfare programmes", "e-governance", "rti", "panchayati raj",
+                    "rbi policies", "repo rate", "reverse repo", "crr", "slr", "inflation", "monetary policy",
+                    "digital currency", "upi", "npas", "budget", "interim budget", "economic survey", "fiscal deficit",
+                    "gst", "direct tax", "msp", "procurement", "fci", "imf", "world bank", "wto", "fta", "forex reserves",
+                    "msmes", "semiconductor mission", "pli scheme", "national parks", "wildlife sanctuaries",
+                    "biosphere reserves", "ramsar sites", "tiger reserves", "elephant reserves", "cop meetings",
+                    "paris agreement", "net zero", "isro missions", "nasa", "spacex", "crispr", "gene editing",
+                    "stem cells", "artificial intelligence", "quantum computing", "chips", "semiconductor",
+                    "missiles", "drones", "uav", "cert-in", "vaccines", "who", "diseases", "un", "brics", "sco", "g20",
+                    "asean", "quad", "nobel prizes", "economic survey", "niti aayog"
+                ]
+            },
+            {
                 title: "Ramsar Sites",
-                url: "ramsarsites.html",
+                url: "/study/ramsarsites.html",
                 words: [
                     "ramsar sites in india 2026", "kolleru lake", "andhra pradesh", "krishna–godavari delta", 
                     "deepor beel", "assam", "near guwahati", "kabartal wetland", "bihar", "begusarai district", 
@@ -311,7 +364,7 @@
             }
         ];
 
-        // Core Word-to-Section Mapping Dictionary Matrix
+        // Section Mapping for /study/contents.html Anchor Navigation
         const sectionMapping = {
             "art and culture": "#art-culture", "dances": "#art-culture", "literature": "#art-culture", "art forms": "#art-culture", "folk songs": "#art-culture", "architecture": "#art-culture",
             "history": "#history", "indian history": "#history", "ancient history": "#history", "freedom struggle": "#history", "medieval history": "#history", "post-independence": "#history", "modern history": "#history", "world history": "#history", "industrial revolution": "#history", "colonization & decolonization": "#history", "world wars": "#history", "political philosophies": "#history",
@@ -322,7 +375,7 @@
             "governance": "#governance", "important aspects of governance": "#governance", "citizens charters": "#governance", "transparency & accountability": "#governance", "role of civil services in a democracy": "#governance", "e-governance applications & models": "#governance",
             "international relations": "#international-relations", "india and its neighborhood": "#international-relations", "effect of policies of developed countries": "#international-relations", "bilateral, regional & global groupings": "#international-relations", "important international institutions": "#international-relations",
             "economy": "#economy", "indian economy & issues relating to planning": "#economy", "government budgeting": "#economy", "mobilization of resources": "#economy", "land reforms in india": "#economy", "growth, development & employment": "#economy", "infrastructure & investment models": "#economy", "inclusive growth": "#economy",
-            "science and technology": "#science-technology", "developments & everyday applications": "#science-technology", "it, space & computers": "#science-technology", "achievements of indians in sci-tech": "#science-technology", "robotics & nanotech": "#nanotech", "indigenization of technology": "#science-technology", "biotechnology & ipr issues": "#science-technology",
+            "science and technology": "#science-technology", "developments & everyday applications": "#science-technology", "it, space & computers": "#science-technology", "achievements of indians in sci-tech": "#science-technology", "robotics & nanotech": "#science-technology", "indigenization of technology": "#science-technology", "biotechnology & ipr issues": "#science-technology",
             "environment": "#environment", "conservation & biodiversity": "#environment", "climate change mitigation": "#environment", "environmental pollution & degradation": "#environment", "environmental impact assessment (eia)": "#environment",
             "disaster management": "#disaster-management", "disaster profiles of india": "#disaster-management", "mitigation strategies": "#disaster-management", "vulnerability & risk assessment": "#disaster-management", "ndma guidelines & frameworks": "#disaster-management",
             "internal security": "#internal-security", "linkages between development & extremism": "#internal-security", "money laundering & its prevention": "#internal-security", "role of external state & non-state actors": "#internal-security", "border area management & security forces": "#internal-security", "cyber security challenges": "#internal-security", "ngos": "#internal-security"
@@ -339,19 +392,37 @@
             const msgEl = document.getElementById('statusMessage');
             const containerEl = document.getElementById('capsuleContainer');
 
-            // Cleans formatting text layer variables but strictly preserves the special '&' operator matrix
             const cleanQuery = rawQuery.toLowerCase().replace(/[.,\/#!$%\^\*;:{}=\-_`~()]/g, "").trim();
 
-            if (cleanQuery.length < 4) {
+            if (cleanQuery.length < 3) {
                 titleEl.textContent = "Not found";
                 msgEl.textContent = "Please enter full word to know";
                 containerEl.innerHTML = "";
                 return;
             }
 
+            // SMART NUTRITION REDIRECT CHECK
+            const isNutritionQuery = cleanQuery.split(/\s+/).some(word => nutritionKeywords.has(word)) ||
+                                     Array.from(nutritionKeywords).some(k => cleanQuery.includes(k));
+
+            if (isNutritionQuery) {
+                titleEl.textContent = "Redirecting";
+                msgEl.textContent = "Taking you to Nutrition page...";
+                containerEl.innerHTML = `
+                    <div class="capsule-panel">
+                        <span>Nutrition Portal</span>
+                        <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </div>
+                `;
+                setTimeout(() => {
+                    window.location.replace(`/search.html?q=${encodeURIComponent(rawQuery)}`);
+                }, 750);
+                return;
+            }
+
             if (commonFilterWords.has(cleanQuery)) {
                 titleEl.textContent = "Not found";
-                msgEl.textContent = "these are common words so please try other words";
+                msgEl.textContent = "These are common words so please try other words";
                 containerEl.innerHTML = "";
                 return;
             }
@@ -366,12 +437,12 @@
                 }
             }
 
-            // INSTANT BYPASS ROUTER: Fires if exactly 1 destination page holds the layout data matrix matches
+            // INSTANT BYPASS ROUTER: Direct jump if query belongs to exactly 1 study page
             if (matchedPages.length === 1) {
                 let singleDestinationPage = matchedPages[0];
                 let secureLandingRedirectUrl = singleDestinationPage.url;
 
-                if (singleDestinationPage.url === "contents.html") {
+                if (singleDestinationPage.url === "/study/contents.html") {
                     const matchingKeyword = singleDestinationPage.words.find(keyword => keyword.includes(cleanQuery));
                     if (matchingKeyword && sectionMapping[matchingKeyword]) {
                         secureLandingRedirectUrl += sectionMapping[matchingKeyword];
@@ -386,7 +457,7 @@
                 return;
             }
 
-            // MULTI-RESULT SELECTION UI: Executes if minimum 2 pages matched the layout strings
+            // MULTI-RESULT SELECTION UI
             if (matchedPages.length > 0) {
                 titleEl.textContent = "Found";
                 
@@ -400,10 +471,8 @@
                         : "it is available in these pages";
                 }
 
-                // Clean old layout parameters before appending the adaptive layout metrics
                 containerEl.className = "capsule-container";
 
-                // INJECTS RESPONSIVE GRID MODIFIERS: Handles adaptive layouts across different devices
                 if (matchedPages.length === 4) {
                     containerEl.classList.add("grid-layout-2x2");
                 } else if (matchedPages.length > 1) {
@@ -413,7 +482,7 @@
                 containerEl.innerHTML = matchedPages.map(page => {
                     let destinationLink = page.url;
 
-                    if (page.url === "contents.html") {
+                    if (page.url === "/study/contents.html") {
                         const matchingKeyword = page.words.find(keyword => keyword.includes(cleanQuery));
                         if (matchingKeyword && sectionMapping[matchingKeyword]) {
                             destinationLink += sectionMapping[matchingKeyword];
