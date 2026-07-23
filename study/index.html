@@ -275,8 +275,8 @@
 
         .theme-toggle svg {
             position: absolute;
-            inset: 0;
-            margin: auto;
+            top: 50%;
+            left: 50%;
             width: 22px;
             height: 22px;
             fill: none;
@@ -284,17 +284,16 @@
             stroke-width: 2.2;
             stroke-linecap: round;
             stroke-linejoin: round;
-            transform-origin: 50% 50%;
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             transition: transform 0.8s var(--ease-premium), opacity 0.8s var(--ease-premium), stroke 0.8s var(--ease-premium);
         }
 
-        .theme-toggle .sun-icon { opacity: 0; transform: translate3d(0, 0, 0) rotate(-90deg) scale(0.4); }
-        .theme-toggle .moon-icon { opacity: 1; transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
-        body.light-mode .theme-toggle .sun-icon { opacity: 1; transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
-        body.light-mode .theme-toggle .moon-icon { opacity: 0; transform: translate3d(0, 0, 0) rotate(90deg) scale(0.4); }
+        .theme-toggle .sun-icon { opacity: 0; transform: translate(-50%, -50%) rotate(-90deg) scale(0.4); }
+        .theme-toggle .moon-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle .sun-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle .moon-icon { opacity: 0; transform: translate(-50%, -50%) rotate(90deg) scale(0.4); }
 
         .matrix-canvas {
             display: grid;
@@ -529,7 +528,7 @@
                         <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
                     </svg>
                     <svg class="moon-icon" viewBox="0 0 24 24">
-                        <path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"></path>
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
                 </div>
                 <button class="ctrl-btn" id="openSearchBtn" aria-label="Open Workspace Search">
@@ -732,10 +731,15 @@
                 // Reset any active wave classes on other links
                 universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
 
+                // Smoothly revert capsule scale to normal so returning to index never snaps
+                document.querySelectorAll('.capsule-panel').forEach(panel => {
+                    panel.style.transform = 'scale(1)';
+                });
+
                 // Activate continuous GPU-promoted fluid wave sweep on clicked link
                 this.classList.add('is-wave-loading');
 
-                // Trigger navigation smoothly; GPU compositor keeps wave in continuous motion
+                // Trigger navigation smoothly
                 setTimeout(() => {
                     window.location.href = destination;
                 }, 180);
@@ -743,6 +747,11 @@
         });
 
         window.addEventListener('pageshow', () => {
+            // Restore capsule panels to CSS hover control
+            document.querySelectorAll('.capsule-panel').forEach(panel => {
+                panel.style.transform = '';
+            });
+
             universalTargetLinks.forEach(l => {
                 l.classList.remove('is-wave-loading');
                 l.classList.remove('kinetic-locked-frame');
