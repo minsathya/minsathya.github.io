@@ -366,6 +366,7 @@
             gap: 16px;
             text-decoration: none !important;
             box-shadow: var(--card-shadow);
+            touch-action: manipulation;
             
             will-change: transform, box-shadow, border-color;
             -webkit-backface-visibility: hidden;
@@ -404,25 +405,8 @@
             transition: color 0.8s var(--ease-premium);
         }
 
-        /* Laptop Hover Rules */
-        @media (hover: hover) and (pointer: fine) {
-            .myspace-card:hover {
-                transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1);
-                border-color: var(--card-border-hover);
-                box-shadow: var(--card-shadow-hover);
-            }
-
-            .myspace-card:hover .myspace-card-icon {
-                transform: scale3d(1.08, 1.08, 1);
-            }
-
-            .footer-links-row a:hover .nav-text,
-            .logo:hover .nav-text {
-                transform: scale3d(1.06, 1.06, 1) !important;
-            }
-        }
-
-        /* iPad / Touch Active Rules (Triggers instant scale animation on mobile) */
+        /* --- UNIVERSAL 3D ANIMATIONS (LAPTOP, IPAD & PHONE) --- */
+        .myspace-card:hover,
         .myspace-card:active,
         .myspace-card.is-touch-active {
             transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1) !important;
@@ -430,9 +414,19 @@
             box-shadow: var(--card-shadow-hover) !important;
         }
 
+        .myspace-card:hover .myspace-card-icon,
         .myspace-card:active .myspace-card-icon,
         .myspace-card.is-touch-active .myspace-card-icon {
             transform: scale3d(1.08, 1.08, 1) !important;
+        }
+
+        .footer-links-row a:hover .nav-text,
+        .footer-links-row a:active .nav-text,
+        .footer-links-row a.is-touch-active .nav-text,
+        .logo:hover .nav-text,
+        .logo:active .nav-text,
+        .logo.is-touch-active .nav-text {
+            transform: scale3d(1.06, 1.06, 1) !important;
         }
 
         footer { 
@@ -755,11 +749,19 @@
         });
 
         universalTargetLinks.forEach(link => {
+            // Trigger scale elevation instantly when finger touches the glass
+            link.addEventListener('pointerdown', function() {
+                this.classList.add('is-touch-active');
+            }, { passive: true });
+
             link.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
                 if (!destination || destination === '#' || destination.startsWith('#')) return;
 
                 e.preventDefault();
+
+                // Keep card elevated and scaled up high for the full 750ms wait time
+                this.classList.add('is-touch-active');
                 sessionStorage.setItem('activeUniversalTargetUrl', this.href);
 
                 universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
@@ -779,6 +781,7 @@
 
             universalTargetLinks.forEach(l => {
                 l.classList.remove('is-wave-loading');
+                l.classList.remove('is-touch-active');
                 l.classList.remove('kinetic-locked-frame');
                 const span = l.querySelector('.nav-text');
                 if (span) {
