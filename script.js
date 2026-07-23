@@ -1,31 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Locate the logo element (looks for class="logo" or the first link in header)
     const logo = document.querySelector('.logo') || document.querySelector('header a');
 
     if (logo) {
-        const path = window.location.pathname;
+        const path = window.location.pathname.toLowerCase();
 
-        // 2. Set the drill-up target dynamically based on the current page location
-        if (path.includes('/study/') && !path.endsWith('/study/index.html') && !path.endsWith('/study/')) {
-            // Level 2 (Study Sub-Pages) -> Steps up to Study Space Home
+        // 1. Check if we are currently on the Study Space Homepage
+        const isStudyHome = path.endsWith('/study') || 
+                            path.endsWith('/study/') || 
+                            path.endsWith('/study/index.html');
+
+        // 2. Check if we are on any sub-page inside the study folder
+        const isStudySubPage = path.includes('/study/') && !isStudyHome;
+
+        // 3. Set the logo link target dynamically
+        if (isStudySubPage) {
+            // Level 2 (Sub-Page) -> Go up to Study Space Home
             logo.href = '/study/index.html';
-        } else if (path.endsWith('/study/index.html') || path.endsWith('/study/')) {
-            // Level 1 (Study Space Home) -> Steps up to Main Homepage
+        } else if (isStudyHome) {
+            // Level 1 (Study Home) -> Go up to Main Homepage
             logo.href = '/index.html';
         } else {
-            // Level 0 (Main Homepage) -> Points to Root Homepage
+            // Level 0 (Main Home) -> Stay on Main Homepage
             logo.href = '/index.html';
         }
 
-        // 3. Attach the 750ms Fluid Wave Transition on click
+        // 4. Attach 750ms fluid wave transition
         logo.addEventListener('click', (e) => {
             e.preventDefault();
             const destination = logo.href;
 
-            // Triggers your wave transition effect class
             document.body.classList.add('wave-active');
 
-            // Waits 750ms for the animation to finish before opening the page
             setTimeout(() => {
                 window.location.href = destination;
             }, 750);
