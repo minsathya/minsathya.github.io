@@ -1,10 +1,452 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta http-equiv="refresh" content="0; url=/study/" />
-  <title>sathya</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sathya.</title>
+
+    <meta name="description" content="Personal workspace for study notes, resources, and current affairs.">
+
+    <!-- Google Tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5VGX2K64Y4');
+    </script>
+    
+    <!-- Favicon Engine -->
+    <link id="favicon" rel="icon" type="image/png" href="favicon-light.png">
+    <script>
+      const favicon = document.getElementById('favicon');
+      const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      function updateFavicon(e) {
+        favicon.href = e.matches ? 'favicon-dark.png' : 'favicon-light.png';
+      }
+      
+      updateFavicon(darkMode);
+      darkMode.addEventListener('change', updateFavicon);
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+            --bg-color: #0b0b0b;
+            --text-main: #ffffff;
+            --text-muted: #555555;
+            --panel-bg: #121212;
+            --panel-border: #222222;
+            --header-bg: #1a231e;
+            --header-border: #222c26;
+            
+            --cascade-distance: 24px;
+            --cascade-duration-exit: 0.2s;
+            --cascade-duration-entry: 0.28s;
+        }
+
+        body.light-mode {
+            --bg-color: #ebebe4;
+            --text-main: #111111;
+            --text-muted: #a1a1a6;
+            --panel-bg: #ffffff;
+            --panel-border: #e2e2e7;
+            --header-bg: #e9ebe6;
+            --header-border: #d4d8cf;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent !important;
+            tap-highlight-color: transparent !important;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0 24px 60px 24px; /* Zero top-padding to dock header flush */
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 95%;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            transition: background-color 0.8s var(--ease-premium), color 0.8s var(--ease-premium);
+        }
+
+        @keyframes masterEntrance {
+            from { opacity: 0; transform: translate3d(0, 24px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+
+        header, main, footer {
+            opacity: 1;
+            will-change: transform, opacity;
+            animation: masterEntrance 1.2s var(--ease-premium) backwards;
+        }
+
+        header { animation-delay: 0.04s; }
+        main { animation-delay: 0.16s; }
+        footer { animation-delay: 0.28s; }
+
+        /* Top-Docked Curved Header */
+        header {
+            position: relative;
+            background-color: var(--header-bg);
+            border: 1px solid var(--header-border);
+            border-top: none; /* Flush with top viewport */
+            border-radius: 0 0 36px 36px; /* Smooth bottom curves */
+            width: 100%;
+            height: 72px;
+            margin: 0 auto 60px auto;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            transition: background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+        }
+
+        body:not(.light-mode) header {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Twin View Layout */
+        .header-inner-view {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        #headerMainView {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+            pointer-events: auto;
+            z-index: 2;
+        }
+
+        #headerSearchView {
+            opacity: 0;
+            transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Skyfall Animation States */
+        header.state-search #headerMainView {
+            animation: skyfallExit var(--cascade-duration-exit) ease-in both;
+            pointer-events: none;
+        }
+        header.state-search #headerSearchView {
+            animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation-delay: var(--cascade-duration-exit);
+            pointer-events: auto;
+        }
+
+        header.state-main #headerSearchView {
+            animation: skyfallExit var(--cascade-duration-exit) ease-in both;
+            pointer-events: none;
+        }
+        header.state-main #headerMainView {
+            animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation-delay: var(--cascade-duration-exit);
+            pointer-events: auto;
+        }
+
+        @keyframes skyfallExit {
+            0% { transform: translate3d(0, 0, 0); opacity: 1; }
+            100% { transform: translate3d(0, var(--cascade-distance), 0); opacity: 0; }
+        }
+
+        @keyframes skyfallEntry {
+            0% { transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0); opacity: 0; }
+            100% { transform: translate3d(0, 0, 0); opacity: 1; }
+        }
+
+        .header-right-cluster,
+        .search-control-cluster {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-shrink: 0;
+            height: 100%;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            text-decoration: none !important;
+            transition: color 0.8s var(--ease-premium);
+            flex-shrink: 0;
+        }
+
+        .ctrl-btn {
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            flex-shrink: 0;
+            transition: opacity 0.2s var(--ease-premium), color 0.8s var(--ease-premium);
+        }
+
+        .ctrl-btn:hover { opacity: 0.6; }
+
+        .ctrl-btn svg,
+        .search-static-icon {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: var(--text-main);
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.8s var(--ease-premium);
+        }
+
+        .search-static-icon {
+            opacity: 0.4;
+            flex-shrink: 0;
+        }
+
+        .search-core-input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            padding: 0 16px;
+            width: 100%;
+            min-width: 0;
+            will-change: transform, opacity;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: color 0.8s var(--ease-premium);
+        }
+
+        .clear-text-btn svg { opacity: 0.4; }
+        .close-search-btn svg { opacity: 0.7; }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            width: 32px;
+            height: 32px;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .theme-toggle svg {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: var(--text-main);
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transform-origin: center center;
+            will-change: transform, opacity;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transition: transform 0.8s var(--ease-premium), opacity 0.8s var(--ease-premium), stroke 0.8s var(--ease-premium);
+        }
+
+        .theme-toggle .sun-icon { opacity: 0; transform: translate3d(0, 0, 0) rotate(-90deg) scale(0.4); }
+        .theme-toggle .moon-icon { opacity: 1; transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle .sun-icon { opacity: 1; transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle .moon-icon { opacity: 0; transform: translate3d(0, 0, 0) rotate(90deg) scale(0.4); }
+
+        main {
+            flex-grow: 1;
+            width: 100%;
+            margin-bottom: 60px;
+        }
+
+        footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            width: 100%;
+        }
+
+        .copyright-tag {
+            color: var(--text-muted);
+            opacity: 0.6;
+            font-size: 12.5px;
+            letter-spacing: 0.2px;
+            transition: color 0.8s var(--ease-premium);
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 0 20px 40px 20px; }
+            header { margin-bottom: 40px; height: 64px; border-radius: 0 0 28px 28px; }
+            .header-inner-view { padding: 0 20px; }
+            .logo { font-size: 22px; }
+            .search-core-input { padding: 0 12px; font-size: 15px; }
+            .header-right-cluster { gap: 16px; }
+        }
+    </style>
 </head>
 <body>
-  <p>Redirecting to Study Hub... <a href="/study/">Click here if not redirected</a>.</p>
+
+    <header id="masterHeader">
+        <!-- Default View -->
+        <div class="header-inner-view" id="headerMainView">
+            <a href="index.html" class="logo">sathya.</a>
+            <div class="header-right-cluster">
+                <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </div>
+                <button class="ctrl-btn" id="openSearchBtn" aria-label="Open Search">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Hidden Search Bar (Skyfall Transition) -->
+        <form class="header-inner-view" id="headerSearchView" action="study/search.html" method="GET">
+            <button type="submit" aria-label="Submit search" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: inherit; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
+
+            <input type="text" class="search-core-input" id="searchCoreInput" name="q" placeholder="Search..." autocomplete="off" enterkeyhint="search">
+            
+            <div class="search-control-cluster">
+                <button type="button" class="ctrl-btn clear-text-btn" id="clearSearchBtn" aria-label="Clear input">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <button type="button" class="ctrl-btn close-search-btn" id="closeSearchBtn" aria-label="Close search">
+                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+            </div>
+        </form>
+    </header>
+
+    <main>
+        <!-- Homepage main content section -->
+    </main>
+
+    <footer>
+        <div class="copyright-tag">
+            &copy; 2026 Sathya. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        const toggleBtn = document.getElementById('themeToggleBtn');
+        const bodyElement = document.body;
+        const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
+
+        const masterHeader = document.getElementById('masterHeader');
+        const openSearchBtn = document.getElementById('openSearchBtn');
+        const closeSearchBtn = document.getElementById('closeSearchBtn');
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+        const searchCoreInput = document.getElementById('searchCoreInput');
+
+        /* Theme Sync Engine */
+        function applyTargetPalette() {
+            const activeSessionOverride = sessionStorage.getItem('dashboard-theme');
+            if (activeSessionOverride) {
+                if (activeSessionOverride === 'light') {
+                    bodyElement.classList.add('light-mode');
+                } else {
+                    bodyElement.classList.remove('light-mode');
+                }
+            } else {
+                if (systemLightQuery.matches) {
+                    bodyElement.classList.add('light-mode');
+                } else {
+                    bodyElement.classList.remove('light-mode');
+                }
+            }
+        }
+
+        applyTargetPalette();
+
+        systemLightQuery.addEventListener('change', (e) => {
+            sessionStorage.removeItem('dashboard-theme');
+            if (e.matches) {
+                bodyElement.classList.add('light-mode');
+            } else {
+                bodyElement.classList.remove('light-mode');
+            }
+        });
+
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isCurrentlyLight = bodyElement.classList.contains('light-mode');
+            if (isCurrentlyLight) {
+                bodyElement.classList.remove('light-mode');
+                sessionStorage.setItem('dashboard-theme', 'dark');
+            } else {
+                bodyElement.classList.add('light-mode');
+                sessionStorage.setItem('dashboard-theme', 'light');
+            }
+        });
+
+        /* Skyfall Search Toggle Engine */
+        openSearchBtn.addEventListener('click', () => {
+            masterHeader.classList.remove('state-main');
+            masterHeader.classList.add('state-search');
+            searchCoreInput.focus({ preventScroll: true });
+        });
+
+        clearSearchBtn.addEventListener('click', () => {
+            searchCoreInput.value = "";
+            searchCoreInput.focus();
+        });
+
+        closeSearchBtn.addEventListener('click', () => {
+            masterHeader.classList.remove('state-search');
+            masterHeader.classList.add('state-main');
+        });
+
+        masterHeader.addEventListener('submit', (e) => {
+            if (searchCoreInput.value.trim() === "") {
+                e.preventDefault();
+                masterHeader.classList.remove('state-search');
+                masterHeader.classList.add('state-main');
+            }
+        });
+    </script>
 </body>
 </html>
