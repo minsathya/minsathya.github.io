@@ -182,11 +182,11 @@
         .close-search-btn svg { opacity: 0.7; }
 
         .theme-toggle { width: 32px; height: 32px; position: relative; cursor: pointer; user-select: none; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .theme-toggle svg { position: absolute; width: 22px; height: 22px; fill: none; stroke: var(--text-main); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transform-origin: center center; will-change: transform, opacity; -webkit-backface-visibility: hidden; backface-visibility: hidden; transition: transform 0.8s var(--ease-premium), opacity 0.8s var(--ease-premium), stroke 0.8s var(--ease-premium); }
-        .theme-toggle .sun-icon { opacity: 0; transform: translate3d(0, 0, 0) rotate(-90deg) scale(0.4); }
-        .theme-toggle .moon-icon { opacity: 1; transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
-        body.light-mode .theme-toggle .sun-icon { opacity: 1; transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
-        body.light-mode .theme-toggle .moon-icon { opacity: 0; transform: translate3d(0, 0, 0) rotate(90deg) scale(0.4); }
+        .theme-toggle svg { position: absolute; top: 50%; left: 50%; width: 22px; height: 22px; fill: none; stroke: var(--text-main); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; will-change: transform, opacity; -webkit-backface-visibility: hidden; backface-visibility: hidden; transition: transform 0.8s var(--ease-premium), opacity 0.8s var(--ease-premium), stroke 0.8s var(--ease-premium); }
+        .theme-toggle .sun-icon { opacity: 0; transform: translate(-50%, -50%) rotate(-90deg) scale(0.4); }
+        .theme-toggle .moon-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle .sun-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle .moon-icon { opacity: 0; transform: translate(-50%, -50%) rotate(90deg) scale(0.4); }
 
         .breadcrumb-nav { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 400; margin-bottom: 8px; padding-left: 8px; flex-wrap: wrap; row-gap: 8px; }
         .breadcrumb-nav a, .breadcrumb-nav a:visited { color: var(--text-muted) !important; }
@@ -250,17 +250,59 @@
         .footer-links-row a:hover { color: var(--text-main) !important; }
         .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; letter-spacing: 0.2px; transition: color 0.8s var(--ease-premium); }
 
-        .nav-text { display: inline-block !important; transform-origin: center center !important; will-change: transform, opacity !important; transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium); }
-        .contents-container a:hover .nav-text, .breadcrumb-nav a:hover .nav-text, .footer-links-row a:hover .nav-text, .logo:hover .nav-text { transform: scale3d(1.06, 1.06, 1) !important; }
-        
+        .nav-text { 
+            display: inline-block !important; 
+            white-space: nowrap !important;
+            transform-origin: center center !important; 
+            will-change: transform, opacity, background-position !important; 
+            transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium); 
+        }
+
         .footer-links-row a .nav-text { color: var(--text-muted) !important; }
         .footer-links-row a:hover .nav-text { color: var(--text-main) !important; }
 
-        .contents-container a.is-zooming .nav-text, .breadcrumb-nav a.is-zooming .nav-text, .footer-links-row a.is-zooming .nav-text, .logo.is-zooming .nav-text { 
-            transition: transform 0.26s cubic-bezier(0.215, 0.61, 0.355, 1), opacity 0.26s linear !important; 
-            transform: scale3d(1.3, 1.3, 1) !important; 
-            opacity: 0 !important; 
+        /* Zoom on hover ONLY for real mouse pointers (Laptop/Desktop). Touch screens will NOT trigger this. */
+        @media (hover: hover) and (pointer: fine) {
+            .contents-container a:hover .nav-text, 
+            .breadcrumb-nav a:hover .nav-text, 
+            .footer-links-row a:hover .nav-text, 
+            .logo:hover .nav-text { 
+                transform: scale3d(1.06, 1.06, 1) !important; 
+            }
         }
+
+        /* --- GPU-Accelerated Continuous Fluid Wave Engine --- */
+        @keyframes fluidWave {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Continuous Hardware-Accelerated Wave Sweep */
+        a.is-wave-loading .nav-text {
+            background-image: linear-gradient(90deg, #ffffff 0%, #ffffff 25%, #555555 50%, #ffffff 75%, #ffffff 100%) !important;
+            background-size: 200% 100% !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+            animation: fluidWave 0.75s infinite linear !important;
+            will-change: background-position, transform !important;
+            opacity: 1 !important;
+        }
+
+        /* Light Mode Fluid Wave Engine */
+        body.light-mode a.is-wave-loading .nav-text {
+            background-image: linear-gradient(90deg, #111111 0%, #111111 25%, #8a8a8e 50%, #111111 75%, #111111 100%) !important;
+            background-size: 200% 100% !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+            animation: fluidWave 0.75s infinite linear !important;
+            will-change: background-position, transform !important;
+            opacity: 1 !important;
+        }
+
         .kinetic-locked-frame { pointer-events: none !important; }
         .kinetic-locked-frame .nav-text { transition: none !important; -webkit-transition: none !important; }
 
@@ -330,7 +372,7 @@
             <div class="header-right-cluster">
                 <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
                     <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
-                    <svg class="moon-icon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                 </div>
                 <button class="ctrl-btn" id="openSearchBtn" aria-label="Open Workspace Search">
                     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -590,10 +632,8 @@
             const existingIndex = trail.findIndex(step => step.path === searchPath);
 
             if (existingIndex !== -1) {
-                // Backtracking: Chop off everything after this page
                 trail = trail.slice(0, existingIndex + 1);
             } else {
-                // Forward Tracking: Append current page to chain
                 if (searchPath !== HOME_PATH && searchPath !== "/study/") {
                     trail.push({ name: currentPageName, path: searchPath });
                 }
@@ -717,26 +757,36 @@
         universalTargetLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
-                if (!destination || destination === '#' || destination.startsWith('#')) return;
+                if (!destination || destination === '#' || destination.startsWith('#') || this.classList.contains('active-footer-page')) return;
 
                 e.preventDefault();
                 sessionStorage.setItem('activeUniversalTargetUrl', this.href);
-                this.classList.add('is-zooming');
+
+                universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
+
+                this.classList.add('is-wave-loading');
 
                 setTimeout(() => {
                     window.location.href = destination;
-                }, 260);
+                }, 750);
             });
         });
 
         window.addEventListener('pageshow', () => {
+            if (document.activeElement && document.activeElement.blur) {
+                document.activeElement.blur();
+            }
+
             universalTargetLinks.forEach(l => {
-                l.classList.remove('is-zooming');
+                l.classList.remove('is-wave-loading');
                 l.classList.remove('kinetic-locked-frame');
                 const span = l.querySelector('.nav-text');
                 if (span) {
                     span.style.transform = '';
                     span.style.opacity = '';
+                    span.style.background = '';
+                    span.style.webkitBackgroundClip = '';
+                    span.style.webkitTextFillColor = '';
                 }
             });
 
@@ -748,61 +798,6 @@
             const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
             if (savedTargetUrl) {
                 sessionStorage.removeItem('activeUniversalTargetUrl');
-
-                let matchedLinkElement = null;
-                universalTargetLinks.forEach(link => {
-                    if (link.href === savedTargetUrl) {
-                        matchedLinkElement = link;
-                    }
-                });
-
-                if (matchedLinkElement) {
-                    const targetSpan = matchedLinkElement.querySelector('.nav-text');
-
-                    if (targetSpan) {
-                        setTimeout(() => {
-                            matchedLinkElement.classList.add('kinetic-locked-frame');
-
-                            let startScale = 1.3;
-                            let endScale = 1.0;
-                            let startOpacity = 0;
-
-                            let endOpacity = 0.8;
-                            if (matchedLinkElement.closest('footer')) endOpacity = 0.4;
-                            if (matchedLinkElement.classList.contains('logo')) endOpacity = 1.0;
-
-                            let duration = 280; 
-                            let startTime = null;
-
-                            targetSpan.style.setProperty('transform', `scale(${startScale})`, 'important');
-                            targetSpan.style.setProperty('opacity', startOpacity, 'important');
-
-                            function animateReverse(timestamp) {
-                                if (!startTime) startTime = timestamp;
-                                let elapsed = timestamp - startTime;
-                                let progress = Math.min(elapsed / duration, 1);
-
-                                let ease = 1 - Math.pow(1 - progress, 2.2);
-
-                                let currentScale = startScale - (startScale - endScale) * ease;
-                                let currentOpacity = startOpacity + (endOpacity - startOpacity) * ease;
-
-                                targetSpan.style.setProperty('transform', `scale(${currentScale})`, 'important');
-                                targetSpan.style.setProperty('opacity', currentOpacity, 'important');
-
-                                if (progress < 1) {
-                                    requestAnimationFrame(animateReverse);
-                                } else {
-                                    targetSpan.style.transform = '';
-                                    targetSpan.style.opacity = '';
-                                    matchedLinkElement.classList.remove('kinetic-locked-frame');
-                                }
-                            }
-
-                            requestAnimationFrame(animateReverse);
-                        }, 40);
-                    }
-                }
             }
         });
 
