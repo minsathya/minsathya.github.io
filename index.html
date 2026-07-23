@@ -4,16 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>sathya.</title>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-MEASUREMENT_ID');
+  </script>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg-color: #0a0c0b;
-      --pill-bg: #121814;
-      --border-color: rgba(255, 255, 255, 0.08);
+      --bg-color: #0e100f;
+      --pill-bg: #1a251e;
       --text-color: #ffffff;
-      --icon-color: #d1d5db;
+      --icon-color: #e2e8f0;
     }
 
     * {
@@ -32,7 +49,7 @@
       align-items: center;
     }
 
-    /* Header Container with top spacing matching /study/ */
+    /* Header spacing matched directly to /study/ */
     header {
       width: 100%;
       display: flex;
@@ -46,13 +63,11 @@
       max-width: 1100px;
       height: 64px;
       background-color: var(--pill-bg);
-      border: 1px solid var(--border-color);
       border-radius: 999px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 2rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
     }
 
     .logo {
@@ -77,12 +92,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: color 0.2s ease, transform 0.2s ease;
+      transition: opacity 0.2s ease;
     }
 
     .nav-btn:hover {
-      color: #ffffff;
-      transform: scale(1.05);
+      opacity: 0.8;
     }
 
     main {
@@ -128,7 +142,7 @@
   </header>
 
   <main>
-    <!-- Main content goes here -->
+    <!-- Content goes here -->
   </main>
 
   <footer>
