@@ -318,12 +318,15 @@
             backface-visibility: hidden;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
-            transition: border-color 0.8s var(--ease-premium), background-color 0.8s var(--ease-premium), transform 0.5s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+            transition: border-color 0.8s var(--ease-premium), background-color 0.8s var(--ease-premium), transform 0.4s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
         }
 
         body:not(.light-mode) .capsule-panel { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
-        .capsule-panel:hover { border-color: #1E1E1E; transform: scale(1.02); }
-        body.light-mode .capsule-panel:hover { border-color: #b8b8bc; }
+        
+        @media (hover: hover) and (pointer: fine) {
+            .capsule-panel:hover { border-color: #1E1E1E; transform: scale(1.02); }
+            body.light-mode .capsule-panel:hover { border-color: #b8b8bc; }
+        }
 
         .panel-title {
             font-size: 20px;
@@ -447,21 +450,17 @@
             100% { background-position: -200% 0; }
         }
 
-        @keyframes fluidWaveMobile {
-            0% { background-position: 300% 0; }
-            100% { background-position: -300% 0; }
-        }
-
-        /* Dark Mode: Continuous Hardware-Accelerated Wave Sweep */
+        /* Base Universal Fluid Wave Engine */
         .matrix-canvas a.is-wave-loading .nav-text,
         .view-more-link.is-wave-loading .nav-text,
         .footer-links-row a.is-wave-loading .nav-text,
         .logo.is-wave-loading .nav-text {
-            background: linear-gradient(90deg, #ffffff 0%, #ffffff 25%, #555555 50%, #ffffff 75%, #ffffff 100%);
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: linear-gradient(90deg, #ffffff 0%, #ffffff 25%, #555555 50%, #ffffff 75%, #ffffff 100%) !important;
+            background-size: 200% 100% !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
             animation: fluidWave 0.75s infinite linear !important;
             will-change: background-position, transform !important;
             transform: translate3d(0, 0, 0) !important;
@@ -470,16 +469,17 @@
             opacity: 1 !important;
         }
 
-        /* Light Mode: Continuous Hardware-Accelerated Wave Sweep */
+        /* Light Mode Fluid Wave Engine */
         body.light-mode .matrix-canvas a.is-wave-loading .nav-text,
         body.light-mode .view-more-link.is-wave-loading .nav-text,
         body.light-mode .footer-links-row a.is-wave-loading .nav-text,
         body.light-mode .logo.is-wave-loading .nav-text {
-            background: linear-gradient(90deg, #111111 0%, #111111 25%, #8a8a8e 50%, #111111 75%, #111111 100%);
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: linear-gradient(90deg, #111111 0%, #111111 25%, #8a8a8e 50%, #111111 75%, #111111 100%) !important;
+            background-size: 200% 100% !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
             animation: fluidWave 0.75s infinite linear !important;
             will-change: background-position, transform !important;
             transform: translate3d(0, 0, 0) !important;
@@ -488,57 +488,32 @@
             opacity: 1 !important;
         }
 
-        /* --- Mobile Phone Optimized High-Sweep Wave Engine --- */
-        @media (max-width: 767px) {
+        /* --- Mobile Phone & WebKit Touch Rendering Precision --- */
+        @media (max-width: 767px), (pointer: coarse) {
             .matrix-canvas a.is-wave-loading .nav-text,
             .view-more-link.is-wave-loading .nav-text,
             .footer-links-row a.is-wave-loading .nav-text,
             .logo.is-wave-loading .nav-text {
-                background: linear-gradient(90deg, #ffffff 0%, #ffffff 30%, #666666 50%, #ffffff 70%, #ffffff 100%) !important;
-                background-size: 300% 100% !important;
+                background: linear-gradient(90deg, #ffffff 0%, #ffffff 20%, #444444 50%, #ffffff 80%, #ffffff 100%) !important;
+                background-size: 220% 100% !important;
                 -webkit-background-clip: text !important;
                 background-clip: text !important;
                 -webkit-text-fill-color: transparent !important;
-                animation: fluidWaveMobile 0.75s infinite linear !important;
+                color: transparent !important;
+                animation: fluidWave 0.7s infinite linear !important;
             }
 
             body.light-mode .matrix-canvas a.is-wave-loading .nav-text,
             body.light-mode .view-more-link.is-wave-loading .nav-text,
             body.light-mode .footer-links-row a.is-wave-loading .nav-text,
             body.light-mode .logo.is-wave-loading .nav-text {
-                background: linear-gradient(90deg, #111111 0%, #111111 30%, #888888 50%, #111111 70%, #111111 100%) !important;
-                background-size: 300% 100% !important;
+                background: linear-gradient(90deg, #111111 0%, #111111 20%, #8a8a8e 50%, #111111 80%, #111111 100%) !important;
+                background-size: 220% 100% !important;
                 -webkit-background-clip: text !important;
                 background-clip: text !important;
                 -webkit-text-fill-color: transparent !important;
-                animation: fluidWaveMobile 0.75s infinite linear !important;
-            }
-        }
-
-        /* --- iPad / Tablet Touch Display High-Contrast Wave Tuning --- */
-        @media (min-width: 768px) and (max-width: 1024px) {
-            .matrix-canvas a.is-wave-loading .nav-text,
-            .view-more-link.is-wave-loading .nav-text,
-            .footer-links-row a.is-wave-loading .nav-text,
-            .logo.is-wave-loading .nav-text {
-                background: linear-gradient(90deg, #ffffff 0%, #ffffff 15%, #333333 50%, #ffffff 85%, #ffffff 100%) !important;
-                background-size: 250% 100% !important;
-                -webkit-background-clip: text !important;
-                background-clip: text !important;
-                -webkit-text-fill-color: transparent !important;
-                animation: fluidWave 0.65s infinite linear !important;
-            }
-
-            body.light-mode .matrix-canvas a.is-wave-loading .nav-text,
-            body.light-mode .view-more-link.is-wave-loading .nav-text,
-            body.light-mode .footer-links-row a.is-wave-loading .nav-text,
-            body.light-mode .logo.is-wave-loading .nav-text {
-                background: linear-gradient(90deg, #111111 0%, #111111 15%, #aaaaaa 50%, #111111 85%, #111111 100%) !important;
-                background-size: 250% 100% !important;
-                -webkit-background-clip: text !important;
-                background-clip: text !important;
-                -webkit-text-fill-color: transparent !important;
-                animation: fluidWave 0.65s infinite linear !important;
+                color: transparent !important;
+                animation: fluidWave 0.7s infinite linear !important;
             }
         }
 
@@ -764,12 +739,14 @@
                 // Reset any active wave classes on other links
                 universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
 
-                // Smoothly revert capsule scale to normal so returning to index never snaps
-                document.querySelectorAll('.capsule-panel').forEach(panel => {
-                    panel.style.transform = 'scale(1)';
-                });
+                // Smoothly ease capsule scale down on touch/iPad without sudden snaps
+                const parentPanel = this.closest('.capsule-panel');
+                if (parentPanel) {
+                    parentPanel.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+                    parentPanel.style.transform = 'scale(1)';
+                }
 
-                // Activate continuous GPU-promoted fluid wave sweep on clicked link
+                // Activate continuous GPU fluid wave sweep on clicked link
                 this.classList.add('is-wave-loading');
 
                 // Trigger navigation smoothly
@@ -780,9 +757,10 @@
         });
 
         window.addEventListener('pageshow', () => {
-            // Restore capsule panels to CSS hover control
+            // Restore capsule panels
             document.querySelectorAll('.capsule-panel').forEach(panel => {
                 panel.style.transform = '';
+                panel.style.transition = '';
             });
 
             universalTargetLinks.forEach(l => {
