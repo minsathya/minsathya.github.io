@@ -11,22 +11,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const isStudySubPage = path.includes('/study/') && !isStudyHome;
 
         if (isStudySubPage) {
-            logo.href = '/study/index.html'; // Level 2 -> Go to Study Home
+            logo.href = '/study/index.html'; // Level 2 -> Go to Study Space Home
         } else if (isStudyHome) {
-            logo.href = '/index.html';       // Level 1 -> Go to Main Home
+            logo.href = '/index.html';       // Level 1 -> Go to Main Homepage
         } else {
-            logo.href = '/index.html';       // Level 0 -> Stay on Main Home
+            logo.href = '/index.html';       // Level 0 -> Stay on Main Homepage
         }
 
-        // Instant touch response on iPad / Phone
+        // Frame-synced touch reaction on mobile
         logo.addEventListener('pointerdown', () => {
-            logo.classList.add('is-touch-active');
+            requestAnimationFrame(() => {
+                logo.classList.add('is-touch-active');
+            });
         }, { passive: true });
 
         // 750ms Wave Transition Effect
         logo.addEventListener('click', (e) => {
             e.preventDefault();
-            logo.classList.add('is-touch-active');
+            requestAnimationFrame(() => {
+                logo.classList.add('is-touch-active');
+            });
             const destination = logo.href;
             document.body.classList.add('wave-active');
             setTimeout(() => {
