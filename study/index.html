@@ -422,12 +422,9 @@
         .view-more-link:hover { opacity: 0.8; text-decoration: none !important; }
 
         .nav-text {
-            position: relative !important;
             display: inline-block !important;
-            overflow: hidden !important;
-            vertical-align: bottom !important;
             transform-origin: center center !important;
-            will-change: transform, opacity !important;
+            will-change: transform, opacity, background-position !important;
             transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
         }
 
@@ -442,48 +439,42 @@
         .footer-links-row a:hover .nav-text { color: var(--text-main) !important; }
         .view-more-link .nav-text { color: #8a9a86 !important; }
 
-        /* --- GPU Compositor Thread Continuous Wave Animation --- */
-        @keyframes gpuTranslateWave {
-            0% { transform: translate3d(-100%, 0, 0); }
-            100% { transform: translate3d(100%, 0, 0); }
+        /* --- Text-Only Fluid Wave Animation Engine --- */
+        @keyframes pureTextWave {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
-        /* Pure GPU transform overlay - stays in motion even during page navigation */
-        .matrix-canvas a.is-wave-loading .nav-text::after,
-        .view-more-link.is-wave-loading .nav-text::after,
-        .footer-links-row a.is-wave-loading .nav-text::after,
-        .logo.is-wave-loading .nav-text::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(134, 134, 134, 0.85) 50%,
-                transparent 100%
-            );
-            mix-blend-mode: difference;
-            pointer-events: none;
-            will-change: transform;
-            transform: translate3d(-100%, 0, 0);
-            animation: gpuTranslateWave 0.75s infinite linear !important;
+        /* Dark Mode: Text stays #ffffff, wave beam glides across letters as #868686 strictly inside text */
+        .matrix-canvas a.is-wave-loading .nav-text,
+        .view-more-link.is-wave-loading .nav-text,
+        .footer-links-row a.is-wave-loading .nav-text,
+        .logo.is-wave-loading .nav-text {
+            background: linear-gradient(90deg, #ffffff 0%, #ffffff 30%, #868686 50%, #ffffff 70%, #ffffff 100%) !important;
+            background-size: 200% 100% !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            animation: pureTextWave 0.8s infinite linear !important;
+            will-change: background-position !important;
+            transform: translate3d(0, 0, 0) !important;
+            opacity: 1 !important;
         }
 
-        /* Light Mode GPU Wave Blend Adjustment */
-        body.light-mode .matrix-canvas a.is-wave-loading .nav-text::after,
-        body.light-mode .view-more-link.is-wave-loading .nav-text::after,
-        body.light-mode .footer-links-row a.is-wave-loading .nav-text::after,
-        body.light-mode .logo.is-wave-loading .nav-text::after {
-            background: linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(138, 138, 142, 0.85) 50%,
-                transparent 100%
-            );
-            mix-blend-mode: difference;
+        /* Light Mode: Text stays #111111, wave beam glides across letters as #8a8a8e strictly inside text */
+        body.light-mode .matrix-canvas a.is-wave-loading .nav-text,
+        body.light-mode .view-more-link.is-wave-loading .nav-text,
+        body.light-mode .footer-links-row a.is-wave-loading .nav-text,
+        body.light-mode .logo.is-wave-loading .nav-text {
+            background: linear-gradient(90deg, #111111 0%, #111111 30%, #8a8a8e 50%, #111111 70%, #111111 100%) !important;
+            background-size: 200% 100% !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            animation: pureTextWave 0.8s infinite linear !important;
+            will-change: background-position !important;
+            transform: translate3d(0, 0, 0) !important;
+            opacity: 1 !important;
         }
 
         .kinetic-locked-frame { pointer-events: none !important; }
@@ -505,7 +496,7 @@
                         <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
                     </svg>
                     <svg class="moon-icon" viewBox="0 0 24 24">
-                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                        <path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"></path>
                     </svg>
                 </div>
                 <button class="ctrl-btn" id="openSearchBtn" aria-label="Open Workspace Search">
@@ -708,10 +699,10 @@
                 // Clear wave from all other links
                 universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
 
-                // Activate hardware GPU wave on clicked link
+                // Activate pure text wave on clicked link
                 this.classList.add('is-wave-loading');
 
-                // Trigger navigation; GPU compositor keeps wave in 100% continuous motion
+                // Trigger navigation cleanly
                 setTimeout(() => {
                     window.location.href = destination;
                 }, 180);
@@ -726,6 +717,9 @@
                 if (span) {
                     span.style.transform = '';
                     span.style.opacity = '';
+                    span.style.background = '';
+                    span.style.webkitBackgroundClip = '';
+                    span.style.webkitTextFillColor = '';
                 }
             });
 
