@@ -36,6 +36,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Smooth gradual 0.55s easing curve */
+            --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
@@ -87,7 +89,7 @@
             width: 95%;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            transition: background-color 0.8s var(--ease-premium), color 0.8s var(--ease-premium);
+            transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
         @keyframes masterEntrance {
@@ -98,7 +100,7 @@
         header, .capsule-panel, footer {
             opacity: 1;
             will-change: transform, opacity;
-            animation: masterEntrance 1.2s var(--ease-premium) backwards;
+            animation: masterEntrance 1.2s var(--ease-smooth) backwards;
         }
 
         header { animation-delay: 0.04s; }
@@ -120,14 +122,13 @@
             margin: 0 auto 80px auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
             overflow: hidden;
-            transition: background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+            transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth), box-shadow 0.8s var(--ease-smooth);
         }
 
         body:not(.light-mode) header {
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
-        /* Twin View Header System Setup */
         .header-inner-view {
             position: absolute;
             inset: 0;
@@ -161,7 +162,7 @@
             pointer-events: none;
         }
         header.state-search #headerSearchView {
-            animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation: skyfallEntry var(--cascade-duration-entry) var(--ease-smooth) both;
             animation-delay: var(--cascade-duration-exit);
             pointer-events: auto;
         }
@@ -171,7 +172,7 @@
             pointer-events: none;
         }
         header.state-main #headerMainView {
-            animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation: skyfallEntry var(--cascade-duration-entry) var(--ease-smooth) both;
             animation-delay: var(--cascade-duration-exit);
             pointer-events: auto;
         }
@@ -201,7 +202,7 @@
             letter-spacing: -0.5px;
             color: var(--text-main);
             text-decoration: none !important;
-            transition: color 0.8s var(--ease-premium);
+            transition: color 0.8s var(--ease-smooth);
             flex-shrink: 0;
         }
 
@@ -218,7 +219,7 @@
             height: 32px;
             padding: 0;
             flex-shrink: 0;
-            transition: opacity 0.2s var(--ease-premium), color 0.8s var(--ease-premium);
+            transition: opacity 0.2s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
         .ctrl-btn:hover { opacity: 0.6; }
@@ -232,7 +233,7 @@
             stroke-width: 2.2;
             stroke-linecap: round;
             stroke-linejoin: round;
-            transition: stroke 0.8s var(--ease-premium);
+            transition: stroke 0.8s var(--ease-smooth);
         }
 
         .search-static-icon {
@@ -255,7 +256,7 @@
             transform: translate3d(0, 0, 0);
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            transition: color 0.8s var(--ease-premium);
+            transition: color 0.8s var(--ease-smooth);
         }
 
         .clear-text-btn svg { opacity: 0.4; }
@@ -287,7 +288,7 @@
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            transition: transform 0.8s var(--ease-premium), opacity 0.8s var(--ease-premium), stroke 0.8s var(--ease-premium);
+            transition: transform 0.8s var(--ease-smooth), opacity 0.8s var(--ease-smooth), stroke 0.8s var(--ease-smooth);
         }
 
         .theme-toggle .sun-icon { opacity: 0; transform: translate(-50%, -50%) rotate(-90deg) scale(0.4); }
@@ -303,6 +304,7 @@
             align-items: stretch;
         }
 
+        /* 3D CAPSULE PANELS WITH SMOOTH 0.55s GRADUAL TRANSITIONS */
         .capsule-panel {
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
@@ -312,20 +314,46 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            transform: scale(1);
-            will-change: transform, opacity;
+            touch-action: manipulation;
+            
+            will-change: transform, box-shadow, border-color;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
-            transition: border-color 0.8s var(--ease-premium), background-color 0.8s var(--ease-premium), transform 0.5s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+            
+            /* Gentle 0.55s cubic-bezier curve for opening & falling back */
+            transition: transform 0.55s var(--ease-smooth), 
+                        box-shadow 0.55s var(--ease-smooth), 
+                        border-color 0.55s var(--ease-smooth), 
+                        background-color 0.8s var(--ease-smooth);
         }
 
         body:not(.light-mode) .capsule-panel { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
         
+        /* Laptop Mouse Hover */
         @media (hover: hover) and (pointer: fine) {
-            .capsule-panel:hover { border-color: #1E1E1E; transform: scale(1.02); }
-            body.light-mode .capsule-panel:hover { border-color: #b8b8bc; }
+            .capsule-panel:hover { 
+                border-color: #1E1E1E; 
+                transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1); 
+                box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+            }
+            body.light-mode .capsule-panel:hover { 
+                border-color: #b8b8bc; 
+                box-shadow: 0 16px 32px rgba(0, 0, 0, 0.09);
+            }
+        }
+
+        /* Dedicated Elevation Lock Class for Touchscreens (iPad / Phone) */
+        .capsule-panel.is-panel-lifted {
+            transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1) !important;
+            border-color: #1E1E1E !important;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45) !important;
+        }
+
+        body.light-mode .capsule-panel.is-panel-lifted {
+            border-color: #b8b8bc !important;
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.09) !important;
         }
 
         .panel-title {
@@ -335,11 +363,11 @@
             color: var(--text-main);
             margin-bottom: 24px;
             padding: 0 24px;
-            transition: color 0.8s var(--ease-premium);
+            transition: color 0.8s var(--ease-smooth);
         }
 
         .document-list { list-style: none; display: flex; flex-direction: column; }
-        .document-list li { border-bottom: 1px solid var(--row-divider); transition: border-color 0.8s var(--ease-premium); }
+        .document-list li { border-bottom: 1px solid var(--row-divider); transition: border-color 0.8s var(--ease-smooth); }
         .document-list li:last-child { border-bottom: none; }
 
         .document-list a {
@@ -352,7 +380,7 @@
             font-weight: 400;
             will-change: transform, opacity;
             backface-visibility: hidden;
-            transition: color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), padding 0.4s var(--ease-premium);
+            transition: color 0.4s var(--ease-smooth), opacity 0.4s var(--ease-smooth), padding 0.4s var(--ease-smooth);
         }
 
         .document-list li:hover,
@@ -381,11 +409,11 @@
             display: inline-block;
             will-change: transform, opacity;
             backface-visibility: hidden;
-            transition: color 0.4s var(--ease-premium);
+            transition: color 0.4s var(--ease-smooth);
         }
 
         .footer-links-row a:hover { color: var(--text-main) !important; }
-        .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; letter-spacing: 0.2px; transition: color 0.8s var(--ease-premium); }
+        .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; letter-spacing: 0.2px; transition: color 0.8s var(--ease-smooth); }
 
         @media (max-width: 1024px) {
             .matrix-canvas { grid-template-columns: repeat(2, 1fr); gap: 28px; }
@@ -409,7 +437,7 @@
             margin-top: 20px;
             padding-top: 12px;
             border-top: 1px dashed var(--row-divider);
-            transition: border-color 0.8s var(--ease-premium);
+            transition: border-color 0.8s var(--ease-smooth);
         }
 
         .view-more-link {
@@ -430,14 +458,14 @@
             white-space: nowrap !important;
             transform-origin: center center !important;
             will-change: transform, opacity, background-position !important;
-            transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
+            transition: transform 0.4s var(--ease-smooth), opacity 0.4s var(--ease-smooth);
         }
 
         .footer-links-row a .nav-text { color: var(--text-muted); }
         .footer-links-row a:hover .nav-text { color: var(--text-main); }
         .view-more-link .nav-text { color: #8a9a86; }
 
-        /* Zoom on hover ONLY for real mouse pointers (Laptop/Desktop). Touch screens will NOT trigger this. */
+        /* Mouse Hover Zoom for Laptop/Desktop */
         @media (hover: hover) and (pointer: fine) {
             .matrix-canvas a:hover .nav-text,
             .view-more-link:hover .nav-text,
@@ -447,13 +475,12 @@
             }
         }
 
-        /* --- GPU-Accelerated Continuous Fluid Wave Engine --- */
+        /* Fluid Wave Animation Engine */
         @keyframes fluidWave {
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
 
-        /* Continuous Hardware-Accelerated Wave Sweep */
         a.is-wave-loading .nav-text {
             background-image: linear-gradient(90deg, #ffffff 0%, #ffffff 25%, #555555 50%, #ffffff 75%, #ffffff 100%) !important;
             background-size: 200% 100% !important;
@@ -466,7 +493,6 @@
             opacity: 1 !important;
         }
 
-        /* Light Mode Fluid Wave Engine */
         body.light-mode a.is-wave-loading .nav-text {
             background-image: linear-gradient(90deg, #111111 0%, #111111 25%, #8a8a8e 50%, #111111 75%, #111111 100%) !important;
             background-size: 200% 100% !important;
@@ -595,7 +621,6 @@
     </footer>
 
     <script>
-        // --- Universal Persistent Master Breadcrumb Engine (Homepage Reset Optimization) ---
         (function buildDynamicBreadcrumbs() {
             const HOME_PATH = "/study/index.html";
             const structuralHomeState = [{ name: "Home", path: HOME_PATH }];
@@ -696,13 +721,22 @@
                 if (!destination || destination === '#' || destination.startsWith('#')) return;
 
                 e.preventDefault();
-                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
 
+                // Clear active states across all panels and links
+                document.querySelectorAll('.capsule-panel').forEach(p => p.classList.remove('is-panel-lifted'));
                 universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
 
-                this.classList.add('is-wave-loading');
+                // Lift parent capsule panel if clicked link is inside one
+                const parentPanel = this.closest('.capsule-panel');
+                if (parentPanel) {
+                    parentPanel.classList.add('is-panel-lifted');
+                }
 
-                // Set timer to 750ms so the fluid wave ALWAYS completes 1 full left-to-right sweep
+                // Trigger wave shimmer animation
+                this.classList.add('is-wave-loading');
+                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
+
+                // Hold for 750ms so wave sweep completes smoothly
                 setTimeout(() => {
                     window.location.href = destination;
                 }, 750);
@@ -710,22 +744,29 @@
         });
 
         window.addEventListener('pageshow', () => {
-            // Remove active focus on iPad so returning never triggers touch jumps
             if (document.activeElement && document.activeElement.blur) {
                 document.activeElement.blur();
             }
 
-            universalTargetLinks.forEach(l => {
-                l.classList.remove('is-wave-loading');
-                l.classList.remove('kinetic-locked-frame');
-                const span = l.querySelector('.nav-text');
-                if (span) {
-                    span.style.transform = '';
-                    span.style.opacity = '';
-                    span.style.background = '';
-                    span.style.webkitBackgroundClip = '';
-                    span.style.webkitTextFillColor = '';
-                }
+            // DOUBLE-FRAME SYNC FIX: Safari paints elevated panels first,
+            // then smoothly glides them flat over 0.55s when returning to this page
+            requestAnimationFrame(() => {
+                document.body.offsetHeight; // Force layout paint frame
+                requestAnimationFrame(() => {
+                    document.querySelectorAll('.capsule-panel').forEach(p => p.classList.remove('is-panel-lifted'));
+                    universalTargetLinks.forEach(l => {
+                        l.classList.remove('is-wave-loading');
+                        l.classList.remove('kinetic-locked-frame');
+                        const span = l.querySelector('.nav-text');
+                        if (span) {
+                            span.style.transform = '';
+                            span.style.opacity = '';
+                            span.style.background = '';
+                            span.style.webkitBackgroundClip = '';
+                            span.style.webkitTextFillColor = '';
+                        }
+                    });
+                });
             });
 
             const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
