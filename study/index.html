@@ -323,7 +323,6 @@
 
         body:not(.light-mode) .capsule-panel { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
         
-        /* Zoom on hover ONLY for real mouse pointers (Laptop/Desktop). Touch screens will stay smooth and stable. */
         @media (hover: hover) and (pointer: fine) {
             .capsule-panel:hover { border-color: #1E1E1E; transform: scale(1.02); }
             body.light-mode .capsule-panel:hover { border-color: #b8b8bc; }
@@ -710,6 +709,11 @@
         });
 
         window.addEventListener('pageshow', () => {
+            // Unfocus active elements on iPad/touch devices so text scale smoothly returns to rest without snapping
+            if (document.activeElement && document.activeElement.blur) {
+                document.activeElement.blur();
+            }
+
             universalTargetLinks.forEach(l => {
                 l.classList.remove('is-wave-loading');
                 l.classList.remove('kinetic-locked-frame');
