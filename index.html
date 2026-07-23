@@ -44,7 +44,8 @@
     
     <style>
         :root {
-            --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+            /* Smooth, gradual animation curve for touchscreen & desktop */
+            --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
             --text-muted: #666666;
@@ -111,7 +112,7 @@
             width: 95%;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            transition: background-color 0.8s var(--ease-premium), color 0.8s var(--ease-premium);
+            transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
         @keyframes masterEntrance {
@@ -122,7 +123,7 @@
         header, main, footer {
             opacity: 1;
             will-change: transform, opacity;
-            animation: masterEntrance 1.2s var(--ease-premium) backwards;
+            animation: masterEntrance 1.2s var(--ease-smooth) backwards;
         }
 
         header { animation-delay: 0.04s; }
@@ -139,7 +140,7 @@
             margin: 0 auto 60px auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
             overflow: hidden;
-            transition: background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+            transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth), box-shadow 0.8s var(--ease-smooth);
         }
 
         body:not(.light-mode) header {
@@ -179,7 +180,7 @@
             pointer-events: none;
         }
         header.state-search #headerSearchView {
-            animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation: skyfallEntry var(--cascade-duration-entry) var(--ease-smooth) both;
             animation-delay: var(--cascade-duration-exit);
             pointer-events: auto;
         }
@@ -189,7 +190,7 @@
             pointer-events: none;
         }
         header.state-main #headerMainView {
-            animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation: skyfallEntry var(--cascade-duration-entry) var(--ease-smooth) both;
             animation-delay: var(--cascade-duration-exit);
             pointer-events: auto;
         }
@@ -219,7 +220,7 @@
             letter-spacing: -0.5px;
             color: var(--text-main);
             text-decoration: none !important;
-            transition: color 0.8s var(--ease-premium);
+            transition: color 0.8s var(--ease-smooth);
             flex-shrink: 0;
         }
 
@@ -236,7 +237,7 @@
             height: 32px;
             padding: 0;
             flex-shrink: 0;
-            transition: opacity 0.2s var(--ease-premium), color 0.8s var(--ease-premium);
+            transition: opacity 0.2s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
         .ctrl-btn:hover { opacity: 0.6; }
@@ -250,7 +251,7 @@
             stroke-width: 2.2;
             stroke-linecap: round;
             stroke-linejoin: round;
-            transition: stroke 0.8s var(--ease-premium);
+            transition: stroke 0.8s var(--ease-smooth);
         }
 
         .search-static-icon {
@@ -273,7 +274,7 @@
             transform: translate3d(0, 0, 0);
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            transition: color 0.8s var(--ease-premium);
+            transition: color 0.8s var(--ease-smooth);
         }
 
         .clear-text-btn svg { opacity: 0.4; }
@@ -304,7 +305,7 @@
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            transition: transform 0.8s var(--ease-premium), opacity 0.8s var(--ease-premium), stroke 0.8s var(--ease-premium);
+            transition: transform 0.8s var(--ease-smooth), opacity 0.8s var(--ease-smooth), stroke 0.8s var(--ease-smooth);
         }
 
         .theme-toggle .sun-icon { opacity: 0; transform: rotate(-90deg) scale(0.4); }
@@ -329,7 +330,7 @@
             border-radius: 36px;
             padding: 32px 28px 36px 28px;
             box-shadow: var(--myspace-shadow);
-            transition: background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+            transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth), box-shadow 0.8s var(--ease-smooth);
         }
 
         .myspace-title {
@@ -339,7 +340,7 @@
             letter-spacing: -0.3px;
             color: var(--text-main);
             margin-bottom: 28px;
-            transition: color 0.8s var(--ease-premium);
+            transition: color 0.8s var(--ease-smooth);
         }
 
         .myspace-grid {
@@ -351,6 +352,7 @@
             width: 100%;
         }
 
+        /* CARD CONTAINER WITH SMOOTH 0.55s GRADUAL TRANSITION */
         .myspace-card {
             flex: 1 1 calc(50% - 10px);
             min-width: 180px;
@@ -374,11 +376,11 @@
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
             
-            /* Exact same 0.35s premium cubic-bezier easing as laptop */
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
-                        box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
-                        border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
-                        background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            /* 0.55s Gentle easing for both Opening and Closing */
+            transition: transform 0.55s var(--ease-smooth), 
+                        box-shadow 0.55s var(--ease-smooth), 
+                        border-color 0.55s var(--ease-smooth), 
+                        background-color 0.8s var(--ease-smooth);
         }
 
         @media (min-width: 701px) {
@@ -395,7 +397,7 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.55s var(--ease-smooth);
         }
 
         .myspace-card-title {
@@ -403,10 +405,10 @@
             font-weight: 500;
             color: var(--text-main);
             letter-spacing: -0.2px;
-            transition: color 0.8s var(--ease-premium);
+            transition: color 0.8s var(--ease-smooth);
         }
 
-        /* Desktop Hover State */
+        /* Laptop Hover */
         @media (hover: hover) and (pointer: fine) {
             .myspace-card:hover {
                 transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1);
@@ -424,7 +426,7 @@
             }
         }
 
-        /* Dedicated Elevation Lock Class (Used by JS to force laptop hover on iPad/Touch) */
+        /* Smooth Elevation Lock for Touch (iPad & Phone) */
         .myspace-card.is-card-lifted {
             transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1) !important;
             border-color: var(--card-border-hover) !important;
@@ -465,18 +467,18 @@
             display: inline-block;
             will-change: transform, opacity;
             backface-visibility: hidden;
-            transition: color 0.4s var(--ease-premium);
+            transition: color 0.4s var(--ease-smooth);
         }
 
         .footer-links-row a:hover { color: var(--text-main) !important; }
-        .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; letter-spacing: 0.2px; transition: color 0.8s var(--ease-premium); }
+        .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; letter-spacing: 0.2px; transition: color 0.8s var(--ease-smooth); }
 
         .nav-text {
             display: inline-block !important;
             white-space: nowrap !important;
             transform-origin: center center !important;
             will-change: transform, opacity, background-position !important;
-            transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
+            transition: transform 0.4s var(--ease-smooth), opacity 0.4s var(--ease-smooth);
         }
 
         .footer-links-row a .nav-text { color: var(--text-muted) !important; }
@@ -760,11 +762,6 @@
         });
 
         universalTargetLinks.forEach(link => {
-            // Touch Start: Immediately starts the 0.35s smooth elevation transition on finger contact
-            link.addEventListener('pointerdown', function() {
-                this.classList.add('is-card-lifted');
-            }, { passive: true });
-
             link.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
                 if (!destination || destination === '#' || destination.startsWith('#')) return;
@@ -776,7 +773,7 @@
                     l.classList.remove('is-card-lifted');
                 });
 
-                // Lock elevation state AND start wave shimmer
+                // Trigger smooth elevation + wave shimmer simultaneously
                 this.classList.add('is-card-lifted');
                 this.classList.add('is-wave-loading');
 
