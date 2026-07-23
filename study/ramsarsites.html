@@ -752,6 +752,7 @@
                 "/study/currentaffairs.html": "Current Affairs",
                 "/study/subjects.html": "Subjects",
                 "/study/ramsarsites.html": "Ramsar Sites",
+                "/study/search.html": "Search",
                 "/study/Footer/about.html": "About",
                 "/study/Footer/contact.html": "Contact",
                 "/study/Footer/privacy.html": "Privacy Policy",
@@ -777,30 +778,15 @@
                 trail = [{ name: "Home", path: HOME_PATH }];
             }
 
-            let cameFromHome = false;
-            if (document.referrer) {
-                try {
-                    const refUrl = new URL(document.referrer);
-                    cameFromHome = refUrl.pathname === HOME_PATH || refUrl.pathname === "/study/";
-                } catch (e) {
-                    cameFromHome = document.referrer.endsWith(HOME_PATH) || document.referrer.endsWith("/study/");
-                }
-            }
+            const existingIndex = trail.findIndex(step => step.path === searchPath);
 
-            if (cameFromHome) {
-                trail = [{ name: "Home", path: HOME_PATH }];
+            if (existingIndex !== -1) {
+                // Backtracking: Chop off everything after this page
+                trail = trail.slice(0, existingIndex + 1);
+            } else {
+                // Forward Tracking: Append current page to chain
                 if (searchPath !== HOME_PATH && searchPath !== "/study/") {
                     trail.push({ name: currentPageName, path: searchPath });
-                }
-            } else {
-                const existingIndex = trail.findIndex(step => step.path === searchPath);
-                
-                if (existingIndex !== -1) {
-                    trail = trail.slice(0, existingIndex + 1);
-                } else {
-                    if (searchPath !== HOME_PATH && searchPath !== "/study/") {
-                        trail.push({ name: currentPageName, path: searchPath });
-                    }
                 }
             }
 
