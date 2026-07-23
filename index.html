@@ -351,9 +351,7 @@
             width: 100%;
         }
 
-        /* HARDWARE-ACCELERATED CAPSULE CARD */
         .myspace-card {
-            position: relative;
             flex: 1 1 calc(50% - 10px);
             min-width: 180px;
             max-width: 280px;
@@ -370,27 +368,16 @@
             box-shadow: var(--card-shadow);
             touch-action: manipulation;
             
-            will-change: transform, border-color;
+            will-change: transform, box-shadow, border-color;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            transform: translate3d(0, 0, 0);
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
             
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
-                        border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+            transition: transform 0.35s var(--ease-premium), 
+                        box-shadow 0.35s var(--ease-premium), 
+                        border-color 0.35s var(--ease-premium), 
                         background-color 0.8s var(--ease-premium);
-        }
-
-        /* GPU Pseudo-element Shadow Overlay to eliminate mobile frame-drops */
-        .myspace-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 24px;
-            box-shadow: var(--card-shadow-hover);
-            opacity: 0;
-            will-change: opacity;
-            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            pointer-events: none;
         }
 
         @media (min-width: 701px) {
@@ -407,8 +394,7 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            will-change: transform;
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.35s var(--ease-premium);
         }
 
         .myspace-card-title {
@@ -419,32 +405,45 @@
             transition: color 0.8s var(--ease-premium);
         }
 
-        /* SMOOTH 60FPS ELEVATION (LAPTOP, IPAD & PHONE) */
-        .myspace-card:hover,
+        /* --- LAPTOP MOUSE HOVER --- */
+        @media (hover: hover) and (pointer: fine) {
+            .myspace-card:hover {
+                transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1);
+                border-color: var(--card-border-hover);
+                box-shadow: var(--card-shadow-hover);
+            }
+
+            .myspace-card:hover .myspace-card-icon {
+                transform: scale3d(1.08, 1.08, 1);
+            }
+
+            .footer-links-row a:hover .nav-text,
+            .logo:hover .nav-text {
+                transform: scale3d(1.06, 1.06, 1) !important;
+            }
+        }
+
+        /* --- IPAD & MOBILE TRANSITION LOCK (Forces identical Laptop 3D animation during wave) --- */
         .myspace-card:active,
-        .myspace-card.is-touch-active {
-            transform: translate3d(0, -6px, 0) !important;
+        .myspace-card.is-touch-active,
+        .myspace-card.is-wave-loading {
+            transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1) !important;
             border-color: var(--card-border-hover) !important;
+            box-shadow: var(--card-shadow-hover) !important;
         }
 
-        .myspace-card:hover::after,
-        .myspace-card:active::after,
-        .myspace-card.is-touch-active::after {
-            opacity: 1 !important;
-        }
-
-        .myspace-card:hover .myspace-card-icon,
         .myspace-card:active .myspace-card-icon,
-        .myspace-card.is-touch-active .myspace-card-icon {
+        .myspace-card.is-touch-active .myspace-card-icon,
+        .myspace-card.is-wave-loading .myspace-card-icon {
             transform: scale3d(1.08, 1.08, 1) !important;
         }
 
-        .footer-links-row a:hover .nav-text,
         .footer-links-row a:active .nav-text,
         .footer-links-row a.is-touch-active .nav-text,
-        .logo:hover .nav-text,
+        .footer-links-row a.is-wave-loading .nav-text,
         .logo:active .nav-text,
-        .logo.is-touch-active .nav-text {
+        .logo.is-touch-active .nav-text,
+        .logo.is-wave-loading .nav-text {
             transform: scale3d(1.06, 1.06, 1) !important;
         }
 
@@ -768,11 +767,8 @@
         });
 
         universalTargetLinks.forEach(link => {
-            // Frame-synced smooth touch start on Mobile GPUs
             link.addEventListener('pointerdown', function() {
-                requestAnimationFrame(() => {
-                    this.classList.add('is-touch-active');
-                });
+                this.classList.add('is-touch-active');
             }, { passive: true });
 
             link.addEventListener('click', function(e) {
@@ -781,12 +777,12 @@
 
                 e.preventDefault();
 
-                requestAnimationFrame(() => {
-                    this.classList.add('is-touch-active');
-                });
-                
+                // Locks card elevation state on iPad/phone during 750ms transition
+                this.classList.add('is-touch-active');
                 sessionStorage.setItem('activeUniversalTargetUrl', this.href);
+
                 universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
+
                 this.classList.add('is-wave-loading');
 
                 setTimeout(() => {
