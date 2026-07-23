@@ -423,7 +423,8 @@
             }
         }
 
-        /* --- IPAD & MOBILE TRANSITION LOCK (Forces identical Laptop 3D animation during wave) --- */
+        /* --- UNIVERSAL 3D ANIMATION LOCK (IPAD, MOBILE & LAPTOP) --- */
+        /* Forces the card container to elevate, scale, and glow border during 750ms transition */
         .myspace-card:active,
         .myspace-card.is-touch-active,
         .myspace-card.is-wave-loading {
@@ -767,23 +768,22 @@
         });
 
         universalTargetLinks.forEach(link => {
-            link.addEventListener('pointerdown', function() {
-                this.classList.add('is-touch-active');
-            }, { passive: true });
-
             link.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
                 if (!destination || destination === '#' || destination.startsWith('#')) return;
 
                 e.preventDefault();
 
-                // Locks card elevation state on iPad/phone during 750ms transition
-                this.classList.add('is-touch-active');
-                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
+                universalTargetLinks.forEach(l => {
+                    l.classList.remove('is-wave-loading');
+                    l.classList.remove('is-touch-active');
+                });
 
-                universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
-
+                // Lock both classes to trigger card elevation + wave text shimmer together
                 this.classList.add('is-wave-loading');
+                this.classList.add('is-touch-active');
+
+                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
 
                 setTimeout(() => {
                     window.location.href = destination;
