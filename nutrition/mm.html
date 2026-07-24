@@ -103,6 +103,7 @@
             transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
+        /* TASK 3: MASTER ENTRANCE ANIMATIONS FROM INDEX.HTML */
         @keyframes masterEntrance {
             from { opacity: 0; transform: translate3d(0, 24px, 0); }
             to { opacity: 1; transform: translate3d(0, 0, 0); }
@@ -117,8 +118,14 @@
         header { animation-delay: 0.04s; }
         .breadcrumbs { animation-delay: 0.14s; } 
         .day-switcher-capsule { animation-delay: 0.18s; }
-        .wide-capsule { animation-delay: 0.22s; }
-        footer { animation-delay: 0.32s; }
+        .wide-capsule:nth-of-type(1) { animation-delay: 0.20s; }
+        .wide-capsule:nth-of-type(2) { animation-delay: 0.24s; }
+        .wide-capsule:nth-of-type(3) { animation-delay: 0.28s; }
+        .wide-capsule:nth-of-type(4) { animation-delay: 0.32s; }
+        .wide-capsule:nth-of-type(5) { animation-delay: 0.36s; }
+        .wide-capsule:nth-of-type(6) { animation-delay: 0.40s; }
+        .wide-capsule:nth-of-type(7) { animation-delay: 0.44s; }
+        footer { animation-delay: 0.52s; }
 
         /* HEADER DESIGN */
         header {
@@ -226,7 +233,7 @@
 
         .contents-container { display: flex; flex-direction: column; gap: 32px; margin-bottom: 80px; width: 100%; }
 
-        /* WIDE CAPSULES */
+        /* TASK 3: WIDE CAPSULES HOVER ANIMATION FROM INDEX.HTML */
         .wide-capsule {
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
@@ -240,6 +247,15 @@
         }
 
         body:not(.light-mode) .wide-capsule { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+
+        @media (hover: hover) and (pointer: fine) {
+            .wide-capsule:hover { 
+                border-color: #1E1E1E; 
+                transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
+                box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+            }
+            body.light-mode .wide-capsule:hover { border-color: #b8b8bc; box-shadow: 0 16px 32px rgba(0, 0, 0, 0.09); }
+        }
 
         .capsule-header-row {
             display: flex;
@@ -258,6 +274,27 @@
             align-items: center;
             gap: 8px;
             line-height: 1.2;
+        }
+
+        /* TASK 1: SELECT ALL / DESELECT ALL BUTTON STYLING */
+        .select-all-btn {
+            background-color: var(--header-bg);
+            border: 1px solid var(--panel-border);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            font-size: 13.5px;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-smooth);
+            user-select: none;
+            outline: none;
+        }
+
+        .select-all-btn:hover {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
         }
 
         /* INLINE IMAGE ICON ENGINE */
@@ -367,6 +404,21 @@
             transition: width 0.8s var(--ease-smooth);
         }
 
+        /* TASK 2: CUSTOM PROGRESS BAR COLORS MATCHING ICON ACCENTS */
+        #proteinBar { background-color: #ea4335 !important; }
+        #fiberBar { background-color: #34a853 !important; }
+        #calBar, #carbsBar { background-color: #fbbc05 !important; }
+
+        /* Fats Capsule - Honey Gold */
+        #sfaBar, #unsatBar, #mufaBar, #pufaBar, #alaBar, #epaBar, #dhaBar, #o6Bar {
+            background-color: #f5a623 !important;
+        }
+
+        /* Carotenoids Capsule - Rich Orange */
+        #bCaroteneBar, #aCaroteneBar {
+            background-color: #ff7a00 !important;
+        }
+
         /* FOOTER */
         footer { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; flex-shrink: 0; }
         .footer-links-row { display: flex; justify-content: center; align-items: center; gap: 32px; flex-wrap: wrap; width: 100%; }
@@ -419,15 +471,16 @@
             .wide-capsule { padding: 32px 24px; border-radius: 24px; }
             .capsule-svg-icon { width: 100%; height: 100%; object-fit: contain; }
         }
+        
         .icon-box {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    margin-right: 10px;
-    vertical-align: middle;
-}
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -484,12 +537,13 @@
             <button class="day-pill" data-day="6">Sat</button>
         </div>
 
-        <!-- TODAY'S MEAL PLATE (EXPLICITLY WITHOUT AN ICON, SENTENCE CASE) -->
+        <!-- TODAY'S MEAL PLATE WITH SELECT/DESELECT ALL BUTTON -->
         <div class="wide-capsule">
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
                     Today’s meal plate <span id="activeDayText" style="color:var(--text-muted); font-size:16px;">(Sunday)</span>
                 </h2>
+                <button type="button" class="select-all-btn" id="selectAllBtn" onclick="toggleSelectAll()">Deselect all</button>
             </div>
             <div class="food-checklist-grid" id="foodGrid">
                 <!-- Populated dynamically in strict top-to-bottom vertical column order -->
@@ -560,7 +614,7 @@
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
                 <span class="icon-box">
-                 <img src="https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/vitamins.png?raw=true" class="capsule-icon" width="70 height="70" alt="Vitamins">
+                 <img src="https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/vitamins.png?raw=true" class="capsule-icon" width="70" height="70" alt="Vitamins">
                      </span>
                     Vitamins
                 </h2>
@@ -816,6 +870,29 @@
             recalculateTotals();
         }
 
+        // TASK 1: SELECT ALL / DESELECT ALL BUTTON ENGINE
+        function toggleSelectAll() {
+            const checkboxes = document.querySelectorAll('#foodGrid input[type="checkbox"]');
+            if (checkboxes.length === 0) return;
+
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            
+            checkboxes.forEach(cb => {
+                cb.checked = !allChecked;
+            });
+
+            recalculateTotals();
+        }
+
+        function updateSelectAllBtnState() {
+            const checkboxes = document.querySelectorAll('#foodGrid input[type="checkbox"]');
+            const selectAllBtn = document.getElementById('selectAllBtn');
+            if (!selectAllBtn || checkboxes.length === 0) return;
+
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            selectAllBtn.innerText = allChecked ? 'Deselect all' : 'Select all';
+        }
+
         function recalculateTotals() {
             const todayItems = weeklyMenu[currentSelectedDay] || [];
             const checkboxes = document.querySelectorAll('#foodGrid input[type="checkbox"]');
@@ -834,6 +911,9 @@
                     }
                 }
             });
+
+            // Update button label dynamically
+            updateSelectAllBtnState();
 
             // CAPSULE 1
             updateBar('cal', totals.cal, targets.cal, 'kcal');
