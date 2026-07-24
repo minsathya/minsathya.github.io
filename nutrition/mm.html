@@ -115,6 +115,7 @@
             animation: masterEntrance 1.2s var(--ease-smooth) backwards;
         }
 
+        /* SITE DUAL-VIEW HEADER DESIGN */
         header {
             position: relative;
             background-color: var(--header-bg);
@@ -128,31 +129,90 @@
             transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth);
         }
 
-        .header-inner-view {
-            position: absolute; inset: 0; width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: space-between;
+        .header-main-view, .header-search-view {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             padding: 0 32px;
+            transition: opacity 0.4s var(--ease-smooth), transform 0.4s var(--ease-smooth);
+        }
+
+        .header-main-view {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .header-search-view {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+
+        header.search-active .header-main-view {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+        }
+
+        header.search-active .header-search-view {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
         }
 
         .logo { font-size: 26px; font-weight: 600; color: var(--text-main); text-decoration: none !important; }
 
         .header-right-cluster { display: flex; align-items: center; gap: 16px; }
 
-        .ctrl-btn { 
-            background: none; 
-            border: none; 
-            color: var(--text-main); 
-            cursor: pointer; 
-            width: 36px; 
-            height: 36px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
+        .ctrl-btn {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 50%;
             transition: background-color 0.3s var(--ease-smooth);
         }
         .ctrl-btn:hover { background-color: rgba(255, 255, 255, 0.05); }
         .ctrl-btn svg { width: 22px; height: 22px; fill: none; stroke: var(--text-main); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            margin-right: 16px;
+        }
+
+        .search-input-wrapper svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 2.2;
+            flex-shrink: 0;
+        }
+
+        #headerSearchInput {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        #headerSearchInput::placeholder { color: var(--text-muted); opacity: 0.7; }
 
         .theme-toggle { width: 32px; height: 32px; position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .theme-toggle svg { position: absolute; width: 22px; height: 22px; fill: none; stroke: var(--text-main); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.8s var(--ease-smooth), opacity 0.8s var(--ease-smooth); }
@@ -203,7 +263,7 @@
 
         .contents-container { display: flex; flex-direction: column; gap: 32px; margin-bottom: 80px; width: 100%; }
 
-        /* HOMEPAGE STYLE WIDE CAPSULES */
+        /* WIDE CAPSULE DISPLAY CARDS */
         .wide-capsule {
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
@@ -227,7 +287,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
 
         .capsule-title {
@@ -289,7 +349,7 @@
         .food-name { font-size: 15.5px; font-weight: 500; color: var(--text-main); }
         .food-qty { font-size: 13.5px; color: var(--text-muted); margin-left: 6px; }
 
-        /* MACROS & NUTRIENTS PROGRESS CARDS */
+        /* MACROS & NUTRIENTS PROGRESS CARDS GRID */
         .macros-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -336,29 +396,6 @@
             transition: width 0.8s var(--ease-smooth);
         }
 
-        /* ACCORDIONS FOR 6 CAPSULES */
-        .accordion-header {
-            cursor: pointer;
-            user-select: none;
-            margin-bottom: 0;
-        }
-
-        .accordion-toggle-icon {
-            width: 22px;
-            height: 22px;
-            stroke: var(--text-muted);
-            fill: none;
-            stroke-width: 2;
-            transition: transform 0.4s var(--ease-smooth);
-        }
-
-        .accordion-content {
-            margin-top: 24px;
-            transition: all 0.4s var(--ease-smooth);
-        }
-
-        .accordion-content.collapsed { display: none; }
-
         footer { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
         .footer-links-row { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; width: 100%; }
         .footer-links-row a { color: var(--text-muted) !important; text-decoration: none !important; font-size: 14px; }
@@ -383,18 +420,28 @@
 
     <div class="fluid-wave-bg"></div>
 
+    <!-- MASTER HEADER WITH MAIN VIEW AND SEARCH VIEW -->
     <header id="masterHeader">
-        <div class="header-inner-view">
+        <div class="header-main-view" id="headerMainView">
             <a href="/study/index.html" class="logo">sathya.</a>
             <div class="header-right-cluster">
-                <button class="ctrl-btn" id="searchBtn" title="Search">
+                <button class="ctrl-btn" id="searchTriggerBtn" aria-label="Open Search">
                     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 </button>
-                <div class="theme-toggle" id="themeToggleBtn">
+                <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle Theme">
                     <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
                     <svg class="moon-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                 </div>
             </div>
+        </div>
+        <div class="header-search-view" id="headerSearchView">
+            <div class="search-input-wrapper">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="headerSearchInput" placeholder="Search nutrients or food items..." autocomplete="off">
+            </div>
+            <button class="ctrl-btn" id="searchCloseBtn" aria-label="Close Search">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
         </div>
     </header>
 
@@ -425,143 +472,125 @@
                 </h2>
             </div>
             <div class="food-checklist-grid" id="foodGrid">
-                <!-- Checkboxes populated dynamically by JS -->
+                <!-- All 23 food items populated dynamically by JS -->
             </div>
         </div>
 
         <!-- CAPSULE 1: MACRONUTRIENTS & ENERGY -->
         <div class="wide-capsule">
-            <div class="capsule-header-row accordion-header" onclick="toggleAccordion('macrosDrawer', 'macrosIcon')">
+            <div class="capsule-header-row">
                 <h2 class="capsule-title">
                     <svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
                     1. MACRONUTRIENTS & ENERGY
                 </h2>
-                <svg class="accordion-toggle-icon" id="macrosIcon" viewBox="0 0 24 24" style="transform: rotate(180deg);"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </div>
-            <div class="accordion-content" id="macrosDrawer">
-                <div class="macros-grid">
-                    <div class="macro-card"><div class="macro-top-label"><span>Calories</span><span class="macro-badge" id="calBadge">0%</span></div><div class="macro-val" id="calVal">0 / 2200 kcal</div><div class="progress-track"><div class="progress-fill" id="calBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Protein</span><span class="macro-badge" id="proteinBadge">0%</span></div><div class="macro-val" id="proteinVal">0g / 95g</div><div class="progress-track"><div class="progress-fill" id="proteinBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Fiber</span><span class="macro-badge" id="fiberBadge">0%</span></div><div class="macro-val" id="fiberVal">0g / 30g</div><div class="progress-track"><div class="progress-fill" id="fiberBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Carbohydrates</span><span class="macro-badge" id="carbsBadge">0%</span></div><div class="macro-val" id="carbsVal">0g / 275g</div><div class="progress-track"><div class="progress-fill" id="carbsBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Total Fat</span><span class="macro-badge" id="fatBadge">0%</span></div><div class="macro-val" id="fatVal">0g / 73g</div><div class="progress-track"><div class="progress-fill" id="fatBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Sugars</span><span class="macro-badge" id="sugarsBadge">0%</span></div><div class="macro-val" id="sugarsVal">0g / 25g</div><div class="progress-track"><div class="progress-fill" id="sugarsBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Lactose</span><span class="macro-badge" id="lactoseBadge">0%</span></div><div class="macro-val" id="lactoseVal">0g / 10g</div><div class="progress-track"><div class="progress-fill" id="lactoseBar"></div></div></div>
-                </div>
+            <div class="macros-grid">
+                <div class="macro-card"><div class="macro-top-label"><span>Calories</span><span class="macro-badge" id="calBadge">0%</span></div><div class="macro-val" id="calVal">0 / 2200 kcal</div><div class="progress-track"><div class="progress-fill" id="calBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Protein</span><span class="macro-badge" id="proteinBadge">0%</span></div><div class="macro-val" id="proteinVal">0g / 95g</div><div class="progress-track"><div class="progress-fill" id="proteinBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Fiber</span><span class="macro-badge" id="fiberBadge">0%</span></div><div class="macro-val" id="fiberVal">0g / 30g</div><div class="progress-track"><div class="progress-fill" id="fiberBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Carbohydrates</span><span class="macro-badge" id="carbsBadge">0%</span></div><div class="macro-val" id="carbsVal">0g / 275g</div><div class="progress-track"><div class="progress-fill" id="carbsBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Total Fat</span><span class="macro-badge" id="fatBadge">0%</span></div><div class="macro-val" id="fatVal">0g / 73g</div><div class="progress-track"><div class="progress-fill" id="fatBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Sugars</span><span class="macro-badge" id="sugarsBadge">0%</span></div><div class="macro-val" id="sugarsVal">0g / 25g</div><div class="progress-track"><div class="progress-fill" id="sugarsBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Lactose</span><span class="macro-badge" id="lactoseBadge">0%</span></div><div class="macro-val" id="lactoseVal">0g / 10g</div><div class="progress-track"><div class="progress-fill" id="lactoseBar"></div></div></div>
             </div>
         </div>
 
         <!-- CAPSULE 2: FATTY ACID PROFILE & LIPIDS -->
         <div class="wide-capsule">
-            <div class="capsule-header-row accordion-header" onclick="toggleAccordion('fattyDrawer', 'fattyIcon')">
+            <div class="capsule-header-row">
                 <h2 class="capsule-title">
                     <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
                     2. FATTY ACID PROFILE & LIPIDS
                 </h2>
-                <svg class="accordion-toggle-icon" id="fattyIcon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </div>
-            <div class="accordion-content collapsed" id="fattyDrawer">
-                <div class="macros-grid">
-                    <div class="macro-card"><div class="macro-top-label"><span>Saturated Fat (SFA)</span><span class="macro-badge" id="sfaBadge">0%</span></div><div class="macro-val" id="sfaVal">0g / 20g</div><div class="progress-track"><div class="progress-fill" id="sfaBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Unsaturated Fat</span><span class="macro-badge" id="unsatBadge">0%</span></div><div class="macro-val" id="unsatVal">0g / 50g</div><div class="progress-track"><div class="progress-fill" id="unsatBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Monounsaturated (MUFA)</span><span class="macro-badge" id="mufaBadge">0%</span></div><div class="macro-val" id="mufaVal">0g / 30g</div><div class="progress-track"><div class="progress-fill" id="mufaBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Polyunsaturated (PUFA)</span><span class="macro-badge" id="pufaBadge">0%</span></div><div class="macro-val" id="pufaVal">0g / 20g</div><div class="progress-track"><div class="progress-fill" id="pufaBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Omega-3 (ALA)</span><span class="macro-badge" id="alaBadge">0%</span></div><div class="macro-val" id="alaVal">0g / 1.6g</div><div class="progress-track"><div class="progress-fill" id="alaBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Omega-3 (EPA)</span><span class="macro-badge" id="epaBadge">0%</span></div><div class="macro-val" id="epaVal">0g / 0.25g</div><div class="progress-track"><div class="progress-fill" id="epaBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Omega-3 (DHA)</span><span class="macro-badge" id="dhaBadge">0%</span></div><div class="macro-val" id="dhaVal">0g / 0.25g</div><div class="progress-track"><div class="progress-fill" id="dhaBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Omega-6</span><span class="macro-badge" id="o6Badge">0%</span></div><div class="macro-val" id="o6Val">0g / 14g</div><div class="progress-track"><div class="progress-fill" id="o6Bar"></div></div></div>
-                </div>
+            <div class="macros-grid">
+                <div class="macro-card"><div class="macro-top-label"><span>Saturated Fat (SFA)</span><span class="macro-badge" id="sfaBadge">0%</span></div><div class="macro-val" id="sfaVal">0g / 20g</div><div class="progress-track"><div class="progress-fill" id="sfaBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Unsaturated Fat</span><span class="macro-badge" id="unsatBadge">0%</span></div><div class="macro-val" id="unsatVal">0g / 50g</div><div class="progress-track"><div class="progress-fill" id="unsatBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Monounsaturated (MUFA)</span><span class="macro-badge" id="mufaBadge">0%</span></div><div class="macro-val" id="mufaVal">0g / 30g</div><div class="progress-track"><div class="progress-fill" id="mufaBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Polyunsaturated (PUFA)</span><span class="macro-badge" id="pufaBadge">0%</span></div><div class="macro-val" id="pufaVal">0g / 20g</div><div class="progress-track"><div class="progress-fill" id="pufaBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Omega-3 (ALA)</span><span class="macro-badge" id="alaBadge">0%</span></div><div class="macro-val" id="alaVal">0g / 1.6g</div><div class="progress-track"><div class="progress-fill" id="alaBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Omega-3 (EPA)</span><span class="macro-badge" id="epaBadge">0%</span></div><div class="macro-val" id="epaVal">0g / 0.25g</div><div class="progress-track"><div class="progress-fill" id="epaBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Omega-3 (DHA)</span><span class="macro-badge" id="dhaBadge">0%</span></div><div class="macro-val" id="dhaVal">0g / 0.25g</div><div class="progress-track"><div class="progress-fill" id="dhaBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Omega-6</span><span class="macro-badge" id="o6Badge">0%</span></div><div class="macro-val" id="o6Val">0g / 14g</div><div class="progress-track"><div class="progress-fill" id="o6Bar"></div></div></div>
             </div>
         </div>
 
         <!-- CAPSULE 3: CAROTENOIDS -->
         <div class="wide-capsule">
-            <div class="capsule-header-row accordion-header" onclick="toggleAccordion('caroteneDrawer', 'caroteneIcon')">
+            <div class="capsule-header-row">
                 <h2 class="capsule-title">
                     <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
                     3. CAROTENOIDS
                 </h2>
-                <svg class="accordion-toggle-icon" id="caroteneIcon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </div>
-            <div class="accordion-content collapsed" id="caroteneDrawer">
-                <div class="macros-grid">
-                    <div class="macro-card"><div class="macro-top-label"><span>Beta-Carotene</span><span class="macro-badge" id="bCaroteneBadge">0%</span></div><div class="macro-val" id="bCaroteneVal">0 µg / 4800 µg</div><div class="progress-track"><div class="progress-fill" id="bCaroteneBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Alpha-Carotene</span><span class="macro-badge" id="aCaroteneBadge">0%</span></div><div class="macro-val" id="aCaroteneVal">0 µg / 500 µg</div><div class="progress-track"><div class="progress-fill" id="aCaroteneBar"></div></div></div>
-                </div>
+            <div class="macros-grid">
+                <div class="macro-card"><div class="macro-top-label"><span>Beta-Carotene</span><span class="macro-badge" id="bCaroteneBadge">0%</span></div><div class="macro-val" id="bCaroteneVal">0 µg / 4800 µg</div><div class="progress-track"><div class="progress-fill" id="bCaroteneBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Alpha-Carotene</span><span class="macro-badge" id="aCaroteneBadge">0%</span></div><div class="macro-val" id="aCaroteneVal">0 µg / 500 µg</div><div class="progress-track"><div class="progress-fill" id="aCaroteneBar"></div></div></div>
             </div>
         </div>
 
         <!-- CAPSULE 4: VITAMINS -->
         <div class="wide-capsule">
-            <div class="capsule-header-row accordion-header" onclick="toggleAccordion('vitaminsDrawer', 'vitaminsIcon')">
+            <div class="capsule-header-row">
                 <h2 class="capsule-title">
                     <svg viewBox="0 0 24 24"><path d="M10.5 20.5L3.5 13.5a4.95 4.95 0 1 1 7-7l7 7a4.95 4.95 0 1 1-7 7z"></path></svg>
                     4. VITAMINS
                 </h2>
-                <svg class="accordion-toggle-icon" id="vitaminsIcon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </div>
-            <div class="accordion-content collapsed" id="vitaminsDrawer">
-                <div class="macros-grid">
-                    <div class="macro-card"><div class="macro-top-label"><span>Vitamin A (RAE)</span><span class="macro-badge" id="vitABadge">0%</span></div><div class="macro-val" id="vitAVal">0 µg / 900 µg</div><div class="progress-track"><div class="progress-fill" id="vitABar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Vitamin B1 (Thiamine)</span><span class="macro-badge" id="vitB1Badge">0%</span></div><div class="macro-val" id="vitB1Val">0 mg / 1.2 mg</div><div class="progress-track"><div class="progress-fill" id="vitB1Bar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Vitamin B2 (Riboflavin)</span><span class="macro-badge" id="vitB2Badge">0%</span></div><div class="macro-val" id="vitB2Val">0 mg / 1.3 mg</div><div class="progress-track"><div class="progress-fill" id="vitB2Bar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Vitamin B3 (Niacin)</span><span class="macro-badge" id="vitB3Badge">0%</span></div><div class="macro-val" id="vitB3Val">0 mg / 16 mg</div><div class="progress-track"><div class="progress-fill" id="vitB3Bar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Vitamin B5 (Pantothenic)</span><span class="macro-badge" id="vitB5Badge">0%</span></div><div class="macro-val" id="vitB5Val">0 mg / 5 mg</div><div class="progress-track"><div class="progress-fill" id="vitB5Bar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Vitamin B6</span><span class="macro-badge" id="vitB6Badge">0%</span></div><div class="macro-val" id="vitB6Val">0 mg / 1.7 mg</div><div class="progress-track"><div class="progress-fill" id="vitB6Bar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Vitamin B7 (Biotin)</span><span class="macro-badge" id="vitB7Badge">0%</span></div><div class="macro-val" id="vitB7Val">0 µg / 30 µg</div><div class="progress-track"><div class="progress-fill" id="vitB7Bar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Vitamin B9 (Folate)</span><span class="macro-badge" id="vitB9Badge">0%</span></div><div class="macro-val" id="vitB9Val">0 µg / 400 µg</div><div class="progress-track"><div class="progress-fill" id="vitB9Bar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Vitamin B12</span><span class="macro-badge" id="vitB12Badge">0%</span></div><div class="macro-val" id="vitB12Val">0 µg / 2.4 µg</div><div class="progress-track"><div class="progress-fill" id="vitB12Bar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Vitamin C</span><span class="macro-badge" id="vitCBadge">0%</span></div><div class="macro-val" id="vitCVal">0 mg / 90 mg</div><div class="progress-track"><div class="progress-fill" id="vitCBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Vitamin D</span><span class="macro-badge" id="vitDBadge">0%</span></div><div class="macro-val" id="vitDVal">0 µg / 15 µg</div><div class="progress-track"><div class="progress-fill" id="vitDBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Vitamin E</span><span class="macro-badge" id="vitEBadge">0%</span></div><div class="macro-val" id="vitEVal">0 mg / 15 mg</div><div class="progress-track"><div class="progress-fill" id="vitEBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Vitamin K</span><span class="macro-badge" id="vitKBadge">0%</span></div><div class="macro-val" id="vitKVal">0 µg / 120 µg</div><div class="progress-track"><div class="progress-fill" id="vitKBar"></div></div></div>
-                </div>
+            <div class="macros-grid">
+                <div class="macro-card"><div class="macro-top-label"><span>Vitamin A (RAE)</span><span class="macro-badge" id="vitABadge">0%</span></div><div class="macro-val" id="vitAVal">0 µg / 900 µg</div><div class="progress-track"><div class="progress-fill" id="vitABar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Vitamin B1 (Thiamine)</span><span class="macro-badge" id="vitB1Badge">0%</span></div><div class="macro-val" id="vitB1Val">0 mg / 1.2 mg</div><div class="progress-track"><div class="progress-fill" id="vitB1Bar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Vitamin B2 (Riboflavin)</span><span class="macro-badge" id="vitB2Badge">0%</span></div><div class="macro-val" id="vitB2Val">0 mg / 1.3 mg</div><div class="progress-track"><div class="progress-fill" id="vitB2Bar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Vitamin B3 (Niacin)</span><span class="macro-badge" id="vitB3Badge">0%</span></div><div class="macro-val" id="vitB3Val">0 mg / 16 mg</div><div class="progress-track"><div class="progress-fill" id="vitB3Bar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Vitamin B5 (Pantothenic)</span><span class="macro-badge" id="vitB5Badge">0%</span></div><div class="macro-val" id="vitB5Val">0 mg / 5 mg</div><div class="progress-track"><div class="progress-fill" id="vitB5Bar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Vitamin B6</span><span class="macro-badge" id="vitB6Badge">0%</span></div><div class="macro-val" id="vitB6Val">0 mg / 1.7 mg</div><div class="progress-track"><div class="progress-fill" id="vitB6Bar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Vitamin B7 (Biotin)</span><span class="macro-badge" id="vitB7Badge">0%</span></div><div class="macro-val" id="vitB7Val">0 µg / 30 µg</div><div class="progress-track"><div class="progress-fill" id="vitB7Bar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Vitamin B9 (Folate)</span><span class="macro-badge" id="vitB9Badge">0%</span></div><div class="macro-val" id="vitB9Val">0 µg / 400 µg</div><div class="progress-track"><div class="progress-fill" id="vitB9Bar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Vitamin B12</span><span class="macro-badge" id="vitB12Badge">0%</span></div><div class="macro-val" id="vitB12Val">0 µg / 2.4 µg</div><div class="progress-track"><div class="progress-fill" id="vitB12Bar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Vitamin C</span><span class="macro-badge" id="vitCBadge">0%</span></div><div class="macro-val" id="vitCVal">0 mg / 90 mg</div><div class="progress-track"><div class="progress-fill" id="vitCBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Vitamin D</span><span class="macro-badge" id="vitDBadge">0%</span></div><div class="macro-val" id="vitDVal">0 µg / 15 µg</div><div class="progress-track"><div class="progress-fill" id="vitDBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Vitamin E</span><span class="macro-badge" id="vitEBadge">0%</span></div><div class="macro-val" id="vitEVal">0 mg / 15 mg</div><div class="progress-track"><div class="progress-fill" id="vitEBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Vitamin K</span><span class="macro-badge" id="vitKBadge">0%</span></div><div class="macro-val" id="vitKVal">0 µg / 120 µg</div><div class="progress-track"><div class="progress-fill" id="vitKBar"></div></div></div>
             </div>
         </div>
 
         <!-- CAPSULE 5: MACRO MINERALS -->
         <div class="wide-capsule">
-            <div class="capsule-header-row accordion-header" onclick="toggleAccordion('macroMineralsDrawer', 'macroMineralsIcon')">
+            <div class="capsule-header-row">
                 <h2 class="capsule-title">
                     <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                     5. MACRO MINERALS
                 </h2>
-                <svg class="accordion-toggle-icon" id="macroMineralsIcon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </div>
-            <div class="accordion-content collapsed" id="macroMineralsDrawer">
-                <div class="macros-grid">
-                    <div class="macro-card"><div class="macro-top-label"><span>Calcium</span><span class="macro-badge" id="calciumBadge">0%</span></div><div class="macro-val" id="calciumVal">0 mg / 1000 mg</div><div class="progress-track"><div class="progress-fill" id="calciumBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Phosphorus</span><span class="macro-badge" id="pBadge">0%</span></div><div class="macro-val" id="pVal">0 mg / 700 mg</div><div class="progress-track"><div class="progress-fill" id="pBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Magnesium</span><span class="macro-badge" id="mgBadge">0%</span></div><div class="macro-val" id="mgVal">0 mg / 440 mg</div><div class="progress-track"><div class="progress-fill" id="mgBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Sodium</span><span class="macro-badge" id="naBadge">0%</span></div><div class="macro-val" id="naVal">0 mg / 2000 mg</div><div class="progress-track"><div class="progress-fill" id="naBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Potassium</span><span class="macro-badge" id="potassiumBadge">0%</span></div><div class="macro-val" id="potassiumVal">0 mg / 3500 mg</div><div class="progress-track"><div class="progress-fill" id="potassiumBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Chloride</span><span class="macro-badge" id="clBadge">0%</span></div><div class="macro-val" id="clVal">0 mg / 2300 mg</div><div class="progress-track"><div class="progress-fill" id="clBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Sulphur</span><span class="macro-badge" id="sBadge">0%</span></div><div class="macro-val" id="sVal">0 mg / 1000 mg</div><div class="progress-track"><div class="progress-fill" id="sBar"></div></div></div>
-                </div>
+            <div class="macros-grid">
+                <div class="macro-card"><div class="macro-top-label"><span>Calcium</span><span class="macro-badge" id="calciumBadge">0%</span></div><div class="macro-val" id="calciumVal">0 mg / 1000 mg</div><div class="progress-track"><div class="progress-fill" id="calciumBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Phosphorus</span><span class="macro-badge" id="pBadge">0%</span></div><div class="macro-val" id="pVal">0 mg / 700 mg</div><div class="progress-track"><div class="progress-fill" id="pBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Magnesium</span><span class="macro-badge" id="mgBadge">0%</span></div><div class="macro-val" id="mgVal">0 mg / 440 mg</div><div class="progress-track"><div class="progress-fill" id="mgBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Sodium</span><span class="macro-badge" id="naBadge">0%</span></div><div class="macro-val" id="naVal">0 mg / 2000 mg</div><div class="progress-track"><div class="progress-fill" id="naBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Potassium</span><span class="macro-badge" id="potassiumBadge">0%</span></div><div class="macro-val" id="potassiumVal">0 mg / 3500 mg</div><div class="progress-track"><div class="progress-fill" id="potassiumBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Chloride</span><span class="macro-badge" id="clBadge">0%</span></div><div class="macro-val" id="clVal">0 mg / 2300 mg</div><div class="progress-track"><div class="progress-fill" id="clBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Sulphur</span><span class="macro-badge" id="sBadge">0%</span></div><div class="macro-val" id="sVal">0 mg / 1000 mg</div><div class="progress-track"><div class="progress-fill" id="sBar"></div></div></div>
             </div>
         </div>
 
         <!-- CAPSULE 6: TRACE MINERALS -->
         <div class="wide-capsule">
-            <div class="capsule-header-row accordion-header" onclick="toggleAccordion('traceMineralsDrawer', 'traceMineralsIcon')">
+            <div class="capsule-header-row">
                 <h2 class="capsule-title">
                     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
                     6. TRACE MINERALS
                 </h2>
-                <svg class="accordion-toggle-icon" id="traceMineralsIcon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </div>
-            <div class="accordion-content collapsed" id="traceMineralsDrawer">
-                <div class="macros-grid">
-                    <div class="macro-card"><div class="macro-top-label"><span>Iron</span><span class="macro-badge" id="ironBadge">0%</span></div><div class="macro-val" id="ironVal">0 mg / 19 mg</div><div class="progress-track"><div class="progress-fill" id="ironBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Zinc</span><span class="macro-badge" id="zincBadge">0%</span></div><div class="macro-val" id="zincVal">0 mg / 17 mg</div><div class="progress-track"><div class="progress-fill" id="zincBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Iodine</span><span class="macro-badge" id="iodineBadge">0%</span></div><div class="macro-val" id="iodineVal">0 µg / 150 µg</div><div class="progress-track"><div class="progress-fill" id="iodineBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Manganese</span><span class="macro-badge" id="mnBadge">0%</span></div><div class="macro-val" id="mnVal">0 mg / 4 mg</div><div class="progress-track"><div class="progress-fill" id="mnBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Selenium</span><span class="macro-badge" id="seBadge">0%</span></div><div class="macro-val" id="seVal">0 µg / 40 µg</div><div class="progress-track"><div class="progress-fill" id="seBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Copper</span><span class="macro-badge" id="cuBadge">0%</span></div><div class="macro-val" id="cuVal">0 mg / 1.7 mg</div><div class="progress-track"><div class="progress-fill" id="cuBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Fluoride</span><span class="macro-badge" id="fBadge">0%</span></div><div class="macro-val" id="fVal">Trace / Est.</div><div class="progress-track"><div class="progress-fill" id="fBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Chromium</span><span class="macro-badge" id="crBadge">0%</span></div><div class="macro-val" id="crVal">Trace / Est.</div><div class="progress-track"><div class="progress-fill" id="crBar"></div></div></div>
-                    <div class="macro-card"><div class="macro-top-label"><span>Molybdenum</span><span class="macro-badge" id="moBadge">0%</span></div><div class="macro-val" id="moVal">0 µg / 45 µg</div><div class="progress-track"><div class="progress-fill" id="moBar"></div></div></div>
-                </div>
+            <div class="macros-grid">
+                <div class="macro-card"><div class="macro-top-label"><span>Iron</span><span class="macro-badge" id="ironBadge">0%</span></div><div class="macro-val" id="ironVal">0 mg / 19 mg</div><div class="progress-track"><div class="progress-fill" id="ironBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Zinc</span><span class="macro-badge" id="zincBadge">0%</span></div><div class="macro-val" id="zincVal">0 mg / 17 mg</div><div class="progress-track"><div class="progress-fill" id="zincBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Iodine</span><span class="macro-badge" id="iodineBadge">0%</span></div><div class="macro-val" id="iodineVal">0 µg / 150 µg</div><div class="progress-track"><div class="progress-fill" id="iodineBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Manganese</span><span class="macro-badge" id="mnBadge">0%</span></div><div class="macro-val" id="mnVal">0 mg / 4 mg</div><div class="progress-track"><div class="progress-fill" id="mnBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Selenium</span><span class="macro-badge" id="seBadge">0%</span></div><div class="macro-val" id="seVal">0 µg / 40 µg</div><div class="progress-track"><div class="progress-fill" id="seBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Copper</span><span class="macro-badge" id="cuBadge">0%</span></div><div class="macro-val" id="cuVal">0 mg / 1.7 mg</div><div class="progress-track"><div class="progress-fill" id="cuBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Fluoride</span><span class="macro-badge" id="fBadge">0%</span></div><div class="macro-val" id="fVal">Trace / Est.</div><div class="progress-track"><div class="progress-fill" id="fBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Chromium</span><span class="macro-badge" id="crBadge">0%</span></div><div class="macro-val" id="crVal">Trace / Est.</div><div class="progress-track"><div class="progress-fill" id="crBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Molybdenum</span><span class="macro-badge" id="moBadge">0%</span></div><div class="macro-val" id="moVal">0 µg / 45 µg</div><div class="progress-track"><div class="progress-fill" id="moBar"></div></div></div>
             </div>
         </div>
     </main>
@@ -578,7 +607,7 @@
     </footer>
 
     <script>
-        // MASTER 23 FOOD DATABASE
+        // FULL MASTER 23 FOOD DATABASE WITH ALL 50 NUTRIENT BREAKDOWNS
         const foodMasterDB = {
             'Chickpeas': { cal: 378, pro: 20.5, fiber: 12.2, carb: 63, fat: 6.07, sug: 10.7, lac: 0, sfa: 0.60, unsat: 5.47, mufa: 1.36, pufa: 4.11, ala: 0.11, epa: 0, dha: 0, o6: 4.0, bCar: 40, aCar: 0, vitA: 3, vitB1: 0.48, vitB2: 0.21, vitB3: 1.54, vitB5: 1.6, vitB6: 0.54, vitB7: 10, vitB9: 557, vitB12: 0, vitC: 4, vitD: 0, vitE: 0.82, vitK: 9, ca: 105, p: 366, mg: 115, na: 24, k: 875, cl: 10, s: 180, fe: 6.2, zn: 3.4, iodine: 0, mn: 2.2, se: 8.2, cu: 0.85, f: 0, cr: 0, mo: 45 },
             'Paneer': { cal: 133, pro: 9.1, fiber: 0, carb: 1.6, fat: 11.5, sug: 1.6, lac: 1.2, sfa: 7.20, unsat: 4.30, mufa: 3.90, pufa: 0.40, ala: 0.05, epa: 0, dha: 0, o6: 0.35, bCar: 15, aCar: 0, vitA: 85, vitB1: 0.02, vitB2: 0.18, vitB3: 0.1, vitB5: 0.3, vitB6: 0.04, vitB7: 2, vitB9: 12, vitB12: 0.45, vitC: 0, vitD: 0.2, vitE: 0.15, vitK: 1, ca: 240, p: 140, mg: 18, na: 12, k: 65, cl: 30, s: 80, fe: 0.2, zn: 1.2, iodine: 8, mn: 0.02, se: 7.5, cu: 0.04, f: 0, cr: 0, mo: 5 },
@@ -605,16 +634,32 @@
             'Sesame oil': { cal: 163, pro: 0, fiber: 0, carb: 0, fat: 18.20, sug: 0, lac: 0, sfa: 2.70, unsat: 15.50, mufa: 7.20, pufa: 8.30, ala: 0.06, epa: 0, dha: 0, o6: 7.95, bCar: 0, aCar: 0, vitA: 0, vitB1: 0, vitB2: 0, vitB3: 0, vitB5: 0, vitB6: 0, vitB7: 0, vitB9: 0, vitB12: 0, vitC: 0, vitD: 0, vitE: 0.26, vitK: 2.5, ca: 0, p: 0, mg: 0, na: 0, k: 0, cl: 0, s: 0, fe: 0, zn: 0, iodine: 0, mn: 0, se: 0, cu: 0, f: 0, cr: 0, mo: 0 }
         };
 
-        // WEEKLY MENU MAPPING
-        const weeklyMenu = {
-            0: [{ name: 'Sprouted Moong', key: 'Green gram', qty: '100g' }, { name: 'Curd', key: 'Curd', qty: '200ml' }, { name: 'Carrot', key: 'Carrot', qty: '100g' }, { name: 'Chapathi', key: 'Chapathi', qty: '120g' }],
-            1: [{ name: 'Peanuts', key: 'Peanuts', qty: '80g' }, { name: 'Toor Dal', key: 'Toor Dal', qty: '100g' }, { name: 'White Rice', key: 'White rice', qty: '100g' }, { name: 'Sesame Oil', key: 'Sesame oil', qty: '20ml' }],
-            2: [{ name: 'Chana Dal', key: 'Chana Dal', qty: '100g' }, { name: 'White Rice', key: 'White rice', qty: '100g' }, { name: 'Guava', key: 'Guava', qty: '100g' }, { name: 'Chia seeds', key: 'Chia seeds', qty: '10g' }],
-            3: [{ name: 'Paneer', key: 'Paneer', qty: '50g' }, { name: 'Chapathi', key: 'Chapathi', qty: '120g' }, { name: 'Horse gram', key: 'Horse gram', qty: '100g' }, { name: 'Flax seeds', key: 'Flax seeds', qty: '10g' }],
-            4: [{ name: 'Soya chunks', key: 'Soya chunks', qty: '50g' }, { name: 'Curd', key: 'Curd', qty: '200ml' }, { name: 'Telagapindi', key: 'Defatted sesame flour', qty: '100g' }],
-            5: [{ name: 'Rajma', key: 'Rajma', qty: '100g' }, { name: 'Black Chickpeas', key: 'Black Chickpeas', qty: '100g' }, { name: 'White Rice', key: 'White rice', qty: '100g' }, { name: 'Sesame seeds', key: 'Sesame seeds', qty: '10g' }],
-            6: [{ name: 'Chickpeas', key: 'Chickpeas', qty: '100g' }, { name: 'White peas', key: 'White peas', qty: '100g' }, { name: 'Soya beans', key: 'Soya beans', qty: '100g' }, { name: 'Red Lobia', key: 'Red Lobia', qty: '100g' }]
-        };
+        // ALL 23 FOOD ITEMS LISTED IN DAILY ROTATION
+        const masterFoodList = [
+            { name: 'Chickpeas', key: 'Chickpeas', qty: '100g Raw' },
+            { name: 'Paneer (Thirumala)', key: 'Paneer', qty: '50g' },
+            { name: 'Chia seeds', key: 'Chia seeds', qty: '10g (2 tsps)' },
+            { name: 'Sesame seeds', key: 'Sesame seeds', qty: '10g Dry roasted' },
+            { name: 'Rajma', key: 'Rajma', qty: '100g Raw' },
+            { name: 'Black Chickpeas', key: 'Black Chickpeas', qty: '100g Raw' },
+            { name: 'White peas', key: 'White peas', qty: '100g Raw' },
+            { name: 'Toor Dal', key: 'Toor Dal', qty: '100g Raw' },
+            { name: 'Chana Dal', key: 'Chana Dal', qty: '100g Raw' },
+            { name: 'Green gram', key: 'Green gram', qty: '100g Raw' },
+            { name: 'Curd', key: 'Curd', qty: '200ml' },
+            { name: 'Carrot', key: 'Carrot', qty: '100g Raw' },
+            { name: 'Soya chunks', key: 'Soya chunks', qty: '50g Raw' },
+            { name: 'Soya beans', key: 'Soya beans', qty: '100g Raw' },
+            { name: 'Peanuts', key: 'Peanuts', qty: '80g Raw' },
+            { name: 'Red Lobia', key: 'Red Lobia', qty: '100g Raw' },
+            { name: 'Flax seeds', key: 'Flax seeds', qty: '10g Powdered' },
+            { name: 'White rice', key: 'White rice', qty: '100g Cooked' },
+            { name: 'Guava', key: 'Guava', qty: '100g Fresh' },
+            { name: 'Horse gram', key: 'Horse gram', qty: '100g Raw' },
+            { name: 'Chapathi', key: 'Chapathi', qty: '120g Dough' },
+            { name: 'Telagapindi', key: 'Defatted sesame flour', qty: '100g Raw' },
+            { name: 'Sesame oil', key: 'Sesame oil', qty: '20ml' }
+        ];
 
         // DAILY TARGET BENCHMARKS
         const targets = {
@@ -639,8 +684,7 @@
             const foodGrid = document.getElementById('foodGrid');
             foodGrid.innerHTML = '';
 
-            const items = weeklyMenu[dayIdx] || [];
-            items.forEach((item, idx) => {
+            masterFoodList.forEach((item, idx) => {
                 const label = document.createElement('label');
                 label.className = 'food-item-checkbox';
                 label.innerHTML = `
@@ -655,7 +699,6 @@
         }
 
         function recalculateTotals() {
-            const items = weeklyMenu[currentSelectedDay] || [];
             const checkboxes = document.querySelectorAll('#foodGrid input[type="checkbox"]');
 
             let totals = {};
@@ -663,7 +706,7 @@
 
             checkboxes.forEach((cb, idx) => {
                 if (cb.checked) {
-                    const itemObj = items[idx];
+                    const itemObj = masterFoodList[idx];
                     const data = foodMasterDB[itemObj.key];
                     if (data) {
                         Object.keys(totals).forEach(k => {
@@ -673,7 +716,7 @@
                 }
             });
 
-            // CAPSULE 1
+            // CAPSULE 1: MACROS
             updateBar('cal', totals.cal, targets.cal, 'kcal');
             updateBar('protein', totals.pro, targets.pro, 'g');
             updateBar('fiber', totals.fiber, targets.fiber, 'g');
@@ -682,7 +725,7 @@
             updateBar('sugars', totals.sug, targets.sug, 'g');
             updateBar('lactose', totals.lac, targets.lac, 'g');
 
-            // CAPSULE 2
+            // CAPSULE 2: FATTY ACIDS
             updateBar('sfa', totals.sfa, targets.sfa, 'g');
             updateBar('unsat', totals.unsat, targets.unsat, 'g');
             updateBar('mufa', totals.mufa, targets.mufa, 'g');
@@ -692,11 +735,11 @@
             updateBar('dha', totals.dha, targets.dha, 'g');
             updateBar('o6', totals.o6, targets.o6, 'g');
 
-            // CAPSULE 3
+            // CAPSULE 3: CAROTENOIDS
             updateBar('bCarotene', totals.bCar, targets.bCar, 'µg');
             updateBar('aCarotene', totals.aCar, targets.aCar, 'µg');
 
-            // CAPSULE 4
+            // CAPSULE 4: VITAMINS
             updateBar('vitA', totals.vitA, targets.vitA, 'µg');
             updateBar('vitB1', totals.vitB1, targets.vitB1, 'mg');
             updateBar('vitB2', totals.vitB2, targets.vitB2, 'mg');
@@ -711,7 +754,7 @@
             updateBar('vitE', totals.vitE, targets.vitE, 'mg');
             updateBar('vitK', totals.vitK, targets.vitK, 'µg');
 
-            // CAPSULE 5
+            // CAPSULE 5: MACRO MINERALS
             updateBar('calcium', totals.ca, targets.ca, 'mg');
             updateBar('p', totals.p, targets.p, 'mg');
             updateBar('mg', totals.mg, targets.mg, 'mg');
@@ -720,7 +763,7 @@
             updateBar('cl', totals.cl, targets.cl, 'mg');
             updateBar('s', totals.s, targets.s, 'mg');
 
-            // CAPSULE 6
+            // CAPSULE 6: TRACE MINERALS
             updateBar('iron', totals.fe, targets.fe, 'mg');
             updateBar('zinc', totals.zn, targets.zn, 'mg');
             updateBar('iodine', totals.iodine, targets.iodine, 'µg');
@@ -756,11 +799,22 @@
             pill.addEventListener('click', () => renderDay(parseInt(pill.dataset.day)));
         });
 
-        function toggleAccordion(drawerId, iconId) {
-            const drawer = document.getElementById(drawerId);
-            const icon = document.getElementById(iconId);
-            const isCollapsed = drawer.classList.toggle('collapsed');
-            icon.style.transform = isCollapsed ? 'rotate(0deg)' : 'rotate(180deg)';
+        // SITE HEADER SEARCH TOGGLE LOGIC
+        const masterHeader = document.getElementById('masterHeader');
+        const searchTriggerBtn = document.getElementById('searchTriggerBtn');
+        const searchCloseBtn = document.getElementById('searchCloseBtn');
+        const headerSearchInput = document.getElementById('headerSearchInput');
+
+        if (searchTriggerBtn && searchCloseBtn) {
+            searchTriggerBtn.addEventListener('click', () => {
+                masterHeader.classList.add('search-active');
+                setTimeout(() => headerSearchInput.focus(), 100);
+            });
+
+            searchCloseBtn.addEventListener('click', () => {
+                masterHeader.classList.remove('search-active');
+                headerSearchInput.value = '';
+            });
         }
 
         // Theme Toggle Engine
@@ -772,15 +826,7 @@
         });
         if (sessionStorage.getItem('dashboard-theme') === 'light') bodyElement.classList.add('light-mode');
 
-        // Search Button Event
-        document.getElementById('searchBtn').addEventListener('click', () => {
-            const query = prompt("Search 50 nutrients or food items:");
-            if (query) {
-                alert(`Searching dashboard for: "${query}"`);
-            }
-        });
-
-        // Initialize Page
+        // Init Page
         renderDay(currentSelectedDay);
     </script>
 </body>
