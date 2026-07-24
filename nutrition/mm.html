@@ -70,6 +70,8 @@
             --panel-bg: #ffffff;
             --panel-border: #e2e2e7;
             --row-divider: #f2f2f7;
+            --row-hover: rgba(0, 0, 0, 0.01);
+
             --header-bg: #e9ebe6;
             --header-border: #d4d8cf;
             --accent-green: #257a6c;
@@ -258,15 +260,15 @@
             line-height: 1.2;
         }
 
-        /* FLEXIBLE 3D PNG ICON ENGINE */
-        .capsule-title img {
-            width: 38px;
-            height: 38px;
-            object-fit: contain;
+        /* INLINE IMAGE ICON ENGINE */
+        .capsule-svg-icon {
+            width: 40px;
+            height: 40px;
             flex-shrink: 0;
-            display: block;
-            margin: 0;
-            padding: 0;
+            display: inline-block;
+            vertical-align: middle;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
         }
 
         /* VERTICAL-FIRST COLUMN FLOW ENGINE */
@@ -415,7 +417,7 @@
             .day-switcher-capsule { overflow-x: auto; padding: 8px 12px; gap: 8px; justify-content: flex-start; }
             .day-pill { padding: 8px 16px; font-size: 14px; }
             .wide-capsule { padding: 32px 24px; border-radius: 24px; }
-            .capsule-title img { width: 32px; height: 32px; }
+            .capsule-svg-icon { width: 34px; height: 34px; }
         }
     </style>
 </head>
@@ -473,7 +475,7 @@
             <button class="day-pill" data-day="6">Sat</button>
         </div>
 
-        <!-- TODAY'S MEAL PLATE (NO ICON, SENTENCE CASE) -->
+        <!-- TODAY'S MEAL PLATE (EXPLICITLY WITHOUT AN ICON, SENTENCE CASE) -->
         <div class="wide-capsule">
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
@@ -489,7 +491,7 @@
         <div class="wide-capsule">
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
-                    <img src="macros.png" alt="Macronutrients & energy icon">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" class="capsule-svg-icon" alt="Macronutrients" />
                     1. Macronutrients & energy
                 </h2>
             </div>
@@ -508,7 +510,7 @@
         <div class="wide-capsule">
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
-                    <img src="fats.png" alt="Fatty acid profile & lipids icon">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" class="capsule-svg-icon" alt="Fats & lipids" />
                     2. Fatty acid profile & lipids
                 </h2>
             </div>
@@ -528,7 +530,7 @@
         <div class="wide-capsule">
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
-                    <img src="carotenoids.png" alt="Carotenoids icon">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" class="capsule-svg-icon" alt="Carotenoids" />
                     3. Carotenoids
                 </h2>
             </div>
@@ -542,7 +544,7 @@
         <div class="wide-capsule">
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
-                    <img src="vitamins.png" alt="Vitamins icon">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" class="capsule-svg-icon" alt="Vitamins" />
                     4. Vitamins
                 </h2>
             </div>
@@ -567,7 +569,7 @@
         <div class="wide-capsule">
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
-                    <img src="macro_minerals.png" alt="Macro minerals icon">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" class="capsule-svg-icon" alt="Macro minerals" />
                     5. Macro minerals
                 </h2>
             </div>
@@ -586,7 +588,7 @@
         <div class="wide-capsule">
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
-                    <img src="trace_minerals.png" alt="Trace minerals icon">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" class="capsule-svg-icon" alt="Trace minerals" />
                     6. Trace minerals
                 </h2>
             </div>
@@ -642,7 +644,7 @@
             'Horse gram': { cal: 321, pro: 22.0, fiber: 8.0, carb: 57.0, fat: 0.43, sug: 2.0, lac: 0, sfa: 0.11, unsat: 0.32, mufa: 0.10, pufa: 0.22, ala: 0.05, epa: 0, dha: 0, o6: 0.17, bCar: 25, aCar: 0, vitA: 2, vitB1: 0.42, vitB2: 0.20, vitB3: 1.50, vitB5: 1.10, vitB6: 0.20, vitB7: 6, vitB9: 140, vitB12: 0, vitC: 1.0, vitD: 0, vitE: 0.80, vitK: 0, ca: 287, p: 311, mg: 175, na: 12, k: 1210, cl: 5, s: 160, fe: 6.8, zn: 2.3, iodine: 0, mn: 1.8, se: 5.0, cu: 700, f: 0, cr: 0, mo: 25 },
             'Chapathi': { cal: 242, pro: 8.17, fiber: 7.34, carb: 50.5, fat: 1.55, sug: 0.53, lac: 0, sfa: 0.34, unsat: 1.21, mufa: 0.30, pufa: 0.91, ala: 0.05, epa: 0, dha: 0, o6: 0.86, bCar: 0, aCar: 0, vitA: 0, vitB1: 0.28, vitB2: 0.09, vitB3: 2.95, vitB5: 0.59, vitB6: 0.25, vitB7: 5, vitB9: 35, vitB12: 0, vitC: 0, vitD: 0, vitE: 0.47, vitK: 1.9, ca: 103, p: 255, mg: 114, na: 3, k: 291, cl: 4, s: 82, fe: 2.73, zn: 1.76, iodine: 0, mn: 2.16, se: 21.5, cu: 430, f: 0, cr: 0, mo: 30 },
             'Defatted sesame flour': { cal: 408, pro: 34.5, fiber: 16.8, carb: 28.4, fat: 13.10, sug: 1.1, lac: 0, sfa: 2.20, unsat: 10.90, mufa: 4.20, pufa: 6.70, ala: 0.33, epa: 0, dha: 0, o6: 6.40, bCar: 0, aCar: 0, vitA: 0, vitB1: 0.79, vitB2: 0.24, vitB3: 5.20, vitB5: 0.31, vitB6: 0.74, vitB7: 10, vitB9: 118, vitB12: 0, vitC: 0, vitD: 0, vitE: 1.80, vitK: 2.0, ca: 1420, p: 965, mg: 510, na: 26, k: 810, cl: 0, s: 345, fe: 18.2, zn: 7.8, iodine: 0, mn: 2.7, se: 24.0, cu: 2000, f: 0, cr: 0, mo: 44 },
-            'Sesame oil': { cal: 163, pro: 0, fiber: 0, carb: 0, fat: 18.20, sug: 0, lac: 0, sfa: 2.70, unsat: 15.50, mufa: 7.20, pufa: 8.30, ala: 0.06, epa: 0, dha: 0, o6: 7.95, bCar: 0, aCar: 0, vitA: 0, vitB1: 0, vitB2: 0, vitB3: 0, vitB5: 0, vitB6: 0, vitB7: 0, vitB9: 0, vitB12: 0, vitC: 0, vitD: 0, vitE: 0.26, vitK: 2.5, ca: 0, p: 0, mg: 0, na: 0, k: 0, cl: 0, s: 0, fe: 0, zn: 0, iodine: 0, mn: 0, se: 0, cu: 0, f: 0, cr: 0, mo: 0 }
+            'Sesame oil': { cal: 163, pro: 0, fiber: 0, carb: 0, fat: 18.20, sug: 0, lac: 0, sfa: 2.70, unsat: 10.90, mufa: 4.20, pufa: 6.70, ala: 0.06, epa: 0, dha: 0, o6: 7.95, bCar: 0, aCar: 0, vitA: 0, vitB1: 0, vitB2: 0, vitB3: 0, vitB5: 0, vitB6: 0, vitB7: 0, vitB9: 0, vitB12: 0, vitC: 0, vitD: 0, vitE: 0.26, vitK: 2.5, ca: 0, p: 0, mg: 0, na: 0, k: 0, cl: 0, s: 0, fe: 0, zn: 0, iodine: 0, mn: 0, se: 0, cu: 0, f: 0, cr: 0, mo: 0 }
         };
 
         // STRICT ITEM SEQUENCE FOR EVERY DAY
