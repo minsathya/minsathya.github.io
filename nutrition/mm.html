@@ -37,7 +37,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         /* Modern Theme Token System */
@@ -260,22 +260,14 @@
             line-height: 1.2;
         }
 
-        /* 3D IMAGE ICON ENGINE MATCHING INDEX.HTML DESIGN */
-        .capsule-icon-wrapper {
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* INLINE VECTOR SVG ICON ENGINE */
+        .capsule-svg-icon {
+            width: 40px;
+            height: 40px;
             flex-shrink: 0;
-            overflow: visible;
-        }
-
-        .capsule-icon-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
+            display: inline-block;
+            vertical-align: middle;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
         }
 
         /* VERTICAL-FIRST COLUMN FLOW ENGINE */
@@ -424,7 +416,7 @@
             .day-switcher-capsule { overflow-x: auto; padding: 8px 12px; gap: 8px; justify-content: flex-start; }
             .day-pill { padding: 8px 16px; font-size: 14px; }
             .wide-capsule { padding: 32px 24px; border-radius: 24px; }
-            .capsule-icon-wrapper { width: 36px; height: 36px; }
+            .capsule-svg-icon { width: 34px; height: 34px; }
         }
     </style>
 </head>
@@ -498,7 +490,24 @@
         <div class="wide-capsule">
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
-                    <span class="capsule-icon-wrapper"><img src="macros.png" alt="Macronutrients & energy icon"></span>
+                    <svg viewBox="0 0 100 100" class="capsule-svg-icon">
+                      <defs>
+                        <radialGradient id="plateBg" cx="50%" cy="50%" r="50%">
+                          <stop offset="85%" stop-color="#F4F1EA"/>
+                          <stop offset="100%" stop-color="#DCD6CD"/>
+                        </radialGradient>
+                        <linearGradient id="pGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF5252"/><stop offset="100%" stop-color="#C62828"/></linearGradient>
+                        <linearGradient id="cGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFB74D"/><stop offset="100%" stop-color="#F57C00"/></linearGradient>
+                        <linearGradient id="fGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#81C784"/><stop offset="100%" stop-color="#388E3C"/></linearGradient>
+                      </defs>
+                      <circle cx="50" cy="50" r="48" fill="url(#plateBg)"/>
+                      <path d="M50 50 L12 35 A42 42 0 0 1 47 8 Z" fill="url(#pGrad)" stroke="#F4F1EA" stroke-width="2"/>
+                      <path d="M50 50 L47 8 A42 42 0 0 1 88 65 Z" fill="url(#cGrad)" stroke="#F4F1EA" stroke-width="2"/>
+                      <path d="M50 50 L88 65 A42 42 0 0 1 12 35 Z" fill="url(#fGrad)" stroke="#F4F1EA" stroke-width="2"/>
+                      <text x="32" y="32" font-family="'Poppins', sans-serif" font-weight="700" font-size="18" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">P</text>
+                      <text x="65" y="38" font-family="'Poppins', sans-serif" font-weight="700" font-size="18" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">C</text>
+                      <text x="48" y="70" font-family="'Poppins', sans-serif" font-weight="700" font-size="18" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">F</text>
+                    </svg>
                     1. Macronutrients & energy
                 </h2>
             </div>
@@ -517,7 +526,26 @@
         <div class="wide-capsule">
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
-                    <span class="capsule-icon-wrapper"><img src="fats.png" alt="Fatty acid profile & lipids icon"></span>
+                    <svg viewBox="0 0 100 100" class="capsule-svg-icon">
+                      <defs>
+                        <linearGradient id="oilGrad" x1="0.5" y1="0" x2="0.5" y2="1">
+                          <stop offset="0%" stop-color="#FFE082"/>
+                          <stop offset="50%" stop-color="#FFB300"/>
+                          <stop offset="100%" stop-color="#FF8F00"/>
+                        </linearGradient>
+                        <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0%" stop-color="#81C784"/>
+                          <stop offset="100%" stop-color="#2E7D32"/>
+                        </linearGradient>
+                      </defs>
+                      <path d="M50 6 C50 6 12 48 12 68 A38 38 0 0 0 88 68 C88 48 50 6 50 6 Z" fill="url(#oilGrad)"/>
+                      <circle cx="30" cy="50" r="4" fill="#FFF" opacity="0.5"/>
+                      <circle cx="70" cy="55" r="3" fill="#FFF" opacity="0.4"/>
+                      <circle cx="65" cy="42" r="5" fill="#FFF" opacity="0.5"/>
+                      <text x="50" y="52" font-family="'Poppins', sans-serif" font-weight="800" font-size="17" fill="#6D4C41" text-anchor="middle" dominant-baseline="central">FATS</text>
+                      <path d="M35 78 C25 65 50 68 50 82 C50 82 42 85 35 78 Z" fill="url(#leafGrad)"/>
+                      <path d="M65 78 C75 65 50 68 50 82 C50 82 58 85 65 78 Z" fill="url(#leafGrad)"/>
+                    </svg>
                     2. Fatty acid profile & lipids
                 </h2>
             </div>
@@ -537,7 +565,24 @@
         <div class="wide-capsule">
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
-                    <span class="capsule-icon-wrapper"><img src="carotenoids.png" alt="Carotenoids icon"></span>
+                    <svg viewBox="0 0 100 100" class="capsule-svg-icon">
+                      <defs>
+                        <radialGradient id="orangeDisc" cx="50%" cy="50%" r="50%">
+                          <stop offset="70%" stop-color="#FF9800"/>
+                          <stop offset="100%" stop-color="#F57C00"/>
+                        </radialGradient>
+                        <linearGradient id="carrotBody" x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0%" stop-color="#FFB74D"/>
+                          <stop offset="100%" stop-color="#E65100"/>
+                        </linearGradient>
+                      </defs>
+                      <circle cx="50" cy="50" r="46" fill="url(#orangeDisc)"/>
+                      <path d="M35 30 C20 18 32 48 42 42 C42 42 28 25 35 30 Z" fill="#4CAF50"/>
+                      <path d="M42 22 C32 10 46 38 50 34 C50 38 38 15 42 22 Z" fill="#388E3C"/>
+                      <path d="M62 28 C68 32 68 38 62 44 L38 78 C35 82 30 80 32 75 L48 32 C52 26 58 25 62 28 Z" fill="url(#carrotBody)"/>
+                      <path d="M52 42 Q56 44 50 48" stroke="#FFF" stroke-width="2" stroke-linecap="round" opacity="0.6" fill="none"/>
+                      <path d="M46 54 Q50 56 44 60" stroke="#FFF" stroke-width="2" stroke-linecap="round" opacity="0.6" fill="none"/>
+                    </svg>
                     3. Carotenoids
                 </h2>
             </div>
@@ -551,7 +596,23 @@
         <div class="wide-capsule">
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
-                    <span class="capsule-icon-wrapper"><img src="vitamins s.png" alt="Vitamins icon"></span>
+                    <svg viewBox="0 0 100 100" class="capsule-svg-icon">
+                      <defs>
+                        <radialGradient id="vitBg" cx="50%" cy="50%" r="50%">
+                          <stop offset="70%" stop-color="#7CB342"/>
+                          <stop offset="100%" stop-color="#558B2F"/>
+                        </radialGradient>
+                        <linearGradient id="vGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="#DCEDC8"/>
+                          <stop offset="100%" stop-color="#AED581"/>
+                        </linearGradient>
+                      </defs>
+                      <circle cx="50" cy="50" r="46" fill="url(#vitBg)"/>
+                      <path d="M32 45 C15 30 25 62 40 55 Z" fill="#33691E"/>
+                      <path d="M25 55 C12 45 22 70 35 62 Z" fill="#558B2F"/>
+                      <path d="M46 32 L58 32 L68 68 L56 68 L52 50 L48 68 L36 68 Z" fill="url(#vGrad)"/>
+                      <path d="M58 32 L68 68 L56 68 L52 50 Z" fill="#9CCC65"/>
+                    </svg>
                     4. Vitamins
                 </h2>
             </div>
@@ -576,7 +637,31 @@
         <div class="wide-capsule">
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
-                    <span class="capsule-icon-wrapper"><img src="macro minerals.png" alt="Macro minerals icon"></span>
+                    <svg viewBox="0 0 100 100" class="capsule-svg-icon">
+                      <defs>
+                        <linearGradient id="waterDrop" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="#4FC3F7"/>
+                          <stop offset="100%" stop-color="#0288D1"/>
+                        </linearGradient>
+                      </defs>
+                      <circle cx="50" cy="50" r="32" fill="#E0F7FA" opacity="0.6"/>
+                      <path d="M50 28 C50 28 35 50 35 60 A15 15 0 0 0 65 60 C65 50 50 28 50 28 Z" fill="url(#waterDrop)"/>
+                      <circle cx="45" cy="55" r="3" fill="#FFF" opacity="0.7"/>
+                      <circle cx="50" cy="12" r="11" fill="#FFC107"/>
+                      <text x="50" y="12" font-family="'Poppins', sans-serif" font-weight="700" font-size="8" fill="#FFF" text-anchor="middle" dominant-baseline="central">Ca</text>
+                      <circle cx="80" cy="25" r="11" fill="#4CAF50"/>
+                      <text x="80" y="25" font-family="'Poppins', sans-serif" font-weight="700" font-size="7" fill="#FFF" text-anchor="middle" dominant-baseline="central">PO₄</text>
+                      <circle cx="85" cy="58" r="11" fill="#8BC34A"/>
+                      <text x="85" y="58" font-family="'Poppins', sans-serif" font-weight="700" font-size="8" fill="#FFF" text-anchor="middle" dominant-baseline="central">Mg</text>
+                      <circle cx="70" cy="85" r="11" fill="#F44336"/>
+                      <text x="70" y="85" font-family="'Poppins', sans-serif" font-weight="700" font-size="8" fill="#FFF" text-anchor="middle" dominant-baseline="central">Na</text>
+                      <circle cx="30" cy="85" r="11" fill="#009688"/>
+                      <text x="30" y="85" font-family="'Poppins', sans-serif" font-weight="700" font-size="9" fill="#FFF" text-anchor="middle" dominant-baseline="central">K</text>
+                      <circle cx="15" cy="58" r="11" fill="#9C27B0"/>
+                      <text x="15" y="58" font-family="'Poppins', sans-serif" font-weight="700" font-size="8" fill="#FFF" text-anchor="middle" dominant-baseline="central">Cl</text>
+                      <circle cx="20" cy="25" r="11" fill="#FF9800"/>
+                      <text x="20" y="25" font-family="'Poppins', sans-serif" font-weight="700" font-size="7" fill="#FFF" text-anchor="middle" dominant-baseline="central">SO₄</text>
+                    </svg>
                     5. Macro minerals
                 </h2>
             </div>
@@ -595,7 +680,33 @@
         <div class="wide-capsule">
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
-                    <span class="capsule-icon-wrapper"><img src="trase minerals.png" alt="Trace minerals icon"></span>
+                    <svg viewBox="0 0 100 100" class="capsule-svg-icon">
+                      <defs>
+                        <linearGradient id="waterDrop2" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="#29B6F6"/>
+                          <stop offset="100%" stop-color="#0277BD"/>
+                        </linearGradient>
+                      </defs>
+                      <path d="M50 32 C50 32 38 50 38 58 A12 12 0 0 0 62 58 C62 50 50 32 50 32 Z" fill="url(#waterDrop2)"/>
+                      <circle cx="50" cy="11" r="10" fill="#FF9800"/>
+                      <text x="50" y="11" font-family="'Poppins', sans-serif" font-weight="700" font-size="8" fill="#FFF" text-anchor="middle" dominant-baseline="central">Fe</text>
+                      <circle cx="76" cy="22" r="10" fill="#7CB342"/>
+                      <text x="76" y="22" font-family="'Poppins', sans-serif" font-weight="700" font-size="8" fill="#FFF" text-anchor="middle" dominant-baseline="central">Zn</text>
+                      <circle cx="87" cy="48" r="10" fill="#E53935"/>
+                      <text x="87" y="48" font-family="'Poppins', sans-serif" font-weight="700" font-size="9" fill="#FFF" text-anchor="middle" dominant-baseline="central">I</text>
+                      <circle cx="78" cy="74" r="10" fill="#8E24AA"/>
+                      <text x="78" y="74" font-family="'Poppins', sans-serif" font-weight="700" font-size="7.5" fill="#FFF" text-anchor="middle" dominant-baseline="central">Mn</text>
+                      <circle cx="62" cy="90" r="10" fill="#00ACC1"/>
+                      <text x="62" y="90" font-family="'Poppins', sans-serif" font-weight="700" font-size="8" fill="#FFF" text-anchor="middle" dominant-baseline="central">Cr</text>
+                      <circle cx="38" cy="90" r="10" fill="#F57C00"/>
+                      <text x="38" y="90" font-family="'Poppins', sans-serif" font-weight="700" font-size="8" fill="#FFF" text-anchor="middle" dominant-baseline="central">Cu</text>
+                      <circle cx="22" cy="74" r="10" fill="#1E88E5"/>
+                      <text x="22" y="74" font-family="'Poppins', sans-serif" font-weight="700" font-size="9" fill="#FFF" text-anchor="middle" dominant-baseline="central">F</text>
+                      <circle cx="13" cy="48" r="10" fill="#9E9D24"/>
+                      <text x="13" y="48" font-family="'Poppins', sans-serif" font-weight="700" font-size="7.5" fill="#FFF" text-anchor="middle" dominant-baseline="central">Mo</text>
+                      <circle cx="24" cy="22" r="10" fill="#EC407A"/>
+                      <text x="24" y="22" font-family="'Poppins', sans-serif" font-weight="700" font-size="8" fill="#FFF" text-anchor="middle" dominant-baseline="central">Se</text>
+                    </svg>
                     6. Trace minerals
                 </h2>
             </div>
@@ -908,12 +1019,6 @@
 
             const searchPath = window.location.pathname;
             const HOME_PATH = "/study/index.html";
-
-            const pageNames = {
-                "/study/index.html": "Home",
-                "/nutrition/index.html": "Nutrition",
-                "/nutrition/mm.html": "MM"
-            };
 
             let trail = [];
             try {
