@@ -103,7 +103,7 @@
             transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
-        /* TASK 3: MASTER ENTRANCE ANIMATIONS FROM INDEX.HTML */
+        /* MASTER ENTRANCE ANIMATIONS */
         @keyframes masterEntrance {
             from { opacity: 0; transform: translate3d(0, 24px, 0); }
             to { opacity: 1; transform: translate3d(0, 0, 0); }
@@ -233,7 +233,7 @@
 
         .contents-container { display: flex; flex-direction: column; gap: 32px; margin-bottom: 80px; width: 100%; }
 
-        /* TASK 3: WIDE CAPSULES HOVER ANIMATION FROM INDEX.HTML */
+        /* WIDE CAPSULES */
         .wide-capsule {
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
@@ -274,27 +274,6 @@
             align-items: center;
             gap: 8px;
             line-height: 1.2;
-        }
-
-        /* TASK 1: SELECT ALL / DESELECT ALL BUTTON STYLING */
-        .select-all-btn {
-            background-color: var(--header-bg);
-            border: 1px solid var(--panel-border);
-            color: var(--text-main);
-            font-family: 'Poppins', sans-serif;
-            font-size: 13.5px;
-            font-weight: 500;
-            padding: 8px 18px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s var(--ease-smooth);
-            user-select: none;
-            outline: none;
-        }
-
-        .select-all-btn:hover {
-            border-color: var(--accent-green);
-            color: var(--accent-green);
         }
 
         /* INLINE IMAGE ICON ENGINE */
@@ -353,12 +332,14 @@
 
         .custom-check-box svg { width: 14px; height: 14px; stroke: #0b0b0b; stroke-width: 3; fill: none; opacity: 0; transition: opacity 0.2s; }
 
-        .food-item-checkbox input:checked + .custom-check-box {
+        .food-item-checkbox input:checked + .custom-check-box,
+        .custom-check-box.checked {
             background-color: var(--accent-green);
             border-color: var(--accent-green);
         }
 
-        .food-item-checkbox input:checked + .custom-check-box svg { opacity: 1; }
+        .food-item-checkbox input:checked + .custom-check-box svg,
+        .custom-check-box.checked svg { opacity: 1; }
 
         .food-name { font-size: 15.5px; font-weight: 500; color: var(--text-main); }
         .food-qty { font-size: 13.5px; color: var(--text-muted); margin-left: 6px; }
@@ -379,6 +360,7 @@
         }
 
         .macro-val { color: var(--text-muted); font-size: 13px; }
+        
         .macro-badge {
             background-color: rgba(162, 224, 160, 0.1);
             color: var(--accent-green);
@@ -386,6 +368,31 @@
             border-radius: 12px;
             font-size: 12px;
             font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s var(--ease-smooth);
+        }
+
+        /* COMPLETED 100% CIRCLE TICK BADGE */
+        .macro-badge.completed-badge {
+            width: 20px !important;
+            height: 20px !important;
+            border-radius: 50% !important;
+            padding: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        .macro-badge.completed-badge svg {
+            width: 12px;
+            height: 12px;
+            stroke: #ffffff;
+            stroke-width: 3.5;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .progress-track {
@@ -404,7 +411,7 @@
             transition: width 0.8s var(--ease-smooth);
         }
 
-        /* TASK 2: CUSTOM PROGRESS BAR COLORS MATCHING ICON ACCENTS */
+        /* CUSTOM PROGRESS BAR COLORS */
         #proteinBar { background-color: #ea4335 !important; }
         #fiberBar { background-color: #34a853 !important; }
         #calBar, #carbsBar { background-color: #fbbc05 !important; }
@@ -414,10 +421,9 @@
             background-color: #f5a623 !important;
         }
 
-        /* Carotenoids Capsule - Rich Orange */
-        #bCaroteneBar, #aCaroteneBar {
-            background-color: #ff7a00 !important;
-        }
+        /* Carotenoids Capsule - Beta Orange, Alpha Leaf Green */
+        #bCaroteneBar { background-color: #ff7a00 !important; }
+        #aCaroteneBar { background-color: #34a853 !important; }
 
         /* FOOTER */
         footer { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; flex-shrink: 0; }
@@ -537,13 +543,15 @@
             <button class="day-pill" data-day="6">Sat</button>
         </div>
 
-        <!-- TODAY'S MEAL PLATE WITH SELECT/DESELECT ALL BUTTON -->
+        <!-- TODAY'S MEAL PLATE WITH MASTER CHECKBOX ICON -->
         <div class="wide-capsule">
             <div class="capsule-header-row">
                 <h2 class="capsule-title">
-                    Today <span id="activeDayText" style="color:var(--text-muted); font-size:16px;">(Sunday)</span>
+                    <span class="custom-check-box" id="masterSelectCheckBox" onclick="toggleSelectAll()" style="cursor: pointer; display: inline-flex; margin-right: 8px;" title="Select / Deselect all items">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </span>
+                    Today’s meal plate <span id="activeDayText" style="color:var(--text-muted); font-size:16px;">(Sunday)</span>
                 </h2>
-                <button type="button" class="select-all-btn" id="selectAllBtn" onclick="toggleSelectAll()">Deselect all</button>
             </div>
             <div class="food-checklist-grid" id="foodGrid">
                 <!-- Populated dynamically in strict top-to-bottom vertical column order -->
@@ -605,7 +613,7 @@
             </div>
             <div class="macros-grid">
                 <div class="macro-card"><div class="macro-top-label"><span>Beta-Carotene</span><span class="macro-badge" id="bCaroteneBadge">0%</span></div><div class="macro-val" id="bCaroteneVal">0 mcg / 4800 mcg</div><div class="progress-track"><div class="progress-fill" id="bCaroteneBar"></div></div></div>
-                <div class="macro-card"><div class="macro-top-label"><span>Alpha-Carotene</span><span class="macro-badge" id="aCaroteneBadge">0%</span></div><div class="macro-val" id="aCaroteneVal">0 mcg / No req.</div><div class="progress-track"><div class="progress-fill" id="aCaroteneBar"></div></div></div>
+                <div class="macro-card"><div class="macro-top-label"><span>Alpha-Carotene</span><span class="macro-badge" id="aCaroteneBadge">0%</span></div><div class="macro-val" id="aCaroteneVal">0 mcg / N/A</div><div class="progress-track"><div class="progress-fill" id="aCaroteneBar"></div></div></div>
             </div>
         </div>
 
@@ -844,6 +852,7 @@
         const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         let currentSelectedDay = new Date().getDay();
 
+        // DEFAULT TO UNCHECKED ITEMS
         function renderDay(dayIdx) {
             currentSelectedDay = dayIdx;
             document.querySelectorAll('.day-pill').forEach(pill => {
@@ -860,7 +869,7 @@
                 const label = document.createElement('label');
                 label.className = 'food-item-checkbox';
                 label.innerHTML = `
-                    <input type="checkbox" data-idx="${idx}" checked onchange="recalculateTotals()">
+                    <input type="checkbox" data-idx="${idx}" onchange="recalculateTotals()">
                     <div class="custom-check-box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                     <span class="food-name">${item.name}<span class="food-qty">– ${item.qty}</span></span>
                 `;
@@ -870,7 +879,7 @@
             recalculateTotals();
         }
 
-        // TASK 1: SELECT ALL / DESELECT ALL BUTTON ENGINE
+        // MASTER CHECKBOX ENGINE
         function toggleSelectAll() {
             const checkboxes = document.querySelectorAll('#foodGrid input[type="checkbox"]');
             if (checkboxes.length === 0) return;
@@ -884,13 +893,38 @@
             recalculateTotals();
         }
 
-        function updateSelectAllBtnState() {
+        function updateMasterCheckBoxState() {
             const checkboxes = document.querySelectorAll('#foodGrid input[type="checkbox"]');
-            const selectAllBtn = document.getElementById('selectAllBtn');
-            if (!selectAllBtn || checkboxes.length === 0) return;
+            const masterBox = document.getElementById('masterSelectCheckBox');
+            if (!masterBox || checkboxes.length === 0) return;
 
-            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-            selectAllBtn.innerText = allChecked ? 'Deselect all' : 'Select all';
+            const allChecked = Array.from(checkboxes).length > 0 && Array.from(checkboxes).every(cb => cb.checked);
+            if (allChecked) {
+                masterBox.classList.add('checked');
+            } else {
+                masterBox.classList.remove('checked');
+            }
+        }
+
+        function getBarColor(id) {
+            const customColors = {
+                'protein': '#ea4335',
+                'fiber': '#34a853',
+                'cal': '#fbbc05',
+                'carbs': '#fbbc05',
+                'sfa': '#f5a623',
+                'unsat': '#f5a623',
+                'mufa': '#f5a623',
+                'pufa': '#f5a623',
+                'ala': '#f5a623',
+                'epa': '#f5a623',
+                'dha': '#f5a623',
+                'o6': '#f5a623',
+                'bCarotene': '#ff7a00',
+                'aCarotene': '#34a853'
+            };
+            if (customColors[id]) return customColors[id];
+            return document.body.classList.contains('light-mode') ? '#257a6c' : '#a2e0a0';
         }
 
         function recalculateTotals() {
@@ -912,8 +946,8 @@
                 }
             });
 
-            // Update button label dynamically
-            updateSelectAllBtnState();
+            // Update master checkbox UI
+            updateMasterCheckBoxState();
 
             // CAPSULE 1
             updateBar('cal', totals.cal, targets.cal, 'kcal');
@@ -974,25 +1008,54 @@
             updateBar('mo', totals.mo, targets.mo, 'mcg');
         }
 
-        function updateBar(id, val, target, unit, prefix = '', noReq = false) {
+        function updateBar(id, val, target, unit, prefix = '', isAlphaCarotene = false) {
             const badgeEl = document.getElementById(`${id}Badge`);
             const valEl = document.getElementById(`${id}Val`);
             const barEl = document.getElementById(`${id}Bar`);
 
             if (!valEl || !barEl || !badgeEl) return;
 
-            if (noReq) {
-                valEl.innerText = `${val.toFixed(val % 1 ? 1 : 0)} ${unit} / No req.`;
-                badgeEl.innerText = '100%';
-                barEl.style.width = '100%';
+            // SPECIAL ALPHA-CAROTENE N/A HANDLING
+            if (isAlphaCarotene) {
+                const formattedVal = val.toFixed(val % 1 ? (val < 1 ? 2 : 1) : 0);
+                valEl.innerText = `${formattedVal} ${unit} / N/A`;
+                if (val > 0) {
+                    barEl.style.width = '100%';
+                    const barColor = getBarColor(id);
+                    badgeEl.className = 'macro-badge completed-badge';
+                    badgeEl.style.backgroundColor = barColor;
+                    badgeEl.style.color = '#ffffff';
+                    badgeEl.innerHTML = `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+                } else {
+                    barEl.style.width = '0%';
+                    badgeEl.className = 'macro-badge';
+                    badgeEl.style.backgroundColor = 'rgba(162, 224, 160, 0.1)';
+                    badgeEl.style.color = 'var(--accent-green)';
+                    badgeEl.style.padding = '2px 8px';
+                    badgeEl.innerText = '0%';
+                }
                 return;
             }
 
             const pct = target > 0 ? Math.min(Math.round((val / target) * 100), 100) : 100;
             const formattedVal = val.toFixed(val % 1 ? (val < 1 ? 2 : 1) : 0);
             valEl.innerText = `${formattedVal} ${unit} / ${prefix}${target} ${unit}`;
-            badgeEl.innerText = `${pct}%`;
-            barEl.style.width = `${pct}%`;
+
+            if (pct >= 100) {
+                barEl.style.width = '100%';
+                const barColor = getBarColor(id);
+                badgeEl.className = 'macro-badge completed-badge';
+                badgeEl.style.backgroundColor = barColor;
+                badgeEl.style.color = '#ffffff';
+                badgeEl.innerHTML = `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            } else {
+                barEl.style.width = `${pct}%`;
+                badgeEl.className = 'macro-badge';
+                badgeEl.style.backgroundColor = 'rgba(162, 224, 160, 0.1)';
+                badgeEl.style.color = 'var(--accent-green)';
+                badgeEl.style.padding = '2px 8px';
+                badgeEl.innerText = `${pct}%`;
+            }
         }
 
         // BREADCRUMB BUILDER
@@ -1060,12 +1123,14 @@
         systemLightQuery.addEventListener('change', (e) => {
             sessionStorage.removeItem('dashboard-theme');
             bodyElement.classList.toggle('light-mode', e.matches);
+            recalculateTotals();
         });
 
         toggleBtn.addEventListener('click', (e) => {
             e.stopPropagation(); 
             const isLight = bodyElement.classList.toggle('light-mode');
             sessionStorage.setItem('dashboard-theme', isLight ? 'light' : 'dark');
+            recalculateTotals();
         });
 
         openSearchBtn.addEventListener('click', () => {
