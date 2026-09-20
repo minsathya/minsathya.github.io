@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sathya.</title>
 
+    <!-- Preload card-bg.png so all elements render simultaneously on load -->
+    <link rel="preload" as="image" href="card-bg.png">
+
     <!-- Universal iPad stabilization -->
     <script>
       if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
@@ -361,7 +364,7 @@
             margin-bottom: 50px;
         }
 
-        /* SHOWCASE CARD INTEGRATING card-bg.png */
+        /* SHOWCASE CARD WITH card-bg.png */
         .myspace-showcase-card {
             position: relative;
             width: 100%;
@@ -382,7 +385,7 @@
             transition: border-color 0.8s var(--ease-smooth), box-shadow 0.8s var(--ease-smooth);
         }
 
-        /* LEAF-ONLY WIND DISPLACEMENT MASK LAYER */
+        /* HIGH-PERFORMANCE LEAF-ONLY WIND DISPLACEMENT LAYER */
         .card-leaves-wind-layer {
             position: absolute;
             inset: 0;
@@ -399,10 +402,14 @@
             filter: url(#leafBreezeFilter);
             -webkit-filter: url(#leafBreezeFilter);
 
-            /* Mask targeted strictly around the leaves (anchors the central stem base & left content) */
-            -webkit-mask-image: radial-gradient(ellipse 48% 68% at 86% 72%, rgba(0,0,0,1) 25%, rgba(0,0,0,0.85) 55%, transparent 75%);
-            mask-image: radial-gradient(ellipse 48% 68% at 86% 72%, rgba(0,0,0,1) 25%, rgba(0,0,0,0.85) 55%, transparent 75%);
-            will-change: filter;
+            /* Mask targeted strictly over the leaves (keeps stem root and left text fully static) */
+            -webkit-mask-image: radial-gradient(ellipse 50% 70% at 86% 70%, rgba(0,0,0,1) 25%, rgba(0,0,0,0.85) 55%, transparent 75%);
+            mask-image: radial-gradient(ellipse 50% 70% at 86% 70%, rgba(0,0,0,1) 25%, rgba(0,0,0,0.85) 55%, transparent 75%);
+            
+            will-change: filter, transform;
+            transform: translate3d(0, 0, 0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         /* LEFT CONTENT COLUMN */
@@ -456,6 +463,7 @@
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
 
+            /* Continuous 0.55s smooth elevation & recoil curve */
             transition: transform 0.55s var(--ease-smooth), 
                         box-shadow 0.55s var(--ease-smooth), 
                         border-color 0.55s var(--ease-smooth), 
@@ -495,10 +503,10 @@
             transition: transform 0.4s var(--ease-smooth), opacity 0.4s var(--ease-smooth);
         }
 
-        /* 3D CARD ELEVATION ON HOVER/ACTIVE */
+        /* 3D CARD ELEVATION ON HOVER */
         @media (hover: hover) and (pointer: fine) {
             .myspace-card:hover {
-                transform: translate3d(0, -5px, 0) scale3d(1.015, 1.015, 1);
+                transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1);
                 border-color: var(--inner-card-border-hover);
                 box-shadow: var(--inner-card-shadow-hover);
             }
@@ -518,17 +526,21 @@
             }
         }
 
-        /* SMOOTH ELEVATION LOCK FOR TOUCH (iPad & Mobile) */
+        /* SMOOTH ELEVATION LOCK FOR TOUCH & CLICK (iPad & Mobile) */
+        .myspace-card:active,
+        .myspace-card:focus-within,
         .myspace-card.is-card-lifted {
-            transform: translate3d(0, -5px, 0) scale3d(1.015, 1.015, 1) !important;
+            transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1) !important;
             border-color: var(--inner-card-border-hover) !important;
             box-shadow: var(--inner-card-shadow-hover) !important;
         }
 
+        .myspace-card:active .myspace-card-icon,
         .myspace-card.is-card-lifted .myspace-card-icon {
             transform: scale3d(1.08, 1.08, 1) !important;
         }
 
+        .myspace-card:active .card-arrow,
         .myspace-card.is-card-lifted .card-arrow {
             transform: translateX(4px) !important;
             opacity: 1 !important;
@@ -616,7 +628,7 @@
             -webkit-transition: none !important;
         }
 
-        /* TABLET / iPad */
+        /* TABLET / iPad OPTIMIZATIONS */
         @media (max-width: 1024px) {
             .myspace-showcase-card {
                 padding: 48px 40px;
@@ -624,7 +636,7 @@
             }
         }
 
-        /* MOBILE (iPhone 15, Pixel 8, Galaxy S24) */
+        /* MOBILE CALIBRATION: STRETCHED VERTICALLY SO TOP LEAF CLEARS THE NUTRITION CAPSULE */
         @media (max-width: 700px) {
             body { 
                 padding: 30px 18px 24px 18px; 
@@ -641,20 +653,23 @@
             .search-core-input { padding: 0 12px; font-size: 15px; }
             .header-right-cluster { gap: 16px; }
 
+            /* Vertically stretched card so buttons stay at top and full plant sits below */
             .myspace-showcase-card {
                 flex-direction: column;
                 align-items: stretch;
                 justify-content: flex-start;
-                min-height: 520px;
-                padding: 36px 22px 220px 22px;
+                min-height: 640px;
+                padding: 38px 20px 280px 20px;
                 border-radius: 28px;
-                background-position: 80% center;
+                background-position: 84% bottom;
+                background-size: cover;
             }
 
             .card-leaves-wind-layer {
-                background-position: 80% center;
-                -webkit-mask-image: radial-gradient(ellipse 65% 55% at 85% 82%, rgba(0,0,0,1) 20%, rgba(0,0,0,0.8) 50%, transparent 75%);
-                mask-image: radial-gradient(ellipse 65% 55% at 85% 82%, rgba(0,0,0,1) 20%, rgba(0,0,0,0.8) 50%, transparent 75%);
+                background-position: 84% bottom;
+                background-size: cover;
+                -webkit-mask-image: radial-gradient(ellipse 75% 55% at 84% 86%, rgba(0,0,0,1) 25%, rgba(0,0,0,0.85) 55%, transparent 80%);
+                mask-image: radial-gradient(ellipse 75% 55% at 84% 86%, rgba(0,0,0,1) 25%, rgba(0,0,0,0.85) 55%, transparent 80%);
             }
 
             .showcase-content-vault {
@@ -663,7 +678,11 @@
 
             .myspace-title {
                 font-size: 28px;
-                margin-bottom: 22px;
+                margin-bottom: 20px;
+            }
+
+            .myspace-btn-stack {
+                gap: 14px;
             }
 
             .myspace-card {
@@ -712,17 +731,27 @@
 </head>
 <body>
 
-    <!-- SVG LEAF WIND DISPLACEMENT TURBULENCE FILTER -->
+    <!-- 60FPS NON-STOPPING FLUID LEAF BREEZE ENGINE -->
     <svg style="position: absolute; width: 0; height: 0; pointer-events: none;" aria-hidden="true">
         <defs>
-            <filter id="leafBreezeFilter" x="-15%" y="-15%" width="130%" height="130%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" result="windTurbulence">
+            <filter id="leafBreezeFilter" x="-10%" y="-10%" width="120%" height="120%">
+                <!-- numOctaves=1 keeps iPad 60FPS; calcMode=spline eliminates turnaround stops -->
+                <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="1" result="windTurbulence">
                     <animate attributeName="baseFrequency" 
-                             dur="8s" 
-                             values="0.012 0.02; 0.018 0.028; 0.01 0.018; 0.012 0.02" 
+                             dur="12s" 
+                             values="0.011 0.018; 0.015 0.024; 0.018 0.021; 0.013 0.026; 0.016 0.019; 0.011 0.018" 
+                             calcMode="spline"
+                             keySplines="0.45 0 0.55 1; 0.45 0 0.55 1; 0.45 0 0.55 1; 0.45 0 0.55 1; 0.45 0 0.55 1"
                              repeatCount="indefinite" />
                 </feTurbulence>
-                <feDisplacementMap in="SourceGraphic" in2="windTurbulence" scale="8" xChannelSelector="R" yChannelSelector="G" />
+                <feDisplacementMap in="SourceGraphic" in2="windTurbulence" scale="8" xChannelSelector="R" yChannelSelector="G">
+                    <animate attributeName="scale" 
+                             dur="9s" 
+                             values="6.5; 9; 7; 10; 6.5" 
+                             calcMode="spline"
+                             keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1"
+                             repeatCount="indefinite" />
+                </feDisplacementMap>
             </filter>
         </defs>
     </svg>
@@ -920,6 +949,22 @@
             }
         });
 
+        // Tactile Smooth Lift & Recoil for Study & Nutrition Capsules
+        const myspaceCards = document.querySelectorAll('.myspace-card');
+        myspaceCards.forEach(card => {
+            card.addEventListener('pointerdown', () => {
+                card.classList.add('is-card-lifted');
+            });
+            const releaseCard = () => {
+                if (!card.classList.contains('is-wave-loading')) {
+                    card.classList.remove('is-card-lifted');
+                }
+            };
+            card.addEventListener('pointerup', releaseCard);
+            card.addEventListener('pointerleave', releaseCard);
+            card.addEventListener('pointercancel', releaseCard);
+        });
+
         function applyTargetPalette() {
             const activeSessionOverride = sessionStorage.getItem('dashboard-theme');
             if (activeSessionOverride) {
@@ -1003,12 +1048,7 @@
 
                 e.preventDefault();
 
-                universalTargetLinks.forEach(l => {
-                    l.classList.remove('is-wave-loading');
-                    l.classList.remove('is-card-lifted');
-                });
-
-                // Smooth elevation + wave shimmer
+                // Elevation is already active from pointerdown; now add wave shimmer
                 this.classList.add('is-card-lifted');
                 this.classList.add('is-wave-loading');
 
