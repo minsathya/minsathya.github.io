@@ -32,6 +32,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        html {
+        overflow-y: scroll;
+        scrollbar-gutter: stable;
+      }
         :root {
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --bg-color: #0b0b0b;
@@ -963,9 +967,6 @@
     </footer>
 
     <script>
-        if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-  }
         // 1. DYNAMIC BREADCRUMBS STATE
         (function buildDynamicBreadcrumbs() {
             const HOME_PATH = "/study/index.html";
