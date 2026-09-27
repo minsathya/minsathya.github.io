@@ -38,7 +38,7 @@
       }
         :root {
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
-            --ease-stage: cubic-bezier(0.22, 1, 0.36, 1);
+            --ease-stage: cubic-bezier(0.16, 1, 0.3, 1);
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
             --text-muted: #777777;
@@ -98,6 +98,22 @@
             overflow-x: hidden;
             transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
+
+        /* RESTORED SMOOTH MASTER REFRESH ENTRANCE */
+        @keyframes masterEntrance {
+            from { opacity: 0; transform: translate3d(0, 20px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+
+        header, main, footer {
+            opacity: 1;
+            will-change: transform, opacity;
+            animation: masterEntrance 1.1s var(--ease-smooth) backwards;
+        }
+
+        header { animation-delay: 0.04s; }
+        main { animation-delay: 0.14s; }
+        footer { animation-delay: 0.24s; }
 
         /* HEADER */
         header {
@@ -423,8 +439,19 @@
             touch-action: pan-y;
             user-select: none;
             -webkit-user-select: none;
-            transition: height 0.38s var(--ease-stage);
+            transition: height 0.45s var(--ease-stage);
             will-change: height;
+        }
+
+        @keyframes topicCardEntrance {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 24px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
         }
 
         .article-card {
@@ -451,26 +478,27 @@
             position: relative;
             transform: translate3d(0, 0, 0);
             opacity: 1;
+            animation: topicCardEntrance 0.7s var(--ease-smooth) backwards;
         }
 
-        /* Stage Animations with Simultaneous Soft Opacity Fade */
+        /* Simultaneous Pure-Width Slide Animations (Zero Sharp Overlap Lines) */
         @keyframes stageSlideOutLeft {
             0% { transform: translate3d(0, 0, 0); opacity: 1; }
-            100% { transform: translate3d(-75px, 0, 0); opacity: 0; }
+            100% { transform: translate3d(-100%, 0, 0); opacity: 0; }
         }
 
         @keyframes stageSlideInRight {
-            0% { transform: translate3d(75px, 0, 0); opacity: 0; }
+            0% { transform: translate3d(100%, 0, 0); opacity: 0; }
             100% { transform: translate3d(0, 0, 0); opacity: 1; }
         }
 
         @keyframes stageSlideOutRight {
             0% { transform: translate3d(0, 0, 0); opacity: 1; }
-            100% { transform: translate3d(75px, 0, 0); opacity: 0; }
+            100% { transform: translate3d(100%, 0, 0); opacity: 0; }
         }
 
         @keyframes stageSlideInLeft {
-            0% { transform: translate3d(-75px, 0, 0); opacity: 0; }
+            0% { transform: translate3d(-100%, 0, 0); opacity: 0; }
             100% { transform: translate3d(0, 0, 0); opacity: 1; }
         }
 
@@ -482,14 +510,14 @@
             width: 100%;
             z-index: 1;
             pointer-events: none;
-            animation: stageSlideOutLeft 0.38s var(--ease-stage) forwards !important;
+            animation: stageSlideOutLeft 0.45s var(--ease-stage) forwards !important;
         }
 
         .article-card.anim-in-right {
             display: block !important;
             position: relative !important;
             z-index: 2;
-            animation: stageSlideInRight 0.38s var(--ease-stage) forwards !important;
+            animation: stageSlideInRight 0.45s var(--ease-stage) forwards !important;
         }
 
         .article-card.anim-out-right {
@@ -500,14 +528,14 @@
             width: 100%;
             z-index: 1;
             pointer-events: none;
-            animation: stageSlideOutRight 0.38s var(--ease-stage) forwards !important;
+            animation: stageSlideOutRight 0.45s var(--ease-stage) forwards !important;
         }
 
         .article-card.anim-in-left {
             display: block !important;
             position: relative !important;
             z-index: 2;
-            animation: stageSlideInLeft 0.38s var(--ease-stage) forwards !important;
+            animation: stageSlideInLeft 0.45s var(--ease-stage) forwards !important;
         }
 
         .article-title {
@@ -1276,6 +1304,13 @@
         let currentActiveTopicIndex = 0;
         let totalLoadedTopics = 0;
         let isTransitioning = false;
+        const topicScrollMap = {}; // Per-topic scroll memory
+
+        window.addEventListener('scroll', () => {
+            if (!isTransitioning) {
+                topicScrollMap[currentActiveTopicIndex] = window.scrollY;
+            }
+        }, { passive: true });
 
         function updatePillGlider(activeBtn) {
             const glider = document.getElementById('pillGlider');
@@ -1327,6 +1362,10 @@
 
             const isNext = direction ? (direction === 'next') : (targetIndex > currentActiveTopicIndex);
             const currentIndex = currentActiveTopicIndex;
+
+            // Remember scroll position on the card we are departing from
+            topicScrollMap[currentIndex] = window.scrollY;
+
             currentActiveTopicIndex = targetIndex;
             isTransitioning = true;
 
@@ -1350,13 +1389,16 @@
                 topicsFeed.style.height = `${incomingHeight}px`;
             }
 
-            // Smoothly align scroll to feed top if user read deep into the previous card
-            const feedTop = topicsFeed.getBoundingClientRect().top + window.scrollY;
-            if (window.scrollY > feedTop) {
-                window.scrollTo({
-                    top: Math.max(0, feedTop - 30),
-                    behavior: 'smooth'
-                });
+            // PER-TOPIC SCROLL RESOLUTION:
+            // If already visited: restore where we left it
+            // If first time visiting: jump directly to the top without a reverse scroll animation
+            const feedTop = Math.max(0, topicsFeed.getBoundingClientRect().top + window.scrollY - 30);
+            if (topicScrollMap[targetIndex] !== undefined) {
+                window.scrollTo({ top: topicScrollMap[targetIndex], behavior: 'instant' });
+            } else {
+                if (window.scrollY > feedTop) {
+                    window.scrollTo({ top: feedTop, behavior: 'instant' });
+                }
             }
 
             // Both cards transition simultaneously with zero clipped straight edges
@@ -1374,7 +1416,7 @@
                 });
                 syncFeedHeight(targetIndex);
                 isTransitioning = false;
-            }, 380);
+            }, 450);
         }
 
         // 5. SWIPE CONTROLLER: TOUCH (MOBILE/IPAD) + TRACKPAD & MOUSE DRAG (LAPTOP)
