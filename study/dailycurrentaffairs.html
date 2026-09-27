@@ -967,6 +967,22 @@
     </footer>
 
     <script>
+  // Preserve exact reading position on refresh for dynamic cards
+  window.addEventListener('beforeunload', () => {
+    sessionStorage.setItem('ca_scroll_pos', window.scrollY);
+  });
+
+  const savedScrollPos = sessionStorage.getItem('ca_scroll_pos');
+  if (savedScrollPos && parseInt(savedScrollPos, 10) > 0) {
+    const checkCardsLoaded = setInterval(() => {
+      if (document.body.scrollHeight > window.innerHeight + 100) {
+        window.scrollTo(0, parseInt(savedScrollPos, 10));
+        clearInterval(checkCardsLoaded);
+      }
+    }, 20);
+
+    setTimeout(() => clearInterval(checkCardsLoaded), 3000);
+  }
         // 1. DYNAMIC BREADCRUMBS STATE
         (function buildDynamicBreadcrumbs() {
             const HOME_PATH = "/study/index.html";
