@@ -33,7 +33,6 @@
 
     <style>
         :root {
-            /* Smooth gradual 0.55s & 0.8s curves matching index.html */
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
@@ -290,7 +289,7 @@
             align-items: flex-start;
         }
 
-        /* 1. BREADCRUMBS DESIGN */
+        /* BREADCRUMBS */
         .breadcrumb-nav {
             font-size: 14.5px;
             color: var(--text-muted);
@@ -312,7 +311,7 @@
         .bc-sep { opacity: 0.5; transition: color 0.8s var(--ease-smooth); }
         .bc-current { color: var(--text-main); font-weight: 500; transition: color 0.8s var(--ease-smooth); }
 
-        /* 2. TITLE + CALENDAR BUTTON */
+        /* TITLE + CALENDAR BUTTON */
         .page-title-row {
             display: flex;
             align-items: center;
@@ -352,7 +351,7 @@
             transition: color 0.8s var(--ease-smooth);
         }
 
-        /* 3. DYNAMIC TOPICS FEED CONTAINER */
+        /* DYNAMIC TOPICS FEED */
         .topics-feed {
             display: flex;
             flex-direction: column;
@@ -360,7 +359,6 @@
             width: 100%;
         }
 
-        /* 4. INDIVIDUAL TOPIC CARD WITH SMOOTH FADE-IN */
         @keyframes topicCardEntrance {
             from {
                 opacity: 0;
@@ -526,7 +524,7 @@
             transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
-        /* DRUM WHEEL DATE PICKER MODAL (STEADY VERTICAL AXIS LOCK) */
+        /* DRUM WHEEL DATE PICKER MODAL (STEADY VERTICAL AXIS) */
         .picker-backdrop {
             position: fixed;
             inset: 0;
@@ -628,7 +626,7 @@
 
         body.light-mode .picker-center-capsule { background: rgba(0, 0, 0, 0.08); border-color: rgba(0, 0, 0, 0.06); }
 
-        /* LOCKED VERTICAL AXIS (OVERFLOW-X HIDDEN & TOUCH PAN-Y) */
+        /* LOCKED VERTICAL AXIS */
         .drum-column {
             height: 100%;
             width: 100%;
@@ -798,14 +796,14 @@
     </header>
 
     <main>
-        <!-- 1. BREADCRUMBS -->
+        <!-- BREADCRUMBS -->
         <nav class="breadcrumb-nav">
             <a href="/study/index.html">Home</a>
             <span class="bc-sep">/</span>
             <span class="bc-current">Daily Current Affairs</span>
         </nav>
 
-        <!-- 2. PAGE HEADING + CALENDAR TRIGGER -->
+        <!-- PAGE HEADING + CALENDAR TRIGGER -->
         <div class="page-title-row">
             <h1 class="page-title">Daily Current Affairs</h1>
             <button class="cal-trigger-btn" id="openCalendarBtn" aria-label="Open Date Picker">
@@ -825,7 +823,7 @@
 
         <div class="active-date-subtext" id="activeDateDisplay">Selected Date: September 27, 2026</div>
 
-        <!-- 3. TOPICS FEED: BOXES FADE IN SLOWLY ONE DOWN ONE -->
+        <!-- TOPICS FEED -->
         <div class="topics-feed" id="topicsFeed"></div>
     </main>
 
@@ -860,9 +858,7 @@
     </footer>
 
     <script>
-        // ========================================================
-        // 1. DYNAMIC BREADCRUMBS STATE FOR FOOTER INTEGRATION
-        // ========================================================
+        // 1. DYNAMIC BREADCRUMBS STATE
         (function buildDynamicBreadcrumbs() {
             const HOME_PATH = "/study/index.html";
             const CURRENT_PATH = "/study/dailycurrentaffairs.html";
@@ -875,97 +871,22 @@
             } catch (e) {}
         })();
 
-        // ========================================================
-        // 2. MASTER DAILY CURRENT AFFAIRS DATABASE
-        // ========================================================
-        const dailyCurrentAffairsDB = {
-            "2026-09-27": [
-                {
-                    topicTitle: "India Orders Captive Coal Plants to Maximise Output from October 1",
-                    gsPaper: "GS-3",
-                    category: "Economy / Energy & Infrastructure",
-                    comesUnder: "Prelims and Mains",
-                    whyInNews: "The Ministry of Power has ordered 112 captive coal power plants to run at full capacity from October 1 to December 31, 2026, to meet high electricity demand and prevent power cuts.",
-                    whatConcept: "A captive power plant is an electricity plant set up by a company primarily to power its own factories (like steel, aluminium, or cement plants) rather than selling to the general public. Under an emergency rule, the government is making these plants produce at maximum capacity and sell their extra, unused electricity to the national grid.",
-                    whoOrg: [
-                        { label: "Parent Ministry", val: "Ministry of Power, Government of India" },
-                        { label: "Monitoring Agency", val: "Central Electricity Authority (CEA)" },
-                        { label: "Status / Type", val: "Statutory body (established under the Electricity Act, 2003; originally set up under the 1948 Act)" },
-                        { label: "Headquarters", val: "New Delhi" }
-                    ],
-                    importantFacts: [
-                        "<strong>Key Legal Clause :</strong> Section 11 of the Electricity Act, 2003, which allows the government to give direct operational orders to power plants during \"extraordinary circumstances\" (such as a severe power shortage or grid emergency).",
-                        "<strong>Plant Size Cut-off :</strong> Applies to captive coal plants with an installed capacity of 50 MW or higher.",
-                        "<strong>Number of Plants :</strong> 112 captive power stations (owned by private and public firms like Tata Steel, Vedanta, Hindalco, JSW Steel, and Reliance).",
-                        "<strong>Low Coal Reserves :</strong> Nearly 40% of India's utility coal plants have critically low coal stocks, with some holding less than three days of fuel.",
-                        "<strong>Weekly Reporting :</strong> Companies must send weekly reports to the Central Electricity Authority (CEA) on electricity produced, self-used, sold on power exchanges, and their remaining coal stocks.",
-                        "<strong>Other Emergency Extensions :</strong> Tata Power's 4,000 MW imported-coal plant at Mundra (Gujarat) was also ordered to keep running at full capacity under Section 11 until December 31, 2026."
-                    ],
-                    background: [
-                        "<strong>Electricity Act, 2003 :</strong> The main law that deregulated power generation in India, introduced power trading/exchanges, and created state and central regulatory commissions (CERC/SERC).",
-                        "<strong>Coal Dependency :</strong> Coal continues to generate over 70% of India's total electricity, providing the non-stop \"baseload\" power that weather-dependent renewable energy cannot yet guarantee.",
-                        "<strong>Weather &amp; Demand Drivers :</strong> Hotter temperatures linked to El Niño climate patterns have raised air conditioning use, while delayed rains have increased electric pump usage for agricultural watering."
-                    ],
-                    significance: [
-                        "<strong>Prevents Power Cuts :</strong> Quickly adds thousands of megawatts of power to the national grid without waiting years to build new power stations.",
-                        "<strong>Controls High Electricity Prices :</strong> Pumping extra power into wholesale power exchanges lowers prices during peak evening hours for state electricity boards (DISCOMs).",
-                        "<strong>Uses Idle Machinery :</strong> Puts unused or under-used private industrial generators to work for public supply during a national shortfall."
-                    ],
-                    challenges: [
-                        "<strong>Fuel Shortages :</strong> Diverting domestic coal to 112 captive plants can worsen shortages at normal public thermal stations that are already running low on fuel.",
-                        "<strong>High Production Costs :</strong> If captive plants are forced to use expensive spot coal or imported coal, selling power on exchanges might lead to financial losses if electricity prices drop.",
-                        "<strong>Plant Strain and Pollution :</strong> Running old industrial plants continuously at 100% capacity without scheduled repair breaks increases the risk of sudden breakdowns and creates more air pollution."
-                    ],
-                    wayForward: [
-                        "<strong>Ensure Dedicated Coal Trains :</strong> The Ministry of Railways must supply guaranteed train rakes to deliver enough coal to both captive and public thermal plants on time.",
-                        "<strong>Fair Price Recovery :</strong> Set up a clear pricing system on power exchanges so captive plants are fully repaid for their fuel and running costs.",
-                        "<strong>Speed Up Energy Storage :</strong> Build large-scale battery storage and pumped hydro plants so India does not have to rely on emergency coal mandates every time power demand spikes."
-                    ]
-                }
-            ]
-        };
-
-        // ========================================================
-        // OPTION 1: AUTOMATICALLY DETECT THE MOST RECENT POST DATE
-        // ========================================================
-        const availableDates = Object.keys(dailyCurrentAffairsDB).sort();
-        let selectedDay, selectedMonth, selectedYear;
-
-        if (availableDates.length > 0) {
-            // Pick the latest available date key (e.g. "2026-09-27")
-            const newestDateKey = availableDates[availableDates.length - 1];
-            const dateParts = newestDateKey.split('-').map(Number);
-            selectedYear = dateParts[0];
-            selectedMonth = dateParts[1];
-            selectedDay = dateParts[2];
-        } else {
-            // Fallback to real-time clock only if database is completely empty
-            const now = new Date();
-            selectedYear = now.getFullYear();
-            selectedMonth = now.getMonth() + 1;
-            selectedDay = now.getDate();
-        }
+        // 2. DATE STATE MANAGEMENT
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        
+        let selectedYear = 2026;
+        let selectedMonth = 9;
+        let selectedDay = 27;
 
         let tempDay = selectedDay;
         let tempMonth = selectedMonth;
         let tempYear = selectedYear;
 
-        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-        function getAvailableYears() {
-            const dbYears = Object.keys(dailyCurrentAffairsDB).map(d => parseInt(d.split('-')[0]));
-            const minYear = 2026;
-            const maxYear = Math.max(minYear, ...dbYears, selectedYear);
-            const years = [];
-            for (let y = minYear; y <= maxYear; y++) {
-                years.push(y);
-            }
-            return years;
-        }
-
         const dayCol = document.getElementById('dayColumn');
         const monthCol = document.getElementById('monthColumn');
         const yearCol = document.getElementById('yearColumn');
+        const topicsFeed = document.getElementById('topicsFeed');
+        const activeDateDisplay = document.getElementById('activeDateDisplay');
 
         function initPickerColumns() {
             dayCol.innerHTML = '';
@@ -987,14 +908,15 @@
             }
 
             yearCol.innerHTML = '';
-            const years = getAvailableYears();
-            years.forEach(y => {
+            const minYear = 2026;
+            const maxYear = Math.max(minYear, new Date().getFullYear() + 1);
+            for (let y = minYear; y <= maxYear; y++) {
                 const cell = document.createElement('div');
                 cell.className = 'drum-cell';
                 cell.textContent = y;
                 cell.dataset.val = y;
                 yearCol.appendChild(cell);
-            });
+            }
         }
 
         function scrollColumnTo(col, val) {
@@ -1027,23 +949,15 @@
         setupScrollHighlight(monthCol, v => tempMonth = v);
         setupScrollHighlight(yearCol, v => tempYear = v);
 
-        // ========================================================
-        // 3. RENDER STAGGERED FADING CARDS FOR SELECTED DATE
-        // ========================================================
-        const topicsFeed = document.getElementById('topicsFeed');
-        const activeDateDisplay = document.getElementById('activeDateDisplay');
-
-        function renderTopics() {
-            const dateKey = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(selectedDay).padStart(2, '0')}`;
-            activeDateDisplay.textContent = `Selected Date: ${monthNames[selectedMonth - 1]} ${selectedDay}, ${selectedYear}`;
-
-            const topics = dailyCurrentAffairsDB[dateKey] || [];
+        // 3. DYNAMIC DATA LOADER ENGINE FROM /study/currentaffairs-data/DD-MM-YYYY.js
+        function renderCards(topics, dateText) {
+            activeDateDisplay.textContent = `Selected Date: ${dateText}`;
             topicsFeed.innerHTML = '';
 
-            if (topics.length === 0) {
+            if (!topics || topics.length === 0) {
                 topicsFeed.innerHTML = `
                     <div class="empty-placeholder-card">
-                        No current affairs entries found for ${monthNames[selectedMonth - 1]} ${selectedDay}, ${selectedYear}.
+                        No current affairs entries found for ${dateText}.
                     </div>
                 `;
                 return;
@@ -1128,12 +1042,80 @@
             });
         }
 
-        // Render newest post automatically on initial landing
-        renderTopics();
+        // Script injector loading /study/currentaffairs-data/DD-MM-YYYY.js
+        function loadDateData(year, month, day, onSuccess, onFail) {
+            const dateKey = `${String(day).padStart(2, '0')}-${String(month).padStart(2, '0')}-${year}`;
+            const existingScript = document.getElementById('currentAffairsDataScript');
+            if (existingScript) existingScript.remove();
 
-        // ========================================================
-        // 4. MODAL CONTROLS
-        // ========================================================
+            window.currentDailyTopics = null;
+
+            const script = document.createElement('script');
+            script.id = 'currentAffairsDataScript';
+            script.src = `/study/currentaffairs-data/${dateKey}.js`;
+
+            script.onload = () => {
+                if (window.currentDailyTopics) {
+                    onSuccess(window.currentDailyTopics, dateKey);
+                } else {
+                    onFail();
+                }
+            };
+
+            script.onerror = () => {
+                onFail();
+            };
+
+            document.body.appendChild(script);
+        }
+
+        // OPTION 1: Backtrack up to 30 days from current date to find the freshest post
+        function loadLatestAvailablePost() {
+            const checkDate = new Date();
+            let attempts = 0;
+            const maxBacktrackDays = 30;
+
+            function tryNextDate() {
+                const y = checkDate.getFullYear();
+                const m = checkDate.getMonth() + 1;
+                const d = checkDate.getDate();
+
+                loadDateData(y, m, d, (topics) => {
+                    selectedYear = y;
+                    selectedMonth = m;
+                    selectedDay = d;
+                    tempYear = y;
+                    tempMonth = m;
+                    tempDay = d;
+                    renderCards(topics, `${monthNames[m - 1]} ${d}, ${y}`);
+                }, () => {
+                    attempts++;
+                    if (attempts < maxBacktrackDays) {
+                        checkDate.setDate(checkDate.getDate() - 1);
+                        tryNextDate();
+                    } else {
+                        // Fallback to static starting date if backtracking finds nothing
+                        loadDateData(2026, 9, 27, (topics) => {
+                            selectedYear = 2026;
+                            selectedMonth = 9;
+                            selectedDay = 27;
+                            tempYear = 2026;
+                            tempMonth = 9;
+                            tempDay = 27;
+                            renderCards(topics, `September 27, 2026`);
+                        }, () => {
+                            renderCards([], `September 27, 2026`);
+                        });
+                    }
+                });
+            }
+
+            tryNextDate();
+        }
+
+        loadLatestAvailablePost();
+
+        // 4. MODAL CONTROLS & APPLY ACTION
         const pickerModal = document.getElementById('pickerModal');
         const openCalendarBtn = document.getElementById('openCalendarBtn');
         const applyDateBtn = document.getElementById('applyDateBtn');
@@ -1152,7 +1134,14 @@
             selectedDay = tempDay;
             selectedMonth = tempMonth;
             selectedYear = tempYear;
-            renderTopics();
+            const formattedDateText = `${monthNames[selectedMonth - 1]} ${selectedDay}, ${selectedYear}`;
+
+            loadDateData(selectedYear, selectedMonth, selectedDay, (topics) => {
+                renderCards(topics, formattedDateText);
+            }, () => {
+                renderCards([], formattedDateText);
+            });
+
             pickerModal.classList.remove('is-open');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
@@ -1163,9 +1152,7 @@
             }
         });
 
-        // ========================================================
-        // 5. EXACT MATCH PALETTE ENGINE (SYNCED WITH index.html)
-        // ========================================================
+        // 5. THEME PALETTE ENGINE (SYNCED WITH index.html)
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
         const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
