@@ -6,7 +6,7 @@
     <title>Daily Current Affairs - sathya.</title>
     <meta name="description" content="Daily Current Affairs for UPSC Civil Services Examination.">
 
-    <!-- Instant Theme Evaluation to Prevent Theme Blink on Reload -->
+    <!-- Instant Theme Evaluation to Prevent Theme Flash on Reload -->
     <script>
       (function() {
         const activeTheme = sessionStorage.getItem('dashboard-theme');
@@ -42,6 +42,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Pre-load Current Affairs Data for Zero Network Wait on Refresh -->
+    <script src="/study/currentaffairs-data/27-09-2026.js"></script>
+
     <style>
       html {
         overflow-y: scroll;
@@ -65,7 +68,6 @@
             --pill-box-bg: rgba(255, 255, 255, 0.025);
             --pill-box-border: #222222;
 
-            /* Vertical cascade parameters */
             --cascade-distance: 24px;
             --cascade-duration-exit: 0.2s;
             --cascade-duration-entry: 0.28s;
@@ -123,15 +125,18 @@
             to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
-        header, main, footer {
+        header, .breadcrumb-nav, .page-title-row, .active-date-row, .topics-feed, footer {
             opacity: 1;
             will-change: transform, opacity;
             animation: masterEntrance 1.2s var(--ease-smooth) backwards;
         }
 
         header { animation-delay: 0.04s; }
-        main { animation-delay: 0.14s; }
-        footer { animation-delay: 0.24s; }
+        .breadcrumb-nav { animation-delay: 0.10s; }
+        .page-title-row { animation-delay: 0.14s; }
+        .active-date-row { animation-delay: 0.18s; }
+        .topics-feed { animation-delay: 0.24s; }
+        footer { animation-delay: 0.32s; }
 
         /* HEADER */
         header {
@@ -458,7 +463,7 @@
             overscroll-behavior-x: none;
             user-select: none;
             -webkit-user-select: none;
-            transition: height 0.42s var(--ease-premium);
+            transition: height 0.45s var(--ease-smooth);
             will-change: height;
         }
 
@@ -518,14 +523,14 @@
             width: 100%;
             z-index: 1;
             pointer-events: none;
-            animation: stageSlideOutLeft 0.4s var(--ease-premium) forwards !important;
+            animation: stageSlideOutLeft 0.48s var(--ease-smooth) forwards !important;
         }
 
         .article-card.anim-in-right {
             display: block !important;
             position: relative !important;
             z-index: 2;
-            animation: stageSlideInRight 0.4s var(--ease-premium) forwards !important;
+            animation: stageSlideInRight 0.48s var(--ease-smooth) forwards !important;
         }
 
         .article-card.anim-out-right {
@@ -536,14 +541,14 @@
             width: 100%;
             z-index: 1;
             pointer-events: none;
-            animation: stageSlideOutRight 0.4s var(--ease-premium) forwards !important;
+            animation: stageSlideOutRight 0.48s var(--ease-smooth) forwards !important;
         }
 
         .article-card.anim-in-left {
             display: block !important;
             position: relative !important;
             z-index: 2;
-            animation: stageSlideInLeft 0.4s var(--ease-premium) forwards !important;
+            animation: stageSlideInLeft 0.48s var(--ease-smooth) forwards !important;
         }
 
         .article-title {
@@ -1360,7 +1365,6 @@
             }
         }
 
-        // Dynamically adjust container height so shorter topics pull footer up directly beneath them
         function syncFeedHeight(idx = currentActiveTopicIndex) {
             const card = document.getElementById(`topic-card-${idx}`);
             if (topicsFeed && card) {
@@ -1391,7 +1395,7 @@
                 if (isSelected) updatePillGlider(btn);
             });
 
-            // Pre-measure target card height and scale container height smoothly
+            // Pre-measure target card height and scale container smoothly
             targetCard.style.display = 'block';
             targetCard.style.visibility = 'hidden';
             const incomingHeight = targetCard.offsetHeight;
@@ -1399,15 +1403,15 @@
             targetCard.style.visibility = '';
 
             topicsFeed.style.height = `${currentCard.offsetHeight}px`;
-            void topicsFeed.offsetHeight; // force layout calculation
+            void topicsFeed.offsetHeight; // force layout
             if (incomingHeight > 0) {
                 topicsFeed.style.height = `${incomingHeight}px`;
             }
 
-            // Immediately display from top of the screen (showing header, title & pill completely)
+            // Instantly jump to top so the header, title, and pill are 100% visible
             window.scrollTo({ top: 0, behavior: 'instant' });
 
-            // Both cards transition simultaneously with zero straight edge clipping
+            // Both cards transition simultaneously with hidden edges
             if (isNext) {
                 currentCard.className = 'article-card anim-out-left';
                 targetCard.className = 'article-card anim-in-right';
@@ -1423,7 +1427,7 @@
                 });
                 topicsFeed.style.height = 'auto'; // allow natural expansion after transition
                 isTransitioning = false;
-            }, 400);
+            }, 460);
         }
 
         // 5. RESPONSIVE TOUCH & TRACKPAD CONTROLLER
@@ -1699,10 +1703,10 @@
             });
 
             // Adjust stage height to Topic 1 immediately with no layout jump
-            requestAnimationFrame(() => syncFeedHeight(0));
+            topicsFeed.style.height = 'auto';
         }
 
-        // Script injector loading /study/currentaffairs-data/DD-MM-YYYY.js
+        // Script injector for Date Picker dynamic navigation
         function loadDateData(year, month, day, onSuccess, onFail) {
             const dateKey = `${String(day).padStart(2, '0')}-${String(month).padStart(2, '0')}-${year}`;
             const existingScript = document.getElementById('currentAffairsDataScript');
@@ -1729,50 +1733,16 @@
             document.body.appendChild(script);
         }
 
-        // Backtrack up to 30 days to find freshest post
-        function loadLatestAvailablePost() {
-            const checkDate = new Date();
-            let attempts = 0;
-            const maxBacktrackDays = 30;
-
-            function tryNextDate() {
-                const y = checkDate.getFullYear();
-                const m = checkDate.getMonth() + 1;
-                const d = checkDate.getDate();
-
-                loadDateData(y, m, d, (topics) => {
-                    selectedYear = y;
-                    selectedMonth = m;
-                    selectedDay = d;
-                    tempYear = y;
-                    tempMonth = m;
-                    tempDay = d;
-                    renderCards(topics, `${monthNames[m - 1]} ${d}, ${y}`);
-                }, () => {
-                    attempts++;
-                    if (attempts < maxBacktrackDays) {
-                        checkDate.setDate(checkDate.getDate() - 1);
-                        tryNextDate();
-                    } else {
-                        loadDateData(2026, 9, 27, (topics) => {
-                            selectedYear = 2026;
-                            selectedMonth = 9;
-                            selectedDay = 27;
-                            tempYear = 2026;
-                            tempMonth = 9;
-                            tempDay = 27;
-                            renderCards(topics, `September 27, 2026`);
-                        }, () => {
-                            renderCards([], `September 27, 2026`);
-                        });
-                    }
-                });
-            }
-
-            tryNextDate();
+        // Immediate Execution: Initial data is pre-loaded at head to guarantee zero blink
+        if (window.currentDailyTopics) {
+            renderCards(window.currentDailyTopics, "September 27, 2026");
+        } else {
+            loadDateData(2026, 9, 27, (topics) => {
+                renderCards(topics, "September 27, 2026");
+            }, () => {
+                renderCards([], "September 27, 2026");
+            });
         }
-
-        loadLatestAvailablePost();
 
         // 7. MODAL CONTROLS & APPLY ACTION
         const pickerModal = document.getElementById('pickerModal');
