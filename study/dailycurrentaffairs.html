@@ -122,10 +122,22 @@
             to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
-        header, .breadcrumb-nav, .date-topics-capsule, .topics-feed, footer, .side-nav-btn {
+        header, .breadcrumb-nav, .date-topics-capsule, .topics-feed, footer {
             opacity: 1;
             will-change: transform, opacity;
             animation: masterEntrance 1.2s var(--ease-smooth) backwards;
+        }
+
+        /* Pure Opacity Entrance for Fixed Navigation Arrows (Prevents Position Shifting) */
+        @keyframes sideNavEntrance {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .side-nav-btn {
+            opacity: 1;
+            will-change: opacity;
+            animation: sideNavEntrance 1.2s var(--ease-smooth) backwards;
         }
 
         header { animation-delay: 0.04s; }
