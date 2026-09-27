@@ -38,10 +38,6 @@
       darkMode.addEventListener('change', updateFavicon);
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
     <!-- Pre-load Current Affairs Data for Zero Network Wait on Refresh -->
     <script src="/study/currentaffairs-data/27-09-2026.js"></script>
 
@@ -51,6 +47,9 @@
         scrollbar-gutter: stable;
       }
         :root {
+            /* Native Device Font Stack (Pixel / Apple / Windows / Android) */
+            --font-stack: "Google Sans", "Google Sans Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, system-ui, sans-serif;
+
             /* Exact 0.55s smooth easing curve from index.html */
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
@@ -99,7 +98,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: 'Poppins', sans-serif;
+            font-family: var(--font-stack);
             min-height: 100vh;
             min-height: 100dvh;
             display: flex;
@@ -262,7 +261,7 @@
             border: none;
             outline: none;
             color: var(--text-main);
-            font-family: 'Poppins', sans-serif;
+            font-family: inherit;
             font-size: 16px;
             padding: 0 16px;
             width: 100%;
@@ -731,7 +730,7 @@
             outline: none;
             padding: 3px 12px;
             border-radius: 14px;
-            font-family: 'Poppins', sans-serif;
+            font-family: inherit;
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
@@ -989,7 +988,7 @@
             border: none;
             padding: 8px 20px;
             border-radius: 20px;
-            font-family: 'Poppins', sans-serif;
+            font-family: inherit;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
@@ -1153,6 +1152,8 @@
             -webkit-text-fill-color: transparent !important;
             color: transparent !important;
             animation: fluidWave 0.75s infinite linear !important;
+            will-change: background-position, transform !important;
+            opacity: 1 !important;
         }
 
         body.light-mode a.is-wave-loading .nav-text {
@@ -1163,6 +1164,8 @@
             -webkit-text-fill-color: transparent !important;
             color: transparent !important;
             animation: fluidWave 0.75s infinite linear !important;
+            will-change: background-position, transform !important;
+            opacity: 1 !important;
         }
 
         /* TABLET & IPAD */
