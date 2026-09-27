@@ -502,12 +502,24 @@
         }
 
         .info-callout-row {
-            font-size: 14.5px;
-            line-height: 1.65;
-            color: var(--text-main);
-            opacity: 0.95;
-            transition: color 0.8s var(--ease-smooth);
-        }
+    position: relative;
+    padding-left: 22px;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--text-main);
+    opacity: 0.95;
+    transition: color 0.8s var(--ease-smooth);
+}
+
+.info-callout-row::before {
+    content: "•";
+    position: absolute;
+    left: 4px;
+    top: -1px;
+    font-size: 18px;
+    color: var(--accent-tag-text);
+    transition: color 0.8s var(--ease-smooth);
+}
 
         .info-callout-row strong { color: var(--text-main); font-weight: 600; transition: color 0.8s var(--ease-smooth); }
 
