@@ -33,6 +33,7 @@
 
     <style>
         :root {
+            /* Smooth gradual 0.55s & 0.8s curves matching index.html */
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
@@ -44,7 +45,8 @@
             --header-border: #222c26;
             --accent-tag-bg: #1c2720;
             --accent-tag-text: #6ec981;
-            --section-callout: #161816;
+            --pill-box-bg: rgba(255, 255, 255, 0.025);
+            --pill-box-border: #222222;
 
             --cascade-distance: 24px;
             --cascade-duration-exit: 0.2s;
@@ -62,7 +64,8 @@
             --header-border: #d4d8cf;
             --accent-tag-bg: #e2ede5;
             --accent-tag-text: #1d6e35;
-            --section-callout: #f7f8f6;
+            --pill-box-bg: rgba(0, 0, 0, 0.025);
+            --pill-box-border: #e2e2e7;
         }
 
         * {
@@ -287,7 +290,7 @@
             align-items: flex-start;
         }
 
-        /* 1. BREADCRUMBS: OUTSIDE THE BOX */
+        /* 1. BREADCRUMBS DESIGN */
         .breadcrumb-nav {
             font-size: 14.5px;
             color: var(--text-muted);
@@ -296,17 +299,18 @@
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
+            transition: color 0.8s var(--ease-smooth);
         }
 
         .breadcrumb-nav a {
             color: var(--text-muted);
             text-decoration: none !important;
-            transition: color 0.3s;
+            transition: color 0.8s var(--ease-smooth);
         }
 
         .breadcrumb-nav a:hover { color: var(--text-main); }
-        .bc-sep { opacity: 0.5; }
-        .bc-current { color: var(--text-main); font-weight: 500; }
+        .bc-sep { opacity: 0.5; transition: color 0.8s var(--ease-smooth); }
+        .bc-current { color: var(--text-main); font-weight: 500; transition: color 0.8s var(--ease-smooth); }
 
         /* 2. TITLE + CALENDAR BUTTON */
         .page-title-row {
@@ -345,6 +349,7 @@
             color: var(--text-muted);
             margin-bottom: 32px;
             font-weight: 500;
+            transition: color 0.8s var(--ease-smooth);
         }
 
         /* 3. DYNAMIC TOPICS FEED CONTAINER */
@@ -376,7 +381,9 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
             opacity: 0;
             animation: topicCardEntrance 0.7s var(--ease-smooth) forwards;
-            transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth);
+            transition: background-color 0.8s var(--ease-smooth), 
+                        border-color 0.8s var(--ease-smooth),
+                        box-shadow 0.8s var(--ease-smooth);
         }
 
         body:not(.light-mode) .article-card { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
@@ -388,6 +395,7 @@
             color: var(--text-main);
             margin-bottom: 20px;
             line-height: 1.35;
+            transition: color 0.8s var(--ease-smooth);
         }
 
         /* METADATA PILLS */
@@ -399,6 +407,7 @@
             padding-bottom: 22px;
             border-bottom: 1px solid var(--row-divider);
             width: 100%;
+            transition: border-color 0.8s var(--ease-smooth);
         }
 
         .meta-pill {
@@ -412,11 +421,14 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--panel-border);
             color: var(--text-muted);
+            transition: background-color 0.8s var(--ease-smooth), 
+                        border-color 0.8s var(--ease-smooth), 
+                        color 0.8s var(--ease-smooth);
         }
 
         body.light-mode .meta-pill { background: rgba(0, 0, 0, 0.03); }
 
-        .meta-pill strong { color: var(--text-main); font-weight: 600; }
+        .meta-pill strong { color: var(--text-main); font-weight: 600; transition: color 0.8s var(--ease-smooth); }
         .meta-pill.accent-pill { background: var(--accent-tag-bg); color: var(--accent-tag-text); border: none; }
 
         /* CONTENT SECTIONS */
@@ -437,6 +449,7 @@
             padding-bottom: 8px;
             border-bottom: 1px solid var(--row-divider);
             margin-bottom: 6px;
+            transition: color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth);
         }
 
         .note-p {
@@ -444,6 +457,7 @@
             line-height: 1.8;
             color: var(--text-main);
             opacity: 0.9;
+            transition: color 0.8s var(--ease-smooth);
         }
 
         .note-list {
@@ -461,6 +475,7 @@
             line-height: 1.75;
             color: var(--text-main);
             opacity: 0.9;
+            transition: color 0.8s var(--ease-smooth);
         }
 
         .note-list li::before {
@@ -470,19 +485,22 @@
             top: -1px;
             font-size: 18px;
             color: var(--accent-tag-text);
+            transition: color 0.8s var(--ease-smooth);
         }
 
-        .note-list li strong { color: var(--text-main); font-weight: 600; }
+        .note-list li strong { color: var(--text-main); font-weight: 600; transition: color 0.8s var(--ease-smooth); }
 
+        /* ROUNDED GREY PILL BOX */
         .info-callout {
-            background-color: var(--section-callout);
-            border-left: 3px solid var(--accent-tag-text);
-            border-radius: 12px;
-            padding: 18px 22px;
+            background-color: var(--pill-box-bg);
+            border: 1px solid var(--pill-box-border);
+            border-radius: 20px;
+            padding: 22px 24px;
             margin: 6px 0;
             display: flex;
             flex-direction: column;
             gap: 10px;
+            transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth);
         }
 
         .info-callout-row {
@@ -490,9 +508,10 @@
             line-height: 1.65;
             color: var(--text-main);
             opacity: 0.95;
+            transition: color 0.8s var(--ease-smooth);
         }
 
-        .info-callout-row strong { color: var(--text-main); font-weight: 600; }
+        .info-callout-row strong { color: var(--text-main); font-weight: 600; transition: color 0.8s var(--ease-smooth); }
 
         .empty-placeholder-card {
             width: 100%;
@@ -504,9 +523,10 @@
             color: var(--text-muted);
             font-size: 15px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+            transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
-        /* DRUM WHEEL DATE PICKER MODAL */
+        /* DRUM WHEEL DATE PICKER MODAL (STEADY VERTICAL AXIS LOCK) */
         .picker-backdrop {
             position: fixed;
             inset: 0;
@@ -536,7 +556,9 @@
             padding: 24px 20px;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
             transform: scale(0.92) translate3d(0, 15px, 0);
-            transition: transform 0.35s var(--ease-smooth);
+            transition: transform 0.35s var(--ease-smooth), 
+                        background-color 0.8s var(--ease-smooth), 
+                        border-color 0.8s var(--ease-smooth);
         }
 
         body.light-mode .picker-card {
@@ -555,7 +577,7 @@
             padding: 0 8px;
         }
 
-        .picker-title { font-size: 18px; font-weight: 600; color: var(--text-main); }
+        .picker-title { font-size: 18px; font-weight: 600; color: var(--text-main); transition: color 0.8s var(--ease-smooth); }
 
         .picker-apply-btn {
             background: #258bf5;
@@ -572,16 +594,19 @@
 
         .picker-apply-btn:hover { opacity: 0.9; transform: scale(1.04); }
 
+        /* DRUM STAGE WITH ZERO LATERAL DRIFT */
         .picker-drum-stage {
             position: relative;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             height: 220px;
+            width: 100%;
             overflow: hidden;
             border-radius: 18px;
             background: rgba(0, 0, 0, 0.25);
             mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%);
+            transition: background-color 0.8s var(--ease-smooth);
         }
 
         body.light-mode .picker-drum-stage { background: rgba(0, 0, 0, 0.04); }
@@ -598,37 +623,57 @@
             pointer-events: none;
             z-index: 1;
             border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth);
         }
 
         body.light-mode .picker-center-capsule { background: rgba(0, 0, 0, 0.08); border-color: rgba(0, 0, 0, 0.06); }
 
+        /* LOCKED VERTICAL AXIS (OVERFLOW-X HIDDEN & TOUCH PAN-Y) */
         .drum-column {
             height: 100%;
+            width: 100%;
             overflow-y: scroll;
+            overflow-x: hidden;
+            touch-action: pan-y;
+            overscroll-behavior-y: contain;
+            overscroll-behavior-x: none;
             scroll-snap-type: y mandatory;
             -ms-overflow-style: none;
             scrollbar-width: none;
             padding: 86px 0;
             z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .drum-column::-webkit-scrollbar { display: none; }
 
         .drum-cell {
+            width: 100%;
             height: 48px;
+            min-height: 48px;
+            max-height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
             font-size: 20px;
             font-weight: 500;
             color: var(--text-muted);
             scroll-snap-align: center;
             cursor: pointer;
             user-select: none;
-            transition: color 0.2s, transform 0.2s;
+            -webkit-user-select: none;
+            transition: color 0.25s var(--ease-smooth);
         }
 
-        .drum-cell.is-selected { color: var(--text-main); font-weight: 600; transform: scale(1.12); }
+        /* Steady state: No horizontal scaling expansion */
+        .drum-cell.is-selected {
+            color: var(--text-main);
+            font-weight: 600;
+        }
 
         /* FOOTER */
         footer { 
@@ -654,11 +699,11 @@
             font-size: 13.5px;
             font-weight: 400;
             display: inline-block;
-            transition: color 0.4s var(--ease-smooth);
+            transition: color 0.8s var(--ease-smooth);
         }
 
         .footer-links-row a:hover { color: var(--text-main) !important; }
-        .copyright-tag { color: var(--text-muted); opacity: 0.65; font-size: 12px; letter-spacing: 0.2px; }
+        .copyright-tag { color: var(--text-muted); opacity: 0.65; font-size: 12px; letter-spacing: 0.2px; transition: color 0.8s var(--ease-smooth); }
 
         .nav-text {
             display: inline-block !important;
@@ -710,6 +755,7 @@
             .article-title { font-size: 22px; }
             .section-heading { font-size: 17px; }
             .note-p, .note-list li { font-size: 14px; }
+            .info-callout { padding: 18px 18px; border-radius: 16px; }
             .footer-links-row { gap: 12px 20px; max-width: 320px; }
         }
     </style>
@@ -753,7 +799,7 @@
     </header>
 
     <main>
-        <!-- 1. BREADCRUMBS: OUTSIDE THE BOX AT ORIGINAL PLACE -->
+        <!-- 1. BREADCRUMBS -->
         <nav class="breadcrumb-nav">
             <a href="/study/index.html">Home</a>
             <span class="bc-sep">/</span>
@@ -781,9 +827,7 @@
         <div class="active-date-subtext" id="activeDateDisplay">Selected Date: September 27, 2026</div>
 
         <!-- 3. TOPICS FEED: BOXES FADE IN SLOWLY ONE DOWN ONE -->
-        <div class="topics-feed" id="topicsFeed">
-            <!-- Full structured cards populate here -->
-        </div>
+        <div class="topics-feed" id="topicsFeed"></div>
     </main>
 
     <!-- 3-COLUMN DRUM WHEEL DATE PICKER MODAL -->
@@ -818,8 +862,22 @@
 
     <script>
         // ========================================================
-        // MASTER DAILY CURRENT AFFAIRS DATABASE
-        // Whenever you add topics, paste them inside this object!
+        // 1. DYNAMIC BREADCRUMBS STATE FOR FOOTER INTEGRATION
+        // ========================================================
+        (function buildDynamicBreadcrumbs() {
+            const HOME_PATH = "/study/index.html";
+            const CURRENT_PATH = "/study/dailycurrentaffairs.html";
+            const structuralTrail = [
+                { name: "Home", path: HOME_PATH },
+                { name: "Daily Current Affairs", path: CURRENT_PATH }
+            ];
+            try {
+                sessionStorage.setItem('breadcrumbTrail', JSON.stringify(structuralTrail));
+            } catch (e) {}
+        })();
+
+        // ========================================================
+        // 2. MASTER DAILY CURRENT AFFAIRS DATABASE
         // ========================================================
         const dailyCurrentAffairsDB = {
             "2026-09-27": [
@@ -847,7 +905,7 @@
                     background: [
                         "<strong>Electricity Act, 2003 :</strong> The main law that deregulated power generation in India, introduced power trading/exchanges, and created state and central regulatory commissions (CERC/SERC).",
                         "<strong>Coal Dependency :</strong> Coal continues to generate over 70% of India's total electricity, providing the non-stop \"baseload\" power that weather-dependent renewable energy cannot yet guarantee.",
-                        "<strong>Weather & Demand Drivers :</strong> Hotter temperatures linked to El Niño climate patterns have raised air conditioning use, while delayed rains have increased electric pump usage for agricultural watering."
+                        "<strong>Weather &amp; Demand Drivers :</strong> Hotter temperatures linked to El Niño climate patterns have raised air conditioning use, while delayed rains have increased electric pump usage for agricultural watering."
                     ],
                     significance: [
                         "<strong>Prevents Power Cuts :</strong> Quickly adds thousands of megawatts of power to the national grid without waiting years to build new power stations.",
@@ -868,7 +926,7 @@
             ]
         };
 
-        // Active state
+        // Active date state
         let selectedDay = 27;
         let selectedMonth = 9;
         let selectedYear = 2026;
@@ -879,7 +937,6 @@
 
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-        // Get all database years dynamically
         function getAvailableYears() {
             const dbYears = Object.keys(dailyCurrentAffairsDB).map(d => parseInt(d.split('-')[0]));
             const minYear = 2026;
@@ -891,13 +948,11 @@
             return years;
         }
 
-        // Drum Picker Elements
         const dayCol = document.getElementById('dayColumn');
         const monthCol = document.getElementById('monthColumn');
         const yearCol = document.getElementById('yearColumn');
 
         function initPickerColumns() {
-            // Days (01 to 31)
             dayCol.innerHTML = '';
             for (let d = 1; d <= 31; d++) {
                 const cell = document.createElement('div');
@@ -907,7 +962,6 @@
                 dayCol.appendChild(cell);
             }
 
-            // Months (01 to 12)
             monthCol.innerHTML = '';
             for (let m = 1; m <= 12; m++) {
                 const cell = document.createElement('div');
@@ -917,7 +971,6 @@
                 monthCol.appendChild(cell);
             }
 
-            // Years (2026, 2027...)
             yearCol.innerHTML = '';
             const years = getAvailableYears();
             years.forEach(y => {
@@ -960,7 +1013,7 @@
         setupScrollHighlight(yearCol, v => tempYear = v);
 
         // ========================================================
-        // RENDER STAGGERED FADING CARDS FOR SELECTED DATE
+        // 3. RENDER STAGGERED FADING CARDS FOR SELECTED DATE
         // ========================================================
         const topicsFeed = document.getElementById('topicsFeed');
         const activeDateDisplay = document.getElementById('activeDateDisplay');
@@ -981,14 +1034,11 @@
                 return;
             }
 
-            // Loop over all topics and append fading cards one down one
             topics.forEach((topic, idx) => {
                 const card = document.createElement('article');
                 card.className = 'article-card';
-                // Incremental delay creates the cascading fade-in
                 card.style.animationDelay = `${idx * 0.12}s`;
 
-                // Build Organisation rows
                 let orgRowsHtml = '';
                 if (topic.whoOrg && topic.whoOrg.length > 0) {
                     orgRowsHtml = topic.whoOrg.map(row => `
@@ -996,7 +1046,6 @@
                     `).join('');
                 }
 
-                // Build list helpers
                 const buildListItems = (list) => {
                     if (!list || list.length === 0) return '';
                     return list.map(item => `<li>${item}</li>`).join('');
@@ -1064,11 +1113,10 @@
             });
         }
 
-        // Initial Load on 27 Sept 2026
         renderTopics();
 
         // ========================================================
-        // MODAL CONTROLS
+        // 4. MODAL CONTROLS
         // ========================================================
         const pickerModal = document.getElementById('pickerModal');
         const openCalendarBtn = document.getElementById('openCalendarBtn');
@@ -1100,7 +1148,7 @@
         });
 
         // ========================================================
-        // HEADER, THEME & WAVE SHIMMER ENGINE
+        // 5. EXACT MATCH PALETTE ENGINE (SYNCED WITH index.html)
         // ========================================================
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
@@ -1163,17 +1211,40 @@
         function applyTargetPalette() {
             const activeSessionOverride = sessionStorage.getItem('dashboard-theme');
             if (activeSessionOverride) {
-                bodyElement.classList.toggle('light-mode', activeSessionOverride === 'light');
+                if (activeSessionOverride === 'light') {
+                    bodyElement.classList.add('light-mode');
+                } else {
+                    bodyElement.classList.remove('light-mode');
+                }
             } else {
-                bodyElement.classList.toggle('light-mode', systemLightQuery.matches);
+                if (systemLightQuery.matches) {
+                    bodyElement.classList.add('light-mode');
+                } else {
+                    bodyElement.classList.remove('light-mode');
+                }
             }
         }
         applyTargetPalette();
 
+        systemLightQuery.addEventListener('change', (e) => {
+            sessionStorage.removeItem('dashboard-theme');
+            if (e.matches) {
+                bodyElement.classList.add('light-mode');
+            } else {
+                bodyElement.classList.remove('light-mode');
+            }
+        });
+
         toggleBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const isLight = bodyElement.classList.toggle('light-mode');
-            sessionStorage.setItem('dashboard-theme', isLight ? 'light' : 'dark');
+            const isCurrentlyLight = bodyElement.classList.contains('light-mode');
+            if (isCurrentlyLight) {
+                bodyElement.classList.remove('light-mode');
+                sessionStorage.setItem('dashboard-theme', 'dark');
+            } else {
+                bodyElement.classList.add('light-mode');
+                sessionStorage.setItem('dashboard-theme', 'light');
+            }
         });
 
         openSearchBtn.addEventListener('click', () => {
@@ -1210,5 +1281,6 @@
             });
         });
     </script>
+    <script src="/script.js"></script>
 </body>
 </html>
