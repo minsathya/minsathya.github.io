@@ -5,7 +5,8 @@ window.currentDailyTopics = [
         category: "Economy / Energy & Infrastructure",
         comesUnder: "Prelims and Mains",
         image: {
-            url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN8Wc8OamwXy4FUmBJbh8SWw2BmNfG6_me_U-HD7MqAQ&s=10"
+            url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN8Wc8OamwXy4FUmBJbh8SWw2BmNfG6_me_U-HD7MqAQ&s=10",
+            caption: "source: Reuters"
         },
         whyInNews: "The Ministry of Power has ordered 112 captive coal power plants to run at full capacity from October 1 to December 31, 2026, to meet high electricity demand and prevent power cuts.",
         whatConcept: "A captive power plant is an electricity plant set up by a company primarily to power its own factories (like steel, aluminium, or cement plants) rather than selling to the general public. Under an emergency rule, the government is making these plants produce at maximum capacity and sell their extra, unused electricity to the national grid.",
