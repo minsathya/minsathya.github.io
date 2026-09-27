@@ -364,14 +364,17 @@
             transition: color 0.8s var(--ease-smooth);
         }
 
-        /* TOPICS NAVIGATION PILL */
+        /* -------------------------------------------------------------
+           SMOOTH SLIDING CAPSULE INDICATOR (SLOW-MOTION GLIDER)
+        ------------------------------------------------------------- */
         .topics-nav-pill {
+            position: relative;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             background: var(--pill-box-bg);
             border: 1px solid var(--pill-box-border);
-            padding: 3px 12px;
+            padding: 3px 6px;
             border-radius: 9999px;
             font-size: 13px;
             font-weight: 500;
@@ -382,20 +385,39 @@
         .topics-nav-pill .pill-label {
             color: var(--text-muted);
             font-weight: 500;
+            padding-left: 6px;
+            padding-right: 2px;
+            z-index: 2;
+        }
+
+        .pill-slider-glider {
+            position: absolute;
+            top: 3px;
+            bottom: 3px;
+            left: 0;
+            width: 0;
+            background: var(--accent-tag-bg);
+            border-radius: 9999px;
+            transition: transform 0.42s cubic-bezier(0.25, 1, 0.35, 1), width 0.42s cubic-bezier(0.25, 1, 0.35, 1), opacity 0.2s ease;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
         }
 
         .topic-num-btn {
+            position: relative;
+            z-index: 2;
             background: transparent;
             border: none;
             outline: none;
             color: var(--text-muted);
             cursor: pointer;
-            padding: 2px 8px;
-            border-radius: 8px;
+            padding: 2px 9px;
+            border-radius: 9999px;
             font-size: 13px;
             font-family: inherit;
             font-weight: 600;
-            transition: all 0.25s var(--ease-smooth);
+            transition: color 0.35s var(--ease-smooth);
         }
 
         .topic-num-btn:hover {
@@ -403,26 +425,29 @@
         }
 
         .topic-num-btn.is-active {
-            background: var(--accent-tag-bg);
             color: var(--accent-tag-text);
+            font-weight: 600;
         }
 
         /* -------------------------------------------------------------
-           SMOOTH HARDWARE-ACCELERATED HORIZONTAL SWIPE CAROUSEL FEED
+           SMOOTH HORIZONTAL SWIPE FEED WITH DYNAMIC HEIGHT RESIZING
         ------------------------------------------------------------- */
         .topics-feed {
             display: flex;
             flex-direction: row;
             width: 100%;
             overflow-x: auto;
+            overflow-y: hidden;
             scroll-snap-type: x mandatory;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             overscroll-behavior-x: contain;
             scrollbar-width: none;
-            gap: 24px;
+            gap: 32px;
             align-items: flex-start;
             padding-bottom: 8px;
+            will-change: height;
+            transition: height 0.38s var(--ease-smooth);
         }
 
         .topics-feed::-webkit-scrollbar {
@@ -432,7 +457,7 @@
         @keyframes topicCardEntrance {
             from {
                 opacity: 0;
-                transform: translate3d(0, 24px, 0);
+                transform: translate3d(0, 20px, 0);
             }
             to {
                 opacity: 1;
@@ -451,7 +476,7 @@
             border: 1px solid var(--panel-border);
             border-radius: 28px;
             padding: 44px 48px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03), -12px 0 30px rgba(0, 0, 0, 0.02), 12px 0 30px rgba(0, 0, 0, 0.02);
             opacity: 0;
             animation: topicCardEntrance 0.7s var(--ease-smooth) forwards;
             transition: background-color 0.8s var(--ease-smooth), 
@@ -459,7 +484,9 @@
                         box-shadow 0.8s var(--ease-smooth);
         }
 
-        body:not(.light-mode) .article-card { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+        body:not(.light-mode) .article-card {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45), -12px 0 30px rgba(0, 0, 0, 0.25), 12px 0 30px rgba(0, 0, 0, 0.25);
+        }
 
         .article-title {
             font-size: 28px;
@@ -626,7 +653,7 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
             padding-left: 2px;
         }
 
@@ -654,6 +681,31 @@
         }
 
         .note-list li strong { color: var(--text-main); font-weight: 600; transition: color 0.8s var(--ease-smooth); }
+
+        /* ITEM ROWS: STACKED ONE DOWN ONE */
+        .note-sub-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+            padding-left: 4px;
+        }
+
+        .note-sub-row {
+            font-size: 14.5px;
+            line-height: 1.65;
+            color: var(--text-main);
+            opacity: 0.95;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .sub-bullet {
+            color: var(--accent-tag-text);
+            font-size: 11px;
+            flex-shrink: 0;
+        }
 
         /* ROUNDED GREY PILL BOX */
         .info-callout {
@@ -753,7 +805,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             padding: 0 8px;
         }
 
@@ -773,6 +825,25 @@
         }
 
         .picker-apply-btn:hover { opacity: 0.9; transform: scale(1.04); }
+
+        /* COLUMN LABELS */
+        .picker-col-headers {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            width: 100%;
+            margin-bottom: 8px;
+            padding: 0 6px;
+        }
+
+        .picker-col-hdr {
+            text-align: center;
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            opacity: 0.75;
+        }
 
         .picker-drum-stage {
             position: relative;
@@ -1034,6 +1105,13 @@
                 <button class="picker-apply-btn" id="applyDateBtn">Apply</button>
             </div>
 
+            <!-- COLUMN HEADERS -->
+            <div class="picker-col-headers">
+                <span class="picker-col-hdr">Date</span>
+                <span class="picker-col-hdr">Month</span>
+                <span class="picker-col-hdr">Year</span>
+            </div>
+
             <div class="picker-drum-stage">
                 <div class="picker-center-capsule"></div>
                 <div class="drum-column" id="dayColumn"></div>
@@ -1060,6 +1138,13 @@
         // Preserve exact reading position on refresh for dynamic cards
         window.addEventListener('beforeunload', () => {
             sessionStorage.setItem('ca_scroll_pos', window.scrollY);
+        });
+
+        // Reset persistent wave animation when user navigates back using browser history (bfcache)
+        window.addEventListener('pageshow', () => {
+            document.querySelectorAll('footer .footer-links-row a, .breadcrumb-nav a, .logo').forEach(l => {
+                l.classList.remove('is-wave-loading');
+            });
         });
 
         const savedScrollPos = sessionStorage.getItem('ca_scroll_pos');
@@ -1184,9 +1269,22 @@
                 drawer.classList.add('is-open');
                 btn.textContent = 'Close';
             }
+            setTimeout(() => updateActiveCardHeight(), 60);
+            setTimeout(() => updateActiveCardHeight(), 300);
+            setTimeout(() => updateActiveCardHeight(), 580);
         };
 
         // 4. TOPIC PILL & HORIZONTAL SWIPE CONTROLLER
+        let currentActiveTopicIndex = 0;
+
+        function updatePillGlider(activeBtn) {
+            const glider = document.getElementById('pillGlider');
+            if (!glider || !activeBtn) return;
+            glider.style.width = `${activeBtn.offsetWidth}px`;
+            glider.style.transform = `translateX(${activeBtn.offsetLeft}px)`;
+            glider.style.opacity = '1';
+        }
+
         function renderTopicsPill(totalTopics) {
             const container = document.getElementById('topicsPillContainer');
             if (!container) return;
@@ -1199,52 +1297,71 @@
                 }
                 container.innerHTML = `
                     <div class="topics-nav-pill">
+                        <span class="pill-slider-glider" id="pillGlider"></span>
                         <span class="pill-label">Topics :</span>
                         ${buttonsHtml}
                     </div>
                 `;
+                requestAnimationFrame(() => {
+                    const firstBtn = container.querySelector('.topic-num-btn.is-active');
+                    if (firstBtn) updatePillGlider(firstBtn);
+                });
             } else {
                 container.innerHTML = '';
             }
         }
 
-        function setActivePill(index) {
-            const buttons = document.querySelectorAll('.topic-num-btn');
-            buttons.forEach((btn, i) => {
-                btn.classList.toggle('is-active', i === index);
-            });
+        // Dynamically adjust container height so shorter topics pull footer up directly beneath them
+        function updateActiveCardHeight(idx = currentActiveTopicIndex) {
+            const card = document.getElementById(`topic-card-${idx}`);
+            if (topicsFeed && card) {
+                const cardHeight = card.offsetHeight;
+                if (cardHeight > 0) {
+                    topicsFeed.style.height = `${cardHeight}px`;
+                }
+            }
         }
 
-        window.scrollToTopic = function(index) {
-            const feed = document.getElementById('topicsFeed');
+        function setActivePill(index) {
+            currentActiveTopicIndex = index;
+            const buttons = document.querySelectorAll('.topic-num-btn');
+            buttons.forEach((btn, i) => {
+                const isSelected = i === index;
+                btn.classList.toggle('is-active', isSelected);
+                if (isSelected) {
+                    updatePillGlider(btn);
+                }
+            });
+            updateActiveCardHeight(index);
+        }
+
+        window.scrollToTopic = function(index, behavior = 'smooth') {
             const card = document.getElementById(`topic-card-${index}`);
-            if (feed && card) {
-                feed.scrollTo({
+            if (topicsFeed && card) {
+                topicsFeed.scrollTo({
                     left: card.offsetLeft,
-                    behavior: 'smooth'
+                    behavior: behavior
                 });
                 setActivePill(index);
 
-                // Align vertical scroll to top of card if user was scrolled deep down
-                const feedRect = feed.getBoundingClientRect();
+                // Align vertical scroll to top of card so reader always sees rounded card corners
+                const feedRect = topicsFeed.getBoundingClientRect();
                 const feedTop = feedRect.top + window.scrollY;
                 if (window.scrollY > feedTop) {
                     window.scrollTo({
                         top: Math.max(0, feedTop - 30),
-                        behavior: 'smooth'
+                        behavior: behavior
                     });
                 }
             }
         };
 
-        // Connects touch swipe and scroll to topic pill numbers using IntersectionObserver
+        // Connects touch swipe and trackpad scroll to topic pill numbers
         let topicObserver = null;
         function setupTopicObserver() {
             if (topicObserver) topicObserver.disconnect();
 
-            const feed = document.getElementById('topicsFeed');
-            const cards = feed.querySelectorAll('.article-card');
-
+            const cards = topicsFeed.querySelectorAll('.article-card');
             topicObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1255,7 +1372,7 @@
                     }
                 });
             }, {
-                root: feed,
+                root: topicsFeed,
                 threshold: 0.55
             });
 
@@ -1266,41 +1383,74 @@
         (function setupDesktopDrag() {
             let isDown = false;
             let startX, scrollLeft;
-            const feed = document.getElementById('topicsFeed');
 
-            feed.addEventListener('mousedown', (e) => {
+            topicsFeed.addEventListener('mousedown', (e) => {
                 if (e.target.closest('button, a, input, .info-callout')) return;
                 isDown = true;
-                feed.style.scrollBehavior = 'auto';
-                feed.style.cursor = 'grabbing';
-                startX = e.pageX - feed.offsetLeft;
-                scrollLeft = feed.scrollLeft;
+                topicsFeed.style.scrollBehavior = 'auto';
+                topicsFeed.style.cursor = 'grabbing';
+                startX = e.pageX - topicsFeed.offsetLeft;
+                scrollLeft = topicsFeed.scrollLeft;
             });
 
             window.addEventListener('mouseup', () => {
                 if (!isDown) return;
                 isDown = false;
-                feed.style.scrollBehavior = 'smooth';
-                feed.style.cursor = '';
+                topicsFeed.style.scrollBehavior = 'smooth';
+                topicsFeed.style.cursor = '';
             });
 
             window.addEventListener('mousemove', (e) => {
                 if (!isDown) return;
-                const x = e.pageX - feed.offsetLeft;
+                const x = e.pageX - topicsFeed.offsetLeft;
                 const walk = (x - startX);
                 if (Math.abs(walk) > 4) {
                     e.preventDefault();
-                    feed.scrollLeft = scrollLeft - walk;
+                    topicsFeed.scrollLeft = scrollLeft - walk;
                 }
             });
         })();
 
         // 5. DYNAMIC DATA LOADER ENGINE (REVERSED: LATEST POST = TOPIC 1)
+        // Helper to format structured items (like Podium Finishers) one below another
+        function formatSubListItems(rawText) {
+            if (!rawText || typeof rawText !== 'string' || !rawText.includes(';')) {
+                return rawText;
+            }
+
+            let labelPart = '';
+            let restPart = rawText;
+
+            if (rawText.includes('</strong>')) {
+                const parts = rawText.split('</strong>');
+                labelPart = parts[0] + '</strong>';
+                restPart = parts.slice(1).join('</strong>').trim();
+                if (restPart.startsWith(':')) {
+                    labelPart += ' :';
+                    restPart = restPart.substring(1).trim();
+                }
+            } else if (rawText.includes(':') && rawText.indexOf(':') < rawText.indexOf(';')) {
+                const colonIdx = rawText.indexOf(':');
+                labelPart = rawText.substring(0, colonIdx + 1);
+                restPart = rawText.substring(colonIdx + 1).trim();
+            }
+
+            const subItems = restPart.split(';').map(s => s.trim().replace(/^,\s*/, '')).filter(Boolean);
+            if (subItems.length > 1) {
+                const subRows = subItems.map(s => `
+                    <div class="note-sub-row"><span class="sub-bullet">▸</span><span>${s}</span></div>
+                `).join('');
+                return `${labelPart ? labelPart : ''}<div class="note-sub-list">${subRows}</div>`;
+            }
+            return rawText;
+        }
+
         function renderCards(topics, dateText) {
             activeDateDisplay.textContent = `Selected Date: ${dateText}`;
             topicsFeed.innerHTML = '';
 
             if (!topics || topics.length === 0) {
+                topicsFeed.style.height = 'auto';
                 renderTopicsPill(0);
                 topicsFeed.innerHTML = `
                     <div class="empty-placeholder-card">
@@ -1310,7 +1460,7 @@
                 return;
             }
 
-            // Reverse order so the most recently appended post in data file is Topic 1
+            // Always reverse order so newest post in data array is Topic 1
             const displayTopics = Array.isArray(topics) ? [...topics].reverse() : [];
             renderTopicsPill(displayTopics.length);
 
@@ -1330,7 +1480,7 @@
 
                 const buildListItems = (list) => {
                     if (!list || list.length === 0) return '';
-                    return list.map(item => `<li>${item}</li>`).join('');
+                    return list.map(item => `<li>${formatSubListItems(item)}</li>`).join('');
                 };
 
                 const hasImage = topic.image && topic.image.url;
@@ -1415,7 +1565,15 @@
                 topicsFeed.appendChild(card);
             });
 
-            // Initialize intersection observer for touch and trackpad swiping
+            // Always reset to Topic 1 (the latest uploaded post) on visit, refresh, or date pick
+            currentActiveTopicIndex = 0;
+            topicsFeed.scrollTo({ left: 0, behavior: 'instant' });
+            requestAnimationFrame(() => {
+                setActivePill(0);
+                updateActiveCardHeight(0);
+            });
+
+            // Initialize swipe listener to sync with topic pill
             setupTopicObserver();
         }
 
@@ -1656,7 +1814,7 @@
                 e.preventDefault();
                 targetLinks.forEach(l => l.classList.remove('is-wave-loading'));
                 this.classList.add('is-wave-loading');
-                setTimeout(() => { window.location.href = dest; }, 750);
+                setTimeout(() => { window.location.href = dest; }, 350);
             });
         });
     </script>
