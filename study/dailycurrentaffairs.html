@@ -387,6 +387,7 @@
         .cal-trigger-btn svg {
             width: 36px;
             height: 36px;
+            display: block;
             filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
         }
 
@@ -1171,7 +1172,7 @@
             }
         }
 
-        /* MOBILE PHONES */
+        /* MOBILE PHONES: SIDE-BY-SIDE EQUAL CENTERING */
         @media (max-width: 700px) {
             body { padding: 30px 18px 24px 18px; }
             .breadcrumb-nav {
@@ -1180,20 +1181,72 @@
             header { height: 64px; border-radius: 24px; margin-bottom: 30px; }
             .header-inner-view { padding: 0 20px; }
             .logo { font-size: 22px; }
+
+            /* Capsule turns into compact 2-row layout */
             .date-topics-capsule {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 14px;
-                padding: 16px 20px;
+                padding: 14px 18px;
                 border-radius: 20px;
             }
+
+            .capsule-date-cluster {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                width: 100%;
+            }
+
+            .cal-trigger-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                line-height: 1;
+            }
+
+            .cal-trigger-btn svg {
+                width: 30px;
+                height: 30px;
+            }
+
+            /* Single-line horizontally centered text stack next to icon */
+            .date-text-stack {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 5px;
+                line-height: 1;
+            }
+
+            .date-label-tiny {
+                font-size: 13px;
+                color: var(--text-muted);
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+            }
+
+            .date-label-tiny::after {
+                content: " :";
+                margin-right: 1px;
+            }
+
+            .date-value-main {
+                font-size: 13.5px;
+                font-weight: 600;
+                color: var(--text-main);
+            }
+
             .capsule-divider {
                 display: none;
             }
+
             .capsule-topics-cluster {
                 width: 100%;
                 justify-content: flex-start;
             }
+
             .article-card { padding: 30px 20px; border-radius: 22px; }
             .article-title { font-size: 22px; }
             .section-heading { font-size: 17px; }
