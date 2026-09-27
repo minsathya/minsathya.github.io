@@ -400,6 +400,7 @@
         .meta-pills-row {
             display: flex;
             flex-wrap: wrap;
+            align-items: center;
             gap: 10px;
             margin-bottom: 32px;
             padding-bottom: 22px;
@@ -428,6 +429,85 @@
 
         .meta-pill strong { color: var(--text-main); font-weight: 600; transition: color 0.8s var(--ease-smooth); }
         .meta-pill.accent-pill { background: var(--accent-tag-bg); color: var(--accent-tag-text); border: none; }
+
+        /* IMAGE ACTION PILL & TOGGLE BUTTON */
+        .image-toggle-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 6px 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--panel-border);
+            color: var(--text-muted);
+            transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth);
+        }
+
+        body.light-mode .image-toggle-pill { background: rgba(0, 0, 0, 0.03); }
+
+        .image-action-btn {
+            background: #258bf5;
+            color: #ffffff;
+            border: none;
+            outline: none;
+            padding: 3px 12px;
+            border-radius: 14px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s var(--ease-smooth), opacity 0.2s var(--ease-smooth);
+        }
+
+        .image-action-btn:hover { opacity: 0.9; transform: scale(1.05); }
+
+        /* SMOOTH SLIDE & FADE DRAWER */
+        .topic-image-drawer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.55s var(--ease-smooth), margin 0.55s var(--ease-smooth);
+            width: 100%;
+            margin: 0 0 0 0;
+        }
+
+        .topic-image-drawer.is-open {
+            grid-template-rows: 1fr;
+            margin: 0 0 32px 0;
+        }
+
+        .topic-image-inner {
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: translate3d(0, -12px, 0);
+            transition: opacity 0.45s var(--ease-smooth), transform 0.45s var(--ease-smooth);
+        }
+
+        .topic-image-drawer.is-open .topic-image-inner {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+            transition-delay: 0.1s;
+        }
+
+        .topic-image-inner img {
+            width: 100%;
+            max-height: 520px;
+            object-fit: cover;
+            border-radius: 20px;
+            display: block;
+        }
+
+        .topic-image-caption {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 10px;
+            text-align: center;
+            font-weight: 500;
+        }
 
         /* CONTENT SECTIONS */
         .note-section {
@@ -502,24 +582,24 @@
         }
 
         .info-callout-row {
-    position: relative;
-    padding-left: 22px;
-    font-size: 14.5px;
-    line-height: 1.65;
-    color: var(--text-main);
-    opacity: 0.95;
-    transition: color 0.8s var(--ease-smooth);
-}
+            position: relative;
+            padding-left: 22px;
+            font-size: 14.5px;
+            line-height: 1.65;
+            color: var(--text-main);
+            opacity: 0.95;
+            transition: color 0.8s var(--ease-smooth);
+        }
 
-.info-callout-row::before {
-    content: "•";
-    position: absolute;
-    left: 4px;
-    top: -1px;
-    font-size: 18px;
-    color: var(--accent-tag-text);
-    transition: color 0.8s var(--ease-smooth);
-}
+        .info-callout-row::before {
+            content: "•";
+            position: absolute;
+            left: 4px;
+            top: -1px;
+            font-size: 18px;
+            color: var(--accent-tag-text);
+            transition: color 0.8s var(--ease-smooth);
+        }
 
         .info-callout-row strong { color: var(--text-main); font-weight: 600; transition: color 0.8s var(--ease-smooth); }
 
@@ -536,7 +616,7 @@
             transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
-        /* DRUM WHEEL DATE PICKER MODAL (STEADY VERTICAL AXIS) */
+        /* DRUM WHEEL DATE PICKER MODAL */
         .picker-backdrop {
             position: fixed;
             inset: 0;
@@ -604,7 +684,6 @@
 
         .picker-apply-btn:hover { opacity: 0.9; transform: scale(1.04); }
 
-        /* DRUM STAGE WITH ZERO LATERAL DRIFT */
         .picker-drum-stage {
             position: relative;
             display: grid;
@@ -638,7 +717,6 @@
 
         body.light-mode .picker-center-capsule { background: rgba(0, 0, 0, 0.08); border-color: rgba(0, 0, 0, 0.06); }
 
-        /* LOCKED VERTICAL AXIS */
         .drum-column {
             height: 100%;
             width: 100%;
@@ -754,8 +832,23 @@
             animation: fluidWave 0.75s infinite linear !important;
         }
 
+        /* TABLET & IPAD */
+        @media (max-width: 1024px) {
+            .breadcrumb-nav,
+            .page-title-row,
+            .active-date-subtext {
+                padding-left: 10px;
+            }
+        }
+
+        /* MOBILE PHONES */
         @media (max-width: 700px) {
             body { padding: 30px 18px 24px 18px; }
+            .breadcrumb-nav,
+            .page-title-row,
+            .active-date-subtext {
+                padding-left: 8px;
+            }
             header { height: 64px; border-radius: 24px; margin-bottom: 30px; }
             .header-inner-view { padding: 0 20px; }
             .logo { font-size: 22px; }
@@ -961,7 +1054,21 @@
         setupScrollHighlight(monthCol, v => tempMonth = v);
         setupScrollHighlight(yearCol, v => tempYear = v);
 
-        // 3. DYNAMIC DATA LOADER ENGINE FROM /study/currentaffairs-data/DD-MM-YYYY.js
+        // 3. IMAGE INTERACTION TOGGLE ENGINE
+        window.toggleTopicImage = function(btn, drawerId) {
+            const drawer = document.getElementById(drawerId);
+            if (!drawer) return;
+            const isOpen = drawer.classList.contains('is-open');
+            if (isOpen) {
+                drawer.classList.remove('is-open');
+                btn.textContent = 'View';
+            } else {
+                drawer.classList.add('is-open');
+                btn.textContent = 'Close';
+            }
+        };
+
+        // 4. DYNAMIC DATA LOADER ENGINE FROM /study/currentaffairs-data/DD-MM-YYYY.js
         function renderCards(topics, dateText) {
             activeDateDisplay.textContent = `Selected Date: ${dateText}`;
             topicsFeed.innerHTML = '';
@@ -992,6 +1099,24 @@
                     return list.map(item => `<li>${item}</li>`).join('');
                 };
 
+                const hasImage = topic.image && topic.image.url;
+                const drawerId = `imgDrawer_${idx}`;
+
+                const imagePillHtml = hasImage ? `
+                    <span class="image-toggle-pill">
+                        Image : <button type="button" class="image-action-btn" onclick="toggleTopicImage(this, '${drawerId}')">View</button>
+                    </span>
+                ` : '';
+
+                const imageDrawerHtml = hasImage ? `
+                    <div class="topic-image-drawer" id="${drawerId}">
+                        <div class="topic-image-inner">
+                            <img src="${topic.image.url}" alt="${topic.image.caption || 'Topic Image'}" loading="lazy">
+                            ${topic.image.caption ? `<div class="topic-image-caption">${topic.image.caption}</div>` : ''}
+                        </div>
+                    </div>
+                ` : '';
+
                 card.innerHTML = `
                     <h2 class="article-title">${topic.topicTitle}</h2>
 
@@ -999,7 +1124,10 @@
                         <span class="meta-pill accent-pill">GS Paper : <strong>${topic.gsPaper}</strong></span>
                         <span class="meta-pill">Category : <strong>${topic.category}</strong></span>
                         <span class="meta-pill">Comes under : <strong>${topic.comesUnder}</strong></span>
+                        ${imagePillHtml}
                     </div>
+
+                    ${imageDrawerHtml}
 
                     ${topic.whyInNews ? `
                     <section class="note-section">
@@ -1081,7 +1209,7 @@
             document.body.appendChild(script);
         }
 
-        // OPTION 1: Backtrack up to 30 days from current date to find the freshest post
+        // Backtrack up to 30 days to find freshest post
         function loadLatestAvailablePost() {
             const checkDate = new Date();
             let attempts = 0;
@@ -1106,7 +1234,6 @@
                         checkDate.setDate(checkDate.getDate() - 1);
                         tryNextDate();
                     } else {
-                        // Fallback to static starting date if backtracking finds nothing
                         loadDateData(2026, 9, 27, (topics) => {
                             selectedYear = 2026;
                             selectedMonth = 9;
@@ -1127,7 +1254,7 @@
 
         loadLatestAvailablePost();
 
-        // 4. MODAL CONTROLS & APPLY ACTION
+        // 5. MODAL CONTROLS & APPLY ACTION
         const pickerModal = document.getElementById('pickerModal');
         const openCalendarBtn = document.getElementById('openCalendarBtn');
         const applyDateBtn = document.getElementById('applyDateBtn');
@@ -1164,7 +1291,7 @@
             }
         });
 
-        // 5. THEME PALETTE ENGINE (SYNCED WITH index.html)
+        // 6. THEME PALETTE ENGINE (SYNCED WITH index.html)
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
         const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
