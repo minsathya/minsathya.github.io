@@ -6,7 +6,7 @@
     <title>Daily Current Affairs - sathya.</title>
     <meta name="description" content="Daily Current Affairs for UPSC Civil Services Examination.">
 
-    <!-- Immediate Theme Check in Head to Prevent Theme Flash / Blink -->
+    <!-- Instant Theme Evaluation to Prevent Theme Blink on Reload -->
     <script>
       (function() {
         const activeTheme = sessionStorage.getItem('dashboard-theme');
@@ -49,6 +49,7 @@
         overscroll-behavior-x: none;
       }
         :root {
+            /* Exact 0.55s smooth easing curve from index.html */
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
             --bg-color: #0b0b0b;
@@ -64,6 +65,7 @@
             --pill-box-bg: rgba(255, 255, 255, 0.025);
             --pill-box-border: #222222;
 
+            /* Vertical cascade parameters */
             --cascade-distance: 24px;
             --cascade-duration-exit: 0.2s;
             --cascade-duration-entry: 0.28s;
@@ -113,7 +115,9 @@
             transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
-        /* MASTER REFRESH ENTRANCE SYNCED WITH index.html */
+        /* -------------------------------------------------------------
+           AUTHENTIC MASTER ENTRANCE FROM index.html (ZERO BLINK ON REFRESH)
+        ------------------------------------------------------------- */
         @keyframes masterEntrance {
             from { opacity: 0; transform: translate3d(0, 24px, 0); }
             to { opacity: 1; transform: translate3d(0, 0, 0); }
@@ -454,7 +458,7 @@
             overscroll-behavior-x: none;
             user-select: none;
             -webkit-user-select: none;
-            transition: height 0.44s var(--ease-premium);
+            transition: height 0.42s var(--ease-premium);
             will-change: height;
         }
 
@@ -469,7 +473,7 @@
             user-select: text;
             -webkit-user-select: text;
             box-sizing: border-box;
-            will-change: transform, opacity;
+            will-change: transform;
             transition: background-color 0.8s var(--ease-smooth), 
                         border-color 0.8s var(--ease-smooth), 
                         box-shadow 0.8s var(--ease-smooth);
@@ -477,7 +481,7 @@
 
         body:not(.light-mode) .article-card { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
 
-        /* Solid active card without re-entry animations to prevent flash/blink */
+        /* Solid active card without re-entry animations to eliminate flash/blink */
         .article-card.is-active {
             display: block;
             position: relative;
@@ -485,25 +489,25 @@
             opacity: 1;
         }
 
-        /* Smooth stage slide keyframes */
+        /* Hardware accelerated smooth slide transitions */
         @keyframes stageSlideOutLeft {
-            0% { transform: translate3d(0, 0, 0); opacity: 1; }
-            100% { transform: translate3d(-100%, 0, 0); opacity: 0.15; }
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
         }
 
         @keyframes stageSlideInRight {
-            0% { transform: translate3d(100%, 0, 0); opacity: 0.15; }
-            100% { transform: translate3d(0, 0, 0); opacity: 1; }
+            0% { transform: translate3d(100%, 0, 0); }
+            100% { transform: translate3d(0, 0, 0); }
         }
 
         @keyframes stageSlideOutRight {
-            0% { transform: translate3d(0, 0, 0); opacity: 1; }
-            100% { transform: translate3d(100%, 0, 0); opacity: 0.15; }
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(100%, 0, 0); }
         }
 
         @keyframes stageSlideInLeft {
-            0% { transform: translate3d(-100%, 0, 0); opacity: 0.15; }
-            100% { transform: translate3d(0, 0, 0); opacity: 1; }
+            0% { transform: translate3d(-100%, 0, 0); }
+            100% { transform: translate3d(0, 0, 0); }
         }
 
         .article-card.anim-out-left {
@@ -514,14 +518,14 @@
             width: 100%;
             z-index: 1;
             pointer-events: none;
-            animation: stageSlideOutLeft 0.44s var(--ease-premium) forwards !important;
+            animation: stageSlideOutLeft 0.4s var(--ease-premium) forwards !important;
         }
 
         .article-card.anim-in-right {
             display: block !important;
             position: relative !important;
             z-index: 2;
-            animation: stageSlideInRight 0.44s var(--ease-premium) forwards !important;
+            animation: stageSlideInRight 0.4s var(--ease-premium) forwards !important;
         }
 
         .article-card.anim-out-right {
@@ -532,14 +536,14 @@
             width: 100%;
             z-index: 1;
             pointer-events: none;
-            animation: stageSlideOutRight 0.44s var(--ease-premium) forwards !important;
+            animation: stageSlideOutRight 0.4s var(--ease-premium) forwards !important;
         }
 
         .article-card.anim-in-left {
             display: block !important;
             position: relative !important;
             z-index: 2;
-            animation: stageSlideInLeft 0.44s var(--ease-premium) forwards !important;
+            animation: stageSlideInLeft 0.4s var(--ease-premium) forwards !important;
         }
 
         .article-title {
@@ -1387,21 +1391,20 @@
                 if (isSelected) updatePillGlider(btn);
             });
 
-            // Pre-measure target card height and smoothly scale container height
+            // Pre-measure target card height and scale container height smoothly
             targetCard.style.display = 'block';
             targetCard.style.visibility = 'hidden';
             const incomingHeight = targetCard.offsetHeight;
             targetCard.style.display = '';
             targetCard.style.visibility = '';
 
-            // Anchor height explicitly before animating to eliminate height jumps
             topicsFeed.style.height = `${currentCard.offsetHeight}px`;
-            void topicsFeed.offsetHeight; // force layout
+            void topicsFeed.offsetHeight; // force layout calculation
             if (incomingHeight > 0) {
                 topicsFeed.style.height = `${incomingHeight}px`;
             }
 
-            // Instantly appear at top of the page without any reverse-scroll lag
+            // Immediately display from top of the screen (showing header, title & pill completely)
             window.scrollTo({ top: 0, behavior: 'instant' });
 
             // Both cards transition simultaneously with zero straight edge clipping
@@ -1413,14 +1416,14 @@
                 targetCard.className = 'article-card anim-in-left';
             }
 
-            // Settle cleanly into position without re-triggering entrance animations
+            // Settle cleanly into position without re-triggering entrance animations or blinking
             setTimeout(() => {
                 cards.forEach((card, idx) => {
                     card.className = idx === targetIndex ? 'article-card is-active' : 'article-card';
                 });
                 topicsFeed.style.height = 'auto'; // allow natural expansion after transition
                 isTransitioning = false;
-            }, 440);
+            }, 400);
         }
 
         // 5. RESPONSIVE TOUCH & TRACKPAD CONTROLLER
@@ -1695,8 +1698,8 @@
                 topicsFeed.appendChild(card);
             });
 
-            // Active card sets container height naturally without keyframe blink
-            topicsFeed.style.height = 'auto';
+            // Adjust stage height to Topic 1 immediately with no layout jump
+            requestAnimationFrame(() => syncFeedHeight(0));
         }
 
         // Script injector loading /study/currentaffairs-data/DD-MM-YYYY.js
@@ -1928,6 +1931,7 @@
 
         closeSearchBtn.addEventListener('click', () => handleHeaderLeaveOrBlur(true));
 
+        // Navigation links wave loading state
         const targetLinks = document.querySelectorAll('footer .footer-links-row a, .breadcrumb-nav a, .logo');
         targetLinks.forEach(link => {
             if (!link.querySelector('.nav-text')) {
