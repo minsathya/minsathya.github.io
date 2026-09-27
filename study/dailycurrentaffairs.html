@@ -38,6 +38,7 @@
       }
         :root {
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+            --ease-float: cubic-bezier(0.2, 0.9, 0.3, 1);
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
             --text-muted: #777777;
@@ -413,15 +414,20 @@
             flex-direction: column;
             width: 100%;
             touch-action: pan-y;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
-        /* CARD ENTRANCE: FADE FROM BOTTOM TO UP */
+        /* CARD ENTRANCE: REFINED SILKY FLOAT (BOTTOM TO UP) */
         @keyframes topicCardEntrance {
-            from {
+            0% {
                 opacity: 0;
-                transform: translate3d(0, 24px, 0);
+                transform: translate3d(0, 16px, 0);
             }
-            to {
+            40% {
+                opacity: 0.65;
+            }
+            100% {
                 opacity: 1;
                 transform: translate3d(0, 0, 0);
             }
@@ -436,6 +442,8 @@
             padding: 44px 48px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
             opacity: 0;
+            user-select: text;
+            -webkit-user-select: text;
             transition: background-color 0.8s var(--ease-smooth), 
                         border-color 0.8s var(--ease-smooth), 
                         box-shadow 0.8s var(--ease-smooth);
@@ -445,7 +453,7 @@
 
         .article-card.is-active {
             display: block;
-            animation: topicCardEntrance 0.6s var(--ease-smooth) forwards;
+            animation: topicCardEntrance 0.65s var(--ease-float) forwards;
         }
 
         .article-title {
@@ -1159,7 +1167,7 @@
             }
         };
 
-        // 4. TOPIC NAVIGATION ENGINE (IN-PLACE FADE FROM BOTTOM-UP ANIMATION)
+        // 4. TOPIC NAVIGATION ENGINE (REFINED IN-PLACE SILKY FLOAT)
         let currentActiveTopicIndex = 0;
         let totalLoadedTopics = 0;
 
@@ -1171,20 +1179,19 @@
             cards.forEach((card, i) => {
                 if (i === index) {
                     card.classList.remove('is-active');
-                    void card.offsetWidth; // Force CSS reflow to re-trigger bottom-up fade animation
+                    void card.offsetWidth; // Reflow resets animation for a silky float-in
                     card.classList.add('is-active');
                 } else {
                     card.classList.remove('is-active');
                 }
             });
 
-            // Update pill active button highlight
             const buttons = document.querySelectorAll('.topic-num-btn');
             buttons.forEach((btn, i) => {
                 btn.classList.toggle('is-active', i === index);
             });
 
-            // If reader scrolled down into previous card, align gently back to top
+            // Smoothly align scroll to feed top if user read deep into the previous card
             const feedTop = topicsFeed.getBoundingClientRect().top + window.scrollY;
             if (window.scrollY > feedTop) {
                 window.scrollTo({
@@ -1215,33 +1222,39 @@
             }
         }
 
-        // Horizontal touch swipe gesture engine (swipe left -> next, swipe right -> prev)
+        // Precision horizontal swipe tracking with vertical scroll discrimination
         let touchStartX = 0;
         let touchStartY = 0;
         let touchEndX = 0;
         let touchEndY = 0;
+        let isTouching = false;
 
         topicsFeed.addEventListener('touchstart', (e) => {
             if (e.touches.length === 1) {
                 touchStartX = e.touches[0].clientX;
                 touchStartY = e.touches[0].clientY;
+                touchEndX = touchStartX;
+                touchEndY = touchStartY;
+                isTouching = true;
             }
         }, { passive: true });
 
-        topicsFeed.addEventListener('touchend', (e) => {
-            if (e.changedTouches.length === 1) {
-                touchEndX = e.changedTouches[0].clientX;
-                touchEndY = e.changedTouches[0].clientY;
-                handleSwipeGesture();
+        topicsFeed.addEventListener('touchmove', (e) => {
+            if (isTouching && e.touches.length === 1) {
+                touchEndX = e.touches[0].clientX;
+                touchEndY = e.touches[0].clientY;
             }
         }, { passive: true });
 
-        function handleSwipeGesture() {
+        topicsFeed.addEventListener('touchend', () => {
+            if (!isTouching) return;
+            isTouching = false;
+
             const diffX = touchEndX - touchStartX;
             const diffY = touchEndY - touchStartY;
 
-            // Ensures swipe is horizontal and distinct (> 45px) so vertical reading isn't interrupted
-            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 45) {
+            // Dominant horizontal intent check (>40px lateral travel with a clean horizontal angle)
+            if (Math.abs(diffX) > Math.abs(diffY) * 1.4 && Math.abs(diffX) > 40) {
                 if (diffX < 0) {
                     // Swiped Left -> Move to Next Topic
                     if (currentActiveTopicIndex < totalLoadedTopics - 1) {
@@ -1254,7 +1267,7 @@
                     }
                 }
             }
-        }
+        }, { passive: true });
 
         // 5. DYNAMIC DATA LOADER ENGINE FROM /study/currentaffairs-data/DD-MM-YYYY.js
         function renderCards(topics, dateText) {
@@ -1275,7 +1288,6 @@
 
             totalLoadedTopics = topics.length;
 
-            // Restore active topic index if returning from reload
             const savedTopic = parseInt(sessionStorage.getItem('ca_active_topic'), 10);
             if (!isNaN(savedTopic) && savedTopic >= 0 && savedTopic < totalLoadedTopics) {
                 currentActiveTopicIndex = savedTopic;
