@@ -38,7 +38,7 @@
       }
         :root {
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
-            --ease-float: cubic-bezier(0.2, 0.9, 0.3, 1);
+            --ease-page: cubic-bezier(0.35, 0, 0.15, 1);
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
             --text-muted: #777777;
@@ -408,24 +408,23 @@
             color: var(--accent-tag-text);
         }
 
-        /* TOPICS FEED CONTAINER */
+        /* 3D BOOK FEED CONTAINER */
         .topics-feed {
-            display: flex;
-            flex-direction: column;
+            position: relative;
+            display: block;
             width: 100%;
+            perspective: 2000px;
+            perspective-origin: center center;
             touch-action: pan-y;
             user-select: none;
             -webkit-user-select: none;
         }
 
-        /* CARD ENTRANCE: REFINED SILKY FLOAT (BOTTOM TO UP) */
-        @keyframes topicCardEntrance {
+        /* INITIAL PAGE LOAD: FLOAT IN */
+        @keyframes initialCardEntrance {
             0% {
                 opacity: 0;
                 transform: translate3d(0, 16px, 0);
-            }
-            40% {
-                opacity: 0.65;
             }
             100% {
                 opacity: 1;
@@ -433,8 +432,64 @@
             }
         }
 
+        /* ========================================================
+           APPLE BOOKS 3D PAGE TURNING ENGINE
+           ======================================================== */
+        @keyframes pageTurnNextOut {
+            0% {
+                transform: rotateY(0deg);
+                opacity: 1;
+                filter: brightness(1);
+            }
+            100% {
+                transform: rotateY(-82deg) translate3d(-35px, 0, -40px) scale(0.97);
+                opacity: 0;
+                filter: brightness(0.25);
+            }
+        }
+
+        @keyframes pageTurnNextIn {
+            0% {
+                transform: scale(0.97) translate3d(15px, 0, -40px);
+                opacity: 0.6;
+                filter: brightness(0.7);
+            }
+            100% {
+                transform: scale(1) translate3d(0, 0, 0);
+                opacity: 1;
+                filter: brightness(1);
+            }
+        }
+
+        @keyframes pageTurnPrevOut {
+            0% {
+                transform: scale(1) translate3d(0, 0, 0);
+                opacity: 1;
+                filter: brightness(1);
+            }
+            100% {
+                transform: scale(0.97) translate3d(15px, 0, -40px);
+                opacity: 0.4;
+                filter: brightness(0.6);
+            }
+        }
+
+        @keyframes pageTurnPrevIn {
+            0% {
+                transform: rotateY(-82deg) translate3d(-35px, 0, -40px) scale(0.97);
+                opacity: 0;
+                filter: brightness(0.25);
+            }
+            100% {
+                transform: rotateY(0deg) translate3d(0, 0, 0) scale(1);
+                opacity: 1;
+                filter: brightness(1);
+            }
+        }
+
         .article-card {
             display: none;
+            position: relative;
             width: 100%;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
@@ -444,16 +499,79 @@
             opacity: 0;
             user-select: text;
             -webkit-user-select: text;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transform-origin: left center;
             transition: background-color 0.8s var(--ease-smooth), 
                         border-color 0.8s var(--ease-smooth), 
                         box-shadow 0.8s var(--ease-smooth);
+        }
+
+        /* Spine Curvature Depth Overlay */
+        .article-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 28px;
+            pointer-events: none;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.08) 12%, transparent 35%);
+            opacity: 0;
+            transition: opacity 0.5s var(--ease-smooth);
         }
 
         body:not(.light-mode) .article-card { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
 
         .article-card.is-active {
             display: block;
-            animation: topicCardEntrance 0.65s var(--ease-float) forwards;
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+            animation: initialCardEntrance 0.65s var(--ease-smooth) forwards;
+        }
+
+        /* Active Flip States */
+        .article-card.turning-next-out {
+            display: block !important;
+            position: absolute !important;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 3;
+            pointer-events: none;
+            animation: pageTurnNextOut 0.65s var(--ease-page) forwards !important;
+        }
+
+        .article-card.turning-next-out::after {
+            opacity: 1;
+        }
+
+        .article-card.turning-next-in {
+            display: block !important;
+            position: relative !important;
+            z-index: 1;
+            animation: pageTurnNextIn 0.65s var(--ease-page) forwards !important;
+        }
+
+        .article-card.turning-prev-out {
+            display: block !important;
+            position: absolute !important;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+            pointer-events: none;
+            animation: pageTurnPrevOut 0.65s var(--ease-page) forwards !important;
+        }
+
+        .article-card.turning-prev-in {
+            display: block !important;
+            position: relative !important;
+            z-index: 3;
+            animation: pageTurnPrevIn 0.65s var(--ease-page) forwards !important;
+        }
+
+        .article-card.turning-prev-in::after {
+            opacity: 1;
         }
 
         .article-title {
@@ -1002,7 +1120,7 @@
             <div id="topicsPillContainer"></div>
         </div>
 
-        <!-- TOPICS FEED -->
+        <!-- 3D BOOK FEED CONTAINER -->
         <div class="topics-feed" id="topicsFeed"></div>
     </main>
 
@@ -1167,31 +1285,30 @@
             }
         };
 
-        // 4. TOPIC NAVIGATION ENGINE (REFINED IN-PLACE SILKY FLOAT)
+        // 4. APPLE BOOKS 3D PAGE TURNING ENGINE
         let currentActiveTopicIndex = 0;
         let totalLoadedTopics = 0;
+        let isPageTurning = false;
 
-        function switchTopic(index) {
-            if (index < 0 || index >= totalLoadedTopics) return;
-            currentActiveTopicIndex = index;
+        function switchTopic(targetIndex) {
+            if (isPageTurning || targetIndex < 0 || targetIndex >= totalLoadedTopics || targetIndex === currentActiveTopicIndex) return;
+
+            const isNext = targetIndex > currentActiveTopicIndex;
+            const currentIndex = currentActiveTopicIndex;
+            currentActiveTopicIndex = targetIndex;
+            isPageTurning = true;
 
             const cards = topicsFeed.querySelectorAll('.article-card');
-            cards.forEach((card, i) => {
-                if (i === index) {
-                    card.classList.remove('is-active');
-                    void card.offsetWidth; // Reflow resets animation for a silky float-in
-                    card.classList.add('is-active');
-                } else {
-                    card.classList.remove('is-active');
-                }
-            });
+            const currentCard = cards[currentIndex];
+            const targetCard = cards[targetIndex];
 
+            // Update pill highlight immediately
             const buttons = document.querySelectorAll('.topic-num-btn');
             buttons.forEach((btn, i) => {
-                btn.classList.toggle('is-active', i === index);
+                btn.classList.toggle('is-active', i === targetIndex);
             });
 
-            // Smoothly align scroll to feed top if user read deep into the previous card
+            // Smoothly align vertical view to top of card if reading deep down
             const feedTop = topicsFeed.getBoundingClientRect().top + window.scrollY;
             if (window.scrollY > feedTop) {
                 window.scrollTo({
@@ -1199,6 +1316,22 @@
                     behavior: 'smooth'
                 });
             }
+
+            // Apply 3D book page flip animations
+            if (isNext) {
+                currentCard.className = 'article-card turning-next-out';
+                targetCard.className = 'article-card turning-next-in';
+            } else {
+                currentCard.className = 'article-card turning-prev-out';
+                targetCard.className = 'article-card turning-prev-in';
+            }
+
+            setTimeout(() => {
+                cards.forEach((card, idx) => {
+                    card.className = idx === targetIndex ? 'article-card is-active' : 'article-card';
+                });
+                isPageTurning = false;
+            }, 640);
         }
 
         function renderTopicsPill(totalTopics) {
@@ -1222,7 +1355,7 @@
             }
         }
 
-        // Precision horizontal swipe tracking with vertical scroll discrimination
+        // Horizontal touch swipe gesture engine (Apple Books page flip)
         let touchStartX = 0;
         let touchStartY = 0;
         let touchEndX = 0;
@@ -1230,6 +1363,7 @@
         let isTouching = false;
 
         topicsFeed.addEventListener('touchstart', (e) => {
+            if (isPageTurning) return;
             if (e.touches.length === 1) {
                 touchStartX = e.touches[0].clientX;
                 touchStartY = e.touches[0].clientY;
@@ -1247,21 +1381,21 @@
         }, { passive: true });
 
         topicsFeed.addEventListener('touchend', () => {
-            if (!isTouching) return;
+            if (!isTouching || isPageTurning) return;
             isTouching = false;
 
             const diffX = touchEndX - touchStartX;
             const diffY = touchEndY - touchStartY;
 
-            // Dominant horizontal intent check (>40px lateral travel with a clean horizontal angle)
-            if (Math.abs(diffX) > Math.abs(diffY) * 1.4 && Math.abs(diffX) > 40) {
+            // Strict lateral swipe detection (>40px with horizontal dominant vector)
+            if (Math.abs(diffX) > Math.abs(diffY) * 1.35 && Math.abs(diffX) > 40) {
                 if (diffX < 0) {
-                    // Swiped Left -> Move to Next Topic
+                    // Swiped Left -> Turn Forward to Next Page
                     if (currentActiveTopicIndex < totalLoadedTopics - 1) {
                         switchTopic(currentActiveTopicIndex + 1);
                     }
                 } else {
-                    // Swiped Right -> Move to Previous Topic
+                    // Swiped Right -> Turn Back to Previous Page
                     if (currentActiveTopicIndex > 0) {
                         switchTopic(currentActiveTopicIndex - 1);
                     }
