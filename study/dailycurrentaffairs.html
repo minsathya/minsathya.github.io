@@ -446,7 +446,6 @@
             color: var(--text-main);
             margin-bottom: 20px;
             line-height: 1.35;
-            text-wrap: wrap;
             transition: color 0.8s var(--ease-smooth);
         }
 
@@ -563,7 +562,7 @@
             font-weight: 500;
         }
 
-        /* CONTENT SECTIONS & LINE PACKING */
+        /* CONTENT SECTIONS */
         .note-section {
             margin-bottom: 32px;
             display: flex;
@@ -581,7 +580,6 @@
             padding-bottom: 8px;
             border-bottom: 1px solid var(--row-divider);
             margin-bottom: 6px;
-            text-wrap: wrap;
             transition: color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth);
         }
 
@@ -590,10 +588,6 @@
             line-height: 1.8;
             color: var(--text-main);
             opacity: 0.9;
-            text-wrap: wrap;
-            hyphens: auto;
-            -webkit-hyphens: auto;
-            word-break: normal;
             transition: color 0.8s var(--ease-smooth);
         }
 
@@ -612,10 +606,6 @@
             line-height: 1.75;
             color: var(--text-main);
             opacity: 0.9;
-            text-wrap: wrap;
-            hyphens: auto;
-            -webkit-hyphens: auto;
-            word-break: normal;
             transition: color 0.8s var(--ease-smooth);
         }
 
@@ -651,10 +641,6 @@
             line-height: 1.65;
             color: var(--text-main);
             opacity: 0.95;
-            text-wrap: wrap;
-            hyphens: auto;
-            -webkit-hyphens: auto;
-            word-break: normal;
             transition: color 0.8s var(--ease-smooth);
         }
 
@@ -1239,12 +1225,15 @@
             }
         }
 
-        // Accurate device classifier: targets iPad, iPhone, and Android touch devices
-        const isMobileOrTablet = /iPad|iPhone|iPod|Android/i.test(navigator.userAgent) || 
-                                 (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        // Targeted device classifier: separates phone from iPad and laptop
+        const isIPad = /iPad/i.test(navigator.userAgent) || 
+                       (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1 && window.innerWidth >= 768);
+        const isPhone = (/iPhone|iPod|Android/i.test(navigator.userAgent) && /Mobile/i.test(navigator.userAgent)) || 
+                        (window.innerWidth <= 700 && navigator.maxTouchPoints > 0);
+        const isTouchDevice = isIPad || isPhone || /iPad|iPhone|iPod|Android/i.test(navigator.userAgent);
 
         let activeScrollAnimation = null;
-        function mobileGlideTo(targetY) {
+        function customTouchGlideTo(targetY) {
             if (activeScrollAnimation) cancelAnimationFrame(activeScrollAnimation);
 
             const startY = window.scrollY;
@@ -1252,8 +1241,12 @@
             const absDist = Math.abs(distance);
             if (absDist < 5) return;
 
-            // Distance-proportional duration ensures phones have enough time to coast and decelerate
-            const duration = Math.min(1150, Math.max(750, Math.round(absDist * 0.55)));
+            // Phone: slightly extended duration so the travel feels slower and more relaxed
+            // iPad: keeps the original timing that was verified as good
+            const duration = isPhone 
+                ? Math.min(1350, Math.max(900, Math.round(absDist * 0.72)))
+                : Math.min(1150, Math.max(750, Math.round(absDist * 0.55)));
+
             let startTime = null;
 
             const cancelOnTouch = () => {
@@ -1267,7 +1260,7 @@
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
 
-                // easeOutCubic: starts briskly and spends the entire second half gently coasting to a stop
+                // easeOutCubic: naturally decelerates into view without sudden braking
                 const ease = 1 - Math.pow(1 - progress, 3);
 
                 window.scrollTo(0, startY + (distance * ease));
@@ -1282,10 +1275,10 @@
             activeScrollAnimation = requestAnimationFrame(step);
         }
 
-        // Unified controller: Laptop is 100% untouched native; Mobile & iPad get gentle coasting deceleration
+        // Unified controller: Laptop is 100% native; Touch devices get smooth coasting
         function performSmoothScroll(targetY) {
-            if (isMobileOrTablet) {
-                mobileGlideTo(targetY);
+            if (isTouchDevice) {
+                customTouchGlideTo(targetY);
             } else {
                 window.scrollTo({
                     top: targetY,
