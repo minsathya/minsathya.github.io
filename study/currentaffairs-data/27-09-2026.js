@@ -5,8 +5,8 @@ window.currentDailyTopics = [
         category: "Economy / Energy & Infrastructure",
         comesUnder: "Prelims and Mains",
         image: {
-            url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN8Wc8OamwXy4FUmBJbh8SWw2BmNfG6_me_U-HD7MqAQ&s=10",
-            caption: "Source : Reuters"
+            url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN8Wc8OamwXy4FUmBJbh8Sww2BmNfG6_me_U-HD7MqAQ&s=10",
+            caption: "Source: Reuters"
         },
         whyInNews: "The Ministry of Power has ordered 112 captive coal power plants to run at full capacity from October 1 to December 31, 2026, to meet high electricity demand and prevent power cuts.",
         whatConcept: "A captive power plant is an electricity plant set up by a company primarily to power its own factories (like steel, aluminium, or cement plants) rather than selling to the general public. Under an emergency rule, the government is making these plants produce at maximum capacity and sell their extra, unused electricity to the national grid.",
@@ -44,16 +44,15 @@ window.currentDailyTopics = [
             "<strong>Fair Price Recovery :</strong> Set up a clear pricing system on power exchanges so captive plants are fully repaid for their fuel and running costs.",
             "<strong>Speed Up Energy Storage :</strong> Build large-scale battery storage and pumped hydro plants so India does not have to rely on emergency coal mandates every time power demand spikes."
         ]
-    }
-],
+    },
     {
         topicTitle: "Baranica Elangovan Wins India's First-Ever Asian Games Pole Vault Medal",
         gsPaper: "Prelims Specific",
         category: "Sports & Culture",
         comesUnder: "Prelims",
         image: {
-            url: "https://c.ndtvimg.com/2026-09/27vghsto_baranica-elangovan-getty_625x300_25_September_26.jpg?im=FaceCrop,algorithm=dnn,width=1280,height=720",
-            caption: "Source : NDTV Sports"
+            url: "https://c.ndtvimg.com/2026-09/27vghsto_baranica-elangovan-getty_625x300_25_September_26.jpg",
+            caption: "Source: NDTV Sports"
         },
         whyInNews: "Baranica Elangovan won a bronze medal in the women's pole vault at the 2026 Asian Games in Aichi-Nagoya, Japan, becoming the first Indian athlete to win an Asian Games medal in this event.",
         whatConcept: "Pole vault is an Olympic track-and-field jumping event where an athlete sprints down a runway and uses a long, flexible pole (usually made of fiberglass or carbon fiber) to launch themselves over a high horizontal bar without knocking it down.",
@@ -74,5 +73,9 @@ window.currentDailyTopics = [
         background: [
             "<strong>Asian Games (Asiad) :</strong> First held in 1951 in New Delhi, India, initiated under the leadership of Prime Minister Jawaharlal Nehru and sports administrator Guru Dutt Sondhi; held every 4 years and recognized by the International Olympic Committee (IOC).",
             "<strong>Government Sports Schemes :</strong> Athletes are funded and trained through government programs such as the Target Olympic Podium Scheme (TOPS) and the Khelo India Scheme, run by the Ministry of Youth Affairs and Sports to prepare medal contenders for major international games."
-        ]
+        ],
+        significance: [],
+        challenges: [],
+        wayForward: []
     }
+];
