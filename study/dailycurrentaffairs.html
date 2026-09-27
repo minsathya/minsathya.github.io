@@ -32,7 +32,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        html {
+      html {
         overflow-y: scroll;
         scrollbar-gutter: stable;
       }
@@ -347,12 +347,61 @@
         .cal-trigger-btn:hover { transform: scale(1.1); }
         .cal-trigger-btn svg { width: 36px; height: 36px; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25)); }
 
+        /* DATE & TOPIC COUNT ROW */
+        .active-date-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 32px;
+            width: 100%;
+        }
+
         .active-date-subtext {
             font-size: 14px;
             color: var(--text-muted);
-            margin-bottom: 32px;
             font-weight: 500;
             transition: color 0.8s var(--ease-smooth);
+        }
+
+        /* TOPICS NAVIGATION PILL */
+        .topics-nav-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--pill-box-bg);
+            border: 1px solid var(--pill-box-border);
+            padding: 3px 12px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth);
+        }
+
+        .topics-nav-pill .pill-label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .topic-num-btn {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            font-weight: 600;
+            transition: background-color 0.2s var(--ease-smooth), color 0.2s var(--ease-smooth), transform 0.2s var(--ease-smooth);
+        }
+
+        .topic-num-btn:hover {
+            background: var(--accent-tag-bg);
+            color: var(--accent-tag-text);
+            transform: translateY(-1px);
         }
 
         /* DYNAMIC TOPICS FEED */
@@ -620,6 +669,54 @@
             transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
+        /* SMART SCROLL-TO-TOP BUTTON */
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 34px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            z-index: 999;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            color: var(--text-main);
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s var(--ease-smooth), transform 0.3s var(--ease-smooth), background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth), color 0.2s var(--ease-smooth);
+        }
+
+        body.light-mode #scrollTopBtn {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        #scrollTopBtn.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        #scrollTopBtn:hover {
+            color: var(--accent-tag-text);
+            transform: translateX(-50%) translateY(-2px);
+        }
+
+        #scrollTopBtn svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            stroke-width: 2.3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
         /* DRUM WHEEL DATE PICKER MODAL */
         .picker-backdrop {
             position: fixed;
@@ -840,7 +937,7 @@
         @media (max-width: 1024px) {
             .breadcrumb-nav,
             .page-title-row,
-            .active-date-subtext {
+            .active-date-row {
                 padding-left: 10px;
             }
         }
@@ -850,7 +947,7 @@
             body { padding: 30px 18px 24px 18px; }
             .breadcrumb-nav,
             .page-title-row,
-            .active-date-subtext {
+            .active-date-row {
                 padding-left: 8px;
             }
             header { height: 64px; border-radius: 24px; margin-bottom: 30px; }
@@ -930,11 +1027,22 @@
             </button>
         </div>
 
-        <div class="active-date-subtext" id="activeDateDisplay">Selected Date: September 27, 2026</div>
+        <!-- SELECTED DATE + DYNAMIC TOPIC PILL -->
+        <div class="active-date-row">
+            <div class="active-date-subtext" id="activeDateDisplay">Selected Date: September 27, 2026</div>
+            <div id="topicsPillContainer"></div>
+        </div>
 
         <!-- TOPICS FEED -->
         <div class="topics-feed" id="topicsFeed"></div>
     </main>
+
+    <!-- SMART FLOATING SCROLL-TO-TOP BUTTON -->
+    <button id="scrollTopBtn" type="button" aria-label="Scroll to top">
+        <svg viewBox="0 0 24 24">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
 
     <!-- 3-COLUMN DRUM WHEEL DATE PICKER MODAL -->
     <div class="picker-backdrop" id="pickerModal">
@@ -967,32 +1075,30 @@
     </footer>
 
     <script>
-  // Preserve exact reading position on refresh for dynamic cards
-  window.addEventListener('beforeunload', () => {
-    sessionStorage.setItem('ca_scroll_pos', window.scrollY);
-  });
+        // Preserve exact reading position on refresh for dynamic cards
+        window.addEventListener('beforeunload', () => {
+            sessionStorage.setItem('ca_scroll_pos', window.scrollY);
+        });
 
-  const savedScrollPos = sessionStorage.getItem('ca_scroll_pos');
-if (savedScrollPos && parseInt(savedScrollPos, 10) > 60) {
-  // 1. Temporarily hide the empty top frame so there is zero blink
-  document.body.style.opacity = '0';
-  document.body.style.transition = 'opacity 0.15s ease';
+        const savedScrollPos = sessionStorage.getItem('ca_scroll_pos');
+        if (savedScrollPos && parseInt(savedScrollPos, 10) > 60) {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.15s ease';
 
-  // 2. Wait until the cards arrive, jump silently, then fade in
-  const checkCardsLoaded = setInterval(() => {
-    if (document.body.scrollHeight > window.innerHeight + 100) {
-      window.scrollTo(0, parseInt(savedScrollPos, 10));
-      document.body.style.opacity = '1';
-      clearInterval(checkCardsLoaded);
-    }
-  }, 10);
+            const checkCardsLoaded = setInterval(() => {
+                if (document.body.scrollHeight > window.innerHeight + 100) {
+                    window.scrollTo(0, parseInt(savedScrollPos, 10));
+                    document.body.style.opacity = '1';
+                    clearInterval(checkCardsLoaded);
+                }
+            }, 10);
 
-  // Safety fallback: reveal page after 1 second if no cards exist
-  setTimeout(() => {
-    document.body.style.opacity = '1';
-    clearInterval(checkCardsLoaded);
-  }, 1000);
-}
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+                clearInterval(checkCardsLoaded);
+            }, 1000);
+        }
+
         // 1. DYNAMIC BREADCRUMBS STATE
         (function buildDynamicBreadcrumbs() {
             const HOME_PATH = "/study/index.html";
@@ -1098,12 +1204,45 @@ if (savedScrollPos && parseInt(savedScrollPos, 10) > 60) {
             }
         };
 
-        // 4. DYNAMIC DATA LOADER ENGINE FROM /study/currentaffairs-data/DD-MM-YYYY.js
+        // 4. TOPIC JUMP PILL AND SMOOTH SCROLLING
+        function renderTopicsPill(totalTopics) {
+            const container = document.getElementById('topicsPillContainer');
+            if (!container) return;
+
+            if (totalTopics > 0) {
+                let buttonsHtml = '';
+                for (let i = 1; i <= totalTopics; i++) {
+                    buttonsHtml += `<button type="button" class="topic-num-btn" onclick="scrollToTopic(${i - 1})">${i}</button>`;
+                }
+                container.innerHTML = `
+                    <div class="topics-nav-pill">
+                        <span class="pill-label">Topics :</span>
+                        ${buttonsHtml}
+                    </div>
+                `;
+            } else {
+                container.innerHTML = '';
+            }
+        }
+
+        window.scrollToTopic = function(index) {
+            const card = document.getElementById(`topic-card-${index}`);
+            if (card) {
+                const cardTop = card.getBoundingClientRect().top + window.scrollY;
+                window.scrollTo({
+                    top: Math.max(0, cardTop - 30),
+                    behavior: 'smooth'
+                });
+            }
+        };
+
+        // 5. DYNAMIC DATA LOADER ENGINE FROM /study/currentaffairs-data/DD-MM-YYYY.js
         function renderCards(topics, dateText) {
             activeDateDisplay.textContent = `Selected Date: ${dateText}`;
             topicsFeed.innerHTML = '';
 
             if (!topics || topics.length === 0) {
+                renderTopicsPill(0);
                 topicsFeed.innerHTML = `
                     <div class="empty-placeholder-card">
                         No current affairs entries found for ${dateText}.
@@ -1112,9 +1251,12 @@ if (savedScrollPos && parseInt(savedScrollPos, 10) > 60) {
                 return;
             }
 
+            renderTopicsPill(topics.length);
+
             topics.forEach((topic, idx) => {
                 const card = document.createElement('article');
                 card.className = 'article-card';
+                card.id = `topic-card-${idx}`;
                 card.style.animationDelay = `${idx * 0.12}s`;
 
                 let orgRowsHtml = '';
@@ -1141,7 +1283,7 @@ if (savedScrollPos && parseInt(savedScrollPos, 10) > 60) {
                 const imageDrawerHtml = hasImage ? `
                     <div class="topic-image-drawer" id="${drawerId}">
                         <div class="topic-image-inner">
-                            <img src="${topic.image.url}" alt="${topic.image.caption || 'Topic Image'}" loading="lazy">
+                            <img src="${topic.image.url}" alt="${topic.image.caption || 'Topic Image'}" loading="lazy" referrerpolicy="no-referrer">
                             ${topic.image.caption ? `<div class="topic-image-caption">${topic.image.caption}</div>` : ''}
                         </div>
                     </div>
@@ -1284,7 +1426,38 @@ if (savedScrollPos && parseInt(savedScrollPos, 10) > 60) {
 
         loadLatestAvailablePost();
 
-        // 5. MODAL CONTROLS & APPLY ACTION
+        // 6. SMART SCROLL-TO-TOP BUTTON ENGINE (UPWARD SCROLL DETECTION)
+        let lastScrollY = window.scrollY;
+        let scrollTimer = null;
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+        window.addEventListener('scroll', () => {
+            const currentY = window.scrollY;
+
+            // Only show when scrolling upwards and at least 200px down the page
+            if (currentY < lastScrollY && currentY > 200) {
+                scrollTopBtn.classList.add('visible');
+
+                if (scrollTimer) clearTimeout(scrollTimer);
+                scrollTimer = setTimeout(() => {
+                    scrollTopBtn.classList.remove('visible');
+                }, 3000);
+            } else {
+                // Instantly hide when scrolling down or when at top of page
+                scrollTopBtn.classList.remove('visible');
+                if (scrollTimer) clearTimeout(scrollTimer);
+            }
+
+            lastScrollY = currentY <= 0 ? 0 : currentY;
+        }, { passive: true });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            scrollTopBtn.classList.remove('visible');
+            if (scrollTimer) clearTimeout(scrollTimer);
+        });
+
+        // 7. MODAL CONTROLS & APPLY ACTION
         const pickerModal = document.getElementById('pickerModal');
         const openCalendarBtn = document.getElementById('openCalendarBtn');
         const applyDateBtn = document.getElementById('applyDateBtn');
@@ -1321,7 +1494,7 @@ if (savedScrollPos && parseInt(savedScrollPos, 10) > 60) {
             }
         });
 
-        // 6. THEME PALETTE ENGINE (SYNCED WITH index.html)
+        // 8. THEME PALETTE ENGINE (SYNCED WITH index.html)
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
         const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
