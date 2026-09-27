@@ -6,6 +6,17 @@
     <title>Daily Current Affairs - sathya.</title>
     <meta name="description" content="Daily Current Affairs for UPSC Civil Services Examination.">
 
+    <!-- Immediate Theme Check in Head to Prevent Theme Flash / Blink -->
+    <script>
+      (function() {
+        const activeTheme = sessionStorage.getItem('dashboard-theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        if (activeTheme === 'light' || (!activeTheme && prefersLight)) {
+          document.documentElement.classList.add('light-mode');
+        }
+      })();
+    </script>
+
     <!-- Google Tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
     <script>
@@ -58,6 +69,7 @@
             --cascade-duration-entry: 0.28s;
         }
 
+        html.light-mode,
         body.light-mode {
             --bg-color: #ebebe4;
             --text-main: #111111;
@@ -101,7 +113,7 @@
             transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
-        /* MASTER REFRESH ENTRANCE EXTRACTED FROM index.html */
+        /* MASTER REFRESH ENTRANCE SYNCED WITH index.html */
         @keyframes masterEntrance {
             from { opacity: 0; transform: translate3d(0, 24px, 0); }
             to { opacity: 1; transform: translate3d(0, 0, 0); }
@@ -465,7 +477,7 @@
 
         body:not(.light-mode) .article-card { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
 
-        /* Solid active card without re-firing entrance animations to prevent blink */
+        /* Solid active card without re-entry animations to prevent flash/blink */
         .article-card.is-active {
             display: block;
             position: relative;
@@ -476,21 +488,21 @@
         /* Smooth stage slide keyframes */
         @keyframes stageSlideOutLeft {
             0% { transform: translate3d(0, 0, 0); opacity: 1; }
-            100% { transform: translate3d(-100%, 0, 0); opacity: 0; }
+            100% { transform: translate3d(-100%, 0, 0); opacity: 0.15; }
         }
 
         @keyframes stageSlideInRight {
-            0% { transform: translate3d(100%, 0, 0); opacity: 0; }
+            0% { transform: translate3d(100%, 0, 0); opacity: 0.15; }
             100% { transform: translate3d(0, 0, 0); opacity: 1; }
         }
 
         @keyframes stageSlideOutRight {
             0% { transform: translate3d(0, 0, 0); opacity: 1; }
-            100% { transform: translate3d(100%, 0, 0); opacity: 0; }
+            100% { transform: translate3d(100%, 0, 0); opacity: 0.15; }
         }
 
         @keyframes stageSlideInLeft {
-            0% { transform: translate3d(-100%, 0, 0); opacity: 0; }
+            0% { transform: translate3d(-100%, 0, 0); opacity: 0.15; }
             100% { transform: translate3d(0, 0, 0); opacity: 1; }
         }
 
@@ -1326,7 +1338,7 @@
                 let buttonsHtml = '';
                 for (let i = 1; i <= totalTopics; i++) {
                     const activeClass = i === 1 ? ' is-active' : '';
-                    buttonsHtml += `<button type="button" class="topic-num-btn${activeClass}" data-topic-btn="${i - 1}" onclick="transitionTopic(${i - 1}, null, true)">${i}</button>`;
+                    buttonsHtml += `<button type="button" class="topic-num-btn${activeClass}" data-topic-btn="${i - 1}" onclick="transitionTopic(${i - 1})">${i}</button>`;
                 }
                 container.innerHTML = `
                     <div class="topics-nav-pill">
@@ -1355,50 +1367,7 @@
             }
         }
 
-        // Context-aware scroll position calculation:
-        // Top of page / Pill Click -> Top of next card (scrollY = 0, full header & pill visible)
-        // Middle of page -> Middle of next card
-        // Bottom/Footer of page -> Bottom of next card where footer is visible
-        function calculateTargetScrollPosition(targetIndex, isPillClick = false) {
-            // Pill clicks always go to the absolute top so header, title, calendar & pill are 100% visible
-            if (isPillClick) {
-                return 0;
-            }
-
-            const currentCard = document.getElementById(`topic-card-${currentActiveTopicIndex}`);
-            const targetCard = document.getElementById(`topic-card-${targetIndex}`);
-            if (!currentCard || !targetCard) return 0;
-
-            const currentScroll = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight;
-            const windowHeight = window.innerHeight;
-            const scrollFromBottom = docHeight - (currentScroll + windowHeight);
-
-            // 1. If at or near the top of the page
-            if (currentScroll <= 120) {
-                return 0;
-            }
-
-            // 2. If at or near the bottom (viewing footer within 85px of bottom)
-            if (scrollFromBottom <= 85) {
-                const projectedDocHeight = docHeight - currentCard.offsetHeight + targetCard.offsetHeight;
-                return Math.max(0, projectedDocHeight - windowHeight);
-            }
-
-            // 3. Middle: compute proportional depth through readable content
-            const feedTop = topicsFeed.offsetTop;
-            const currentReadableHeight = Math.max(1, currentCard.offsetHeight - windowHeight + 100);
-            const currentOffset = Math.max(0, currentScroll - feedTop);
-            const progressRatio = Math.min(1, Math.max(0, currentOffset / currentReadableHeight));
-
-            const targetReadableHeight = Math.max(0, targetCard.offsetHeight - windowHeight + 100);
-            const projectedDocHeight = docHeight - currentCard.offsetHeight + targetCard.offsetHeight;
-            const maxScroll = Math.max(0, projectedDocHeight - windowHeight);
-
-            return Math.min(maxScroll, Math.max(0, feedTop + (progressRatio * targetReadableHeight)));
-        }
-
-        function transitionTopic(targetIndex, direction = null, isPillClick = false) {
+        function transitionTopic(targetIndex, direction = null) {
             if (isTransitioning || targetIndex < 0 || targetIndex >= totalLoadedTopics || targetIndex === currentActiveTopicIndex) return;
 
             const isNext = direction ? (direction === 'next') : (targetIndex > currentActiveTopicIndex);
@@ -1418,25 +1387,22 @@
                 if (isSelected) updatePillGlider(btn);
             });
 
-            // Calculate precise target scroll position (Top, Middle, or Bottom/Footer)
-            const resolvedScrollY = calculateTargetScrollPosition(targetIndex, isPillClick);
-
             // Pre-measure target card height and smoothly scale container height
             targetCard.style.display = 'block';
             targetCard.style.visibility = 'hidden';
             const incomingHeight = targetCard.offsetHeight;
             targetCard.style.display = '';
             targetCard.style.visibility = '';
+
+            // Anchor height explicitly before animating to eliminate height jumps
+            topicsFeed.style.height = `${currentCard.offsetHeight}px`;
+            void topicsFeed.offsetHeight; // force layout
             if (incomingHeight > 0) {
                 topicsFeed.style.height = `${incomingHeight}px`;
             }
 
-            // Apply calculated scroll target directly without reverse scroll jumps
-            if (isPillClick) {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                window.scrollTo({ top: resolvedScrollY, behavior: 'instant' });
-            }
+            // Instantly appear at top of the page without any reverse-scroll lag
+            window.scrollTo({ top: 0, behavior: 'instant' });
 
             // Both cards transition simultaneously with zero straight edge clipping
             if (isNext) {
@@ -1452,7 +1418,7 @@
                 cards.forEach((card, idx) => {
                     card.className = idx === targetIndex ? 'article-card is-active' : 'article-card';
                 });
-                syncFeedHeight(targetIndex);
+                topicsFeed.style.height = 'auto'; // allow natural expansion after transition
                 isTransitioning = false;
             }, 440);
         }
@@ -1493,14 +1459,14 @@
             if (isHorizontalSwipe) {
                 const diffX = e.changedTouches[0].clientX - touchStartX;
                 const diffY = e.changedTouches[0].clientY - touchStartY;
-                if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY) * 1.1) {
+                if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
                     if (diffX < 0) {
                         if (currentActiveTopicIndex < totalLoadedTopics - 1) {
-                            transitionTopic(currentActiveTopicIndex + 1, 'next', false);
+                            transitionTopic(currentActiveTopicIndex + 1, 'next');
                         }
                     } else {
                         if (currentActiveTopicIndex > 0) {
-                            transitionTopic(currentActiveTopicIndex - 1, 'prev', false);
+                            transitionTopic(currentActiveTopicIndex - 1, 'prev');
                         }
                     }
                 }
@@ -1530,11 +1496,11 @@
             if (Math.abs(diffX) > Math.abs(diffY) * 1.25 && Math.abs(diffX) > 42) {
                 if (diffX < 0) {
                     if (currentActiveTopicIndex < totalLoadedTopics - 1) {
-                        transitionTopic(currentActiveTopicIndex + 1, 'next', false);
+                        transitionTopic(currentActiveTopicIndex + 1, 'next');
                     }
                 } else {
                     if (currentActiveTopicIndex > 0) {
-                        transitionTopic(currentActiveTopicIndex - 1, 'prev', false);
+                        transitionTopic(currentActiveTopicIndex - 1, 'prev');
                     }
                 }
             }
@@ -1550,11 +1516,11 @@
                     wheelGestureDebounce = true;
                     if (e.deltaX > 0) {
                         if (currentActiveTopicIndex < totalLoadedTopics - 1) {
-                            transitionTopic(currentActiveTopicIndex + 1, 'next', false);
+                            transitionTopic(currentActiveTopicIndex + 1, 'next');
                         }
                     } else {
                         if (currentActiveTopicIndex > 0) {
-                            transitionTopic(currentActiveTopicIndex - 1, 'prev', false);
+                            transitionTopic(currentActiveTopicIndex - 1, 'prev');
                         }
                     }
                     setTimeout(() => { wheelGestureDebounce = false; }, 480);
@@ -1566,9 +1532,9 @@
         window.addEventListener('keydown', (e) => {
             if (document.activeElement.tagName === 'INPUT') return;
             if (e.key === 'ArrowRight' && currentActiveTopicIndex < totalLoadedTopics - 1) {
-                transitionTopic(currentActiveTopicIndex + 1, 'next', false);
+                transitionTopic(currentActiveTopicIndex + 1, 'next');
             } else if (e.key === 'ArrowLeft' && currentActiveTopicIndex > 0) {
-                transitionTopic(currentActiveTopicIndex - 1, 'prev', false);
+                transitionTopic(currentActiveTopicIndex - 1, 'prev');
             }
         });
 
@@ -1729,8 +1695,8 @@
                 topicsFeed.appendChild(card);
             });
 
-            // Adjust stage height to Topic 1 immediately with no layout jump
-            requestAnimationFrame(() => syncFeedHeight(0));
+            // Active card sets container height naturally without keyframe blink
+            topicsFeed.style.height = 'auto';
         }
 
         // Script injector loading /study/currentaffairs-data/DD-MM-YYYY.js
@@ -1833,7 +1799,7 @@
             });
 
             pickerModal.classList.remove('is-open');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'instant' });
         });
 
         pickerModal.addEventListener('pointerdown', (e) => {
@@ -1906,14 +1872,18 @@
             if (activeSessionOverride) {
                 if (activeSessionOverride === 'light') {
                     bodyElement.classList.add('light-mode');
+                    document.documentElement.classList.add('light-mode');
                 } else {
                     bodyElement.classList.remove('light-mode');
+                    document.documentElement.classList.remove('light-mode');
                 }
             } else {
                 if (systemLightQuery.matches) {
                     bodyElement.classList.add('light-mode');
+                    document.documentElement.classList.add('light-mode');
                 } else {
                     bodyElement.classList.remove('light-mode');
+                    document.documentElement.classList.remove('light-mode');
                 }
             }
         }
@@ -1923,8 +1893,10 @@
             sessionStorage.removeItem('dashboard-theme');
             if (e.matches) {
                 bodyElement.classList.add('light-mode');
+                document.documentElement.classList.add('light-mode');
             } else {
                 bodyElement.classList.remove('light-mode');
+                document.documentElement.classList.remove('light-mode');
             }
         });
 
@@ -1933,9 +1905,11 @@
             const isCurrentlyLight = bodyElement.classList.contains('light-mode');
             if (isCurrentlyLight) {
                 bodyElement.classList.remove('light-mode');
+                document.documentElement.classList.remove('light-mode');
                 sessionStorage.setItem('dashboard-theme', 'dark');
             } else {
                 bodyElement.classList.add('light-mode');
+                document.documentElement.classList.add('light-mode');
                 sessionStorage.setItem('dashboard-theme', 'light');
             }
         });
@@ -1954,7 +1928,6 @@
 
         closeSearchBtn.addEventListener('click', () => handleHeaderLeaveOrBlur(true));
 
-        // Snappy page transitions without navigation freeze
         const targetLinks = document.querySelectorAll('footer .footer-links-row a, .breadcrumb-nav a, .logo');
         targetLinks.forEach(link => {
             if (!link.querySelector('.nav-text')) {
