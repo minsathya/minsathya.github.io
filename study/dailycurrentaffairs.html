@@ -123,7 +123,7 @@
             to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
-        header, .breadcrumb-nav, .date-header-row, .active-topics-row, .topics-feed, footer, .side-nav-btn {
+        header, .breadcrumb-nav, .date-topics-capsule, .topics-feed, footer, .side-nav-btn {
             opacity: 1;
             will-change: transform, opacity;
             animation: masterEntrance 1.2s var(--ease-smooth) backwards;
@@ -131,11 +131,10 @@
 
         header { animation-delay: 0.04s; }
         .breadcrumb-nav { animation-delay: 0.10s; }
-        .date-header-row { animation-delay: 0.14s; }
-        .active-topics-row { animation-delay: 0.18s; }
-        .topics-feed { animation-delay: 0.24s; }
-        .side-nav-btn { animation-delay: 0.28s; }
-        footer { animation-delay: 0.32s; }
+        .date-topics-capsule { animation-delay: 0.16s; }
+        .topics-feed { animation-delay: 0.22s; }
+        .side-nav-btn { animation-delay: 0.26s; }
+        footer { animation-delay: 0.30s; }
 
         /* HEADER */
         header {
@@ -339,45 +338,96 @@
         .bc-sep { opacity: 0.5; transition: color 0.8s var(--ease-smooth); }
         .bc-current { color: var(--text-main); font-weight: 500; transition: color 0.8s var(--ease-smooth); }
 
-        /* DATE ROW: SMALL MUTED GREY TEXT + CALENDAR BUTTON */
-        .date-header-row {
+        /* -------------------------------------------------------------
+           DATE & TOPICS COMBINED CAPSULE
+        ------------------------------------------------------------- */
+        .date-topics-capsule {
+            width: 100%;
+            background-color: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 24px;
+            padding: 16px 28px;
+            margin-bottom: 32px;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.02);
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-            width: 100%;
+            justify-content: space-between;
+            gap: 20px;
+            transition: background-color 0.8s var(--ease-smooth), 
+                        border-color 0.8s var(--ease-smooth), 
+                        box-shadow 0.8s var(--ease-smooth);
         }
 
-        .active-date-subtext {
-            font-size: 14px;
-            color: var(--text-muted);
-            font-weight: 500;
-            transition: color 0.8s var(--ease-smooth);
+        body:not(.light-mode) .date-topics-capsule {
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+        }
+
+        .capsule-date-cluster {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-shrink: 0;
         }
 
         .cal-trigger-btn {
             background: none;
             border: none;
             cursor: pointer;
-            padding: 4px;
+            padding: 0;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 12px;
             transition: transform 0.25s var(--ease-smooth);
         }
 
-        .cal-trigger-btn:hover { transform: scale(1.1); }
-        .cal-trigger-btn svg { width: 34px; height: 34px; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25)); }
+        .cal-trigger-btn:hover {
+            transform: scale(1.08);
+        }
 
-        /* TOPICS ROW BELOW THE DATE */
-        .active-topics-row {
+        .cal-trigger-btn svg {
+            width: 36px;
+            height: 36px;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
+        }
+
+        .date-text-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .date-label-tiny {
+            font-size: 11.5px;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 0.2px;
+            transition: color 0.8s var(--ease-smooth);
+        }
+
+        .date-value-main {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+            letter-spacing: -0.2px;
+            transition: color 0.8s var(--ease-smooth);
+        }
+
+        .capsule-divider {
+            width: 1px;
+            height: 36px;
+            background-color: var(--row-divider);
+            margin: 0 4px;
+            flex-shrink: 0;
+            transition: background-color 0.8s var(--ease-smooth);
+        }
+
+        .capsule-topics-cluster {
             display: flex;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 32px;
-            width: 100%;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-grow: 1;
+            min-width: 0;
         }
 
         /* SLOW-MOTION GLIDING CAPSULE INDICATOR */
@@ -1116,9 +1166,7 @@
 
         /* TABLET & IPAD */
         @media (max-width: 1024px) {
-            .breadcrumb-nav,
-            .date-header-row,
-            .active-topics-row {
+            .breadcrumb-nav {
                 padding-left: 10px;
             }
         }
@@ -1126,14 +1174,26 @@
         /* MOBILE PHONES */
         @media (max-width: 700px) {
             body { padding: 30px 18px 24px 18px; }
-            .breadcrumb-nav,
-            .date-header-row,
-            .active-topics-row {
+            .breadcrumb-nav {
                 padding-left: 8px;
             }
             header { height: 64px; border-radius: 24px; margin-bottom: 30px; }
             .header-inner-view { padding: 0 20px; }
             .logo { font-size: 22px; }
+            .date-topics-capsule {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+                padding: 16px 20px;
+                border-radius: 20px;
+            }
+            .capsule-divider {
+                display: none;
+            }
+            .capsule-topics-cluster {
+                width: 100%;
+                justify-content: flex-start;
+            }
             .article-card { padding: 30px 20px; border-radius: 22px; }
             .article-title { font-size: 22px; }
             .section-heading { font-size: 17px; }
@@ -1189,27 +1249,34 @@
             <span class="bc-current">Daily Current Affairs</span>
         </nav>
 
-        <!-- DATE ROW: SMALL MUTED GREY TEXT + CALENDAR TRIGGER -->
-        <div class="date-header-row">
-            <span class="active-date-subtext" id="activeDateDisplay">Selected Date: September 27, 2026</span>
-            <button class="cal-trigger-btn" id="openCalendarBtn" aria-label="Open Date Picker">
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="6" y="14" width="52" height="44" rx="14" fill="#E8EDF2"/>
-                    <path d="M6 24C6 16.268 12.268 10 20 10H44C51.732 10 58 16.268 58 24V26H6V24Z" fill="#258BF5"/>
-                    <rect x="18" y="4" width="6" height="12" rx="3" fill="#1A67B8"/>
-                    <rect x="40" y="4" width="6" height="12" rx="3" fill="#1A67B8"/>
-                    <rect x="14" y="32" width="8" height="8" rx="3" fill="#258BF5"/>
-                    <rect x="28" y="32" width="8" height="8" rx="3" fill="#258BF5"/>
-                    <rect x="42" y="32" width="8" height="8" rx="3" fill="#258BF5"/>
-                    <rect x="14" y="44" width="8" height="8" rx="3" fill="#258BF5"/>
-                    <rect x="28" y="44" width="8" height="8" rx="3" fill="#90C4F9"/>
-                </svg>
-            </button>
-        </div>
+        <!-- DATE & TOPICS COMBINED CAPSULE -->
+        <div class="date-topics-capsule">
+            <!-- Left Side: Calendar Trigger & Small Muted Date Stack -->
+            <div class="capsule-date-cluster">
+                <button class="cal-trigger-btn" id="openCalendarBtn" aria-label="Open Date Picker">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="14" width="52" height="44" rx="14" fill="#E8EDF2"/>
+                        <path d="M6 24C6 16.268 12.268 10 20 10H44C51.732 10 58 16.268 58 24V26H6V24Z" fill="#258BF5"/>
+                        <rect x="18" y="4" width="6" height="12" rx="3" fill="#1A67B8"/>
+                        <rect x="40" y="4" width="6" height="12" rx="3" fill="#1A67B8"/>
+                        <rect x="14" y="32" width="8" height="8" rx="3" fill="#258BF5"/>
+                        <rect x="28" y="32" width="8" height="8" rx="3" fill="#258BF5"/>
+                        <rect x="42" y="32" width="8" height="8" rx="3" fill="#258BF5"/>
+                        <rect x="14" y="44" width="8" height="8" rx="3" fill="#258BF5"/>
+                        <rect x="28" y="44" width="8" height="8" rx="3" fill="#90C4F9"/>
+                    </svg>
+                </button>
+                <div class="date-text-stack">
+                    <span class="date-label-tiny">Selected Date</span>
+                    <span class="date-value-main" id="activeDateDisplay">27 September 2026</span>
+                </div>
+            </div>
 
-        <!-- TOPICS PILL BELOW THE DATE -->
-        <div class="active-topics-row">
-            <div id="topicsPillContainer"></div>
+            <!-- Middle Vertical Divider Line -->
+            <div class="capsule-divider"></div>
+
+            <!-- Right Side: Topics Indicator Glider Pill -->
+            <div class="capsule-topics-cluster" id="topicsPillContainer"></div>
         </div>
 
         <!-- SEAMLESS SINGLE-CARD STAGE -->
@@ -1434,7 +1501,7 @@
                 container.innerHTML = `
                     <div class="topics-nav-pill">
                         <span class="pill-slider-glider" id="pillGlider"></span>
-                        <span class="pill-label">Topics :</span>
+                        <span class="pill-label">Topics:</span>
                         ${buttonsHtml}
                     </div>
                 `;
@@ -1493,7 +1560,7 @@
                 topicsFeed.style.height = `${incomingHeight}px`;
             }
 
-            // Immediately display from top of the screen (showing header, date row & pill completely)
+            // Immediately display from top of the screen (showing header, date capsule & pill completely)
             window.scrollTo({ top: 0, behavior: 'instant' });
 
             // Both cards transition simultaneously with zero straight edge clipping
@@ -1621,7 +1688,7 @@
         }
 
         function renderCards(topics, dateText) {
-            activeDateDisplay.textContent = `Selected Date: ${dateText}`;
+            activeDateDisplay.textContent = dateText;
             topicsFeed.innerHTML = '';
 
             if (!topics || topics.length === 0) {
@@ -1779,12 +1846,12 @@
 
         // Immediate Execution: Initial data is pre-loaded at head to guarantee zero blink
         if (window.currentDailyTopics) {
-            renderCards(window.currentDailyTopics, "September 27, 2026");
+            renderCards(window.currentDailyTopics, "27 September 2026");
         } else {
             loadDateData(2026, 9, 27, (topics) => {
-                renderCards(topics, "September 27, 2026");
+                renderCards(topics, "27 September 2026");
             }, () => {
-                renderCards([], "September 27, 2026");
+                renderCards([], "27 September 2026");
             });
         }
 
@@ -1807,7 +1874,7 @@
             selectedDay = tempDay;
             selectedMonth = tempMonth;
             selectedYear = tempYear;
-            const formattedDateText = `${monthNames[selectedMonth - 1]} ${selectedDay}, ${selectedYear}`;
+            const formattedDateText = `${selectedDay} ${monthNames[selectedMonth - 1]} ${selectedYear}`;
 
             loadDateData(selectedYear, selectedMonth, selectedDay, (topics) => {
                 renderCards(topics, formattedDateText);
