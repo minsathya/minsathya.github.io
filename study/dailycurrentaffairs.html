@@ -382,7 +382,7 @@
             opacity: 0;
             animation: topicCardEntrance 0.7s var(--ease-smooth) forwards;
             transition: background-color 0.8s var(--ease-smooth), 
-                        border-color 0.8s var(--ease-smooth),
+                        border-color 0.8s var(--ease-smooth), 
                         box-shadow 0.8s var(--ease-smooth);
         }
 
@@ -669,7 +669,6 @@
             transition: color 0.25s var(--ease-smooth);
         }
 
-        /* Steady state: No horizontal scaling expansion */
         .drum-cell.is-selected {
             color: var(--text-main);
             font-weight: 600;
@@ -926,10 +925,26 @@
             ]
         };
 
-        // Active date state
-        let selectedDay = 27;
-        let selectedMonth = 9;
-        let selectedYear = 2026;
+        // ========================================================
+        // OPTION 1: AUTOMATICALLY DETECT THE MOST RECENT POST DATE
+        // ========================================================
+        const availableDates = Object.keys(dailyCurrentAffairsDB).sort();
+        let selectedDay, selectedMonth, selectedYear;
+
+        if (availableDates.length > 0) {
+            // Pick the latest available date key (e.g. "2026-09-27")
+            const newestDateKey = availableDates[availableDates.length - 1];
+            const dateParts = newestDateKey.split('-').map(Number);
+            selectedYear = dateParts[0];
+            selectedMonth = dateParts[1];
+            selectedDay = dateParts[2];
+        } else {
+            // Fallback to real-time clock only if database is completely empty
+            const now = new Date();
+            selectedYear = now.getFullYear();
+            selectedMonth = now.getMonth() + 1;
+            selectedDay = now.getDate();
+        }
 
         let tempDay = selectedDay;
         let tempMonth = selectedMonth;
@@ -940,7 +955,7 @@
         function getAvailableYears() {
             const dbYears = Object.keys(dailyCurrentAffairsDB).map(d => parseInt(d.split('-')[0]));
             const minYear = 2026;
-            const maxYear = Math.max(minYear, ...dbYears);
+            const maxYear = Math.max(minYear, ...dbYears, selectedYear);
             const years = [];
             for (let y = minYear; y <= maxYear; y++) {
                 years.push(y);
@@ -1113,6 +1128,7 @@
             });
         }
 
+        // Render newest post automatically on initial landing
         renderTopics();
 
         // ========================================================
