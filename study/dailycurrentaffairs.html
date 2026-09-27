@@ -38,7 +38,6 @@
       }
         :root {
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
-            --ease-card: cubic-bezier(0.22, 1, 0.36, 1);
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
             --text-muted: #777777;
@@ -409,105 +408,58 @@
         }
 
         /* -------------------------------------------------------------
-           SIMULTANEOUS DUAL-CARD STAGE (ZERO FOOTER GAP, NO CLIP LAG)
+           SMOOTH HARDWARE-ACCELERATED HORIZONTAL SWIPE CAROUSEL FEED
         ------------------------------------------------------------- */
         .topics-feed {
-            position: relative;
+            display: flex;
+            flex-direction: row;
             width: 100%;
-            cursor: grab;
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: pan-y;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-x: contain;
+            scrollbar-width: none;
+            gap: 24px;
+            align-items: flex-start;
+            padding-bottom: 8px;
         }
 
-        .topics-feed:active {
-            cursor: grabbing;
-        }
-
-        /* Individual Card Styling */
-        .article-card {
+        .topics-feed::-webkit-scrollbar {
             display: none;
-            width: 100%;
+        }
+
+        @keyframes topicCardEntrance {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 24px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        .article-card {
+            flex: 0 0 100%;
+            min-width: 100%;
+            max-width: 100%;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            box-sizing: border-box;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 28px;
             padding: 44px 48px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
-            user-select: text;
-            -webkit-user-select: text;
-            box-sizing: border-box;
-            will-change: transform, opacity;
+            opacity: 0;
+            animation: topicCardEntrance 0.7s var(--ease-smooth) forwards;
             transition: background-color 0.8s var(--ease-smooth), 
                         border-color 0.8s var(--ease-smooth), 
                         box-shadow 0.8s var(--ease-smooth);
         }
 
         body:not(.light-mode) .article-card { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
-
-        .article-card.is-active {
-            display: block;
-            position: relative;
-            transform: translate3d(0, 0, 0);
-            opacity: 1;
-        }
-
-        /* Simultaneous Animation Keyframes */
-        @keyframes slideOutToLeft {
-            0% { transform: translate3d(0, 0, 0); opacity: 1; }
-            100% { transform: translate3d(-105%, 0, 0); opacity: 0; }
-        }
-
-        @keyframes slideInFromRight {
-            0% { transform: translate3d(105%, 0, 0); opacity: 0; }
-            100% { transform: translate3d(0, 0, 0); opacity: 1; }
-        }
-
-        @keyframes slideOutToRight {
-            0% { transform: translate3d(0, 0, 0); opacity: 1; }
-            100% { transform: translate3d(105%, 0, 0); opacity: 0; }
-        }
-
-        @keyframes slideInFromLeft {
-            0% { transform: translate3d(-105%, 0, 0); opacity: 0; }
-            100% { transform: translate3d(0, 0, 0); opacity: 1; }
-        }
-
-        /* Stage Transition Classes */
-        .article-card.anim-out-left {
-            display: block !important;
-            position: absolute !important;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1;
-            pointer-events: none;
-            animation: slideOutToLeft 0.48s var(--ease-card) forwards !important;
-        }
-
-        .article-card.anim-in-right {
-            display: block !important;
-            position: relative !important;
-            z-index: 2;
-            animation: slideInFromRight 0.48s var(--ease-card) forwards !important;
-        }
-
-        .article-card.anim-out-right {
-            display: block !important;
-            position: absolute !important;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1;
-            pointer-events: none;
-            animation: slideOutToRight 0.48s var(--ease-card) forwards !important;
-        }
-
-        .article-card.anim-in-left {
-            display: block !important;
-            position: relative !important;
-            z-index: 2;
-            animation: slideInFromLeft 0.48s var(--ease-card) forwards !important;
-        }
 
         .article-title {
             font-size: 28px;
@@ -1070,7 +1022,7 @@
             <div id="topicsPillContainer"></div>
         </div>
 
-        <!-- TOPICS STAGE -->
+        <!-- HORIZONTAL SWIPE SNAP CAROUSEL FEED -->
         <div class="topics-feed" id="topicsFeed"></div>
     </main>
 
@@ -1108,7 +1060,6 @@
         // Preserve exact reading position on refresh for dynamic cards
         window.addEventListener('beforeunload', () => {
             sessionStorage.setItem('ca_scroll_pos', window.scrollY);
-            sessionStorage.setItem('ca_active_topic', currentActiveTopicIndex);
         });
 
         const savedScrollPos = sessionStorage.getItem('ca_scroll_pos');
@@ -1235,55 +1186,7 @@
             }
         };
 
-        // 4. SIMULTANEOUS TRANSITION STAGE ENGINE
-        let currentActiveTopicIndex = 0;
-        let totalLoadedTopics = 0;
-        let isTransitioning = false;
-
-        function transitionTopic(targetIndex, direction = null) {
-            if (isTransitioning || targetIndex < 0 || targetIndex >= totalLoadedTopics || targetIndex === currentActiveTopicIndex) return;
-
-            const isNext = direction ? (direction === 'next') : (targetIndex > currentActiveTopicIndex);
-            const currentIndex = currentActiveTopicIndex;
-            currentActiveTopicIndex = targetIndex;
-            isTransitioning = true;
-
-            const cards = topicsFeed.querySelectorAll('.article-card');
-            const currentCard = cards[currentIndex];
-            const targetCard = cards[targetIndex];
-
-            // Update topic pill active state
-            const buttons = document.querySelectorAll('.topic-num-btn');
-            buttons.forEach((btn, i) => {
-                btn.classList.toggle('is-active', i === targetIndex);
-            });
-
-            // Smoothly align scroll to feed top if user read deep into the previous card
-            const feedTop = topicsFeed.getBoundingClientRect().top + window.scrollY;
-            if (window.scrollY > feedTop) {
-                window.scrollTo({
-                    top: Math.max(0, feedTop - 30),
-                    behavior: 'smooth'
-                });
-            }
-
-            // Both cards move simultaneously: 1st exits off edge, 2nd enters from other edge
-            if (isNext) {
-                currentCard.className = 'article-card anim-out-left';
-                targetCard.className = 'article-card anim-in-right';
-            } else {
-                currentCard.className = 'article-card anim-out-right';
-                targetCard.className = 'article-card anim-in-left';
-            }
-
-            setTimeout(() => {
-                cards.forEach((card, idx) => {
-                    card.className = idx === targetIndex ? 'article-card is-active' : 'article-card';
-                });
-                isTransitioning = false;
-            }, 480);
-        }
-
+        // 4. TOPIC PILL & HORIZONTAL SWIPE CONTROLLER
         function renderTopicsPill(totalTopics) {
             const container = document.getElementById('topicsPillContainer');
             if (!container) return;
@@ -1291,8 +1194,8 @@
             if (totalTopics > 0) {
                 let buttonsHtml = '';
                 for (let i = 1; i <= totalTopics; i++) {
-                    const activeClass = (i - 1) === currentActiveTopicIndex ? ' is-active' : '';
-                    buttonsHtml += `<button type="button" class="topic-num-btn${activeClass}" onclick="transitionTopic(${i - 1})">${i}</button>`;
+                    const activeClass = i === 1 ? ' is-active' : '';
+                    buttonsHtml += `<button type="button" class="topic-num-btn${activeClass}" data-topic-btn="${i - 1}" onclick="scrollToTopic(${i - 1})">${i}</button>`;
                 }
                 container.innerHTML = `
                     <div class="topics-nav-pill">
@@ -1305,93 +1208,99 @@
             }
         }
 
-        // 5. UNIVERSAL SWIPE CONTROLLER (LAPTOP TRACKPAD, MOUSE DRAG, PHONE/TABLET TOUCH)
-        let pointerStartX = 0;
-        let pointerStartY = 0;
-        let pointerEndX = 0;
-        let pointerEndY = 0;
-        let isPointerActive = false;
+        function setActivePill(index) {
+            const buttons = document.querySelectorAll('.topic-num-btn');
+            buttons.forEach((btn, i) => {
+                btn.classList.toggle('is-active', i === index);
+            });
+        }
 
-        // A. Pointer Drag (Works for Mouse on PC/Laptop & Touch on Mobile/iPad)
-        topicsFeed.addEventListener('pointerdown', (e) => {
-            if (isTransitioning) return;
-            // Ignore drag if user clicks a button, link, or image view trigger
-            if (e.target.closest('button, a, input')) return;
-            pointerStartX = e.clientX;
-            pointerStartY = e.clientY;
-            pointerEndX = pointerStartX;
-            pointerEndY = pointerStartY;
-            isPointerActive = true;
-        });
+        window.scrollToTopic = function(index) {
+            const feed = document.getElementById('topicsFeed');
+            const card = document.getElementById(`topic-card-${index}`);
+            if (feed && card) {
+                feed.scrollTo({
+                    left: card.offsetLeft,
+                    behavior: 'smooth'
+                });
+                setActivePill(index);
 
-        window.addEventListener('pointermove', (e) => {
-            if (!isPointerActive) return;
-            pointerEndX = e.clientX;
-            pointerEndY = e.clientY;
-        });
-
-        window.addEventListener('pointerup', () => {
-            if (!isPointerActive || isTransitioning) return;
-            isPointerActive = false;
-
-            const diffX = pointerEndX - pointerStartX;
-            const diffY = pointerEndY - pointerStartY;
-
-            // Trigger when horizontal swipe exceeds vertical movement by 1.25x and travel is > 45px
-            if (Math.abs(diffX) > Math.abs(diffY) * 1.25 && Math.abs(diffX) > 45) {
-                if (diffX < 0) {
-                    // Dragged Left -> Next Topic
-                    if (currentActiveTopicIndex < totalLoadedTopics - 1) {
-                        transitionTopic(currentActiveTopicIndex + 1, 'next');
-                    }
-                } else {
-                    // Dragged Right -> Previous Topic
-                    if (currentActiveTopicIndex > 0) {
-                        transitionTopic(currentActiveTopicIndex - 1, 'prev');
-                    }
+                // Align vertical scroll to top of card if user was scrolled deep down
+                const feedRect = feed.getBoundingClientRect();
+                const feedTop = feedRect.top + window.scrollY;
+                if (window.scrollY > feedTop) {
+                    window.scrollTo({
+                        top: Math.max(0, feedTop - 30),
+                        behavior: 'smooth'
+                    });
                 }
             }
-        });
+        };
 
-        // B. Laptop Two-Finger Trackpad Horizontal Gesture
-        let wheelGestureDebounce = false;
-        topicsFeed.addEventListener('wheel', (e) => {
-            if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 35) {
-                if (wheelGestureDebounce || isTransitioning) return;
-                wheelGestureDebounce = true;
-                if (e.deltaX > 0) {
-                    // Trackpad flicked left -> Next Topic
-                    if (currentActiveTopicIndex < totalLoadedTopics - 1) {
-                        transitionTopic(currentActiveTopicIndex + 1, 'next');
+        // Connects touch swipe and scroll to topic pill numbers using IntersectionObserver
+        let topicObserver = null;
+        function setupTopicObserver() {
+            if (topicObserver) topicObserver.disconnect();
+
+            const feed = document.getElementById('topicsFeed');
+            const cards = feed.querySelectorAll('.article-card');
+
+            topicObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const idx = parseInt(entry.target.dataset.index, 10);
+                        if (!isNaN(idx)) {
+                            setActivePill(idx);
+                        }
                     }
-                } else {
-                    // Trackpad flicked right -> Previous Topic
-                    if (currentActiveTopicIndex > 0) {
-                        transitionTopic(currentActiveTopicIndex - 1, 'prev');
-                    }
+                });
+            }, {
+                root: feed,
+                threshold: 0.55
+            });
+
+            cards.forEach(card => topicObserver.observe(card));
+        }
+
+        // Mouse Drag Support on Desktop / Laptop
+        (function setupDesktopDrag() {
+            let isDown = false;
+            let startX, scrollLeft;
+            const feed = document.getElementById('topicsFeed');
+
+            feed.addEventListener('mousedown', (e) => {
+                if (e.target.closest('button, a, input, .info-callout')) return;
+                isDown = true;
+                feed.style.scrollBehavior = 'auto';
+                feed.style.cursor = 'grabbing';
+                startX = e.pageX - feed.offsetLeft;
+                scrollLeft = feed.scrollLeft;
+            });
+
+            window.addEventListener('mouseup', () => {
+                if (!isDown) return;
+                isDown = false;
+                feed.style.scrollBehavior = 'smooth';
+                feed.style.cursor = '';
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                const x = e.pageX - feed.offsetLeft;
+                const walk = (x - startX);
+                if (Math.abs(walk) > 4) {
+                    e.preventDefault();
+                    feed.scrollLeft = scrollLeft - walk;
                 }
-                setTimeout(() => { wheelGestureDebounce = false; }, 600);
-            }
-        }, { passive: true });
+            });
+        })();
 
-        // C. Laptop Keyboard Navigation (Left / Right Arrows)
-        window.addEventListener('keydown', (e) => {
-            if (document.activeElement.tagName === 'INPUT') return;
-            if (e.key === 'ArrowRight' && currentActiveTopicIndex < totalLoadedTopics - 1) {
-                transitionTopic(currentActiveTopicIndex + 1, 'next');
-            } else if (e.key === 'ArrowLeft' && currentActiveTopicIndex > 0) {
-                transitionTopic(currentActiveTopicIndex - 1, 'prev');
-            }
-        });
-
-        // 6. DYNAMIC DATA LOADER ENGINE (REVERSED: LATEST POST = TOPIC 1)
+        // 5. DYNAMIC DATA LOADER ENGINE (REVERSED: LATEST POST = TOPIC 1)
         function renderCards(topics, dateText) {
             activeDateDisplay.textContent = `Selected Date: ${dateText}`;
             topicsFeed.innerHTML = '';
 
             if (!topics || topics.length === 0) {
-                totalLoadedTopics = 0;
-                currentActiveTopicIndex = 0;
                 renderTopicsPill(0);
                 topicsFeed.innerHTML = `
                     <div class="empty-placeholder-card">
@@ -1401,24 +1310,16 @@
                 return;
             }
 
-            // Reverse array: Most recently appended post in the data file becomes Topic 1
+            // Reverse order so the most recently appended post in data file is Topic 1
             const displayTopics = Array.isArray(topics) ? [...topics].reverse() : [];
-            totalLoadedTopics = displayTopics.length;
-
-            const savedTopic = parseInt(sessionStorage.getItem('ca_active_topic'), 10);
-            if (!isNaN(savedTopic) && savedTopic >= 0 && savedTopic < totalLoadedTopics) {
-                currentActiveTopicIndex = savedTopic;
-            } else {
-                currentActiveTopicIndex = 0;
-            }
-
-            renderTopicsPill(totalLoadedTopics);
+            renderTopicsPill(displayTopics.length);
 
             displayTopics.forEach((topic, idx) => {
                 const card = document.createElement('article');
-                card.className = `article-card${idx === currentActiveTopicIndex ? ' is-active' : ''}`;
+                card.className = 'article-card';
                 card.id = `topic-card-${idx}`;
                 card.dataset.index = idx;
+                card.style.animationDelay = `${idx * 0.12}s`;
 
                 let orgRowsHtml = '';
                 if (topic.whoOrg && topic.whoOrg.length > 0) {
@@ -1513,6 +1414,9 @@
 
                 topicsFeed.appendChild(card);
             });
+
+            // Initialize intersection observer for touch and trackpad swiping
+            setupTopicObserver();
         }
 
         // Script injector loading /study/currentaffairs-data/DD-MM-YYYY.js
@@ -1587,7 +1491,7 @@
 
         loadLatestAvailablePost();
 
-        // 7. MODAL CONTROLS & APPLY ACTION
+        // 6. MODAL CONTROLS & APPLY ACTION
         const pickerModal = document.getElementById('pickerModal');
         const openCalendarBtn = document.getElementById('openCalendarBtn');
         const applyDateBtn = document.getElementById('applyDateBtn');
@@ -1624,7 +1528,7 @@
             }
         });
 
-        // 8. THEME PALETTE ENGINE (SYNCED WITH index.html)
+        // 7. THEME PALETTE ENGINE (SYNCED WITH index.html)
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
         const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
