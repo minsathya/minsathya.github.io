@@ -1427,7 +1427,7 @@
             }, 400);
         }
 
-        // 5. RESPONSIVE TOUCH & DESKTOP MOUSE CONTROLLER
+        // 5. RESPONSIVE TOUCH, TRACKPAD & MOUSE DRAG CONTROLLER
         // A. Mobile & iPad Dedicated Touch Engine (Immediate response & early horizontal angle lock)
         let touchStartX = 0;
         let touchStartY = 0;
@@ -1510,7 +1510,38 @@
             }
         });
 
-        // C. Laptop Keyboard Arrow Keys
+        // C. Laptop Trackpad: Horizontal Two-Finger Flick (Allows System Back when on Topic 1)
+        let wheelGestureDebounce = false;
+        topicsFeed.addEventListener('wheel', (e) => {
+            if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                // Swiping right (two-finger flick to the right -> back action)
+                if (e.deltaX < 0) {
+                    // On Topic 1, do NOT preventDefault so native system back gesture fires naturally!
+                    if (currentActiveTopicIndex === 0) {
+                        return;
+                    }
+                    // On Topic 2 or higher, intercept and slide back to previous topic
+                    e.preventDefault();
+                    if (Math.abs(e.deltaX) > 20 && !wheelGestureDebounce && !isTransitioning) {
+                        wheelGestureDebounce = true;
+                        transitionTopic(currentActiveTopicIndex - 1, 'prev');
+                        setTimeout(() => { wheelGestureDebounce = false; }, 480);
+                    }
+                } else if (e.deltaX > 0) {
+                    // Swiping left (two-finger flick to the left -> next topic)
+                    if (currentActiveTopicIndex < totalLoadedTopics - 1) {
+                        e.preventDefault();
+                        if (Math.abs(e.deltaX) > 20 && !wheelGestureDebounce && !isTransitioning) {
+                            wheelGestureDebounce = true;
+                            transitionTopic(currentActiveTopicIndex + 1, 'next');
+                            setTimeout(() => { wheelGestureDebounce = false; }, 480);
+                        }
+                    }
+                }
+            }
+        }, { passive: false });
+
+        // D. Laptop Keyboard Arrow Keys
         window.addEventListener('keydown', (e) => {
             if (document.activeElement.tagName === 'INPUT') return;
             if (e.key === 'ArrowRight' && currentActiveTopicIndex < totalLoadedTopics - 1) {
