@@ -1204,7 +1204,7 @@
             }
         };
 
-        // 4. TOPIC JUMP PILL AND NATIVE SMOOTH SCROLLING
+        // 4. TOPIC JUMP PILL AND RESPONSIVE SMART SCROLLING
         function renderTopicsPill(totalTopics) {
             const container = document.getElementById('topicsPillContainer');
             if (!container) return;
@@ -1225,14 +1225,66 @@
             }
         }
 
+        // Accurate device classifier: targets iPad, iPhone, and Android devices
+        const isMobileOrTablet = /iPad|iPhone|iPod|Android/i.test(navigator.userAgent) || 
+                                 (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+        let activeScrollAnimation = null;
+        function mobileGlideTo(targetY, duration = 700) {
+            if (activeScrollAnimation) cancelAnimationFrame(activeScrollAnimation);
+
+            const startY = window.scrollY;
+            const distance = targetY - startY;
+            if (Math.abs(distance) < 5) return;
+
+            let startTime = null;
+
+            const cancelOnTouch = () => {
+                cancelAnimationFrame(activeScrollAnimation);
+                window.removeEventListener('touchstart', cancelOnTouch);
+            };
+            window.addEventListener('touchstart', cancelOnTouch, { passive: true });
+
+            function step(currentTime) {
+                if (!startTime) startTime = currentTime;
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                // easeInOutCubic: smooth start, progressive speed, and gentle deceleration on arrival
+                const ease = progress < 0.5
+                    ? 4 * progress * progress * progress
+                    : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+                window.scrollTo(0, startY + (distance * ease));
+
+                if (elapsed < duration) {
+                    activeScrollAnimation = requestAnimationFrame(step);
+                } else {
+                    window.removeEventListener('touchstart', cancelOnTouch);
+                }
+            }
+
+            activeScrollAnimation = requestAnimationFrame(step);
+        }
+
+        // Unified controller: Laptop stays 100% native; Mobile/Tablet gets natural deceleration
+        function performSmoothScroll(targetY) {
+            if (isMobileOrTablet) {
+                mobileGlideTo(targetY, 700);
+            } else {
+                // Laptop & Desktop PC (Completely untouched native smooth scroll)
+                window.scrollTo({
+                    top: targetY,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
         window.scrollToTopic = function(index) {
             const card = document.getElementById(`topic-card-${index}`);
             if (card) {
                 const cardTop = card.getBoundingClientRect().top + window.scrollY;
-                window.scrollTo({
-                    top: Math.max(0, cardTop - 30),
-                    behavior: 'smooth'
-                });
+                performSmoothScroll(Math.max(0, cardTop - 30));
             }
         };
 
@@ -1426,7 +1478,7 @@
 
         loadLatestAvailablePost();
 
-        // 6. SMART SCROLL-TO-TOP BUTTON ENGINE (NATIVE SMOOTH SCROLL)
+        // 6. SMART SCROLL-TO-TOP BUTTON ENGINE
         let lastScrollY = window.scrollY;
         let scrollTimer = null;
         const scrollTopBtn = document.getElementById('scrollTopBtn');
@@ -1451,7 +1503,7 @@
         }, { passive: true });
 
         scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            performSmoothScroll(0);
             scrollTopBtn.classList.remove('visible');
             if (scrollTimer) clearTimeout(scrollTimer);
         });
@@ -1484,7 +1536,7 @@
             });
 
             pickerModal.classList.remove('is-open');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            performSmoothScroll(0);
         });
 
         pickerModal.addEventListener('pointerdown', (e) => {
