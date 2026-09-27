@@ -101,7 +101,7 @@
             transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
-        /* MASTER REFRESH ENTRANCE SYNCED WITH index.html */
+        /* MASTER REFRESH ENTRANCE EXTRACTED FROM index.html */
         @keyframes masterEntrance {
             from { opacity: 0; transform: translate3d(0, 24px, 0); }
             to { opacity: 1; transform: translate3d(0, 0, 0); }
@@ -442,7 +442,7 @@
             overscroll-behavior-x: none;
             user-select: none;
             -webkit-user-select: none;
-            transition: height 0.42s var(--ease-premium);
+            transition: height 0.44s var(--ease-premium);
             will-change: height;
         }
 
@@ -1344,7 +1344,7 @@
             }
         }
 
-        // Dynamically adjust feed container height so the footer sits directly beneath shorter cards
+        // Dynamically adjust container height so shorter topics pull footer up directly beneath them
         function syncFeedHeight(idx = currentActiveTopicIndex) {
             const card = document.getElementById(`topic-card-${idx}`);
             if (topicsFeed && card) {
@@ -1356,44 +1356,46 @@
         }
 
         // Context-aware scroll position calculation:
-        // Top of page -> Top of next card
+        // Top of page / Pill Click -> Top of next card (scrollY = 0, full header & pill visible)
         // Middle of page -> Middle of next card
         // Bottom/Footer of page -> Bottom of next card where footer is visible
         function calculateTargetScrollPosition(targetIndex, isPillClick = false) {
-            const feedTop = Math.max(0, topicsFeed.getBoundingClientRect().top + window.scrollY - 30);
-
-            // Pill clicks always start at top of card
+            // Pill clicks always go to the absolute top so header, title, calendar & pill are 100% visible
             if (isPillClick) {
-                return feedTop;
+                return 0;
             }
 
             const currentCard = document.getElementById(`topic-card-${currentActiveTopicIndex}`);
             const targetCard = document.getElementById(`topic-card-${targetIndex}`);
-            if (!currentCard || !targetCard) return feedTop;
+            if (!currentCard || !targetCard) return 0;
 
             const currentScroll = window.scrollY;
             const docHeight = document.documentElement.scrollHeight;
             const windowHeight = window.innerHeight;
             const scrollFromBottom = docHeight - (currentScroll + windowHeight);
 
-            // 1. If at or above the top of the card
-            if (currentScroll <= feedTop + 40) {
-                return feedTop;
+            // 1. If at or near the top of the page
+            if (currentScroll <= 120) {
+                return 0;
             }
 
-            // 2. If at or near the bottom (viewing footer within 75px of bottom)
-            if (scrollFromBottom <= 75) {
+            // 2. If at or near the bottom (viewing footer within 85px of bottom)
+            if (scrollFromBottom <= 85) {
                 const projectedDocHeight = docHeight - currentCard.offsetHeight + targetCard.offsetHeight;
-                return Math.max(feedTop, projectedDocHeight - windowHeight);
+                return Math.max(0, projectedDocHeight - windowHeight);
             }
 
             // 3. Middle: compute proportional depth through readable content
+            const feedTop = topicsFeed.offsetTop;
             const currentReadableHeight = Math.max(1, currentCard.offsetHeight - windowHeight + 100);
             const currentOffset = Math.max(0, currentScroll - feedTop);
             const progressRatio = Math.min(1, Math.max(0, currentOffset / currentReadableHeight));
 
             const targetReadableHeight = Math.max(0, targetCard.offsetHeight - windowHeight + 100);
-            return Math.max(0, feedTop + (progressRatio * targetReadableHeight));
+            const projectedDocHeight = docHeight - currentCard.offsetHeight + targetCard.offsetHeight;
+            const maxScroll = Math.max(0, projectedDocHeight - windowHeight);
+
+            return Math.min(maxScroll, Math.max(0, feedTop + (progressRatio * targetReadableHeight)));
         }
 
         function transitionTopic(targetIndex, direction = null, isPillClick = false) {
@@ -1430,7 +1432,11 @@
             }
 
             // Apply calculated scroll target directly without reverse scroll jumps
-            window.scrollTo({ top: resolvedScrollY, behavior: 'instant' });
+            if (isPillClick) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: resolvedScrollY, behavior: 'instant' });
+            }
 
             // Both cards transition simultaneously with zero straight edge clipping
             if (isNext) {
@@ -1456,7 +1462,7 @@
         let touchStartX = 0;
         let touchStartY = 0;
         let isHorizontalSwipe = false;
-        let isTouching = false;
+        let isTouchActive = false;
 
         topicsFeed.addEventListener('touchstart', (e) => {
             if (isTransitioning) return;
@@ -1465,12 +1471,12 @@
                 touchStartX = e.touches[0].clientX;
                 touchStartY = e.touches[0].clientY;
                 isHorizontalSwipe = false;
-                isTouching = true;
+                isTouchActive = true;
             }
         }, { passive: true });
 
         topicsFeed.addEventListener('touchmove', (e) => {
-            if (!isTouching || isTransitioning) return;
+            if (!isTouchActive || isTransitioning) return;
             const diffX = e.touches[0].clientX - touchStartX;
             const diffY = e.touches[0].clientY - touchStartY;
 
@@ -1481,12 +1487,13 @@
         }, { passive: true });
 
         topicsFeed.addEventListener('touchend', (e) => {
-            if (!isTouching || isTransitioning) return;
-            isTouching = false;
+            if (!isTouchActive || isTransitioning) return;
+            isTouchActive = false;
 
             if (isHorizontalSwipe) {
                 const diffX = e.changedTouches[0].clientX - touchStartX;
-                if (Math.abs(diffX) > 36) {
+                const diffY = e.changedTouches[0].clientY - touchStartY;
+                if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY) * 1.1) {
                     if (diffX < 0) {
                         if (currentActiveTopicIndex < totalLoadedTopics - 1) {
                             transitionTopic(currentActiveTopicIndex + 1, 'next', false);
@@ -1535,10 +1542,11 @@
 
         // C. Laptop Trackpad: Two-Finger Horizontal Flick (Blocks browser history navigation)
         let wheelGestureDebounce = false;
-        topicsFeed.addEventListener('wheel', (e) => {
-            if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        window.addEventListener('wheel', (e) => {
+            const isInsideFeed = e.target.closest('#topicsFeed') || e.target.closest('main');
+            if (isInsideFeed && Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
                 e.preventDefault(); // Prevents trackpad navigation to previous page
-                if (Math.abs(e.deltaX) > 24 && !wheelGestureDebounce && !isTransitioning) {
+                if (Math.abs(e.deltaX) > 20 && !wheelGestureDebounce && !isTransitioning) {
                     wheelGestureDebounce = true;
                     if (e.deltaX > 0) {
                         if (currentActiveTopicIndex < totalLoadedTopics - 1) {
@@ -1946,6 +1954,7 @@
 
         closeSearchBtn.addEventListener('click', () => handleHeaderLeaveOrBlur(true));
 
+        // Snappy page transitions without navigation freeze
         const targetLinks = document.querySelectorAll('footer .footer-links-row a, .breadcrumb-nav a, .logo');
         targetLinks.forEach(link => {
             if (!link.querySelector('.nav-text')) {
