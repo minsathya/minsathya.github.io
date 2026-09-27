@@ -963,6 +963,9 @@
     </footer>
 
     <script>
+        if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
         // 1. DYNAMIC BREADCRUMBS STATE
         (function buildDynamicBreadcrumbs() {
             const HOME_PATH = "/study/index.html";
