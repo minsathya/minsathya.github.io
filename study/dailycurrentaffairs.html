@@ -407,26 +407,15 @@
             color: var(--accent-tag-text);
         }
 
-        /* HORIZONTAL SWIPE SNAP CAROUSEL FEED */
+        /* TOPICS FEED CONTAINER */
         .topics-feed {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             width: 100%;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior-x: contain;
-            scrollbar-width: none;
-            gap: 24px;
-            align-items: flex-start;
-            padding-bottom: 8px;
+            touch-action: pan-y;
         }
 
-        .topics-feed::-webkit-scrollbar {
-            display: none;
-        }
-
+        /* CARD ENTRANCE: FADE FROM BOTTOM TO UP */
         @keyframes topicCardEntrance {
             from {
                 opacity: 0;
@@ -439,25 +428,25 @@
         }
 
         .article-card {
-            flex: 0 0 100%;
-            min-width: 100%;
-            max-width: 100%;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-            box-sizing: border-box;
+            display: none;
+            width: 100%;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 28px;
             padding: 44px 48px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
             opacity: 0;
-            animation: topicCardEntrance 0.7s var(--ease-smooth) forwards;
             transition: background-color 0.8s var(--ease-smooth), 
                         border-color 0.8s var(--ease-smooth), 
                         box-shadow 0.8s var(--ease-smooth);
         }
 
         body:not(.light-mode) .article-card { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+
+        .article-card.is-active {
+            display: block;
+            animation: topicCardEntrance 0.6s var(--ease-smooth) forwards;
+        }
 
         .article-title {
             font-size: 28px;
@@ -1005,7 +994,7 @@
             <div id="topicsPillContainer"></div>
         </div>
 
-        <!-- HORIZONTAL SWIPE SNAP CAROUSEL FEED -->
+        <!-- TOPICS FEED -->
         <div class="topics-feed" id="topicsFeed"></div>
     </main>
 
@@ -1043,6 +1032,7 @@
         // Preserve exact reading position on refresh for dynamic cards
         window.addEventListener('beforeunload', () => {
             sessionStorage.setItem('ca_scroll_pos', window.scrollY);
+            sessionStorage.setItem('ca_active_topic', currentActiveTopicIndex);
         });
 
         const savedScrollPos = sessionStorage.getItem('ca_scroll_pos');
@@ -1169,7 +1159,41 @@
             }
         };
 
-        // 4. TOPIC PILL & HORIZONTAL SWIPE CONTROLLER
+        // 4. TOPIC NAVIGATION ENGINE (IN-PLACE FADE FROM BOTTOM-UP ANIMATION)
+        let currentActiveTopicIndex = 0;
+        let totalLoadedTopics = 0;
+
+        function switchTopic(index) {
+            if (index < 0 || index >= totalLoadedTopics) return;
+            currentActiveTopicIndex = index;
+
+            const cards = topicsFeed.querySelectorAll('.article-card');
+            cards.forEach((card, i) => {
+                if (i === index) {
+                    card.classList.remove('is-active');
+                    void card.offsetWidth; // Force CSS reflow to re-trigger bottom-up fade animation
+                    card.classList.add('is-active');
+                } else {
+                    card.classList.remove('is-active');
+                }
+            });
+
+            // Update pill active button highlight
+            const buttons = document.querySelectorAll('.topic-num-btn');
+            buttons.forEach((btn, i) => {
+                btn.classList.toggle('is-active', i === index);
+            });
+
+            // If reader scrolled down into previous card, align gently back to top
+            const feedTop = topicsFeed.getBoundingClientRect().top + window.scrollY;
+            if (window.scrollY > feedTop) {
+                window.scrollTo({
+                    top: Math.max(0, feedTop - 30),
+                    behavior: 'smooth'
+                });
+            }
+        }
+
         function renderTopicsPill(totalTopics) {
             const container = document.getElementById('topicsPillContainer');
             if (!container) return;
@@ -1177,8 +1201,8 @@
             if (totalTopics > 0) {
                 let buttonsHtml = '';
                 for (let i = 1; i <= totalTopics; i++) {
-                    const activeClass = i === 1 ? ' is-active' : '';
-                    buttonsHtml += `<button type="button" class="topic-num-btn${activeClass}" data-topic-btn="${i - 1}" onclick="scrollToTopic(${i - 1})">${i}</button>`;
+                    const activeClass = (i - 1) === currentActiveTopicIndex ? ' is-active' : '';
+                    buttonsHtml += `<button type="button" class="topic-num-btn${activeClass}" onclick="switchTopic(${i - 1})">${i}</button>`;
                 }
                 container.innerHTML = `
                     <div class="topics-nav-pill">
@@ -1191,59 +1215,45 @@
             }
         }
 
-        function setActivePill(index) {
-            const buttons = document.querySelectorAll('.topic-num-btn');
-            buttons.forEach((btn, i) => {
-                btn.classList.toggle('is-active', i === index);
-            });
-        }
+        // Horizontal touch swipe gesture engine (swipe left -> next, swipe right -> prev)
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
 
-        // Tapping topic pill glides horizontally to that card & gently aligns vertical view
-        window.scrollToTopic = function(index) {
-            const feed = document.getElementById('topicsFeed');
-            const card = document.getElementById(`topic-card-${index}`);
-            if (feed && card) {
-                feed.scrollTo({
-                    left: card.offsetLeft,
-                    behavior: 'smooth'
-                });
-                setActivePill(index);
+        topicsFeed.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            }
+        }, { passive: true });
 
-                // Align vertical scroll to top of card if user was scrolled deep down
-                const feedRect = feed.getBoundingClientRect();
-                const feedTop = feedRect.top + window.scrollY;
-                if (window.scrollY > feedTop) {
-                    window.scrollTo({
-                        top: Math.max(0, feedTop - 30),
-                        behavior: 'smooth'
-                    });
+        topicsFeed.addEventListener('touchend', (e) => {
+            if (e.changedTouches.length === 1) {
+                touchEndX = e.changedTouches[0].clientX;
+                touchEndY = e.changedTouches[0].clientY;
+                handleSwipeGesture();
+            }
+        }, { passive: true });
+
+        function handleSwipeGesture() {
+            const diffX = touchEndX - touchStartX;
+            const diffY = touchEndY - touchStartY;
+
+            // Ensures swipe is horizontal and distinct (> 45px) so vertical reading isn't interrupted
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 45) {
+                if (diffX < 0) {
+                    // Swiped Left -> Move to Next Topic
+                    if (currentActiveTopicIndex < totalLoadedTopics - 1) {
+                        switchTopic(currentActiveTopicIndex + 1);
+                    }
+                } else {
+                    // Swiped Right -> Move to Previous Topic
+                    if (currentActiveTopicIndex > 0) {
+                        switchTopic(currentActiveTopicIndex - 1);
+                    }
                 }
             }
-        };
-
-        // Connects touch swipe to topic pill numbers using IntersectionObserver
-        let topicObserver = null;
-        function setupTopicObserver() {
-            if (topicObserver) topicObserver.disconnect();
-
-            const feed = document.getElementById('topicsFeed');
-            const cards = feed.querySelectorAll('.article-card');
-
-            topicObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const idx = parseInt(entry.target.dataset.index, 10);
-                        if (!isNaN(idx)) {
-                            setActivePill(idx);
-                        }
-                    }
-                });
-            }, {
-                root: feed,
-                threshold: 0.55
-            });
-
-            cards.forEach(card => topicObserver.observe(card));
         }
 
         // 5. DYNAMIC DATA LOADER ENGINE FROM /study/currentaffairs-data/DD-MM-YYYY.js
@@ -1252,6 +1262,8 @@
             topicsFeed.innerHTML = '';
 
             if (!topics || topics.length === 0) {
+                totalLoadedTopics = 0;
+                currentActiveTopicIndex = 0;
                 renderTopicsPill(0);
                 topicsFeed.innerHTML = `
                     <div class="empty-placeholder-card">
@@ -1261,14 +1273,23 @@
                 return;
             }
 
-            renderTopicsPill(topics.length);
+            totalLoadedTopics = topics.length;
+
+            // Restore active topic index if returning from reload
+            const savedTopic = parseInt(sessionStorage.getItem('ca_active_topic'), 10);
+            if (!isNaN(savedTopic) && savedTopic >= 0 && savedTopic < totalLoadedTopics) {
+                currentActiveTopicIndex = savedTopic;
+            } else {
+                currentActiveTopicIndex = 0;
+            }
+
+            renderTopicsPill(totalLoadedTopics);
 
             topics.forEach((topic, idx) => {
                 const card = document.createElement('article');
-                card.className = 'article-card';
+                card.className = `article-card${idx === currentActiveTopicIndex ? ' is-active' : ''}`;
                 card.id = `topic-card-${idx}`;
                 card.dataset.index = idx;
-                card.style.animationDelay = `${idx * 0.12}s`;
 
                 let orgRowsHtml = '';
                 if (topic.whoOrg && topic.whoOrg.length > 0) {
@@ -1363,9 +1384,6 @@
 
                 topicsFeed.appendChild(card);
             });
-
-            // Initialize swipe listener to sync with topic pill
-            setupTopicObserver();
         }
 
         // Script injector loading /study/currentaffairs-data/DD-MM-YYYY.js
