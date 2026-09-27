@@ -1204,7 +1204,7 @@
             }
         };
 
-        // 4. TOPIC JUMP PILL AND SMOOTH SCROLLING
+        // 4. TOPIC JUMP PILL AND CINEMATIC EASING ENGINE
         function renderTopicsPill(totalTopics) {
             const container = document.getElementById('topicsPillContainer');
             if (!container) return;
@@ -1225,14 +1225,48 @@
             }
         }
 
+        let activeScrollAnimation = null;
+        function smoothGlideTo(targetY, duration = 800) {
+            if (activeScrollAnimation) cancelAnimationFrame(activeScrollAnimation);
+
+            const startY = window.scrollY;
+            const distance = targetY - startY;
+            let startTime = null;
+
+            const cancelOnInteraction = () => {
+                cancelAnimationFrame(activeScrollAnimation);
+                window.removeEventListener('touchstart', cancelOnInteraction);
+                window.removeEventListener('wheel', cancelOnInteraction);
+            };
+            window.addEventListener('touchstart', cancelOnInteraction, { passive: true });
+            window.addEventListener('wheel', cancelOnInteraction, { passive: true });
+
+            function step(currentTime) {
+                if (!startTime) startTime = currentTime;
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                // easeOutQuart: silky smooth arrival with no abrupt stops on mobile devices
+                const ease = 1 - Math.pow(1 - progress, 4);
+
+                window.scrollTo(0, startY + (distance * ease));
+
+                if (elapsed < duration) {
+                    activeScrollAnimation = requestAnimationFrame(step);
+                } else {
+                    window.removeEventListener('touchstart', cancelOnInteraction);
+                    window.removeEventListener('wheel', cancelOnInteraction);
+                }
+            }
+
+            activeScrollAnimation = requestAnimationFrame(step);
+        }
+
         window.scrollToTopic = function(index) {
             const card = document.getElementById(`topic-card-${index}`);
             if (card) {
                 const cardTop = card.getBoundingClientRect().top + window.scrollY;
-                window.scrollTo({
-                    top: Math.max(0, cardTop - 30),
-                    behavior: 'smooth'
-                });
+                smoothGlideTo(Math.max(0, cardTop - 30), 800);
             }
         };
 
@@ -1426,7 +1460,7 @@
 
         loadLatestAvailablePost();
 
-        // 6. SMART SCROLL-TO-TOP BUTTON ENGINE (UPWARD SCROLL DETECTION)
+        // 6. SMART SCROLL-TO-TOP BUTTON ENGINE (WITH SMOOTH GLIDE)
         let lastScrollY = window.scrollY;
         let scrollTimer = null;
         const scrollTopBtn = document.getElementById('scrollTopBtn');
@@ -1443,7 +1477,6 @@
                     scrollTopBtn.classList.remove('visible');
                 }, 3000);
             } else {
-                // Instantly hide when scrolling down or when at top of page
                 scrollTopBtn.classList.remove('visible');
                 if (scrollTimer) clearTimeout(scrollTimer);
             }
@@ -1452,7 +1485,7 @@
         }, { passive: true });
 
         scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            smoothGlideTo(0, 750);
             scrollTopBtn.classList.remove('visible');
             if (scrollTimer) clearTimeout(scrollTimer);
         });
@@ -1485,7 +1518,7 @@
             });
 
             pickerModal.classList.remove('is-open');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            smoothGlideTo(0, 600);
         });
 
         pickerModal.addEventListener('pointerdown', (e) => {
