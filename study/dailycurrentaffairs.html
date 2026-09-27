@@ -1192,7 +1192,7 @@
 
             const script = document.createElement('script');
             script.id = 'currentAffairsDataScript';
-            script.src = `/study/currentaffairs-data/${dateKey}.js`;
+            script.src = `/study/currentaffairs-data/${dateKey}.js?t=${Date.now()}`;
 
             script.onload = () => {
                 if (window.currentDailyTopics) {
