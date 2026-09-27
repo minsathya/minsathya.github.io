@@ -38,7 +38,6 @@
       }
         :root {
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
-            --ease-curl: cubic-bezier(0.32, 0, 0.15, 1);
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
             --text-muted: #777777;
@@ -409,278 +408,54 @@
         }
 
         /* -------------------------------------------------------------
-           APPLE BOOKS REALISTIC 3D PAGE CURL ENGINE
+           SMOOTH SLIDING FEED WITH DYNAMIC HEIGHT RESIZING
         ------------------------------------------------------------- */
         .topics-feed {
-            position: relative;
-            display: block;
             width: 100%;
+            overflow: hidden;
+            position: relative;
             touch-action: pan-y;
-            user-select: none;
-            -webkit-user-select: none;
+            will-change: height;
+            transition: height 0.4s var(--ease-smooth);
+        }
+
+        @keyframes feedInitialEntrance {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 20px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        .topics-track {
+            display: flex;
+            width: 100%;
+            align-items: flex-start;
+            will-change: transform;
+            transition: transform 0.48s var(--ease-smooth);
+            animation: feedInitialEntrance 0.7s var(--ease-smooth) backwards;
         }
 
         .article-card {
-            display: none;
-            position: relative;
+            flex: 0 0 100%;
             width: 100%;
+            min-width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 28px;
             padding: 44px 48px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
-            opacity: 0;
-            user-select: text;
-            -webkit-user-select: text;
-            overflow: hidden;
             transition: background-color 0.8s var(--ease-smooth), 
                         border-color 0.8s var(--ease-smooth), 
                         box-shadow 0.8s var(--ease-smooth);
         }
 
         body:not(.light-mode) .article-card { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
-
-        .article-card.is-active {
-            display: block;
-            opacity: 1;
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-        }
-
-        /* Diagonal cylindrical paper roll shadow overlay */
-        .article-card::after {
-            content: '';
-            position: absolute;
-            top: -60%;
-            left: -60%;
-            width: 220%;
-            height: 220%;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        /* --- 1. BOTTOM-RIGHT CURL PEEL --- */
-        @keyframes curlBottomOut {
-            0% {
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-                filter: brightness(1);
-            }
-            30% {
-                clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 100%);
-            }
-            65% {
-                clip-path: polygon(0 0, 75% 0, 0 75%, 0 100%, 0 0);
-                filter: brightness(0.88);
-            }
-            100% {
-                clip-path: polygon(0 0, 0 0, 0 0, 0 0, 0 0);
-                filter: brightness(0.5);
-            }
-        }
-
-        @keyframes shadowBottomRoll {
-            0% {
-                transform: translate3d(65%, 65%, 0);
-                opacity: 0;
-            }
-            15% { opacity: 1; }
-            85% { opacity: 1; }
-            100% {
-                transform: translate3d(-70%, -70%, 0);
-                opacity: 0;
-            }
-        }
-
-        /* --- 2. TOP-RIGHT CURL PEEL --- */
-        @keyframes curlTopOut {
-            0% {
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-                filter: brightness(1);
-            }
-            30% {
-                clip-path: polygon(0 0, 50% 0, 100% 50%, 100% 100%, 0 100%);
-            }
-            65% {
-                clip-path: polygon(0 25%, 0 100%, 100% 100%, 75% 100%, 0 25%);
-                filter: brightness(0.88);
-            }
-            100% {
-                clip-path: polygon(0 100%, 0 100%, 0 100%, 0 100%, 0 100%);
-                filter: brightness(0.5);
-            }
-        }
-
-        @keyframes shadowTopRoll {
-            0% {
-                transform: translate3d(65%, -65%, 0);
-                opacity: 0;
-            }
-            15% { opacity: 1; }
-            85% { opacity: 1; }
-            100% {
-                transform: translate3d(-70%, 70%, 0);
-                opacity: 0;
-            }
-        }
-
-        /* --- 3. MIDDLE-RIGHT CURL PEEL --- */
-        @keyframes curlMidOut {
-            0% {
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-                filter: brightness(1);
-            }
-            35% {
-                clip-path: polygon(0 0, 75% 0, 45% 50%, 75% 100%, 0 100%);
-            }
-            70% {
-                clip-path: polygon(0 0, 35% 0, 0 50%, 35% 100%, 0 100%);
-                filter: brightness(0.85);
-            }
-            100% {
-                clip-path: polygon(0 0, 0 0, 0 50%, 0 100%, 0 100%);
-                filter: brightness(0.5);
-            }
-        }
-
-        @keyframes shadowMidRoll {
-            0% {
-                transform: translate3d(70%, 0, 0);
-                opacity: 0;
-            }
-            15% { opacity: 1; }
-            85% { opacity: 1; }
-            100% {
-                transform: translate3d(-70%, 0, 0);
-                opacity: 0;
-            }
-        }
-
-        /* Underneath Page Revealed */
-        @keyframes pageRevealUnderneath {
-            0% {
-                opacity: 0.85;
-                filter: brightness(0.82);
-                transform: scale(0.985);
-            }
-            100% {
-                opacity: 1;
-                filter: brightness(1);
-                transform: scale(1);
-            }
-        }
-
-        /* Backward Curl (Returning Previous Page from Left) */
-        @keyframes curlBackwardIn {
-            0% {
-                clip-path: polygon(0 0, 0 0, 0 0, 0 0, 0 0);
-                filter: brightness(0.5);
-            }
-            35% {
-                clip-path: polygon(0 0, 75% 0, 0 75%, 0 100%, 0 0);
-            }
-            70% {
-                clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 100%);
-                filter: brightness(0.9);
-            }
-            100% {
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-                filter: brightness(1);
-            }
-        }
-
-        @keyframes shadowBackwardRoll {
-            0% {
-                transform: translate3d(-70%, -70%, 0);
-                opacity: 0;
-            }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% {
-                transform: translate3d(70%, 70%, 0);
-                opacity: 0;
-            }
-        }
-
-        /* Curl Class Activations */
-        .article-card.curl-bottom-out {
-            display: block !important;
-            position: absolute !important;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 5;
-            pointer-events: none;
-            animation: curlBottomOut 0.72s var(--ease-curl) forwards !important;
-        }
-
-        .article-card.curl-bottom-out::after {
-            background: linear-gradient(135deg, transparent 44%, rgba(0, 0, 0, 0.45) 48%, rgba(255, 255, 255, 0.12) 50%, rgba(20, 20, 20, 0.95) 53%, rgba(0, 0, 0, 0.3) 57%, transparent 64%);
-            animation: shadowBottomRoll 0.72s var(--ease-curl) forwards !important;
-        }
-
-        .article-card.curl-top-out {
-            display: block !important;
-            position: absolute !important;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 5;
-            pointer-events: none;
-            animation: curlTopOut 0.72s var(--ease-curl) forwards !important;
-        }
-
-        .article-card.curl-top-out::after {
-            background: linear-gradient(45deg, transparent 44%, rgba(0, 0, 0, 0.45) 48%, rgba(255, 255, 255, 0.12) 50%, rgba(20, 20, 20, 0.95) 53%, rgba(0, 0, 0, 0.3) 57%, transparent 64%);
-            animation: shadowTopRoll 0.72s var(--ease-curl) forwards !important;
-        }
-
-        .article-card.curl-mid-out {
-            display: block !important;
-            position: absolute !important;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 5;
-            pointer-events: none;
-            animation: curlMidOut 0.72s var(--ease-curl) forwards !important;
-        }
-
-        .article-card.curl-mid-out::after {
-            background: linear-gradient(90deg, transparent 44%, rgba(0, 0, 0, 0.45) 48%, rgba(255, 255, 255, 0.12) 50%, rgba(20, 20, 20, 0.95) 53%, rgba(0, 0, 0, 0.3) 57%, transparent 64%);
-            animation: shadowMidRoll 0.72s var(--ease-curl) forwards !important;
-        }
-
-        .article-card.revealing-underneath {
-            display: block !important;
-            position: relative !important;
-            z-index: 1;
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%) !important;
-            animation: pageRevealUnderneath 0.72s var(--ease-curl) forwards !important;
-        }
-
-        .article-card.curl-backward-in {
-            display: block !important;
-            position: relative !important;
-            z-index: 5;
-            animation: curlBackwardIn 0.72s var(--ease-curl) forwards !important;
-        }
-
-        .article-card.curl-backward-in::after {
-            background: linear-gradient(135deg, transparent 44%, rgba(0, 0, 0, 0.45) 48%, rgba(255, 255, 255, 0.12) 50%, rgba(20, 20, 20, 0.95) 53%, rgba(0, 0, 0, 0.3) 57%, transparent 64%);
-            animation: shadowBackwardRoll 0.72s var(--ease-curl) forwards !important;
-        }
-
-        .article-card.outgoing-underneath {
-            display: block !important;
-            position: absolute !important;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1;
-            pointer-events: none;
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%) !important;
-            filter: brightness(0.82);
-        }
 
         .article-title {
             font-size: 28px;
@@ -689,6 +464,9 @@
             color: var(--text-main);
             margin-bottom: 20px;
             line-height: 1.35;
+            hyphens: none;
+            -webkit-hyphens: none;
+            word-break: normal;
             transition: color 0.8s var(--ease-smooth);
         }
 
@@ -823,6 +601,9 @@
             padding-bottom: 8px;
             border-bottom: 1px solid var(--row-divider);
             margin-bottom: 6px;
+            hyphens: none;
+            -webkit-hyphens: none;
+            word-break: normal;
             transition: color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth);
         }
 
@@ -831,6 +612,9 @@
             line-height: 1.8;
             color: var(--text-main);
             opacity: 0.9;
+            hyphens: none;
+            -webkit-hyphens: none;
+            word-break: normal;
             transition: color 0.8s var(--ease-smooth);
         }
 
@@ -849,6 +633,9 @@
             line-height: 1.75;
             color: var(--text-main);
             opacity: 0.9;
+            hyphens: none;
+            -webkit-hyphens: none;
+            word-break: normal;
             transition: color 0.8s var(--ease-smooth);
         }
 
@@ -884,6 +671,9 @@
             line-height: 1.65;
             color: var(--text-main);
             opacity: 0.95;
+            hyphens: none;
+            -webkit-hyphens: none;
+            word-break: normal;
             transition: color 0.8s var(--ease-smooth);
         }
 
@@ -1228,8 +1018,10 @@
             <div id="topicsPillContainer"></div>
         </div>
 
-        <!-- 3D BOOK FEED CONTAINER -->
-        <div class="topics-feed" id="topicsFeed"></div>
+        <!-- SLIDING FEED CONTAINER -->
+        <div class="topics-feed" id="topicsFeed">
+            <div class="topics-track" id="topicsTrack"></div>
+        </div>
     </main>
 
     <!-- 3-COLUMN DRUM WHEEL DATE PICKER MODAL -->
@@ -1316,6 +1108,7 @@
         const monthCol = document.getElementById('monthColumn');
         const yearCol = document.getElementById('yearColumn');
         const topicsFeed = document.getElementById('topicsFeed');
+        const topicsTrack = document.getElementById('topicsTrack');
         const activeDateDisplay = document.getElementById('activeDateDisplay');
 
         function initPickerColumns() {
@@ -1391,33 +1184,45 @@
                 drawer.classList.add('is-open');
                 btn.textContent = 'Close';
             }
+            // Ensure feed container height smoothly adapts to drawer height
+            setTimeout(updateFeedHeight, 50);
+            setTimeout(updateFeedHeight, 250);
+            setTimeout(updateFeedHeight, 550);
         };
 
-        // 4. APPLE BOOKS DIRECTIONAL PAGE CURL ENGINE
+        // 4. SMOOTH HORIZONTAL SLIDE & DYNAMIC CONTAINER HEIGHT
         let currentActiveTopicIndex = 0;
         let totalLoadedTopics = 0;
-        let isPageCurling = false;
+        let cardResizeObserver = null;
 
-        // curlOrigin: 'bottom' | 'top' | 'mid'
-        function switchTopic(targetIndex, curlOrigin = 'bottom') {
-            if (isPageCurling || targetIndex < 0 || targetIndex >= totalLoadedTopics || targetIndex === currentActiveTopicIndex) return;
+        function updateFeedHeight() {
+            if (!topicsTrack) return;
+            const cards = topicsTrack.querySelectorAll('.article-card');
+            if (cards[currentActiveTopicIndex]) {
+                const activeCardHeight = cards[currentActiveTopicIndex].offsetHeight;
+                if (activeCardHeight > 0) {
+                    topicsFeed.style.height = `${activeCardHeight}px`;
+                }
+            }
+        }
 
-            const isNext = targetIndex > currentActiveTopicIndex;
-            const currentIndex = currentActiveTopicIndex;
-            currentActiveTopicIndex = targetIndex;
-            isPageCurling = true;
+        function switchTopic(index) {
+            if (index < 0 || index >= totalLoadedTopics) return;
+            currentActiveTopicIndex = index;
 
-            const cards = topicsFeed.querySelectorAll('.article-card');
-            const currentCard = cards[currentIndex];
-            const targetCard = cards[targetIndex];
+            // Slide track horizontally
+            topicsTrack.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
 
-            // Highlight active button in Topics pill
+            // Dynamically resize container height to fit active topic card
+            updateFeedHeight();
+
+            // Update pill highlight state
             const buttons = document.querySelectorAll('.topic-num-btn');
             buttons.forEach((btn, i) => {
-                btn.classList.toggle('is-active', i === targetIndex);
+                btn.classList.toggle('is-active', i === index);
             });
 
-            // Smoothly align scroll to feed top if user read down into card
+            // Smoothly align scroll to top if reader read down into previous card
             const feedTop = topicsFeed.getBoundingClientRect().top + window.scrollY;
             if (window.scrollY > feedTop) {
                 window.scrollTo({
@@ -1425,26 +1230,6 @@
                     behavior: 'smooth'
                 });
             }
-
-            // Trigger direction-specific peel animation
-            if (isNext) {
-                let outClass = 'article-card curl-bottom-out';
-                if (curlOrigin === 'top') outClass = 'article-card curl-top-out';
-                if (curlOrigin === 'mid') outClass = 'article-card curl-mid-out';
-
-                currentCard.className = outClass;
-                targetCard.className = 'article-card revealing-underneath';
-            } else {
-                currentCard.className = 'article-card outgoing-underneath';
-                targetCard.className = 'article-card curl-backward-in';
-            }
-
-            setTimeout(() => {
-                cards.forEach((card, idx) => {
-                    card.className = idx === targetIndex ? 'article-card is-active' : 'article-card';
-                });
-                isPageCurling = false;
-            }, 720);
         }
 
         function renderTopicsPill(totalTopics) {
@@ -1455,7 +1240,7 @@
                 let buttonsHtml = '';
                 for (let i = 1; i <= totalTopics; i++) {
                     const activeClass = (i - 1) === currentActiveTopicIndex ? ' is-active' : '';
-                    buttonsHtml += `<button type="button" class="topic-num-btn${activeClass}" onclick="switchTopic(${i - 1}, 'bottom')">${i}</button>`;
+                    buttonsHtml += `<button type="button" class="topic-num-btn${activeClass}" onclick="switchTopic(${i - 1})">${i}</button>`;
                 }
                 container.innerHTML = `
                     <div class="topics-nav-pill">
@@ -1468,37 +1253,20 @@
             }
         }
 
-        // TOUCH CONTROLLER: SUPPORTS HORIZONTAL SWIPE + TOP/MID/BOTTOM EDGE TAPS
+        // Horizontal touch swipe gesture engine (smooth lateral slide)
         let touchStartX = 0;
         let touchStartY = 0;
         let touchEndX = 0;
         let touchEndY = 0;
-        let touchStartTime = 0;
-        let touchZoneY = 'bottom';
         let isTouching = false;
 
         topicsFeed.addEventListener('touchstart', (e) => {
-            if (isPageCurling) return;
             if (e.touches.length === 1) {
                 touchStartX = e.touches[0].clientX;
                 touchStartY = e.touches[0].clientY;
                 touchEndX = touchStartX;
                 touchEndY = touchStartY;
-                touchStartTime = Date.now();
                 isTouching = true;
-
-                // Detect vertical touch position within the card (Top / Middle / Bottom)
-                const feedRect = topicsFeed.getBoundingClientRect();
-                const relativeY = touchStartY - feedRect.top;
-                const ratioY = relativeY / feedRect.height;
-
-                if (ratioY < 0.33) {
-                    touchZoneY = 'top';
-                } else if (ratioY > 0.67) {
-                    touchZoneY = 'bottom';
-                } else {
-                    touchZoneY = 'mid';
-                }
             }
         }, { passive: true });
 
@@ -1510,64 +1278,39 @@
         }, { passive: true });
 
         topicsFeed.addEventListener('touchend', () => {
-            if (!isTouching || isPageCurling) return;
+            if (!isTouching) return;
             isTouching = false;
 
             const diffX = touchEndX - touchStartX;
             const diffY = touchEndY - touchStartY;
-            const totalDistance = Math.hypot(diffX, diffY);
-            const duration = Date.now() - touchStartTime;
 
-            const feedRect = topicsFeed.getBoundingClientRect();
-            const relStartX = touchStartX - feedRect.left;
-            const cardWidth = feedRect.width;
-
-            // 1. HORIZONTAL SWIPE GESTURE (Anywhere across the card)
-            if (Math.abs(diffX) > Math.abs(diffY) * 1.3 && Math.abs(diffX) > 38) {
+            // Strict lateral swipe detection (>40px with horizontal dominant vector)
+            if (Math.abs(diffX) > Math.abs(diffY) * 1.3 && Math.abs(diffX) > 40) {
                 if (diffX < 0) {
-                    // Swiped Left -> Curl forward to Next Page using touch vertical origin
+                    // Swiped Left -> Next Topic
                     if (currentActiveTopicIndex < totalLoadedTopics - 1) {
-                        switchTopic(currentActiveTopicIndex + 1, touchZoneY);
+                        switchTopic(currentActiveTopicIndex + 1);
                     }
                 } else {
-                    // Swiped Right -> Curl back to Previous Page
+                    // Swiped Right -> Previous Topic
                     if (currentActiveTopicIndex > 0) {
-                        switchTopic(currentActiveTopicIndex - 1, 'bottom');
+                        switchTopic(currentActiveTopicIndex - 1);
                     }
-                }
-                return;
-            }
-
-            // 2. EDGE TAP ZONES (Apple Books single tap on page margins)
-            if (totalDistance < 14 && duration < 320) {
-                // Right margin tap zone (Rightmost ~24% of card)
-                if (relStartX > cardWidth * 0.76) {
-                    if (currentActiveTopicIndex < totalLoadedTopics - 1) {
-                        switchTopic(currentActiveTopicIndex + 1, touchZoneY);
-                    }
-                    return;
-                }
-
-                // Left margin tap zone (Leftmost ~20% of card)
-                if (relStartX < cardWidth * 0.20) {
-                    if (currentActiveTopicIndex > 0) {
-                        switchTopic(currentActiveTopicIndex - 1, 'bottom');
-                    }
-                    return;
                 }
             }
         }, { passive: true });
 
-        // 5. DYNAMIC DATA LOADER ENGINE FROM /study/currentaffairs-data/DD-MM-YYYY.js
+        // 5. DYNAMIC DATA LOADER ENGINE (REVERSED: LATEST POST = TOPIC 1)
         function renderCards(topics, dateText) {
             activeDateDisplay.textContent = `Selected Date: ${dateText}`;
-            topicsFeed.innerHTML = '';
+            topicsTrack.innerHTML = '';
 
             if (!topics || topics.length === 0) {
                 totalLoadedTopics = 0;
                 currentActiveTopicIndex = 0;
+                topicsFeed.style.height = 'auto';
                 renderTopicsPill(0);
-                topicsFeed.innerHTML = `
+                topicsTrack.innerHTML = `
                     <div class="empty-placeholder-card">
                         No current affairs entries found for ${dateText}.
                     </div>
@@ -1575,7 +1318,9 @@
                 return;
             }
 
-            totalLoadedTopics = topics.length;
+            // Reverse array so the most recently appended post is displayed first (Topic 1)
+            const displayTopics = Array.isArray(topics) ? [...topics].reverse() : [];
+            totalLoadedTopics = displayTopics.length;
 
             const savedTopic = parseInt(sessionStorage.getItem('ca_active_topic'), 10);
             if (!isNaN(savedTopic) && savedTopic >= 0 && savedTopic < totalLoadedTopics) {
@@ -1586,9 +1331,9 @@
 
             renderTopicsPill(totalLoadedTopics);
 
-            topics.forEach((topic, idx) => {
+            displayTopics.forEach((topic, idx) => {
                 const card = document.createElement('article');
-                card.className = `article-card${idx === currentActiveTopicIndex ? ' is-active' : ''}`;
+                card.className = 'article-card';
                 card.id = `topic-card-${idx}`;
                 card.dataset.index = idx;
 
@@ -1683,8 +1428,20 @@
                     </section>` : ''}
                 `;
 
-                topicsFeed.appendChild(card);
+                topicsTrack.appendChild(card);
             });
+
+            // Set track translation and adapt height to the active card
+            topicsTrack.style.transform = `translate3d(-${currentActiveTopicIndex * 100}%, 0, 0)`;
+            requestAnimationFrame(() => updateFeedHeight());
+
+            // Setup ResizeObserver to guarantee the container matches card height dynamically
+            if (cardResizeObserver) cardResizeObserver.disconnect();
+            if (window.ResizeObserver) {
+                cardResizeObserver = new ResizeObserver(() => updateFeedHeight());
+                const cards = topicsTrack.querySelectorAll('.article-card');
+                cards.forEach(card => cardResizeObserver.observe(card));
+            }
         }
 
         // Script injector loading /study/currentaffairs-data/DD-MM-YYYY.js
