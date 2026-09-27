@@ -5,7 +5,7 @@ window.currentDailyTopics = [
         category: "Economy / Energy & Infrastructure",
         comesUnder: "Prelims and Mains",
         image: {
-            url: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=1200&q=80",
+            url: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN8Wc8OamwXy4FUmBJbh8SWw2BmNfG6_me_U-HD7MqAQ&s=10
             caption: "Thermal energy generation and industrial coal distribution infrastructure"
         },
         whyInNews: "The Ministry of Power has ordered 112 captive coal power plants to run at full capacity from October 1 to December 31, 2026, to meet high electricity demand and prevent power cuts.",
