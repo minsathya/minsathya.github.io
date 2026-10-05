@@ -1,1 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sathya.</title>
 
+    <!-- Universal iPad stabilization -->
+    <script>
+      if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
+        document.documentElement.classList.add('instant-landing');
+      }
+    </script>
+
+    <meta name="description" content="Personal workspace for study notes, resources, and current affairs.">
+
+    <!-- Google Tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5VGX2K64Y4');
+    </script>
+    
+    <!-- Favicon Engine -->
+    <link id="favicon" rel="icon" type="image/png" href="favicon-light.png">
+
+    <script>
+      const favicon = document.getElementById('favicon');
+      const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      function updateFavicon(e) {
+        favicon.href = e.matches ? 'favicon-dark.png' : 'favicon-light.png';
+      }
+      
+      updateFavicon(darkMode);
+      darkMode.addEventListener('change', updateFavicon);
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Smooth, gradual animation curve for touchscreen & desktop */
+            --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+            --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+            --bg-color: #0b0b0b;
+            --text-main: #ffffff;
+            --text-muted: #666666;
+            --panel-bg: #121212;
+            --panel-border: #222222;
+            --row-divider: #1c1c1c;
+            --row-hover: rgba(255, 255, 255, 0.015);
+            --header-bg: #1a231e;
+            --header-border: #222c26;
+            
+            /* 3D Container Variables */
+            --myspace-bg: #141414;
+            --myspace-border: #242424;
+            --myspace-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            --card-shadow-hover: 0 16px 36px rgba(0, 0, 0, 0.45);
+            --card-border-hover: #383838;
+
+            /* Vertical cascade parameters */
+            --cascade-distance: 24px;
+            --cascade-duration-exit: 0.2s;
+            --cascade-duration-entry: 0.28s;
+        }
+
+        body.light-mode {
+            --bg-color: #ebebe4;
+            --text-main: #111111;
+            --text-muted: #88888e;
+            --panel-bg: #ffffff;
+            --panel-border: #e2e2e7;
+            --row-divider: #f2f2f7;
+            --row-hover: rgba(0, 0, 0, 0.01);
+            --header-bg: #e9ebe6;
+            --header-border: #d4d8cf;
+            
+            /* 3D Container Variables (Light) */
+            --myspace-bg: #f5f5f0;
+            --myspace-border: #dcdce0;
+            --myspace-shadow: 0 20px 45px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+            --card-shadow-hover: 0 16px 32px rgba(0, 0, 0, 0.09);
+            --card-border-hover: #b8b8c0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent !important;
+            tap-highlight-color: transparent !important;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 60px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 95%;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
+        }
+
+        @keyframes masterEntrance {
+            from { opacity: 0; transform: translate3d(0, 24px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+
+        header, main, footer {
+            opacity: 1;
+            will-change: transform, opacity;
+            animation: masterEntrance 1.2s var(--ease-smooth) backwards;
+        }
+
+        header { animation-delay: 0.04s; }
+        main { animation-delay: 0.16s; }
+        footer { animation-delay: 0.28s; }
+
+        /* HEADER BASE MATCHING CAPSULE GEOMETRY & PALETTE */
+        header {
+            position: relative;
+            background-color: var(--header-bg);
+            border: 1px solid var(--header-border);
+            border-radius: 28px;
+            width: 100%;
+            height: 72px;
+            margin: 0 auto 60px auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            touch-action: manipulation;
+            
+            will-change: transform, box-shadow, border-color;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            
+            /* Always smooth 0.55s curve for both lifting up & recoiling back down */
+            transition: transform 0.55s var(--ease-smooth), 
+                        box-shadow 0.55s var(--ease-smooth), 
+                        border-color 0.55s var(--ease-smooth), 
+                        background-color 0.8s var(--ease-smooth);
+        }
+
+        body:not(.light-mode) header {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* NATIVE REPEATABLE 3D LIFT ON HOVER, FOCUS, TAP, OR CLICK */
+        header:hover,
+        header:focus-within,
+        header:active,
+        header.is-header-lifted {
+            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
+            border-color: #1E1E1E;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+        }
+
+        body.light-mode header:hover,
+        body.light-mode header:focus-within,
+        body.light-mode header:active,
+        body.light-mode header.is-header-lifted {
+            border-color: #b8b8bc;
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.09);
+        }
+
+        .header-inner-view {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        #headerMainView {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+            pointer-events: auto;
+            z-index: 2;
+        }
+
+        #headerSearchView {
+            opacity: 0;
+            transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        header.state-search #headerMainView {
+            animation: skyfallExit var(--cascade-duration-exit) ease-in both;
+            pointer-events: none;
+        }
+        header.state-search #headerSearchView {
+            animation: skyfallEntry var(--cascade-duration-entry) var(--ease-smooth) both;
+            animation-delay: var(--cascade-duration-exit);
+            pointer-events: auto;
+        }
+
+        header.state-main #headerSearchView {
+            animation: skyfallExit var(--cascade-duration-exit) ease-in both;
+            pointer-events: none;
+        }
+        header.state-main #headerMainView {
+            animation: skyfallEntry var(--cascade-duration-entry) var(--ease-smooth) both;
+            animation-delay: var(--cascade-duration-exit);
+            pointer-events: auto;
+        }
+
+        @keyframes skyfallExit {
+            0% { transform: translate3d(0, 0, 0); opacity: 1; }
+            100% { transform: translate3d(0, var(--cascade-distance), 0); opacity: 0; }
+        }
+
+        @keyframes skyfallEntry {
+            0% { transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0); opacity: 0; }
+            100% { transform: translate3d(0, 0, 0); opacity: 1; }
+        }
+
+        .header-right-cluster,
+        .search-control-cluster {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-shrink: 0;
+            height: 100%;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            text-decoration: none !important;
+            transition: color 0.8s var(--ease-smooth);
+            flex-shrink: 0;
+        }
+
+        .ctrl-btn {
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            flex-shrink: 0;
+            transition: opacity 0.2s var(--ease-smooth), color 0.8s var(--ease-smooth);
+        }
+
+        .ctrl-btn:hover { opacity: 0.6; }
+
+        .ctrl-btn svg,
+        .search-static-icon {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: var(--text-main);
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.8s var(--ease-smooth);
+        }
+
+        .search-static-icon {
+            opacity: 0.4;
+            flex-shrink: 0;
+        }
+
+        .search-core-input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            padding: 0 16px;
+            width: 100%;
+            min-width: 0;
+            will-change: transform, opacity;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: color 0.8s var(--ease-smooth);
+        }
+
+        .clear-text-btn svg { opacity: 0.4; }
+        .close-search-btn svg { opacity: 0.7; }
+
+        .theme-toggle {
+            width: 32px;
+            height: 32px;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        .theme-toggle svg {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: var(--text-main);
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transform-origin: center center;
+            will-change: transform, opacity;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transition: transform 0.8s var(--ease-smooth), opacity 0.8s var(--ease-smooth), stroke 0.8s var(--ease-smooth);
+        }
+
+        .theme-toggle .sun-icon { opacity: 0; transform: rotate(-90deg) scale(0.4); }
+        .theme-toggle .moon-icon { opacity: 1; transform: rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle .sun-icon { opacity: 1; transform: rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle .moon-icon { opacity: 0; transform: rotate(90deg) scale(0.4); }
+
+        main {
+            flex-grow: 1;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .myspace-container {
+            width: 100%;
+            max-width: 680px;
+            background-color: var(--myspace-bg);
+            border: 1px solid var(--myspace-border);
+            border-radius: 36px;
+            padding: 32px 28px 36px 28px;
+            box-shadow: var(--myspace-shadow);
+            transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth), box-shadow 0.8s var(--ease-smooth);
+        }
+
+        .myspace-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            color: var(--text-main);
+            margin-bottom: 28px;
+            transition: color 0.8s var(--ease-smooth);
+        }
+
+        .myspace-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: stretch;
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* CARD CONTAINER WITH SMOOTH 0.55s GRADUAL TRANSITION */
+        .myspace-card {
+            flex: 1 1 calc(50% - 10px);
+            min-width: 180px;
+            max-width: 280px;
+            background-color: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 24px;
+            padding: 28px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            text-decoration: none !important;
+            box-shadow: var(--card-shadow);
+            touch-action: manipulation;
+            
+            will-change: transform, box-shadow, border-color;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            
+            /* Smooth 0.55s gradual transition for both opening and falling back */
+            transition: transform 0.55s var(--ease-smooth), 
+                        box-shadow 0.55s var(--ease-smooth), 
+                        border-color 0.55s var(--ease-smooth), 
+                        background-color 0.8s var(--ease-smooth);
+        }
+
+        @media (min-width: 701px) {
+            .myspace-grid.has-3-items .myspace-card {
+                flex: 1 1 calc(33.333% - 14px) !important;
+                max-width: 200px !important;
+            }
+        }
+
+        .myspace-card-icon {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.55s var(--ease-smooth);
+        }
+
+        .myspace-card-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-main);
+            letter-spacing: -0.2px;
+            transition: color 0.8s var(--ease-smooth);
+        }
+
+        /* Laptop Hover */
+        @media (hover: hover) and (pointer: fine) {
+            .myspace-card:hover {
+                transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1);
+                border-color: var(--card-border-hover);
+                box-shadow: var(--card-shadow-hover);
+            }
+
+            .myspace-card:hover .myspace-card-icon {
+                transform: scale3d(1.08, 1.08, 1);
+            }
+
+            .footer-links-row a:hover .nav-text,
+            .logo:hover .nav-text {
+                transform: scale3d(1.06, 1.06, 1) !important;
+            }
+        }
+
+        /* Smooth Elevation Lock for Touch (iPad & Phone) */
+        .myspace-card.is-card-lifted {
+            transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1) !important;
+            border-color: var(--card-border-hover) !important;
+            box-shadow: var(--card-shadow-hover) !important;
+        }
+
+        .myspace-card.is-card-lifted .myspace-card-icon {
+            transform: scale3d(1.08, 1.08, 1) !important;
+        }
+
+        .footer-links-row a.is-card-lifted .nav-text,
+        .logo.is-card-lifted .nav-text {
+            transform: scale3d(1.06, 1.06, 1) !important;
+        }
+
+        footer { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 24px; 
+            width: 100%; 
+        }
+
+        .footer-links-row { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 32px; 
+            flex-wrap: wrap; 
+            width: 100%; 
+        }
+
+        .footer-links-row a {
+            color: var(--text-muted) !important;
+            text-decoration: none !important;
+            font-size: 14px;
+            font-weight: 400;
+            display: inline-block;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            transition: color 0.4s var(--ease-smooth);
+        }
+
+        .footer-links-row a:hover { color: var(--text-main) !important; }
+        .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; letter-spacing: 0.2px; transition: color 0.8s var(--ease-smooth); }
+
+        .nav-text {
+            display: inline-block !important;
+            white-space: nowrap !important;
+            transform-origin: center center !important;
+            will-change: transform, opacity, background-position !important;
+            transition: transform 0.4s var(--ease-smooth), opacity 0.4s var(--ease-smooth);
+        }
+
+        .footer-links-row a .nav-text { color: var(--text-muted) !important; }
+        .footer-links-row a:hover .nav-text { color: var(--text-main) !important; }
+
+        @keyframes fluidWave {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        a.is-wave-loading .nav-text {
+            background-image: linear-gradient(90deg, #ffffff 0%, #ffffff 25%, #555555 50%, #ffffff 75%, #ffffff 100%) !important;
+            background-size: 200% 100% !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+            animation: fluidWave 0.75s infinite linear !important;
+            will-change: background-position, transform !important;
+            opacity: 1 !important;
+        }
+
+        body.light-mode a.is-wave-loading .nav-text {
+            background-image: linear-gradient(90deg, #111111 0%, #111111 25%, #8a8a8e 50%, #111111 75%, #111111 100%) !important;
+            background-size: 200% 100% !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+            animation: fluidWave 0.75s infinite linear !important;
+            will-change: background-position, transform !important;
+            opacity: 1 !important;
+        }
+
+        .kinetic-locked-frame { pointer-events: none !important; }
+        .kinetic-locked-frame .nav-text {
+            transition: none !important;
+            -webkit-transition: none !important;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 40px 20px; }
+            header { margin-bottom: 40px; height: 64px; border-radius: 24px; }
+            .header-inner-view { padding: 0 20px; }
+            .logo { font-size: 22px; }
+            .search-core-input { padding: 0 12px; font-size: 15px; }
+            .header-right-cluster { gap: 16px; }
+            
+            .myspace-container { padding: 24px 18px 28px 18px; border-radius: 28px; }
+            .myspace-title { font-size: 18px; margin-bottom: 20px; }
+            .myspace-card { padding: 22px 16px; border-radius: 20px; }
+        }
+
+        html.instant-landing header, 
+        html.instant-landing footer {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+            will-change: auto !important;
+        }
+
+        html.instant-landing,
+        html.instant-landing body,
+        html.instant-landing main,
+        html.instant-landing header,
+        html.instant-landing * {
+            transition: none !important;
+            transition-duration: 0s !important;
+        }
+    </style>
+</head>
+<body>
+
+    <header id="masterHeader">
+        <div class="header-inner-view" id="headerMainView">
+            <a href="index.html" class="logo">sathya.</a>
+            <div class="header-right-cluster">
+                <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </div>
+                <button class="ctrl-btn" id="openSearchBtn" aria-label="Open Workspace Search">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+            </div>
+        </div>
+
+        <form class="header-inner-view" id="headerSearchView" action="/study/search.html" method="GET">
+            <button type="submit" aria-label="Submit search" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: inherit; display: flex; align-items: center; justify-content: center;">
+                <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
+
+            <input type="text" class="search-core-input" id="searchCoreInput" name="q" placeholder="Search..." autocomplete="off" enterkeyhint="search">
+            
+            <div class="search-control-cluster">
+                <button type="button" class="ctrl-btn clear-text-btn" id="clearSearchBtn" aria-label="Clear typed text">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <button type="button" class="ctrl-btn close-search-btn" id="closeSearchBtn" aria-label="Minimize search pill">
+                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+            </div>
+        </form>
+    </header>
+    
+    <main>
+        <!-- 3D Capsule Workspace Container -->
+        <div class="myspace-container">
+            <h2 class="myspace-title">My Space</h2>
+            
+            <div class="myspace-grid" id="myspaceGrid">
+                
+                <!-- Capsule 1: Study -->
+                <a href="/study/index.html" class="myspace-card">
+                    <div class="myspace-card-icon">
+                        <!-- Custom Blue Open Book SVG -->
+                        <svg width="52" height="52" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 16C7 13.2386 9.23858 11 12 11H30V50H12C9.23858 50 7 47.7614 7 45V16Z" fill="#0C2340"/>
+                            <path d="M57 16C57 13.2386 54.7614 11 52 11H34V50H52C54.7614 50 57 47.7614 57 45V16Z" fill="#0C2340"/>
+                            <path d="M10 17C10 14.7909 11.7909 13 14 13H30V48H14C11.7909 48 10 46.2091 10 44V17Z" fill="#0080FF"/>
+                            <path d="M54 17C54 14.7909 52.2091 13 50 13H34V48H50C52.2091 48 54 46.2091 54 44V17Z" fill="#0080FF"/>
+                            <path d="M30 50C30 51.6569 30.8954 53 32 53C33.1046 53 34 51.6569 34 50V11H30V50Z" fill="#071526"/>
+                            <rect x="14" y="19" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                            <rect x="14" y="25" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                            <rect x="14" y="31" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                            <rect x="14" y="37" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                            <rect x="38" y="19" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                            <rect x="38" y="25" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                            <rect x="38" y="31" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                            <rect x="38" y="37" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                        </svg>
+                    </div>
+                    <span class="myspace-card-title nav-text">Study</span>
+                </a>
+
+                <!-- Capsule 2: Nutrition -->
+                <a href="/nutrition/index.html" class="myspace-card">
+                    <div class="myspace-card-icon">
+                        <!-- Soil-Buried Green Sprout Vector -->
+                        <svg width="56" height="56" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="96" y="440" width="320" height="14" rx="7" fill="#58341a"/>
+
+                            <path d="M 256 420 C 256 360 252 300 205 235" stroke="#72b528" stroke-width="20" stroke-linecap="round"/>
+                            <path d="M 250 335 C 250 300 268 270 300 230" stroke="#72b528" stroke-width="18" stroke-linecap="round"/>
+
+                            <path d="M 210 280 C 185 305 95 300 82 205 C 72 178 78 152 82 150 C 88 150 120 148 185 178 C 242 205 252 250 210 280 Z" fill="#81cc33"/>
+                            <path d="M 82 150 C 115 148 185 162 240 230 C 230 200 172 165 115 152 C 95 148 85 150 82 150 Z" fill="#69ad22"/>
+                            <path d="M 195 260 Q 140 215 98 190" stroke="#9de048" stroke-width="12" stroke-linecap="round"/>
+
+                            <path d="M 260 280 C 278 300 358 298 398 238 C 408 218 402 195 398 192 C 392 192 362 192 312 210 C 258 230 248 260 260 280 Z" fill="#7ac42e"/>
+                            <path d="M 398 192 C 372 190 312 202 260 260 C 270 238 318 208 368 198 C 388 194 396 193 398 192 Z" fill="#62a420"/>
+                            <path d="M 285 260 Q 338 232 380 220" stroke="#96db42" stroke-width="11" stroke-linecap="round"/>
+
+                            <path d="M 125 440 C 130 405 165 375 210 375 C 228 375 240 385 256 385 C 272 385 284 375 302 375 C 347 375 382 405 387 440 Z" fill="#8c5027"/>
+                            <path d="M 125 440 C 130 415 160 395 200 395 C 220 395 238 402 256 402 C 274 402 292 395 312 395 C 352 395 382 415 387 440 Z" fill="#a46332"/>
+                            <path d="M 190 422 C 220 398 256 395 290 400 C 330 406 360 422 256 422 C 215 422 198 426 190 422 Z" fill="#b8723c"/>
+                        </svg>
+                    </div>
+                    <span class="myspace-card-title nav-text">Nutrition</span>
+                </a>
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links-row">
+            <a href="/study/Footer/about.html">About</a>
+            <a href="/study/Footer/contact.html">Contact</a>
+            <a href="/study/Footer/privacy.html">Privacy Policy</a>
+            <a href="/study/Footer/terms.html">Terms &amp; Conditions</a>
+            <a href="/study/Footer/disclaimer.html">Disclaimer</a>
+        </div>
+        <div class="copyright-tag">
+            &copy; 2026 Sathya. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        const toggleBtn = document.getElementById('themeToggleBtn');
+        const bodyElement = document.body;
+        const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
+
+        const masterHeader = document.getElementById('masterHeader');
+        const openSearchBtn = document.getElementById('openSearchBtn');
+        const closeSearchBtn = document.getElementById('closeSearchBtn');
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+        const searchCoreInput = document.getElementById('searchCoreInput');
+
+        // Helper to handle search state and lift release
+        function handleHeaderLeaveOrBlur(isExplicitClose = false) {
+            const isSearchActive = masterHeader.classList.contains('state-search');
+            if (isSearchActive) {
+                const isEmpty = searchCoreInput.value.trim() === "";
+                if (isEmpty || isExplicitClose) {
+                    masterHeader.classList.remove('state-search');
+                    masterHeader.classList.add('state-main');
+                    searchCoreInput.value = "";
+                }
+            }
+            searchCoreInput.blur();
+            masterHeader.classList.remove('is-header-lifted');
+        }
+
+        // Tactile Lift Handlers for Header
+        masterHeader.addEventListener('pointerdown', (e) => {
+            masterHeader.classList.add('is-header-lifted');
+            if (masterHeader.classList.contains('state-search')) {
+                if (document.activeElement !== searchCoreInput && e.target !== closeSearchBtn && e.target !== clearSearchBtn) {
+                    searchCoreInput.focus({ preventScroll: true });
+                }
+            }
+        });
+
+        masterHeader.addEventListener('pointerleave', () => {
+            if (masterHeader.classList.contains('state-search') && searchCoreInput.value.trim() === "") {
+                handleHeaderLeaveOrBlur(false);
+            } else {
+                searchCoreInput.blur();
+                masterHeader.classList.remove('is-header-lifted');
+            }
+        });
+
+        masterHeader.addEventListener('pointerup', () => {
+            if (document.activeElement !== searchCoreInput && !masterHeader.matches(':hover')) {
+                masterHeader.classList.remove('is-header-lifted');
+            }
+        });
+
+        // Global Click-Outside Dismiss
+        document.addEventListener('pointerdown', (e) => {
+            if (!masterHeader.contains(e.target)) {
+                if (masterHeader.classList.contains('state-search') && searchCoreInput.value.trim() === "") {
+                    handleHeaderLeaveOrBlur(false);
+                } else {
+                    searchCoreInput.blur();
+                    masterHeader.classList.remove('is-header-lifted');
+                }
+            }
+        });
+
+        function applyTargetPalette() {
+            const activeSessionOverride = sessionStorage.getItem('dashboard-theme');
+            if (activeSessionOverride) {
+                if (activeSessionOverride === 'light') {
+                    bodyElement.classList.add('light-mode');
+                } else {
+                    bodyElement.classList.remove('light-mode');
+                }
+            } else {
+                if (systemLightQuery.matches) {
+                    bodyElement.classList.add('light-mode');
+                } else {
+                    bodyElement.classList.remove('light-mode');
+                }
+            }
+        }
+
+        applyTargetPalette();
+
+        systemLightQuery.addEventListener('change', (e) => {
+            sessionStorage.removeItem('dashboard-theme');
+            if (e.matches) {
+                bodyElement.classList.add('light-mode');
+            } else {
+                bodyElement.classList.remove('light-mode');
+            }
+        });
+
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isCurrentlyLight = bodyElement.classList.contains('light-mode');
+            if (isCurrentlyLight) {
+                bodyElement.classList.remove('light-mode');
+                sessionStorage.setItem('dashboard-theme', 'dark');
+            } else {
+                bodyElement.classList.add('light-mode');
+                sessionStorage.setItem('dashboard-theme', 'light');
+            }
+        });
+
+        openSearchBtn.addEventListener('click', () => {
+            masterHeader.classList.remove('state-main');
+            masterHeader.classList.add('state-search');
+            masterHeader.classList.add('is-header-lifted');
+            searchCoreInput.focus({ preventScroll: true });
+        });
+
+        clearSearchBtn.addEventListener('click', () => {
+            searchCoreInput.value = "";
+            searchCoreInput.focus();
+        });
+
+        closeSearchBtn.addEventListener('click', () => {
+            handleHeaderLeaveOrBlur(true);
+        });
+
+        searchCoreInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && searchCoreInput.value.trim() === "") {
+                handleHeaderLeaveOrBlur(true);
+            }
+        });
+
+        const myspaceGrid = document.getElementById('myspaceGrid');
+        if (myspaceGrid && myspaceGrid.children.length === 3) {
+            myspaceGrid.classList.add('has-3-items');
+        }
+
+        const universalTargetLinks = document.querySelectorAll('footer .footer-links-row a, .logo, .myspace-card');
+
+        universalTargetLinks.forEach(link => {
+            if (!link.querySelector('.nav-text')) {
+                const wrapper = document.createElement('span');
+                wrapper.className = 'nav-text';
+                while (link.firstChild) {
+                    wrapper.appendChild(link.firstChild);
+                }
+                link.appendChild(wrapper);
+            }
+        });
+
+        universalTargetLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const destination = this.getAttribute('href');
+                if (!destination || destination === '#' || destination.startsWith('#')) return;
+
+                e.preventDefault();
+
+                universalTargetLinks.forEach(l => {
+                    l.classList.remove('is-wave-loading');
+                    l.classList.remove('is-card-lifted');
+                });
+
+                // Trigger smooth elevation + wave shimmer simultaneously
+                this.classList.add('is-card-lifted');
+                this.classList.add('is-wave-loading');
+
+                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
+
+                setTimeout(() => {
+                    window.location.href = destination;
+                }, 750);
+            });
+        });
+
+        window.addEventListener('pageshow', () => {
+            if (document.activeElement && document.activeElement.blur) {
+                document.activeElement.blur();
+            }
+
+            requestAnimationFrame(() => {
+                document.body.offsetHeight; // Force layout paint frame
+                requestAnimationFrame(() => {
+                    masterHeader.classList.remove('is-header-lifted');
+                    universalTargetLinks.forEach(l => {
+                        l.classList.remove('is-wave-loading');
+                        l.classList.remove('is-card-lifted');
+                        l.classList.remove('kinetic-locked-frame');
+                        const span = l.querySelector('.nav-text');
+                        if (span) {
+                            span.style.transform = '';
+                            span.style.opacity = '';
+                            span.style.background = '';
+                            span.style.webkitBackgroundClip = '';
+                            span.style.webkitTextFillColor = '';
+                        }
+                    });
+                });
+            });
+
+            if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
+                sessionStorage.removeItem('activeUniversalTargetUrl');
+                return;
+            }
+
+            const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
+            if (savedTargetUrl) {
+                sessionStorage.removeItem('activeUniversalTargetUrl');
+            }
+        });
+    </script>
+    <script src="/script.js"></script>
+</body>
+</html>
