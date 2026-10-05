@@ -10,7 +10,7 @@
         /* Site-wide Light Mode Color Overrides */
         html.light-mode, 
         body.light-mode {
-            --bg-color: #f1f1f1 !important;
+            --bg-color: #f5f5f7 !important;
             --header-bg: #ffffff !important;
         }
 
