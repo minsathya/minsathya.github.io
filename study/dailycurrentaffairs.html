@@ -44,7 +44,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Pre-load Current Affairs Data for Zero Network Wait on Refresh -->
-    <script src="/study/currentaffairs-data/27-09-2026.js"></script>
+    <script src="/study/currentaffairs-data/05-10-2026.js"></script>
 
     <style>
       html {
@@ -718,8 +718,9 @@
         .meta-pill strong { color: var(--text-main); font-weight: 600; transition: color 0.8s var(--ease-smooth); }
         .meta-pill.accent-pill { background: var(--accent-tag-bg); color: var(--accent-tag-text); border: none; }
 
-        /* IMAGE ACTION PILL & TOGGLE BUTTON */
-        .image-toggle-pill {
+        /* ACTION PILLS: IMAGE & READ */
+        .image-toggle-pill,
+        .read-toggle-pill {
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -733,9 +734,13 @@
             transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth);
         }
 
-        body.light-mode .image-toggle-pill { background: rgba(0, 0, 0, 0.03); }
+        body.light-mode .image-toggle-pill,
+        body.light-mode .read-toggle-pill { 
+            background: rgba(0, 0, 0, 0.03); 
+        }
 
-        .image-action-btn {
+        .image-action-btn,
+        .read-action-btn {
             background: #258bf5;
             color: #ffffff;
             border: none;
@@ -746,12 +751,20 @@
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s var(--ease-smooth), opacity 0.2s var(--ease-smooth);
+            transition: transform 0.2s var(--ease-smooth), opacity 0.2s var(--ease-smooth), background-color 0.3s;
         }
 
-        .image-action-btn:hover { opacity: 0.9; transform: scale(1.05); }
+        .image-action-btn:hover,
+        .read-action-btn:hover { 
+            opacity: 0.9; 
+            transform: scale(1.05); 
+        }
 
-        /* SMOOTH SLIDE & FADE DRAWER */
+        .read-action-btn.is-active {
+            background: #1d6e35;
+        }
+
+        /* SMOOTH SLIDE & FADE DRAWER FOR IMAGE */
         .topic-image-drawer {
             display: grid;
             grid-template-rows: 0fr;
@@ -795,6 +808,105 @@
             margin-top: 10px;
             text-align: center;
             font-weight: 500;
+        }
+
+        /* SHORT REVISION ARTICLE DRAWER */
+        .topic-short-drawer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.55s var(--ease-smooth), margin 0.55s var(--ease-smooth);
+            width: 100%;
+            margin: 0;
+        }
+
+        .topic-short-drawer.is-open {
+            grid-template-rows: 1fr;
+            margin: 0 0 32px 0;
+        }
+
+        .topic-short-inner {
+            overflow: hidden;
+            opacity: 0;
+            transform: translate3d(0, -12px, 0);
+            transition: opacity 0.45s var(--ease-smooth), transform 0.45s var(--ease-smooth);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .topic-short-drawer.is-open .topic-short-inner {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+            transition-delay: 0.08s;
+        }
+
+        .short-article-card-box {
+            background: var(--pill-box-bg);
+            border: 1px solid var(--pill-box-border);
+            border-radius: 24px;
+            padding: 32px 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .short-badge-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--row-divider);
+            padding-bottom: 12px;
+            margin-bottom: 4px;
+        }
+
+        .short-badge {
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: var(--accent-tag-text);
+            background: var(--accent-tag-bg);
+            padding: 4px 12px;
+            border-radius: 12px;
+        }
+
+        .short-meta-tag {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .article-separation-divider {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 12px 0;
+            width: 100%;
+        }
+
+        .article-separation-divider::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--row-divider);
+            z-index: 1;
+        }
+
+        .divider-label-pill {
+            position: relative;
+            z-index: 2;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
         }
 
         /* CONTENT SECTIONS */
@@ -1187,7 +1299,7 @@
             }
         }
 
-        /* MOBILE PHONES: SIDE-BY-SIDE EQUAL CENTERING */
+        /* MOBILE PHONES */
         @media (max-width: 700px) {
             body { padding: 30px 18px 24px 18px; }
             .breadcrumb-nav {
@@ -1197,7 +1309,6 @@
             .header-inner-view { padding: 0 20px; }
             .logo { font-size: 22px; }
 
-            /* Capsule turns into compact 2-row layout */
             .date-topics-capsule {
                 flex-direction: column;
                 align-items: flex-start;
@@ -1213,19 +1324,8 @@
                 width: 100%;
             }
 
-            .cal-trigger-btn {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                line-height: 1;
-            }
+            .cal-trigger-btn svg { width: 30px; height: 30px; }
 
-            .cal-trigger-btn svg {
-                width: 30px;
-                height: 30px;
-            }
-
-            /* Single-line horizontally centered text stack next to icon */
             .date-text-stack {
                 display: flex;
                 flex-direction: row;
@@ -1242,28 +1342,13 @@
                 align-items: center;
             }
 
-            .date-label-tiny::after {
-                content: " :";
-                margin-right: 1px;
-            }
-
-            .date-value-main {
-                font-size: 13.5px;
-                font-weight: 600;
-                color: var(--text-main);
-            }
-
-            .capsule-divider {
-                display: none;
-            }
-
-            .capsule-topics-cluster {
-                width: 100%;
-                justify-content: flex-start;
-            }
-
+            .date-label-tiny::after { content: " :"; margin-right: 1px; }
+            .date-value-main { font-size: 13.5px; font-weight: 600; color: var(--text-main); }
+            .capsule-divider { display: none; }
+            .capsule-topics-cluster { width: 100%; justify-content: flex-start; }
             .article-card { padding: 30px 20px; border-radius: 22px; }
             .article-title { font-size: 22px; }
+            .short-article-card-box { padding: 22px 18px; border-radius: 18px; }
             .section-heading { font-size: 17px; }
             .note-p, .note-list li { font-size: 14px; }
             .info-callout { padding: 18px 18px; border-radius: 16px; }
@@ -1310,7 +1395,7 @@
     </header>
 
     <main>
-        <!-- BREADCRUMBS: IDENTIFIES PAGE NAME ONLY -->
+        <!-- BREADCRUMBS -->
         <nav class="breadcrumb-nav">
             <a href="/study/index.html">Home</a>
             <span class="bc-sep">/</span>
@@ -1319,7 +1404,6 @@
 
         <!-- DATE & TOPICS COMBINED CAPSULE -->
         <div class="date-topics-capsule">
-            <!-- Left Side: Calendar Trigger & Small Muted Date Stack -->
             <div class="capsule-date-cluster">
                 <button class="cal-trigger-btn" id="openCalendarBtn" aria-label="Open Date Picker">
                     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1336,18 +1420,16 @@
                 </button>
                 <div class="date-text-stack">
                     <span class="date-label-tiny">Selected Date</span>
-                    <span class="date-value-main" id="activeDateDisplay">27 September 2026</span>
+                    <span class="date-value-main" id="activeDateDisplay">05 October 2026</span>
                 </div>
             </div>
 
-            <!-- Middle Vertical Divider Line -->
             <div class="capsule-divider"></div>
 
-            <!-- Right Side: Topics Indicator Glider Pill -->
             <div class="capsule-topics-cluster" id="topicsPillContainer"></div>
         </div>
 
-        <!-- SEAMLESS SINGLE-CARD STAGE -->
+        <!-- ARTICLE FEED -->
         <div class="topics-feed" id="topicsFeed"></div>
     </main>
 
@@ -1367,7 +1449,6 @@
                 <button class="picker-apply-btn" id="applyDateBtn">Apply</button>
             </div>
 
-            <!-- COLUMN HEADERS -->
             <div class="picker-col-headers">
                 <span class="picker-col-hdr">Date</span>
                 <span class="picker-col-hdr">Month</span>
@@ -1397,7 +1478,6 @@
     </footer>
 
     <script>
-        // Clean back navigation without stuck wave loading
         window.addEventListener('pageshow', () => {
             if (document.activeElement && document.activeElement.blur) {
                 document.activeElement.blur();
@@ -1434,8 +1514,8 @@
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         
         let selectedYear = 2026;
-        let selectedMonth = 9;
-        let selectedDay = 27;
+        let selectedMonth = 10;
+        let selectedDay = 5;
 
         let tempDay = selectedDay;
         let tempMonth = selectedMonth;
@@ -1508,7 +1588,7 @@
         setupScrollHighlight(monthCol, v => tempMonth = v);
         setupScrollHighlight(yearCol, v => tempYear = v);
 
-        // 3. IMAGE INTERACTION TOGGLE ENGINE
+        // 3. IMAGE & SHORT REVISION INTERACTION ENGINES
         window.toggleTopicImage = function(btn, drawerId) {
             const drawer = document.getElementById(drawerId);
             if (!drawer) return;
@@ -1525,7 +1605,25 @@
             setTimeout(() => syncFeedHeight(), 580);
         };
 
-        // 4. SEAMLESS DUAL-CARD STAGE (ZERO FOOTER GAP, NO EDGE CLIPPING)
+        window.toggleShortArticle = function(btn, drawerId) {
+            const drawer = document.getElementById(drawerId);
+            if (!drawer) return;
+            const isOpen = drawer.classList.contains('is-open');
+            if (isOpen) {
+                drawer.classList.remove('is-open');
+                btn.textContent = 'Short';
+                btn.classList.remove('is-active');
+            } else {
+                drawer.classList.add('is-open');
+                btn.textContent = 'Full';
+                btn.classList.add('is-active');
+            }
+            setTimeout(() => syncFeedHeight(), 80);
+            setTimeout(() => syncFeedHeight(), 350);
+            setTimeout(() => syncFeedHeight(), 580);
+        };
+
+        // 4. DUAL-CARD STAGE ENGINE
         let currentActiveTopicIndex = 0;
         let totalLoadedTopics = 0;
         let isTransitioning = false;
@@ -1604,7 +1702,6 @@
             const currentCard = cards[currentIndex];
             const targetCard = cards[targetIndex];
 
-            // Update topic pill glider in slow motion
             const buttons = document.querySelectorAll('.topic-num-btn');
             buttons.forEach((btn, i) => {
                 const isSelected = i === targetIndex;
@@ -1612,10 +1709,8 @@
                 if (isSelected) updatePillGlider(btn);
             });
 
-            // Update laptop side navigation arrows fade state
             updateNavArrows();
 
-            // Pre-measure target card height and scale container height smoothly
             targetCard.style.display = 'block';
             targetCard.style.visibility = 'hidden';
             const incomingHeight = targetCard.offsetHeight;
@@ -1623,15 +1718,13 @@
             targetCard.style.visibility = '';
 
             topicsFeed.style.height = `${currentCard.offsetHeight}px`;
-            void topicsFeed.offsetHeight; // force layout calculation
+            void topicsFeed.offsetHeight;
             if (incomingHeight > 0) {
                 topicsFeed.style.height = `${incomingHeight}px`;
             }
 
-            // Immediately display from top of the screen (showing header, date capsule & pill completely)
             window.scrollTo({ top: 0, behavior: 'instant' });
 
-            // Both cards transition simultaneously with zero straight edge clipping
             if (isNext) {
                 currentCard.className = 'article-card anim-out-left';
                 targetCard.className = 'article-card anim-in-right';
@@ -1640,12 +1733,11 @@
                 targetCard.className = 'article-card anim-in-left';
             }
 
-            // Settle cleanly into position without re-triggering entrance animations or blinking
             setTimeout(() => {
                 cards.forEach((card, idx) => {
                     card.className = idx === targetIndex ? 'article-card is-active' : 'article-card';
                 });
-                topicsFeed.style.height = 'auto'; // allow natural expansion after transition
+                topicsFeed.style.height = 'auto';
                 isTransitioning = false;
             }, 400);
         }
@@ -1685,7 +1777,6 @@
             const diffX = e.touches[0].clientX - touchStartX;
             const diffY = e.touches[0].clientY - touchStartY;
 
-            // Early horizontal intent detection
             if (!isHorizontalSwipe && Math.abs(diffX) > 8 && Math.abs(diffX) > Math.abs(diffY)) {
                 isHorizontalSwipe = true;
             }
@@ -1722,7 +1813,7 @@
             }
         });
 
-        // 7. DYNAMIC DATA LOADER ENGINE (REVERSED: LATEST POST = TOPIC 1)
+        // 7. DYNAMIC DATA RENDERER
         function formatSubListItems(rawText) {
             if (!rawText || typeof rawText !== 'string' || !rawText.includes(';')) {
                 return rawText;
@@ -1755,6 +1846,70 @@
             return rawText;
         }
 
+        function renderArticleSections(data) {
+            const buildListItems = (list) => {
+                if (!list || list.length === 0) return '';
+                return list.map(item => `<li>${formatSubListItems(item)}</li>`).join('');
+            };
+
+            let orgRowsHtml = '';
+            if (data.whoOrg && data.whoOrg.length > 0) {
+                orgRowsHtml = data.whoOrg.map(row => `
+                    <div class="info-callout-row"><strong>${row.label} :</strong> ${row.val}</div>
+                `).join('');
+            }
+
+            return `
+                ${data.whyInNews ? `
+                <section class="note-section">
+                    <h3 class="section-heading">Why in News?</h3>
+                    <p class="note-p">${data.whyInNews}</p>
+                </section>` : ''}
+
+                ${data.whatConcept ? `
+                <section class="note-section">
+                    <h3 class="section-heading">What / Concept</h3>
+                    <p class="note-p">${data.whatConcept}</p>
+                </section>` : ''}
+
+                ${orgRowsHtml ? `
+                <section class="note-section">
+                    <h3 class="section-heading">Who / Organisation</h3>
+                    <div class="info-callout">${orgRowsHtml}</div>
+                </section>` : ''}
+
+                ${data.importantFacts && data.importantFacts.length > 0 ? `
+                <section class="note-section">
+                    <h3 class="section-heading">Important Facts ⭐</h3>
+                    <ul class="note-list">${buildListItems(data.importantFacts)}</ul>
+                </section>` : ''}
+
+                ${data.background && data.background.length > 0 ? `
+                <section class="note-section">
+                    <h3 class="section-heading">Background / Static Linkage</h3>
+                    <ul class="note-list">${buildListItems(data.background)}</ul>
+                </section>` : ''}
+
+                ${data.significance && data.significance.length > 0 ? `
+                <section class="note-section">
+                    <h3 class="section-heading">Significance</h3>
+                    <ul class="note-list">${buildListItems(data.significance)}</ul>
+                </section>` : ''}
+
+                ${data.challenges && data.challenges.length > 0 ? `
+                <section class="note-section">
+                    <h3 class="section-heading">Challenges / Concerns</h3>
+                    <ul class="note-list">${buildListItems(data.challenges)}</ul>
+                </section>` : ''}
+
+                ${data.wayForward && data.wayForward.length > 0 ? `
+                <section class="note-section">
+                    <h3 class="section-heading">Way Forward</h3>
+                    <ul class="note-list">${buildListItems(data.wayForward)}</ul>
+                </section>` : ''}
+            `;
+        }
+
         function renderCards(topics, dateText) {
             activeDateDisplay.textContent = dateText;
             topicsFeed.innerHTML = '';
@@ -1773,7 +1928,6 @@
                 return;
             }
 
-            // Always reverse array so newest post in data file is Topic 1
             const displayTopics = Array.isArray(topics) ? [...topics].reverse() : [];
             totalLoadedTopics = displayTopics.length;
             currentActiveTopicIndex = 0;
@@ -1787,32 +1941,45 @@
                 card.id = `topic-card-${idx}`;
                 card.dataset.index = idx;
 
-                let orgRowsHtml = '';
-                if (topic.whoOrg && topic.whoOrg.length > 0) {
-                    orgRowsHtml = topic.whoOrg.map(row => `
-                        <div class="info-callout-row"><strong>${row.label} :</strong> ${row.val}</div>
-                    `).join('');
-                }
-
-                const buildListItems = (list) => {
-                    if (!list || list.length === 0) return '';
-                    return list.map(item => `<li>${formatSubListItems(item)}</li>`).join('');
-                };
-
                 const hasImage = topic.image && topic.image.url;
-                const drawerId = `imgDrawer_${idx}`;
+                const imgDrawerId = `imgDrawer_${idx}`;
+                const shortDrawerId = `shortDrawer_${idx}`;
+                const hasShort = !!topic.shortArticle;
 
                 const imagePillHtml = hasImage ? `
                     <span class="image-toggle-pill">
-                        Image : <button type="button" class="image-action-btn" onclick="toggleTopicImage(this, '${drawerId}')">View</button>
+                        Image : <button type="button" class="image-action-btn" onclick="toggleTopicImage(this, '${imgDrawerId}')">View</button>
+                    </span>
+                ` : '';
+
+                const readPillHtml = hasShort ? `
+                    <span class="read-toggle-pill">
+                        Read : <button type="button" class="read-action-btn" onclick="toggleShortArticle(this, '${shortDrawerId}')">Short</button>
                     </span>
                 ` : '';
 
                 const imageDrawerHtml = hasImage ? `
-                    <div class="topic-image-drawer" id="${drawerId}">
+                    <div class="topic-image-drawer" id="${imgDrawerId}">
                         <div class="topic-image-inner">
                             <img src="${topic.image.url}" alt="${topic.image.caption || 'Topic Image'}" loading="lazy" referrerpolicy="no-referrer">
                             ${topic.image.caption ? `<div class="topic-image-caption">${topic.image.caption}</div>` : ''}
+                        </div>
+                    </div>
+                ` : '';
+
+                const shortDrawerHtml = hasShort ? `
+                    <div class="topic-short-drawer" id="${shortDrawerId}">
+                        <div class="topic-short-inner">
+                            <div class="short-article-card-box">
+                                <div class="short-badge-row">
+                                    <span class="short-badge">Quick Revision · &lt;250 Words</span>
+                                    <span class="short-meta-tag">${topic.shortArticle.category || topic.category}</span>
+                                </div>
+                                ${renderArticleSections(topic.shortArticle)}
+                            </div>
+                            <div class="article-separation-divider">
+                                <span class="divider-label-pill">Detailed Analysis Below</span>
+                            </div>
                         </div>
                     </div>
                 ` : '';
@@ -1825,63 +1992,17 @@
                         <span class="meta-pill">Category : <strong>${topic.category}</strong></span>
                         <span class="meta-pill">Comes under : <strong>${topic.comesUnder}</strong></span>
                         ${imagePillHtml}
+                        ${readPillHtml}
                     </div>
 
                     ${imageDrawerHtml}
-
-                    ${topic.whyInNews ? `
-                    <section class="note-section">
-                        <h3 class="section-heading">Why in News?</h3>
-                        <p class="note-p">${topic.whyInNews}</p>
-                    </section>` : ''}
-
-                    ${topic.whatConcept ? `
-                    <section class="note-section">
-                        <h3 class="section-heading">What / Concept</h3>
-                        <p class="note-p">${topic.whatConcept}</p>
-                    </section>` : ''}
-
-                    ${orgRowsHtml ? `
-                    <section class="note-section">
-                        <h3 class="section-heading">Who / Organisation</h3>
-                        <div class="info-callout">${orgRowsHtml}</div>
-                    </section>` : ''}
-
-                    ${topic.importantFacts && topic.importantFacts.length > 0 ? `
-                    <section class="note-section">
-                        <h3 class="section-heading">Important Facts ⭐</h3>
-                        <ul class="note-list">${buildListItems(topic.importantFacts)}</ul>
-                    </section>` : ''}
-
-                    ${topic.background && topic.background.length > 0 ? `
-                    <section class="note-section">
-                        <h3 class="section-heading">Background / Static Linkage</h3>
-                        <ul class="note-list">${buildListItems(topic.background)}</ul>
-                    </section>` : ''}
-
-                    ${topic.significance && topic.significance.length > 0 ? `
-                    <section class="note-section">
-                        <h3 class="section-heading">Significance</h3>
-                        <ul class="note-list">${buildListItems(topic.significance)}</ul>
-                    </section>` : ''}
-
-                    ${topic.challenges && topic.challenges.length > 0 ? `
-                    <section class="note-section">
-                        <h3 class="section-heading">Challenges / Concerns</h3>
-                        <ul class="note-list">${buildListItems(topic.challenges)}</ul>
-                    </section>` : ''}
-
-                    ${topic.wayForward && topic.wayForward.length > 0 ? `
-                    <section class="note-section">
-                        <h3 class="section-heading">Way Forward</h3>
-                        <ul class="note-list">${buildListItems(topic.wayForward)}</ul>
-                    </section>` : ''}
+                    ${shortDrawerHtml}
+                    ${renderArticleSections(topic)}
                 `;
 
                 topicsFeed.appendChild(card);
             });
 
-            // Adjust stage height to Topic 1 immediately with no layout jump
             topicsFeed.style.height = 'auto';
         }
 
@@ -1912,14 +2033,14 @@
             document.body.appendChild(script);
         }
 
-        // Immediate Execution: Initial data is pre-loaded at head to guarantee zero blink
+        // Initial Data Load (Configured for 05 October 2026)
         if (window.currentDailyTopics) {
-            renderCards(window.currentDailyTopics, "27 September 2026");
+            renderCards(window.currentDailyTopics, "05 October 2026");
         } else {
-            loadDateData(2026, 9, 27, (topics) => {
-                renderCards(topics, "27 September 2026");
+            loadDateData(2026, 10, 5, (topics) => {
+                renderCards(topics, "05 October 2026");
             }, () => {
-                renderCards([], "27 September 2026");
+                renderCards([], "05 October 2026");
             });
         }
 
@@ -1942,7 +2063,7 @@
             selectedDay = tempDay;
             selectedMonth = tempMonth;
             selectedYear = tempYear;
-            const formattedDateText = `${selectedDay} ${monthNames[selectedMonth - 1]} ${selectedYear}`;
+            const formattedDateText = `${String(selectedDay).padStart(2, '0')} ${monthNames[selectedMonth - 1]} ${selectedYear}`;
 
             loadDateData(selectedYear, selectedMonth, selectedDay, (topics) => {
                 renderCards(topics, formattedDateText);
