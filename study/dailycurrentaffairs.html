@@ -442,39 +442,49 @@
             min-width: 0;
         }
 
-        /* SLOW-MOTION GLIDING CAPSULE INDICATOR */
+        /* -------------------------------------------------------------
+           RESTORED SINGLE-CAPSULE TOPICS PILL LAYOUT (NO OVERFLOW)
+        ------------------------------------------------------------- */
         .topics-nav-pill {
             position: relative;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
             background: var(--pill-box-bg);
             border: 1px solid var(--pill-box-border);
-            padding: 3px 6px;
+            padding: 3px 5px 3px 12px;
             border-radius: 9999px;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-muted);
+            height: 32px;
+            box-sizing: border-box;
             transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth);
         }
 
         .topics-nav-pill .pill-label {
-            color: var(--text-muted);
+            font-size: 13px;
             font-weight: 500;
-            padding-left: 6px;
-            padding-right: 2px;
-            z-index: 2;
+            color: var(--text-muted);
+            user-select: none;
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .topic-numbers-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            height: 100%;
         }
 
         .pill-slider-glider {
             position: absolute;
-            top: 3px;
-            bottom: 3px;
+            top: 1px;
+            bottom: 1px;
             left: 0;
             width: 0;
             background: var(--accent-tag-bg);
             border-radius: 9999px;
-            transition: transform 0.42s cubic-bezier(0.25, 1, 0.35, 1), width 0.42s cubic-bezier(0.25, 1, 0.35, 1), opacity 0.2s ease;
+            transition: transform 0.38s cubic-bezier(0.25, 1, 0.35, 1), width 0.38s cubic-bezier(0.25, 1, 0.35, 1), opacity 0.2s ease;
             pointer-events: none;
             z-index: 1;
             opacity: 0;
@@ -488,12 +498,18 @@
             outline: none;
             color: var(--text-muted);
             cursor: pointer;
-            padding: 2px 9px;
+            height: 24px;
+            min-width: 24px;
+            padding: 0 8px;
             border-radius: 9999px;
             font-size: 13px;
             font-family: inherit;
             font-weight: 600;
-            transition: color 0.35s var(--ease-smooth);
+            line-height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s var(--ease-smooth);
         }
 
         .topic-num-btn:hover {
@@ -505,9 +521,7 @@
             font-weight: 600;
         }
 
-        /* -------------------------------------------------------------
-           SEAMLESS DUAL-CARD STAGE (ZERO BLINK, DYNAMIC CONTAINER HEIGHT)
-        ------------------------------------------------------------- */
+        /* SEAMLESS DUAL-CARD STAGE */
         .topics-feed {
             position: relative;
             width: 100%;
@@ -538,7 +552,6 @@
 
         body:not(.light-mode) .article-card { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
 
-        /* Solid active card without re-entry animations to eliminate flash/blink */
         .article-card.is-active {
             display: block;
             position: relative;
@@ -546,62 +559,15 @@
             opacity: 1;
         }
 
-        /* Hardware accelerated smooth slide transitions */
-        @keyframes stageSlideOutLeft {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
-        }
+        @keyframes stageSlideOutLeft { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+        @keyframes stageSlideInRight { 0% { transform: translate3d(100%, 0, 0); } 100% { transform: translate3d(0, 0, 0); } }
+        @keyframes stageSlideOutRight { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(100%, 0, 0); } }
+        @keyframes stageSlideInLeft { 0% { transform: translate3d(-100%, 0, 0); } 100% { transform: translate3d(0, 0, 0); } }
 
-        @keyframes stageSlideInRight {
-            0% { transform: translate3d(100%, 0, 0); }
-            100% { transform: translate3d(0, 0, 0); }
-        }
-
-        @keyframes stageSlideOutRight {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(100%, 0, 0); }
-        }
-
-        @keyframes stageSlideInLeft {
-            0% { transform: translate3d(-100%, 0, 0); }
-            100% { transform: translate3d(0, 0, 0); }
-        }
-
-        .article-card.anim-out-left {
-            display: block !important;
-            position: absolute !important;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1;
-            pointer-events: none;
-            animation: stageSlideOutLeft 0.48s var(--ease-smooth) forwards !important;
-        }
-
-        .article-card.anim-in-right {
-            display: block !important;
-            position: relative !important;
-            z-index: 2;
-            animation: stageSlideInRight 0.48s var(--ease-smooth) forwards !important;
-        }
-
-        .article-card.anim-out-right {
-            display: block !important;
-            position: absolute !important;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1;
-            pointer-events: none;
-            animation: stageSlideOutRight 0.48s var(--ease-smooth) forwards !important;
-        }
-
-        .article-card.anim-in-left {
-            display: block !important;
-            position: relative !important;
-            z-index: 2;
-            animation: stageSlideInLeft 0.48s var(--ease-smooth) forwards !important;
-        }
+        .article-card.anim-out-left { display: block !important; position: absolute !important; top: 0; left: 0; width: 100%; z-index: 1; pointer-events: none; animation: stageSlideOutLeft 0.48s var(--ease-smooth) forwards !important; }
+        .article-card.anim-in-right { display: block !important; position: relative !important; z-index: 2; animation: stageSlideInRight 0.48s var(--ease-smooth) forwards !important; }
+        .article-card.anim-out-right { display: block !important; position: absolute !important; top: 0; left: 0; width: 100%; z-index: 1; pointer-events: none; animation: stageSlideOutRight 0.48s var(--ease-smooth) forwards !important; }
+        .article-card.anim-in-left { display: block !important; position: relative !important; z-index: 2; animation: stageSlideInLeft 0.48s var(--ease-smooth) forwards !important; }
 
         .article-title {
             font-size: 28px;
@@ -616,9 +582,7 @@
             transition: color 0.8s var(--ease-smooth);
         }
 
-        /* -------------------------------------------------------------
-           LAPTOP FLOATING SIDE NAVIGATION ARROWS
-        ------------------------------------------------------------- */
+        /* LAPTOP FLOATING SIDE NAVIGATION ARROWS */
         .side-nav-btn {
             display: none;
             position: fixed;
@@ -642,9 +606,7 @@
                         color 0.8s var(--ease-smooth);
         }
 
-        body.light-mode .side-nav-btn {
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
-        }
+        body.light-mode .side-nav-btn { box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12); }
 
         .side-nav-btn svg {
             width: 22px;
@@ -657,15 +619,9 @@
         }
 
         @media (min-width: 1025px) {
-            .side-nav-btn {
-                display: flex;
-            }
-            .side-nav-prev {
-                left: max(20px, calc(50% - 440px - 72px));
-            }
-            .side-nav-next {
-                right: max(20px, calc(50% - 440px - 72px));
-            }
+            .side-nav-btn { display: flex; }
+            .side-nav-prev { left: max(20px, calc(50% - 440px - 72px)); }
+            .side-nav-next { right: max(20px, calc(50% - 440px - 72px)); }
         }
 
         .side-nav-btn:hover:not(.is-disabled) {
@@ -674,17 +630,10 @@
             color: var(--accent-tag-text);
         }
 
-        body.light-mode .side-nav-btn:hover:not(.is-disabled) {
-            border-color: #b8b8bc;
-        }
+        body.light-mode .side-nav-btn:hover:not(.is-disabled) { border-color: #b8b8bc; }
+        .side-nav-btn.is-disabled { opacity: 0.15 !important; pointer-events: none !important; cursor: default !important; }
 
-        .side-nav-btn.is-disabled {
-            opacity: 0.15 !important;
-            pointer-events: none !important;
-            cursor: default !important;
-        }
-
-        /* METADATA PILLS */
+        /* METADATA PILLS ROW */
         .meta-pills-row {
             display: flex;
             flex-wrap: wrap;
@@ -760,17 +709,13 @@
             transform: scale(1.05); 
         }
 
-        .read-action-btn.is-active {
-            background: #1d6e35;
-        }
-
         /* SMOOTH SLIDE & FADE DRAWER FOR IMAGE */
         .topic-image-drawer {
             display: grid;
             grid-template-rows: 0fr;
             transition: grid-template-rows 0.55s var(--ease-smooth), margin 0.55s var(--ease-smooth);
             width: 100%;
-            margin: 0 0 0 0;
+            margin: 0;
         }
 
         .topic-image-drawer.is-open {
@@ -831,7 +776,6 @@
             transition: opacity 0.45s var(--ease-smooth), transform 0.45s var(--ease-smooth);
             display: flex;
             flex-direction: column;
-            gap: 24px;
         }
 
         .topic-short-drawer.is-open .topic-short-inner {
@@ -840,48 +784,13 @@
             transition-delay: 0.08s;
         }
 
-        .short-article-card-box {
-            background: var(--pill-box-bg);
-            border: 1px solid var(--pill-box-border);
-            border-radius: 24px;
-            padding: 32px 36px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .short-badge-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--row-divider);
-            padding-bottom: 12px;
-            margin-bottom: 4px;
-        }
-
-        .short-badge {
-            font-size: 11.5px;
-            font-weight: 700;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-            color: var(--accent-tag-text);
-            background: var(--accent-tag-bg);
-            padding: 4px 12px;
-            border-radius: 12px;
-        }
-
-        .short-meta-tag {
-            font-size: 12.5px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
+        /* SEPARATION DIVIDER BETWEEN SHORT & DETAILED */
         .article-separation-divider {
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 12px 0;
+            margin: 16px 0 28px 0;
             width: 100%;
         }
 
@@ -900,13 +809,14 @@
             z-index: 2;
             background: var(--panel-bg);
             border: 1px solid var(--panel-border);
-            padding: 4px 16px;
+            padding: 5px 18px;
             border-radius: 20px;
             font-size: 11.5px;
             font-weight: 600;
             letter-spacing: 0.5px;
             text-transform: uppercase;
             color: var(--text-muted);
+            transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
         /* CONTENT SECTIONS */
@@ -1348,7 +1258,6 @@
             .capsule-topics-cluster { width: 100%; justify-content: flex-start; }
             .article-card { padding: 30px 20px; border-radius: 22px; }
             .article-title { font-size: 22px; }
-            .short-article-card-box { padding: 22px 18px; border-radius: 18px; }
             .section-heading { font-size: 17px; }
             .note-p, .note-list li { font-size: 14px; }
             .info-callout { padding: 18px 18px; border-radius: 16px; }
@@ -1527,14 +1436,18 @@
         const topicsFeed = document.getElementById('topicsFeed');
         const activeDateDisplay = document.getElementById('activeDateDisplay');
 
+        // Infinite 31 -> 01 Loop: 5 sets of 1..31
         function initPickerColumns() {
             dayCol.innerHTML = '';
-            for (let d = 1; d <= 31; d++) {
-                const cell = document.createElement('div');
-                cell.className = 'drum-cell';
-                cell.textContent = String(d).padStart(2, '0');
-                cell.dataset.val = d;
-                dayCol.appendChild(cell);
+            const DAY_LOOPS = 5;
+            for (let l = 0; l < DAY_LOOPS; l++) {
+                for (let d = 1; d <= 31; d++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'drum-cell';
+                    cell.textContent = String(d).padStart(2, '0');
+                    cell.dataset.val = d;
+                    dayCol.appendChild(cell);
+                }
             }
 
             monthCol.innerHTML = '';
@@ -1559,22 +1472,36 @@
         }
 
         function scrollColumnTo(col, val) {
+            const cellHeight = 48;
+            if (col === dayCol) {
+                const middleTargetIndex = 2 * 31 + (parseInt(val) - 1);
+                col.scrollTo({ top: middleTargetIndex * cellHeight, behavior: 'instant' });
+                return;
+            }
             const cells = Array.from(col.querySelectorAll('.drum-cell'));
             const target = cells.find(c => parseInt(c.dataset.val) === parseInt(val));
             if (target) {
-                const cellHeight = 48;
                 const index = cells.indexOf(target);
                 col.scrollTo({ top: index * cellHeight, behavior: 'smooth' });
             }
         }
 
         function setupScrollHighlight(col, onSelected) {
+            const cellHeight = 48;
             col.addEventListener('scroll', () => {
-                const cellHeight = 48;
+                if (col === dayCol) {
+                    const loopHeight = 31 * cellHeight; // 1488px
+                    if (col.scrollTop < loopHeight * 0.8) {
+                        col.scrollTop += loopHeight * 2;
+                    } else if (col.scrollTop > loopHeight * 3.8) {
+                        col.scrollTop -= loopHeight * 2;
+                    }
+                }
+
                 const index = Math.round(col.scrollTop / cellHeight);
                 const cells = col.querySelectorAll('.drum-cell');
                 cells.forEach((cell, i) => {
-                    const isSelected = i === index;
+                    const isSelected = (i === index);
                     cell.classList.toggle('is-selected', isSelected);
                     if (isSelected && onSelected) {
                         onSelected(parseInt(cell.dataset.val));
@@ -1612,11 +1539,9 @@
             if (isOpen) {
                 drawer.classList.remove('is-open');
                 btn.textContent = 'Short';
-                btn.classList.remove('is-active');
             } else {
                 drawer.classList.add('is-open');
                 btn.textContent = 'Full';
-                btn.classList.add('is-active');
             }
             setTimeout(() => syncFeedHeight(), 80);
             setTimeout(() => syncFeedHeight(), 350);
@@ -1646,6 +1571,7 @@
             }
         }
 
+        // PERFECTLY ALIGNED GLIDER UPDATE
         function updatePillGlider(activeBtn) {
             const glider = document.getElementById('pillGlider');
             if (!glider || !activeBtn) return;
@@ -1654,6 +1580,7 @@
             glider.style.opacity = '1';
         }
 
+        // RESTORED SINGLE CAPSULE TOPICS PILL
         function renderTopicsPill(totalTopics) {
             const container = document.getElementById('topicsPillContainer');
             if (!container) return;
@@ -1666,15 +1593,21 @@
                 }
                 container.innerHTML = `
                     <div class="topics-nav-pill">
-                        <span class="pill-slider-glider" id="pillGlider"></span>
-                        <span class="pill-label">Topics:</span>
-                        ${buttonsHtml}
+                        <span class="pill-label">Topics :</span>
+                        <div class="topic-numbers-wrapper">
+                            <span class="pill-slider-glider" id="pillGlider"></span>
+                            ${buttonsHtml}
+                        </div>
                     </div>
                 `;
-                requestAnimationFrame(() => {
+                const syncGlider = () => {
                     const firstBtn = container.querySelector('.topic-num-btn.is-active');
                     if (firstBtn) updatePillGlider(firstBtn);
-                });
+                };
+                requestAnimationFrame(syncGlider);
+                if (document.fonts && document.fonts.ready) {
+                    document.fonts.ready.then(syncGlider);
+                }
             } else {
                 container.innerHTML = '';
             }
@@ -1739,6 +1672,7 @@
                 });
                 topicsFeed.style.height = 'auto';
                 isTransitioning = false;
+                packAllMetaPills();
             }, 400);
         }
 
@@ -1910,6 +1844,79 @@
             `;
         }
 
+        // SMART GAP-FILLING PILL PACKER (Auto-aligns order to eliminate empty gaps)
+        function packMetaPills(row) {
+            if (!row) return;
+            const pills = Array.from(row.querySelectorAll('.meta-pill, .image-toggle-pill, .read-toggle-pill'));
+            if (pills.length <= 1) return;
+
+            pills.forEach(p => p.style.order = '');
+            const availableWidth = row.clientWidth;
+            if (availableWidth <= 0) return;
+
+            const gap = 10;
+            const items = pills.map((p) => ({
+                el: p,
+                width: p.getBoundingClientRect().width,
+                placed: false
+            }));
+
+            const finalOrder = [];
+            let unplacedCount = items.length;
+
+            while (unplacedCount > 0) {
+                let currentLineWidth = 0;
+                let addedAny = false;
+
+                for (let i = 0; i < items.length; i++) {
+                    if (!items[i].placed) {
+                        items[i].placed = true;
+                        finalOrder.push(items[i]);
+                        currentLineWidth = items[i].width;
+                        unplacedCount--;
+                        addedAny = true;
+                        break;
+                    }
+                }
+                if (!addedAny) break;
+
+                let canFit = true;
+                while (canFit && unplacedCount > 0) {
+                    let bestCandidate = null;
+                    for (let i = 0; i < items.length; i++) {
+                        const candidate = items[i];
+                        if (!candidate.placed && (currentLineWidth + gap + candidate.width <= availableWidth)) {
+                            bestCandidate = candidate;
+                            break;
+                        }
+                    }
+
+                    if (bestCandidate) {
+                        bestCandidate.placed = true;
+                        finalOrder.push(bestCandidate);
+                        currentLineWidth += gap + bestCandidate.width;
+                        unplacedCount--;
+                    } else {
+                        canFit = false;
+                    }
+                }
+            }
+
+            finalOrder.forEach((item, visualIndex) => {
+                item.el.style.order = visualIndex;
+            });
+        }
+
+        function packAllMetaPills() {
+            document.querySelectorAll('.meta-pills-row').forEach(packMetaPills);
+        }
+
+        window.addEventListener('resize', () => {
+            packAllMetaPills();
+            const activeBtn = document.querySelector('.topic-num-btn.is-active');
+            if (activeBtn) updatePillGlider(activeBtn);
+        });
+
         function renderCards(topics, dateText) {
             activeDateDisplay.textContent = dateText;
             topicsFeed.innerHTML = '';
@@ -1970,13 +1977,7 @@
                 const shortDrawerHtml = hasShort ? `
                     <div class="topic-short-drawer" id="${shortDrawerId}">
                         <div class="topic-short-inner">
-                            <div class="short-article-card-box">
-                                <div class="short-badge-row">
-                                    <span class="short-badge">Quick Revision · &lt;250 Words</span>
-                                    <span class="short-meta-tag">${topic.shortArticle.category || topic.category}</span>
-                                </div>
-                                ${renderArticleSections(topic.shortArticle)}
-                            </div>
+                            ${renderArticleSections(topic.shortArticle)}
                             <div class="article-separation-divider">
                                 <span class="divider-label-pill">Detailed Analysis Below</span>
                             </div>
@@ -2004,6 +2005,9 @@
             });
 
             topicsFeed.style.height = 'auto';
+            requestAnimationFrame(() => {
+                packAllMetaPills();
+            });
         }
 
         // Script injector for Date Picker dynamic navigation
