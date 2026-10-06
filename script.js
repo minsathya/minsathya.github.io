@@ -10,7 +10,7 @@
         /* Site-wide Dark Mode Overrides (Pure Black Theme) */
         html:not(.light-mode), 
         body:not(.light-mode) {
-            --bg-color: #0bobob !important;
+            --bg-color: #0b0b0b !important;
             --panel-bg: #0d0d0d !important;
             --panel-border: #131313 !important;
             --row-divider: #111111 !important;
