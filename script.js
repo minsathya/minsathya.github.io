@@ -2,12 +2,21 @@
    GLOBAL SITE THEME & UNIFIED HEADER ENGINE
    ========================================================================== */
 
-// 1. GLOBAL COLOR & UNIFIED HEADER STYLES INJECTION
+// 1. GLOBAL COLOR OVERRIDES & UNIFIED HEADER INJECTION
 (function injectGlobalStyles() {
     const style = document.createElement('style');
     style.id = 'global-site-theme-rules';
     style.textContent = `
-        /* Site-wide Light Mode Color Overrides */
+        /* Site-wide Dark Mode Overrides (Pure Black Theme) */
+        html:not(.light-mode), 
+        body:not(.light-mode) {
+            --bg-color: #000000 !important;
+            --panel-bg: #0a0a0a !important;
+            --panel-border: #0a0a0a !important;
+            --row-divider: #0a0a0a !important;
+        }
+
+        /* Site-wide Light Mode Overrides */
         html.light-mode, 
         body.light-mode {
             --bg-color: #f5f5f7 !important;
@@ -30,7 +39,7 @@
 
         body:not(.light-mode) header#masterHeader,
         body:not(.light-mode) header {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4) !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
         }
 
         /* Universal 3D Lift Animation on Hover / Tap */
@@ -44,7 +53,7 @@
         header.is-header-lifted {
             transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
             border-color: #1E1E1E !important;
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45) !important;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.55) !important;
         }
 
         body.light-mode header#masterHeader:hover,
@@ -87,12 +96,10 @@
 
 // 3. LOGO NAVIGATION & UNIVERSAL HEADER INTERACTIONS
 document.addEventListener('DOMContentLoaded', () => {
-    // Sync body theme class with html element
     if (document.documentElement.classList.contains('light-mode') && !document.body.classList.contains('light-mode')) {
         document.body.classList.add('light-mode');
     }
 
-    // Standardized Header Lift & Dismissal Handlers
     const masterHeader = document.getElementById('masterHeader') || document.querySelector('header');
     const searchInput = document.getElementById('searchCoreInput');
     const closeSearchBtn = document.getElementById('closeSearchBtn');
@@ -131,7 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Logo Hierarchy Routing Logic
     const logo = document.querySelector('.logo') || document.querySelector('header a');
 
     if (logo) {
@@ -144,11 +150,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const isStudySubPage = path.includes('/study/') && !isStudyHome;
 
         if (isStudySubPage) {
-            logo.href = '/study/index.html'; // Level 2 -> Go to Study Home
+            logo.href = '/study/index.html';
         } else if (isStudyHome) {
-            logo.href = '/index.html';       // Level 1 -> Go to Main Home
+            logo.href = '/index.html';
         } else {
-            logo.href = '/index.html';       // Level 0 -> Stay on Main Home
+            logo.href = '/index.html';
         }
 
         logo.addEventListener('click', (e) => {
