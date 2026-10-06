@@ -2,25 +2,40 @@
    GLOBAL SITE THEME & UNIFIED HEADER ENGINE
    ========================================================================== */
 
-// 1. GLOBAL COLOR OVERRIDES & UNIFIED HEADER INJECTION
+// 1. GLOBAL THEME, DYNAMIC SHADOWS & UNIFIED HEADER INJECTION
 (function injectGlobalStyles() {
     const style = document.createElement('style');
     style.id = 'global-site-theme-rules';
     style.textContent = `
-        /* Site-wide Dark Mode Overrides (Pure Black Theme) */
+        /* Site-wide Dark Mode: Shadows blend into pure black */
         html:not(.light-mode), 
         body:not(.light-mode) {
-            --bg-color: #0b0b0b !important;
+            --bg-color: #000000 !important;
             --panel-bg: #0d0d0d !important;
-            --panel-border: #131313 !important;
-            --row-divider: #111111 !important;
+            --panel-border: #141414 !important;
+            --row-divider: #141414 !important;
+            --shadow-ambient: 0 20px 40px rgba(0, 0, 0, 0.85) !important;
+            --shadow-lift: 0 24px 48px rgba(0, 0, 0, 0.95) !important;
         }
 
-        /* Site-wide Light Mode Overrides */
+        /* Site-wide Light Mode: Shadows blend into soft light surface */
         html.light-mode, 
         body.light-mode {
             --bg-color: #f5f5f7 !important;
             --header-bg: #ffffff !important;
+            --shadow-ambient: 0 20px 40px rgba(0, 0, 0, 0.03) !important;
+            --shadow-lift: 0 16px 32px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        /* Universal Shadow Application Across All Panels & Cards */
+        .article-card,
+        .date-topics-capsule,
+        .empty-placeholder-card,
+        .info-callout {
+            box-shadow: var(--shadow-ambient) !important;
+            transition: background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                        border-color 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                        box-shadow 0.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
         /* Standardize Header Design Across All Pages */
@@ -30,16 +45,11 @@
             height: 72px !important;
             border: 1px solid var(--header-border) !important;
             background-color: var(--header-bg) !important;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02) !important;
+            box-shadow: var(--shadow-ambient) !important;
             transition: transform 0.55s cubic-bezier(0.25, 1, 0.5, 1), 
                         box-shadow 0.55s cubic-bezier(0.25, 1, 0.5, 1), 
                         border-color 0.55s cubic-bezier(0.25, 1, 0.5, 1), 
                         background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
-        }
-
-        body:not(.light-mode) header#masterHeader,
-        body:not(.light-mode) header {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
         }
 
         /* Universal 3D Lift Animation on Hover / Tap */
@@ -53,7 +63,7 @@
         header.is-header-lifted {
             transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
             border-color: #1E1E1E !important;
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.55) !important;
+            box-shadow: var(--shadow-lift) !important;
         }
 
         body.light-mode header#masterHeader:hover,
@@ -65,7 +75,7 @@
         body.light-mode header:active,
         body.light-mode header.is-header-lifted {
             border-color: #b8b8bc !important;
-            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.09) !important;
+            box-shadow: var(--shadow-lift) !important;
         }
 
         /* Mobile Viewport Header Sizing */
