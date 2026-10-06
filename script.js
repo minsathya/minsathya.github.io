@@ -12,7 +12,7 @@
         body:not(.light-mode) {
             --bg-color: #000000 !important;
             --panel-bg: #0a0a0a !important;
-            --panel-border: #101010 !important;
+            --panel-border: #131313 !important;
             --row-divider: #0a0a0a !important;
         }
 
