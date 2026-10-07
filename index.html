@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <!-- v2.3 -->
+    <!-- v2.4 -->
     <title>sathya.</title>
 
     <!-- Universal iPad stabilization -->
@@ -424,8 +424,13 @@
            Horizontal Stretched Panels with Height Matching img 1 (~170px)
            ------------------------------------------------------------- */
         @media (max-width: 700px) {
-            body { padding: 28px 18px 24px 18px; }
-            .top-nav-bar { margin-bottom: 16px; }
+            body {
+                padding: 28px 18px 24px 18px;
+                justify-content: flex-start !important;
+                gap: 16px;
+            }
+            footer { margin-top: auto; }
+            .top-nav-bar { margin-bottom: 0; }
             .brand-pill { height: 56px; padding: 0 26px; font-size: 21px; border-radius: var(--corner-radius); }
 
             /* Push panels to top — no vertical centering */
