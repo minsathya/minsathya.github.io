@@ -23,6 +23,10 @@
     <link rel="preload" as="image" href="/nutrition/images/calories.png">
     <link rel="preload" as="image" href="/nutrition/images/protein.png">
     <link rel="preload" as="image" href="/nutrition/images/fiber.png">
+    <link rel="preload" as="image" href="/nutrition/images/carbohydrates.png">
+    <link rel="preload" as="image" href="/nutrition/images/fats.png">
+    <link rel="preload" as="image" href="/nutrition/images/sugars.png">
+    <link rel="preload" as="image" href="/nutrition/images/lactose.png">
 
     <!-- Google Tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
@@ -60,12 +64,14 @@
             --text-main: #ffffff;
             --text-muted: #88888e;
 
-            /* Panels: Background matches site bg, border transparent until hover (Image 2 & 3) */
+            /* Panels: Transparent in idle, visible border on hover/touch */
             --panel-bg: transparent;
             --panel-border: transparent;
-            --panel-border-hover: rgba(255, 255, 255, 0.22);
+            --panel-border-hover: rgba(255, 255, 255, 0.35);
             
             --corner-radius: 24px;
+            --page-gutter: 44px;
+            --section-gap: 48px;
         }
 
         body.light-mode {
@@ -76,7 +82,7 @@
             /* Panels (Light Theme) */
             --panel-bg: transparent;
             --panel-border: transparent;
-            --panel-border-hover: rgba(0, 0, 0, 0.16);
+            --panel-border-hover: rgba(0, 0, 0, 0.25);
         }
 
         * {
@@ -92,12 +98,13 @@
             color: var(--text-main);
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            padding: 38px 24px 32px 24px;
-            max-width: 1200px;
-            margin: 0 auto;
+            justify-content: flex-start;
+            padding: 40px 0 32px 0;
+            max-width: 100%;
+            margin: 0;
             width: 100%;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
@@ -131,6 +138,7 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
+            padding: 0 var(--page-gutter);
         }
 
         /* Top Left 's.' brand link directly to main home */
@@ -140,7 +148,7 @@
             align-items: baseline;
             justify-content: flex-start;
             height: auto;
-            padding: 0 2px;
+            padding: 0;
             background-color: transparent;
             border: none;
             text-decoration: none !important;
@@ -191,16 +199,16 @@
         }
 
         /* -------------------------------------------------------------
-           2. WORKSPACE HEADING: 'Nutrition' MOVED DOWN CLOSER TO PANELS
+           2. WORKSPACE HEADING: 'Nutrition' (EQUAL GAP AS TOP SECTION)
            ------------------------------------------------------------- */
         .workspace-heading-area {
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            margin-top: 52px;
-            margin-bottom: 24px;
-            padding: 0 2px;
+            margin-top: var(--section-gap);
+            margin-bottom: var(--section-gap);
+            padding: 0 var(--page-gutter);
         }
 
         .page-main-heading {
@@ -215,15 +223,17 @@
 
         /* -------------------------------------------------------------
            3. MAIN PANELS TRACK: 100% IN LINE WITH s. & NUTRITION
+              EDGE-TO-EDGE HORIZONTAL SCROLL (NO CLIPPING)
            ------------------------------------------------------------- */
         main {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: flex-start;
             width: 100%;
-            padding: 6px 0 28px 0;
+            padding: 0;
+            margin: 0;
             overflow: visible;
         }
 
@@ -238,7 +248,8 @@
             overflow-y: hidden;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
-            padding: 14px 6px 24px 6px;
+            padding: 12px var(--page-gutter) 24px var(--page-gutter);
+            scroll-padding-left: var(--page-gutter);
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
@@ -262,7 +273,7 @@
             flex-shrink: 0;
             
             background-color: transparent !important;
-            border: 1px solid transparent !important;
+            border: 1.5px solid transparent !important;
             border-radius: var(--corner-radius);
             padding: 28px 20px 24px 20px;
             display: flex;
@@ -293,9 +304,13 @@
         }
 
         .apple-panel:nth-child(1) { animation-delay: 0.04s; }
-        .apple-panel:nth-child(2) { animation-delay: 0.10s; }
-        .apple-panel:nth-child(3) { animation-delay: 0.16s; }
-        .apple-panel:nth-child(4) { animation-delay: 0.22s; }
+        .apple-panel:nth-child(2) { animation-delay: 0.08s; }
+        .apple-panel:nth-child(3) { animation-delay: 0.12s; }
+        .apple-panel:nth-child(4) { animation-delay: 0.16s; }
+        .apple-panel:nth-child(5) { animation-delay: 0.20s; }
+        .apple-panel:nth-child(6) { animation-delay: 0.24s; }
+        .apple-panel:nth-child(7) { animation-delay: 0.28s; }
+        .apple-panel:nth-child(8) { animation-delay: 0.32s; }
 
         @keyframes rapidCascadeIn {
             0% {
@@ -381,10 +396,14 @@
             animation: iconSmoothIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
         }
 
-        .apple-panel:nth-child(1) .panel-icon-wrap img { animation-delay: 0.08s; }
-        .apple-panel:nth-child(2) .panel-icon-wrap img { animation-delay: 0.14s; }
-        .apple-panel:nth-child(3) .panel-icon-wrap img { animation-delay: 0.20s; }
-        .apple-panel:nth-child(4) .panel-icon-wrap img { animation-delay: 0.26s; }
+        .apple-panel:nth-child(1) .panel-icon-wrap img { animation-delay: 0.06s; }
+        .apple-panel:nth-child(2) .panel-icon-wrap img { animation-delay: 0.10s; }
+        .apple-panel:nth-child(3) .panel-icon-wrap img { animation-delay: 0.14s; }
+        .apple-panel:nth-child(4) .panel-icon-wrap img { animation-delay: 0.18s; }
+        .apple-panel:nth-child(5) .panel-icon-wrap img { animation-delay: 0.22s; }
+        .apple-panel:nth-child(6) .panel-icon-wrap img { animation-delay: 0.26s; }
+        .apple-panel:nth-child(7) .panel-icon-wrap img { animation-delay: 0.30s; }
+        .apple-panel:nth-child(8) .panel-icon-wrap img { animation-delay: 0.34s; }
 
         body.light-mode .panel-icon-wrap img {
             filter: none !important;
@@ -426,7 +445,8 @@
             align-items: center; 
             gap: 18px; 
             width: 100%; 
-            padding-top: 24px;
+            padding: 24px var(--page-gutter) 0 var(--page-gutter);
+            margin-top: auto;
         }
 
         .footer-links-row { 
@@ -500,11 +520,16 @@
 
         /* -------------------------------------------------------------
            6. MOBILE VIEWPORT (< 700px):
-           Sleek Vertical Rectangles Aligned Perfectly With s. & Nutrition
+           Sleek Vertical Rectangles Aligned In-Line with s. & Nutrition
            ------------------------------------------------------------- */
         @media (max-width: 700px) {
+            :root {
+                --page-gutter: 28px;
+                --section-gap: 32px;
+            }
+
             body {
-                padding: 26px 18px 20px 18px;
+                padding: 28px 0 20px 0;
             }
 
             .brand-pill {
@@ -518,22 +543,22 @@
             }
 
             .workspace-heading-area {
-                margin-top: 36px;
-                margin-bottom: 16px;
+                margin-top: var(--section-gap);
+                margin-bottom: var(--section-gap);
             }
 
             .page-main-heading {
-                font-size: 18px;
+                font-size: 19px;
             }
 
             main {
-                padding: 6px 0 16px 0;
+                padding: 0;
             }
 
             .panels-scroll-track {
                 gap: 16px;
                 padding-top: 10px;
-                padding-bottom: 18px;
+                padding-bottom: 20px;
             }
 
             .apple-panel {
@@ -580,7 +605,7 @@
     <main>
         <div class="panels-scroll-track" id="panelsTrack">
 
-            <!-- Panel 1: Track (Renamed from Track the Nutrients; Connects to mm.html) -->
+            <!-- Panel 1: Track (Connects to mm.html) -->
             <a href="/nutrition/mm.html" class="apple-panel myspace-card" id="cardTrack" data-index="0" aria-label="Track">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
@@ -593,7 +618,7 @@
                 </div>
             </a>
 
-            <!-- Panel 2: Calories (Fire emblem; Between Track & Protein; Not mm.html) -->
+            <!-- Panel 2: Calories -->
             <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCalories" data-index="1" aria-label="Calories">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
@@ -606,7 +631,7 @@
                 </div>
             </a>
 
-            <!-- Panel 3: Protein (Paneer emblem; Not mm.html) -->
+            <!-- Panel 3: Protein -->
             <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardProtein" data-index="2" aria-label="Protein">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
@@ -619,7 +644,7 @@
                 </div>
             </a>
 
-            <!-- Panel 4: Fiber (Red beans emblem; Not mm.html) -->
+            <!-- Panel 4: Fiber -->
             <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardFiber" data-index="3" aria-label="Fiber">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
@@ -629,6 +654,58 @@
                 <div class="panel-bottom-content">
                     <h2 class="panel-title nav-text">Fiber</h2>
                     <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 5: Carbohydrates -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCarbohydrates" data-index="4" aria-label="Carbohydrates">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/carbohydrates.png" width="105" height="105" alt="Carbohydrates" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/carbohydrates.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Carbohydrates</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 6: Fats -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardFats" data-index="5" aria-label="Fats">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/fats.png" width="105" height="105" alt="Fats" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/fats.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Fats</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 7: Sugars -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardSugars" data-index="6" aria-label="Sugars">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/sugars.png" width="105" height="105" alt="Sugars" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/sugars.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Sugars</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 8: Lactose -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardLactose" data-index="7" aria-label="Lactose">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/lactose.png" width="105" height="105" alt="Lactose" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/lactose.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Lactose</h2>
+                    <span class="panel-subtext">Sugars</span>
                 </div>
             </a>
 
@@ -679,15 +756,23 @@
         } catch (e) {}
 
         // -------------------------------------------------------------
-        // 3. CLICK INTERACTIONS & FLUID WAVE TRANSITIONS
+        // 3. TACTILE TOUCH & CLICK INTERACTIONS
         // -------------------------------------------------------------
         const cards = Array.from(document.querySelectorAll('.apple-panel'));
 
-        cards.forEach((card, idx) => {
+        cards.forEach((card) => {
+            // Instant tactile border reveal on touch / pointerdown
+            card.addEventListener('pointerdown', function() {
+                cards.forEach(c => {
+                    if (c !== this) c.classList.remove('is-card-lifted');
+                });
+                this.classList.add('is-card-lifted');
+            });
+
             card.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
                 
-                // If it's a placeholder link (Calories, Protein, Fiber):
+                // If it's a placeholder link:
                 if (!destination || destination === '#' || destination.startsWith('javascript:')) {
                     e.preventDefault();
                     return;
@@ -708,6 +793,13 @@
                     window.location.href = destination;
                 }, 700);
             });
+        });
+
+        // Touch outside cards removes the lifted border state
+        document.addEventListener('pointerdown', (e) => {
+            if (!e.target.closest('.apple-panel')) {
+                cards.forEach(c => c.classList.remove('is-card-lifted'));
+            }
         });
 
         // Other target links (footer, brand pill)

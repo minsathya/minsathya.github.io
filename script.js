@@ -33,11 +33,27 @@
             --panel-border: transparent !important;
         }
 
-        /* Seamless Apple-Style Panels on Root Homepage & Nutrition Workspace */
-        body.root-home .apple-panel,
-        body.nutrition-workspace .apple-panel {
+        /* Seamless Apple-Style Panels on Root Homepage & Nutrition Workspace: Transparent in Idle */
+        body.root-home .apple-panel:not(:hover):not(:active):not(.is-card-lifted),
+        body.nutrition-workspace .apple-panel:not(:hover):not(:active):not(.is-card-lifted) {
             background-color: transparent !important;
             border-color: transparent !important;
+        }
+
+        /* Border only appears on hover, active or lifted */
+        body.root-home .apple-panel:hover,
+        body.root-home .apple-panel:active,
+        body.root-home .apple-panel.is-card-lifted,
+        body.nutrition-workspace .apple-panel:hover,
+        body.nutrition-workspace .apple-panel:active,
+        body.nutrition-workspace .apple-panel.is-card-lifted {
+            border-color: rgba(255, 255, 255, 0.35) !important;
+        }
+
+        body.light-mode.nutrition-workspace .apple-panel:hover,
+        body.light-mode.nutrition-workspace .apple-panel:active,
+        body.light-mode.nutrition-workspace .apple-panel.is-card-lifted {
+            border-color: rgba(0, 0, 0, 0.25) !important;
         }
 
         /* Site-wide Light Mode: Shadows completely removed */
@@ -134,6 +150,18 @@
 
 // 2. IMMEDIATE THEME SYNCHRONIZATION
 (function syncInitialTheme() {
+    const currentPath = window.location.pathname.toLowerCase();
+    const isRootHome = currentPath === '' || currentPath === '/' || (currentPath.endsWith('/index.html') && !currentPath.includes('/study/') && !currentPath.includes('/nutrition/'));
+
+    // Root Homepage: Always maintain deep night sky background in any theme
+    if (isRootHome) {
+        document.documentElement.classList.remove('light-mode');
+        if (document.body) document.body.classList.remove('light-mode');
+        document.documentElement.classList.add('root-home');
+        if (document.body) document.body.classList.add('root-home');
+        return;
+    }
+
     const savedTheme = sessionStorage.getItem('dashboard-theme');
     const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
     if (savedTheme === 'light' || (!savedTheme && systemPrefersLight)) {
@@ -141,12 +169,6 @@
         if (document.body) document.body.classList.add('light-mode');
     }
 
-    const currentPath = window.location.pathname.toLowerCase();
-    const isRootHome = currentPath === '' || currentPath === '/' || (currentPath.endsWith('/index.html') && !currentPath.includes('/study/') && !currentPath.includes('/nutrition/'));
-    if (isRootHome) {
-        document.documentElement.classList.add('root-home');
-        if (document.body) document.body.classList.add('root-home');
-    }
     if (currentPath.includes('/nutrition/')) {
         document.documentElement.classList.add('nutrition-workspace');
         if (document.body) document.body.classList.add('nutrition-workspace');
@@ -155,15 +177,19 @@
 
 // 3. LOGO NAVIGATION & UNIVERSAL INTERACTIONS
 document.addEventListener('DOMContentLoaded', () => {
-    if (document.documentElement.classList.contains('light-mode') && !document.body.classList.contains('light-mode')) {
-        document.body.classList.add('light-mode');
-    }
-
     const currentPath = window.location.pathname.toLowerCase();
     const isRootHome = currentPath === '' || currentPath === '/' || (currentPath.endsWith('/index.html') && !currentPath.includes('/study/') && !currentPath.includes('/nutrition/'));
+
     if (isRootHome) {
-        document.body.classList.add('root-home');
+        document.documentElement.classList.remove('light-mode');
+        if (document.body) document.body.classList.remove('light-mode');
+        if (document.body) document.body.classList.add('root-home');
+    } else {
+        if (document.documentElement.classList.contains('light-mode') && !document.body.classList.contains('light-mode')) {
+            document.body.classList.add('light-mode');
+        }
     }
+
     if (currentPath.includes('/nutrition/')) {
         document.body.classList.add('nutrition-workspace');
     }

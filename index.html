@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
+    <meta name="theme-color" content="#060914">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <!-- v2.5 -->
     <title>sathya.</title>
 
@@ -52,29 +53,21 @@
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 
-            /* Atmospheric Deep Night Blue Sky */
+            /* Atmospheric Deep Night Blue Sky (Permanent Across All Themes & Devices) */
             --sky-gradient: radial-gradient(ellipse at 50% 12%, #182548 0%, #101934 40%, #090e20 80%, #060914 100%);
             --text-main: #ffffff;
             --text-muted: #9998b3;
 
-            /* Seamless Panels: No background, no border in idle state (matches user request) */
+            /* Seamless Panels: No background, transparent border in idle */
             --panel-bg: transparent;
             --panel-border: transparent;
-            --panel-border-hover: rgba(255, 255, 255, 0.24);
+            --panel-border-hover: rgba(255, 255, 255, 0.35);
             
             --corner-radius: 24px;
         }
 
-        body.light-mode {
-            /* Atmospheric Clean Daytime Sky Blue (Light Mode) */
-            --sky-gradient: radial-gradient(ellipse at 50% 20%, #dbeafe 0%, #edf4fc 50%, #f8fafc 100%);
-            --text-main: #0c1c30;
-            --text-muted: #3d5e82;
-
-            /* Seamless Panels (Light Mode) */
-            --panel-bg: transparent;
-            --panel-border: transparent;
-            --panel-border-hover: rgba(12, 28, 48, 0.22);
+        html {
+            background-color: #060914 !important;
         }
 
         * {
@@ -86,10 +79,12 @@
         }
 
         body {
+            background-color: #060914 !important;
             background: var(--sky-gradient) !important;
             color: var(--text-main);
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -116,18 +111,13 @@
             overflow: hidden;
         }
 
-        /* High-Quality Night Sky Stars Layer (Dark Mode Only) */
+        /* High-Quality Night Sky Stars Layer (Always Visible in Any Theme) */
         .stars-layer {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
-            transition: opacity 0.8s var(--ease-smooth);
             opacity: 1;
-        }
-
-        body.light-mode .stars-layer {
-            opacity: 0;
         }
 
         .star {
@@ -282,7 +272,7 @@
             aspect-ratio: 1 / 1.46;
             flex-shrink: 0;
             background-color: transparent !important;
-            border: 1px solid transparent !important;
+            border: 1.5px solid transparent !important;
             border-radius: var(--corner-radius);
             backdrop-filter: none;
             -webkit-backdrop-filter: none;
@@ -492,78 +482,99 @@
         }
 
         /* -------------------------------------------------------------
-           MOBILE BREAKPOINT (< 700px):
-           Sleek Vertical Rectangles Matching Calories Panel & Nutrition Workspace
+           RESPONSIVE BREAKPOINT:
+           PHONE (< 768px) & IPAD IN PORTRAIT ((orientation: portrait) and (max-width: 1024px))
+           Horizontally Stretched Panels (Text Left, Icon Right, Seamless Idle, Border on Touch/Hover)
            ------------------------------------------------------------- */
-        @media (max-width: 700px) {
+        @media (max-width: 768px), (orientation: portrait) and (max-width: 1024px) {
             body {
-                padding: 26px 18px 20px 18px;
+                padding: 28px 20px 24px 20px;
                 justify-content: flex-start !important;
                 gap: 20px;
             }
             footer { margin-top: auto; }
             .top-nav-bar { margin-bottom: 0; }
-            .brand-pill { font-size: 36px; padding: 0 2px; }
+            .brand-pill { font-size: 36px; padding: 0; }
             .brand-dot { width: 7px; height: 7px; vertical-align: -1px; }
 
             /* Centered main area */
             main {
                 justify-content: center !important;
                 align-items: center !important;
-                padding: 12px 0 !important;
+                padding: 16px 0 !important;
                 flex-grow: 1 !important;
             }
 
             .apple-panels-grid {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                align-items: center;
-                gap: 16px;
-                width: 100%;
-                max-width: 100%;
-            }
-
-            /* Sleek Vertical Panels matching Calories Panel & Nutrition Workspace */
-            .apple-panel {
-                width: 210px !important;
-                min-width: 210px !important;
-                max-width: 210px !important;
-                height: 320px !important;
-                min-height: 320px !important;
-                aspect-ratio: 1 / 1.48 !important;
-                padding: 24px 16px 20px 16px !important;
-                border-radius: 20px !important;
-                flex-shrink: 0 !important;
                 flex-direction: column !important;
                 align-items: stretch !important;
+                width: 100% !important;
+                max-width: 480px !important;
+                gap: 16px !important;
+                margin: 0 auto !important;
+            }
+
+            /* Horizontally Stretched Panels on Phone & iPad Portrait */
+            .apple-panel {
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                height: auto !important;
+                min-height: 110px !important;
+                aspect-ratio: unset !important;
+                flex-direction: row !important;
+                align-items: center !important;
                 justify-content: space-between !important;
+                padding: 22px 28px !important;
+                border-radius: 20px !important;
             }
 
             .panel-header-text {
-                gap: 4px;
-                text-align: left;
-                align-items: flex-start;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 4px !important;
+                text-align: left !important;
+                align-items: flex-start !important;
             }
 
             .panel-tag {
-                font-size: 10px;
-                letter-spacing: 0.8px;
+                font-size: 10px !important;
+                letter-spacing: 0.8px !important;
                 line-height: 1.2;
             }
 
             .panel-title {
-                font-size: 22px !important;
-                line-height: 1.1;
+                font-size: 24px !important;
+                line-height: 1.15 !important;
             }
 
             .panel-artwork-stage {
-                padding: 8px 0;
+                flex-grow: 0 !important;
+                padding: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
             }
 
             .panel-icon-wrap svg {
-                width: 80px !important;
-                height: 80px !important;
+                width: 64px !important;
+                height: 64px !important;
+            }
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding: 26px 18px 20px 18px;
+            }
+            .apple-panel {
+                padding: 20px 22px !important;
+            }
+            .panel-title {
+                font-size: 22px !important;
+            }
+            .panel-icon-wrap svg {
+                width: 58px !important;
+                height: 58px !important;
             }
         }
 
@@ -693,26 +704,15 @@
         </div>
     </footer>
 
-    <!-- Interactive Navigation & Automatic System Theme Engine -->
+    <!-- Interactive Navigation Engine -->
     <script>
         // -------------------------------------------------------------
-        // 1. AUTOMATIC DEVICE THEME DETECTOR
+        // 1. SCROLL RESTORATION & BREADCRUMB INITIALIZATION
         // -------------------------------------------------------------
-        const bodyElement = document.body;
-        const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
-
-        function applyDeviceTheme() {
-            if (systemLightQuery.matches) {
-                bodyElement.classList.add('light-mode');
-                document.documentElement.classList.add('light-mode');
-            } else {
-                bodyElement.classList.remove('light-mode');
-                document.documentElement.classList.remove('light-mode');
-            }
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
         }
-
-        applyDeviceTheme();
-        systemLightQuery.addEventListener('change', applyDeviceTheme);
+        window.scrollTo(0, 0);
 
         // Reset breadcrumbs on home page so subsequent navigation starts fresh
         try {
@@ -740,11 +740,19 @@
         }
 
         // -------------------------------------------------------------
-        // 3. CLICK INTERACTIONS & FLUID WAVE TRANSITIONS
+        // 3. TACTILE TOUCH & CLICK INTERACTIONS
         // -------------------------------------------------------------
         const cards = Array.from(document.querySelectorAll('.apple-panel'));
 
         cards.forEach((card) => {
+            // Instant tactile border reveal on touch / pointerdown
+            card.addEventListener('pointerdown', function() {
+                cards.forEach(c => {
+                    if (c !== this) c.classList.remove('is-card-lifted');
+                });
+                this.classList.add('is-card-lifted');
+            });
+
             card.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
                 if (!destination || destination === '#' || destination.startsWith('javascript:')) return;
@@ -765,6 +773,13 @@
                     window.location.href = destination;
                 }, 700);
             });
+        });
+
+        // Touch outside cards removes the lifted border state
+        document.addEventListener('pointerdown', (e) => {
+            if (!e.target.closest('.apple-panel')) {
+                cards.forEach(c => c.classList.remove('is-card-lifted'));
+            }
         });
 
         const otherTargetLinks = document.querySelectorAll('footer .footer-links-row a, .brand-pill');
