@@ -45,11 +45,11 @@
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
             
-            --bg-color: #0a130d;
+            --bg-color: #0b0b0b;
             --text-main: #ffffff;
             --text-muted: #555555;
             --panel-bg: #121212;
-            --panel-border: rgba(255, 255, 255, 0.08);
+            --panel-border: #222222;
             --row-divider: #1c1c1c;
             --row-hover: rgba(255, 255, 255, 0.015);
 
@@ -390,25 +390,26 @@
             border: 1px solid var(--panel-border);
             border-radius: 28px;
             padding: 40px 48px;
-            box-shadow: none;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
             display: flex;
             flex-direction: column;
             width: 100%;
             position: relative;
             transition: transform 0.55s var(--ease-smooth), 
+                        box-shadow 0.55s var(--ease-smooth), 
                         border-color 0.55s var(--ease-smooth),
                         background-color 0.8s var(--ease-smooth);
         }
 
-        body:not(.light-mode) .wide-capsule { box-shadow: none; }
+        body:not(.light-mode) .wide-capsule { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
 
         @media (hover: hover) and (pointer: fine) {
             .wide-capsule:hover { 
                 border-color: #1E1E1E; 
                 transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
-                box-shadow: none;
+                box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
             }
-            body.light-mode .wide-capsule:hover { border-color: #b8b8bc; box-shadow: none; }
+            body.light-mode .wide-capsule:hover { border-color: #b8b8bc; box-shadow: 0 16px 32px rgba(0, 0, 0, 0.09); }
         }
 
         .capsule-header-row {
@@ -1629,20 +1630,9 @@
             if (trail.length === 0 || (trail[0].path !== HOME_PATH && trail[0].path !== "/nutrition/")) {
                 trail = [
                     { name: "Home", path: HOME_PATH },
-                    { name: "Track the Nutrients", path: "/nutrition/mm.html" }
+                    { name: "Track", path: "/nutrition/mm.html" }
                 ];
-            } else {
-                const existingIndex = trail.findIndex(step => step.path === searchPath);
-                if (existingIndex !== -1) {
-                    trail = trail.slice(0, existingIndex + 1);
-                } else {
-                    trail.push({ name: "Track the Nutrients", path: searchPath });
-                }
             }
-
-            try {
-                sessionStorage.setItem('breadcrumbTrail', JSON.stringify(trail));
-            } catch (e) {}
 
             let htmlMarkup = '';
             trail.forEach((step) => {
@@ -1798,6 +1788,5 @@
         initDaysTrack();
         selectDay(0, true);
     </script>
-    <script src="/script.js"></script>
 </body>
 </html>

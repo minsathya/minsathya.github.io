@@ -27,6 +27,9 @@
     <link rel="preload" as="image" href="/nutrition/images/fats.png">
     <link rel="preload" as="image" href="/nutrition/images/sugars.png">
     <link rel="preload" as="image" href="/nutrition/images/lactose.png">
+    <link rel="preload" as="image" href="/nutrition/images/carotenoids.png">
+    <link rel="preload" as="image" href="/nutrition/images/vitamin-a.png">
+    <link rel="preload" as="image" href="/nutrition/images/vitamin-c.png">
 
     <!-- Google Tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
@@ -64,10 +67,10 @@
             --text-main: #ffffff;
             --text-muted: #88888e;
 
-            /* Panels: Transparent in idle, visible border on hover/touch */
+            /* Panels: Border from 2 versions before */
             --panel-bg: transparent;
-            --panel-border: transparent;
-            --panel-border-hover: rgba(255, 255, 255, 0.35);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --panel-border-hover: rgba(255, 255, 255, 0.22);
             
             --corner-radius: 24px;
             --page-gutter: 44px;
@@ -81,8 +84,8 @@
 
             /* Panels (Light Theme) */
             --panel-bg: transparent;
-            --panel-border: transparent;
-            --panel-border-hover: rgba(0, 0, 0, 0.25);
+            --panel-border: rgba(0, 0, 0, 0.07);
+            --panel-border-hover: rgba(0, 0, 0, 0.2);
         }
 
         * {
@@ -230,10 +233,11 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            align-items: flex-start;
+            align-items: stretch;
             width: 100%;
             padding: 0;
             margin: 0;
+            gap: 28px;
             overflow: visible;
         }
 
@@ -260,8 +264,8 @@
 
         /* -------------------------------------------------------------
            4. UNIFORM PANELS: EXACT SIZE OF CALORIES PANEL (240px x 350px)
-              IDLE: SEAMLESS NO-BG NO-BORDER (MATCHES IMG 2)
-              HOVER/TOUCH: BORDER-ONLY APPEARS WITH SMOOTH LIFT (MATCHES IMG 3)
+              IDLE: BORDER RESTORED FROM 2 VERSIONS BEFORE
+              HOVER/TOUCH: HIGHLIGHT BORDER WITH SMOOTH LIFT
            ------------------------------------------------------------- */
         .apple-panel {
             width: 240px;
@@ -273,7 +277,7 @@
             flex-shrink: 0;
             
             background-color: transparent !important;
-            border: 1.5px solid transparent !important;
+            border: 1px solid var(--panel-border) !important;
             border-radius: var(--corner-radius);
             padding: 28px 20px 24px 20px;
             display: flex;
@@ -304,13 +308,14 @@
         }
 
         .apple-panel:nth-child(1) { animation-delay: 0.04s; }
-        .apple-panel:nth-child(2) { animation-delay: 0.08s; }
-        .apple-panel:nth-child(3) { animation-delay: 0.12s; }
-        .apple-panel:nth-child(4) { animation-delay: 0.16s; }
-        .apple-panel:nth-child(5) { animation-delay: 0.20s; }
-        .apple-panel:nth-child(6) { animation-delay: 0.24s; }
-        .apple-panel:nth-child(7) { animation-delay: 0.28s; }
-        .apple-panel:nth-child(8) { animation-delay: 0.32s; }
+        .apple-panel:nth-child(2) { animation-delay: 0.07s; }
+        .apple-panel:nth-child(3) { animation-delay: 0.10s; }
+        .apple-panel:nth-child(4) { animation-delay: 0.13s; }
+        .apple-panel:nth-child(5) { animation-delay: 0.16s; }
+        .apple-panel:nth-child(6) { animation-delay: 0.19s; }
+        .apple-panel:nth-child(7) { animation-delay: 0.22s; }
+        .apple-panel:nth-child(8) { animation-delay: 0.25s; }
+        .apple-panel:nth-child(9) { animation-delay: 0.28s; }
 
         @keyframes rapidCascadeIn {
             0% {
@@ -323,7 +328,7 @@
             }
         }
 
-        /* Lift-up & BORDER ONLY APPEARS when cursor reaches the panel (Img 3) */
+        /* Lift-up & Border highlight when cursor reaches the panel */
         @media (hover: hover) and (pointer: fine) {
             .apple-panel:hover {
                 transform: translate3d(0, -6px, 0) !important;
@@ -342,7 +347,7 @@
             }
         }
 
-        /* Touch / tap: BORDER ONLY APPEARS with smooth lift */
+        /* Touch / tap: Border highlight with smooth lift */
         .apple-panel:active,
         .apple-panel.is-card-lifted {
             transform: translate3d(0, -6px, 0) !important;
@@ -396,14 +401,72 @@
             animation: iconSmoothIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
         }
 
-        .apple-panel:nth-child(1) .panel-icon-wrap img { animation-delay: 0.06s; }
-        .apple-panel:nth-child(2) .panel-icon-wrap img { animation-delay: 0.10s; }
-        .apple-panel:nth-child(3) .panel-icon-wrap img { animation-delay: 0.14s; }
-        .apple-panel:nth-child(4) .panel-icon-wrap img { animation-delay: 0.18s; }
-        .apple-panel:nth-child(5) .panel-icon-wrap img { animation-delay: 0.22s; }
-        .apple-panel:nth-child(6) .panel-icon-wrap img { animation-delay: 0.26s; }
-        .apple-panel:nth-child(7) .panel-icon-wrap img { animation-delay: 0.30s; }
-        .apple-panel:nth-child(8) .panel-icon-wrap img { animation-delay: 0.34s; }
+        /* Typographic Element & Vitamin Symbol Badges */
+        .element-symbol-badge {
+            width: 105px;
+            height: 105px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-sizing: border-box;
+            transition: transform 0.55s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+            animation: iconSmoothIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body.light-mode .element-symbol-badge {
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .sym-text {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro", "Inter", sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            line-height: 1;
+            display: inline-flex;
+            align-items: baseline;
+            justify-content: center;
+            transition: color 0.8s var(--ease-smooth);
+        }
+
+        .sym-text.single-letter {
+            font-size: 48px;
+        }
+
+        .sym-sub {
+            font-size: 23px;
+            font-weight: 600;
+            margin-left: 2px;
+            bottom: -2px;
+            position: relative;
+            opacity: 0.88;
+        }
+
+        .apple-panel:nth-child(1) .panel-icon-wrap img,
+        .apple-panel:nth-child(1) .element-symbol-badge { animation-delay: 0.06s; }
+        .apple-panel:nth-child(2) .panel-icon-wrap img,
+        .apple-panel:nth-child(2) .element-symbol-badge { animation-delay: 0.09s; }
+        .apple-panel:nth-child(3) .panel-icon-wrap img,
+        .apple-panel:nth-child(3) .element-symbol-badge { animation-delay: 0.12s; }
+        .apple-panel:nth-child(4) .panel-icon-wrap img,
+        .apple-panel:nth-child(4) .element-symbol-badge { animation-delay: 0.15s; }
+        .apple-panel:nth-child(5) .panel-icon-wrap img,
+        .apple-panel:nth-child(5) .element-symbol-badge { animation-delay: 0.18s; }
+        .apple-panel:nth-child(6) .panel-icon-wrap img,
+        .apple-panel:nth-child(6) .element-symbol-badge { animation-delay: 0.21s; }
+        .apple-panel:nth-child(7) .panel-icon-wrap img,
+        .apple-panel:nth-child(7) .element-symbol-badge { animation-delay: 0.24s; }
+        .apple-panel:nth-child(8) .panel-icon-wrap img,
+        .apple-panel:nth-child(8) .element-symbol-badge { animation-delay: 0.27s; }
+        .apple-panel:nth-child(9) .panel-icon-wrap img,
+        .apple-panel:nth-child(9) .element-symbol-badge { animation-delay: 0.30s; }
 
         body.light-mode .panel-icon-wrap img {
             filter: none !important;
@@ -557,24 +620,38 @@
 
             .panels-scroll-track {
                 gap: 16px;
-                padding-top: 10px;
-                padding-bottom: 20px;
+                padding-top: 8px;
+                padding-bottom: 16px;
             }
 
+            /* Phone Only: slightly smaller panel container, strictly preserving icon & text size */
             .apple-panel {
-                width: 210px !important;
-                min-width: 210px !important;
-                max-width: 210px !important;
-                height: 320px !important;
-                min-height: 320px !important;
-                aspect-ratio: 1 / 1.48 !important;
-                padding: 24px 16px 20px 16px !important;
-                border-radius: 20px !important;
+                width: 185px !important;
+                min-width: 185px !important;
+                max-width: 185px !important;
+                height: 285px !important;
+                min-height: 285px !important;
+                aspect-ratio: 1 / 1.54 !important;
+                padding: 20px 14px 18px 14px !important;
+                border-radius: 18px !important;
             }
 
-            .panel-icon-wrap img {
+            .panel-icon-wrap img,
+            .element-symbol-badge {
                 width: 90px !important;
                 height: 90px !important;
+            }
+
+            .sym-text {
+                font-size: 36px !important;
+            }
+
+            .sym-text.single-letter {
+                font-size: 40px !important;
+            }
+
+            .sym-sub {
+                font-size: 20px !important;
             }
 
             .panel-title {
@@ -601,10 +678,10 @@
         <h1 class="page-main-heading">Nutrition</h1>
     </div>
 
-    <!-- 3. Center Section: 4 Uniform Panels (In-line with s. & Nutrition) -->
+    <!-- 3. Center Section: 5 Lines of Nutrition Panels -->
     <main>
-        <div class="panels-scroll-track" id="panelsTrack">
-
+        <!-- Line 1: Macronutrients & Energy -->
+        <div class="panels-scroll-track" id="trackMacronutrients" aria-label="Macronutrients & Energy">
             <!-- Panel 1: Track (Connects to mm.html) -->
             <a href="/nutrition/mm.html" class="apple-panel myspace-card" id="cardTrack" data-index="0" aria-label="Track">
                 <div class="panel-artwork-stage">
@@ -708,7 +785,462 @@
                     <span class="panel-subtext">Sugars</span>
                 </div>
             </a>
+        </div>
 
+        <!-- Line 2: Carotenoids & Fat-Soluble Vitamins -->
+        <div class="panels-scroll-track" id="trackVitaminsAtoK" aria-label="Vitamins & Carotenoids">
+            <!-- Panel 1: Carotenoids -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCarotenoids" data-index="8" aria-label="Carotenoids">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/carotenoids.png" width="105" height="105" alt="Carotenoids" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/carotenoids.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Carotenoids</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 2: Vitamin A -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminA" data-index="9" aria-label="Vitamin A">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/vitamin-a.png" width="105" height="105" alt="Vitamin A" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/vitamin-a.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin A</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 3: Vitamin C -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminC" data-index="10" aria-label="Vitamin C">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/vitamin-c.png" width="105" height="105" alt="Vitamin C" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/vitamin-c.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin C</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 4: Vitamin D -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminD" data-index="11" aria-label="Vitamin D">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text single-letter">D</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin D</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 5: Vitamin E -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminE" data-index="12" aria-label="Vitamin E">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text single-letter">E</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin E</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 6: Vitamin K -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminK" data-index="13" aria-label="Vitamin K">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text single-letter">K</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin K</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Line 3: B-Vitamins -->
+        <div class="panels-scroll-track" id="trackBVitamins" aria-label="B-Complex Vitamins">
+            <!-- B1 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB1" data-index="14" aria-label="Vitamin B1">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">B<sub class="sym-sub">1</sub></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Thiamine</span>
+                </div>
+            </a>
+
+            <!-- B2 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB2" data-index="15" aria-label="Vitamin B2">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">B<sub class="sym-sub">2</sub></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Riboflavin</span>
+                </div>
+            </a>
+
+            <!-- B3 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB3" data-index="16" aria-label="Vitamin B3">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">B<sub class="sym-sub">3</sub></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Niacin</span>
+                </div>
+            </a>
+
+            <!-- B5 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB5" data-index="17" aria-label="Vitamin B5">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">B<sub class="sym-sub">5</sub></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Pantothenic Acid</span>
+                </div>
+            </a>
+
+            <!-- B6 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB6" data-index="18" aria-label="Vitamin B6">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">B<sub class="sym-sub">6</sub></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Pyridoxine</span>
+                </div>
+            </a>
+
+            <!-- B7 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB7" data-index="19" aria-label="Vitamin B7">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">B<sub class="sym-sub">7</sub></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Biotin</span>
+                </div>
+            </a>
+
+            <!-- B9 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB9" data-index="20" aria-label="Vitamin B9">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">B<sub class="sym-sub">9</sub></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Folate</span>
+                </div>
+            </a>
+
+            <!-- B12 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB12" data-index="21" aria-label="Vitamin B12">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">B<sub class="sym-sub">12</sub></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Cobalamin</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Line 4: Macro Minerals -->
+        <div class="panels-scroll-track" id="trackMacroMinerals" aria-label="Macro Minerals">
+            <!-- Calcium -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCalcium" data-index="22" aria-label="Calcium">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">Ca</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Calcium</h2>
+                    <span class="panel-subtext">Macro Minerals</span>
+                </div>
+            </a>
+
+            <!-- Phosphorus -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardPhosphorus" data-index="23" aria-label="Phosphorus">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text single-letter">P</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Phosphorus</h2>
+                    <span class="panel-subtext">Macro Minerals</span>
+                </div>
+            </a>
+
+            <!-- Magnesium -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardMagnesium" data-index="24" aria-label="Magnesium">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">Mg</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Magnesium</h2>
+                    <span class="panel-subtext">Macro Minerals</span>
+                </div>
+            </a>
+
+            <!-- Sodium -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardSodium" data-index="25" aria-label="Sodium">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">Na</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Sodium</h2>
+                    <span class="panel-subtext">Macro Minerals</span>
+                </div>
+            </a>
+
+            <!-- Potassium -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardPotassium" data-index="26" aria-label="Potassium">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text single-letter">K</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Potassium</h2>
+                    <span class="panel-subtext">Macro Minerals</span>
+                </div>
+            </a>
+
+            <!-- Chloride -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardChloride" data-index="27" aria-label="Chloride">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">Cl</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Chloride</h2>
+                    <span class="panel-subtext">Macro Minerals</span>
+                </div>
+            </a>
+
+            <!-- Sulphur -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardSulphur" data-index="28" aria-label="Sulphur">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text single-letter">S</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Sulphur</h2>
+                    <span class="panel-subtext">Macro Minerals</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Line 5: Trace Minerals -->
+        <div class="panels-scroll-track" id="trackTraceMinerals" aria-label="Trace Minerals">
+            <!-- Iron -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardIron" data-index="29" aria-label="Iron">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">Fe</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Iron</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
+
+            <!-- Zinc -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardZinc" data-index="30" aria-label="Zinc">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">Zn</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Zinc</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
+
+            <!-- Iodine -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardIodine" data-index="31" aria-label="Iodine">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text single-letter">I</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Iodine</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
+
+            <!-- Manganese -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardManganese" data-index="32" aria-label="Manganese">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">Mn</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Manganese</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
+
+            <!-- Selenium -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardSelenium" data-index="33" aria-label="Selenium">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">Se</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Selenium</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
+
+            <!-- Copper -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCopper" data-index="34" aria-label="Copper">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">Cu</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Copper</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
+
+            <!-- Fluoride -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardFluoride" data-index="35" aria-label="Fluoride">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text single-letter">F</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Fluoride</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
+
+            <!-- Chromium -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardChromium" data-index="36" aria-label="Chromium">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">Cr</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Chromium</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
+
+            <!-- Molybdenum -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardMolybdenum" data-index="37" aria-label="Molybdenum">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <div class="element-symbol-badge">
+                            <span class="sym-text">Mo</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Molybdenum</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
         </div>
     </main>
 

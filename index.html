@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
-    <meta name="theme-color" content="#060914">
+    <meta name="theme-color" content="#191843">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <!-- v2.5 -->
     <title>sathya.</title>
@@ -53,21 +53,25 @@
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 
-            /* Atmospheric Deep Night Blue Sky (Permanent Across All Themes & Devices) */
-            --sky-gradient: radial-gradient(ellipse at 50% 12%, #182548 0%, #101934 40%, #090e20 80%, #060914 100%);
+            /* Atmospheric Deep Night Blue Sky (Rich, Smooth Night Blue Sky) */
+            --sky-gradient: radial-gradient(ellipse at 50% 25%, #222055 0%, #191843 50%, #11102f 100%);
             --text-main: #ffffff;
             --text-muted: #9998b3;
 
-            /* Seamless Panels: No background, transparent border in idle */
+            /* Panels: Border from 2 versions before */
             --panel-bg: transparent;
-            --panel-border: transparent;
-            --panel-border-hover: rgba(255, 255, 255, 0.35);
+            --panel-border: rgba(255, 255, 255, 0.12);
+            --panel-border-hover: rgba(255, 255, 255, 0.3);
             
             --corner-radius: 24px;
         }
 
         html {
-            background-color: #060914 !important;
+            background: var(--sky-gradient) !important;
+            background-color: #11102f !important;
+            min-height: 100vh;
+            min-height: 100dvh;
+            width: 100%;
         }
 
         * {
@@ -79,8 +83,7 @@
         }
 
         body {
-            background-color: #060914 !important;
-            background: var(--sky-gradient) !important;
+            background: transparent !important;
             color: var(--text-main);
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
@@ -89,13 +92,13 @@
             flex-direction: column;
             justify-content: space-between;
             padding: 40px 24px 36px 24px;
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
-            width: 95%;
+            width: 100%;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             position: relative;
-            transition: background 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
+            transition: color 0.8s var(--ease-smooth);
         }
 
         /* -------------------------------------------------------------
@@ -272,7 +275,7 @@
             aspect-ratio: 1 / 1.46;
             flex-shrink: 0;
             background-color: transparent !important;
-            border: 1.5px solid transparent !important;
+            border: 1px solid var(--panel-border) !important;
             border-radius: var(--corner-radius);
             backdrop-filter: none;
             -webkit-backdrop-filter: none;
@@ -482,13 +485,13 @@
         }
 
         /* -------------------------------------------------------------
-           RESPONSIVE BREAKPOINT:
-           PHONE (< 768px) & IPAD IN PORTRAIT ((orientation: portrait) and (max-width: 1024px))
-           Horizontally Stretched Panels (Text Left, Icon Right, Seamless Idle, Border on Touch/Hover)
+           MOBILE BREAKPOINT (PHONE ONLY < 640px):
+           Horizontal Stretched Panels on Phones Only
+           Note: iPad in portrait & landscape retains standard vertical laptop panels!
            ------------------------------------------------------------- */
-        @media (max-width: 768px), (orientation: portrait) and (max-width: 1024px) {
+        @media (max-width: 640px) {
             body {
-                padding: 28px 20px 24px 20px;
+                padding: 26px 18px 20px 18px;
                 justify-content: flex-start !important;
                 gap: 20px;
             }
@@ -509,12 +512,12 @@
                 flex-direction: column !important;
                 align-items: stretch !important;
                 width: 100% !important;
-                max-width: 480px !important;
+                max-width: 440px !important;
                 gap: 16px !important;
                 margin: 0 auto !important;
             }
 
-            /* Horizontally Stretched Panels on Phone & iPad Portrait */
+            /* Horizontally Stretched Panels on Phone Only */
             .apple-panel {
                 width: 100% !important;
                 min-width: 0 !important;
@@ -525,7 +528,7 @@
                 flex-direction: row !important;
                 align-items: center !important;
                 justify-content: space-between !important;
-                padding: 22px 28px !important;
+                padding: 20px 24px !important;
                 border-radius: 20px !important;
             }
 
@@ -544,7 +547,7 @@
             }
 
             .panel-title {
-                font-size: 24px !important;
+                font-size: 23px !important;
                 line-height: 1.15 !important;
             }
 
@@ -557,24 +560,8 @@
             }
 
             .panel-icon-wrap svg {
-                width: 64px !important;
-                height: 64px !important;
-            }
-        }
-
-        @media (max-width: 500px) {
-            body {
-                padding: 26px 18px 20px 18px;
-            }
-            .apple-panel {
-                padding: 20px 22px !important;
-            }
-            .panel-title {
-                font-size: 22px !important;
-            }
-            .panel-icon-wrap svg {
-                width: 58px !important;
-                height: 58px !important;
+                width: 60px !important;
+                height: 60px !important;
             }
         }
 
