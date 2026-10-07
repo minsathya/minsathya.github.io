@@ -48,16 +48,16 @@
         :root {
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
-            --bg-color: #0b0b0b;
+            
+            /* Nutrition Workspace Dark Theme */
+            --bg-color: #0a130d;
             --text-main: #ffffff;
             --text-muted: #88888e;
 
-            /* Panels (Dark Theme - shadow matches dark bg) */
-            --panel-bg: rgba(18, 18, 21, 0.92);
+            /* Panels (Dark Theme - No drop shadows) */
+            --panel-bg: rgba(18, 28, 22, 0.92);
             --panel-border: rgba(255, 255, 255, 0.08);
-            --panel-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
-            --panel-shadow-hover: 0 28px 56px rgba(0, 0, 0, 0.6);
-            --panel-border-hover: rgba(255, 255, 255, 0.2);
+            --panel-border-hover: rgba(255, 255, 255, 0.22);
             
             --corner-radius: 26px;
         }
@@ -67,12 +67,10 @@
             --text-main: #111111;
             --text-muted: #6e6e73;
 
-            /* Panels (Light Theme - shadow matches light bg) */
+            /* Panels (Light Theme - No drop shadows) */
             --panel-bg: rgba(255, 255, 255, 0.95);
             --panel-border: rgba(0, 0, 0, 0.07);
-            --panel-shadow: 0 20px 45px rgba(0, 0, 0, 0.06);
-            --panel-shadow-hover: 0 28px 52px rgba(0, 0, 0, 0.1);
-            --panel-border-hover: rgba(0, 0, 0, 0.18);
+            --panel-border-hover: rgba(0, 0, 0, 0.2);
         }
 
         * {
@@ -90,7 +88,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: space-between;
             padding: 40px 24px 36px 24px;
             max-width: 1200px;
             margin: 0 auto;
@@ -98,7 +96,6 @@
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             position: relative;
-            gap: 24px;
             transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
@@ -107,7 +104,7 @@
             to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
-        .breadcrumb-nav, .page-main-heading, .panels-container, footer {
+        .top-section-cluster, main, footer {
             position: relative;
             z-index: 1;
             opacity: 1;
@@ -115,130 +112,277 @@
             animation: masterEntrance 1s var(--ease-smooth) backwards;
         }
 
-        .breadcrumb-nav { animation-delay: 0.04s; }
-        .page-main-heading { animation-delay: 0.10s; }
-        .panels-container { animation-delay: 0.16s; }
-        footer { animation-delay: 0.24s; }
+        .top-section-cluster { animation-delay: 0.04s; }
+        main { animation-delay: 0.12s; }
+        footer { animation-delay: 0.22s; }
 
         /* -------------------------------------------------------------
-           BREADCRUMBS (TOP LEFT)
+           TOP SECTION: BRAND 'sathya.' & HEADING 'Nutrition'
            ------------------------------------------------------------- */
-        .breadcrumb-nav {
+        .top-section-cluster {
             display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 15px;
-            padding-left: 0;
-            margin-bottom: 4px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
             width: 100%;
         }
 
-        .breadcrumb-nav a {
-            color: var(--text-muted) !important;
-            text-decoration: none !important;
-            transition: color 0.4s var(--ease-smooth);
-        }
-
-        .breadcrumb-nav a:hover {
-            color: var(--text-main) !important;
-        }
-
-        .breadcrumb-separator {
-            color: var(--text-muted);
-            opacity: 0.4;
-            user-select: none;
-        }
-
-        .breadcrumb-current {
+        /* Top Left 'sathya.' brand link directly to main home */
+        .brand-pill {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: flex-start;
+            height: 48px;
+            padding: 0 4px;
+            background-color: transparent;
+            border: none;
             color: var(--text-main);
-            opacity: 0.85;
-            font-weight: 500;
+            text-decoration: none !important;
+            font-size: 26px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            box-shadow: none !important;
+            touch-action: manipulation;
+            cursor: pointer;
+            user-select: none;
+            
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            
+            transition: transform 0.55s var(--ease-smooth),
+                        color 0.8s var(--ease-smooth);
         }
 
-        /* -------------------------------------------------------------
-           MAIN HEADING (UNDER BREADCRUMBS, ALIGNED LEFT)
-           ------------------------------------------------------------- */
+        .brand-pill:hover,
+        .brand-pill:focus-within,
+        .brand-pill:active,
+        .brand-pill.is-pill-lifted {
+            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
+            box-shadow: none !important;
+        }
+
         .page-main-heading {
             font-size: 32px;
             font-weight: 700;
             letter-spacing: -0.6px;
             color: var(--text-main);
-            padding-left: 0;
-            margin-bottom: 24px;
+            padding: 0 4px;
+            margin: 0;
             line-height: 1.15;
             transition: color 0.8s var(--ease-smooth);
         }
 
         /* -------------------------------------------------------------
-           PANELS CONTAINER & APPLE-STYLE VERTICAL PANEL ON LEFT
+           MAIN CONTENT: VERTICALLY CENTERED HORIZONTAL CAROUSEL
            ------------------------------------------------------------- */
-        .panels-container {
+        main {
+            flex-grow: 1;
             display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             width: 100%;
+            padding: 28px 0;
         }
 
-        /* Desktop & iPad: Vertical Apple-Style Panel matching index.html */
+        /* Full-bleed horizontal scroll viewport for edge-to-edge smooth glide */
+        .carousel-outer-shell {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+            overflow: visible;
+        }
+
+        .panels-scroll-track {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
+            gap: 28px;
+            padding: 20px max(24px, calc((100vw - 1200px) / 2 + 24px));
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .panels-scroll-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* -------------------------------------------------------------
+           APPLE-STYLE VERTICAL PANELS (NO SHADOWS SITE-WIDE)
+           ------------------------------------------------------------- */
         .apple-panel {
-            width: 100%;
-            max-width: 315px;
-            min-height: 410px;
+            width: 310px;
+            min-width: 310px;
+            max-width: 310px;
+            min-height: 425px;
             aspect-ratio: 1 / 1.38;
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: var(--corner-radius);
-            padding: 38px 30px;
+            padding: 38px 28px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
             text-decoration: none !important;
-            box-shadow: var(--panel-shadow);
+            box-shadow: none !important;
             touch-action: manipulation;
             cursor: pointer;
             overflow: hidden;
             
-            will-change: transform, box-shadow, border-color;
+            will-change: transform, border-color;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             
             transition: transform 0.55s var(--ease-smooth), 
-                        box-shadow 0.55s var(--ease-smooth), 
                         border-color 0.55s var(--ease-smooth), 
                         background-color 0.8s var(--ease-smooth);
         }
 
-        .panel-header-text {
+        /* Hover & Touch Elevation (Smooth Lift Without Drop Shadow) */
+        @media (hover: hover) and (pointer: fine) {
+            .apple-panel:hover {
+                transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
+                border-color: var(--panel-border-hover);
+                box-shadow: none !important;
+            }
+
+            .apple-panel:hover .panel-icon-wrap {
+                transform: scale3d(1.06, 1.06, 1);
+            }
+
+            .footer-links-row a:hover .nav-text,
+            .brand-pill:hover .nav-text {
+                transform: scale3d(1.06, 1.06, 1) !important;
+            }
+        }
+
+        .apple-panel:active,
+        .apple-panel.is-card-lifted {
+            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
+            border-color: var(--panel-border-hover) !important;
+            box-shadow: none !important;
+        }
+
+        .apple-panel.is-card-lifted .panel-icon-wrap {
+            transform: scale3d(1.06, 1.06, 1) !important;
+        }
+
+        /* -------------------------------------------------------------
+           PANEL 1 SPECIFIC LAYOUT:
+           Icon at TOP (larger), Title at center-to-bottom-middle, Subtext below
+           ------------------------------------------------------------- */
+        .panel-layout-top-icon {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
         }
 
-        .panel-tag {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: #72b528;
-            transition: color 0.8s var(--ease-smooth);
+        .panel-layout-top-icon .panel-artwork-stage {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 10px;
         }
 
-        .panel-title {
-            font-size: 28px;
+        .panel-layout-top-icon .panel-bottom-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding-bottom: 12px;
+            width: 100%;
+        }
+
+        .panel-layout-top-icon .panel-title {
+            font-size: 27px;
             font-weight: 700;
-            letter-spacing: -0.6px;
+            letter-spacing: -0.5px;
             color: var(--text-main);
             line-height: 1.15;
             transition: color 0.8s var(--ease-smooth);
         }
 
+        .panel-subtext {
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 0.2px;
+            transition: color 0.8s var(--ease-smooth);
+        }
+
+        /* -------------------------------------------------------------
+           PANEL 2 SPECIFIC LAYOUT:
+           'Vegetarian' line 1 top-left, 'Protein Sources' line 2, Icon below
+           ------------------------------------------------------------- */
+        .panel-layout-two-line {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: left;
+        }
+
+        .panel-header-two-line {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .panel-header-two-line .line-vegetarian {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            line-height: 1.1;
+        }
+
+        .panel-header-two-line .line-protein {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.4px;
+            color: var(--text-main);
+            opacity: 0.9;
+            line-height: 1.15;
+        }
+
+        /* -------------------------------------------------------------
+           PANEL 3 SPECIFIC LAYOUT: 'Fiber'
+           ------------------------------------------------------------- */
+        .panel-layout-standard {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: left;
+        }
+
+        .panel-layout-standard .panel-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            line-height: 1.15;
+        }
+
+        /* Artwork Stages & High Quality 3D Icons */
         .panel-artwork-stage {
-            flex-grow: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 24px 0 8px 0;
+            flex-grow: 1;
+            padding: 16px 0;
         }
 
         .panel-icon-wrap {
@@ -250,43 +394,23 @@
         }
 
         .panel-icon-wrap img {
-            width: 100px;
-            height: 100px;
             object-fit: contain;
-            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
             transition: transform 0.55s var(--ease-smooth);
+            filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.35));
         }
 
         body.light-mode .panel-icon-wrap img {
-            filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.08));
+            filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.1));
         }
 
-        @media (hover: hover) and (pointer: fine) {
-            .apple-panel:hover {
-                transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
-                border-color: var(--panel-border-hover);
-                box-shadow: var(--panel-shadow-hover);
-            }
-
-            .apple-panel:hover .panel-icon-wrap {
-                transform: scale3d(1.06, 1.06, 1);
-            }
-
-            .footer-links-row a:hover .nav-text,
-            .breadcrumb-nav a:hover .nav-text {
-                transform: scale3d(1.06, 1.06, 1) !important;
-            }
+        .icon-large {
+            width: 130px;
+            height: 130px;
         }
 
-        .apple-panel:active,
-        .apple-panel.is-card-lifted {
-            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
-            border-color: var(--panel-border-hover) !important;
-            box-shadow: var(--panel-shadow-hover) !important;
-        }
-
-        .apple-panel.is-card-lifted .panel-icon-wrap {
-            transform: scale3d(1.06, 1.06, 1) !important;
+        .icon-standard {
+            width: 120px;
+            height: 120px;
         }
 
         /* -------------------------------------------------------------
@@ -298,8 +422,7 @@
             align-items: center; 
             gap: 18px; 
             width: 100%; 
-            margin-top: auto;
-            padding-top: 40px;
+            padding-top: 24px;
         }
 
         .footer-links-row { 
@@ -333,13 +456,13 @@
 
         .nav-text {
             display: inline-block !important;
-            white-space: nowrap !important;
+            white-space: normal;
             transform-origin: center center !important;
             will-change: transform, opacity, background-position !important;
             transition: transform 0.4s var(--ease-smooth), opacity 0.4s var(--ease-smooth);
         }
 
-        .footer-links-row a .nav-text { color: var(--text-muted) !important; }
+        .footer-links-row a .nav-text { color: var(--text-muted) !important; white-space: nowrap !important; }
         .footer-links-row a:hover .nav-text { color: var(--text-main) !important; }
 
         @keyframes fluidWave {
@@ -372,91 +495,134 @@
         }
 
         /* -------------------------------------------------------------
-           MOBILE BREAKPOINT (< 700px)
+           MOBILE & TABLET VIEWPORT (< 700px):
+           Horizontal Scroll With Peek Cue for 2nd Panel
            ------------------------------------------------------------- */
         @media (max-width: 700px) {
             body {
                 padding: 28px 18px 24px 18px;
-                gap: 16px;
-            }
-            .breadcrumb-nav { margin-bottom: 2px; }
-            .page-main-heading { font-size: 26px; margin-bottom: 16px; }
-
-            .apple-panel {
-                width: 100% !important;
-                max-width: 100% !important;
-                min-height: unset !important;
-                height: auto !important;
-                aspect-ratio: unset !important;
-                flex: none !important;
-                flex-direction: row !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                gap: 20px !important;
-                padding: 22px 28px !important;
-                border-radius: var(--corner-radius) !important;
             }
 
-            .panel-artwork-stage {
-                flex-grow: 0;
-                flex-shrink: 0;
-                padding: 0 !important;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+            .top-section-cluster {
+                gap: 8px;
             }
 
-            .panel-header-text {
-                gap: 4px;
-                text-align: left;
-                align-items: flex-start;
-            }
-
-            .panel-tag {
-                font-size: 10px;
-                letter-spacing: 0.8px;
-                line-height: 1.2;
-            }
-
-            .panel-title {
+            .brand-pill {
+                height: 44px;
                 font-size: 24px;
-                line-height: 1.1;
             }
 
-            .panel-icon-wrap img {
-                width: 68px !important;
-                height: 68px !important;
+            .page-main-heading {
+                font-size: 28px;
+            }
+
+            main {
+                padding: 20px 0;
+            }
+
+            .panels-scroll-track {
+                gap: 16px;
+                padding: 16px 18px;
+            }
+
+            /* On mobile: First panel takes 78vw, giving an intuitive peek (~18vw) of the second panel */
+            .apple-panel {
+                width: 78vw;
+                min-width: 78vw;
+                max-width: 320px;
+                min-height: 400px;
+                height: 410px;
+                padding: 32px 24px;
+                border-radius: 24px;
+            }
+
+            .icon-large {
+                width: 120px;
+                height: 120px;
+            }
+
+            .icon-standard {
+                width: 110px;
+                height: 110px;
+            }
+
+            .panel-layout-top-icon .panel-title {
+                font-size: 25px;
+            }
+
+            .panel-header-two-line .line-vegetarian {
+                font-size: 26px;
+            }
+
+            .panel-header-two-line .line-protein {
+                font-size: 22px;
+            }
+
+            .panel-layout-standard .panel-title {
+                font-size: 26px;
             }
         }
     </style>
 </head>
-<body>
+<body class="nutrition-workspace">
 
-    <!-- Breadcrumbs at top left -->
-    <nav class="breadcrumb-nav" id="dynamicBreadcrumbNav">
-        <a href="/index.html"><span class="nav-text">Home</span></a>
-        <span class="breadcrumb-separator">/</span>
-        <span class="breadcrumb-current">Nutrition</span>
-    </nav>
-
-    <!-- Heading under breadcrumbs, aligned left -->
-    <h1 class="page-main-heading">Nutrition</h1>
-
-    <!-- Apple-Style Vertical Panel on left side -->
-    <div class="panels-container">
-        <a href="/nutrition/mm.html" class="apple-panel myspace-card" data-panel="nutrition" id="cardTrackNutrients">
-            <div class="panel-header-text">
-                <span class="panel-tag">WORKSPACE</span>
-                <h2 class="panel-title nav-text">Track the Nutrients</h2>
-            </div>
-
-            <div class="panel-artwork-stage">
-                <div class="panel-icon-wrap">
-                    <img src="/nutrition/images/macros.png" class="panel-icon-img" width="100" height="100" alt="Track the Nutrients" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/macros.png?raw=true';">
-                </div>
-            </div>
+    <!-- Top Section: Brand Pill 'sathya.' (links directly to main home) and Workspace Heading -->
+    <div class="top-section-cluster">
+        <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="Go to Main Homepage">
+            <span class="nav-text">sathya.</span>
         </a>
+        <h1 class="page-main-heading">Nutrition</h1>
     </div>
+
+    <!-- Center Section: Vertically Centered Smooth Horizontal Scroll Carousel -->
+    <main>
+        <div class="carousel-outer-shell">
+            <div class="panels-scroll-track" id="panelsTrack">
+
+                <!-- Panel 1: Track the Nutrients -->
+                <!-- Icon at TOP (large), Heading at center-to-bottom-middle, Subtext 'Weekly data' below -->
+                <a href="/nutrition/mm.html" class="apple-panel panel-layout-top-icon myspace-card" id="cardTrackNutrients">
+                    <div class="panel-artwork-stage">
+                        <div class="panel-icon-wrap">
+                            <img src="/nutrition/images/macros.png" class="icon-large" width="130" height="130" alt="Track the Nutrients" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/macros.png?raw=true';">
+                        </div>
+                    </div>
+                    <div class="panel-bottom-content">
+                        <h2 class="panel-title nav-text">Track the Nutrients</h2>
+                        <span class="panel-subtext">Weekly data</span>
+                    </div>
+                </a>
+
+                <!-- Panel 2: Vegetarian Protein Sources -->
+                <!-- Heading with 'Vegetarian' on top line, 'Protein Sources' on second line; 3D Protein Icon -->
+                <a href="/nutrition/mm.html" class="apple-panel panel-layout-two-line myspace-card" id="cardVegProtein">
+                    <div class="panel-header-two-line">
+                        <span class="line-vegetarian nav-text">Vegetarian</span>
+                        <span class="line-protein nav-text">Protein Sources</span>
+                    </div>
+                    <div class="panel-artwork-stage">
+                        <div class="panel-icon-wrap">
+                            <img src="/nutrition/images/protein.png" class="icon-standard" width="120" height="120" alt="Vegetarian Protein Sources" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/protein.png?raw=true';">
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Panel 3: Fiber -->
+                <!-- Heading 'Fiber' with High Quality 3D Fiber Icon -->
+                <a href="/nutrition/mm.html" class="apple-panel panel-layout-standard myspace-card" id="cardFiber">
+                    <div class="panel-header-text">
+                        <h2 class="panel-title nav-text">Fiber</h2>
+                    </div>
+                    <div class="panel-artwork-stage">
+                        <div class="panel-icon-wrap">
+                            <img src="/nutrition/images/fiber.png" class="icon-standard" width="120" height="120" alt="Fiber" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/fiber.png?raw=true';">
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </main>
 
     <!-- Standard Footer -->
     <footer>
@@ -493,24 +659,18 @@
         systemLightQuery.addEventListener('change', applyDeviceTheme);
 
         // -------------------------------------------------------------
-        // 2. DYNAMIC BREADCRUMB INITIALIZATION & SESSION RESET
+        // 2. BREADCRUMB SESSION STATE INITIALIZATION FOR NUTRITION
         // -------------------------------------------------------------
-        (function buildDynamicBreadcrumbs() {
-            const container = document.getElementById('dynamicBreadcrumbNav');
-            if (!container) return;
-            container.innerHTML = `<a href="/index.html"><span class="nav-text">Home</span></a><span class="breadcrumb-separator">/</span><span class="breadcrumb-current">Nutrition</span>`;
-            try {
-                sessionStorage.setItem('breadcrumbTrail', JSON.stringify([
-                    { name: "Home", path: "/index.html" },
-                    { name: "Nutrition", path: "/nutrition/index.html" }
-                ]));
-            } catch (e) {}
-        })();
+        try {
+            sessionStorage.setItem('breadcrumbTrail', JSON.stringify([
+                { name: "Home", path: "/nutrition/index.html" }
+            ]));
+        } catch (e) {}
 
         // -------------------------------------------------------------
         // 3. FLUID WAVE CLICK TRANSITIONS
         // -------------------------------------------------------------
-        const universalTargetLinks = document.querySelectorAll('.panels-container a, .breadcrumb-nav a, footer .footer-links-row a');
+        const universalTargetLinks = document.querySelectorAll('.panels-scroll-track a, .brand-pill, footer .footer-links-row a');
 
         function executeLayoutSpans() {
             universalTargetLinks.forEach(link => {

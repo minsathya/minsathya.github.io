@@ -61,8 +61,8 @@
             /* Panels (Dark) */
             --panel-bg: rgba(18, 18, 21, 0.92);
             --panel-border: rgba(255, 255, 255, 0.08);
-            --panel-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
-            --panel-shadow-hover: 0 28px 56px rgba(0, 0, 0, 0.6);
+            --panel-shadow: none;
+            --panel-shadow-hover: none;
             --panel-border-hover: rgba(255, 255, 255, 0.2);
             
             --corner-radius: 26px;
@@ -78,8 +78,8 @@
             /* Panels (Light) */
             --panel-bg: rgba(255, 255, 255, 0.95);
             --panel-border: rgba(0, 0, 0, 0.07);
-            --panel-shadow: 0 20px 45px rgba(0, 0, 0, 0.06);
-            --panel-shadow-hover: 0 28px 52px rgba(0, 0, 0, 0.1);
+            --panel-shadow: none;
+            --panel-shadow-hover: none;
             --panel-border-hover: rgba(0, 0, 0, 0.18);
         }
 
@@ -227,18 +227,17 @@
             justify-content: space-between;
             position: relative;
             text-decoration: none !important;
-            box-shadow: var(--panel-shadow);
+            box-shadow: none;
             touch-action: manipulation;
             cursor: pointer;
             overflow: hidden;
             
-            will-change: transform, box-shadow, border-color;
+            will-change: transform, border-color;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             
             /* Smooth 0.55s lift and fall-back transition */
             transition: transform 0.55s var(--ease-smooth), 
-                        box-shadow 0.55s var(--ease-smooth), 
                         border-color 0.55s var(--ease-smooth), 
                         background-color 0.8s var(--ease-smooth);
         }
@@ -301,7 +300,7 @@
             .apple-panel:hover {
                 transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
                 border-color: var(--panel-border-hover);
-                box-shadow: var(--panel-shadow-hover);
+                box-shadow: none;
             }
 
             .apple-panel:hover .panel-icon-wrap {
@@ -318,7 +317,7 @@
         .apple-panel.is-card-lifted {
             transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
             border-color: var(--panel-border-hover) !important;
-            box-shadow: var(--panel-shadow-hover) !important;
+            box-shadow: none !important;
         }
 
         .apple-panel.is-card-lifted .panel-icon-wrap {

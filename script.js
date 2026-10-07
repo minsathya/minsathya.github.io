@@ -7,35 +7,58 @@
     const style = document.createElement('style');
     style.id = 'global-site-theme-rules';
     style.textContent = `
-        /* Site-wide Dark Mode: Shadows blend into pure black */
+        /* Site-wide Dark Mode: Shadows completely removed site-wide */
         html:not(.light-mode), 
         body:not(.light-mode) {
             --bg-color: #000000 !important;
             --panel-bg: #0d0d0d !important;
             --panel-border: #141414 !important;
             --row-divider: #141414 !important;
-            --shadow-ambient: 0 20px 40px rgba(0, 0, 0, 0.85) !important;
-            --shadow-lift: 0 24px 48px rgba(0, 0, 0, 0.95) !important;
+            --shadow-ambient: none !important;
+            --shadow-lift: none !important;
         }
 
-        /* Site-wide Light Mode: Shadows blend into soft light surface */
+        /* Nutrition Workspace Dark Mode Background */
+        html:not(.light-mode) body.nutrition-workspace,
+        body:not(.light-mode).nutrition-workspace {
+            --bg-color: #0a130d !important;
+            background-color: #0a130d !important;
+            --panel-bg: rgba(18, 28, 22, 0.92) !important;
+            --panel-border: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        /* Site-wide Light Mode: Shadows completely removed */
         html.light-mode, 
         body.light-mode {
             --bg-color: #f5f5f7 !important;
             --header-bg: #ffffff !important;
-            --shadow-ambient: 0 20px 40px rgba(0, 0, 0, 0.03) !important;
-            --shadow-lift: 0 16px 32px rgba(0, 0, 0, 0.08) !important;
+            --shadow-ambient: none !important;
+            --shadow-lift: none !important;
         }
 
-        /* Universal Shadow Application Across All Panels & Cards */
+        /* Universal Shadow Removal Across All Panels & Cards Site-wide */
         .article-card,
         .date-topics-capsule,
         .empty-placeholder-card,
-        .info-callout {
-            box-shadow: var(--shadow-ambient) !important;
+        .info-callout,
+        .apple-panel,
+        .myspace-card,
+        .wide-capsule,
+        .macro-card {
+            box-shadow: none !important;
             transition: background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1),
                         border-color 0.8s cubic-bezier(0.25, 1, 0.5, 1),
-                        box-shadow 0.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
+                        transform 0.55s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+
+        .article-card:hover,
+        .date-topics-capsule:hover,
+        .apple-panel:hover,
+        .apple-panel:active,
+        .apple-panel.is-card-lifted,
+        .wide-capsule:hover,
+        .wide-capsule.is-capsule-lifted {
+            box-shadow: none !important;
         }
 
         /* Standardize Header Design Across All Pages */
@@ -45,9 +68,8 @@
             height: 72px !important;
             border: 1px solid var(--header-border) !important;
             background-color: var(--header-bg) !important;
-            box-shadow: var(--shadow-ambient) !important;
+            box-shadow: none !important;
             transition: transform 0.55s cubic-bezier(0.25, 1, 0.5, 1), 
-                        box-shadow 0.55s cubic-bezier(0.25, 1, 0.5, 1), 
                         border-color 0.55s cubic-bezier(0.25, 1, 0.5, 1), 
                         background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
@@ -63,7 +85,7 @@
         header.is-header-lifted {
             transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
             border-color: #1E1E1E !important;
-            box-shadow: var(--shadow-lift) !important;
+            box-shadow: none !important;
         }
 
         body.light-mode header#masterHeader:hover,
@@ -75,7 +97,7 @@
         body.light-mode header:active,
         body.light-mode header.is-header-lifted {
             border-color: #b8b8bc !important;
-            box-shadow: var(--shadow-lift) !important;
+            box-shadow: none !important;
         }
 
         /* Mobile Viewport Header Sizing */
@@ -102,12 +124,23 @@
         document.documentElement.classList.add('light-mode');
         if (document.body) document.body.classList.add('light-mode');
     }
+
+    const currentPath = window.location.pathname.toLowerCase();
+    if (currentPath.includes('/nutrition/')) {
+        document.documentElement.classList.add('nutrition-workspace');
+        if (document.body) document.body.classList.add('nutrition-workspace');
+    }
 })();
 
-// 3. LOGO NAVIGATION & UNIVERSAL HEADER INTERACTIONS
+// 3. LOGO NAVIGATION & UNIVERSAL INTERACTIONS
 document.addEventListener('DOMContentLoaded', () => {
     if (document.documentElement.classList.contains('light-mode') && !document.body.classList.contains('light-mode')) {
         document.body.classList.add('light-mode');
+    }
+
+    const currentPath = window.location.pathname.toLowerCase();
+    if (currentPath.includes('/nutrition/')) {
+        document.body.classList.add('nutrition-workspace');
     }
 
     const masterHeader = document.getElementById('masterHeader') || document.querySelector('header');
@@ -148,39 +181,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const logo = document.querySelector('.logo') || document.querySelector('header a');
+    // Logo ("sathya.") ALWAYS directs to the main homepage (/index.html) across the whole site
+    const logo = document.querySelector('.logo') || document.querySelector('header a.brand-pill') || document.querySelector('.brand-pill');
 
     if (logo) {
-        const path = window.location.pathname.toLowerCase();
-
-        const isStudyHome = path.endsWith('/study') || 
-                            path.endsWith('/study/') || 
-                            path.endsWith('/study/index.html');
-
-        const isStudySubPage = path.includes('/study/') && !isStudyHome;
-
-        if (isStudySubPage) {
-            logo.href = '/study/index.html';
-        } else if (isStudyHome) {
-            logo.href = '/index.html';
-        } else {
-            logo.href = '/index.html';
-        }
+        logo.href = '/index.html';
 
         logo.addEventListener('click', (e) => {
             e.preventDefault();
             logo.classList.add('is-card-lifted');
             logo.classList.add('is-wave-loading');
-            const destination = logo.href;
             document.body.classList.add('wave-active');
             setTimeout(() => {
-                window.location.href = destination;
+                window.location.href = '/index.html';
             }, 750);
         });
     }
 });
 
-// 4. UNIVERSAL BREADCRUMB LIFECYCLE & RESET ON RETURN TO HOME/INDEX
+// 4. UNIVERSAL BREADCRUMB LIFECYCLE & WORKSPACE HOME ROUTING
 (function initBreadcrumbLifecycle() {
     try {
         const path = window.location.pathname.toLowerCase();
@@ -193,10 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (isStudyIndex) {
             sessionStorage.setItem('breadcrumbTrail', JSON.stringify([{ name: "Home", path: "/study/index.html" }]));
         } else if (isNutritionIndex) {
-            sessionStorage.setItem('breadcrumbTrail', JSON.stringify([
-                { name: "Home", path: "/index.html" },
-                { name: "Nutrition", path: "/nutrition/index.html" }
-            ]));
+            sessionStorage.setItem('breadcrumbTrail', JSON.stringify([{ name: "Home", path: "/nutrition/index.html" }]));
         }
     } catch (e) {}
 
@@ -204,9 +220,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const link = e.target.closest('.breadcrumb-nav a, .breadcrumbs a');
         if (!link) return;
         const href = link.getAttribute('href');
-        if (!href || href.startsWith('#')) return;
+        const linkText = link.textContent.trim().toLowerCase();
+        const currentPath = window.location.pathname.toLowerCase();
 
         try {
+            // Clicking "Home" in breadcrumbs routes to the current workspace homepage:
+            if (linkText === 'home') {
+                if (currentPath.includes('/nutrition/')) {
+                    e.preventDefault();
+                    sessionStorage.setItem('breadcrumbTrail', JSON.stringify([{ name: "Home", path: "/nutrition/index.html" }]));
+                    window.location.href = '/nutrition/index.html';
+                    return;
+                } else if (currentPath.includes('/study/')) {
+                    e.preventDefault();
+                    sessionStorage.setItem('breadcrumbTrail', JSON.stringify([{ name: "Home", path: "/study/index.html" }]));
+                    window.location.href = '/study/index.html';
+                    return;
+                }
+            }
+
             if (href === '/index.html' || href === '/') {
                 sessionStorage.removeItem('breadcrumbTrail');
                 return;
@@ -216,10 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             if (href === '/nutrition/index.html' || href === '/nutrition/') {
-                sessionStorage.setItem('breadcrumbTrail', JSON.stringify([
-                    { name: "Home", path: "/index.html" },
-                    { name: "Nutrition", path: "/nutrition/index.html" }
-                ]));
+                sessionStorage.setItem('breadcrumbTrail', JSON.stringify([{ name: "Home", path: "/nutrition/index.html" }]));
                 return;
             }
 
