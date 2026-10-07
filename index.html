@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <!-- v2.1 -->
+    <!-- v2.2 -->
     <title>sathya.</title>
 
     <!-- Universal iPad stabilization -->
@@ -438,17 +438,18 @@
 
             /* Full-width horizontal panels — text LEFT, icon RIGHT */
             .apple-panel {
-                width: 100%;
-                max-width: 100%;
-                min-height: 150px;
-                height: auto;
-                aspect-ratio: auto;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                gap: 24px;
-                padding: 32px 34px;
-                border-radius: var(--corner-radius);
+                width: 100% !important;
+                max-width: 100% !important;
+                min-height: unset !important;
+                height: auto !important;
+                aspect-ratio: unset !important;
+                flex: none !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                gap: 24px !important;
+                padding: 32px 34px !important;
+                border-radius: var(--corner-radius) !important;
             }
 
             /* Icon stays on the RIGHT (natural HTML order) */
