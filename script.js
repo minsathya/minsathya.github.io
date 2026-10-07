@@ -18,13 +18,26 @@
             --shadow-lift: none !important;
         }
 
-        /* Nutrition Workspace Dark Mode Background */
+        /* Root Homepage & Nutrition Workspace Dark Mode: Seamless Panels (Transparent BG, Zero Border in Idle) */
         html:not(.light-mode) body.nutrition-workspace,
         body:not(.light-mode).nutrition-workspace {
             --bg-color: #0a130d !important;
             background-color: #0a130d !important;
             --panel-bg: transparent !important;
             --panel-border: transparent !important;
+        }
+
+        html:not(.light-mode) body.root-home,
+        body:not(.light-mode).root-home {
+            --panel-bg: transparent !important;
+            --panel-border: transparent !important;
+        }
+
+        /* Seamless Apple-Style Panels on Root Homepage & Nutrition Workspace */
+        body.root-home .apple-panel,
+        body.nutrition-workspace .apple-panel {
+            background-color: transparent !important;
+            border-color: transparent !important;
         }
 
         /* Site-wide Light Mode: Shadows completely removed */
@@ -41,14 +54,17 @@
         .date-topics-capsule,
         .empty-placeholder-card,
         .info-callout,
-        .apple-panel,
-        .myspace-card,
+        .myspace-card:not(.apple-panel),
         .wide-capsule,
         .macro-card {
             box-shadow: none !important;
             transition: background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1),
                         border-color 0.8s cubic-bezier(0.25, 1, 0.5, 1),
                         transform 0.55s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+
+        .apple-panel {
+            box-shadow: none !important;
         }
 
         .article-card:hover,
@@ -126,6 +142,11 @@
     }
 
     const currentPath = window.location.pathname.toLowerCase();
+    const isRootHome = currentPath === '' || currentPath === '/' || (currentPath.endsWith('/index.html') && !currentPath.includes('/study/') && !currentPath.includes('/nutrition/'));
+    if (isRootHome) {
+        document.documentElement.classList.add('root-home');
+        if (document.body) document.body.classList.add('root-home');
+    }
     if (currentPath.includes('/nutrition/')) {
         document.documentElement.classList.add('nutrition-workspace');
         if (document.body) document.body.classList.add('nutrition-workspace');
@@ -139,6 +160,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const currentPath = window.location.pathname.toLowerCase();
+    const isRootHome = currentPath === '' || currentPath === '/' || (currentPath.endsWith('/index.html') && !currentPath.includes('/study/') && !currentPath.includes('/nutrition/'));
+    if (isRootHome) {
+        document.body.classList.add('root-home');
+    }
     if (currentPath.includes('/nutrition/')) {
         document.body.classList.add('nutrition-workspace');
     }

@@ -270,6 +270,8 @@
         /* -------------------------------------------------------------
            DESKTOP & LAPTOP & IPAD:
            Vertical Apple-Style Panels — Matching Calories Panel Size (240x350)
+           Idle: Seamless zero bg, zero border (matching site background)
+           Hover & Touch: Smooth -6px lift, border-only reveals, no horizontal shrink
            ------------------------------------------------------------- */
         .apple-panel {
             width: 240px;
@@ -278,8 +280,9 @@
             height: 350px;
             min-height: 350px;
             aspect-ratio: 1 / 1.46;
-            background-color: var(--panel-bg);
-            border: 1px solid var(--panel-border);
+            flex-shrink: 0;
+            background-color: transparent !important;
+            border: 1px solid transparent !important;
             border-radius: var(--corner-radius);
             backdrop-filter: none;
             -webkit-backdrop-filter: none;
@@ -300,10 +303,10 @@
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             
-            /* Smooth lift-up and border transition */
+            /* Smooth lift-up and border transition matching nutrition homepage */
             transition: transform 0.45s var(--ease-smooth), 
                         border-color 0.35s var(--ease-smooth), 
-                        background-color 0.4s var(--ease-smooth);
+                        background-color 0.4s var(--ease-smooth) !important;
         }
 
         /* Panel Header Text: Tag + Main Title Only */
@@ -367,9 +370,9 @@
         /* Hover: ONLY BORDER APPEARS, NO HORIZONTAL SCALING */
         @media (hover: hover) and (pointer: fine) {
             .apple-panel:hover {
-                transform: translate3d(0, -6px, 0);
+                transform: translate3d(0, -6px, 0) !important;
                 border-color: var(--panel-border-hover) !important;
-                background-color: var(--panel-bg);
+                background-color: transparent !important;
                 box-shadow: none !important;
             }
 
@@ -383,15 +386,16 @@
             }
         }
 
-        /* Touch / tap: ONLY BORDER APPEARS */
+        /* Touch / tap: ONLY BORDER APPEARS with smooth lift — NO HORIZONTAL SHRINK */
         .apple-panel:active,
         .apple-panel.is-card-lifted {
             transform: translate3d(0, -6px, 0) !important;
             border-color: var(--panel-border-hover) !important;
-            background-color: var(--panel-bg);
+            background-color: transparent !important;
             box-shadow: none !important;
         }
 
+        .apple-panel:active .panel-icon-wrap,
         .apple-panel.is-card-lifted .panel-icon-wrap {
             transform: scale3d(1.05, 1.05, 1) !important;
         }
@@ -489,61 +493,53 @@
 
         /* -------------------------------------------------------------
            MOBILE BREAKPOINT (< 700px):
-           Horizontal Stretched Panels Matching Approved Format
+           Sleek Vertical Rectangles Matching Calories Panel & Nutrition Workspace
            ------------------------------------------------------------- */
         @media (max-width: 700px) {
             body {
-                padding: 28px 18px 24px 18px;
+                padding: 26px 18px 20px 18px;
                 justify-content: flex-start !important;
-                gap: 16px;
+                gap: 20px;
             }
             footer { margin-top: auto; }
             .top-nav-bar { margin-bottom: 0; }
             .brand-pill { font-size: 36px; padding: 0 2px; }
+            .brand-dot { width: 7px; height: 7px; vertical-align: -1px; }
 
-            /* Push panels to top — no vertical centering on mobile */
+            /* Centered main area */
             main {
-                justify-content: flex-start !important;
-                align-items: flex-start !important;
-                padding: 0 !important;
-                flex-grow: 0 !important;
+                justify-content: center !important;
+                align-items: center !important;
+                padding: 12px 0 !important;
+                flex-grow: 1 !important;
             }
 
             .apple-panels-grid {
-                flex-direction: column;
-                align-items: stretch;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
                 gap: 16px;
                 width: 100%;
                 max-width: 100%;
             }
 
-            /* Full-width horizontal panels — text LEFT, icon RIGHT */
+            /* Sleek Vertical Panels matching Calories Panel & Nutrition Workspace */
             .apple-panel {
-                width: 100% !important;
-                max-width: 100% !important;
-                min-height: unset !important;
-                height: auto !important;
-                aspect-ratio: unset !important;
-                flex: none !important;
-                flex-direction: row !important;
-                align-items: center !important;
+                width: 210px !important;
+                min-width: 210px !important;
+                max-width: 210px !important;
+                height: 320px !important;
+                min-height: 320px !important;
+                aspect-ratio: 1 / 1.48 !important;
+                padding: 24px 16px 20px 16px !important;
+                border-radius: 20px !important;
+                flex-shrink: 0 !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
                 justify-content: space-between !important;
-                gap: 20px !important;
-                padding: 22px 28px !important;
-                border-radius: var(--corner-radius) !important;
             }
 
-            /* Icon stays on the RIGHT (natural HTML order) */
-            .panel-artwork-stage {
-                flex-grow: 0;
-                flex-shrink: 0;
-                padding: 0 !important;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            /* Text stays on the LEFT (natural HTML order) */
             .panel-header-text {
                 gap: 4px;
                 text-align: left;
@@ -557,13 +553,17 @@
             }
 
             .panel-title {
-                font-size: 26px;
+                font-size: 22px !important;
                 line-height: 1.1;
             }
 
+            .panel-artwork-stage {
+                padding: 8px 0;
+            }
+
             .panel-icon-wrap svg {
-                width: 68px !important;
-                height: 68px !important;
+                width: 80px !important;
+                height: 80px !important;
             }
         }
 
@@ -585,7 +585,7 @@
         }
     </style>
 </head>
-<body>
+<body class="root-home">
 
     <!-- High-Quality Atmospheric Night Sky: Night Blue with Glowing Stars (Clear of top-left s. brand) -->
     <div class="sky-scene" aria-hidden="true">
@@ -740,29 +740,18 @@
         }
 
         // -------------------------------------------------------------
-        // 3. SEAMLESS WAVE NAVIGATION & RESTORATION
+        // 3. CLICK INTERACTIONS & FLUID WAVE TRANSITIONS
         // -------------------------------------------------------------
-        const universalTargetLinks = document.querySelectorAll('footer .footer-links-row a, .logo, .apple-panel');
+        const cards = Array.from(document.querySelectorAll('.apple-panel'));
 
-        universalTargetLinks.forEach(link => {
-            if (!link.querySelector('.nav-text')) {
-                const wrapper = document.createElement('span');
-                wrapper.className = 'nav-text';
-                while (link.firstChild) {
-                    wrapper.appendChild(link.firstChild);
-                }
-                link.appendChild(wrapper);
-            }
-        });
-
-        universalTargetLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
+        cards.forEach((card) => {
+            card.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
-                if (!destination || destination === '#' || destination.startsWith('#')) return;
+                if (!destination || destination === '#' || destination.startsWith('javascript:')) return;
 
                 e.preventDefault();
 
-                universalTargetLinks.forEach(l => {
+                cards.forEach(l => {
                     l.classList.remove('is-wave-loading');
                     l.classList.remove('is-card-lifted');
                 });
@@ -770,6 +759,23 @@
                 this.classList.add('is-card-lifted');
                 this.classList.add('is-wave-loading');
 
+                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
+
+                setTimeout(() => {
+                    window.location.href = destination;
+                }, 700);
+            });
+        });
+
+        const otherTargetLinks = document.querySelectorAll('footer .footer-links-row a, .brand-pill');
+        otherTargetLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const destination = this.getAttribute('href');
+                if (!destination || destination === '#' || destination.startsWith('javascript:')) return;
+
+                e.preventDefault();
+                this.classList.add('is-card-lifted');
+                this.classList.add('is-wave-loading');
                 sessionStorage.setItem('activeUniversalTargetUrl', this.href);
 
                 setTimeout(() => {
@@ -787,18 +793,9 @@
                 document.body.offsetHeight;
                 requestAnimationFrame(() => {
                     if (brandPill) brandPill.classList.remove('is-pill-lifted');
-                    universalTargetLinks.forEach(l => {
+                    document.querySelectorAll('.is-wave-loading, .is-card-lifted').forEach(l => {
                         l.classList.remove('is-wave-loading');
                         l.classList.remove('is-card-lifted');
-                        l.classList.remove('kinetic-locked-frame');
-                        const span = l.querySelector('.nav-text');
-                        if (span) {
-                            span.style.transform = '';
-                            span.style.opacity = '';
-                            span.style.background = '';
-                            span.style.webkitBackgroundClip = '';
-                            span.style.webkitTextFillColor = '';
-                        }
                     });
                 });
             });

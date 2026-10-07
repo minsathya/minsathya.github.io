@@ -261,8 +261,8 @@
             aspect-ratio: 1 / 1.46;
             flex-shrink: 0;
             
-            background-color: var(--panel-bg);
-            border: 1px solid var(--panel-border);
+            background-color: transparent !important;
+            border: 1px solid transparent !important;
             border-radius: var(--corner-radius);
             padding: 28px 20px 24px 20px;
             display: flex;
@@ -311,9 +311,9 @@
         /* Lift-up & BORDER ONLY APPEARS when cursor reaches the panel (Img 3) */
         @media (hover: hover) and (pointer: fine) {
             .apple-panel:hover {
-                transform: translate3d(0, -6px, 0);
+                transform: translate3d(0, -6px, 0) !important;
                 border-color: var(--panel-border-hover) !important;
-                background-color: var(--panel-bg);
+                background-color: transparent !important;
                 box-shadow: none !important;
             }
 
@@ -332,10 +332,11 @@
         .apple-panel.is-card-lifted {
             transform: translate3d(0, -6px, 0) !important;
             border-color: var(--panel-border-hover) !important;
-            background-color: var(--panel-bg);
+            background-color: transparent !important;
             box-shadow: none !important;
         }
 
+        .apple-panel:active .panel-icon-wrap,
         .apple-panel.is-card-lifted .panel-icon-wrap {
             transform: scale3d(1.05, 1.05, 1) !important;
         }
