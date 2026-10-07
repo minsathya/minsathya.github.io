@@ -6,8 +6,8 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <!-- v2.4 -->
-    <title>sathya.</title>
+    <!-- v2.5 -->
+    <title>s.</title>
 
     <!-- Universal iPad stabilization -->
     <script>
@@ -52,35 +52,29 @@
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 
-            --bg-color: #0b0b0b;
+            /* Atmospheric Night Sky (Dark Mode matching Reference Img 1) */
+            --sky-gradient: radial-gradient(ellipse at 50% 25%, #222055 0%, #191843 50%, #11102f 100%);
             --text-main: #ffffff;
-            --text-muted: #88888e;
-            --header-bg: #1a231e;
-            --header-border: #222c26;
+            --text-muted: #9998b3;
 
-            /* Panels (Dark) */
-            --panel-bg: rgba(18, 18, 21, 0.92);
-            --panel-border: rgba(255, 255, 255, 0.08);
-            --panel-shadow: none;
-            --panel-shadow-hover: none;
-            --panel-border-hover: rgba(255, 255, 255, 0.2);
+            /* Floating Translucent Glass Panels (Dark - Zero Shadow) */
+            --panel-bg: rgba(22, 21, 52, 0.78);
+            --panel-border: rgba(255, 255, 255, 0.12);
+            --panel-border-hover: rgba(255, 255, 255, 0.3);
             
             --corner-radius: 26px;
         }
 
         body.light-mode {
-            --bg-color: #ebebe4;
-            --text-main: #111111;
-            --text-muted: #6e6e73;
-            --header-bg: #e9ebe6;
-            --header-border: #d4d8cf;
+            /* Atmospheric Daytime Sky Blue (Light Mode matching Reference Img 2) */
+            --sky-gradient: radial-gradient(ellipse at 50% 20%, #68b4ff 0%, #52a6f8 50%, #3e95ee 100%);
+            --text-main: #0c1c30;
+            --text-muted: #3d5e82;
 
-            /* Panels (Light) */
-            --panel-bg: rgba(255, 255, 255, 0.95);
-            --panel-border: rgba(0, 0, 0, 0.07);
-            --panel-shadow: none;
-            --panel-shadow-hover: none;
-            --panel-border-hover: rgba(0, 0, 0, 0.18);
+            /* Floating Translucent Glass Panels (Light - Zero Shadow) */
+            --panel-bg: rgba(255, 255, 255, 0.85);
+            --panel-border: rgba(255, 255, 255, 0.6);
+            --panel-border-hover: rgba(255, 255, 255, 0.95);
         }
 
         * {
@@ -92,7 +86,7 @@
         }
 
         body {
-            background-color: var(--bg-color);
+            background: var(--sky-gradient) !important;
             color: var(--text-main);
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
@@ -106,7 +100,120 @@
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             position: relative;
-            transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
+            transition: background 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
+        }
+
+        /* -------------------------------------------------------------
+           ATMOSPHERIC 3D SKY LAYER (STARS & CLOUDS)
+           ------------------------------------------------------------- */
+        .sky-scene {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        /* Stars & Golden Firefly Particles (Dark Mode Only) */
+        .stars-layer {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.8s var(--ease-smooth);
+            opacity: 1;
+        }
+
+        body.light-mode .stars-layer {
+            opacity: 0;
+        }
+
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            background: #ffd675;
+            box-shadow: 0 0 10px #ffe599, 0 0 20px rgba(255, 214, 117, 0.5);
+            animation: starPulse 4s infinite ease-in-out alternate;
+        }
+
+        .star-1 { width: 5px; height: 5px; top: 12%; left: 18%; animation-delay: 0s; }
+        .star-2 { width: 6px; height: 6px; top: 16%; left: 62%; animation-delay: 1.2s; }
+        .star-3 { width: 4px; height: 4px; top: 22%; left: 84%; animation-delay: 2.5s; }
+        .star-4 { width: 5px; height: 5px; top: 40%; left: 8%; animation-delay: 0.8s; }
+        .star-5 { width: 6px; height: 6px; top: 58%; left: 32%; animation-delay: 1.9s; }
+        .star-6 { width: 4px; height: 4px; top: 78%; left: 24%; animation-delay: 3.1s; }
+        .star-7 { width: 5px; height: 5px; top: 32%; left: 92%; animation-delay: 2.2s; }
+        .star-8 { width: 6px; height: 6px; top: 82%; left: 74%; animation-delay: 1.5s; }
+
+        @keyframes starPulse {
+            0% { transform: scale(0.85); opacity: 0.55; }
+            50% { transform: scale(1.25); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.65; }
+        }
+
+        /* 3D Pillowy Floating Clouds matching Img 1 & 2 */
+        .clouds-layer {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .cloud-shape {
+            position: absolute;
+            border-radius: 120px;
+            filter: blur(0.5px);
+            transition: all 0.8s var(--ease-smooth);
+            will-change: transform;
+        }
+
+        /* Cloud in Lower Left */
+        .cloud-bottom-left {
+            width: 290px;
+            height: 95px;
+            bottom: 12%;
+            left: 2%;
+            animation: cloudFloat 9s infinite ease-in-out alternate;
+        }
+
+        /* Cloud in Lower Right */
+        .cloud-bottom-right {
+            width: 320px;
+            height: 105px;
+            bottom: 16%;
+            right: 1%;
+            animation: cloudFloat 11s infinite ease-in-out alternate-reverse;
+        }
+
+        /* Cloud Mid Left */
+        .cloud-mid-left {
+            width: 240px;
+            height: 75px;
+            top: 42%;
+            left: 6%;
+            animation: cloudFloat 10s infinite ease-in-out alternate;
+        }
+
+        /* Dark Mode Cloud Styling: Soft moonlight ambient warm glow matching img 1 */
+        body:not(.light-mode) .cloud-shape {
+            background: radial-gradient(ellipse at 50% 25%, #ffeec7 0%, #caa9e2 40%, rgba(135, 110, 175, 0.85) 75%, rgba(65, 55, 115, 0.4) 100%);
+            box-shadow: 0 0 35px rgba(255, 230, 185, 0.25), inset 0 2px 10px rgba(255, 245, 220, 0.7);
+            opacity: 0.88;
+        }
+
+        /* Light Mode Cloud Styling: Fluffy white sunlit 3D clouds matching img 2 */
+        body.light-mode .cloud-shape {
+            background: radial-gradient(ellipse at 50% 20%, #ffffff 0%, #ffffff 50%, #d8eaff 85%, #b5d7ff 100%);
+            box-shadow: 0 12px 35px rgba(255, 255, 255, 0.45), inset 0 3px 12px rgba(255, 255, 255, 0.9);
+            opacity: 0.95;
+        }
+
+        @keyframes cloudFloat {
+            0% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(12px, -14px, 0); }
+            100% { transform: translate3d(-6px, 8px, 0); }
         }
 
         @keyframes masterEntrance {
@@ -127,7 +234,7 @@
         footer { animation-delay: 0.24s; }
 
         /* -------------------------------------------------------------
-           TOP NAVIGATION: MATCHED BRAND PILL (FLAT SIDES, ROUND CORNERS)
+           TOP NAVIGATION: 's.' BRAND PILL WITH PEACH DOT
            ------------------------------------------------------------- */
         .top-nav-bar {
             width: 100%;
@@ -137,23 +244,22 @@
             margin-bottom: 20px;
         }
 
-        /* Top Left 'sathya.' - no background, sits directly on page bg */
+        /* 's.' brand link directly on background */
         .brand-pill {
             position: relative;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            height: 62px;
-            padding: 0 8px;
+            justify-content: flex-start;
+            height: auto;
+            padding: 0 4px;
             background-color: transparent;
             border: none;
-            border-radius: var(--corner-radius);
-            color: var(--text-main);
             text-decoration: none !important;
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-            box-shadow: none;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -1.2px;
+            line-height: 1;
+            box-shadow: none !important;
             touch-action: manipulation;
             cursor: pointer;
             user-select: none;
@@ -162,30 +268,29 @@
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             
-            transition: transform 0.55s var(--ease-smooth),
-                        color 0.8s var(--ease-smooth);
+            transition: transform 0.55s var(--ease-smooth);
         }
 
-        body.light-mode .brand-pill {
-            box-shadow: none;
+        /* 's' font color follows device theme */
+        .brand-letter {
+            color: var(--text-main);
+            transition: color 0.8s var(--ease-smooth);
         }
 
-        /* Identical 0.55s Lift Animation on Hover, Active & Touch */
+        /* Round full stop '.' is always peach color in any theme */
+        .brand-dot {
+            color: #ff9e79 !important;
+            font-weight: 800;
+            margin-left: 1px;
+            transition: color 0.8s var(--ease-smooth);
+        }
+
         .brand-pill:hover,
         .brand-pill:focus-within,
         .brand-pill:active,
         .brand-pill.is-pill-lifted {
-            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
-            border-color: transparent;
-            box-shadow: none;
-        }
-
-        body.light-mode .brand-pill:hover,
-        body.light-mode .brand-pill:focus-within,
-        body.light-mode .brand-pill:active,
-        body.light-mode .brand-pill.is-pill-lifted {
-            border-color: transparent;
-            box-shadow: none;
+            transform: translate3d(0, -5px, 0) scale3d(1.02, 1.02, 1);
+            box-shadow: none !important;
         }
 
         /* -------------------------------------------------------------
@@ -211,7 +316,7 @@
 
         /* -------------------------------------------------------------
            DESKTOP & LAPTOP & IPAD:
-           Restored Vertical Apple-Style Panels (User-Approved Previous Version)
+           Vertical Apple-Style Glassmorphic Panels (Zero Shadows)
            ------------------------------------------------------------- */
         .apple-panel {
             flex: 1 1 280px;
@@ -221,13 +326,15 @@
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: var(--corner-radius);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             padding: 38px 30px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
             text-decoration: none !important;
-            box-shadow: none;
+            box-shadow: none !important;
             touch-action: manipulation;
             cursor: pointer;
             overflow: hidden;
@@ -269,7 +376,7 @@
             transition: color 0.8s var(--ease-smooth);
         }
 
-        /* Central Floating Artwork Display */
+        /* Central Floating Artwork Display (No Drop Shadow on Icons) */
         .panel-artwork-stage {
             flex-grow: 1;
             display: flex;
@@ -286,13 +393,16 @@
             transition: transform 0.55s var(--ease-smooth);
         }
 
+        /* Removed all drop-shadows from icons for a clean vector finish */
         .panel-icon-wrap svg {
-            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
+            filter: none !important;
+            -webkit-filter: none !important;
             transition: transform 0.55s var(--ease-smooth);
         }
 
         body.light-mode .panel-icon-wrap svg {
-            filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.08));
+            filter: none !important;
+            -webkit-filter: none !important;
         }
 
         /* Hover & Touch Elevation */
@@ -300,7 +410,7 @@
             .apple-panel:hover {
                 transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
                 border-color: var(--panel-border-hover);
-                box-shadow: none;
+                box-shadow: none !important;
             }
 
             .apple-panel:hover .panel-icon-wrap {
@@ -363,7 +473,7 @@
         .footer-links-row a:hover { color: var(--text-main) !important; }
         .copyright-tag { 
             color: var(--text-muted); 
-            opacity: 0.6; 
+            opacity: 0.7; 
             font-size: 12px; 
             letter-spacing: 0.2px; 
             transition: color 0.8s var(--ease-smooth); 
@@ -417,7 +527,7 @@
 
         /* -------------------------------------------------------------
            MOBILE BREAKPOINT (< 700px):
-           Horizontal Stretched Panels with Height Matching img 1 (~170px)
+           Horizontal Stretched Panels Matching Approved Format
            ------------------------------------------------------------- */
         @media (max-width: 700px) {
             body {
@@ -427,9 +537,9 @@
             }
             footer { margin-top: auto; }
             .top-nav-bar { margin-bottom: 0; }
-            .brand-pill { height: auto; min-height: 44px; padding: 0 4px; font-size: 21px; background-color: transparent !important; border: none !important; box-shadow: none !important; }
+            .brand-pill { font-size: 36px; padding: 0 2px; }
 
-            /* Push panels to top — no vertical centering */
+            /* Push panels to top — no vertical centering on mobile */
             main {
                 justify-content: flex-start !important;
                 align-items: flex-start !important;
@@ -515,14 +625,33 @@
 </head>
 <body>
 
-    <!-- Top Left Brand Pill (Flat Sides & Rounded Corners Matching Panels) -->
+    <!-- Atmospheric 3D Sky Layer: Night Blue with Glowing Stars & Floating Clouds in Dark Mode / Sky Blue with Clouds in Light Mode -->
+    <div class="sky-scene" aria-hidden="true">
+        <div class="stars-layer">
+            <div class="star star-1"></div>
+            <div class="star star-2"></div>
+            <div class="star star-3"></div>
+            <div class="star star-4"></div>
+            <div class="star star-5"></div>
+            <div class="star star-6"></div>
+            <div class="star star-7"></div>
+            <div class="star star-8"></div>
+        </div>
+        <div class="clouds-layer">
+            <div class="cloud-shape cloud-bottom-left"></div>
+            <div class="cloud-shape cloud-bottom-right"></div>
+            <div class="cloud-shape cloud-mid-left"></div>
+        </div>
+    </div>
+
+    <!-- Top Left Brand 's.' with Peach Dot -->
     <nav class="top-nav-bar" id="topNavBar">
-        <a href="index.html" class="logo brand-pill" id="brandPill">
-            <span class="nav-text">sathya.</span>
+        <a href="index.html" class="logo brand-pill" id="brandPill" aria-label="s.">
+            <span class="brand-letter">s</span><span class="brand-dot">.</span>
         </a>
     </nav>
     
-    <!-- Centered Panels (Vertical Apple-Style on Laptop/iPad; 168px Stretched Horizontal on Mobile) -->
+    <!-- Centered Panels (Vertical Apple-Style on Laptop/iPad; Horizontal on Mobile) -->
     <main>
         <div class="apple-panels-grid" id="panelsGrid">
             
@@ -535,7 +664,7 @@
 
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <!-- Custom Blue Open Book SVG -->
+                        <!-- Custom Blue Open Book SVG (Clean, No drop shadow) -->
                         <svg width="105" height="105" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7 16C7 13.2386 9.23858 11 12 11H30V50H12C9.23858 50 7 47.7614 7 45V16Z" fill="#0C2340"/>
                             <path d="M57 16C57 13.2386 54.7614 11 52 11H34V50H52C54.7614 50 57 47.7614 57 45V16Z" fill="#0C2340"/>
@@ -564,7 +693,7 @@
 
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <!-- Soil-Buried Green Sprout Vector -->
+                        <!-- Soil-Buried Green Sprout Vector (Clean, No drop shadow) -->
                         <svg width="108" height="108" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="96" y="440" width="320" height="14" rx="7" fill="#58341a"/>
                             <path d="M 256 420 C 256 360 252 300 205 235" stroke="#72b528" stroke-width="20" stroke-linecap="round"/>

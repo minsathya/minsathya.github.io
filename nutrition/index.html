@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Nutrition - sathya.</title>
+    <title>s.</title>
 
     <!-- Universal iPad stabilization -->
     <script>
@@ -54,8 +54,8 @@
             --text-main: #ffffff;
             --text-muted: #88888e;
 
-            /* Panels (Dark Theme - No drop shadows) */
-            --panel-bg: rgba(18, 28, 22, 0.92);
+            /* Panels: Previous original panel bg restored, zero shadows */
+            --panel-bg: rgba(18, 18, 21, 0.92);
             --panel-border: rgba(255, 255, 255, 0.08);
             --panel-border-hover: rgba(255, 255, 255, 0.22);
             
@@ -67,7 +67,7 @@
             --text-main: #111111;
             --text-muted: #6e6e73;
 
-            /* Panels (Light Theme - No drop shadows) */
+            /* Panels (Light Theme) */
             --panel-bg: rgba(255, 255, 255, 0.95);
             --panel-border: rgba(0, 0, 0, 0.07);
             --panel-border-hover: rgba(0, 0, 0, 0.2);
@@ -117,31 +117,31 @@
         footer { animation-delay: 0.22s; }
 
         /* -------------------------------------------------------------
-           TOP SECTION: BRAND 'sathya.' & HEADING 'Nutrition'
+           TOP SECTION: 's.' BRAND & 'Nutrition' SUB-HEADING
            ------------------------------------------------------------- */
         .top-section-cluster {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 12px;
+            gap: 4px;
             width: 100%;
         }
 
-        /* Top Left 'sathya.' brand link directly to main home */
+        /* Top Left 's.' brand link directly to main home */
         .brand-pill {
             position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: flex-start;
-            height: 48px;
+            height: auto;
             padding: 0 4px;
             background-color: transparent;
             border: none;
-            color: var(--text-main);
             text-decoration: none !important;
-            font-size: 26px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -1.2px;
+            line-height: 1;
             box-shadow: none !important;
             touch-action: manipulation;
             cursor: pointer;
@@ -151,26 +151,40 @@
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             
-            transition: transform 0.55s var(--ease-smooth),
-                        color 0.8s var(--ease-smooth);
+            transition: transform 0.55s var(--ease-smooth);
+        }
+
+        /* 's' font color follows device theme */
+        .brand-letter {
+            color: var(--text-main);
+            transition: color 0.8s var(--ease-smooth);
+        }
+
+        /* Round full stop '.' is always peach color in any theme */
+        .brand-dot {
+            color: #ff9e79 !important;
+            font-weight: 800;
+            margin-left: 1px;
+            transition: color 0.8s var(--ease-smooth);
         }
 
         .brand-pill:hover,
         .brand-pill:focus-within,
         .brand-pill:active,
         .brand-pill.is-pill-lifted {
-            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
+            transform: translate3d(0, -5px, 0) scale3d(1.02, 1.02, 1);
             box-shadow: none !important;
         }
 
+        /* 'Nutrition' is visually refined and smaller than 's.' */
         .page-main-heading {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.6px;
-            color: var(--text-main);
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: -0.2px;
+            color: var(--text-muted);
             padding: 0 4px;
             margin: 0;
-            line-height: 1.15;
+            line-height: 1.2;
             transition: color 0.8s var(--ease-smooth);
         }
 
@@ -184,7 +198,7 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            padding: 28px 0;
+            padding: 24px 0;
         }
 
         /* Full-bleed horizontal scroll viewport for edge-to-edge smooth glide */
@@ -215,7 +229,7 @@
         }
 
         /* -------------------------------------------------------------
-           APPLE-STYLE VERTICAL PANELS (NO SHADOWS SITE-WIDE)
+           APPLE-STYLE VERTICAL PANELS (CLEAN, NO SHADOWS SITE-WIDE)
            ------------------------------------------------------------- */
         .apple-panel {
             width: 310px;
@@ -232,7 +246,9 @@
             padding: 38px 28px;
             display: flex;
             flex-direction: column;
+            align-items: center;
             justify-content: space-between;
+            text-align: center;
             position: relative;
             text-decoration: none !important;
             box-shadow: none !important;
@@ -249,7 +265,7 @@
                         background-color 0.8s var(--ease-smooth);
         }
 
-        /* Hover & Touch Elevation (Smooth Lift Without Drop Shadow) */
+        /* Hover & Touch Elevation (Smooth Lift Without Any Drop Shadow) */
         @media (hover: hover) and (pointer: fine) {
             .apple-panel:hover {
                 transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
@@ -279,26 +295,42 @@
         }
 
         /* -------------------------------------------------------------
-           PANEL 1 SPECIFIC LAYOUT:
-           Icon at TOP (larger), Title at center-to-bottom-middle, Subtext below
+           UNIFIED PANEL LAYOUT ACROSS ALL PANELS:
+           Icon at TOP (clean, no shadow), Heading center-bottom, Subtext below
            ------------------------------------------------------------- */
-        .panel-layout-top-icon {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            text-align: center;
-        }
-
-        .panel-layout-top-icon .panel-artwork-stage {
+        .panel-artwork-stage {
             flex-grow: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             padding-top: 10px;
+            width: 100%;
         }
 
-        .panel-layout-top-icon .panel-bottom-content {
+        .panel-icon-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            will-change: transform;
+            transition: transform 0.55s var(--ease-smooth);
+        }
+
+        /* Removed all drop-shadows from icons for a super clean finish */
+        .panel-icon-wrap img {
+            width: 130px;
+            height: 130px;
+            object-fit: contain;
+            transition: transform 0.55s var(--ease-smooth);
+            filter: none !important;
+            -webkit-filter: none !important;
+        }
+
+        body.light-mode .panel-icon-wrap img {
+            filter: none !important;
+            -webkit-filter: none !important;
+        }
+
+        .panel-bottom-content {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -307,8 +339,8 @@
             width: 100%;
         }
 
-        .panel-layout-top-icon .panel-title {
-            font-size: 27px;
+        .panel-title {
+            font-size: 26px;
             font-weight: 700;
             letter-spacing: -0.5px;
             color: var(--text-main);
@@ -322,95 +354,6 @@
             color: var(--text-muted);
             letter-spacing: 0.2px;
             transition: color 0.8s var(--ease-smooth);
-        }
-
-        /* -------------------------------------------------------------
-           PANEL 2 SPECIFIC LAYOUT:
-           'Vegetarian' line 1 top-left, 'Protein Sources' line 2, Icon below
-           ------------------------------------------------------------- */
-        .panel-layout-two-line {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            text-align: left;
-        }
-
-        .panel-header-two-line {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .panel-header-two-line .line-vegetarian {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            color: var(--text-main);
-            line-height: 1.1;
-        }
-
-        .panel-header-two-line .line-protein {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.4px;
-            color: var(--text-main);
-            opacity: 0.9;
-            line-height: 1.15;
-        }
-
-        /* -------------------------------------------------------------
-           PANEL 3 SPECIFIC LAYOUT: 'Fiber'
-           ------------------------------------------------------------- */
-        .panel-layout-standard {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            text-align: left;
-        }
-
-        .panel-layout-standard .panel-title {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            color: var(--text-main);
-            line-height: 1.15;
-        }
-
-        /* Artwork Stages & High Quality 3D Icons */
-        .panel-artwork-stage {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-grow: 1;
-            padding: 16px 0;
-        }
-
-        .panel-icon-wrap {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            will-change: transform;
-            transition: transform 0.55s var(--ease-smooth);
-        }
-
-        .panel-icon-wrap img {
-            object-fit: contain;
-            transition: transform 0.55s var(--ease-smooth);
-            filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.35));
-        }
-
-        body.light-mode .panel-icon-wrap img {
-            filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.1));
-        }
-
-        .icon-large {
-            width: 130px;
-            height: 130px;
-        }
-
-        .icon-standard {
-            width: 120px;
-            height: 120px;
         }
 
         /* -------------------------------------------------------------
@@ -504,20 +447,19 @@
             }
 
             .top-section-cluster {
-                gap: 8px;
+                gap: 4px;
             }
 
             .brand-pill {
-                height: 44px;
-                font-size: 24px;
+                font-size: 36px;
             }
 
             .page-main-heading {
-                font-size: 28px;
+                font-size: 18px;
             }
 
             main {
-                padding: 20px 0;
+                padding: 16px 0;
             }
 
             .panels-scroll-track {
@@ -536,40 +478,23 @@
                 border-radius: 24px;
             }
 
-            .icon-large {
+            .panel-icon-wrap img {
                 width: 120px;
                 height: 120px;
             }
 
-            .icon-standard {
-                width: 110px;
-                height: 110px;
-            }
-
-            .panel-layout-top-icon .panel-title {
-                font-size: 25px;
-            }
-
-            .panel-header-two-line .line-vegetarian {
-                font-size: 26px;
-            }
-
-            .panel-header-two-line .line-protein {
-                font-size: 22px;
-            }
-
-            .panel-layout-standard .panel-title {
-                font-size: 26px;
+            .panel-title {
+                font-size: 24px;
             }
         }
     </style>
 </head>
 <body class="nutrition-workspace">
 
-    <!-- Top Section: Brand Pill 'sathya.' (links directly to main home) and Workspace Heading -->
+    <!-- Top Section: 's.' Brand (with peach dot) and Sub-Heading 'Nutrition' -->
     <div class="top-section-cluster">
         <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="Go to Main Homepage">
-            <span class="nav-text">sathya.</span>
+            <span class="brand-letter">s</span><span class="brand-dot">.</span>
         </a>
         <h1 class="page-main-heading">Nutrition</h1>
     </div>
@@ -580,11 +505,10 @@
             <div class="panels-scroll-track" id="panelsTrack">
 
                 <!-- Panel 1: Track the Nutrients -->
-                <!-- Icon at TOP (large), Heading at center-to-bottom-middle, Subtext 'Weekly data' below -->
-                <a href="/nutrition/mm.html" class="apple-panel panel-layout-top-icon myspace-card" id="cardTrackNutrients">
+                <a href="/nutrition/mm.html" class="apple-panel myspace-card" id="cardTrackNutrients">
                     <div class="panel-artwork-stage">
                         <div class="panel-icon-wrap">
-                            <img src="/nutrition/images/macros.png" class="icon-large" width="130" height="130" alt="Track the Nutrients" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/macros.png?raw=true';">
+                            <img src="/nutrition/images/macros.png" width="130" height="130" alt="Track the Nutrients" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/macros.png?raw=true';">
                         </div>
                     </div>
                     <div class="panel-bottom-content">
@@ -593,30 +517,29 @@
                     </div>
                 </a>
 
-                <!-- Panel 2: Vegetarian Protein Sources -->
-                <!-- Heading with 'Vegetarian' on top line, 'Protein Sources' on second line; 3D Protein Icon -->
-                <a href="/nutrition/mm.html" class="apple-panel panel-layout-two-line myspace-card" id="cardVegProtein">
-                    <div class="panel-header-two-line">
-                        <span class="line-vegetarian nav-text">Vegetarian</span>
-                        <span class="line-protein nav-text">Protein Sources</span>
-                    </div>
+                <!-- Panel 2: Protein (renamed from Vegetarian Protein Sources, same layout) -->
+                <a href="/nutrition/mm.html" class="apple-panel myspace-card" id="cardProtein">
                     <div class="panel-artwork-stage">
                         <div class="panel-icon-wrap">
-                            <img src="/nutrition/images/protein.png" class="icon-standard" width="120" height="120" alt="Vegetarian Protein Sources" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/protein.png?raw=true';">
+                            <img src="/nutrition/images/protein.png" width="130" height="130" alt="Protein" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/protein.png?raw=true';">
                         </div>
+                    </div>
+                    <div class="panel-bottom-content">
+                        <h2 class="panel-title nav-text">Protein</h2>
+                        <span class="panel-subtext">Daily sources</span>
                     </div>
                 </a>
 
-                <!-- Panel 3: Fiber -->
-                <!-- Heading 'Fiber' with High Quality 3D Fiber Icon -->
-                <a href="/nutrition/mm.html" class="apple-panel panel-layout-standard myspace-card" id="cardFiber">
-                    <div class="panel-header-text">
-                        <h2 class="panel-title nav-text">Fiber</h2>
-                    </div>
+                <!-- Panel 3: Fiber (same layout) -->
+                <a href="/nutrition/mm.html" class="apple-panel myspace-card" id="cardFiber">
                     <div class="panel-artwork-stage">
                         <div class="panel-icon-wrap">
-                            <img src="/nutrition/images/fiber.png" class="icon-standard" width="120" height="120" alt="Fiber" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/fiber.png?raw=true';">
+                            <img src="/nutrition/images/fiber.png" width="130" height="130" alt="Fiber" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/fiber.png?raw=true';">
                         </div>
+                    </div>
+                    <div class="panel-bottom-content">
+                        <h2 class="panel-title nav-text">Fiber</h2>
+                        <span class="panel-subtext">Daily intake</span>
                     </div>
                 </a>
 
