@@ -208,11 +208,12 @@
             max-width: 680px;
         }
 
-        /* Clean Vertical Panel with Flat Sides & Round Corners */
+        /* Clean Vertical Panel with Flat Sides, Round Corners, & Constant Portrait Proportion */
         .apple-panel {
             flex: 1 1 280px;
             max-width: 315px;
             min-height: 410px;
+            aspect-ratio: 1 / 1.38;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: var(--corner-radius);
@@ -271,7 +272,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 30px 0 10px 0;
+            padding: 24px 0 8px 0;
         }
 
         .panel-icon-wrap {
@@ -411,25 +412,30 @@
             -webkit-transition: none !important;
         }
 
-        /* Responsive Breakpoints */
+        /* Responsive Breakpoints: Maintain Constant Vertical Aspect Ratio on Mobile */
         @media (max-width: 700px) {
             body { padding: 28px 18px 24px 18px; }
-            .top-nav-bar { margin-bottom: 16px; }
-            .brand-pill { height: 56px; padding: 0 26px; font-size: 21px; border-radius: 22px; }
+            .top-nav-bar { margin-bottom: 20px; }
+            .brand-pill { height: 58px; padding: 0 28px; font-size: 22px; border-radius: var(--corner-radius); }
             
             .apple-panels-grid {
                 flex-direction: column;
                 align-items: center;
-                gap: 20px;
+                gap: 24px;
             }
             .apple-panel {
-                max-width: 100%;
                 width: 100%;
-                min-height: 340px;
-                padding: 30px 24px;
-                border-radius: 22px;
+                max-width: 290px;
+                min-height: 400px;
+                aspect-ratio: 1 / 1.38;
+                padding: 34px 26px;
+                border-radius: var(--corner-radius);
             }
-            .panel-title { font-size: 26px; }
+            .panel-title { font-size: 28px; }
+            .panel-icon-wrap svg {
+                width: 96px;
+                height: 96px;
+            }
         }
 
         /* Instant landing helper */
@@ -459,7 +465,7 @@
         </a>
     </nav>
     
-    <!-- Centered Vertical Apple Panels (No 3D Tilt, No Subtext, No Explore Button) -->
+    <!-- Centered Vertical Apple Panels (Maintaining Consistent Portrait Proportion) -->
     <main>
         <div class="apple-panels-grid" id="panelsGrid">
             
@@ -540,7 +546,7 @@
     <!-- Interactive Navigation & Automatic System Theme Engine -->
     <script>
         // -------------------------------------------------------------
-        // 1. AUTOMATIC DEVICE THEME DETECTOR (NO MANUAL TOGGLE UI)
+        // 1. AUTOMATIC DEVICE THEME DETECTOR
         // -------------------------------------------------------------
         const bodyElement = document.body;
         const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
