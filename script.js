@@ -179,3 +179,60 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// 4. UNIVERSAL BREADCRUMB LIFECYCLE & RESET ON RETURN TO HOME/INDEX
+(function initBreadcrumbLifecycle() {
+    try {
+        const path = window.location.pathname.toLowerCase();
+        const isRootIndex = path === '' || path === '/' || (path.endsWith('/index.html') && !path.includes('/study/') && !path.includes('/nutrition/'));
+        const isStudyIndex = path.endsWith('/study') || path.endsWith('/study/') || path.endsWith('/study/index.html');
+        const isNutritionIndex = path.endsWith('/nutrition') || path.endsWith('/nutrition/') || path.endsWith('/nutrition/index.html');
+
+        if (isRootIndex) {
+            sessionStorage.removeItem('breadcrumbTrail');
+        } else if (isStudyIndex) {
+            sessionStorage.setItem('breadcrumbTrail', JSON.stringify([{ name: "Home", path: "/study/index.html" }]));
+        } else if (isNutritionIndex) {
+            sessionStorage.setItem('breadcrumbTrail', JSON.stringify([
+                { name: "Home", path: "/index.html" },
+                { name: "Nutrition", path: "/nutrition/index.html" }
+            ]));
+        }
+    } catch (e) {}
+
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('.breadcrumb-nav a, .breadcrumbs a');
+        if (!link) return;
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#')) return;
+
+        try {
+            if (href === '/index.html' || href === '/') {
+                sessionStorage.removeItem('breadcrumbTrail');
+                return;
+            }
+            if (href === '/study/index.html' || href === '/study/') {
+                sessionStorage.setItem('breadcrumbTrail', JSON.stringify([{ name: "Home", path: "/study/index.html" }]));
+                return;
+            }
+            if (href === '/nutrition/index.html' || href === '/nutrition/') {
+                sessionStorage.setItem('breadcrumbTrail', JSON.stringify([
+                    { name: "Home", path: "/index.html" },
+                    { name: "Nutrition", path: "/nutrition/index.html" }
+                ]));
+                return;
+            }
+
+            const stored = sessionStorage.getItem('breadcrumbTrail');
+            if (stored) {
+                let trail = JSON.parse(stored);
+                const targetIdx = trail.findIndex(step => step.path === href);
+                if (targetIdx !== -1) {
+                    trail = trail.slice(0, targetIdx + 1);
+                    sessionStorage.setItem('breadcrumbTrail', JSON.stringify(trail));
+                }
+            }
+        } catch (err) {}
+    }, true);
+})();
+

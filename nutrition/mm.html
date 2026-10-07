@@ -1617,7 +1617,7 @@
             if (!container) return;
 
             const searchPath = window.location.pathname;
-            const HOME_PATH = "/study/index.html";
+            const HOME_PATH = "/index.html";
 
             let trail = [];
             try {
@@ -1627,13 +1627,24 @@
                 trail = [];
             }
 
-            if (trail.length === 0 || (trail[0].path !== HOME_PATH && trail[0].path !== "/study/")) {
+            if (trail.length === 0 || (trail[0].path !== HOME_PATH && trail[0].path !== "/")) {
                 trail = [
                     { name: "Home", path: HOME_PATH },
                     { name: "Nutrition", path: "/nutrition/index.html" },
-                    { name: "MM", path: "/nutrition/mm.html" }
+                    { name: "Track the Nutrients", path: "/nutrition/mm.html" }
                 ];
+            } else {
+                const existingIndex = trail.findIndex(step => step.path === searchPath);
+                if (existingIndex !== -1) {
+                    trail = trail.slice(0, existingIndex + 1);
+                } else {
+                    trail.push({ name: "Track the Nutrients", path: searchPath });
+                }
             }
+
+            try {
+                sessionStorage.setItem('breadcrumbTrail', JSON.stringify(trail));
+            } catch (e) {}
 
             let htmlMarkup = '';
             trail.forEach((step) => {
@@ -1789,5 +1800,6 @@
         initDaysTrack();
         selectDay(0, true);
     </script>
+    <script src="/script.js"></script>
 </body>
 </html>

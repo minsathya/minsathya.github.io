@@ -137,40 +137,37 @@
             margin-bottom: 20px;
         }
 
-        /* Top Left 'sathya.' Pill with straight sides and round corners */
+        /* Top Left 'sathya.' - no background, sits directly on page bg */
         .brand-pill {
             position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             height: 62px;
-            padding: 0 32px;
-            background-color: var(--header-bg);
-            border: 1px solid var(--header-border);
+            padding: 0 8px;
+            background-color: transparent;
+            border: none;
             border-radius: var(--corner-radius);
             color: var(--text-main);
             text-decoration: none !important;
             font-size: 24px;
             font-weight: 600;
             letter-spacing: -0.5px;
-            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+            box-shadow: none;
             touch-action: manipulation;
             cursor: pointer;
             user-select: none;
             
-            will-change: transform, box-shadow, border-color;
+            will-change: transform;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             
-            transition: transform 0.55s var(--ease-smooth), 
-                        box-shadow 0.55s var(--ease-smooth), 
-                        border-color 0.55s var(--ease-smooth), 
-                        background-color 0.8s var(--ease-smooth),
+            transition: transform 0.55s var(--ease-smooth),
                         color 0.8s var(--ease-smooth);
         }
 
         body.light-mode .brand-pill {
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+            box-shadow: none;
         }
 
         /* Identical 0.55s Lift Animation on Hover, Active & Touch */
@@ -179,16 +176,16 @@
         .brand-pill:active,
         .brand-pill.is-pill-lifted {
             transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
-            border-color: #1E1E1E;
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+            border-color: transparent;
+            box-shadow: none;
         }
 
         body.light-mode .brand-pill:hover,
         body.light-mode .brand-pill:focus-within,
         body.light-mode .brand-pill:active,
         body.light-mode .brand-pill.is-pill-lifted {
-            border-color: #b8b8bc;
-            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.09);
+            border-color: transparent;
+            box-shadow: none;
         }
 
         /* -------------------------------------------------------------
@@ -431,7 +428,7 @@
             }
             footer { margin-top: auto; }
             .top-nav-bar { margin-bottom: 0; }
-            .brand-pill { height: 56px; padding: 0 26px; font-size: 21px; border-radius: var(--corner-radius); }
+            .brand-pill { height: auto; min-height: 44px; padding: 0 4px; font-size: 21px; background-color: transparent !important; border: none !important; box-shadow: none !important; }
 
             /* Push panels to top — no vertical centering */
             main {
@@ -624,6 +621,11 @@
 
         applyDeviceTheme();
         systemLightQuery.addEventListener('change', applyDeviceTheme);
+
+        // Reset breadcrumbs on home page so subsequent navigation starts fresh
+        try {
+            sessionStorage.removeItem('breadcrumbTrail');
+        } catch (e) {}
 
         // -------------------------------------------------------------
         // 2. BRAND PILL TACTILE LIFT & RECOIL (0.55s ANIMATION)
