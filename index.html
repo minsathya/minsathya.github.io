@@ -414,7 +414,7 @@
 
         /* -------------------------------------------------------------
            MOBILE BREAKPOINT (< 700px):
-           Balanced Horizontal Panels (Not overly wide, refined height)
+           Trimmed Vertical Space Above & Below Text and Icon
            ------------------------------------------------------------- */
         @media (max-width: 700px) {
             body { padding: 28px 18px 24px 18px; }
@@ -424,48 +424,51 @@
             .apple-panels-grid {
                 flex-direction: column;
                 align-items: center;
-                gap: 15px;
+                gap: 14px;
                 width: 100%;
+                max-width: 400px;
             }
 
-            /* Balanced horizontal panel (not overly wide, slightly lower height) */
+            /* Sleek horizontal panel with trimmed vertical space above and below content */
             .apple-panel {
                 width: 100%;
-                max-width: 330px;
-                min-height: 110px;
+                max-width: 380px;
+                min-height: auto;
                 aspect-ratio: auto;
                 flex-direction: row;
                 align-items: center;
                 justify-content: space-between;
-                padding: 18px 26px;
+                padding: 14px 26px;
                 border-radius: var(--corner-radius);
             }
 
             .panel-header-text {
-                gap: 3px;
+                gap: 2px;
                 text-align: left;
             }
 
             .panel-tag {
-                font-size: 10.5px;
+                font-size: 10px;
                 letter-spacing: 0.8px;
+                line-height: 1.2;
             }
 
             .panel-title {
                 font-size: 24px;
+                line-height: 1.15;
             }
 
             .panel-artwork-stage {
                 flex-grow: 0;
-                padding: 0;
+                padding: 0 !important;
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
 
             .panel-icon-wrap svg {
-                width: 62px;
-                height: 62px;
+                width: 58px;
+                height: 58px;
             }
         }
 
@@ -496,7 +499,7 @@
         </a>
     </nav>
     
-    <!-- Centered Panels (Vertical on Laptop/iPad, Horizontal on Mobile) -->
+    <!-- Centered Panels (Vertical on Laptop/iPad, Sleek Horizontal on Mobile) -->
     <main>
         <div class="apple-panels-grid" id="panelsGrid">
             
