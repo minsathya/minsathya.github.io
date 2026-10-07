@@ -414,46 +414,45 @@
 
         /* -------------------------------------------------------------
            MOBILE BREAKPOINT (< 700px):
-           Horizontal, Stretched Panels with Comfortable Height
+           Balanced Horizontal Panels (Not overly wide, refined height)
            ------------------------------------------------------------- */
         @media (max-width: 700px) {
             body { padding: 28px 18px 24px 18px; }
             .top-nav-bar { margin-bottom: 20px; }
-            .brand-pill { height: 58px; padding: 0 28px; font-size: 22px; border-radius: var(--corner-radius); }
+            .brand-pill { height: 56px; padding: 0 26px; font-size: 21px; border-radius: var(--corner-radius); }
             
             .apple-panels-grid {
                 flex-direction: column;
                 align-items: center;
-                gap: 18px;
+                gap: 15px;
                 width: 100%;
-                max-width: 420px;
             }
 
-            /* Stretched horizontal panel (not thin, comfortable height like version 1) */
+            /* Balanced horizontal panel (not overly wide, slightly lower height) */
             .apple-panel {
                 width: 100%;
-                max-width: 100%;
-                min-height: 135px;
+                max-width: 330px;
+                min-height: 110px;
                 aspect-ratio: auto;
                 flex-direction: row;
                 align-items: center;
                 justify-content: space-between;
-                padding: 24px 30px;
+                padding: 18px 26px;
                 border-radius: var(--corner-radius);
             }
 
             .panel-header-text {
-                gap: 4px;
+                gap: 3px;
                 text-align: left;
             }
 
             .panel-tag {
-                font-size: 11px;
+                font-size: 10.5px;
                 letter-spacing: 0.8px;
             }
 
             .panel-title {
-                font-size: 26px;
+                font-size: 24px;
             }
 
             .panel-artwork-stage {
@@ -465,8 +464,8 @@
             }
 
             .panel-icon-wrap svg {
-                width: 72px;
-                height: 72px;
+                width: 62px;
+                height: 62px;
             }
         }
 
