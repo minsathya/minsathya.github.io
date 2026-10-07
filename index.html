@@ -54,7 +54,7 @@
             --header-bg: #1a231e;
             --header-border: #222c26;
 
-            /* Vertical Panels (Dark) */
+            /* Panels (Dark) */
             --panel-bg: rgba(18, 18, 21, 0.92);
             --panel-border: rgba(255, 255, 255, 0.08);
             --panel-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
@@ -71,7 +71,7 @@
             --header-bg: #e9ebe6;
             --header-border: #d4d8cf;
 
-            /* Vertical Panels (Light) */
+            /* Panels (Light) */
             --panel-bg: rgba(255, 255, 255, 0.95);
             --panel-border: rgba(0, 0, 0, 0.07);
             --panel-shadow: 0 20px 45px rgba(0, 0, 0, 0.06);
@@ -188,7 +188,7 @@
         }
 
         /* -------------------------------------------------------------
-           MAIN CENTERED SECTION: CLEAN VERTICAL APPLE-STYLE PANELS
+           MAIN CENTERED SECTION: PANELS GRID
            ------------------------------------------------------------- */
         main {
             flex-grow: 1;
@@ -208,7 +208,7 @@
             max-width: 680px;
         }
 
-        /* Clean Vertical Panel with Flat Sides, Round Corners, & Constant Portrait Proportion */
+        /* Desktop & Laptop & iPad: Vertical Apple-Style Panels */
         .apple-panel {
             flex: 1 1 280px;
             max-width: 315px;
@@ -239,7 +239,7 @@
                         background-color 0.8s var(--ease-smooth);
         }
 
-        /* Panel Header Text: Tag + Main Title Only (No Subtext) */
+        /* Panel Header Text: Tag + Main Title Only */
         .panel-header-text {
             display: flex;
             flex-direction: column;
@@ -412,7 +412,10 @@
             -webkit-transition: none !important;
         }
 
-        /* Responsive Breakpoints: Maintain Constant Vertical Aspect Ratio on Mobile */
+        /* -------------------------------------------------------------
+           MOBILE BREAKPOINT (< 700px):
+           Horizontal, Stretched Panels with Comfortable Height
+           ------------------------------------------------------------- */
         @media (max-width: 700px) {
             body { padding: 28px 18px 24px 18px; }
             .top-nav-bar { margin-bottom: 20px; }
@@ -421,20 +424,49 @@
             .apple-panels-grid {
                 flex-direction: column;
                 align-items: center;
-                gap: 24px;
+                gap: 18px;
+                width: 100%;
+                max-width: 420px;
             }
+
+            /* Stretched horizontal panel (not thin, comfortable height like version 1) */
             .apple-panel {
                 width: 100%;
-                max-width: 290px;
-                min-height: 400px;
-                aspect-ratio: 1 / 1.38;
-                padding: 34px 26px;
+                max-width: 100%;
+                min-height: 135px;
+                aspect-ratio: auto;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                padding: 24px 30px;
                 border-radius: var(--corner-radius);
             }
-            .panel-title { font-size: 28px; }
+
+            .panel-header-text {
+                gap: 4px;
+                text-align: left;
+            }
+
+            .panel-tag {
+                font-size: 11px;
+                letter-spacing: 0.8px;
+            }
+
+            .panel-title {
+                font-size: 26px;
+            }
+
+            .panel-artwork-stage {
+                flex-grow: 0;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
             .panel-icon-wrap svg {
-                width: 96px;
-                height: 96px;
+                width: 72px;
+                height: 72px;
             }
         }
 
@@ -465,11 +497,11 @@
         </a>
     </nav>
     
-    <!-- Centered Vertical Apple Panels (Maintaining Consistent Portrait Proportion) -->
+    <!-- Centered Panels (Vertical on Laptop/iPad, Horizontal on Mobile) -->
     <main>
         <div class="apple-panels-grid" id="panelsGrid">
             
-            <!-- Apple Panel 1: Study -->
+            <!-- Panel 1: Study -->
             <a href="/study/index.html" class="apple-panel myspace-card" data-panel="study" id="cardStudy">
                 <div class="panel-header-text">
                     <span class="panel-tag study-tag">WORKSPACE</span>
@@ -498,7 +530,7 @@
                 </div>
             </a>
 
-            <!-- Apple Panel 2: Nutrition -->
+            <!-- Panel 2: Nutrition -->
             <a href="/nutrition/index.html" class="apple-panel myspace-card" data-panel="nutrition" id="cardNutrition">
                 <div class="panel-header-text">
                     <span class="panel-tag nutrition-tag">WORKSPACE</span>
