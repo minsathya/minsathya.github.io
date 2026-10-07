@@ -57,12 +57,12 @@
             --text-main: #ffffff;
             --text-muted: #9998b3;
 
-            /* Floating Translucent Glass Panels (Dark - Zero Shadow) */
-            --panel-bg: rgba(22, 21, 52, 0.78);
-            --panel-border: rgba(255, 255, 255, 0.12);
-            --panel-border-hover: rgba(255, 255, 255, 0.3);
+            /* Seamless Panels: No background, no border in idle state (matches user request) */
+            --panel-bg: transparent;
+            --panel-border: transparent;
+            --panel-border-hover: rgba(255, 255, 255, 0.24);
             
-            --corner-radius: 26px;
+            --corner-radius: 24px;
         }
 
         body.light-mode {
@@ -71,10 +71,10 @@
             --text-main: #0c1c30;
             --text-muted: #3d5e82;
 
-            /* Floating Translucent Glass Panels (Light - Zero Shadow) */
-            --panel-bg: rgba(255, 255, 255, 0.85);
-            --panel-border: rgba(255, 255, 255, 0.6);
-            --panel-border-hover: rgba(255, 255, 255, 0.95);
+            /* Seamless Panels (Light Mode) */
+            --panel-bg: transparent;
+            --panel-border: transparent;
+            --panel-border-hover: rgba(12, 28, 48, 0.22);
         }
 
         * {
@@ -281,8 +281,8 @@
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: var(--corner-radius);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
             padding: 28px 20px 24px 20px;
             display: flex;
             flex-direction: column;
@@ -293,15 +293,17 @@
             touch-action: manipulation;
             cursor: pointer;
             overflow: hidden;
+            box-sizing: border-box;
             
-            will-change: transform, border-color;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             
-            /* Smooth 0.55s lift and fall-back transition */
-            transition: transform 0.55s var(--ease-smooth), 
-                        border-color 0.55s var(--ease-smooth), 
-                        background-color 0.8s var(--ease-smooth);
+            /* Smooth lift-up and border transition */
+            transition: transform 0.45s var(--ease-smooth), 
+                        border-color 0.35s var(--ease-smooth), 
+                        background-color 0.4s var(--ease-smooth);
         }
 
         /* Panel Header Text: Tag + Main Title Only */
@@ -362,33 +364,36 @@
             -webkit-filter: none !important;
         }
 
-        /* Hover & Touch Elevation */
+        /* Hover: ONLY BORDER APPEARS, NO HORIZONTAL SCALING */
         @media (hover: hover) and (pointer: fine) {
             .apple-panel:hover {
-                transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
-                border-color: var(--panel-border-hover);
+                transform: translate3d(0, -6px, 0);
+                border-color: var(--panel-border-hover) !important;
+                background-color: var(--panel-bg);
                 box-shadow: none !important;
             }
 
             .apple-panel:hover .panel-icon-wrap {
-                transform: scale3d(1.06, 1.06, 1);
+                transform: scale3d(1.05, 1.05, 1);
             }
 
             .footer-links-row a:hover .nav-text,
             .brand-pill:hover .nav-text {
-                transform: scale3d(1.06, 1.06, 1) !important;
+                transform: scale3d(1.05, 1.05, 1) !important;
             }
         }
 
+        /* Touch / tap: ONLY BORDER APPEARS */
         .apple-panel:active,
         .apple-panel.is-card-lifted {
-            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
+            transform: translate3d(0, -6px, 0) !important;
             border-color: var(--panel-border-hover) !important;
+            background-color: var(--panel-bg);
             box-shadow: none !important;
         }
 
         .apple-panel.is-card-lifted .panel-icon-wrap {
-            transform: scale3d(1.06, 1.06, 1) !important;
+            transform: scale3d(1.05, 1.05, 1) !important;
         }
 
         .brand-pill.is-card-lifted .nav-text,

@@ -60,9 +60,9 @@
             --text-main: #ffffff;
             --text-muted: #88888e;
 
-            /* Panels: Original sleek dark charcoal (#121212), zero shadows, zero green tint */
-            --panel-bg: #121212;
-            --panel-border: rgba(255, 255, 255, 0.08);
+            /* Panels: Background matches site bg, border transparent until hover (Image 2 & 3) */
+            --panel-bg: transparent;
+            --panel-border: transparent;
             --panel-border-hover: rgba(255, 255, 255, 0.22);
             
             --corner-radius: 24px;
@@ -74,9 +74,9 @@
             --text-muted: #6e6e73;
 
             /* Panels (Light Theme) */
-            --panel-bg: rgba(255, 255, 255, 0.95);
-            --panel-border: rgba(0, 0, 0, 0.07);
-            --panel-border-hover: rgba(0, 0, 0, 0.2);
+            --panel-bg: transparent;
+            --panel-border: transparent;
+            --panel-border-hover: rgba(0, 0, 0, 0.16);
         }
 
         * {
@@ -238,7 +238,7 @@
             overflow-y: hidden;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
-            padding: 10px 2px 24px 2px;
+            padding: 14px 6px 24px 6px;
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
@@ -249,7 +249,8 @@
 
         /* -------------------------------------------------------------
            4. UNIFORM PANELS: EXACT SIZE OF CALORIES PANEL (240px x 350px)
-              WITH SIGNATURE APPLE LIFT-UP AND CLOSE ON HOVER/TOUCH
+              IDLE: SEAMLESS NO-BG NO-BORDER (MATCHES IMG 2)
+              HOVER/TOUCH: BORDER-ONLY APPEARS WITH SMOOTH LIFT (MATCHES IMG 3)
            ------------------------------------------------------------- */
         .apple-panel {
             width: 240px;
@@ -275,17 +276,19 @@
             touch-action: manipulation;
             cursor: pointer;
             overflow: hidden;
+            box-sizing: border-box;
             
-            will-change: transform, border-color;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             
-            /* Signature smooth Apple lift-up & settle transition */
-            transition: transform 0.55s var(--ease-smooth), 
-                        border-color 0.55s var(--ease-smooth), 
-                        background-color 0.8s var(--ease-smooth);
+            /* Smooth lift-up & border-fade transition */
+            transition: transform 0.45s var(--ease-smooth), 
+                        border-color 0.35s var(--ease-smooth), 
+                        background-color 0.4s var(--ease-smooth);
 
-            /* Rapid smooth entrance on load: one after another rapidly */
+            /* Rapid smooth entrance on load */
             animation: rapidCascadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) backwards;
         }
 
@@ -305,16 +308,17 @@
             }
         }
 
-        /* Lift-up when cursor reaches the panel */
+        /* Lift-up & BORDER ONLY APPEARS when cursor reaches the panel (Img 3) */
         @media (hover: hover) and (pointer: fine) {
             .apple-panel:hover {
-                transform: translate3d(0, -7px, 0) scale3d(1.02, 1.02, 1);
-                border-color: var(--panel-border-hover);
+                transform: translate3d(0, -6px, 0);
+                border-color: var(--panel-border-hover) !important;
+                background-color: var(--panel-bg);
                 box-shadow: none !important;
             }
 
             .apple-panel:hover .panel-icon-wrap {
-                transform: scale3d(1.06, 1.06, 1);
+                transform: scale3d(1.05, 1.05, 1);
             }
 
             .footer-links-row a:hover .nav-text,
@@ -323,16 +327,17 @@
             }
         }
 
-        /* Lift-up on touch or active tap */
+        /* Touch / tap: BORDER ONLY APPEARS with smooth lift */
         .apple-panel:active,
         .apple-panel.is-card-lifted {
-            transform: translate3d(0, -7px, 0) scale3d(1.02, 1.02, 1) !important;
+            transform: translate3d(0, -6px, 0) !important;
             border-color: var(--panel-border-hover) !important;
+            background-color: var(--panel-bg);
             box-shadow: none !important;
         }
 
         .apple-panel.is-card-lifted .panel-icon-wrap {
-            transform: scale3d(1.06, 1.06, 1) !important;
+            transform: scale3d(1.05, 1.05, 1) !important;
         }
 
         /* Artwork Stages & Rapid Smooth Icon Loading */
