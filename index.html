@@ -142,8 +142,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            height: 60px;
-            padding: 0 30px;
+            height: 62px;
+            padding: 0 32px;
             background-color: var(--header-bg);
             border: 1px solid var(--header-border);
             border-radius: var(--corner-radius);
@@ -172,7 +172,7 @@
             box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
         }
 
-        /* 0.55s Lift Animation on Hover, Active & Touch */
+        /* Identical 0.55s Lift Animation on Hover, Active & Touch */
         .brand-pill:hover,
         .brand-pill:focus-within,
         .brand-pill:active,
@@ -211,21 +211,22 @@
             max-width: 680px;
         }
 
-        /* Desktop & Laptop & iPad: Compact Panels with Trimmed Vertical Voids */
+        /* -------------------------------------------------------------
+           DESKTOP & LAPTOP & IPAD:
+           Restored Vertical Apple-Style Panels (User-Approved Previous Version)
+           ------------------------------------------------------------- */
         .apple-panel {
-            flex: 1 1 270px;
-            max-width: 310px;
-            min-height: auto;
-            aspect-ratio: auto;
+            flex: 1 1 280px;
+            max-width: 315px;
+            min-height: 410px;
+            aspect-ratio: 1 / 1.38;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: var(--corner-radius);
-            padding: 28px 28px 24px 28px;
+            padding: 38px 30px;
             display: flex;
             flex-direction: column;
-            align-items: stretch;
-            justify-content: flex-start;
-            gap: 16px;
+            justify-content: space-between;
             position: relative;
             text-decoration: none !important;
             box-shadow: var(--panel-shadow);
@@ -244,13 +245,11 @@
                         background-color 0.8s var(--ease-smooth);
         }
 
-        /* Panel Header Text: Tag + Main Title (Trimmed spacing) */
+        /* Panel Header Text: Tag + Main Title Only */
         .panel-header-text {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            text-align: left;
-            gap: 4px;
+            gap: 8px;
         }
 
         .panel-tag {
@@ -258,7 +257,6 @@
             font-weight: 700;
             letter-spacing: 1px;
             text-transform: uppercase;
-            line-height: 1.2;
             transition: color 0.8s var(--ease-smooth);
         }
 
@@ -266,22 +264,21 @@
         .panel-tag.nutrition-tag { color: #72b528; }
 
         .panel-title {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 700;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.6px;
             color: var(--text-main);
             line-height: 1.1;
             transition: color 0.8s var(--ease-smooth);
         }
 
-        /* Central Artwork: Trimmed vertical space above & below */
+        /* Central Floating Artwork Display */
         .panel-artwork-stage {
-            flex-grow: 0;
+            flex-grow: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
-            padding: 6px 0 0 0;
+            padding: 24px 0 8px 0;
         }
 
         .panel-icon-wrap {
@@ -293,14 +290,12 @@
         }
 
         .panel-icon-wrap svg {
-            width: 86px;
-            height: 86px;
-            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.25));
+            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
             transition: transform 0.55s var(--ease-smooth);
         }
 
         body.light-mode .panel-icon-wrap svg {
-            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.08));
+            filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.08));
         }
 
         /* Hover & Touch Elevation */
@@ -424,51 +419,51 @@
         }
 
         /* -------------------------------------------------------------
-           MOBILE & TABLET BREAKPOINT (< 768px):
-           Trimmed Vertical Space Above & Below Text and Icon (Horizontal)
+           MOBILE BREAKPOINT (< 700px):
+           Horizontal Stretched Panels with Height Matching img 1 (~170px)
            ------------------------------------------------------------- */
-        @media (max-width: 768px) {
-            body { padding: 24px 18px 20px 18px; }
-            .top-nav-bar { margin-bottom: 18px; }
-            .brand-pill { height: 54px; padding: 0 24px; font-size: 20px; border-radius: var(--corner-radius); }
+        @media (max-width: 700px) {
+            body { padding: 28px 18px 24px 18px; }
+            .top-nav-bar { margin-bottom: 20px; }
+            .brand-pill { height: 56px; padding: 0 26px; font-size: 21px; border-radius: var(--corner-radius); }
             
             .apple-panels-grid {
                 flex-direction: column;
                 align-items: center;
-                gap: 14px;
+                gap: 18px;
                 width: 100%;
-                max-width: 390px;
+                max-width: 400px;
             }
 
-            /* Sleek horizontal panel with tight vertical space */
+            /* Stretched horizontal panel with height matching img 1 (~170px) */
             .apple-panel {
                 width: 100%;
-                max-width: 100%;
-                min-height: auto;
+                max-width: 360px;
+                min-height: 168px;
+                height: 168px;
                 aspect-ratio: auto;
                 flex-direction: row;
                 align-items: center;
                 justify-content: space-between;
-                padding: 14px 24px;
-                gap: 0;
+                padding: 26px 30px;
                 border-radius: var(--corner-radius);
             }
 
             .panel-header-text {
-                align-items: flex-start;
+                gap: 6px;
                 text-align: left;
-                gap: 2px;
+                align-items: flex-start;
             }
 
             .panel-tag {
-                font-size: 10px;
+                font-size: 11px;
                 letter-spacing: 0.8px;
                 line-height: 1.2;
             }
 
             .panel-title {
-                font-size: 24px;
-                line-height: 1.15;
+                font-size: 28px;
+                line-height: 1.1;
             }
 
             .panel-artwork-stage {
@@ -480,8 +475,8 @@
             }
 
             .panel-icon-wrap svg {
-                width: 56px;
-                height: 56px;
+                width: 80px !important;
+                height: 80px !important;
             }
         }
 
@@ -512,7 +507,7 @@
         </a>
     </nav>
     
-    <!-- Centered Panels (Sleek and Compact on both Desktop and Mobile) -->
+    <!-- Centered Panels (Vertical Apple-Style on Laptop/iPad; 168px Stretched Horizontal on Mobile) -->
     <main>
         <div class="apple-panels-grid" id="panelsGrid">
             
@@ -526,7 +521,7 @@
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
                         <!-- Custom Blue Open Book SVG -->
-                        <svg width="86" height="86" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="105" height="105" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7 16C7 13.2386 9.23858 11 12 11H30V50H12C9.23858 50 7 47.7614 7 45V16Z" fill="#0C2340"/>
                             <path d="M57 16C57 13.2386 54.7614 11 52 11H34V50H52C54.7614 50 57 47.7614 57 45V16Z" fill="#0C2340"/>
                             <path d="M10 17C10 14.7909 11.7909 13 14 13H30V48H14C11.7909 48 10 46.2091 10 44V17Z" fill="#0080FF"/>
@@ -555,7 +550,7 @@
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
                         <!-- Soil-Buried Green Sprout Vector -->
-                        <svg width="88" height="88" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="108" height="108" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="96" y="440" width="320" height="14" rx="7" fill="#58341a"/>
                             <path d="M 256 420 C 256 360 252 300 205 235" stroke="#72b528" stroke-width="20" stroke-linecap="round"/>
                             <path d="M 250 335 C 250 300 268 270 300 230" stroke="#72b528" stroke-width="18" stroke-linecap="round"/>
@@ -706,6 +701,6 @@
             }
         });
     </script>
-    <script src="/script.js?v=2"></script>
+    <script src="/script.js"></script>
 </body>
 </html>
