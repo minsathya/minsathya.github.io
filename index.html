@@ -429,27 +429,41 @@
             
             .apple-panels-grid {
                 flex-direction: column;
-                align-items: center;
-                gap: 18px;
+                align-items: stretch;
+                gap: 22px;
                 width: 100%;
-                max-width: 400px;
+                max-width: 100%;
             }
 
-            /* Stretched horizontal panel with height matching img 1 (~170px) */
+            /* Full-width horizontal panels — icon LEFT, text RIGHT */
             .apple-panel {
                 width: 100%;
-                max-width: 360px;
-                min-height: 168px;
-                height: 168px;
+                max-width: 100%;
+                min-height: 150px;
+                height: auto;
                 aspect-ratio: auto;
                 flex-direction: row;
                 align-items: center;
-                justify-content: space-between;
-                padding: 26px 30px;
+                justify-content: flex-start;
+                gap: 24px;
+                padding: 32px 34px;
                 border-radius: var(--corner-radius);
             }
 
+            /* Icon (artwork) goes LEFT via CSS order */
+            .panel-artwork-stage {
+                order: -1;
+                flex-grow: 0;
+                flex-shrink: 0;
+                padding: 0 !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Text goes RIGHT */
             .panel-header-text {
+                order: 1;
                 gap: 6px;
                 text-align: left;
                 align-items: flex-start;
@@ -464,14 +478,6 @@
             .panel-title {
                 font-size: 28px;
                 line-height: 1.1;
-            }
-
-            .panel-artwork-stage {
-                flex-grow: 0;
-                padding: 0 !important;
-                display: flex;
-                align-items: center;
-                justify-content: center;
             }
 
             .panel-icon-wrap svg {
