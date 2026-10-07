@@ -44,26 +44,32 @@
     
     <style>
         :root {
-            /* Smooth, gradual animation curve for touchscreen & desktop */
+            /* Smooth transitions & curves */
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
-            --text-muted: #666666;
-            --panel-bg: #121212;
-            --panel-border: #222222;
-            --row-divider: #1c1c1c;
-            --row-hover: rgba(255, 255, 255, 0.015);
+            --text-muted: #88888e;
+            --panel-bg: rgba(18, 18, 21, 0.82);
+            --panel-border: rgba(255, 255, 255, 0.08);
             --header-bg: #1a231e;
             --header-border: #222c26;
             
-            /* 3D Container Variables */
-            --myspace-bg: #141414;
-            --myspace-border: #242424;
-            --myspace-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-            --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            --card-shadow-hover: 0 16px 36px rgba(0, 0, 0, 0.45);
-            --card-border-hover: #383838;
+            /* 3D Container Variables (Dark) */
+            --myspace-bg: rgba(17, 17, 20, 0.72);
+            --myspace-border: rgba(255, 255, 255, 0.09);
+            --myspace-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            --card-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+            --card-shadow-hover: 0 28px 56px rgba(0, 0, 0, 0.6);
+            --card-border-hover: rgba(255, 255, 255, 0.22);
+
+            --emblem-bg: rgba(255, 255, 255, 0.035);
+            --emblem-border: rgba(255, 255, 255, 0.08);
+            --pill-bg: rgba(255, 255, 255, 0.05);
+            --pill-border: rgba(255, 255, 255, 0.1);
+            --pill-text: #a0a0aa;
 
             /* Vertical cascade parameters */
             --cascade-distance: 24px;
@@ -74,21 +80,25 @@
         body.light-mode {
             --bg-color: #ebebe4;
             --text-main: #111111;
-            --text-muted: #88888e;
-            --panel-bg: #ffffff;
-            --panel-border: #e2e2e7;
-            --row-divider: #f2f2f7;
-            --row-hover: rgba(0, 0, 0, 0.01);
+            --text-muted: #73737a;
+            --panel-bg: rgba(255, 255, 255, 0.88);
+            --panel-border: rgba(0, 0, 0, 0.07);
             --header-bg: #e9ebe6;
             --header-border: #d4d8cf;
             
             /* 3D Container Variables (Light) */
-            --myspace-bg: #f5f5f0;
-            --myspace-border: #dcdce0;
-            --myspace-shadow: 0 20px 45px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-            --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
-            --card-shadow-hover: 0 16px 32px rgba(0, 0, 0, 0.09);
-            --card-border-hover: #b8b8c0;
+            --myspace-bg: rgba(245, 245, 240, 0.75);
+            --myspace-border: rgba(0, 0, 0, 0.08);
+            --myspace-shadow: 0 30px 60px rgba(0, 0, 0, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --card-shadow-hover: 0 24px 48px rgba(0, 0, 0, 0.11);
+            --card-border-hover: rgba(0, 0, 0, 0.18);
+
+            --emblem-bg: rgba(0, 0, 0, 0.03);
+            --emblem-border: rgba(0, 0, 0, 0.07);
+            --pill-bg: rgba(0, 0, 0, 0.04);
+            --pill-border: rgba(0, 0, 0, 0.08);
+            --pill-text: #66666f;
         }
 
         * {
@@ -107,13 +117,31 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 60px 24px;
+            padding: 50px 24px 40px 24px;
             max-width: 1200px;
             margin: 0 auto;
             width: 95%;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            position: relative;
             transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
+        }
+
+        /* 3D Ambient Space Canvas */
+        .ambient-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.75;
+            transition: opacity 0.8s var(--ease-smooth);
+        }
+
+        body.light-mode .ambient-canvas {
+            opacity: 0.55;
         }
 
         @keyframes masterEntrance {
@@ -122,16 +150,18 @@
         }
 
         header, main, footer {
+            position: relative;
+            z-index: 1;
             opacity: 1;
             will-change: transform, opacity;
-            animation: masterEntrance 1.2s var(--ease-smooth) backwards;
+            animation: masterEntrance 1.1s var(--ease-smooth) backwards;
         }
 
         header { animation-delay: 0.04s; }
-        main { animation-delay: 0.16s; }
-        footer { animation-delay: 0.28s; }
+        main { animation-delay: 0.14s; }
+        footer { animation-delay: 0.24s; }
 
-        /* HEADER BASE MATCHING CAPSULE GEOMETRY & PALETTE */
+        /* HEADER BASE */
         header {
             position: relative;
             background-color: var(--header-bg);
@@ -139,7 +169,7 @@
             border-radius: 28px;
             width: 100%;
             height: 72px;
-            margin: 0 auto 60px auto;
+            margin: 0 auto 50px auto;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
             overflow: hidden;
             touch-action: manipulation;
@@ -150,7 +180,6 @@
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
             
-            /* Always smooth 0.55s curve for both lifting up & recoiling back down */
             transition: transform 0.55s var(--ease-smooth), 
                         box-shadow 0.55s var(--ease-smooth), 
                         border-color 0.55s var(--ease-smooth), 
@@ -161,12 +190,11 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
-        /* NATIVE REPEATABLE 3D LIFT ON HOVER, FOCUS, TAP, OR CLICK */
         header:hover,
         header:focus-within,
         header:active,
         header.is-header-lifted {
-            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
+            transform: translate3d(0, -5px, 0) scale3d(1.012, 1.012, 1);
             border-color: #1E1E1E;
             box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
         }
@@ -345,33 +373,87 @@
         body.light-mode .theme-toggle .sun-icon { opacity: 1; transform: rotate(0deg) scale(1); }
         body.light-mode .theme-toggle .moon-icon { opacity: 0; transform: rotate(90deg) scale(0.4); }
 
+        /* 3D INTERACTIVE MAIN STAGE */
         main {
             flex-grow: 1;
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 80px;
+            margin-bottom: 60px;
+            perspective: 1200px;
+            -webkit-perspective: 1200px;
         }
 
         .myspace-container {
             width: 100%;
-            max-width: 680px;
+            max-width: 720px;
             background-color: var(--myspace-bg);
             border: 1px solid var(--myspace-border);
             border-radius: 36px;
-            padding: 32px 28px 36px 28px;
+            padding: 38px 36px 42px 36px;
             box-shadow: var(--myspace-shadow);
-            transition: background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth), box-shadow 0.8s var(--ease-smooth);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
+            will-change: transform;
+            transition: background-color 0.8s var(--ease-smooth), 
+                        border-color 0.8s var(--ease-smooth), 
+                        box-shadow 0.8s var(--ease-smooth);
+        }
+
+        /* Minimal Header within My Space Container */
+        .myspace-header-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 32px;
+            transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
+        }
+
+        .myspace-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            background: var(--pill-bg);
+            border: 1px solid var(--pill-border);
+            font-size: 11.5px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            color: var(--pill-text);
+            margin-bottom: 12px;
+            transform: translateZ(16px);
+            -webkit-transform: translateZ(16px);
+            transition: color 0.8s var(--ease-smooth), background-color 0.8s var(--ease-smooth);
+        }
+
+        .badge-pulse {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #2dd4bf;
+            box-shadow: 0 0 10px rgba(45, 212, 191, 0.7);
+            animation: pulseGlow 2.4s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.6; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.15); box-shadow: 0 0 14px rgba(45, 212, 191, 0.9); }
         }
 
         .myspace-title {
             text-align: center;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 600;
-            letter-spacing: -0.3px;
+            letter-spacing: -0.4px;
             color: var(--text-main);
-            margin-bottom: 28px;
+            transform: translateZ(22px);
+            -webkit-transform: translateZ(22px);
             transition: color 0.8s var(--ease-smooth);
         }
 
@@ -380,76 +462,207 @@
             flex-wrap: wrap;
             justify-content: center;
             align-items: stretch;
-            gap: 20px;
+            gap: 22px;
             width: 100%;
+            transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
         }
 
-        /* CARD CONTAINER WITH SMOOTH 0.55s GRADUAL TRANSITION */
+        /* 3D INTERACTIVE CARDS */
         .myspace-card {
-            flex: 1 1 calc(50% - 10px);
-            min-width: 180px;
-            max-width: 280px;
+            flex: 1 1 calc(50% - 11px);
+            min-width: 220px;
+            max-width: 310px;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
-            border-radius: 24px;
-            padding: 28px 20px;
+            border-radius: 28px;
+            padding: 32px 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 16px;
+            justify-content: space-between;
+            position: relative;
             text-decoration: none !important;
             box-shadow: var(--card-shadow);
             touch-action: manipulation;
+            cursor: pointer;
+            overflow: hidden;
             
             will-change: transform, box-shadow, border-color;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
             
-            /* Smooth 0.55s gradual transition for both opening and falling back */
-            transition: transform 0.55s var(--ease-smooth), 
-                        box-shadow 0.55s var(--ease-smooth), 
-                        border-color 0.55s var(--ease-smooth), 
+            /* Damped smooth transition */
+            transition: transform 0.5s var(--ease-smooth), 
+                        box-shadow 0.5s var(--ease-smooth), 
+                        border-color 0.5s var(--ease-smooth), 
                         background-color 0.8s var(--ease-smooth);
         }
 
-        @media (min-width: 701px) {
-            .myspace-grid.has-3-items .myspace-card {
-                flex: 1 1 calc(33.333% - 14px) !important;
-                max-width: 200px !important;
-            }
+        /* Dynamic Specular Sheen Layer */
+        .card-sheen {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 10;
+            mix-blend-mode: overlay;
+            transition: opacity 0.4s var(--ease-smooth);
+            will-change: background, opacity;
         }
 
+        body.light-mode .card-sheen {
+            mix-blend-mode: soft-light;
+        }
+
+        /* Subtle Ambient Glow Behind Card */
+        .card-ambient-glow {
+            position: absolute;
+            inset: -20px;
+            border-radius: 36px;
+            pointer-events: none;
+            opacity: 0;
+            z-index: -1;
+            filter: blur(28px);
+            transition: opacity 0.5s var(--ease-smooth);
+        }
+
+        .myspace-card[data-card="study"] .card-ambient-glow {
+            background: radial-gradient(circle, rgba(0, 128, 255, 0.22) 0%, transparent 70%);
+        }
+
+        .myspace-card[data-card="nutrition"] .card-ambient-glow {
+            background: radial-gradient(circle, rgba(120, 200, 50, 0.22) 0%, transparent 70%);
+        }
+
+        /* 3D Elevated Card Content Layers */
+        .card-3d-content {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
+            z-index: 2;
+        }
+
+        /* Floating 3D Emblem Pod */
         .myspace-card-icon {
-            width: 56px;
-            height: 56px;
+            width: 76px;
+            height: 76px;
+            border-radius: 22px;
+            background: var(--emblem-bg);
+            border: 1px solid var(--emblem-border);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            transition: transform 0.55s var(--ease-smooth);
+            transform: translateZ(40px);
+            -webkit-transform: translateZ(40px);
+            will-change: transform;
+            transition: transform 0.5s var(--ease-smooth), background-color 0.8s var(--ease-smooth), border-color 0.8s var(--ease-smooth);
+        }
+
+        .myspace-card-icon svg {
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.18));
+            transition: transform 0.5s var(--ease-spring);
+        }
+
+        /* Text Block */
+        .card-text-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 4px;
+            transform: translateZ(28px);
+            -webkit-transform: translateZ(28px);
         }
 
         .myspace-card-title {
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 17px;
+            font-weight: 600;
             color: var(--text-main);
-            letter-spacing: -0.2px;
+            letter-spacing: -0.3px;
             transition: color 0.8s var(--ease-smooth);
         }
 
-        /* Laptop Hover */
+        .myspace-card-desc {
+            font-size: 12.5px;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: -0.1px;
+            transition: color 0.8s var(--ease-smooth);
+        }
+
+        /* Minimal Interactive Action Pill */
+        .card-action-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 999px;
+            background: var(--pill-bg);
+            border: 1px solid var(--pill-border);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--pill-text);
+            margin-top: 6px;
+            transform: translateZ(24px);
+            -webkit-transform: translateZ(24px);
+            transition: background 0.3s var(--ease-smooth), 
+                        border-color 0.3s var(--ease-smooth), 
+                        color 0.3s var(--ease-smooth), 
+                        transform 0.4s var(--ease-smooth);
+        }
+
+        .card-action-pill svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            transition: transform 0.3s var(--ease-smooth);
+        }
+
+        /* Hover States for Desktop */
         @media (hover: hover) and (pointer: fine) {
             .myspace-card:hover {
-                transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1);
                 border-color: var(--card-border-hover);
                 box-shadow: var(--card-shadow-hover);
             }
 
+            .myspace-card:hover .card-sheen {
+                opacity: 1;
+            }
+
+            .myspace-card:hover .card-ambient-glow {
+                opacity: 0.9;
+            }
+
             .myspace-card:hover .myspace-card-icon {
-                transform: scale3d(1.08, 1.08, 1);
+                transform: translateZ(52px) scale3d(1.06, 1.06, 1);
+            }
+
+            .myspace-card:hover .card-action-pill {
+                color: var(--text-main);
+                background: rgba(255, 255, 255, 0.1);
+                border-color: rgba(255, 255, 255, 0.22);
+            }
+
+            body.light-mode .myspace-card:hover .card-action-pill {
+                background: rgba(0, 0, 0, 0.08);
+                border-color: rgba(0, 0, 0, 0.16);
+            }
+
+            .myspace-card:hover .card-action-pill svg {
+                transform: translateX(3px);
             }
 
             .footer-links-row a:hover .nav-text,
@@ -458,15 +671,19 @@
             }
         }
 
-        /* Smooth Elevation Lock for Touch (iPad & Phone) */
+        /* Tactile Press State */
+        .myspace-card:active,
         .myspace-card.is-card-lifted {
-            transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1) !important;
             border-color: var(--card-border-hover) !important;
             box-shadow: var(--card-shadow-hover) !important;
         }
 
+        .myspace-card.is-card-lifted .card-ambient-glow {
+            opacity: 1 !important;
+        }
+
         .myspace-card.is-card-lifted .myspace-card-icon {
-            transform: scale3d(1.08, 1.08, 1) !important;
+            transform: translateZ(46px) scale3d(1.04, 1.04, 1) !important;
         }
 
         .footer-links-row a.is-card-lifted .nav-text,
@@ -474,11 +691,12 @@
             transform: scale3d(1.06, 1.06, 1) !important;
         }
 
+        /* FOOTER */
         footer { 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            gap: 24px; 
+            gap: 20px; 
             width: 100%; 
         }
 
@@ -486,7 +704,7 @@
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            gap: 32px; 
+            gap: 28px; 
             flex-wrap: wrap; 
             width: 100%; 
         }
@@ -494,7 +712,7 @@
         .footer-links-row a {
             color: var(--text-muted) !important;
             text-decoration: none !important;
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 400;
             display: inline-block;
             will-change: transform, opacity;
@@ -503,7 +721,13 @@
         }
 
         .footer-links-row a:hover { color: var(--text-main) !important; }
-        .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; letter-spacing: 0.2px; transition: color 0.8s var(--ease-smooth); }
+        .copyright-tag { 
+            color: var(--text-muted); 
+            opacity: 0.6; 
+            font-size: 12px; 
+            letter-spacing: 0.2px; 
+            transition: color 0.8s var(--ease-smooth); 
+        }
 
         .nav-text {
             display: inline-block !important;
@@ -552,18 +776,21 @@
         }
 
         @media (max-width: 700px) {
-            body { padding: 40px 20px; }
-            header { margin-bottom: 40px; height: 64px; border-radius: 24px; }
+            body { padding: 32px 18px 28px 18px; }
+            header { margin-bottom: 36px; height: 64px; border-radius: 24px; }
             .header-inner-view { padding: 0 20px; }
             .logo { font-size: 22px; }
             .search-core-input { padding: 0 12px; font-size: 15px; }
             .header-right-cluster { gap: 16px; }
             
-            .myspace-container { padding: 24px 18px 28px 18px; border-radius: 28px; }
-            .myspace-title { font-size: 18px; margin-bottom: 20px; }
-            .myspace-card { padding: 22px 16px; border-radius: 20px; }
+            .myspace-container { padding: 28px 20px 32px 20px; border-radius: 28px; }
+            .myspace-header-center { margin-bottom: 24px; }
+            .myspace-title { font-size: 20px; }
+            .myspace-card { padding: 24px 18px; border-radius: 22px; min-width: 100%; }
+            .myspace-card-icon { width: 68px; height: 68px; border-radius: 18px; }
         }
 
+        /* Instant landing helper */
         html.instant-landing header, 
         html.instant-landing footer {
             animation: none !important;
@@ -583,6 +810,9 @@
     </style>
 </head>
 <body>
+
+    <!-- Lightweight 3D Ambient Space Canvas -->
+    <canvas id="ambientCanvas" class="ambient-canvas" aria-hidden="true"></canvas>
 
     <header id="masterHeader">
         <div class="header-inner-view" id="headerMainView">
@@ -629,59 +859,89 @@
     </header>
     
     <main>
-        <!-- 3D Capsule Workspace Container -->
-        <div class="myspace-container">
-            <h2 class="myspace-title">My Space</h2>
+        <!-- 3D Interactive Stage Container -->
+        <div class="myspace-container" id="myspaceContainer">
+            <div class="myspace-header-center">
+                <div class="myspace-badge">
+                    <span class="badge-pulse"></span>
+                    <span>Workspace</span>
+                </div>
+                <h2 class="myspace-title">My Space</h2>
+            </div>
             
             <div class="myspace-grid" id="myspaceGrid">
                 
-                <!-- Capsule 1: Study -->
-                <a href="/study/index.html" class="myspace-card">
-                    <div class="myspace-card-icon">
-                        <!-- Custom Blue Open Book SVG -->
-                        <svg width="52" height="52" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 16C7 13.2386 9.23858 11 12 11H30V50H12C9.23858 50 7 47.7614 7 45V16Z" fill="#0C2340"/>
-                            <path d="M57 16C57 13.2386 54.7614 11 52 11H34V50H52C54.7614 50 57 47.7614 57 45V16Z" fill="#0C2340"/>
-                            <path d="M10 17C10 14.7909 11.7909 13 14 13H30V48H14C11.7909 48 10 46.2091 10 44V17Z" fill="#0080FF"/>
-                            <path d="M54 17C54 14.7909 52.2091 13 50 13H34V48H50C52.2091 48 54 46.2091 54 44V17Z" fill="#0080FF"/>
-                            <path d="M30 50C30 51.6569 30.8954 53 32 53C33.1046 53 34 51.6569 34 50V11H30V50Z" fill="#071526"/>
-                            <rect x="14" y="19" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
-                            <rect x="14" y="25" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
-                            <rect x="14" y="31" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
-                            <rect x="14" y="37" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
-                            <rect x="38" y="19" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
-                            <rect x="38" y="25" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
-                            <rect x="38" y="31" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
-                            <rect x="38" y="37" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
-                        </svg>
+                <!-- 3D Card 1: Study -->
+                <a href="/study/index.html" class="myspace-card" data-card="study" id="cardStudy">
+                    <div class="card-ambient-glow"></div>
+                    <div class="card-sheen" id="sheenStudy"></div>
+                    
+                    <div class="card-3d-content">
+                        <div class="myspace-card-icon">
+                            <!-- Custom Blue Open Book SVG -->
+                            <svg width="50" height="50" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 16C7 13.2386 9.23858 11 12 11H30V50H12C9.23858 50 7 47.7614 7 45V16Z" fill="#0C2340"/>
+                                <path d="M57 16C57 13.2386 54.7614 11 52 11H34V50H52C54.7614 50 57 47.7614 57 45V16Z" fill="#0C2340"/>
+                                <path d="M10 17C10 14.7909 11.7909 13 14 13H30V48H14C11.7909 48 10 46.2091 10 44V17Z" fill="#0080FF"/>
+                                <path d="M54 17C54 14.7909 52.2091 13 50 13H34V48H50C52.2091 48 54 46.2091 54 44V17Z" fill="#0080FF"/>
+                                <path d="M30 50C30 51.6569 30.8954 53 32 53C33.1046 53 34 51.6569 34 50V11H30V50Z" fill="#071526"/>
+                                <rect x="14" y="19" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                                <rect x="14" y="25" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                                <rect x="14" y="31" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                                <rect x="14" y="37" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                                <rect x="38" y="19" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                                <rect x="38" y="25" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                                <rect x="38" y="31" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                                <rect x="38" y="37" width="12" height="2.5" rx="1.25" fill="#FFFFFF"/>
+                            </svg>
+                        </div>
+
+                        <div class="card-text-block">
+                            <span class="myspace-card-title nav-text">Study</span>
+                            <span class="myspace-card-desc">Notes &amp; CSAT</span>
+                        </div>
+
+                        <div class="card-action-pill">
+                            <span>Explore</span>
+                            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </div>
                     </div>
-                    <span class="myspace-card-title nav-text">Study</span>
                 </a>
 
-                <!-- Capsule 2: Nutrition -->
-                <a href="/nutrition/index.html" class="myspace-card">
-                    <div class="myspace-card-icon">
-                        <!-- Soil-Buried Green Sprout Vector -->
-                        <svg width="56" height="56" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="96" y="440" width="320" height="14" rx="7" fill="#58341a"/>
+                <!-- 3D Card 2: Nutrition -->
+                <a href="/nutrition/index.html" class="myspace-card" data-card="nutrition" id="cardNutrition">
+                    <div class="card-ambient-glow"></div>
+                    <div class="card-sheen" id="sheenNutrition"></div>
+                    
+                    <div class="card-3d-content">
+                        <div class="myspace-card-icon">
+                            <!-- Soil-Buried Green Sprout Vector -->
+                            <svg width="52" height="52" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="96" y="440" width="320" height="14" rx="7" fill="#58341a"/>
+                                <path d="M 256 420 C 256 360 252 300 205 235" stroke="#72b528" stroke-width="20" stroke-linecap="round"/>
+                                <path d="M 250 335 C 250 300 268 270 300 230" stroke="#72b528" stroke-width="18" stroke-linecap="round"/>
+                                <path d="M 210 280 C 185 305 95 300 82 205 C 72 178 78 152 82 150 C 88 150 120 148 185 178 C 242 205 252 250 210 280 Z" fill="#81cc33"/>
+                                <path d="M 82 150 C 115 148 185 162 240 230 C 230 200 172 165 115 152 C 95 148 85 150 82 150 Z" fill="#69ad22"/>
+                                <path d="M 195 260 Q 140 215 98 190" stroke="#9de048" stroke-width="12" stroke-linecap="round"/>
+                                <path d="M 260 280 C 278 300 358 298 398 238 C 408 218 402 195 398 192 C 392 192 362 192 312 210 C 258 230 248 260 260 280 Z" fill="#7ac42e"/>
+                                <path d="M 398 192 C 372 190 312 202 260 260 C 270 238 318 208 368 198 C 388 194 396 193 398 192 Z" fill="#62a420"/>
+                                <path d="M 285 260 Q 338 232 380 220" stroke="#96db42" stroke-width="11" stroke-linecap="round"/>
+                                <path d="M 125 440 C 130 405 165 375 210 375 C 228 375 240 385 256 385 C 272 385 284 375 302 375 C 347 375 382 405 387 440 Z" fill="#8c5027"/>
+                                <path d="M 125 440 C 130 415 160 395 200 395 C 220 395 238 402 256 402 C 274 402 292 395 312 395 C 352 395 382 415 387 440 Z" fill="#a46332"/>
+                                <path d="M 190 422 C 220 398 256 395 290 400 C 330 406 360 422 256 422 C 215 422 198 426 190 422 Z" fill="#b8723c"/>
+                            </svg>
+                        </div>
 
-                            <path d="M 256 420 C 256 360 252 300 205 235" stroke="#72b528" stroke-width="20" stroke-linecap="round"/>
-                            <path d="M 250 335 C 250 300 268 270 300 230" stroke="#72b528" stroke-width="18" stroke-linecap="round"/>
+                        <div class="card-text-block">
+                            <span class="myspace-card-title nav-text">Nutrition</span>
+                            <span class="myspace-card-desc">Food Plan &amp; Macros</span>
+                        </div>
 
-                            <path d="M 210 280 C 185 305 95 300 82 205 C 72 178 78 152 82 150 C 88 150 120 148 185 178 C 242 205 252 250 210 280 Z" fill="#81cc33"/>
-                            <path d="M 82 150 C 115 148 185 162 240 230 C 230 200 172 165 115 152 C 95 148 85 150 82 150 Z" fill="#69ad22"/>
-                            <path d="M 195 260 Q 140 215 98 190" stroke="#9de048" stroke-width="12" stroke-linecap="round"/>
-
-                            <path d="M 260 280 C 278 300 358 298 398 238 C 408 218 402 195 398 192 C 392 192 362 192 312 210 C 258 230 248 260 260 280 Z" fill="#7ac42e"/>
-                            <path d="M 398 192 C 372 190 312 202 260 260 C 270 238 318 208 368 198 C 388 194 396 193 398 192 Z" fill="#62a420"/>
-                            <path d="M 285 260 Q 338 232 380 220" stroke="#96db42" stroke-width="11" stroke-linecap="round"/>
-
-                            <path d="M 125 440 C 130 405 165 375 210 375 C 228 375 240 385 256 385 C 272 385 284 375 302 375 C 347 375 382 405 387 440 Z" fill="#8c5027"/>
-                            <path d="M 125 440 C 130 415 160 395 200 395 C 220 395 238 402 256 402 C 274 402 292 395 312 395 C 352 395 382 415 387 440 Z" fill="#a46332"/>
-                            <path d="M 190 422 C 220 398 256 395 290 400 C 330 406 360 422 256 422 C 215 422 198 426 190 422 Z" fill="#b8723c"/>
-                        </svg>
+                        <div class="card-action-pill">
+                            <span>Explore</span>
+                            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </div>
                     </div>
-                    <span class="myspace-card-title nav-text">Nutrition</span>
                 </a>
 
             </div>
@@ -701,7 +961,254 @@
         </div>
     </footer>
 
+    <!-- Interactive 3D Physics Engine & Ambient Stardust -->
     <script>
+        // -------------------------------------------------------------
+        // 1. LIGHTWEIGHT 3D AMBIENT STARDUST CANVAS
+        // -------------------------------------------------------------
+        (function initAmbient3DCanvas() {
+            const canvas = document.getElementById('ambientCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return;
+
+            let width = 0, height = 0;
+            let dpr = Math.min(window.devicePixelRatio || 1, 2);
+            let animationFrameId = null;
+            let isVisible = true;
+
+            const particles = [];
+            const PARTICLE_COUNT = 42;
+            const FOV = 420;
+
+            let mouseX = 0, mouseY = 0;
+            let targetMouseX = 0, targetMouseY = 0;
+
+            function resizeCanvas() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width * dpr;
+                canvas.height = height * dpr;
+                ctx.scale(dpr, dpr);
+            }
+
+            // Initialize 3D points in spatial volume
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                particles.push({
+                    x: (Math.random() - 0.5) * 1400,
+                    y: (Math.random() - 0.5) * 900,
+                    z: Math.random() * 800 + 100,
+                    radius: Math.random() * 1.6 + 0.8,
+                    baseAlpha: Math.random() * 0.45 + 0.25,
+                    vx: (Math.random() - 0.5) * 0.18,
+                    vy: (Math.random() - 0.5) * 0.18
+                });
+            }
+
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas, { passive: true });
+
+            window.addEventListener('pointermove', (e) => {
+                targetMouseX = (e.clientX - width / 2) * 0.25;
+                targetMouseY = (e.clientY - height / 2) * 0.25;
+            }, { passive: true });
+
+            document.addEventListener('visibilitychange', () => {
+                isVisible = !document.hidden;
+                if (isVisible && !animationFrameId) {
+                    render();
+                }
+            });
+
+            function render() {
+                if (!isVisible) {
+                    animationFrameId = null;
+                    return;
+                }
+
+                ctx.clearRect(0, 0, width, height);
+
+                // Damped camera follow
+                mouseX += (targetMouseX - mouseX) * 0.05;
+                mouseY += (targetMouseY - mouseY) * 0.05;
+
+                const isLight = document.body.classList.contains('light-mode');
+                const particleRgb = isLight ? '80, 80, 95' : '185, 215, 255';
+                const lineRgb = isLight ? '100, 100, 115' : '150, 185, 240';
+
+                const projectedPoints = [];
+
+                for (let i = 0; i < PARTICLE_COUNT; i++) {
+                    const p = particles[i];
+
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < -700) p.x = 700;
+                    if (p.x > 700) p.x = -700;
+                    if (p.y < -450) p.y = 450;
+                    if (p.y > 450) p.y = -450;
+
+                    const adjX = p.x - mouseX * (1 - p.z / 900);
+                    const adjY = p.y - mouseY * (1 - p.z / 900);
+                    const scale = FOV / (FOV + p.z);
+
+                    const screenX = width / 2 + adjX * scale;
+                    const screenY = height / 2 + adjY * scale;
+
+                    if (screenX >= -20 && screenX <= width + 20 && screenY >= -20 && screenY <= height + 20) {
+                        const alpha = p.baseAlpha * scale * (isLight ? 0.45 : 0.8);
+                        ctx.beginPath();
+                        ctx.arc(screenX, screenY, Math.max(0.6, p.radius * scale), 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(${particleRgb}, ${alpha})`;
+                        ctx.fill();
+
+                        projectedPoints.push({ x: screenX, y: screenY, z: p.z, alpha: alpha });
+                    }
+                }
+
+                // Micro constellation filaments between close pairs
+                for (let i = 0; i < projectedPoints.length; i++) {
+                    for (let j = i + 1; j < projectedPoints.length; j++) {
+                        const p1 = projectedPoints[i];
+                        const p2 = projectedPoints[j];
+                        const dx = p1.x - p2.x;
+                        const dy = p1.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < 100) {
+                            const lineAlpha = (1 - dist / 100) * 0.12 * Math.min(p1.alpha, p2.alpha);
+                            ctx.beginPath();
+                            ctx.moveTo(p1.x, p1.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.strokeStyle = `rgba(${lineRgb}, ${lineAlpha})`;
+                            ctx.lineWidth = 0.75;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                animationFrameId = requestAnimationFrame(render);
+            }
+
+            render();
+        })();
+
+        // -------------------------------------------------------------
+        // 2. 3D TILT PHYSICS & SPECULAR SHEEN FOR CARDS & STAGE
+        // -------------------------------------------------------------
+        (function init3DTiltPhysics() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReducedMotion) return;
+
+            const container = document.getElementById('myspaceContainer');
+            const cards = document.querySelectorAll('.myspace-card');
+
+            let stageRotX = 0, stageRotY = 0;
+            let targetStageRotX = 0, targetStageRotY = 0;
+
+            const cardStates = new Map();
+
+            cards.forEach(card => {
+                const sheen = card.querySelector('.card-sheen');
+                cardStates.set(card, {
+                    element: card,
+                    sheen: sheen,
+                    rotX: 0,
+                    rotY: 0,
+                    targetRotX: 0,
+                    targetRotY: 0,
+                    sheenX: 50,
+                    sheenY: 50,
+                    isHovered: false
+                });
+
+                card.addEventListener('pointerenter', () => {
+                    const state = cardStates.get(card);
+                    if (state) state.isHovered = true;
+                });
+
+                card.addEventListener('pointermove', (e) => {
+                    const state = cardStates.get(card);
+                    if (!state) return;
+
+                    const rect = card.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width; // 0 to 1
+                    const y = (e.clientY - rect.top) / rect.height; // 0 to 1
+
+                    // Tilt range: ±10 degrees
+                    state.targetRotX = (0.5 - y) * 16;
+                    state.targetRotY = (x - 0.5) * 16;
+                    state.sheenX = x * 100;
+                    state.sheenY = y * 100;
+                });
+
+                card.addEventListener('pointerleave', () => {
+                    const state = cardStates.get(card);
+                    if (!state) return;
+                    state.isHovered = false;
+                    state.targetRotX = 0;
+                    state.targetRotY = 0;
+                });
+            });
+
+            // Container Macroscopic 3D Parallax Tracking
+            window.addEventListener('pointermove', (e) => {
+                const cx = window.innerWidth / 2;
+                const cy = window.innerHeight / 2;
+                const normX = (e.clientX - cx) / cx; // -1 to 1
+                const normY = (e.clientY - cy) / cy; // -1 to 1
+
+                targetStageRotY = normX * 4.5;
+                targetStageRotX = -normY * 4.5;
+            }, { passive: true });
+
+            window.addEventListener('pointerleave', () => {
+                targetStageRotX = 0;
+                targetStageRotY = 0;
+            });
+
+            let time = 0;
+
+            function update3DPhysics() {
+                time += 0.02;
+
+                // Subtle organic idle float when no mouse interaction
+                const idleFloatX = Math.sin(time) * 0.8;
+                const idleFloatY = Math.cos(time * 0.8) * 0.8;
+
+                // Stage smooth lerp
+                stageRotX += (targetStageRotX + idleFloatX - stageRotX) * 0.08;
+                stageRotY += (targetStageRotY + idleFloatY - stageRotY) * 0.08;
+
+                if (container) {
+                    container.style.transform = `rotateX(${stageRotX.toFixed(2)}deg) rotateY(${stageRotY.toFixed(2)}deg)`;
+                }
+
+                // Individual cards smooth lerp
+                cardStates.forEach(state => {
+                    const lerpFactor = state.isHovered ? 0.12 : 0.07;
+                    state.rotX += (state.targetRotX - state.rotX) * lerpFactor;
+                    state.rotY += (state.targetRotY - state.rotY) * lerpFactor;
+
+                    const liftZ = state.isHovered ? 16 : 0;
+                    state.element.style.transform = `perspective(1000px) rotateX(${state.rotX.toFixed(2)}deg) rotateY(${state.rotY.toFixed(2)}deg) translateZ(${liftZ}px)`;
+
+                    if (state.sheen && state.isHovered) {
+                        const sheenIntensity = document.body.classList.contains('light-mode') ? 0.14 : 0.18;
+                        state.sheen.style.background = `radial-gradient(circle 240px at ${state.sheenX}% ${state.sheenY}%, rgba(255, 255, 255, ${sheenIntensity}), transparent 75%)`;
+                    }
+                });
+
+                requestAnimationFrame(update3DPhysics);
+            }
+
+            requestAnimationFrame(update3DPhysics);
+        })();
+
+        // -------------------------------------------------------------
+        // 3. HEADER SEARCH & PALETTE THEME CONTROLLER
+        // -------------------------------------------------------------
         const toggleBtn = document.getElementById('themeToggleBtn');
         const bodyElement = document.body;
         const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
@@ -712,7 +1219,6 @@
         const clearSearchBtn = document.getElementById('clearSearchBtn');
         const searchCoreInput = document.getElementById('searchCoreInput');
 
-        // Helper to handle search state and lift release
         function handleHeaderLeaveOrBlur(isExplicitClose = false) {
             const isSearchActive = masterHeader.classList.contains('state-search');
             if (isSearchActive) {
@@ -727,7 +1233,6 @@
             masterHeader.classList.remove('is-header-lifted');
         }
 
-        // Tactile Lift Handlers for Header
         masterHeader.addEventListener('pointerdown', (e) => {
             masterHeader.classList.add('is-header-lifted');
             if (masterHeader.classList.contains('state-search')) {
@@ -752,7 +1257,6 @@
             }
         });
 
-        // Global Click-Outside Dismiss
         document.addEventListener('pointerdown', (e) => {
             if (!masterHeader.contains(e.target)) {
                 if (masterHeader.classList.contains('state-search') && searchCoreInput.value.trim() === "") {
@@ -826,11 +1330,9 @@
             }
         });
 
-        const myspaceGrid = document.getElementById('myspaceGrid');
-        if (myspaceGrid && myspaceGrid.children.length === 3) {
-            myspaceGrid.classList.add('has-3-items');
-        }
-
+        // -------------------------------------------------------------
+        // 4. SEAMLESS WAVE NAVIGATION & STATE RESTORATION
+        // -------------------------------------------------------------
         const universalTargetLinks = document.querySelectorAll('footer .footer-links-row a, .logo, .myspace-card');
 
         universalTargetLinks.forEach(link => {
@@ -856,7 +1358,6 @@
                     l.classList.remove('is-card-lifted');
                 });
 
-                // Trigger smooth elevation + wave shimmer simultaneously
                 this.classList.add('is-card-lifted');
                 this.classList.add('is-wave-loading');
 
@@ -864,7 +1365,7 @@
 
                 setTimeout(() => {
                     window.location.href = destination;
-                }, 750);
+                }, 700);
             });
         });
 
@@ -874,7 +1375,7 @@
             }
 
             requestAnimationFrame(() => {
-                document.body.offsetHeight; // Force layout paint frame
+                document.body.offsetHeight;
                 requestAnimationFrame(() => {
                     masterHeader.classList.remove('is-header-lifted');
                     universalTargetLinks.forEach(l => {
