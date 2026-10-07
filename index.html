@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <!-- v2.2 -->
+    <!-- v2.3 -->
     <title>sathya.</title>
 
     <!-- Universal iPad stabilization -->
@@ -425,13 +425,21 @@
            ------------------------------------------------------------- */
         @media (max-width: 700px) {
             body { padding: 28px 18px 24px 18px; }
-            .top-nav-bar { margin-bottom: 20px; }
+            .top-nav-bar { margin-bottom: 16px; }
             .brand-pill { height: 56px; padding: 0 26px; font-size: 21px; border-radius: var(--corner-radius); }
-            
+
+            /* Push panels to top — no vertical centering */
+            main {
+                justify-content: flex-start !important;
+                align-items: flex-start !important;
+                padding: 0 !important;
+                flex-grow: 0 !important;
+            }
+
             .apple-panels-grid {
                 flex-direction: column;
                 align-items: stretch;
-                gap: 22px;
+                gap: 16px;
                 width: 100%;
                 max-width: 100%;
             }
@@ -447,8 +455,8 @@
                 flex-direction: row !important;
                 align-items: center !important;
                 justify-content: space-between !important;
-                gap: 24px !important;
-                padding: 32px 34px !important;
+                gap: 20px !important;
+                padding: 22px 28px !important;
                 border-radius: var(--corner-radius) !important;
             }
 
@@ -464,25 +472,25 @@
 
             /* Text stays on the LEFT (natural HTML order) */
             .panel-header-text {
-                gap: 6px;
+                gap: 4px;
                 text-align: left;
                 align-items: flex-start;
             }
 
             .panel-tag {
-                font-size: 11px;
+                font-size: 10px;
                 letter-spacing: 0.8px;
                 line-height: 1.2;
             }
 
             .panel-title {
-                font-size: 28px;
+                font-size: 26px;
                 line-height: 1.1;
             }
 
             .panel-icon-wrap svg {
-                width: 80px !important;
-                height: 80px !important;
+                width: 68px !important;
+                height: 68px !important;
             }
         }
 
