@@ -23,7 +23,7 @@
         body:not(.light-mode).nutrition-workspace {
             --bg-color: #0a130d !important;
             background-color: #0a130d !important;
-            --panel-bg: rgba(18, 28, 22, 0.92) !important;
+            --panel-bg: #121212 !important;
             --panel-border: rgba(255, 255, 255, 0.08) !important;
         }
 

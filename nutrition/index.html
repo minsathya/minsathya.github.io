@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>s.</title>
+    <title>sathya.</title>
 
     <!-- Universal iPad stabilization -->
     <script>
@@ -54,8 +54,8 @@
             --text-main: #ffffff;
             --text-muted: #88888e;
 
-            /* Panels: Previous original panel bg restored, zero shadows */
-            --panel-bg: rgba(18, 18, 21, 0.92);
+            /* Panels: Original sleek dark charcoal (#121212), zero shadows, zero green tint */
+            --panel-bg: #121212;
             --panel-border: rgba(255, 255, 255, 0.08);
             --panel-border-hover: rgba(255, 255, 255, 0.22);
             
@@ -89,10 +89,10 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 40px 24px 36px 24px;
+            padding: 38px 24px 32px 24px;
             max-width: 1200px;
             margin: 0 auto;
-            width: 95%;
+            width: 100%;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             position: relative;
@@ -100,11 +100,11 @@
         }
 
         @keyframes masterEntrance {
-            from { opacity: 0; transform: translate3d(0, 18px, 0); }
+            from { opacity: 0; transform: translate3d(0, 16px, 0); }
             to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
-        .top-section-cluster, main, footer {
+        .top-nav-bar, .workspace-heading-area, main, footer {
             position: relative;
             z-index: 1;
             opacity: 1;
@@ -112,19 +112,19 @@
             animation: masterEntrance 1s var(--ease-smooth) backwards;
         }
 
-        .top-section-cluster { animation-delay: 0.04s; }
-        main { animation-delay: 0.12s; }
+        .top-nav-bar { animation-delay: 0.04s; }
+        .workspace-heading-area { animation-delay: 0.08s; }
+        main { animation-delay: 0.14s; }
         footer { animation-delay: 0.22s; }
 
         /* -------------------------------------------------------------
-           TOP SECTION: 's.' BRAND & 'Nutrition' SUB-HEADING
+           1. TOP NAVIGATION: 's.' BRAND PILL WITH PEACH CIRCULAR DOT
            ------------------------------------------------------------- */
-        .top-section-cluster {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 4px;
+        .top-nav-bar {
             width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
         }
 
         /* Top Left 's.' brand link directly to main home */
@@ -134,7 +134,7 @@
             align-items: center;
             justify-content: flex-start;
             height: auto;
-            padding: 0 4px;
+            padding: 0 2px;
             background-color: transparent;
             border: none;
             text-decoration: none !important;
@@ -160,48 +160,66 @@
             transition: color 0.8s var(--ease-smooth);
         }
 
-        /* Round full stop '.' is always peach color in any theme */
+        /* Round full stop '.' rendered as a pure CSS circle — never renders as square box on refresh */
         .brand-dot {
-            color: #ff9e79 !important;
-            font-weight: 800;
-            margin-left: 1px;
-            transition: color 0.8s var(--ease-smooth);
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #ff9e79 !important;
+            border-radius: 50% !important;
+            margin-left: 2px;
+            margin-bottom: 3px;
+            vertical-align: baseline;
+            flex-shrink: 0;
+            line-height: 1;
+            transition: background-color 0.8s var(--ease-smooth);
         }
 
         .brand-pill:hover,
         .brand-pill:focus-within,
         .brand-pill:active,
         .brand-pill.is-pill-lifted {
-            transform: translate3d(0, -5px, 0) scale3d(1.02, 1.02, 1);
+            transform: translate3d(0, -4px, 0) scale3d(1.02, 1.02, 1);
             box-shadow: none !important;
         }
 
-        /* 'Nutrition' is visually refined and smaller than 's.' */
+        /* -------------------------------------------------------------
+           2. WORKSPACE HEADING: 'Nutrition' POSITIONED IN THE MIDDLE
+              BETWEEN 's.' BRAND (TOP) AND CAROUSEL PANELS (BOTTOM)
+           ------------------------------------------------------------- */
+        .workspace-heading-area {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin: 24px 0 16px 0;
+            padding: 0 2px;
+        }
+
         .page-main-heading {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 500;
             letter-spacing: -0.2px;
             color: var(--text-muted);
-            padding: 0 4px;
             margin: 0;
             line-height: 1.2;
             transition: color 0.8s var(--ease-smooth);
         }
 
         /* -------------------------------------------------------------
-           MAIN CONTENT: VERTICALLY CENTERED HORIZONTAL CAROUSEL
+           3. MAIN CONTENT: 3D DYNAMIC SCROLLING CAROUSEL
            ------------------------------------------------------------- */
         main {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             width: 100%;
-            padding: 24px 0;
+            padding: 12px 0 24px 0;
         }
 
-        /* Full-bleed horizontal scroll viewport for edge-to-edge smooth glide */
+        /* Full-bleed horizontal scroll shell */
         .carousel-outer-shell {
             width: 100vw;
             margin-left: calc(-50vw + 50%);
@@ -213,15 +231,21 @@
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
+            align-items: center;
             overflow-x: auto;
             overflow-y: hidden;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             scroll-snap-type: x mandatory;
-            gap: 28px;
-            padding: 20px max(24px, calc((100vw - 1200px) / 2 + 24px));
+            gap: 24px;
+            padding-top: 20px;
+            padding-bottom: 24px;
+            /* Dynamically aligned with s. and Nutrition via JS */
+            padding-left: var(--track-pad-left, 24px);
+            padding-right: 48px;
             scrollbar-width: none;
             -ms-overflow-style: none;
+            perspective: 1200px;
         }
 
         .panels-scroll-track::-webkit-scrollbar {
@@ -229,21 +253,22 @@
         }
 
         /* -------------------------------------------------------------
-           APPLE-STYLE VERTICAL PANELS (CLEAN, NO SHADOWS SITE-WIDE)
+           4. APPLE-STYLE VERTICAL PANELS WITH 3D DYNAMIC SCALING
            ------------------------------------------------------------- */
         .apple-panel {
-            width: 310px;
-            min-width: 310px;
-            max-width: 310px;
-            min-height: 425px;
-            aspect-ratio: 1 / 1.38;
+            width: 270px;
+            min-width: 270px;
+            max-width: 270px;
+            height: 395px;
+            min-height: 395px;
+            aspect-ratio: 1 / 1.45;
             flex-shrink: 0;
             scroll-snap-align: start;
             
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: var(--corner-radius);
-            padding: 38px 28px;
+            padding: 34px 24px 28px 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -256,55 +281,46 @@
             cursor: pointer;
             overflow: hidden;
             
-            will-change: transform, border-color;
+            transform-origin: center center;
+            will-change: transform, opacity, border-color;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             
-            transition: transform 0.55s var(--ease-smooth), 
-                        border-color 0.55s var(--ease-smooth), 
+            /* Silky smooth 3D coverflow transition */
+            transition: transform 0.16s ease-out, 
+                        opacity 0.16s ease-out, 
+                        border-color 0.4s var(--ease-smooth), 
                         background-color 0.8s var(--ease-smooth);
         }
 
-        /* Hover & Touch Elevation (Smooth Lift Without Any Drop Shadow) */
         @media (hover: hover) and (pointer: fine) {
             .apple-panel:hover {
-                transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
                 border-color: var(--panel-border-hover);
-                box-shadow: none !important;
             }
 
             .apple-panel:hover .panel-icon-wrap {
-                transform: scale3d(1.06, 1.06, 1);
+                transform: scale3d(1.05, 1.05, 1);
             }
 
             .footer-links-row a:hover .nav-text,
             .brand-pill:hover .nav-text {
-                transform: scale3d(1.06, 1.06, 1) !important;
+                transform: scale3d(1.05, 1.05, 1) !important;
             }
         }
 
         .apple-panel:active,
         .apple-panel.is-card-lifted {
-            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
             border-color: var(--panel-border-hover) !important;
-            box-shadow: none !important;
         }
 
-        .apple-panel.is-card-lifted .panel-icon-wrap {
-            transform: scale3d(1.06, 1.06, 1) !important;
-        }
-
-        /* -------------------------------------------------------------
-           UNIFIED PANEL LAYOUT ACROSS ALL PANELS:
-           Icon at TOP (clean, no shadow), Heading center-bottom, Subtext below
-           ------------------------------------------------------------- */
+        /* Artwork Stages & High-Quality 3D Emblems */
         .panel-artwork-stage {
             flex-grow: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding-top: 10px;
             width: 100%;
+            padding-top: 6px;
         }
 
         .panel-icon-wrap {
@@ -315,10 +331,10 @@
             transition: transform 0.55s var(--ease-smooth);
         }
 
-        /* Removed all drop-shadows from icons for a super clean finish */
+        /* Zero icon drop-shadows site-wide for clean vector look */
         .panel-icon-wrap img {
-            width: 130px;
-            height: 130px;
+            width: 125px;
+            height: 125px;
             object-fit: contain;
             transition: transform 0.55s var(--ease-smooth);
             filter: none !important;
@@ -335,14 +351,14 @@
             flex-direction: column;
             align-items: center;
             gap: 6px;
-            padding-bottom: 12px;
+            padding-bottom: 8px;
             width: 100%;
         }
 
         .panel-title {
-            font-size: 26px;
+            font-size: 25px;
             font-weight: 700;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.4px;
             color: var(--text-main);
             line-height: 1.15;
             transition: color 0.8s var(--ease-smooth);
@@ -357,7 +373,7 @@
         }
 
         /* -------------------------------------------------------------
-           FOOTER
+           5. FOOTER
            ------------------------------------------------------------- */
         footer { 
             display: flex; 
@@ -438,20 +454,26 @@
         }
 
         /* -------------------------------------------------------------
-           MOBILE & TABLET VIEWPORT (< 700px):
-           Horizontal Scroll With Peek Cue for 2nd Panel
+           6. MOBILE VIEWPORT (< 700px):
+           Sleek Vertical Rectangles (NOT Square Boxes, NOT Taking Max Space)
            ------------------------------------------------------------- */
         @media (max-width: 700px) {
             body {
-                padding: 28px 18px 24px 18px;
-            }
-
-            .top-section-cluster {
-                gap: 4px;
+                padding: 26px 18px 20px 18px;
             }
 
             .brand-pill {
                 font-size: 36px;
+            }
+
+            .brand-dot {
+                width: 7px;
+                height: 7px;
+                margin-bottom: 2px;
+            }
+
+            .workspace-heading-area {
+                margin: 18px 0 12px 0;
             }
 
             .page-main-heading {
@@ -459,56 +481,66 @@
             }
 
             main {
-                padding: 16px 0;
+                padding: 10px 0 18px 0;
             }
 
             .panels-scroll-track {
                 gap: 16px;
-                padding: 16px 18px;
+                padding-top: 14px;
+                padding-bottom: 18px;
             }
 
-            /* On mobile: First panel takes 78vw, giving an intuitive peek (~18vw) of the second panel */
+            /* Scaled-down elegant vertical rectangle matching iPad/laptop proportions */
             .apple-panel {
-                width: 78vw;
-                min-width: 78vw;
-                max-width: 320px;
-                min-height: 400px;
-                height: 410px;
-                padding: 32px 24px;
-                border-radius: 24px;
+                width: 220px !important;
+                min-width: 220px !important;
+                max-width: 220px !important;
+                height: 325px !important;
+                min-height: 325px !important;
+                aspect-ratio: 1 / 1.48 !important;
+                padding: 26px 18px 20px 18px !important;
+                border-radius: 20px !important;
             }
 
             .panel-icon-wrap img {
-                width: 120px;
-                height: 120px;
+                width: 95px !important;
+                height: 95px !important;
             }
 
             .panel-title {
-                font-size: 24px;
+                font-size: 21px !important;
+            }
+
+            .panel-subtext {
+                font-size: 12.5px !important;
             }
         }
     </style>
 </head>
 <body class="nutrition-workspace">
 
-    <!-- Top Section: 's.' Brand (with peach dot) and Sub-Heading 'Nutrition' -->
-    <div class="top-section-cluster">
-        <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="Go to Main Homepage">
-            <span class="brand-letter">s</span><span class="brand-dot">.</span>
+    <!-- 1. Top Section: 's.' Brand (with peach circular dot) -->
+    <nav class="top-nav-bar" id="topNavBar">
+        <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="s.">
+            <span class="brand-letter">s</span><span class="brand-dot" aria-hidden="true"></span>
         </a>
+    </nav>
+
+    <!-- 2. Middle Section: 'Nutrition' Heading positioned gracefully between s. and carousel panels -->
+    <div class="workspace-heading-area" id="workspaceHeadingArea">
         <h1 class="page-main-heading">Nutrition</h1>
     </div>
 
-    <!-- Center Section: Vertically Centered Smooth Horizontal Scroll Carousel -->
+    <!-- 3. Center Section: 3D Coverflow Smooth Horizontal Scroll Carousel -->
     <main>
         <div class="carousel-outer-shell">
             <div class="panels-scroll-track" id="panelsTrack">
 
-                <!-- Panel 1: Track the Nutrients -->
-                <a href="/nutrition/mm.html" class="apple-panel myspace-card" id="cardTrackNutrients">
+                <!-- Panel 1: Track the Nutrients (Connects to mm.html) -->
+                <a href="/nutrition/mm.html" class="apple-panel myspace-card" id="cardTrackNutrients" data-index="0">
                     <div class="panel-artwork-stage">
                         <div class="panel-icon-wrap">
-                            <img src="/nutrition/images/macros.png" width="130" height="130" alt="Track the Nutrients" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/macros.png?raw=true';">
+                            <img src="/nutrition/images/macros.png" width="125" height="125" alt="Track the Nutrients" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/macros.png?raw=true';">
                         </div>
                     </div>
                     <div class="panel-bottom-content">
@@ -517,29 +549,42 @@
                     </div>
                 </a>
 
-                <!-- Panel 2: Protein (renamed from Vegetarian Protein Sources, same layout) -->
-                <a href="/nutrition/mm.html" class="apple-panel myspace-card" id="cardProtein">
+                <!-- Panel 2: Calories (Fire emblem; Between Track Nutrients & Protein; Not mm.html) -->
+                <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCalories" data-index="1">
                     <div class="panel-artwork-stage">
                         <div class="panel-icon-wrap">
-                            <img src="/nutrition/images/protein.png" width="130" height="130" alt="Protein" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/protein.png?raw=true';">
+                            <img src="/nutrition/images/calories.png" width="125" height="125" alt="Calories" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/calories.png?raw=true';">
+                        </div>
+                    </div>
+                    <div class="panel-bottom-content">
+                        <h2 class="panel-title nav-text">Calories</h2>
+                        <span class="panel-subtext">Sources</span>
+                    </div>
+                </a>
+
+                <!-- Panel 3: Protein (Paneer cubes emblem; Not mm.html) -->
+                <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardProtein" data-index="2">
+                    <div class="panel-artwork-stage">
+                        <div class="panel-icon-wrap">
+                            <img src="/nutrition/images/protein.png" width="125" height="125" alt="Protein" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/protein.png?raw=true';">
                         </div>
                     </div>
                     <div class="panel-bottom-content">
                         <h2 class="panel-title nav-text">Protein</h2>
-                        <span class="panel-subtext">Daily sources</span>
+                        <span class="panel-subtext">Sources</span>
                     </div>
                 </a>
 
-                <!-- Panel 3: Fiber (same layout) -->
-                <a href="/nutrition/mm.html" class="apple-panel myspace-card" id="cardFiber">
+                <!-- Panel 4: Fiber (Red beans emblem; Not mm.html) -->
+                <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardFiber" data-index="3">
                     <div class="panel-artwork-stage">
                         <div class="panel-icon-wrap">
-                            <img src="/nutrition/images/fiber.png" width="130" height="130" alt="Fiber" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/fiber.png?raw=true';">
+                            <img src="/nutrition/images/fiber.png" width="125" height="125" alt="Fiber" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/fiber.png?raw=true';">
                         </div>
                     </div>
                     <div class="panel-bottom-content">
                         <h2 class="panel-title nav-text">Fiber</h2>
-                        <span class="panel-subtext">Daily intake</span>
+                        <span class="panel-subtext">Sources</span>
                     </div>
                 </a>
 
@@ -559,7 +604,7 @@
         <div class="copyright-tag">&copy; 2026 Sathya. All rights reserved.</div>
     </footer>
 
-    <!-- Interactive Navigation & Automatic System Theme Engine -->
+    <!-- Interactive Navigation, 3D Carousel Engine & Theme Detector -->
     <script>
         // -------------------------------------------------------------
         // 1. AUTOMATIC DEVICE THEME DETECTOR
@@ -591,37 +636,93 @@
         } catch (e) {}
 
         // -------------------------------------------------------------
-        // 3. FLUID WAVE CLICK TRANSITIONS
+        // 3. CAROUSEL LEFT ALIGNMENT ENGINE (MATCHES s. & NUTRITION)
         // -------------------------------------------------------------
-        const universalTargetLinks = document.querySelectorAll('.panels-scroll-track a, .brand-pill, footer .footer-links-row a');
+        const track = document.getElementById('panelsTrack');
+        const brandPill = document.getElementById('brandPill');
 
-        function executeLayoutSpans() {
-            universalTargetLinks.forEach(link => {
-                if (!link.querySelector('.nav-text')) {
-                    const wrapper = document.createElement('span');
-                    wrapper.className = 'nav-text';
-                    while (link.firstChild) wrapper.appendChild(link.firstChild);
-                    link.appendChild(wrapper);
-                }
+        function updateTrackAlignment() {
+            if (!brandPill || !track) return;
+            const brandRect = brandPill.getBoundingClientRect();
+            const leftOffset = Math.max(16, brandRect.left);
+            track.style.setProperty('--track-pad-left', leftOffset + 'px');
+            track.style.paddingRight = Math.max(leftOffset, 48) + 'px';
+        }
+
+        // -------------------------------------------------------------
+        // 4. 3D COVERFLOW DYNAMIC SCALE ANIMATION ON HORIZONTAL SCROLL
+        // -------------------------------------------------------------
+        const cards = Array.from(document.querySelectorAll('.apple-panel'));
+
+        function updateCarousel3D() {
+            if (!track || cards.length === 0) return;
+
+            const cardWidth = cards[0].offsetWidth;
+            const gap = parseFloat(getComputedStyle(track).gap) || 24;
+            const step = cardWidth + gap;
+            if (step <= 0) return;
+
+            // Fractional active index based on scroll offset
+            const activeIndex = track.scrollLeft / step;
+
+            cards.forEach((card, i) => {
+                const dist = Math.abs(i - activeIndex);
+
+                // Smooth dynamic scale:
+                // Active panel = 1.0
+                // 1 panel away = ~0.90
+                // 2 panels away = ~0.81
+                // 3 panels away = ~0.73
+                let scale = 1.0 - (dist * 0.095);
+                if (scale < 0.73) scale = 0.73;
+
+                // Subtle opacity depth
+                let opacity = 1.0 - (dist * 0.08);
+                if (opacity < 0.72) opacity = 0.72;
+
+                const zIndex = 30 - Math.round(dist * 5);
+
+                card.style.transform = `scale(${scale.toFixed(3)})`;
+                card.style.opacity = opacity.toFixed(3);
+                card.style.zIndex = zIndex;
             });
         }
-        executeLayoutSpans();
 
-        universalTargetLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
+        track.addEventListener('scroll', () => {
+            requestAnimationFrame(updateCarousel3D);
+        }, { passive: true });
+
+        window.addEventListener('resize', () => {
+            updateTrackAlignment();
+            requestAnimationFrame(updateCarousel3D);
+        });
+
+        // -------------------------------------------------------------
+        // 5. CLICK INTERACTION & FLUID WAVE TRANSITIONS
+        // -------------------------------------------------------------
+        cards.forEach((card, idx) => {
+            card.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
-                if (!destination || destination === '#' || destination.startsWith('#')) return;
+                
+                // If it's a placeholder link (Calories, Protein, Fiber), scroll that panel into focus!
+                if (!destination || destination === '#' || destination.startsWith('javascript:')) {
+                    e.preventDefault();
+                    const cardWidth = cards[0].offsetWidth;
+                    const gap = parseFloat(getComputedStyle(track).gap) || 24;
+                    const step = cardWidth + gap;
+                    track.scrollTo({ left: idx * step, behavior: 'smooth' });
+                    return;
+                }
 
+                // If navigating to mm.html (Track the Nutrients):
                 e.preventDefault();
-
-                universalTargetLinks.forEach(l => {
+                cards.forEach(l => {
                     l.classList.remove('is-wave-loading');
                     l.classList.remove('is-card-lifted');
                 });
 
                 this.classList.add('is-card-lifted');
                 this.classList.add('is-wave-loading');
-
                 sessionStorage.setItem('activeUniversalTargetUrl', this.href);
 
                 setTimeout(() => {
@@ -630,7 +731,38 @@
             });
         });
 
+        // Other target links (footer, brand pill)
+        const otherTargetLinks = document.querySelectorAll('.brand-pill, footer .footer-links-row a');
+        otherTargetLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const destination = this.getAttribute('href');
+                if (!destination || destination === '#' || destination.startsWith('javascript:')) return;
+
+                e.preventDefault();
+                this.classList.add('is-card-lifted');
+                this.classList.add('is-wave-loading');
+                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
+
+                setTimeout(() => {
+                    window.location.href = destination;
+                }, 700);
+            });
+        });
+
+        // Initial setup
+        document.addEventListener('DOMContentLoaded', () => {
+            updateTrackAlignment();
+            updateCarousel3D();
+        });
+
+        window.addEventListener('load', () => {
+            updateTrackAlignment();
+            updateCarousel3D();
+        });
+
         window.addEventListener('pageshow', () => {
+            updateTrackAlignment();
+            updateCarousel3D();
             if (document.activeElement && document.activeElement.blur) {
                 document.activeElement.blur();
             }
@@ -638,17 +770,9 @@
             requestAnimationFrame(() => {
                 document.body.offsetHeight;
                 requestAnimationFrame(() => {
-                    universalTargetLinks.forEach(l => {
+                    document.querySelectorAll('.is-wave-loading, .is-card-lifted').forEach(l => {
                         l.classList.remove('is-wave-loading');
                         l.classList.remove('is-card-lifted');
-                        const span = l.querySelector('.nav-text');
-                        if (span) {
-                            span.style.transform = '';
-                            span.style.opacity = '';
-                            span.style.background = '';
-                            span.style.webkitBackgroundClip = '';
-                            span.style.webkitTextFillColor = '';
-                        }
                     });
                 });
             });
