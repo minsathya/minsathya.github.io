@@ -18,6 +18,12 @@
     <meta name="description" content="Personalized daily food plan, macro tracking, and comprehensive 50-nutrient analysis dashboard.">
     <meta name="keywords" content="Nutrition, Macro Tracker, Daily Meals, Micro Nutrients, Sathya Nutrition">
     
+    <!-- Preload all panel icons for instantaneous loading on refresh -->
+    <link rel="preload" as="image" href="/nutrition/images/macros.png">
+    <link rel="preload" as="image" href="/nutrition/images/calories.png">
+    <link rel="preload" as="image" href="/nutrition/images/protein.png">
+    <link rel="preload" as="image" href="/nutrition/images/fiber.png">
+
     <!-- Google Tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
     <script>
@@ -59,7 +65,7 @@
             --panel-border: rgba(255, 255, 255, 0.08);
             --panel-border-hover: rgba(255, 255, 255, 0.22);
             
-            --corner-radius: 26px;
+            --corner-radius: 24px;
         }
 
         body.light-mode {
@@ -114,11 +120,11 @@
 
         .top-nav-bar { animation-delay: 0.04s; }
         .workspace-heading-area { animation-delay: 0.08s; }
-        main { animation-delay: 0.14s; }
+        main { animation-delay: 0.12s; }
         footer { animation-delay: 0.22s; }
 
         /* -------------------------------------------------------------
-           1. TOP NAVIGATION: 's.' BRAND PILL WITH PEACH CIRCULAR DOT
+           1. TOP NAVIGATION: 's.' BRAND PILL WITH ACCURATE BASELINE PEACH DOT
            ------------------------------------------------------------- */
         .top-nav-bar {
             width: 100%;
@@ -131,7 +137,7 @@
         .brand-pill {
             position: relative;
             display: inline-flex;
-            align-items: center;
+            align-items: baseline;
             justify-content: flex-start;
             height: auto;
             padding: 0 2px;
@@ -158,9 +164,10 @@
         .brand-letter {
             color: var(--text-main);
             transition: color 0.8s var(--ease-smooth);
+            line-height: 1;
         }
 
-        /* Round full stop '.' rendered as a pure CSS circle — never renders as square box on refresh */
+        /* Peach dot: sits right at the bottom baseline of 's', never elevated */
         .brand-dot {
             display: inline-block;
             width: 8px;
@@ -168,8 +175,8 @@
             background-color: #ff9e79 !important;
             border-radius: 50% !important;
             margin-left: 2px;
-            margin-bottom: 3px;
-            vertical-align: baseline;
+            margin-bottom: 0 !important;
+            vertical-align: -1px;
             flex-shrink: 0;
             line-height: 1;
             transition: background-color 0.8s var(--ease-smooth);
@@ -184,15 +191,15 @@
         }
 
         /* -------------------------------------------------------------
-           2. WORKSPACE HEADING: 'Nutrition' POSITIONED IN THE MIDDLE
-              BETWEEN 's.' BRAND (TOP) AND CAROUSEL PANELS (BOTTOM)
+           2. WORKSPACE HEADING: 'Nutrition' MOVED DOWN CLOSER TO PANELS
            ------------------------------------------------------------- */
         .workspace-heading-area {
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            margin: 24px 0 16px 0;
+            margin-top: 52px;
+            margin-bottom: 24px;
             padding: 0 2px;
         }
 
@@ -207,7 +214,7 @@
         }
 
         /* -------------------------------------------------------------
-           3. MAIN CONTENT: 3D DYNAMIC SCROLLING CAROUSEL
+           3. MAIN PANELS TRACK: 100% IN LINE WITH s. & NUTRITION
            ------------------------------------------------------------- */
         main {
             flex-grow: 1;
@@ -216,14 +223,7 @@
             justify-content: center;
             align-items: flex-start;
             width: 100%;
-            padding: 12px 0 24px 0;
-        }
-
-        /* Full-bleed horizontal scroll shell */
-        .carousel-outer-shell {
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-right: calc(-50vw + 50%);
+            padding: 6px 0 28px 0;
             overflow: visible;
         }
 
@@ -231,21 +231,16 @@
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
-            align-items: center;
+            align-items: stretch;
+            gap: 24px;
+            width: 100%;
             overflow-x: auto;
             overflow-y: hidden;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
-            scroll-snap-type: x mandatory;
-            gap: 24px;
-            padding-top: 20px;
-            padding-bottom: 24px;
-            /* Dynamically aligned with s. and Nutrition via JS */
-            padding-left: var(--track-pad-left, 24px);
-            padding-right: 48px;
+            padding: 10px 2px 24px 2px;
             scrollbar-width: none;
             -ms-overflow-style: none;
-            perspective: 1200px;
         }
 
         .panels-scroll-track::-webkit-scrollbar {
@@ -253,22 +248,22 @@
         }
 
         /* -------------------------------------------------------------
-           4. APPLE-STYLE VERTICAL PANELS WITH 3D DYNAMIC SCALING
+           4. UNIFORM PANELS: EXACT SIZE OF CALORIES PANEL (240px x 350px)
+              WITH SIGNATURE APPLE LIFT-UP AND CLOSE ON HOVER/TOUCH
            ------------------------------------------------------------- */
         .apple-panel {
-            width: 270px;
-            min-width: 270px;
-            max-width: 270px;
-            height: 395px;
-            min-height: 395px;
-            aspect-ratio: 1 / 1.45;
+            width: 240px;
+            min-width: 240px;
+            max-width: 240px;
+            height: 350px;
+            min-height: 350px;
+            aspect-ratio: 1 / 1.46;
             flex-shrink: 0;
-            scroll-snap-align: start;
             
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: var(--corner-radius);
-            padding: 34px 24px 28px 24px;
+            padding: 28px 20px 24px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -281,25 +276,45 @@
             cursor: pointer;
             overflow: hidden;
             
-            transform-origin: center center;
-            will-change: transform, opacity, border-color;
+            will-change: transform, border-color;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             
-            /* Silky smooth 3D coverflow transition */
-            transition: transform 0.16s ease-out, 
-                        opacity 0.16s ease-out, 
-                        border-color 0.4s var(--ease-smooth), 
+            /* Signature smooth Apple lift-up & settle transition */
+            transition: transform 0.55s var(--ease-smooth), 
+                        border-color 0.55s var(--ease-smooth), 
                         background-color 0.8s var(--ease-smooth);
+
+            /* Rapid smooth entrance on load: one after another rapidly */
+            animation: rapidCascadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) backwards;
         }
 
+        .apple-panel:nth-child(1) { animation-delay: 0.04s; }
+        .apple-panel:nth-child(2) { animation-delay: 0.10s; }
+        .apple-panel:nth-child(3) { animation-delay: 0.16s; }
+        .apple-panel:nth-child(4) { animation-delay: 0.22s; }
+
+        @keyframes rapidCascadeIn {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 16px, 0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        /* Lift-up when cursor reaches the panel */
         @media (hover: hover) and (pointer: fine) {
             .apple-panel:hover {
+                transform: translate3d(0, -7px, 0) scale3d(1.02, 1.02, 1);
                 border-color: var(--panel-border-hover);
+                box-shadow: none !important;
             }
 
             .apple-panel:hover .panel-icon-wrap {
-                transform: scale3d(1.05, 1.05, 1);
+                transform: scale3d(1.06, 1.06, 1);
             }
 
             .footer-links-row a:hover .nav-text,
@@ -308,19 +323,26 @@
             }
         }
 
+        /* Lift-up on touch or active tap */
         .apple-panel:active,
         .apple-panel.is-card-lifted {
+            transform: translate3d(0, -7px, 0) scale3d(1.02, 1.02, 1) !important;
             border-color: var(--panel-border-hover) !important;
+            box-shadow: none !important;
         }
 
-        /* Artwork Stages & High-Quality 3D Emblems */
+        .apple-panel.is-card-lifted .panel-icon-wrap {
+            transform: scale3d(1.06, 1.06, 1) !important;
+        }
+
+        /* Artwork Stages & Rapid Smooth Icon Loading */
         .panel-artwork-stage {
             flex-grow: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-            padding-top: 6px;
+            padding-top: 4px;
         }
 
         .panel-icon-wrap {
@@ -331,15 +353,32 @@
             transition: transform 0.55s var(--ease-smooth);
         }
 
-        /* Zero icon drop-shadows site-wide for clean vector look */
+        /* Smooth rapid entrance for icons without stuttering */
+        @keyframes iconSmoothIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
         .panel-icon-wrap img {
-            width: 125px;
-            height: 125px;
+            width: 105px;
+            height: 105px;
             object-fit: contain;
             transition: transform 0.55s var(--ease-smooth);
             filter: none !important;
             -webkit-filter: none !important;
+            animation: iconSmoothIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
         }
+
+        .apple-panel:nth-child(1) .panel-icon-wrap img { animation-delay: 0.08s; }
+        .apple-panel:nth-child(2) .panel-icon-wrap img { animation-delay: 0.14s; }
+        .apple-panel:nth-child(3) .panel-icon-wrap img { animation-delay: 0.20s; }
+        .apple-panel:nth-child(4) .panel-icon-wrap img { animation-delay: 0.26s; }
 
         body.light-mode .panel-icon-wrap img {
             filter: none !important;
@@ -350,13 +389,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
-            padding-bottom: 8px;
+            gap: 4px;
+            padding-bottom: 6px;
             width: 100%;
         }
 
         .panel-title {
-            font-size: 25px;
+            font-size: 23px;
             font-weight: 700;
             letter-spacing: -0.4px;
             color: var(--text-main);
@@ -365,7 +404,7 @@
         }
 
         .panel-subtext {
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 500;
             color: var(--text-muted);
             letter-spacing: 0.2px;
@@ -455,7 +494,7 @@
 
         /* -------------------------------------------------------------
            6. MOBILE VIEWPORT (< 700px):
-           Sleek Vertical Rectangles (NOT Square Boxes, NOT Taking Max Space)
+           Sleek Vertical Rectangles Aligned Perfectly With s. & Nutrition
            ------------------------------------------------------------- */
         @media (max-width: 700px) {
             body {
@@ -469,11 +508,12 @@
             .brand-dot {
                 width: 7px;
                 height: 7px;
-                margin-bottom: 2px;
+                vertical-align: -1px;
             }
 
             .workspace-heading-area {
-                margin: 18px 0 12px 0;
+                margin-top: 36px;
+                margin-bottom: 16px;
             }
 
             .page-main-heading {
@@ -481,30 +521,29 @@
             }
 
             main {
-                padding: 10px 0 18px 0;
+                padding: 6px 0 16px 0;
             }
 
             .panels-scroll-track {
                 gap: 16px;
-                padding-top: 14px;
+                padding-top: 10px;
                 padding-bottom: 18px;
             }
 
-            /* Scaled-down elegant vertical rectangle matching iPad/laptop proportions */
             .apple-panel {
-                width: 220px !important;
-                min-width: 220px !important;
-                max-width: 220px !important;
-                height: 325px !important;
-                min-height: 325px !important;
+                width: 210px !important;
+                min-width: 210px !important;
+                max-width: 210px !important;
+                height: 320px !important;
+                min-height: 320px !important;
                 aspect-ratio: 1 / 1.48 !important;
-                padding: 26px 18px 20px 18px !important;
+                padding: 24px 16px 20px 16px !important;
                 border-radius: 20px !important;
             }
 
             .panel-icon-wrap img {
-                width: 95px !important;
-                height: 95px !important;
+                width: 90px !important;
+                height: 90px !important;
             }
 
             .panel-title {
@@ -512,83 +551,81 @@
             }
 
             .panel-subtext {
-                font-size: 12.5px !important;
+                font-size: 12px !important;
             }
         }
     </style>
 </head>
 <body class="nutrition-workspace">
 
-    <!-- 1. Top Section: 's.' Brand (with peach circular dot) -->
+    <!-- 1. Top Section: 's.' Brand (with peach circular dot on baseline) -->
     <nav class="top-nav-bar" id="topNavBar">
         <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="s.">
             <span class="brand-letter">s</span><span class="brand-dot" aria-hidden="true"></span>
         </a>
     </nav>
 
-    <!-- 2. Middle Section: 'Nutrition' Heading positioned gracefully between s. and carousel panels -->
+    <!-- 2. Middle Section: 'Nutrition' Heading moved down closer to panels -->
     <div class="workspace-heading-area" id="workspaceHeadingArea">
         <h1 class="page-main-heading">Nutrition</h1>
     </div>
 
-    <!-- 3. Center Section: 3D Coverflow Smooth Horizontal Scroll Carousel -->
+    <!-- 3. Center Section: 4 Uniform Panels (In-line with s. & Nutrition) -->
     <main>
-        <div class="carousel-outer-shell">
-            <div class="panels-scroll-track" id="panelsTrack">
+        <div class="panels-scroll-track" id="panelsTrack">
 
-                <!-- Panel 1: Track the Nutrients (Connects to mm.html) -->
-                <a href="/nutrition/mm.html" class="apple-panel myspace-card" id="cardTrackNutrients" data-index="0">
-                    <div class="panel-artwork-stage">
-                        <div class="panel-icon-wrap">
-                            <img src="/nutrition/images/macros.png" width="125" height="125" alt="Track the Nutrients" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/macros.png?raw=true';">
-                        </div>
+            <!-- Panel 1: Track (Renamed from Track the Nutrients; Connects to mm.html) -->
+            <a href="/nutrition/mm.html" class="apple-panel myspace-card" id="cardTrack" data-index="0" aria-label="Track">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/macros.png" width="105" height="105" alt="Track" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/macros.png?raw=true';">
                     </div>
-                    <div class="panel-bottom-content">
-                        <h2 class="panel-title nav-text">Track the Nutrients</h2>
-                        <span class="panel-subtext">Weekly data</span>
-                    </div>
-                </a>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Track</h2>
+                    <span class="panel-subtext">Weekly data</span>
+                </div>
+            </a>
 
-                <!-- Panel 2: Calories (Fire emblem; Between Track Nutrients & Protein; Not mm.html) -->
-                <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCalories" data-index="1">
-                    <div class="panel-artwork-stage">
-                        <div class="panel-icon-wrap">
-                            <img src="/nutrition/images/calories.png" width="125" height="125" alt="Calories" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/calories.png?raw=true';">
-                        </div>
+            <!-- Panel 2: Calories (Fire emblem; Between Track & Protein; Not mm.html) -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCalories" data-index="1" aria-label="Calories">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/calories.png" width="105" height="105" alt="Calories" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/calories.png?raw=true';">
                     </div>
-                    <div class="panel-bottom-content">
-                        <h2 class="panel-title nav-text">Calories</h2>
-                        <span class="panel-subtext">Sources</span>
-                    </div>
-                </a>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Calories</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
 
-                <!-- Panel 3: Protein (Paneer cubes emblem; Not mm.html) -->
-                <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardProtein" data-index="2">
-                    <div class="panel-artwork-stage">
-                        <div class="panel-icon-wrap">
-                            <img src="/nutrition/images/protein.png" width="125" height="125" alt="Protein" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/protein.png?raw=true';">
-                        </div>
+            <!-- Panel 3: Protein (Paneer emblem; Not mm.html) -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardProtein" data-index="2" aria-label="Protein">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/protein.png" width="105" height="105" alt="Protein" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/protein.png?raw=true';">
                     </div>
-                    <div class="panel-bottom-content">
-                        <h2 class="panel-title nav-text">Protein</h2>
-                        <span class="panel-subtext">Sources</span>
-                    </div>
-                </a>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Protein</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
 
-                <!-- Panel 4: Fiber (Red beans emblem; Not mm.html) -->
-                <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardFiber" data-index="3">
-                    <div class="panel-artwork-stage">
-                        <div class="panel-icon-wrap">
-                            <img src="/nutrition/images/fiber.png" width="125" height="125" alt="Fiber" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/fiber.png?raw=true';">
-                        </div>
+            <!-- Panel 4: Fiber (Red beans emblem; Not mm.html) -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardFiber" data-index="3" aria-label="Fiber">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/fiber.png" width="105" height="105" alt="Fiber" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/fiber.png?raw=true';">
                     </div>
-                    <div class="panel-bottom-content">
-                        <h2 class="panel-title nav-text">Fiber</h2>
-                        <span class="panel-subtext">Sources</span>
-                    </div>
-                </a>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Fiber</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
 
-            </div>
         </div>
     </main>
 
@@ -604,7 +641,7 @@
         <div class="copyright-tag">&copy; 2026 Sathya. All rights reserved.</div>
     </footer>
 
-    <!-- Interactive Navigation, 3D Carousel Engine & Theme Detector -->
+    <!-- Interactive Navigation & Theme Engine -->
     <script>
         // -------------------------------------------------------------
         // 1. AUTOMATIC DEVICE THEME DETECTOR
@@ -636,85 +673,21 @@
         } catch (e) {}
 
         // -------------------------------------------------------------
-        // 3. CAROUSEL LEFT ALIGNMENT ENGINE (MATCHES s. & NUTRITION)
-        // -------------------------------------------------------------
-        const track = document.getElementById('panelsTrack');
-        const brandPill = document.getElementById('brandPill');
-
-        function updateTrackAlignment() {
-            if (!brandPill || !track) return;
-            const brandRect = brandPill.getBoundingClientRect();
-            const leftOffset = Math.max(16, brandRect.left);
-            track.style.setProperty('--track-pad-left', leftOffset + 'px');
-            track.style.paddingRight = Math.max(leftOffset, 48) + 'px';
-        }
-
-        // -------------------------------------------------------------
-        // 4. 3D COVERFLOW DYNAMIC SCALE ANIMATION ON HORIZONTAL SCROLL
+        // 3. CLICK INTERACTIONS & FLUID WAVE TRANSITIONS
         // -------------------------------------------------------------
         const cards = Array.from(document.querySelectorAll('.apple-panel'));
 
-        function updateCarousel3D() {
-            if (!track || cards.length === 0) return;
-
-            const cardWidth = cards[0].offsetWidth;
-            const gap = parseFloat(getComputedStyle(track).gap) || 24;
-            const step = cardWidth + gap;
-            if (step <= 0) return;
-
-            // Fractional active index based on scroll offset
-            const activeIndex = track.scrollLeft / step;
-
-            cards.forEach((card, i) => {
-                const dist = Math.abs(i - activeIndex);
-
-                // Smooth dynamic scale:
-                // Active panel = 1.0
-                // 1 panel away = ~0.90
-                // 2 panels away = ~0.81
-                // 3 panels away = ~0.73
-                let scale = 1.0 - (dist * 0.095);
-                if (scale < 0.73) scale = 0.73;
-
-                // Subtle opacity depth
-                let opacity = 1.0 - (dist * 0.08);
-                if (opacity < 0.72) opacity = 0.72;
-
-                const zIndex = 30 - Math.round(dist * 5);
-
-                card.style.transform = `scale(${scale.toFixed(3)})`;
-                card.style.opacity = opacity.toFixed(3);
-                card.style.zIndex = zIndex;
-            });
-        }
-
-        track.addEventListener('scroll', () => {
-            requestAnimationFrame(updateCarousel3D);
-        }, { passive: true });
-
-        window.addEventListener('resize', () => {
-            updateTrackAlignment();
-            requestAnimationFrame(updateCarousel3D);
-        });
-
-        // -------------------------------------------------------------
-        // 5. CLICK INTERACTION & FLUID WAVE TRANSITIONS
-        // -------------------------------------------------------------
         cards.forEach((card, idx) => {
             card.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
                 
-                // If it's a placeholder link (Calories, Protein, Fiber), scroll that panel into focus!
+                // If it's a placeholder link (Calories, Protein, Fiber):
                 if (!destination || destination === '#' || destination.startsWith('javascript:')) {
                     e.preventDefault();
-                    const cardWidth = cards[0].offsetWidth;
-                    const gap = parseFloat(getComputedStyle(track).gap) || 24;
-                    const step = cardWidth + gap;
-                    track.scrollTo({ left: idx * step, behavior: 'smooth' });
                     return;
                 }
 
-                // If navigating to mm.html (Track the Nutrients):
+                // If navigating to mm.html (Track):
                 e.preventDefault();
                 cards.forEach(l => {
                     l.classList.remove('is-wave-loading');
@@ -749,20 +722,7 @@
             });
         });
 
-        // Initial setup
-        document.addEventListener('DOMContentLoaded', () => {
-            updateTrackAlignment();
-            updateCarousel3D();
-        });
-
-        window.addEventListener('load', () => {
-            updateTrackAlignment();
-            updateCarousel3D();
-        });
-
         window.addEventListener('pageshow', () => {
-            updateTrackAlignment();
-            updateCarousel3D();
             if (document.activeElement && document.activeElement.blur) {
                 document.activeElement.blur();
             }
