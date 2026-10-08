@@ -76,7 +76,7 @@
             /* Panels: Completely hidden border in idle, revealed only on hover/touch */
             --panel-bg: transparent;
             --panel-border: transparent;
-            --panel-border-hover: #222222;
+            --panel-border-hover: rgba(255, 255, 255, 0.12);
             
             --corner-radius: 24px;
             --page-gutter: 44px;
@@ -91,7 +91,7 @@
             /* Panels (Light Theme) */
             --panel-bg: transparent;
             --panel-border: transparent;
-            --panel-border-hover: rgba(0, 0, 0, 0.25);
+            --panel-border-hover: rgba(0, 0, 0, 0.08);
         }
 
         * {
@@ -146,8 +146,164 @@
             width: 100%;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: space-between;
             padding: 0 var(--page-gutter);
+            gap: 16px;
+        }
+
+        /* Matte Blur Capsule Search Bar at Top Right Corner (Matches user reference) */
+        .matte-search-capsule {
+            position: relative;
+            display: flex;
+            align-items: center;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(28px) saturate(190%);
+            -webkit-backdrop-filter: blur(28px) saturate(190%);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            box-shadow: 
+                0 6px 20px rgba(0, 0, 0, 0.22), 
+                inset 0 1px 1.5px rgba(255, 255, 255, 0.35);
+            height: 44px;
+            width: 250px;
+            max-width: 100%;
+            transition: width 0.4s var(--ease-smooth), 
+                        box-shadow 0.4s var(--ease-smooth), 
+                        border-color 0.4s var(--ease-smooth),
+                        background-color 0.4s var(--ease-smooth);
+        }
+
+        body.light-mode .matte-search-capsule {
+            background: rgba(230, 230, 235, 0.65);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 
+                0 4px 14px rgba(0, 0, 0, 0.06), 
+                inset 0 1px 1.5px rgba(255, 255, 255, 0.7);
+        }
+
+        .matte-search-capsule:focus-within {
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                0 8px 26px rgba(0, 0, 0, 0.3), 
+                inset 0 1px 1.5px rgba(255, 255, 255, 0.5);
+            width: 290px;
+        }
+
+        body.light-mode .matte-search-capsule:focus-within {
+            border-color: rgba(0, 0, 0, 0.22);
+            box-shadow: 
+                0 8px 22px rgba(0, 0, 0, 0.1), 
+                inset 0 1px 1.5px rgba(255, 255, 255, 0.9);
+        }
+
+        .matte-search-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+            padding: 0 14px 0 20px;
+        }
+
+        .matte-search-input {
+            flex: 1;
+            min-width: 0;
+            height: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Poppins", sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-main);
+            letter-spacing: -0.2px;
+        }
+
+        .matte-search-input::placeholder {
+            color: var(--text-main);
+            opacity: 0.65;
+        }
+
+        body.light-mode .matte-search-input {
+            color: #111111;
+        }
+
+        body.light-mode .matte-search-input::placeholder {
+            color: #111111;
+            opacity: 0.55;
+        }
+
+        .matte-search-share-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            opacity: 0.82;
+            cursor: pointer;
+            padding: 4px;
+            margin-left: 8px;
+            border-radius: 50%;
+            transition: transform 0.25s var(--ease-smooth), opacity 0.25s var(--ease-smooth);
+        }
+
+        .matte-search-share-btn:hover {
+            opacity: 1;
+            transform: scale(1.12);
+        }
+
+        .matte-search-share-btn:active {
+            transform: scale(0.92);
+        }
+
+        body.light-mode .matte-search-share-btn {
+            color: #111111;
+        }
+
+        .matte-toast-pill {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 8px;
+            background: rgba(18, 18, 18, 0.92);
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 9999px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-4px);
+            transition: opacity 0.3s var(--ease-smooth), transform 0.3s var(--ease-smooth);
+            z-index: 100;
+            white-space: nowrap;
+        }
+
+        .matte-toast-pill.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 3D Code-Rendered Vector Spheres */
+        .icon-3d-sphere {
+            width: 105px;
+            height: 105px;
+            display: block;
+            overflow: visible;
+            transition: transform 0.55s var(--ease-smooth);
+            animation: iconSmoothIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .icon-3d-sphere .sphere-text {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "Inter", sans-serif;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
         /* Top Left 's.' brand link directly to main home */
@@ -643,9 +799,24 @@
             }
 
             .panel-icon-wrap img,
+            .icon-3d-sphere,
             .element-symbol-badge {
                 width: 90px !important;
                 height: 90px !important;
+            }
+
+            .matte-search-capsule {
+                height: 38px;
+                width: 165px;
+            }
+            .matte-search-capsule:focus-within {
+                width: 195px;
+            }
+            .matte-search-inner {
+                padding: 0 10px 0 14px;
+            }
+            .matte-search-input {
+                font-size: 13.5px;
             }
 
             .sym-text {
@@ -672,11 +843,28 @@
 </head>
 <body class="nutrition-workspace">
 
-    <!-- 1. Top Section: 's.' Brand (with peach circular dot on baseline) -->
+    <!-- 1. Top Section: 's.' Brand (left) & Matte Blur Capsule Search Bar (top right) -->
     <nav class="top-nav-bar" id="topNavBar">
         <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="s.">
             <span class="brand-letter">s</span><span class="brand-dot" aria-hidden="true"></span>
         </a>
+
+        <!-- Matte Blur Capsule Search Bar at Top Right Corner (Matches user reference) -->
+        <div class="matte-search-capsule" id="matteSearchCapsule">
+            <div class="matte-search-inner">
+                <input type="text" id="nutritionSearchInput" class="matte-search-input" placeholder="fire" autocomplete="off" spellcheck="false" aria-label="Search nutrients">
+                <button type="button" class="matte-search-share-btn" id="matteShareBtn" aria-label="Share" title="Share link">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="18" cy="5" r="3"/>
+                        <circle cx="6" cy="12" r="3"/>
+                        <circle cx="18" cy="19" r="3"/>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="matte-toast-pill" id="matteToastPill">Link copied</div>
+        </div>
     </nav>
 
     <!-- 2. Middle Section: 'Nutrition' Heading moved down closer to panels -->
@@ -686,6 +874,233 @@
 
     <!-- 3. Center Section: 5 Lines of Nutrition Panels -->
     <main>
+        <!-- 3D Vector Shaders, Gradients & Volumetric Lighting Defs (Zero-asset instant load) -->
+        <svg style="position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none;" aria-hidden="true" focusable="false">
+            <defs>
+                <!-- Realistic Ground Plane Contact Shadow Blur -->
+                <filter id="sphere-ground-blur" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" />
+                </filter>
+
+                <!-- 3D Text Emboss / Drop Shadow Filters -->
+                <filter id="sphere-text-shadow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="rgba(0,0,0,0.45)" />
+                </filter>
+                <filter id="sphere-text-shadow-light" x="-30%" y="-30%" width="160%" height="160%">
+                    <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="rgba(0,0,0,0.25)" />
+                </filter>
+
+                <!-- Curvature Ambient Bounce Light (Bottom reflection) -->
+                <linearGradient id="sphere-ambient-bounce" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
+                    <stop offset="70%" stop-color="#ffffff" stop-opacity="0" />
+                    <stop offset="100%" stop-color="#ffffff" stop-opacity="0.22" />
+                </linearGradient>
+
+                <!-- Apple-Style Specular Gloss Sheen (Top-left curvature highlight) -->
+                <linearGradient id="sphere-specular-gloss" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.82" />
+                    <stop offset="40%" stop-color="#ffffff" stop-opacity="0.35" />
+                    <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+                </linearGradient>
+
+                <!-- LINE 3: B-VITAMIN 3D GRADIENTS -->
+                <!-- B1 Thiamine (Warm Amber Gold) -->
+                <radialGradient id="grad-b1" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fff176" />
+                    <stop offset="28%" stop-color="#fbbf24" />
+                    <stop offset="68%" stop-color="#d97706" />
+                    <stop offset="100%" stop-color="#78350f" />
+                </radialGradient>
+
+                <!-- B2 Riboflavin (Neon Citron Yellow-Lime) -->
+                <radialGradient id="grad-b2" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fef08a" />
+                    <stop offset="28%" stop-color="#eab308" />
+                    <stop offset="68%" stop-color="#a16207" />
+                    <stop offset="100%" stop-color="#713f12" />
+                </radialGradient>
+
+                <!-- B3 Niacin (Vivid Coral Tangerine) -->
+                <radialGradient id="grad-b3" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#ffedd5" />
+                    <stop offset="28%" stop-color="#f97316" />
+                    <stop offset="68%" stop-color="#c2410c" />
+                    <stop offset="100%" stop-color="#7c2d12" />
+                </radialGradient>
+
+                <!-- B5 Pantothenic Acid (Warm Terracotta Rose) -->
+                <radialGradient id="grad-b5" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fecdd3" />
+                    <stop offset="28%" stop-color="#f43f5e" />
+                    <stop offset="68%" stop-color="#be123c" />
+                    <stop offset="100%" stop-color="#881337" />
+                </radialGradient>
+
+                <!-- B6 Pyridoxine (Vivid Electric Teal Cyan) -->
+                <radialGradient id="grad-b6" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#a5f3fc" />
+                    <stop offset="28%" stop-color="#06b6d4" />
+                    <stop offset="68%" stop-color="#0e7490" />
+                    <stop offset="100%" stop-color="#155e75" />
+                </radialGradient>
+
+                <!-- B7 Biotin (Royal Lavender Orchid) -->
+                <radialGradient id="grad-b7" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#f3e8ff" />
+                    <stop offset="28%" stop-color="#a855f7" />
+                    <stop offset="68%" stop-color="#7e22ce" />
+                    <stop offset="100%" stop-color="#581c87" />
+                </radialGradient>
+
+                <!-- B9 Folate (Fresh Leaf Emerald) -->
+                <radialGradient id="grad-b9" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#bbf7d0" />
+                    <stop offset="28%" stop-color="#22c55e" />
+                    <stop offset="68%" stop-color="#15803d" />
+                    <stop offset="100%" stop-color="#14532d" />
+                </radialGradient>
+
+                <!-- B12 Cobalamin (Deep Ruby Crimson Cobalt) -->
+                <radialGradient id="grad-b12" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fca5a5" />
+                    <stop offset="28%" stop-color="#ef4444" />
+                    <stop offset="68%" stop-color="#b91c1c" />
+                    <stop offset="100%" stop-color="#7f1d1d" />
+                </radialGradient>
+
+                <!-- LINE 4: MACRO MINERALS 3D GRADIENTS -->
+                <!-- Calcium (Luminescent Porcelain Pearl) -->
+                <radialGradient id="grad-ca" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#ffffff" />
+                    <stop offset="35%" stop-color="#e2e8f0" />
+                    <stop offset="70%" stop-color="#94a3b8" />
+                    <stop offset="100%" stop-color="#475569" />
+                </radialGradient>
+
+                <!-- Phosphorus (Electric Bioluminescent Indigo) -->
+                <radialGradient id="grad-p" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#c7d2fe" />
+                    <stop offset="28%" stop-color="#6366f1" />
+                    <stop offset="68%" stop-color="#4338ca" />
+                    <stop offset="100%" stop-color="#312e81" />
+                </radialGradient>
+
+                <!-- Magnesium (Mint Jade Silver) -->
+                <radialGradient id="grad-mg" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#a7f3d0" />
+                    <stop offset="28%" stop-color="#10b981" />
+                    <stop offset="68%" stop-color="#047857" />
+                    <stop offset="100%" stop-color="#064e3b" />
+                </radialGradient>
+
+                <!-- Sodium (Warm Solar Gold Flame) -->
+                <radialGradient id="grad-na" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fef08a" />
+                    <stop offset="28%" stop-color="#eab308" />
+                    <stop offset="68%" stop-color="#b45309" />
+                    <stop offset="100%" stop-color="#78350f" />
+                </radialGradient>
+
+                <!-- Potassium (Royal Lilac Violet) -->
+                <radialGradient id="grad-k" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#ddd6fe" />
+                    <stop offset="28%" stop-color="#8b5cf6" />
+                    <stop offset="68%" stop-color="#6d28d9" />
+                    <stop offset="100%" stop-color="#4c1d95" />
+                </radialGradient>
+
+                <!-- Chloride (Aquamarine Seafoam) -->
+                <radialGradient id="grad-cl" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#bae6fd" />
+                    <stop offset="28%" stop-color="#0ea5e9" />
+                    <stop offset="68%" stop-color="#0369a1" />
+                    <stop offset="100%" stop-color="#0c4a6e" />
+                </radialGradient>
+
+                <!-- Sulphur (Solar Sulphur Citrine) -->
+                <radialGradient id="grad-s" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fef9c3" />
+                    <stop offset="28%" stop-color="#facc15" />
+                    <stop offset="68%" stop-color="#ca8a04" />
+                    <stop offset="100%" stop-color="#854d0e" />
+                </radialGradient>
+
+                <!-- LINE 5: TRACE MINERALS 3D GRADIENTS -->
+                <!-- Iron (Metallic Rust Red Hematite) -->
+                <radialGradient id="grad-fe" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fecaca" />
+                    <stop offset="28%" stop-color="#dc2626" />
+                    <stop offset="68%" stop-color="#991b1b" />
+                    <stop offset="100%" stop-color="#450a0a" />
+                </radialGradient>
+
+                <!-- Zinc (Polished Titanium Slate) -->
+                <radialGradient id="grad-zn" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#e2e8f0" />
+                    <stop offset="28%" stop-color="#64748b" />
+                    <stop offset="68%" stop-color="#334155" />
+                    <stop offset="100%" stop-color="#0f172a" />
+                </radialGradient>
+
+                <!-- Iodine (Amethyst Vapor Violet) -->
+                <radialGradient id="grad-i" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#f5d0fe" />
+                    <stop offset="28%" stop-color="#c026d3" />
+                    <stop offset="68%" stop-color="#86198f" />
+                    <stop offset="100%" stop-color="#4a044e" />
+                </radialGradient>
+
+                <!-- Manganese (Rose Quartz Mauve Bronze) -->
+                <radialGradient id="grad-mn" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fbcfe8" />
+                    <stop offset="28%" stop-color="#db2777" />
+                    <stop offset="68%" stop-color="#9d174d" />
+                    <stop offset="100%" stop-color="#500724" />
+                </radialGradient>
+
+                <!-- Selenium (Deep Celestial Cobalt) -->
+                <radialGradient id="grad-se" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#bfdbfe" />
+                    <stop offset="28%" stop-color="#2563eb" />
+                    <stop offset="68%" stop-color="#1d4ed8" />
+                    <stop offset="100%" stop-color="#1e3a8a" />
+                </radialGradient>
+
+                <!-- Copper (Burnished Bronze Copper) -->
+                <radialGradient id="grad-cu" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#ffedd5" />
+                    <stop offset="28%" stop-color="#ea580c" />
+                    <stop offset="68%" stop-color="#9a3412" />
+                    <stop offset="100%" stop-color="#431407" />
+                </radialGradient>
+
+                <!-- Fluoride (Fluorite Ice Mint Turquoise) -->
+                <radialGradient id="grad-f" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#ccfbf1" />
+                    <stop offset="28%" stop-color="#14b8a6" />
+                    <stop offset="68%" stop-color="#0f766e" />
+                    <stop offset="100%" stop-color="#134e4a" />
+                </radialGradient>
+
+                <!-- Chromium (Mirror Chrome Silver) -->
+                <radialGradient id="grad-cr" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#f1f5f9" />
+                    <stop offset="28%" stop-color="#94a3b8" />
+                    <stop offset="68%" stop-color="#475569" />
+                    <stop offset="100%" stop-color="#1e293b" />
+                </radialGradient>
+
+                <!-- Molybdenum (Obsidian Gunmetal Sapphire) -->
+                <radialGradient id="grad-mo" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#93c5fd" />
+                    <stop offset="28%" stop-color="#3b82f6" />
+                    <stop offset="68%" stop-color="#1e40af" />
+                    <stop offset="100%" stop-color="#172554" />
+                </radialGradient>
+            </defs>
+        </svg>
+
         <!-- Line 1: Macronutrients & Energy -->
         <div class="panels-scroll-track" id="trackMacronutrients" aria-label="Macronutrients & Energy">
             <!-- Panel 1: Track (Connects to mm.html) -->
@@ -877,12 +1292,16 @@
         <!-- Line 3: B-Vitamins -->
         <div class="panels-scroll-track" id="trackBVitamins" aria-label="B-Complex Vitamins">
             <!-- B1 -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB1" data-index="14" aria-label="Vitamin B1">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB1" data-index="14" aria-label="Vitamin B1 Thiamine">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">B<sub class="sym-sub">1</sub></span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b1)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="20">1</tspan></text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -892,12 +1311,16 @@
             </a>
 
             <!-- B2 -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB2" data-index="15" aria-label="Vitamin B2">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB2" data-index="15" aria-label="Vitamin B2 Riboflavin">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">B<sub class="sym-sub">2</sub></span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b2)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="20">2</tspan></text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -907,12 +1330,16 @@
             </a>
 
             <!-- B3 -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB3" data-index="16" aria-label="Vitamin B3">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB3" data-index="16" aria-label="Vitamin B3 Niacin">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">B<sub class="sym-sub">3</sub></span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b3)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="20">3</tspan></text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -922,12 +1349,16 @@
             </a>
 
             <!-- B5 -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB5" data-index="17" aria-label="Vitamin B5">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB5" data-index="17" aria-label="Vitamin B5 Pantothenic Acid">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">B<sub class="sym-sub">5</sub></span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b5)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="20">5</tspan></text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -937,12 +1368,16 @@
             </a>
 
             <!-- B6 -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB6" data-index="18" aria-label="Vitamin B6">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB6" data-index="18" aria-label="Vitamin B6 Pyridoxine">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">B<sub class="sym-sub">6</sub></span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b6)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="20">6</tspan></text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -952,12 +1387,16 @@
             </a>
 
             <!-- B7 -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB7" data-index="19" aria-label="Vitamin B7">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB7" data-index="19" aria-label="Vitamin B7 Biotin">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">B<sub class="sym-sub">7</sub></span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b7)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="20">7</tspan></text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -967,12 +1406,16 @@
             </a>
 
             <!-- B9 -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB9" data-index="20" aria-label="Vitamin B9">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB9" data-index="20" aria-label="Vitamin B9 Folate">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">B<sub class="sym-sub">9</sub></span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b9)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="20">9</tspan></text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -982,12 +1425,16 @@
             </a>
 
             <!-- B12 -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB12" data-index="21" aria-label="Vitamin B12">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB12" data-index="21" aria-label="Vitamin B12 Cobalamin">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">B<sub class="sym-sub">12</sub></span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b12)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="18">12</tspan></text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1000,12 +1447,16 @@
         <!-- Line 4: Macro Minerals -->
         <div class="panels-scroll-track" id="trackMacroMinerals" aria-label="Macro Minerals">
             <!-- Calcium -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCalcium" data-index="22" aria-label="Calcium">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCalcium" data-index="22" aria-label="Calcium Ca Macro Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">Ca</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-ca)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#1e293b" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow-light)">Ca</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1015,12 +1466,16 @@
             </a>
 
             <!-- Phosphorus -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardPhosphorus" data-index="23" aria-label="Phosphorus">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardPhosphorus" data-index="23" aria-label="Phosphorus P Macro Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text single-letter">P</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-p)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="39" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">P</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1030,12 +1485,16 @@
             </a>
 
             <!-- Magnesium -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardMagnesium" data-index="24" aria-label="Magnesium">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardMagnesium" data-index="24" aria-label="Magnesium Mg Macro Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">Mg</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-mg)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Mg</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1045,12 +1504,16 @@
             </a>
 
             <!-- Sodium -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardSodium" data-index="25" aria-label="Sodium">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardSodium" data-index="25" aria-label="Sodium Na Macro Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">Na</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-na)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Na</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1060,12 +1523,16 @@
             </a>
 
             <!-- Potassium -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardPotassium" data-index="26" aria-label="Potassium">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardPotassium" data-index="26" aria-label="Potassium K Macro Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text single-letter">K</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-k)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="39" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">K</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1075,12 +1542,16 @@
             </a>
 
             <!-- Chloride -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardChloride" data-index="27" aria-label="Chloride">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardChloride" data-index="27" aria-label="Chloride Cl Macro Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">Cl</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-cl)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Cl</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1090,12 +1561,16 @@
             </a>
 
             <!-- Sulphur -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardSulphur" data-index="28" aria-label="Sulphur">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardSulphur" data-index="28" aria-label="Sulphur S Macro Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text single-letter">S</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-s)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="39" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">S</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1108,12 +1583,16 @@
         <!-- Line 5: Trace Minerals -->
         <div class="panels-scroll-track" id="trackTraceMinerals" aria-label="Trace Minerals">
             <!-- Iron -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardIron" data-index="29" aria-label="Iron">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardIron" data-index="29" aria-label="Iron Fe Trace Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">Fe</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-fe)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Fe</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1123,12 +1602,16 @@
             </a>
 
             <!-- Zinc -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardZinc" data-index="30" aria-label="Zinc">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardZinc" data-index="30" aria-label="Zinc Zn Trace Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">Zn</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-zn)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Zn</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1138,12 +1621,16 @@
             </a>
 
             <!-- Iodine -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardIodine" data-index="31" aria-label="Iodine">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardIodine" data-index="31" aria-label="Iodine I Trace Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text single-letter">I</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-i)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="39" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">I</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1153,12 +1640,16 @@
             </a>
 
             <!-- Manganese -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardManganese" data-index="32" aria-label="Manganese">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardManganese" data-index="32" aria-label="Manganese Mn Trace Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">Mn</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-mn)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Mn</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1168,12 +1659,16 @@
             </a>
 
             <!-- Selenium -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardSelenium" data-index="33" aria-label="Selenium">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardSelenium" data-index="33" aria-label="Selenium Se Trace Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">Se</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-se)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Se</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1183,12 +1678,16 @@
             </a>
 
             <!-- Copper -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCopper" data-index="34" aria-label="Copper">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCopper" data-index="34" aria-label="Copper Cu Trace Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">Cu</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-cu)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Cu</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1198,12 +1697,16 @@
             </a>
 
             <!-- Fluoride -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardFluoride" data-index="35" aria-label="Fluoride">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardFluoride" data-index="35" aria-label="Fluoride F Trace Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text single-letter">F</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-f)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="39" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">F</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1213,12 +1716,16 @@
             </a>
 
             <!-- Chromium -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardChromium" data-index="36" aria-label="Chromium">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardChromium" data-index="36" aria-label="Chromium Cr Trace Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">Cr</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-cr)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Cr</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1228,12 +1735,16 @@
             </a>
 
             <!-- Molybdenum -->
-            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardMolybdenum" data-index="37" aria-label="Molybdenum">
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardMolybdenum" data-index="37" aria-label="Molybdenum Mo Trace Minerals">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text">Mo</span>
-                        </div>
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-mo)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Mo</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -1367,6 +1878,76 @@
                 });
             });
         });
+
+        // -------------------------------------------------------------
+        // 4. MATTE BLUR SEARCH BAR & SHARE ENGINE
+        // -------------------------------------------------------------
+        const searchInput = document.getElementById('nutritionSearchInput');
+        const shareBtn = document.getElementById('matteShareBtn');
+        const toastPill = document.getElementById('matteToastPill');
+        let toastTimeout = null;
+
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const query = this.value.trim().toLowerCase();
+                cards.forEach(card => {
+                    if (!query) {
+                        card.style.opacity = '';
+                        card.style.filter = '';
+                        card.style.pointerEvents = '';
+                        return;
+                    }
+                    const title = (card.querySelector('.panel-title')?.textContent || '').toLowerCase();
+                    const subtext = (card.querySelector('.panel-subtext')?.textContent || '').toLowerCase();
+                    const aria = (card.getAttribute('aria-label') || '').toLowerCase();
+
+                    const matches = title.includes(query) || subtext.includes(query) || aria.includes(query);
+                    if (matches) {
+                        card.style.opacity = '1';
+                        card.style.filter = 'none';
+                        card.style.pointerEvents = 'auto';
+                    } else {
+                        card.style.opacity = '0.2';
+                        card.style.filter = 'grayscale(0.65)';
+                        card.style.pointerEvents = 'none';
+                    }
+                });
+            });
+        }
+
+        if (shareBtn && toastPill) {
+            shareBtn.addEventListener('click', async function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const shareUrl = window.location.href;
+
+                let copied = false;
+                if (navigator.clipboard && window.isSecureContext) {
+                    try {
+                        await navigator.clipboard.writeText(shareUrl);
+                        copied = true;
+                    } catch (err) {}
+                }
+
+                if (!copied) {
+                    try {
+                        const tempInput = document.createElement('input');
+                        tempInput.value = shareUrl;
+                        document.body.appendChild(tempInput);
+                        tempInput.select();
+                        copied = document.execCommand('copy');
+                        document.body.removeChild(tempInput);
+                    } catch (err) {}
+                }
+
+                toastPill.textContent = copied ? 'Link copied' : 'Sharing link';
+                toastPill.classList.add('show');
+                if (toastTimeout) clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toastPill.classList.remove('show');
+                }, 2200);
+            });
+        }
     </script>
     <script src="/script.js"></script>
 </body>
