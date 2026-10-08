@@ -25,7 +25,7 @@
             background-color: #0a130d !important;
             --panel-bg: transparent !important;
             --panel-border: transparent !important;
-            --panel-border-hover: rgba(255, 255, 255, 0.3) !important;
+            --panel-border-hover: #222222 !important;
         }
 
         /* Root Homepage: Always deep night blue sky bg (rich & slightly darker) and transparent idle borders */
@@ -37,7 +37,7 @@
             color: #ffffff !important;
             --panel-bg: transparent !important;
             --panel-border: transparent !important;
-            --panel-border-hover: rgba(255, 255, 255, 0.3) !important;
+            --panel-border-hover: #222222 !important;
         }
 
         body.root-home {
@@ -55,14 +55,14 @@
         body.root-home .apple-panel:hover,
         body.root-home .apple-panel:active,
         body.root-home .apple-panel.is-card-lifted {
-            border-color: var(--panel-border-hover) !important;
+            border-color: #222222 !important;
             background-color: transparent !important;
         }
 
         body.nutrition-workspace .apple-panel:hover,
         body.nutrition-workspace .apple-panel:active,
         body.nutrition-workspace .apple-panel.is-card-lifted {
-            border-color: var(--panel-border-hover) !important;
+            border-color: #222222 !important;
             background-color: transparent !important;
         }
 
