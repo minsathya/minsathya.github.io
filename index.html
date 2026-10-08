@@ -28,15 +28,18 @@
       gtag('config', 'G-5VGX2K64Y4');
     </script>
     
-    <!-- Favicon Engine -->
-    <link id="favicon" rel="icon" type="image/png" href="favicon-light.png">
+    <!-- Favicon & Apple Touch Icon (iPad & Safari support) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=3">
+    <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png?v=3">
+    <link id="favicon" rel="icon" type="image/png" href="favicon-light.png?v=3">
 
     <script>
       const favicon = document.getElementById('favicon');
       const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
       
       function updateFavicon(e) {
-        favicon.href = e.matches ? 'favicon-dark.png' : 'favicon-light.png';
+        favicon.href = e.matches ? 'favicon-dark.png?v=3' : 'favicon-light.png?v=3';
       }
       
       updateFavicon(darkMode);
@@ -53,14 +56,14 @@
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 
-            /* Atmospheric Deep Night Blue Sky (Rich, Smooth Night Blue Sky) */
-            --sky-gradient: radial-gradient(ellipse at 50% 25%, #222055 0%, #191843 50%, #11102f 100%);
+            /* Atmospheric Deep Night Blue Sky - Richer & Slightly Darker */
+            --sky-gradient: radial-gradient(ellipse at 50% 22%, #191742 0%, #121132 50%, #0a0921 100%);
             --text-main: #ffffff;
             --text-muted: #9998b3;
 
-            /* Panels: Border from 2 versions before */
+            /* Panels: Completely hidden border in idle, revealed only on hover/touch */
             --panel-bg: transparent;
-            --panel-border: rgba(255, 255, 255, 0.12);
+            --panel-border: transparent;
             --panel-border-hover: rgba(255, 255, 255, 0.3);
             
             --corner-radius: 24px;
@@ -68,7 +71,7 @@
 
         html {
             background: var(--sky-gradient) !important;
-            background-color: #11102f !important;
+            background-color: #0a0921 !important;
             min-height: 100vh;
             min-height: 100dvh;
             width: 100%;
@@ -275,7 +278,7 @@
             aspect-ratio: 1 / 1.46;
             flex-shrink: 0;
             background-color: transparent !important;
-            border: 1px solid var(--panel-border) !important;
+            border: 1.5px solid transparent !important;
             border-radius: var(--corner-radius);
             backdrop-filter: none;
             -webkit-backdrop-filter: none;

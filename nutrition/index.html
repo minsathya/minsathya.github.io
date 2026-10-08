@@ -30,6 +30,9 @@
     <link rel="preload" as="image" href="/nutrition/images/carotenoids.png">
     <link rel="preload" as="image" href="/nutrition/images/vitamin-a.png">
     <link rel="preload" as="image" href="/nutrition/images/vitamin-c.png">
+    <link rel="preload" as="image" href="/nutrition/images/vitamin-d.png">
+    <link rel="preload" as="image" href="/nutrition/images/vitamin-e.png">
+    <link rel="preload" as="image" href="/nutrition/images/vitamin-k.png">
 
     <!-- Google Tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
@@ -40,14 +43,17 @@
       gtag('config', 'G-5VGX2K64Y4');
     </script>
     
-    <!-- Favicon Engine -->
-    <link id="favicon" rel="icon" type="image/png" href="../favicon-light.png">
+    <!-- Favicon & Apple Touch Icon (iPad & Safari support) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=3">
+    <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png?v=3">
+    <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png?v=3">
 
     <script>
       const favicon = document.getElementById('favicon');
       const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
       function updateFavicon(e) {
-        favicon.href = e.matches ? '../favicon-dark.png' : '../favicon-light.png';
+        favicon.href = e.matches ? '/favicon-dark.png?v=3' : '/favicon-light.png?v=3';
       }
       updateFavicon(darkMode);
       darkMode.addEventListener('change', updateFavicon);
@@ -67,10 +73,10 @@
             --text-main: #ffffff;
             --text-muted: #88888e;
 
-            /* Panels: Border from 2 versions before */
+            /* Panels: Completely hidden border in idle, revealed only on hover/touch */
             --panel-bg: transparent;
-            --panel-border: rgba(255, 255, 255, 0.08);
-            --panel-border-hover: rgba(255, 255, 255, 0.22);
+            --panel-border: transparent;
+            --panel-border-hover: rgba(255, 255, 255, 0.3);
             
             --corner-radius: 24px;
             --page-gutter: 44px;
@@ -84,8 +90,8 @@
 
             /* Panels (Light Theme) */
             --panel-bg: transparent;
-            --panel-border: rgba(0, 0, 0, 0.07);
-            --panel-border-hover: rgba(0, 0, 0, 0.2);
+            --panel-border: transparent;
+            --panel-border-hover: rgba(0, 0, 0, 0.25);
         }
 
         * {
@@ -277,7 +283,7 @@
             flex-shrink: 0;
             
             background-color: transparent !important;
-            border: 1px solid var(--panel-border) !important;
+            border: 1.5px solid transparent !important;
             border-radius: var(--corner-radius);
             padding: 28px 20px 24px 20px;
             display: flex;
@@ -832,9 +838,7 @@
             <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminD" data-index="11" aria-label="Vitamin D">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text single-letter">D</span>
-                        </div>
+                        <img src="/nutrition/images/vitamin-d.png" width="105" height="105" alt="Vitamin D" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/vitamin-d.png?raw=true';">
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -847,9 +851,7 @@
             <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminE" data-index="12" aria-label="Vitamin E">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text single-letter">E</span>
-                        </div>
+                        <img src="/nutrition/images/vitamin-e.png" width="105" height="105" alt="Vitamin E" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/vitamin-e.png?raw=true';">
                     </div>
                 </div>
                 <div class="panel-bottom-content">
@@ -862,9 +864,7 @@
             <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminK" data-index="13" aria-label="Vitamin K">
                 <div class="panel-artwork-stage">
                     <div class="panel-icon-wrap">
-                        <div class="element-symbol-badge">
-                            <span class="sym-text single-letter">K</span>
-                        </div>
+                        <img src="/nutrition/images/vitamin-k.png" width="105" height="105" alt="Vitamin K" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/vitamin-k.png?raw=true';">
                     </div>
                 </div>
                 <div class="panel-bottom-content">

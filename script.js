@@ -18,25 +18,25 @@
             --shadow-lift: none !important;
         }
 
-        /* Root Homepage & Nutrition Workspace: Panel Border Colors From 2 Versions Before */
+        /* Root Homepage & Nutrition Workspace: Panel Transparent BG & Hidden Border in Idle */
         html:not(.light-mode) body.nutrition-workspace,
         body:not(.light-mode).nutrition-workspace {
             --bg-color: #0a130d !important;
             background-color: #0a130d !important;
             --panel-bg: transparent !important;
-            --panel-border: rgba(255, 255, 255, 0.08) !important;
-            --panel-border-hover: rgba(255, 255, 255, 0.22) !important;
+            --panel-border: transparent !important;
+            --panel-border-hover: rgba(255, 255, 255, 0.3) !important;
         }
 
-        /* Root Homepage: Always deep night blue sky bg and borders from 2 versions before in all themes */
+        /* Root Homepage: Always deep night blue sky bg (rich & slightly darker) and transparent idle borders */
         html.root-home,
         html.root-home body,
         body.root-home {
-            background: radial-gradient(ellipse at 50% 25%, #222055 0%, #191843 50%, #11102f 100%) fixed !important;
-            background-color: #11102f !important;
+            background: radial-gradient(ellipse at 50% 22%, #191742 0%, #121132 50%, #0a0921 100%) fixed !important;
+            background-color: #0a0921 !important;
             color: #ffffff !important;
             --panel-bg: transparent !important;
-            --panel-border: rgba(255, 255, 255, 0.12) !important;
+            --panel-border: transparent !important;
             --panel-border-hover: rgba(255, 255, 255, 0.3) !important;
         }
 
@@ -44,24 +44,26 @@
             background: transparent !important;
         }
 
-        /* Apple-Style Panels on Root Homepage & Nutrition Workspace */
+        /* Apple-Style Panels on Root Homepage & Nutrition Workspace: Transparent in Idle */
         body.root-home .apple-panel,
         body.nutrition-workspace .apple-panel {
             background-color: transparent !important;
-            border-color: var(--panel-border) !important;
+            border: 1.5px solid transparent !important;
         }
 
-        /* Border highlights on hover, active or lifted */
+        /* Border only appears on hover, active or lifted */
         body.root-home .apple-panel:hover,
         body.root-home .apple-panel:active,
         body.root-home .apple-panel.is-card-lifted {
             border-color: var(--panel-border-hover) !important;
+            background-color: transparent !important;
         }
 
         body.nutrition-workspace .apple-panel:hover,
         body.nutrition-workspace .apple-panel:active,
         body.nutrition-workspace .apple-panel.is-card-lifted {
             border-color: var(--panel-border-hover) !important;
+            background-color: transparent !important;
         }
 
         body.light-mode.nutrition-workspace .apple-panel:hover,

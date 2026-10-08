@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -27,12 +27,15 @@
     </script>
 
     <!-- Favicon Engine -->
-    <link id="favicon" rel="icon" type="image/png" href="../favicon-light.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=3">
+    <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png?v=3">
+    <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png?v=3?v=3">
     <script>
       const favicon = document.getElementById('favicon');
       const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
       function updateFavicon(e) {
-        favicon.href = e.matches ? '../favicon-dark.png' : '../favicon-light.png';
+        favicon.href = e.matches ? '../favicon-dark.png?v=3' : '../favicon-light.png?v=3';
       }
       updateFavicon(darkMode);
       darkMode.addEventListener('change', updateFavicon);
