@@ -5,11 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
-    <meta name="theme-color" content="#121316">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Nutrition - sathya.</title>
+    <meta http-equiv="Expires" content="0">
+    <title>sathya.</title>
 
-    <meta name="description" content="Comprehensive architectural index of 37 vital nutrients, macronutrients, vitamin complexes, and mineral elements.">
+    <!-- Universal iPad stabilization -->
+    <script>
+      if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
+        document.documentElement.classList.add('instant-landing');
+      }
+    </script>
+
+    <meta name="description" content="Personalized daily food plan, macro tracking, and comprehensive 50-nutrient analysis dashboard.">
+    <meta name="keywords" content="Nutrition, Macro Tracker, Daily Meals, Micro Nutrients, Sathya Nutrition">
+    
+    <!-- Preload all panel icons for instantaneous loading on refresh -->
+    <link rel="preload" as="image" href="/nutrition/images/macros.png">
+    <link rel="preload" as="image" href="/nutrition/images/calories.png">
+    <link rel="preload" as="image" href="/nutrition/images/protein.png">
+    <link rel="preload" as="image" href="/nutrition/images/fiber.png">
+    <link rel="preload" as="image" href="/nutrition/images/carbohydrates.png">
+    <link rel="preload" as="image" href="/nutrition/images/fats.png">
+    <link rel="preload" as="image" href="/nutrition/images/sugars.png">
+    <link rel="preload" as="image" href="/nutrition/images/lactose.png">
+    <link rel="preload" as="image" href="/nutrition/images/carotenoids.png">
+    <link rel="preload" as="image" href="/nutrition/images/vitamin-a.png">
+    <link rel="preload" as="image" href="/nutrition/images/vitamin-c.png">
+    <link rel="preload" as="image" href="/nutrition/images/vitamin-d.png">
+    <link rel="preload" as="image" href="/nutrition/images/vitamin-e.png">
+    <link rel="preload" as="image" href="/nutrition/images/vitamin-k.png">
 
     <!-- Google Tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
@@ -20,38 +43,55 @@
       gtag('config', 'G-5VGX2K64Y4');
     </script>
     
-    <!-- Favicon -->
+    <!-- Favicon & Apple Touch Icon (iPad & Safari support) -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=3">
     <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png?v=3">
-    <link id="favicon" rel="icon" type="image/png" href="/favicon-dark.png?v=3">
+    <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png?v=3">
 
+    <script>
+      const favicon = document.getElementById('favicon');
+      const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
+      function updateFavicon(e) {
+        favicon.href = e.matches ? '/favicon-dark.png?v=3' : '/favicon-light.png?v=3';
+      }
+      updateFavicon(darkMode);
+      darkMode.addEventListener('change', updateFavicon);
+    </script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* =============================================================
-           ARCHITECTURAL MINIMALIST SYSTEM — NUTRITION WORKSPACE
-           Strict 3-Color Eye-Friendly Palette:
-           1. Base Void Canvas: #121316 (Calming Charcoal Slate)
-           2. Ink Typography:   #e2e4e9 (Soft Mineral Ivory)
-           3. Accent Harmony:   #7ea88f (Serene Sage Green)
-           ============================================================= */
         :root {
-            --color-base: #121316;
-            --color-ink: #e2e4e9;
-            --color-accent: #7ea88f;
-
-            /* Alpha variants of the strict 3 colors */
-            --ink-muted: rgba(226, 228, 233, 0.62);
-            --ink-subtle: rgba(226, 228, 233, 0.38);
-            --border-silent: rgba(226, 228, 233, 0.08);
-            --border-hover: rgba(126, 168, 143, 0.45);
-            --surface-card: rgba(226, 228, 233, 0.024);
-            --surface-hover: rgba(126, 168, 143, 0.05);
-
-            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+            --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+            
+            /* Nutrition Workspace Dark Theme */
+            --bg-color: #0a130d;
+            --text-main: #ffffff;
+            --text-muted: #88888e;
+
+            /* Panels: Completely hidden border in idle, revealed only on hover/touch */
+            --panel-bg: transparent;
+            --panel-border: transparent;
+            --panel-border-hover: rgba(255, 255, 255, 0.12);
+            
+            --corner-radius: 24px;
+            --page-gutter: 44px;
+            --section-gap: 48px;
+        }
+
+        body.light-mode {
+            --bg-color: #ebebe4;
+            --text-main: #111111;
+            --text-muted: #6e6e73;
+
+            /* Panels (Light Theme) */
+            --panel-bg: transparent;
+            --panel-border: transparent;
+            --panel-border-hover: rgba(0, 0, 0, 0.08);
         }
 
         * {
@@ -59,959 +99,1856 @@
             margin: 0;
             padding: 0;
             -webkit-tap-highlight-color: transparent !important;
-        }
-
-        html, body {
-            background-color: var(--color-base) !important;
-            color: var(--color-ink);
-            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
-            min-height: 100vh;
-            min-height: 100dvh;
-            width: 100%;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
+            tap-highlight-color: transparent !important;
         }
 
         body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            padding: 48px 36px 36px 36px;
-            max-width: 1240px;
-            margin: 0 auto;
+            justify-content: flex-start;
+            padding: 40px 0 32px 0;
+            max-width: 100%;
+            margin: 0;
+            width: 100%;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            position: relative;
+            transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
-        /* Smooth Architectural Entrance Animation */
-        @keyframes archEntrance {
-            0% {
-                opacity: 0;
-                transform: translateY(18px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes masterEntrance {
+            from { opacity: 0; transform: translate3d(0, 16px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
-        header, .toolbar-row, .nutrient-grid, footer {
-            animation: archEntrance 0.85s var(--ease-out-expo) backwards;
+        .top-nav-bar, .workspace-heading-area, main, footer {
+            position: relative;
+            z-index: 1;
+            opacity: 1;
+            will-change: transform, opacity;
+            animation: masterEntrance 1s var(--ease-smooth) backwards;
         }
-        header       { animation-delay: 0.04s; }
-        .toolbar-row { animation-delay: 0.12s; }
-        .nutrient-grid { animation-delay: 0.20s; }
-        footer       { animation-delay: 0.28s; }
+
+        .top-nav-bar { animation-delay: 0.04s; }
+        .workspace-heading-area { animation-delay: 0.08s; }
+        main { animation-delay: 0.12s; }
+        footer { animation-delay: 0.22s; }
 
         /* -------------------------------------------------------------
-           HEADER: CLEAN BREADCRUMB & WORKSPACE TITLE
+           1. TOP NAVIGATION: 's.' BRAND PILL WITH ACCURATE BASELINE PEACH DOT
            ------------------------------------------------------------- */
-        header {
+        .top-nav-bar {
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 100%;
-            padding-bottom: 28px;
-            border-bottom: 1px solid var(--border-silent);
-            flex-wrap: wrap;
+            padding: 0 var(--page-gutter);
             gap: 16px;
         }
 
-        .breadcrumb-trail {
+        /* Matte Blur Capsule Search Bar at Top Right Corner (Matches user reference) */
+        .matte-search-capsule {
+            position: relative;
             display: flex;
             align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: var(--color-ink);
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(28px) saturate(190%);
+            -webkit-backdrop-filter: blur(28px) saturate(190%);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            box-shadow: 
+                0 6px 20px rgba(0, 0, 0, 0.22), 
+                inset 0 1px 1.5px rgba(255, 255, 255, 0.35);
+            height: 44px;
+            width: 250px;
+            max-width: 100%;
+            transition: width 0.4s var(--ease-smooth), 
+                        box-shadow 0.4s var(--ease-smooth), 
+                        border-color 0.4s var(--ease-smooth),
+                        background-color 0.4s var(--ease-smooth);
         }
 
-        .brand-monogram {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: -0.8px;
+        body.light-mode .matte-search-capsule {
+            background: rgba(230, 230, 235, 0.65);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 
+                0 4px 14px rgba(0, 0, 0, 0.06), 
+                inset 0 1px 1.5px rgba(255, 255, 255, 0.7);
+        }
+
+        .matte-search-capsule:focus-within {
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                0 8px 26px rgba(0, 0, 0, 0.3), 
+                inset 0 1px 1.5px rgba(255, 255, 255, 0.5);
+            width: 290px;
+        }
+
+        body.light-mode .matte-search-capsule:focus-within {
+            border-color: rgba(0, 0, 0, 0.22);
+            box-shadow: 
+                0 8px 22px rgba(0, 0, 0, 0.1), 
+                inset 0 1px 1.5px rgba(255, 255, 255, 0.9);
+        }
+
+        .matte-search-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+            padding: 0 14px 0 20px;
+        }
+
+        .matte-search-input {
+            flex: 1;
+            min-width: 0;
+            height: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Poppins", sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-main);
+            letter-spacing: -0.2px;
+        }
+
+        .matte-search-input::placeholder {
+            color: var(--text-main);
+            opacity: 0.65;
+        }
+
+        body.light-mode .matte-search-input {
+            color: #111111;
+        }
+
+        body.light-mode .matte-search-input::placeholder {
+            color: #111111;
+            opacity: 0.55;
+        }
+
+        .matte-search-share-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            opacity: 0.82;
+            cursor: pointer;
+            padding: 4px;
+            margin-left: 8px;
+            border-radius: 50%;
+            transition: transform 0.25s var(--ease-smooth), opacity 0.25s var(--ease-smooth);
+        }
+
+        .matte-search-share-btn:hover {
+            opacity: 1;
+            transform: scale(1.12);
+        }
+
+        .matte-search-share-btn:active {
+            transform: scale(0.92);
+        }
+
+        body.light-mode .matte-search-share-btn {
+            color: #111111;
+        }
+
+        .matte-toast-pill {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 8px;
+            background: rgba(18, 18, 18, 0.92);
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 9999px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-4px);
+            transition: opacity 0.3s var(--ease-smooth), transform 0.3s var(--ease-smooth);
+            z-index: 100;
+            white-space: nowrap;
+        }
+
+        .matte-toast-pill.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 3D Code-Rendered Vector Spheres */
+        .icon-3d-sphere {
+            width: 105px;
+            height: 105px;
+            display: block;
+            overflow: visible;
+            transition: transform 0.55s var(--ease-smooth);
+            animation: iconSmoothIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .icon-3d-sphere .sphere-text {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "Inter", sans-serif;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        /* Top Left 's.' brand link directly to main home */
+        .brand-pill {
+            position: relative;
             display: inline-flex;
             align-items: baseline;
-            color: var(--color-ink);
-            text-decoration: none;
+            justify-content: flex-start;
+            height: auto;
+            padding: 0;
+            background-color: transparent;
+            border: none;
+            text-decoration: none !important;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -1.2px;
+            line-height: 1;
+            box-shadow: none !important;
+            touch-action: manipulation;
+            cursor: pointer;
+            user-select: none;
+            
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            
+            transition: transform 0.55s var(--ease-smooth);
         }
 
+        /* 's' font color follows device theme */
+        .brand-letter {
+            color: var(--text-main);
+            transition: color 0.8s var(--ease-smooth);
+            line-height: 1;
+        }
+
+        /* Peach dot: sits right at the bottom baseline of 's', never elevated */
         .brand-dot {
             display: inline-block;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background-color: var(--color-accent);
+            width: 8px;
+            height: 8px;
+            background-color: #ff9e79 !important;
+            border-radius: 50% !important;
             margin-left: 2px;
+            margin-bottom: 0 !important;
+            vertical-align: -1px;
+            flex-shrink: 0;
+            line-height: 1;
+            transition: background-color 0.8s var(--ease-smooth);
         }
 
-        .breadcrumb-divider {
-            color: var(--ink-subtle);
-            font-weight: 300;
-            font-size: 16px;
-        }
-
-        .breadcrumb-current {
-            font-size: 20px;
-            font-weight: 600;
-            letter-spacing: -0.4px;
-            color: var(--color-ink);
-        }
-
-        .header-stats {
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--color-accent);
+        .brand-pill:hover,
+        .brand-pill:focus-within,
+        .brand-pill:active,
+        .brand-pill.is-pill-lifted {
+            transform: translate3d(0, -4px, 0) scale3d(1.02, 1.02, 1);
+            box-shadow: none !important;
         }
 
         /* -------------------------------------------------------------
-           TOOLBAR: MINIMALIST LIVE SEARCH & ARCHITECTURAL CATEGORY TABS
+           2. WORKSPACE HEADING: 'Nutrition' (EQUAL GAP AS TOP SECTION)
            ------------------------------------------------------------- */
-        .toolbar-row {
+        .workspace-heading-area {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: var(--section-gap);
+            margin-bottom: var(--section-gap);
+            padding: 0 var(--page-gutter);
+        }
+
+        .page-main-heading {
+            font-size: 22px;
+            font-weight: 500;
+            letter-spacing: -0.2px;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.2;
+            transition: color 0.8s var(--ease-smooth);
+        }
+
+        /* -------------------------------------------------------------
+           3. MAIN PANELS TRACK: 100% IN LINE WITH s. & NUTRITION
+              EDGE-TO-EDGE HORIZONTAL SCROLL (NO CLIPPING)
+           ------------------------------------------------------------- */
+        main {
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            gap: 28px;
+            overflow: visible;
+        }
+
+        .panels-scroll-track {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: stretch;
             gap: 24px;
-            padding: 44px 0 32px 0;
-        }
-
-        .search-shell {
-            position: relative;
             width: 100%;
-            max-width: 580px;
-        }
-
-        .search-input {
-            width: 100%;
-            height: 48px;
-            padding: 0 44px 0 18px;
-            background: var(--surface-card);
-            border: 1px solid var(--border-silent);
-            border-radius: 12px;
-            font-family: inherit;
-            font-size: 14px;
-            font-weight: 400;
-            color: var(--color-ink);
-            outline: none;
-            letter-spacing: -0.1px;
-            transition: border-color 0.3s var(--ease-smooth), background-color 0.3s var(--ease-smooth);
-        }
-
-        .search-input::placeholder {
-            color: var(--ink-subtle);
-        }
-
-        .search-input:focus {
-            border-color: var(--color-accent);
-            background: rgba(126, 168, 143, 0.04);
-        }
-
-        .search-icon-wrap {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--ink-subtle);
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Category Filter Tabs */
-        .category-tabs {
-            display: flex;
-            align-items: center;
-            gap: 10px;
             overflow-x: auto;
-            padding-bottom: 6px;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            padding: 12px var(--page-gutter) 24px var(--page-gutter);
+            scroll-padding-left: var(--page-gutter);
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
-        .category-tabs::-webkit-scrollbar {
+
+        .panels-scroll-track::-webkit-scrollbar {
             display: none;
         }
 
-        .tab-btn {
-            background: transparent;
-            border: 1px solid var(--border-silent);
-            color: var(--ink-muted);
-            font-family: inherit;
-            font-size: 12.5px;
-            font-weight: 500;
-            padding: 8px 18px;
-            border-radius: 9999px;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.3s var(--ease-smooth);
-        }
-
-        .tab-btn:hover {
-            color: var(--color-ink);
-            border-color: rgba(226, 228, 233, 0.2);
-        }
-
-        .tab-btn.is-active {
-            background: var(--color-accent);
-            color: var(--color-base);
-            border-color: var(--color-accent);
-            font-weight: 600;
-        }
-
         /* -------------------------------------------------------------
-           NUTRIENT GRID: PERIODIC ARCHITECTURAL TILES
+           4. UNIFORM PANELS: EXACT SIZE OF CALORIES PANEL (240px x 350px)
+              IDLE: BORDER RESTORED FROM 2 VERSIONS BEFORE
+              HOVER/TOUCH: HIGHLIGHT BORDER WITH SMOOTH LIFT
            ------------------------------------------------------------- */
-        .nutrient-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 18px;
-            width: 100%;
-            margin-bottom: 56px;
-        }
-
-        .nutrient-card {
-            position: relative;
-            text-decoration: none;
-            background: var(--surface-card);
-            border: 1px solid var(--border-silent);
-            border-radius: 16px;
-            padding: 24px 22px;
+        .apple-panel {
+            width: 215px;
+            min-width: 215px;
+            max-width: 215px;
+            height: 315px;
+            min-height: 315px;
+            aspect-ratio: 1 / 1.465;
+            flex-shrink: 0;
+            
+            background-color: transparent !important;
+            border: 1.5px solid transparent !important;
+            border-radius: 22px;
+            padding: 22px 16px 18px 16px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            min-height: 148px;
-            transition: transform 0.45s var(--ease-out-expo), 
-                        border-color 0.45s var(--ease-out-expo), 
-                        background-color 0.45s var(--ease-out-expo),
-                        opacity 0.35s var(--ease-smooth);
-            cursor: pointer;
-        }
-
-        .nutrient-card:hover,
-        .nutrient-card:active {
-            transform: translateY(-4px);
-            border-color: var(--border-hover);
-            background-color: var(--surface-hover);
-        }
-
-        .nutrient-card.is-dimmed {
-            opacity: 0.12 !important;
-            transform: scale(0.97) !important;
-            pointer-events: none;
-        }
-
-        .card-top {
-            display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 100%;
+            text-align: center;
+            position: relative;
+            text-decoration: none !important;
+            box-shadow: none !important;
+            touch-action: manipulation;
+            cursor: pointer;
+            overflow: hidden;
+            box-sizing: border-box;
+            
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            
+            /* Smooth lift-up & border-fade transition */
+            transition: transform 0.45s var(--ease-smooth), 
+                        border-color 0.35s var(--ease-smooth), 
+                        background-color 0.4s var(--ease-smooth);
+
+            /* Rapid smooth entrance on load */
+            animation: rapidCascadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) backwards;
         }
 
-        .card-symbol {
-            font-size: 15px;
+        .apple-panel:nth-child(1) { animation-delay: 0.04s; }
+        .apple-panel:nth-child(2) { animation-delay: 0.07s; }
+        .apple-panel:nth-child(3) { animation-delay: 0.10s; }
+        .apple-panel:nth-child(4) { animation-delay: 0.13s; }
+        .apple-panel:nth-child(5) { animation-delay: 0.16s; }
+        .apple-panel:nth-child(6) { animation-delay: 0.19s; }
+        .apple-panel:nth-child(7) { animation-delay: 0.22s; }
+        .apple-panel:nth-child(8) { animation-delay: 0.25s; }
+        .apple-panel:nth-child(9) { animation-delay: 0.28s; }
+
+        @keyframes rapidCascadeIn {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 16px, 0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        /* Lift-up & Border highlight when cursor reaches the panel */
+        @media (hover: hover) and (pointer: fine) {
+            .apple-panel:hover {
+                transform: translate3d(0, -6px, 0) !important;
+                border-color: var(--panel-border-hover) !important;
+                background-color: transparent !important;
+                box-shadow: none !important;
+            }
+
+            .apple-panel:hover .panel-icon-wrap {
+                transform: scale3d(1.05, 1.05, 1);
+            }
+
+            .footer-links-row a:hover .nav-text,
+            .brand-pill:hover .nav-text {
+                transform: scale3d(1.05, 1.05, 1) !important;
+            }
+        }
+
+        /* Touch / tap: Border highlight with smooth lift */
+        .apple-panel:active,
+        .apple-panel.is-card-lifted {
+            transform: translate3d(0, -6px, 0) !important;
+            border-color: var(--panel-border-hover) !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+        }
+
+        .apple-panel:active .panel-icon-wrap,
+        .apple-panel.is-card-lifted .panel-icon-wrap {
+            transform: scale3d(1.05, 1.05, 1) !important;
+        }
+
+        /* Artwork Stages & Rapid Smooth Icon Loading */
+        .panel-artwork-stage {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding-top: 4px;
+        }
+
+        .panel-icon-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            will-change: transform;
+            transition: transform 0.55s var(--ease-smooth);
+        }
+
+        /* Smooth rapid entrance for icons without stuttering */
+        @keyframes iconSmoothIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .panel-icon-wrap img {
+            width: 105px;
+            height: 105px;
+            object-fit: contain;
+            transition: transform 0.55s var(--ease-smooth);
+            filter: none !important;
+            -webkit-filter: none !important;
+            animation: iconSmoothIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+        }
+
+        /* Typographic Element & Vitamin Symbol Badges */
+        .element-symbol-badge {
+            width: 105px;
+            height: 105px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-sizing: border-box;
+            transition: transform 0.55s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+            animation: iconSmoothIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body.light-mode .element-symbol-badge {
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .sym-text {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro", "Inter", sans-serif;
+            font-size: 42px;
             font-weight: 700;
-            letter-spacing: -0.3px;
-            color: var(--color-accent);
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            line-height: 1;
             display: inline-flex;
             align-items: baseline;
+            justify-content: center;
+            transition: color 0.8s var(--ease-smooth);
         }
 
-        .card-symbol sub {
-            font-size: 11px;
-            margin-left: 1px;
+        .sym-text.single-letter {
+            font-size: 48px;
         }
 
-        .card-category-tag {
-            font-size: 10px;
-            font-weight: 500;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
+        .sym-sub {
+            font-size: 23px;
+            font-weight: 600;
+            margin-left: 2px;
+            bottom: -2px;
+            position: relative;
+            opacity: 0.88;
         }
 
-        .card-content {
-            margin-top: 18px;
+        .apple-panel:nth-child(1) .panel-icon-wrap img,
+        .apple-panel:nth-child(1) .element-symbol-badge { animation-delay: 0.06s; }
+        .apple-panel:nth-child(2) .panel-icon-wrap img,
+        .apple-panel:nth-child(2) .element-symbol-badge { animation-delay: 0.09s; }
+        .apple-panel:nth-child(3) .panel-icon-wrap img,
+        .apple-panel:nth-child(3) .element-symbol-badge { animation-delay: 0.12s; }
+        .apple-panel:nth-child(4) .panel-icon-wrap img,
+        .apple-panel:nth-child(4) .element-symbol-badge { animation-delay: 0.15s; }
+        .apple-panel:nth-child(5) .panel-icon-wrap img,
+        .apple-panel:nth-child(5) .element-symbol-badge { animation-delay: 0.18s; }
+        .apple-panel:nth-child(6) .panel-icon-wrap img,
+        .apple-panel:nth-child(6) .element-symbol-badge { animation-delay: 0.21s; }
+        .apple-panel:nth-child(7) .panel-icon-wrap img,
+        .apple-panel:nth-child(7) .element-symbol-badge { animation-delay: 0.24s; }
+        .apple-panel:nth-child(8) .panel-icon-wrap img,
+        .apple-panel:nth-child(8) .element-symbol-badge { animation-delay: 0.27s; }
+        .apple-panel:nth-child(9) .panel-icon-wrap img,
+        .apple-panel:nth-child(9) .element-symbol-badge { animation-delay: 0.30s; }
+
+        body.light-mode .panel-icon-wrap img {
+            filter: none !important;
+            -webkit-filter: none !important;
+        }
+
+        .panel-bottom-content {
             display: flex;
             flex-direction: column;
+            align-items: center;
             gap: 4px;
+            padding-bottom: 6px;
+            width: 100%;
         }
 
-        .card-title {
-            font-size: 19px;
-            font-weight: 600;
+        .panel-title {
+            font-size: 23px;
+            font-weight: 700;
             letter-spacing: -0.4px;
-            color: var(--color-ink);
-            line-height: 1.25;
-            transition: color 0.3s var(--ease-smooth);
+            color: var(--text-main);
+            line-height: 1.15;
+            transition: color 0.8s var(--ease-smooth);
         }
 
-        .nutrient-card:hover .card-title {
-            color: #ffffff;
-        }
-
-        .card-subtext {
-            font-size: 12.5px;
-            font-weight: 400;
-            color: var(--ink-muted);
-            letter-spacing: 0.1px;
+        .panel-subtext {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 0.2px;
+            transition: color 0.8s var(--ease-smooth);
         }
 
         /* -------------------------------------------------------------
-           FOOTER: CLEAN ARCHITECTURAL FOOTER
+           5. FOOTER
            ------------------------------------------------------------- */
-        footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding-top: 32px;
-            border-top: 1px solid var(--border-silent);
-            flex-wrap: wrap;
-            gap: 20px;
+        footer { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 18px; 
+            width: 100%; 
+            padding: 24px var(--page-gutter) 0 var(--page-gutter);
+            margin-top: auto;
         }
 
-        .footer-links {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-            flex-wrap: wrap;
+        .footer-links-row { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 28px; 
+            flex-wrap: wrap; 
+            width: 100%; 
         }
 
-        .footer-links a {
-            text-decoration: none;
-            font-size: 12.5px;
-            font-weight: 500;
-            color: var(--ink-muted);
-            transition: color 0.3s var(--ease-smooth);
-        }
-
-        .footer-links a:hover {
-            color: var(--color-ink);
-        }
-
-        .footer-copyright {
-            font-size: 12px;
+        .footer-links-row a {
+            color: var(--text-muted) !important;
+            text-decoration: none !important;
+            font-size: 13.5px;
             font-weight: 400;
-            color: var(--ink-subtle);
+            display: inline-block;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            transition: color 0.4s var(--ease-smooth);
         }
 
-        /* Wave Shimmer Loading on Navigate */
-        @keyframes subtleWave {
+        .footer-links-row a:hover { color: var(--text-main) !important; }
+        .copyright-tag { 
+            color: var(--text-muted); 
+            opacity: 0.6; 
+            font-size: 12px; 
+            letter-spacing: 0.2px; 
+            transition: color 0.8s var(--ease-smooth); 
+        }
+
+        .nav-text {
+            display: inline-block !important;
+            white-space: normal;
+            transform-origin: center center !important;
+            will-change: transform, opacity, background-position !important;
+            transition: transform 0.4s var(--ease-smooth), opacity 0.4s var(--ease-smooth);
+        }
+
+        .footer-links-row a .nav-text { color: var(--text-muted) !important; white-space: nowrap !important; }
+        .footer-links-row a:hover .nav-text { color: var(--text-main) !important; }
+
+        @keyframes fluidWave {
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
 
-        .is-wave-loading .card-title {
-            background-image: linear-gradient(90deg, var(--color-ink) 0%, var(--color-ink) 30%, var(--color-accent) 50%, var(--color-ink) 70%, var(--color-ink) 100%) !important;
+        a.is-wave-loading .nav-text {
+            background-image: linear-gradient(90deg, #ffffff 0%, #ffffff 25%, #555555 50%, #ffffff 75%, #ffffff 100%) !important;
             background-size: 200% 100% !important;
             -webkit-background-clip: text !important;
             background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
             color: transparent !important;
-            animation: subtleWave 0.85s infinite linear !important;
+            animation: fluidWave 0.75s infinite linear !important;
+            will-change: background-position, transform !important;
+            opacity: 1 !important;
         }
 
-        /* Responsive Architecture */
-        @media (max-width: 820px) {
+        body.light-mode a.is-wave-loading .nav-text {
+            background-image: linear-gradient(90deg, #111111 0%, #111111 25%, #8a8a8e 50%, #111111 75%, #111111 100%) !important;
+            background-size: 200% 100% !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+            animation: fluidWave 0.75s infinite linear !important;
+            will-change: background-position, transform !important;
+            opacity: 1 !important;
+        }
+
+        /* -------------------------------------------------------------
+           6. MOBILE VIEWPORT (< 700px):
+           Sleek Vertical Rectangles Aligned In-Line with s. & Nutrition
+           ------------------------------------------------------------- */
+        @media (max-width: 700px) {
+            :root {
+                --page-gutter: 28px;
+                --section-gap: 32px;
+            }
+
             body {
-                padding: 32px 20px 24px 20px;
+                padding: 28px 0 20px 0;
             }
 
-            .nutrient-grid {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-                gap: 12px;
+            .brand-pill {
+                font-size: 36px;
             }
 
-            .nutrient-card {
-                padding: 18px 16px;
-                min-height: 130px;
+            .brand-dot {
+                width: 7px;
+                height: 7px;
+                vertical-align: -1px;
             }
 
-            .card-title {
-                font-size: 16.5px;
+            .workspace-heading-area {
+                margin-top: var(--section-gap);
+                margin-bottom: var(--section-gap);
             }
 
-            .card-subtext {
-                font-size: 11.5px;
+            .page-main-heading {
+                font-size: 19px;
             }
 
-            footer {
-                flex-direction: column;
-                align-items: flex-start;
+            main {
+                padding: 0;
+            }
+
+            .panels-scroll-track {
                 gap: 16px;
+                padding-top: 8px;
+                padding-bottom: 16px;
             }
 
-            .footer-links {
-                gap: 20px;
+            /* Phone Only: slightly smaller panel container, strictly preserving icon & text size */
+            .apple-panel {
+                width: 175px !important;
+                min-width: 175px !important;
+                max-width: 175px !important;
+                height: 270px !important;
+                min-height: 270px !important;
+                aspect-ratio: 1 / 1.54 !important;
+                padding: 18px 12px 16px 12px !important;
+                border-radius: 16px !important;
+            }
+
+            .panel-icon-wrap img,
+            .icon-3d-sphere,
+            .element-symbol-badge {
+                width: 90px !important;
+                height: 90px !important;
+            }
+
+            .matte-search-capsule {
+                height: 38px;
+                width: 165px;
+            }
+            .matte-search-capsule:focus-within {
+                width: 195px;
+            }
+            .matte-search-inner {
+                padding: 0 10px 0 14px;
+            }
+            .matte-search-input {
+                font-size: 13.5px;
+            }
+
+            .sym-text {
+                font-size: 36px !important;
+            }
+
+            .sym-text.single-letter {
+                font-size: 40px !important;
+            }
+
+            .sym-sub {
+                font-size: 20px !important;
+            }
+
+            .panel-title {
+                font-size: 21px !important;
+            }
+
+            .panel-subtext {
+                font-size: 12px !important;
             }
         }
     </style>
 </head>
-<body>
+<body class="nutrition-workspace">
 
-    <!-- Header: Minimalist Top Bar with Breadcrumbs -->
-    <header>
-        <div class="breadcrumb-trail">
-            <a href="/" class="brand-monogram" aria-label="sathya.">
-                <span>sathya</span><span class="brand-dot" aria-hidden="true"></span>
-            </a>
-            <span class="breadcrumb-divider">/</span>
-            <span class="breadcrumb-current">Nutrition</span>
-        </div>
-        <div class="header-stats">37 Vital Components</div>
-    </header>
-
-    <!-- Toolbar: Search Shell & Category Tabs -->
-    <section class="toolbar-row" aria-label="Search and filter nutrients">
-        <div class="search-shell">
-            <input type="text" id="nutrientSearchInput" class="search-input" placeholder="Search by name, symbol, or scientific role..." autocomplete="off" spellcheck="false" aria-label="Search nutrients">
-            <div class="search-icon-wrap" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-            </div>
-        </div>
-
-        <nav class="category-tabs" id="categoryTabs" aria-label="Nutrient Categories">
-            <button type="button" class="tab-btn is-active" data-cat="all">All (37)</button>
-            <button type="button" class="tab-btn" data-cat="macros">Macronutrients (7)</button>
-            <button type="button" class="tab-btn" data-cat="vitamins">Vitamins (6)</button>
-            <button type="button" class="tab-btn" data-cat="b-complex">B-Complex (8)</button>
-            <button type="button" class="tab-btn" data-cat="macro-minerals">Macro Minerals (7)</button>
-            <button type="button" class="tab-btn" data-cat="trace-minerals">Trace Minerals (9)</button>
-        </nav>
-    </section>
-
-    <!-- Main Nutrient Periodic Ledger Grid (All 37 Nutrients Preserved) -->
-    <main class="nutrient-grid" id="nutrientGrid">
-
-        <!-- ==================== 1. MACRONUTRIENTS (7) ==================== -->
-        <!-- Track (Routes to mm.html) -->
-        <a href="/nutrition/mm.html" class="nutrient-card" data-cat="macros" data-search="track weekly data macronutrients">
-            <div class="card-top">
-                <span class="card-symbol">Tr</span>
-                <span class="card-category-tag">Macro</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Track</h2>
-                <span class="card-subtext">Weekly data</span>
-            </div>
+    <!-- 1. Top Section: 's.' Brand (left) & Matte Blur Capsule Search Bar (top right) -->
+    <nav class="top-nav-bar" id="topNavBar">
+        <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="s.">
+            <span class="brand-letter">s</span><span class="brand-dot" aria-hidden="true"></span>
         </a>
 
-        <!-- Calories -->
-        <div class="nutrient-card" data-cat="macros" data-search="calories energy kcal">
-            <div class="card-top">
-                <span class="card-symbol">Kcal</span>
-                <span class="card-category-tag">Energy</span>
+        <!-- Matte Blur Capsule Search Bar at Top Right Corner (Matches user reference) -->
+        <div class="matte-search-capsule" id="matteSearchCapsule">
+            <div class="matte-search-inner">
+                <input type="text" id="nutritionSearchInput" class="matte-search-input" placeholder="fire" autocomplete="off" spellcheck="false" aria-label="Search nutrients">
+                <button type="button" class="matte-search-share-btn" id="matteShareBtn" aria-label="Share" title="Share link">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="18" cy="5" r="3"/>
+                        <circle cx="6" cy="12" r="3"/>
+                        <circle cx="18" cy="19" r="3"/>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                    </svg>
+                </button>
             </div>
-            <div class="card-content">
-                <h2 class="card-title">Calories</h2>
-                <span class="card-subtext">Energy</span>
-            </div>
+            <div class="matte-toast-pill" id="matteToastPill">Link copied</div>
+        </div>
+    </nav>
+
+    <!-- 2. Middle Section: 'Nutrition' Heading moved down closer to panels -->
+    <div class="workspace-heading-area" id="workspaceHeadingArea">
+        <h1 class="page-main-heading">Nutrition</h1>
+    </div>
+
+    <!-- 3. Center Section: 5 Lines of Nutrition Panels -->
+    <main>
+        <!-- 3D Vector Shaders, Gradients & Volumetric Lighting Defs (Zero-asset instant load) -->
+        <svg style="position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none;" aria-hidden="true" focusable="false">
+            <defs>
+                <!-- Realistic Ground Plane Contact Shadow Blur -->
+                <filter id="sphere-ground-blur" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" />
+                </filter>
+
+                <!-- 3D Text Emboss / Drop Shadow Filters -->
+                <filter id="sphere-text-shadow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="rgba(0,0,0,0.45)" />
+                </filter>
+                <filter id="sphere-text-shadow-light" x="-30%" y="-30%" width="160%" height="160%">
+                    <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="rgba(0,0,0,0.25)" />
+                </filter>
+
+                <!-- Curvature Ambient Bounce Light (Bottom reflection) -->
+                <linearGradient id="sphere-ambient-bounce" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
+                    <stop offset="70%" stop-color="#ffffff" stop-opacity="0" />
+                    <stop offset="100%" stop-color="#ffffff" stop-opacity="0.22" />
+                </linearGradient>
+
+                <!-- Apple-Style Specular Gloss Sheen (Top-left curvature highlight) -->
+                <linearGradient id="sphere-specular-gloss" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.82" />
+                    <stop offset="40%" stop-color="#ffffff" stop-opacity="0.35" />
+                    <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+                </linearGradient>
+
+                <!-- LINE 3: B-VITAMIN 3D GRADIENTS -->
+                <!-- B1 Thiamine (Warm Amber Gold) -->
+                <radialGradient id="grad-b1" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fff176" />
+                    <stop offset="28%" stop-color="#fbbf24" />
+                    <stop offset="68%" stop-color="#d97706" />
+                    <stop offset="100%" stop-color="#78350f" />
+                </radialGradient>
+
+                <!-- B2 Riboflavin (Neon Citron Yellow-Lime) -->
+                <radialGradient id="grad-b2" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fef08a" />
+                    <stop offset="28%" stop-color="#eab308" />
+                    <stop offset="68%" stop-color="#a16207" />
+                    <stop offset="100%" stop-color="#713f12" />
+                </radialGradient>
+
+                <!-- B3 Niacin (Vivid Coral Tangerine) -->
+                <radialGradient id="grad-b3" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#ffedd5" />
+                    <stop offset="28%" stop-color="#f97316" />
+                    <stop offset="68%" stop-color="#c2410c" />
+                    <stop offset="100%" stop-color="#7c2d12" />
+                </radialGradient>
+
+                <!-- B5 Pantothenic Acid (Warm Terracotta Rose) -->
+                <radialGradient id="grad-b5" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fecdd3" />
+                    <stop offset="28%" stop-color="#f43f5e" />
+                    <stop offset="68%" stop-color="#be123c" />
+                    <stop offset="100%" stop-color="#881337" />
+                </radialGradient>
+
+                <!-- B6 Pyridoxine (Vivid Electric Teal Cyan) -->
+                <radialGradient id="grad-b6" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#a5f3fc" />
+                    <stop offset="28%" stop-color="#06b6d4" />
+                    <stop offset="68%" stop-color="#0e7490" />
+                    <stop offset="100%" stop-color="#155e75" />
+                </radialGradient>
+
+                <!-- B7 Biotin (Royal Lavender Orchid) -->
+                <radialGradient id="grad-b7" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#f3e8ff" />
+                    <stop offset="28%" stop-color="#a855f7" />
+                    <stop offset="68%" stop-color="#7e22ce" />
+                    <stop offset="100%" stop-color="#581c87" />
+                </radialGradient>
+
+                <!-- B9 Folate (Fresh Leaf Emerald) -->
+                <radialGradient id="grad-b9" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#bbf7d0" />
+                    <stop offset="28%" stop-color="#22c55e" />
+                    <stop offset="68%" stop-color="#15803d" />
+                    <stop offset="100%" stop-color="#14532d" />
+                </radialGradient>
+
+                <!-- B12 Cobalamin (Deep Ruby Crimson Cobalt) -->
+                <radialGradient id="grad-b12" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fca5a5" />
+                    <stop offset="28%" stop-color="#ef4444" />
+                    <stop offset="68%" stop-color="#b91c1c" />
+                    <stop offset="100%" stop-color="#7f1d1d" />
+                </radialGradient>
+
+                <!-- LINE 4: MACRO MINERALS 3D GRADIENTS -->
+                <!-- Calcium (Luminescent Porcelain Pearl) -->
+                <radialGradient id="grad-ca" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#ffffff" />
+                    <stop offset="35%" stop-color="#e2e8f0" />
+                    <stop offset="70%" stop-color="#94a3b8" />
+                    <stop offset="100%" stop-color="#475569" />
+                </radialGradient>
+
+                <!-- Phosphorus (Electric Bioluminescent Indigo) -->
+                <radialGradient id="grad-p" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#c7d2fe" />
+                    <stop offset="28%" stop-color="#6366f1" />
+                    <stop offset="68%" stop-color="#4338ca" />
+                    <stop offset="100%" stop-color="#312e81" />
+                </radialGradient>
+
+                <!-- Magnesium (Mint Jade Silver) -->
+                <radialGradient id="grad-mg" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#a7f3d0" />
+                    <stop offset="28%" stop-color="#10b981" />
+                    <stop offset="68%" stop-color="#047857" />
+                    <stop offset="100%" stop-color="#064e3b" />
+                </radialGradient>
+
+                <!-- Sodium (Warm Solar Gold Flame) -->
+                <radialGradient id="grad-na" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fef08a" />
+                    <stop offset="28%" stop-color="#eab308" />
+                    <stop offset="68%" stop-color="#b45309" />
+                    <stop offset="100%" stop-color="#78350f" />
+                </radialGradient>
+
+                <!-- Potassium (Royal Lilac Violet) -->
+                <radialGradient id="grad-k" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#ddd6fe" />
+                    <stop offset="28%" stop-color="#8b5cf6" />
+                    <stop offset="68%" stop-color="#6d28d9" />
+                    <stop offset="100%" stop-color="#4c1d95" />
+                </radialGradient>
+
+                <!-- Chloride (Aquamarine Seafoam) -->
+                <radialGradient id="grad-cl" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#bae6fd" />
+                    <stop offset="28%" stop-color="#0ea5e9" />
+                    <stop offset="68%" stop-color="#0369a1" />
+                    <stop offset="100%" stop-color="#0c4a6e" />
+                </radialGradient>
+
+                <!-- Sulphur (Solar Sulphur Citrine) -->
+                <radialGradient id="grad-s" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fef9c3" />
+                    <stop offset="28%" stop-color="#facc15" />
+                    <stop offset="68%" stop-color="#ca8a04" />
+                    <stop offset="100%" stop-color="#854d0e" />
+                </radialGradient>
+
+                <!-- LINE 5: TRACE MINERALS 3D GRADIENTS -->
+                <!-- Iron (Metallic Rust Red Hematite) -->
+                <radialGradient id="grad-fe" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fecaca" />
+                    <stop offset="28%" stop-color="#dc2626" />
+                    <stop offset="68%" stop-color="#991b1b" />
+                    <stop offset="100%" stop-color="#450a0a" />
+                </radialGradient>
+
+                <!-- Zinc (Polished Titanium Slate) -->
+                <radialGradient id="grad-zn" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#e2e8f0" />
+                    <stop offset="28%" stop-color="#64748b" />
+                    <stop offset="68%" stop-color="#334155" />
+                    <stop offset="100%" stop-color="#0f172a" />
+                </radialGradient>
+
+                <!-- Iodine (Amethyst Vapor Violet) -->
+                <radialGradient id="grad-i" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#f5d0fe" />
+                    <stop offset="28%" stop-color="#c026d3" />
+                    <stop offset="68%" stop-color="#86198f" />
+                    <stop offset="100%" stop-color="#4a044e" />
+                </radialGradient>
+
+                <!-- Manganese (Rose Quartz Mauve Bronze) -->
+                <radialGradient id="grad-mn" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#fbcfe8" />
+                    <stop offset="28%" stop-color="#db2777" />
+                    <stop offset="68%" stop-color="#9d174d" />
+                    <stop offset="100%" stop-color="#500724" />
+                </radialGradient>
+
+                <!-- Selenium (Deep Celestial Cobalt) -->
+                <radialGradient id="grad-se" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#bfdbfe" />
+                    <stop offset="28%" stop-color="#2563eb" />
+                    <stop offset="68%" stop-color="#1d4ed8" />
+                    <stop offset="100%" stop-color="#1e3a8a" />
+                </radialGradient>
+
+                <!-- Copper (Burnished Bronze Copper) -->
+                <radialGradient id="grad-cu" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#ffedd5" />
+                    <stop offset="28%" stop-color="#ea580c" />
+                    <stop offset="68%" stop-color="#9a3412" />
+                    <stop offset="100%" stop-color="#431407" />
+                </radialGradient>
+
+                <!-- Fluoride (Fluorite Ice Mint Turquoise) -->
+                <radialGradient id="grad-f" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#ccfbf1" />
+                    <stop offset="28%" stop-color="#14b8a6" />
+                    <stop offset="68%" stop-color="#0f766e" />
+                    <stop offset="100%" stop-color="#134e4a" />
+                </radialGradient>
+
+                <!-- Chromium (Mirror Chrome Silver) -->
+                <radialGradient id="grad-cr" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#f1f5f9" />
+                    <stop offset="28%" stop-color="#94a3b8" />
+                    <stop offset="68%" stop-color="#475569" />
+                    <stop offset="100%" stop-color="#1e293b" />
+                </radialGradient>
+
+                <!-- Molybdenum (Obsidian Gunmetal Sapphire) -->
+                <radialGradient id="grad-mo" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%" stop-color="#93c5fd" />
+                    <stop offset="28%" stop-color="#3b82f6" />
+                    <stop offset="68%" stop-color="#1e40af" />
+                    <stop offset="100%" stop-color="#172554" />
+                </radialGradient>
+            </defs>
+        </svg>
+
+        <!-- Line 1: Macronutrients & Energy -->
+        <div class="panels-scroll-track" id="trackMacronutrients" aria-label="Macronutrients & Energy">
+            <!-- Panel 1: Track (Connects to mm.html) -->
+            <a href="/nutrition/mm.html" class="apple-panel myspace-card" id="cardTrack" data-index="0" aria-label="Track">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/macros.png" width="105" height="105" alt="Track" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/macros.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Track</h2>
+                    <span class="panel-subtext">Weekly data</span>
+                </div>
+            </a>
+
+            <!-- Panel 2: Calories -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCalories" data-index="1" aria-label="Calories">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/calories.png" width="105" height="105" alt="Calories" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/calories.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Calories</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 3: Protein -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardProtein" data-index="2" aria-label="Protein">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/protein.png" width="105" height="105" alt="Protein" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/protein.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Protein</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 4: Fiber -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardFiber" data-index="3" aria-label="Fiber">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/fiber.png" width="105" height="105" alt="Fiber" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/fiber.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Fiber</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 5: Carbohydrates -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCarbohydrates" data-index="4" aria-label="Carbohydrates">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/carbohydrates.png" width="105" height="105" alt="Carbohydrates" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/carbohydrates.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Carbohydrates</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 6: Fats -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardFats" data-index="5" aria-label="Fats">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/fats.png" width="105" height="105" alt="Fats" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/fats.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Fats</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 7: Sugars -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardSugars" data-index="6" aria-label="Sugars">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/sugars.png" width="105" height="105" alt="Sugars" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/sugars.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Sugars</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 8: Lactose -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardLactose" data-index="7" aria-label="Lactose">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/lactose.png" width="105" height="105" alt="Lactose" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/lactose.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Lactose</h2>
+                    <span class="panel-subtext">Sugars</span>
+                </div>
+            </a>
         </div>
 
-        <!-- Protein -->
-        <div class="nutrient-card" data-cat="macros" data-search="protein amino acids">
-            <div class="card-top">
-                <span class="card-symbol">Pr</span>
-                <span class="card-category-tag">Macro</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Protein</h2>
-                <span class="card-subtext">Amino acids</span>
-            </div>
+        <!-- Line 2: Carotenoids & Fat-Soluble Vitamins -->
+        <div class="panels-scroll-track" id="trackVitaminsAtoK" aria-label="Vitamins & Carotenoids">
+            <!-- Panel 1: Carotenoids -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCarotenoids" data-index="8" aria-label="Carotenoids">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/carotenoids.png" width="105" height="105" alt="Carotenoids" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/carotenoids.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Carotenoids</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 2: Vitamin A -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminA" data-index="9" aria-label="Vitamin A">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/vitamin-a.png" width="105" height="105" alt="Vitamin A" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/vitamin-a.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin A</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 3: Vitamin C -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminC" data-index="10" aria-label="Vitamin C">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/vitamin-c.png" width="105" height="105" alt="Vitamin C" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/vitamin-c.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin C</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 4: Vitamin D -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminD" data-index="11" aria-label="Vitamin D">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/vitamin-d.png" width="105" height="105" alt="Vitamin D" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/vitamin-d.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin D</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 5: Vitamin E -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminE" data-index="12" aria-label="Vitamin E">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/vitamin-e.png" width="105" height="105" alt="Vitamin E" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/vitamin-e.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin E</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
+
+            <!-- Panel 6: Vitamin K -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminK" data-index="13" aria-label="Vitamin K">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <img src="/nutrition/images/vitamin-k.png" width="105" height="105" alt="Vitamin K" onerror="this.onerror=null; this.src='https://github.com/minsathya/minsathya.github.io/blob/main/nutrition/images/vitamin-k.png?raw=true';">
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin K</h2>
+                    <span class="panel-subtext">Sources</span>
+                </div>
+            </a>
         </div>
 
-        <!-- Fiber -->
-        <div class="nutrient-card" data-cat="macros" data-search="fiber digestion">
-            <div class="card-top">
-                <span class="card-symbol">Fb</span>
-                <span class="card-category-tag">Macro</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Fiber</h2>
-                <span class="card-subtext">Digestion</span>
-            </div>
+        <!-- Line 3: B-Vitamins -->
+        <div class="panels-scroll-track" id="trackBVitamins" aria-label="B-Complex Vitamins">
+            <!-- B1 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB1" data-index="14" aria-label="Vitamin B1 Thiamine">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b1)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="20">1</tspan></text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Thiamine</span>
+                </div>
+            </a>
+
+            <!-- B2 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB2" data-index="15" aria-label="Vitamin B2 Riboflavin">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b2)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="20">2</tspan></text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Riboflavin</span>
+                </div>
+            </a>
+
+            <!-- B3 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB3" data-index="16" aria-label="Vitamin B3 Niacin">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b3)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="20">3</tspan></text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Niacin</span>
+                </div>
+            </a>
+
+            <!-- B5 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB5" data-index="17" aria-label="Vitamin B5 Pantothenic Acid">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b5)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="20">5</tspan></text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Pantothenic Acid</span>
+                </div>
+            </a>
+
+            <!-- B6 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB6" data-index="18" aria-label="Vitamin B6 Pyridoxine">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b6)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="20">6</tspan></text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Pyridoxine</span>
+                </div>
+            </a>
+
+            <!-- B7 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB7" data-index="19" aria-label="Vitamin B7 Biotin">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b7)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="20">7</tspan></text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Biotin</span>
+                </div>
+            </a>
+
+            <!-- B9 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB9" data-index="20" aria-label="Vitamin B9 Folate">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b9)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="20">9</tspan></text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Folate</span>
+                </div>
+            </a>
+
+            <!-- B12 -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardVitaminB12" data-index="21" aria-label="Vitamin B12 Cobalamin">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-b12)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="55" fill="#ffffff" font-size="34" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">B<tspan dy="6" font-size="18">12</tspan></text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Vitamin</h2>
+                    <span class="panel-subtext">Cobalamin</span>
+                </div>
+            </a>
         </div>
 
-        <!-- Water -->
-        <div class="nutrient-card" data-cat="macros" data-search="water hydration h2o">
-            <div class="card-top">
-                <span class="card-symbol">H₂O</span>
-                <span class="card-category-tag">Fluid</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Water</h2>
-                <span class="card-subtext">Hydration</span>
-            </div>
+        <!-- Line 4: Macro Minerals -->
+        <div class="panels-scroll-track" id="trackMacroMinerals" aria-label="Macro Minerals">
+            <!-- Calcium -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCalcium" data-index="22" aria-label="Calcium Ca Macro Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-ca)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#1e293b" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow-light)">Ca</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Calcium</h2>
+                    <span class="panel-subtext">Macro Minerals</span>
+                </div>
+            </a>
+
+            <!-- Phosphorus -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardPhosphorus" data-index="23" aria-label="Phosphorus P Macro Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-p)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="39" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">P</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Phosphorus</h2>
+                    <span class="panel-subtext">Macro Minerals</span>
+                </div>
+            </a>
+
+            <!-- Magnesium -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardMagnesium" data-index="24" aria-label="Magnesium Mg Macro Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-mg)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Mg</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Magnesium</h2>
+                    <span class="panel-subtext">Macro Minerals</span>
+                </div>
+            </a>
+
+            <!-- Sodium -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardSodium" data-index="25" aria-label="Sodium Na Macro Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-na)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Na</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Sodium</h2>
+                    <span class="panel-subtext">Macro Minerals</span>
+                </div>
+            </a>
+
+            <!-- Potassium -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardPotassium" data-index="26" aria-label="Potassium K Macro Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-k)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="39" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">K</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Potassium</h2>
+                    <span class="panel-subtext">Macro Minerals</span>
+                </div>
+            </a>
+
+            <!-- Chloride -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardChloride" data-index="27" aria-label="Chloride Cl Macro Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-cl)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Cl</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Chloride</h2>
+                    <span class="panel-subtext">Macro Minerals</span>
+                </div>
+            </a>
+
+            <!-- Sulphur -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardSulphur" data-index="28" aria-label="Sulphur S Macro Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-s)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="39" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">S</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Sulphur</h2>
+                    <span class="panel-subtext">Macro Minerals</span>
+                </div>
+            </a>
         </div>
 
-        <!-- Fats -->
-        <div class="nutrient-card" data-cat="macros" data-search="fats lipids">
-            <div class="card-top">
-                <span class="card-symbol">Lip</span>
-                <span class="card-category-tag">Macro</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Fats</h2>
-                <span class="card-subtext">Lipids</span>
-            </div>
-        </div>
+        <!-- Line 5: Trace Minerals -->
+        <div class="panels-scroll-track" id="trackTraceMinerals" aria-label="Trace Minerals">
+            <!-- Iron -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardIron" data-index="29" aria-label="Iron Fe Trace Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-fe)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Fe</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Iron</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
 
-        <!-- Carbs -->
-        <div class="nutrient-card" data-cat="macros" data-search="carbs glucose carbohydrates">
-            <div class="card-top">
-                <span class="card-symbol">CHO</span>
-                <span class="card-category-tag">Macro</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Carbs</h2>
-                <span class="card-subtext">Glucose</span>
-            </div>
-        </div>
+            <!-- Zinc -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardZinc" data-index="30" aria-label="Zinc Zn Trace Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-zn)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Zn</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Zinc</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
 
-        <!-- ==================== 2. ESSENTIAL VITAMINS (6) ==================== -->
-        <!-- Carotenoids -->
-        <div class="nutrient-card" data-cat="vitamins" data-search="carotenoids antioxidant">
-            <div class="card-top">
-                <span class="card-symbol">Car</span>
-                <span class="card-category-tag">Antioxidant</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Carotenoids</h2>
-                <span class="card-subtext">Antioxidant</span>
-            </div>
-        </div>
+            <!-- Iodine -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardIodine" data-index="31" aria-label="Iodine I Trace Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-i)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="39" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">I</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Iodine</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
 
-        <!-- Vitamin A -->
-        <div class="nutrient-card" data-cat="vitamins" data-search="vitamin a retinol">
-            <div class="card-top">
-                <span class="card-symbol">Vit A</span>
-                <span class="card-category-tag">Vitamin</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Vitamin A</h2>
-                <span class="card-subtext">Retinol</span>
-            </div>
-        </div>
+            <!-- Manganese -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardManganese" data-index="32" aria-label="Manganese Mn Trace Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-mn)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Mn</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Manganese</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
 
-        <!-- Vitamin C -->
-        <div class="nutrient-card" data-cat="vitamins" data-search="vitamin c ascorbic acid">
-            <div class="card-top">
-                <span class="card-symbol">Vit C</span>
-                <span class="card-category-tag">Vitamin</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Vitamin C</h2>
-                <span class="card-subtext">Ascorbic Acid</span>
-            </div>
-        </div>
+            <!-- Selenium -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardSelenium" data-index="33" aria-label="Selenium Se Trace Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-se)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Se</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Selenium</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
 
-        <!-- Vitamin D -->
-        <div class="nutrient-card" data-cat="vitamins" data-search="vitamin d calciferol">
-            <div class="card-top">
-                <span class="card-symbol">Vit D</span>
-                <span class="card-category-tag">Vitamin</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Vitamin D</h2>
-                <span class="card-subtext">Calciferol</span>
-            </div>
-        </div>
+            <!-- Copper -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardCopper" data-index="34" aria-label="Copper Cu Trace Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-cu)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Cu</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Copper</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
 
-        <!-- Vitamin E -->
-        <div class="nutrient-card" data-cat="vitamins" data-search="vitamin e tocopherol">
-            <div class="card-top">
-                <span class="card-symbol">Vit E</span>
-                <span class="card-category-tag">Vitamin</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Vitamin E</h2>
-                <span class="card-subtext">Tocopherol</span>
-            </div>
-        </div>
+            <!-- Fluoride -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardFluoride" data-index="35" aria-label="Fluoride F Trace Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-f)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="39" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">F</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Fluoride</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
 
-        <!-- Vitamin K -->
-        <div class="nutrient-card" data-cat="vitamins" data-search="vitamin k phylloquinone">
-            <div class="card-top">
-                <span class="card-symbol">Vit K</span>
-                <span class="card-category-tag">Vitamin</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Vitamin K</h2>
-                <span class="card-subtext">Phylloquinone</span>
-            </div>
-        </div>
+            <!-- Chromium -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardChromium" data-index="36" aria-label="Chromium Cr Trace Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-cr)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Cr</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Chromium</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
 
-        <!-- ==================== 3. B-COMPLEX VITAMINS (8) ==================== -->
-        <!-- B1 Thiamine -->
-        <div class="nutrient-card" data-cat="b-complex" data-search="vitamin b1 thiamine">
-            <div class="card-top">
-                <span class="card-symbol">B₁</span>
-                <span class="card-category-tag">B-Complex</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Vitamin</h2>
-                <span class="card-subtext">Thiamine</span>
-            </div>
+            <!-- Molybdenum -->
+            <a href="javascript:void(0)" class="apple-panel myspace-card" id="cardMolybdenum" data-index="37" aria-label="Molybdenum Mo Trace Minerals">
+                <div class="panel-artwork-stage">
+                    <div class="panel-icon-wrap">
+                        <svg class="icon-3d-sphere" viewBox="0 0 100 100" role="img" aria-hidden="true">
+                            <ellipse cx="50" cy="88" rx="33" ry="6.5" fill="rgba(0,0,0,0.35)" filter="url(#sphere-ground-blur)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#grad-mo)"/>
+                            <circle cx="50" cy="48" r="38" fill="url(#sphere-ambient-bounce)"/>
+                            <ellipse cx="38" cy="27" rx="18" ry="9" transform="rotate(-22 38 27)" fill="url(#sphere-specular-gloss)"/>
+                            <text x="50" y="50" fill="#ffffff" font-size="33" class="sphere-text" text-anchor="middle" dominant-baseline="central" filter="url(#sphere-text-shadow)">Mo</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="panel-bottom-content">
+                    <h2 class="panel-title nav-text">Molybdenum</h2>
+                    <span class="panel-subtext">Trace Minerals</span>
+                </div>
+            </a>
         </div>
-
-        <!-- B2 Riboflavin -->
-        <div class="nutrient-card" data-cat="b-complex" data-search="vitamin b2 riboflavin">
-            <div class="card-top">
-                <span class="card-symbol">B₂</span>
-                <span class="card-category-tag">B-Complex</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Vitamin</h2>
-                <span class="card-subtext">Riboflavin</span>
-            </div>
-        </div>
-
-        <!-- B3 Niacin -->
-        <div class="nutrient-card" data-cat="b-complex" data-search="vitamin b3 niacin">
-            <div class="card-top">
-                <span class="card-symbol">B₃</span>
-                <span class="card-category-tag">B-Complex</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Vitamin</h2>
-                <span class="card-subtext">Niacin</span>
-            </div>
-        </div>
-
-        <!-- B5 Pantothenic Acid -->
-        <div class="nutrient-card" data-cat="b-complex" data-search="vitamin b5 pantothenic acid">
-            <div class="card-top">
-                <span class="card-symbol">B₅</span>
-                <span class="card-category-tag">B-Complex</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Vitamin</h2>
-                <span class="card-subtext">Pantothenic Acid</span>
-            </div>
-        </div>
-
-        <!-- B6 Pyridoxine -->
-        <div class="nutrient-card" data-cat="b-complex" data-search="vitamin b6 pyridoxine">
-            <div class="card-top">
-                <span class="card-symbol">B₆</span>
-                <span class="card-category-tag">B-Complex</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Vitamin</h2>
-                <span class="card-subtext">Pyridoxine</span>
-            </div>
-        </div>
-
-        <!-- B7 Biotin -->
-        <div class="nutrient-card" data-cat="b-complex" data-search="vitamin b7 biotin">
-            <div class="card-top">
-                <span class="card-symbol">B₇</span>
-                <span class="card-category-tag">B-Complex</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Vitamin</h2>
-                <span class="card-subtext">Biotin</span>
-            </div>
-        </div>
-
-        <!-- B9 Folate -->
-        <div class="nutrient-card" data-cat="b-complex" data-search="vitamin b9 folate">
-            <div class="card-top">
-                <span class="card-symbol">B₉</span>
-                <span class="card-category-tag">B-Complex</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Vitamin</h2>
-                <span class="card-subtext">Folate</span>
-            </div>
-        </div>
-
-        <!-- B12 Cobalamin -->
-        <div class="nutrient-card" data-cat="b-complex" data-search="vitamin b12 cobalamin">
-            <div class="card-top">
-                <span class="card-symbol">B₁₂</span>
-                <span class="card-category-tag">B-Complex</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Vitamin</h2>
-                <span class="card-subtext">Cobalamin</span>
-            </div>
-        </div>
-
-        <!-- ==================== 4. MACRO MINERALS (7) ==================== -->
-        <!-- Calcium -->
-        <div class="nutrient-card" data-cat="macro-minerals" data-search="calcium ca macro minerals">
-            <div class="card-top">
-                <span class="card-symbol">Ca</span>
-                <span class="card-category-tag">Macro Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Calcium</h2>
-                <span class="card-subtext">Macro Minerals</span>
-            </div>
-        </div>
-
-        <!-- Phosphorus -->
-        <div class="nutrient-card" data-cat="macro-minerals" data-search="phosphorus p macro minerals">
-            <div class="card-top">
-                <span class="card-symbol">P</span>
-                <span class="card-category-tag">Macro Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Phosphorus</h2>
-                <span class="card-subtext">Macro Minerals</span>
-            </div>
-        </div>
-
-        <!-- Magnesium -->
-        <div class="nutrient-card" data-cat="macro-minerals" data-search="magnesium mg macro minerals">
-            <div class="card-top">
-                <span class="card-symbol">Mg</span>
-                <span class="card-category-tag">Macro Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Magnesium</h2>
-                <span class="card-subtext">Macro Minerals</span>
-            </div>
-        </div>
-
-        <!-- Sodium -->
-        <div class="nutrient-card" data-cat="macro-minerals" data-search="sodium na macro minerals">
-            <div class="card-top">
-                <span class="card-symbol">Na</span>
-                <span class="card-category-tag">Macro Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Sodium</h2>
-                <span class="card-subtext">Macro Minerals</span>
-            </div>
-        </div>
-
-        <!-- Potassium -->
-        <div class="nutrient-card" data-cat="macro-minerals" data-search="potassium k macro minerals">
-            <div class="card-top">
-                <span class="card-symbol">K</span>
-                <span class="card-category-tag">Macro Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Potassium</h2>
-                <span class="card-subtext">Macro Minerals</span>
-            </div>
-        </div>
-
-        <!-- Chloride -->
-        <div class="nutrient-card" data-cat="macro-minerals" data-search="chloride cl macro minerals">
-            <div class="card-top">
-                <span class="card-symbol">Cl</span>
-                <span class="card-category-tag">Macro Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Chloride</h2>
-                <span class="card-subtext">Macro Minerals</span>
-            </div>
-        </div>
-
-        <!-- Sulphur -->
-        <div class="nutrient-card" data-cat="macro-minerals" data-search="sulphur sulfur s macro minerals">
-            <div class="card-top">
-                <span class="card-symbol">S</span>
-                <span class="card-category-tag">Macro Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Sulphur</h2>
-                <span class="card-subtext">Macro Minerals</span>
-            </div>
-        </div>
-
-        <!-- ==================== 5. TRACE MINERALS (9) ==================== -->
-        <!-- Iron -->
-        <div class="nutrient-card" data-cat="trace-minerals" data-search="iron fe trace minerals">
-            <div class="card-top">
-                <span class="card-symbol">Fe</span>
-                <span class="card-category-tag">Trace Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Iron</h2>
-                <span class="card-subtext">Trace Minerals</span>
-            </div>
-        </div>
-
-        <!-- Zinc -->
-        <div class="nutrient-card" data-cat="trace-minerals" data-search="zinc zn trace minerals">
-            <div class="card-top">
-                <span class="card-symbol">Zn</span>
-                <span class="card-category-tag">Trace Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Zinc</h2>
-                <span class="card-subtext">Trace Minerals</span>
-            </div>
-        </div>
-
-        <!-- Iodine -->
-        <div class="nutrient-card" data-cat="trace-minerals" data-search="iodine i trace minerals">
-            <div class="card-top">
-                <span class="card-symbol">I</span>
-                <span class="card-category-tag">Trace Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Iodine</h2>
-                <span class="card-subtext">Trace Minerals</span>
-            </div>
-        </div>
-
-        <!-- Manganese -->
-        <div class="nutrient-card" data-cat="trace-minerals" data-search="manganese mn trace minerals">
-            <div class="card-top">
-                <span class="card-symbol">Mn</span>
-                <span class="card-category-tag">Trace Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Manganese</h2>
-                <span class="card-subtext">Trace Minerals</span>
-            </div>
-        </div>
-
-        <!-- Selenium -->
-        <div class="nutrient-card" data-cat="trace-minerals" data-search="selenium se trace minerals">
-            <div class="card-top">
-                <span class="card-symbol">Se</span>
-                <span class="card-category-tag">Trace Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Selenium</h2>
-                <span class="card-subtext">Trace Minerals</span>
-            </div>
-        </div>
-
-        <!-- Copper -->
-        <div class="nutrient-card" data-cat="trace-minerals" data-search="copper cu trace minerals">
-            <div class="card-top">
-                <span class="card-symbol">Cu</span>
-                <span class="card-category-tag">Trace Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Copper</h2>
-                <span class="card-subtext">Trace Minerals</span>
-            </div>
-        </div>
-
-        <!-- Fluoride -->
-        <div class="nutrient-card" data-cat="trace-minerals" data-search="fluoride f trace minerals">
-            <div class="card-top">
-                <span class="card-symbol">F</span>
-                <span class="card-category-tag">Trace Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Fluoride</h2>
-                <span class="card-subtext">Trace Minerals</span>
-            </div>
-        </div>
-
-        <!-- Chromium -->
-        <div class="nutrient-card" data-cat="trace-minerals" data-search="chromium cr trace minerals">
-            <div class="card-top">
-                <span class="card-symbol">Cr</span>
-                <span class="card-category-tag">Trace Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Chromium</h2>
-                <span class="card-subtext">Trace Minerals</span>
-            </div>
-        </div>
-
-        <!-- Molybdenum -->
-        <div class="nutrient-card" data-cat="trace-minerals" data-search="molybdenum mo trace minerals">
-            <div class="card-top">
-                <span class="card-symbol">Mo</span>
-                <span class="card-category-tag">Trace Mineral</span>
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Molybdenum</h2>
-                <span class="card-subtext">Trace Minerals</span>
-            </div>
-        </div>
-
     </main>
 
-    <!-- Footer: Clean Links & Copyright -->
+    <!-- Standard Footer -->
     <footer>
-        <nav class="footer-links" aria-label="Footer Navigation">
-            <a href="/study/Footer/about.html">About</a>
-            <a href="/study/Footer/contact.html">Contact</a>
-            <a href="/study/Footer/privacy.html">Privacy Policy</a>
-            <a href="/study/Footer/terms.html">Terms &amp; Conditions</a>
-            <a href="/study/Footer/disclaimer.html">Disclaimer</a>
-        </nav>
-        <div class="footer-copyright">
-            &copy; 2026 Sathya. All rights reserved.
+        <div class="footer-links-row">
+            <a href="/study/Footer/about.html"><span class="nav-text">About</span></a>
+            <a href="/study/Footer/contact.html"><span class="nav-text">Contact</span></a>
+            <a href="/study/Footer/privacy.html"><span class="nav-text">Privacy Policy</span></a>
+            <a href="/study/Footer/terms.html"><span class="nav-text">Terms &amp; Conditions</span></a>
+            <a href="/study/Footer/disclaimer.html"><span class="nav-text">Disclaimer</span></a>
         </div>
+        <div class="copyright-tag">&copy; 2026 Sathya. All rights reserved.</div>
     </footer>
 
-    <!-- Interactive Filter & Search Engine -->
+    <!-- Interactive Navigation & Theme Engine -->
     <script>
-        const searchInput = document.getElementById('nutrientSearchInput');
-        const tabButtons = document.querySelectorAll('.tab-btn');
-        const cards = Array.from(document.querySelectorAll('.nutrient-card'));
+        // -------------------------------------------------------------
+        // 1. AUTOMATIC DEVICE THEME DETECTOR
+        // -------------------------------------------------------------
+        const bodyElement = document.body;
+        const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
 
-        let currentCategory = 'all';
-
-        function filterGrid() {
-            const query = (searchInput.value || '').trim().toLowerCase();
-
-            cards.forEach(card => {
-                const cardCat = card.getAttribute('data-cat');
-                const cardSearch = (card.getAttribute('data-search') || '').toLowerCase();
-                const cardTitle = (card.querySelector('.card-title')?.textContent || '').toLowerCase();
-                const cardSubtext = (card.querySelector('.card-subtext')?.textContent || '').toLowerCase();
-
-                const categoryMatch = (currentCategory === 'all') || (cardCat === currentCategory);
-                const queryMatch = !query || cardSearch.includes(query) || cardTitle.includes(query) || cardSubtext.includes(query);
-
-                if (categoryMatch && queryMatch) {
-                    card.classList.remove('is-dimmed');
-                    card.style.display = 'flex';
-                } else if (!categoryMatch) {
-                    card.style.display = 'none';
-                } else {
-                    card.style.display = 'flex';
-                    card.classList.add('is-dimmed');
-                }
-            });
+        function applyDeviceTheme() {
+            const saved = sessionStorage.getItem('dashboard-theme');
+            if (saved) {
+                bodyElement.classList.toggle('light-mode', saved === 'light');
+                document.documentElement.classList.toggle('light-mode', saved === 'light');
+            } else {
+                bodyElement.classList.toggle('light-mode', systemLightQuery.matches);
+                document.documentElement.classList.toggle('light-mode', systemLightQuery.matches);
+            }
         }
 
-        // Live Search Input Event
-        searchInput.addEventListener('input', filterGrid);
+        applyDeviceTheme();
+        systemLightQuery.addEventListener('change', applyDeviceTheme);
 
-        // Category Tab Switch Event
-        tabButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                tabButtons.forEach(b => b.classList.remove('is-active'));
-                this.classList.add('is-active');
-                currentCategory = this.getAttribute('data-cat');
-                filterGrid();
+        // -------------------------------------------------------------
+        // 2. BREADCRUMB SESSION STATE INITIALIZATION FOR NUTRITION
+        // -------------------------------------------------------------
+        try {
+            sessionStorage.setItem('breadcrumbTrail', JSON.stringify([
+                { name: "Home", path: "/nutrition/index.html" }
+            ]));
+        } catch (e) {}
+
+        // -------------------------------------------------------------
+        // 3. TACTILE TOUCH & CLICK INTERACTIONS
+        // -------------------------------------------------------------
+        const cards = Array.from(document.querySelectorAll('.apple-panel'));
+
+        cards.forEach((card) => {
+            // Instant tactile border reveal on touch / pointerdown
+            card.addEventListener('pointerdown', function() {
+                cards.forEach(c => {
+                    if (c !== this) c.classList.remove('is-card-lifted');
+                });
+                this.classList.add('is-card-lifted');
+            });
+
+            card.addEventListener('click', function(e) {
+                const destination = this.getAttribute('href');
+                
+                // If it's a placeholder link:
+                if (!destination || destination === '#' || destination.startsWith('javascript:')) {
+                    e.preventDefault();
+                    return;
+                }
+
+                // If navigating to mm.html (Track):
+                e.preventDefault();
+                cards.forEach(l => {
+                    l.classList.remove('is-wave-loading');
+                    l.classList.remove('is-card-lifted');
+                });
+
+                this.classList.add('is-card-lifted');
+                this.classList.add('is-wave-loading');
+                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
+
+                setTimeout(() => {
+                    window.location.href = destination;
+                }, 700);
             });
         });
 
-        // Tactile Click & Shimmer for Track card (mm.html)
-        cards.forEach(card => {
-            card.addEventListener('click', function(e) {
+        // Touch outside cards removes the lifted border state
+        document.addEventListener('pointerdown', (e) => {
+            if (!e.target.closest('.apple-panel')) {
+                cards.forEach(c => c.classList.remove('is-card-lifted'));
+            }
+        });
+
+        // Other target links (footer, brand pill)
+        const otherTargetLinks = document.querySelectorAll('.brand-pill, footer .footer-links-row a');
+        otherTargetLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
                 if (!destination || destination === '#' || destination.startsWith('javascript:')) return;
 
                 e.preventDefault();
+                this.classList.add('is-card-lifted');
                 this.classList.add('is-wave-loading');
+                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
+
                 setTimeout(() => {
                     window.location.href = destination;
-                }, 380);
+                }, 700);
             });
         });
 
         window.addEventListener('pageshow', () => {
-            cards.forEach(c => c.classList.remove('is-wave-loading'));
+            if (document.activeElement && document.activeElement.blur) {
+                document.activeElement.blur();
+            }
+
+            requestAnimationFrame(() => {
+                document.body.offsetHeight;
+                requestAnimationFrame(() => {
+                    document.querySelectorAll('.is-wave-loading, .is-card-lifted').forEach(l => {
+                        l.classList.remove('is-wave-loading');
+                        l.classList.remove('is-card-lifted');
+                    });
+                });
+            });
         });
+
+        // -------------------------------------------------------------
+        // 4. MATTE BLUR SEARCH BAR & SHARE ENGINE
+        // -------------------------------------------------------------
+        const searchInput = document.getElementById('nutritionSearchInput');
+        const shareBtn = document.getElementById('matteShareBtn');
+        const toastPill = document.getElementById('matteToastPill');
+        let toastTimeout = null;
+
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const query = this.value.trim().toLowerCase();
+                cards.forEach(card => {
+                    if (!query) {
+                        card.style.opacity = '';
+                        card.style.filter = '';
+                        card.style.pointerEvents = '';
+                        return;
+                    }
+                    const title = (card.querySelector('.panel-title')?.textContent || '').toLowerCase();
+                    const subtext = (card.querySelector('.panel-subtext')?.textContent || '').toLowerCase();
+                    const aria = (card.getAttribute('aria-label') || '').toLowerCase();
+
+                    const matches = title.includes(query) || subtext.includes(query) || aria.includes(query);
+                    if (matches) {
+                        card.style.opacity = '1';
+                        card.style.filter = 'none';
+                        card.style.pointerEvents = 'auto';
+                    } else {
+                        card.style.opacity = '0.2';
+                        card.style.filter = 'grayscale(0.65)';
+                        card.style.pointerEvents = 'none';
+                    }
+                });
+            });
+        }
+
+        if (shareBtn && toastPill) {
+            shareBtn.addEventListener('click', async function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const shareUrl = window.location.href;
+
+                let copied = false;
+                if (navigator.clipboard && window.isSecureContext) {
+                    try {
+                        await navigator.clipboard.writeText(shareUrl);
+                        copied = true;
+                    } catch (err) {}
+                }
+
+                if (!copied) {
+                    try {
+                        const tempInput = document.createElement('input');
+                        tempInput.value = shareUrl;
+                        document.body.appendChild(tempInput);
+                        tempInput.select();
+                        copied = document.execCommand('copy');
+                        document.body.removeChild(tempInput);
+                    } catch (err) {}
+                }
+
+                toastPill.textContent = copied ? 'Link copied' : 'Sharing link';
+                toastPill.classList.add('show');
+                if (toastTimeout) clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toastPill.classList.remove('show');
+                }, 2200);
+            });
+        }
     </script>
+    <script src="/script.js"></script>
 </body>
 </html>
