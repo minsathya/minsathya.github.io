@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
-    <meta name="theme-color" content="#191843">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>sathya.</title>
 
     <meta name="description" content="Personal space for UPSC CSE study notes, resources, and syllabus.">
@@ -28,7 +26,7 @@
       gtag('config', 'G-5VGX2K64Y4');
     </script>
     
-    <!-- Favicon & Apple Touch Icon (iPad & Safari support) -->
+    <!-- Favicon & Apple Touch Icon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
     <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=3">
     <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png?v=3">
@@ -52,16 +50,13 @@
     
     <style>
         :root {
-            /* Ultra-smooth gradual curves */
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 
-            /* Atmospheric Deep Night Blue Sky - Rich & Dark */
-            --sky-gradient: radial-gradient(ellipse at 50% 22%, #191742 0%, #121132 50%, #0a0921 100%);
+            /* Theme Tokens: Dark Mode Default */
+            --bg-color: #0b0b0b;
             --text-main: #ffffff;
-            --text-muted: #9998b3;
-
-            /* Study Capsule Panels */
+            --text-muted: #888888;
             --panel-bg: #121212;
             --panel-border: #222222;
             --row-divider: #1c1c1c;
@@ -69,6 +64,7 @@
         }
 
         body.light-mode {
+            --bg-color: #f5f5f7;
             --text-main: #111111;
             --text-muted: #8e8e93;
             --panel-bg: #ffffff;
@@ -78,8 +74,7 @@
         }
 
         html {
-            background: var(--sky-gradient) !important;
-            background-color: #0a0921 !important;
+            background-color: var(--bg-color);
             min-height: 100vh;
             min-height: 100dvh;
             width: 100%;
@@ -94,7 +89,7 @@
         }
 
         body {
-            background: transparent !important;
+            background-color: var(--bg-color);
             color: var(--text-main);
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
@@ -109,68 +104,11 @@
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             position: relative;
-            transition: color 0.8s var(--ease-smooth);
+            transition: background-color 0.4s var(--ease-smooth), color 0.4s var(--ease-smooth);
         }
 
         /* -------------------------------------------------------------
-           ATMOSPHERIC 3D SKY LAYER (STARS & CLOUDS) - GPU OPTIMIZED
-           ------------------------------------------------------------- */
-        .sky-scene {
-            position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-            contain: strict;
-        }
-
-        .stars-layer {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 1;
-        }
-
-        .star {
-            position: absolute;
-            border-radius: 50%;
-            background: #fff6d6;
-            box-shadow: 0 0 6px rgba(255, 238, 180, 0.8), 0 0 12px rgba(255, 218, 120, 0.4);
-            animation: starTwinkle 3.6s infinite ease-in-out alternate;
-            transform: translateZ(0);
-        }
-
-        /* Distributed across night sky — STRICTLY CLEAR of top-left (s. brand area) */
-        .star-1  { width: 3px;   height: 3px;   top: 8%;  left: 52%; animation-delay: 0s; }
-        .star-2  { width: 4px;   height: 4px;   top: 14%; left: 78%; animation-delay: 1.1s; }
-        .star-3  { width: 2.5px; height: 2.5px; top: 9%;  left: 91%; animation-delay: 2.2s; }
-        .star-4  { width: 3.5px; height: 3.5px; top: 24%; left: 64%; animation-delay: 0.7s; }
-        .star-5  { width: 2px;   height: 2px;   top: 22%; left: 42%; animation-delay: 1.8s; }
-        .star-6  { width: 4px;   height: 4px;   top: 36%; left: 88%; animation-delay: 2.9s; }
-        .star-7  { width: 3px;   height: 3px;   top: 48%; left: 7%;  animation-delay: 0.5s; }
-        .star-8  { width: 2.5px; height: 2.5px; top: 68%; left: 12%; animation-delay: 1.4s; }
-        .star-9  { width: 3.5px; height: 3.5px; top: 82%; left: 18%; animation-delay: 2.7s; }
-        .star-10 { width: 3px;   height: 3px;   top: 75%; left: 85%; animation-delay: 1.9s; }
-        .star-11 { width: 4px;   height: 4px;   top: 86%; left: 68%; animation-delay: 0.9s; }
-        .star-12 { width: 2px;   height: 2px;   top: 56%; left: 94%; animation-delay: 3.1s; }
-        .star-13 { width: 3px;   height: 3px;   top: 18%; left: 84%; animation-delay: 1.6s; }
-        .star-14 { width: 2.5px; height: 2.5px; top: 32%; left: 48%; animation-delay: 2.4s; }
-        .star-15 { width: 3px;   height: 3px;   top: 62%; left: 55%; animation-delay: 1.2s; }
-
-        @keyframes starTwinkle {
-            0%   { transform: scale(0.8) translateZ(0);  opacity: 0.4; }
-            50%  { transform: scale(1.25) translateZ(0); opacity: 0.95; }
-            100% { transform: scale(0.85) translateZ(0); opacity: 0.55; }
-        }
-
-        /* -------------------------------------------------------------
-           FIXED, BUTTERY SMOOTH 60FPS MASTER ENTRANCE ANIMATION
-           - Subtle 10px micro-lift eliminates layout paint spikes
-           - Snappy 0.48s Apple-grade deceleration curve
-           - No static GPU texture allocation thrashing
+           60FPS MASTER ENTRANCE ANIMATION
            ------------------------------------------------------------- */
         @keyframes masterEntrance {
             0% {
@@ -205,7 +143,7 @@
         }
 
         /* -------------------------------------------------------------
-           TOP NAVIGATION: 's.' BRAND PILL WITH PEACH DOT
+           TOP NAVIGATION: 's' BRANDMARK WITH TWINKLING STAR
            ------------------------------------------------------------- */
         .top-nav-bar {
             width: 100%;
@@ -215,7 +153,6 @@
             margin-bottom: 28px;
         }
 
-        /* 's.' brand link directly on background */
         .brand-pill {
             position: relative;
             display: inline-flex;
@@ -234,47 +171,50 @@
             touch-action: manipulation;
             cursor: pointer;
             user-select: none;
-            
-            -webkit-transform: translateZ(0);
             transform: translateZ(0);
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            
-            transition: transform 0.55s var(--ease-smooth);
-        }
-
-        /* 's' font color follows device theme */
-        .brand-letter {
-            color: var(--text-main);
-            transition: color 0.8s var(--ease-smooth);
-            line-height: 1;
-        }
-
-        /* Round full stop '.' rendered as a pure CSS circle — sits right at the baseline */
-        .brand-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: #ff9e79 !important;
-            border-radius: 50% !important;
-            margin-left: 2px;
-            margin-bottom: 0 !important;
-            vertical-align: -1px;
-            flex-shrink: 0;
-            line-height: 1;
-            transition: background-color 0.8s var(--ease-smooth);
+            transition: transform 0.45s var(--ease-smooth);
         }
 
         .brand-pill:hover,
-        .brand-pill:focus-within,
-        .brand-pill:active,
-        .brand-pill.is-pill-lifted {
-            transform: translate3d(0, -4px, 0) scale3d(1.02, 1.02, 1);
-            box-shadow: none !important;
+        .brand-pill:active {
+            transform: translate3d(0, -3px, 0) scale3d(1.02, 1.02, 1);
+        }
+
+        .brand-letter {
+            color: var(--text-main);
+            transition: color 0.4s var(--ease-smooth);
+            line-height: 1;
+        }
+
+        /* Brand Twinkling Star (Scales up to size of dot in #ff9e79) */
+        .brand-star-wrap {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 10px;
+            height: 10px;
+            margin-left: 3px;
+            vertical-align: 2px;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .brand-star {
+            width: 9px;
+            height: 9px;
+            display: block;
+            transform-origin: center center;
+            animation: brandStarPulse 2.8s infinite ease-in-out;
+        }
+
+        @keyframes brandStarPulse {
+            0%   { transform: scale(0.35) translateZ(0); opacity: 0.45; filter: drop-shadow(0 0 2px rgba(255, 158, 121, 0.4)); }
+            50%  { transform: scale(1.0) translateZ(0);  opacity: 1;    filter: drop-shadow(0 0 6px rgba(255, 158, 121, 0.9)); }
+            100% { transform: scale(0.35) translateZ(0); opacity: 0.45; filter: drop-shadow(0 0 2px rgba(255, 158, 121, 0.4)); }
         }
 
         /* -------------------------------------------------------------
-           MAIN STUDY SECTION: MATRIX CANVAS (STUDY CAPSULE PANELS)
+           MAIN STUDY SECTION: MATRIX CANVAS (5 CAPSULE PANELS)
            ------------------------------------------------------------- */
         main {
             flex-grow: 1;
@@ -307,20 +247,16 @@
             height: 100%;
             touch-action: manipulation;
             box-sizing: border-box;
-            
-            -webkit-transform: translateZ(0);
             transform: translateZ(0);
-            -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            
             transition: transform 0.45s var(--ease-smooth), 
                         box-shadow 0.45s var(--ease-smooth), 
                         border-color 0.45s var(--ease-smooth), 
-                        background-color 0.6s var(--ease-smooth);
+                        background-color 0.4s var(--ease-smooth);
         }
 
-        body:not(.light-mode) .capsule-panel {
-            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.42);
+        body.light-mode .capsule-panel {
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
         }
 
         /* Hover Elevation: Smooth lift and contour highlight */
@@ -329,6 +265,9 @@
                 border-color: var(--panel-border-hover); 
                 transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1); 
                 box-shadow: 0 24px 48px rgba(0, 0, 0, 0.48);
+            }
+            body.light-mode .capsule-panel:hover {
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
             }
         }
 
@@ -348,7 +287,7 @@
             color: var(--text-main);
             margin-bottom: 24px;
             padding: 0 24px;
-            transition: color 0.6s var(--ease-smooth);
+            transition: color 0.4s var(--ease-smooth);
         }
 
         .document-list { 
@@ -359,7 +298,7 @@
 
         .document-list li { 
             border-bottom: 1px solid var(--row-divider); 
-            transition: border-color 0.6s var(--ease-smooth); 
+            transition: border-color 0.4s var(--ease-smooth); 
         }
 
         .document-list li:last-child { 
@@ -385,30 +324,6 @@
 
         body.light-mode .document-list li:hover a {
             color: #000000 !important;
-        }
-
-        .view-more-container {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            margin-top: 20px;
-            padding-top: 12px;
-            border-top: 1px dashed var(--row-divider);
-            transition: border-color 0.6s var(--ease-smooth);
-        }
-
-        .view-more-link {
-            color: #8a9a86 !important;
-            font-weight: 600;
-            text-decoration: none !important;
-            font-size: 0.95rem;
-            display: inline-block;
-            transition: opacity 0.2s ease, transform 0.3s var(--ease-smooth);
-        }
-
-        .view-more-link:hover { 
-            opacity: 0.85; 
-            transform: scale(1.03); 
         }
 
         /* -------------------------------------------------------------
@@ -439,7 +354,7 @@
             font-weight: 400;
             display: inline-block;
             backface-visibility: hidden;
-            transition: color 0.4s var(--ease-smooth);
+            transition: color 0.3s var(--ease-smooth);
         }
 
         .footer-links-row a:hover { color: var(--text-main) !important; }
@@ -448,7 +363,7 @@
             opacity: 0.7; 
             font-size: 12px; 
             letter-spacing: 0.2px; 
-            transition: color 0.8s var(--ease-smooth); 
+            transition: color 0.4s var(--ease-smooth); 
         }
 
         .nav-text {
@@ -461,7 +376,6 @@
 
         @media (hover: hover) and (pointer: fine) {
             .matrix-canvas a:hover .nav-text,
-            .view-more-link:hover .nav-text,
             .footer-links-row a:hover .nav-text,
             .brand-pill:hover .nav-text {
                 transform: scale3d(1.05, 1.05, 1) !important;
@@ -515,11 +429,6 @@
                 font-size: 36px;
             }
 
-            .brand-dot {
-                width: 7px;
-                height: 7px;
-            }
-
             .matrix-canvas {
                 grid-template-columns: 1fr;
                 gap: 18px;
@@ -541,55 +450,23 @@
                 font-size: 14px;
             }
         }
-
-        /* Instant landing helper */
-        html.instant-landing .brand-pill,
-        html.instant-landing footer {
-            animation: none !important;
-            opacity: 1 !important;
-            transform: none !important;
-        }
-
-        html.instant-landing,
-        html.instant-landing body,
-        html.instant-landing main,
-        html.instant-landing * {
-            transition: none !important;
-            transition-duration: 0s !important;
-        }
     </style>
 </head>
 <body class="root-home">
 
-    <!-- High-Quality Atmospheric Night Sky: Night Blue with Glowing Stars (Clear of top-left s. brand) -->
-    <div class="sky-scene" aria-hidden="true">
-        <div class="stars-layer">
-            <div class="star star-1"></div>
-            <div class="star star-2"></div>
-            <div class="star star-3"></div>
-            <div class="star star-4"></div>
-            <div class="star star-5"></div>
-            <div class="star star-6"></div>
-            <div class="star star-7"></div>
-            <div class="star star-8"></div>
-            <div class="star star-9"></div>
-            <div class="star star-10"></div>
-            <div class="star star-11"></div>
-            <div class="star star-12"></div>
-            <div class="star star-13"></div>
-            <div class="star star-14"></div>
-            <div class="star star-15"></div>
-        </div>
-    </div>
-
-    <!-- Top Left Brand 's.' with Peach Dot -->
+    <!-- Top Left Brand 's' with Animated Twinkling Star -->
     <nav class="top-nav-bar" id="topNavBar">
-        <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="s.">
-            <span class="brand-letter">s</span><span class="brand-dot" aria-hidden="true"></span>
+        <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="sathya.">
+            <span class="brand-letter">s</span>
+            <span class="brand-star-wrap" aria-hidden="true">
+                <svg class="brand-star" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z" fill="#ff9e79"/>
+                </svg>
+            </span>
         </a>
     </nav>
     
-    <!-- Main Content: Study Matrix Canvas (Direct Study Content, No Header) -->
+    <!-- Main Content: Study Matrix Canvas (5 Panels - Contents Panel Removed) -->
     <main>
         <div class="matrix-canvas">
             <!-- 1. Upsc -->
@@ -612,20 +489,7 @@
                 </ul>
             </div>
 
-            <!-- 3. Contents -->
-            <div class="capsule-panel">
-                <h2 class="panel-title">Contents</h2>
-                <ul class="document-list">
-                    <li><a href="/study/contents.html#art-culture"><span class="nav-text">Art and culture</span></a></li>
-                    <li><a href="/study/contents.html#history"><span class="nav-text">History</span></a></li>
-                    <li><a href="/study/contents.html#indian-society"><span class="nav-text">Indian society</span></a></li>
-                </ul>
-                <div class="view-more-container">
-                    <a href="/study/contents.html" class="view-more-link"><span class="nav-text">View more</span></a>
-                </div>
-            </div>
-
-            <!-- 4. Must read -->
+            <!-- 3. Must read -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Must read</h2>
                 <ul class="document-list">
@@ -634,7 +498,7 @@
                 </ul>
             </div>
 
-            <!-- 5. Chapters -->
+            <!-- 4. Chapters -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Chapters</h2>
                 <ul class="document-list">
@@ -642,7 +506,7 @@
                 </ul>
             </div>
 
-            <!-- 6. Essays -->
+            <!-- 5. Essays -->
             <div class="capsule-panel">
                 <h2 class="panel-title">Essays</h2>
                 <ul class="document-list">
@@ -668,9 +532,6 @@
 
     <!-- Interactive Navigation Engine -->
     <script>
-        // -------------------------------------------------------------
-        // 1. SCROLL RESTORATION & BREADCRUMB INITIALIZATION
-        // -------------------------------------------------------------
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }
@@ -680,29 +541,7 @@
             sessionStorage.removeItem('breadcrumbTrail');
         } catch (e) {}
 
-        // -------------------------------------------------------------
-        // 2. BRAND PILL TACTILE LIFT & RECOIL
-        // -------------------------------------------------------------
-        const brandPill = document.getElementById('brandPill');
-        if (brandPill) {
-            brandPill.addEventListener('pointerdown', () => {
-                brandPill.classList.add('is-pill-lifted');
-            });
-
-            brandPill.addEventListener('pointerup', () => {
-                if (!brandPill.matches(':hover')) {
-                    brandPill.classList.remove('is-pill-lifted');
-                }
-            });
-
-            brandPill.addEventListener('pointerleave', () => {
-                brandPill.classList.remove('is-pill-lifted');
-            });
-        }
-
-        // -------------------------------------------------------------
-        // 3. TACTILE TOUCH & CLICK INTERACTIONS FOR CAPSULE PANELS
-        // -------------------------------------------------------------
+        // Capsule panel touch feedback
         const capsulePanels = document.querySelectorAll('.capsule-panel');
         capsulePanels.forEach(panel => {
             panel.addEventListener('pointerdown', () => {
@@ -721,15 +560,14 @@
             panel.addEventListener('pointercancel', releasePanelLift);
         });
 
-        // Touch outside panels removes lifted state
         document.addEventListener('pointerdown', (e) => {
             if (!e.target.closest('.capsule-panel')) {
                 capsulePanels.forEach(p => p.classList.remove('is-panel-lifted'));
             }
         });
 
-        // Target links with wave shimmer animation
-        const targetLinks = document.querySelectorAll('.matrix-canvas a, .view-more-link, footer .footer-links-row a, .brand-pill');
+        // Target links with wave shimmer
+        const targetLinks = document.querySelectorAll('.matrix-canvas a, footer .footer-links-row a, .brand-pill');
         targetLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
@@ -742,36 +580,23 @@
 
                 setTimeout(() => {
                     window.location.href = destination;
-                }, 550);
+                }, 500);
             });
         });
 
-        // Page-show reset on forward/backward navigation
         window.addEventListener('pageshow', () => {
             if (document.activeElement && document.activeElement.blur) {
                 document.activeElement.blur();
             }
-
             requestAnimationFrame(() => {
                 document.body.offsetHeight;
                 requestAnimationFrame(() => {
-                    if (brandPill) brandPill.classList.remove('is-pill-lifted');
                     document.querySelectorAll('.is-wave-loading, .is-panel-lifted').forEach(l => {
                         l.classList.remove('is-wave-loading');
                         l.classList.remove('is-panel-lifted');
                     });
                 });
             });
-
-            if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
-                sessionStorage.removeItem('activeUniversalTargetUrl');
-                return;
-            }
-
-            const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
-            if (savedTargetUrl) {
-                sessionStorage.removeItem('activeUniversalTargetUrl');
-            }
         });
     </script>
     <script src="/script.js"></script>

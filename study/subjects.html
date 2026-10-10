@@ -1,20 +1,23 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
     <title>Subjects - sathya.</title>
 
-    <!-- Universal iPad stabilization: catches text fragments instantly before document draw -->
+    <meta name="description" content="This page contains all the subjects for UPSC CSE and must read chapters in each subject.">
+    <meta name="keywords" content="UPSC syllabus, UPSC subjects list, important upsc topics, General Studies notes, UPSC CSE, Indian Polity Laxmikanth, Geography for UPSC, Indian History index, Subject breakdown">
+
+    <!-- Universal iPad stabilization -->
     <script>
       if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
         document.documentElement.classList.add('instant-landing');
       }
     </script>
 
-    <meta name="description" content="This page contains all the subjects for UPSC CSE and must read chapters in each subject.">
-    <meta name="keywords" content="UPSC syllabus, UPSC subjects list, important upsc topics, General Studies notes, UPSC CSE, Indian Polity Laxmikanth, Geography for UPSC, Indian History index, Subject breakdown">
-    
+    <!-- Google Tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -22,56 +25,63 @@
       gtag('js', new Date());
       gtag('config', 'G-5VGX2K64Y4');
     </script>
-    
-    <!-- Relative paths for files inside /study/ -->
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
+
+    <!-- Favicon & Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
     <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=3">
     <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png?v=3">
-    <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png?v=3?v=3">
+    <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png?v=3">
 
     <script>
       const favicon = document.getElementById('favicon');
       const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
-      
       function updateFavicon(e) {
-        favicon.href = e.matches ? '../favicon-dark.png?v=3' : '../favicon-light.png?v=3';
+        favicon.href = e.matches ? '/favicon-dark.png?v=3' : '/favicon-light.png?v=3';
       }
-      
       updateFavicon(darkMode);
       darkMode.addEventListener('change', updateFavicon);
     </script>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
+            --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+
+            /* Theme Tokens: Dark Mode Default */
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
-            --text-muted: #555555;
-            --panel-bg: #121212;
+            --text-muted: #737373;
+            --panel-bg: #141414;
             --panel-border: #222222;
             --row-divider: #1c1c1c;
-            --row-hover: rgba(255, 255, 255, 0.015);
-            --header-bg: #1a231e;
-            --header-border: #222c26;
-            --cascade-distance: 24px;
-            --cascade-duration-exit: 0.2s;
-            --cascade-duration-entry: 0.28s;
+            --row-hover: rgba(255, 255, 255, 0.03);
+
+            /* Pill Buttons */
+            --open-btn-bg: #222222;
+            --open-btn-text: #ffffff;
+            --close-btn-bg: #0080FF;
+            --close-btn-text: #ffffff;
+            --back-btn-hover: rgba(255, 255, 255, 0.08);
         }
 
         body.light-mode {
-            --bg-color: #ebebe4;
+            --bg-color: #f5f5f7;
             --text-main: #111111;
-            --text-muted: #a1a1a6;
+            --text-muted: #8e8e93;
             --panel-bg: #ffffff;
             --panel-border: #e2e2e7;
             --row-divider: #f2f2f7;
-            --row-hover: rgba(0, 0, 0, 0.01);
-            --header-bg: #e9ebe6;
-            --header-border: #d4d8cf;
+            --row-hover: rgba(0, 0, 0, 0.02);
+
+            --open-btn-bg: #ebebf0;
+            --open-btn-text: #1c1c1e;
+            --close-btn-bg: #0080FF;
+            --close-btn-text: #ffffff;
+            --back-btn-hover: rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -82,599 +92,1227 @@
             tap-highlight-color: transparent !important;
         }
 
+        html {
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            min-height: 100dvh;
+            width: 100%;
+        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 60px 24px;
-            max-width: 1200px;
+            padding: 36px 24px 32px 24px;
+            max-width: 920px;
             margin: 0 auto;
-            width: 95%;
+            width: 100%;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            transition: background-color 0.8s var(--ease-premium), color 0.8s var(--ease-premium);
+            transition: background-color 0.4s var(--ease-smooth), color 0.4s var(--ease-smooth);
         }
 
-        @keyframes masterEntrance {
-            from { opacity: 0; transform: translate3d(0, 24px, 0); }
-            to { opacity: 1; transform: translate3d(0, 0, 0); }
-        }
-
-        header, .breadcrumb-nav, .page-main-heading, .wide-capsule, footer {
-            opacity: 1;
-            will-change: transform, opacity;
-            animation: masterEntrance 1.2s var(--ease-premium) backwards;
-        }
-
-        header { animation-delay: 0.04s; }
-        .breadcrumb-nav { animation-delay: 0.08s; }
-        .page-main-heading { animation-delay: 0.12s; }
-        .wide-capsule { animation-delay: 0.16s; }
-        footer { animation-delay: 0.24s; }
-
-        header {
-            position: relative;
-            background-color: var(--header-bg);
-            border: 1px solid var(--header-border);
-            border-radius: 50px;
+        /* -------------------------------------------------------------
+           TOP NAVIGATION: 's' BRANDMARK WITH TWINKLING STAR
+           ------------------------------------------------------------- */
+        .top-nav-bar {
             width: 100%;
-            height: 72px;
-            margin: 0 auto 60px auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
-            overflow: hidden;
-            transition: background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
-        }
-        body:not(.light-mode) header { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); }
-
-        .header-inner-view {
-            position: absolute; inset: 0; width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 32px; will-change: transform, opacity;
-            backface-visibility: hidden; -webkit-backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 24px;
         }
 
-        #headerMainView { opacity: 1; transform: translate3d(0, 0, 0); pointer-events: auto; z-index: 2; }
-        #headerSearchView { opacity: 0; transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0); pointer-events: none; z-index: 1; }
+        .brand-pill {
+            position: relative;
+            display: inline-flex;
+            align-items: baseline;
+            justify-content: flex-start;
+            height: auto;
+            padding: 0 4px;
+            background-color: transparent;
+            border: none;
+            text-decoration: none !important;
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -1.2px;
+            line-height: 1;
+            cursor: pointer;
+            user-select: none;
+            transform: translateZ(0);
+            transition: transform 0.45s var(--ease-smooth);
+        }
 
-        header.state-search #headerMainView { animation: skyfallExit var(--cascade-duration-exit) ease-in both; pointer-events: none; }
-        header.state-search #headerSearchView { animation: skyfallEntry var(--cascade-duration-entry) var(--ease-premium) both; animation-delay: var(--cascade-duration-exit); pointer-events: auto; }
-        header.state-main #headerSearchView { animation: skyfallExit var(--cascade-duration-exit) ease-in both; pointer-events: none; }
-        header.state-main #headerMainView { animation: skyfallEntry var(--cascade-duration-entry) var(--ease-premium) both; animation-delay: var(--cascade-duration-exit); pointer-events: auto; }
+        .brand-pill:hover,
+        .brand-pill:active {
+            transform: translate3d(0, -3px, 0) scale3d(1.02, 1.02, 1);
+        }
 
-        @keyframes skyfallExit { 0% { transform: translate3d(0, 0, 0); opacity: 1; } 100% { transform: translate3d(0, var(--cascade-distance), 0); opacity: 0; } }
-        @keyframes skyfallEntry { 0% { transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0); opacity: 0; } 100% { transform: translate3d(0, 0, 0); opacity: 1; } }
+        .brand-letter {
+            color: var(--text-main);
+            line-height: 1;
+            transition: color 0.4s var(--ease-smooth);
+        }
 
-        .header-right-cluster, .search-control-cluster { display: flex; align-items: center; gap: 20px; height: 100%; }
-        .logo { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; color: var(--text-main); text-decoration: none !important; transition: color 0.8s var(--ease-premium); }
-        .ctrl-btn { background: none; border: none; outline: none; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; transition: opacity 0.2s var(--ease-premium), color 0.8s var(--ease-premium); }
-        .ctrl-btn:hover { opacity: 0.6; }
-        .ctrl-btn svg, .search-static-icon { width: 22px; height: 22px; fill: none; stroke: var(--text-main); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.8s var(--ease-premium); }
-        .search-static-icon { opacity: 0.4; }
-        .search-core-input { flex-grow: 1; background: transparent; border: none; outline: none; color: var(--text-main); font-family: 'Poppins', sans-serif; font-size: 16px; padding: 0 16px; width: 100%; will-change: transform, opacity; transition: color 0.8s var(--ease-premium); }
-        
-        .theme-toggle { width: 32px; height: 32px; position: relative; cursor: pointer; user-select: none; display: flex; align-items: center; justify-content: center; }
-        .theme-toggle svg { position: absolute; top: 50%; left: 50%; width: 22px; height: 22px; fill: none; stroke: var(--text-main); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transform-origin: center center; transition: transform 0.8s var(--ease-premium), opacity 0.8s var(--ease-premium), stroke 0.8s var(--ease-premium); }
-        .theme-toggle .sun-icon { opacity: 0; transform: translate(-50%, -50%) rotate(-90deg) scale(0.4); }
-        .theme-toggle .moon-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
-        body.light-mode .theme-toggle .sun-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
-        body.light-mode .theme-toggle .moon-icon { opacity: 0; transform: translate(-50%, -50%) rotate(90deg) scale(0.4); }
+        /* Brand Twinkling Star (Scales up to size of dot in #ff9e79) */
+        .brand-star-wrap {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 10px;
+            height: 10px;
+            margin-left: 3px;
+            vertical-align: 2px;
+            flex-shrink: 0;
+            line-height: 1;
+        }
 
-        .breadcrumb-nav { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 400; margin-bottom: 8px; padding-left: 8px; flex-wrap: wrap; row-gap: 8px; }
-        .breadcrumb-nav a, .breadcrumb-nav a:visited { color: var(--text-muted) !important; }
-        .breadcrumb-nav a { color: var(--text-muted) !important; text-decoration: none !important; transition: color 0.4s var(--ease-premium); }
-        .breadcrumb-separator { color: var(--text-muted); opacity: 0.4; user-select: none; }
-        .breadcrumb-current { color: var(--text-main); opacity: 0.8; }
+        .brand-star {
+            width: 9px;
+            height: 9px;
+            display: block;
+            transform-origin: center center;
+            animation: brandStarPulse 2.8s infinite ease-in-out;
+        }
 
-        .page-main-heading { font-size: 24px; font-weight: 600; letter-spacing: -0.5px; color: var(--text-main); margin-bottom: 12px; padding-left: 8px; transition: color 0.8s var(--ease-premium); }
+        @keyframes brandStarPulse {
+            0%   { transform: scale(0.35) translateZ(0); opacity: 0.45; filter: drop-shadow(0 0 2px rgba(255, 158, 121, 0.4)); }
+            50%  { transform: scale(1.0) translateZ(0);  opacity: 1;    filter: drop-shadow(0 0 6px rgba(255, 158, 121, 0.9)); }
+            100% { transform: scale(0.35) translateZ(0); opacity: 0.45; filter: drop-shadow(0 0 2px rgba(255, 158, 121, 0.4)); }
+        }
 
-        .subjects-container { display: flex; flex-direction: column; gap: 32px; margin-bottom: 80px; width: 100%; }
-        
-        .wide-capsule {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--panel-border);
-            border-radius: 28px;
-            padding: 40px 48px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+        /* -------------------------------------------------------------
+           PAGE HEADER ROW: BACK ARROW + SUBJECTS TITLE
+           ------------------------------------------------------------- */
+        .subjects-header-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .back-icon-btn {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-main);
+            padding: 0;
+            flex-shrink: 0;
+            transition: background-color 0.2s var(--ease-smooth), transform 0.2s var(--ease-smooth);
+        }
+
+        .back-icon-btn:hover {
+            background-color: var(--back-btn-hover);
+            transform: translate3d(-2px, 0, 0);
+        }
+
+        .back-icon-btn svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            stroke-width: 2.4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.6px;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        /* -------------------------------------------------------------
+           MAIN SUBJECTS LIST & 3D ACCORDION PANELS
+           ------------------------------------------------------------- */
+        main {
+            flex-grow: 1;
+            width: 100%;
             display: flex;
             flex-direction: column;
-            width: 100%;
-            transition: border-color 0.8s var(--ease-premium), background-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+            gap: 16px;
+            padding-bottom: 48px;
         }
-        body:not(.light-mode) .wide-capsule { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
 
-        .topics-vertical-stack {
+        .subject-accordion-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            transition: background-color 0.4s var(--ease-smooth),
+                        border-color 0.4s var(--ease-smooth),
+                        box-shadow 0.4s var(--ease-smooth),
+                        transform 0.3s var(--ease-smooth);
+            will-change: transform;
+        }
+
+        body.light-mode .subject-accordion-card {
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .subject-accordion-card:hover {
+                border-color: rgba(255, 255, 255, 0.18);
+            }
+            body.light-mode .subject-accordion-card:hover {
+                border-color: rgba(0, 0, 0, 0.18);
+            }
+        }
+
+        /* Header row inside each subject card */
+        .subject-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            cursor: pointer;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        .subject-title {
+            font-size: 19px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            color: var(--text-main);
+            line-height: 1.2;
+            transition: color 0.3s var(--ease-smooth);
+        }
+
+        /* Open / Close Pill Button */
+        .accordion-toggle-btn {
+            background-color: var(--open-btn-bg);
+            color: var(--open-btn-text);
+            border: none;
+            outline: none;
+            border-radius: 20px;
+            padding: 7px 20px;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 600;
+            letter-spacing: 0.1px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background-color 0.28s var(--ease-smooth),
+                        color 0.28s var(--ease-smooth),
+                        transform 0.2s var(--ease-smooth);
+        }
+
+        .subject-accordion-card.is-expanded .accordion-toggle-btn {
+            background-color: var(--close-btn-bg) !important;
+            color: var(--close-btn-text) !important;
+            box-shadow: 0 4px 12px rgba(0, 128, 255, 0.35);
+        }
+
+        .accordion-toggle-btn:hover {
+            transform: scale(1.04);
+        }
+
+        .accordion-toggle-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* -------------------------------------------------------------
+           SMOOTH CSS GRID ACCORDION CONTENT EXPANSION
+           ------------------------------------------------------------- */
+        .accordion-content-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.36s var(--ease-premium);
+        }
+
+        .subject-accordion-card.is-expanded .accordion-content-wrapper {
+            grid-template-rows: 1fr;
+        }
+
+        .accordion-content-inner {
+            overflow: hidden;
+            opacity: 0;
+            transform: translate3d(0, -6px, 0);
+            transition: opacity 0.32s var(--ease-smooth), transform 0.32s var(--ease-smooth);
+        }
+
+        .subject-accordion-card.is-expanded .accordion-content-inner {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .subject-drawer-body {
+            padding: 4px 24px 22px 24px;
+        }
+
+        /* Sub-section Uppercase Heading (e.g. INDIAN HISTORY, WORLD HISTORY) */
+        .subject-sub-heading {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin: 18px 0 10px 4px;
+        }
+
+        .subject-sub-heading:first-child {
+            margin-top: 6px;
+        }
+
+        /* Topics List Inside Accordion */
+        .subject-topics-list {
             list-style: none;
             display: flex;
             flex-direction: column;
-            counter-reset: subject-counter;
         }
 
-        .topics-vertical-stack li {
+        .subject-topic-item {
             border-bottom: 1px solid var(--row-divider);
+            transition: border-color 0.3s var(--ease-smooth);
+        }
+
+        .subject-topic-item:last-child {
+            border-bottom: none;
+        }
+
+        .subject-topic-link {
             display: flex;
             align-items: center;
-            transition: border-color 0.8s var(--ease-premium);
-            counter-increment: subject-counter;
-        }
-        .topics-vertical-stack li:last-child { border-bottom: none; }
-
-        .topics-vertical-stack a {
-            display: block;
-            width: 100%;
-            padding: 16px 0 16px 36px;
+            justify-content: space-between;
+            padding: 14px 8px;
             color: var(--text-main);
-            opacity: 0.8;
+            opacity: 0.9;
             text-decoration: none !important;
-            font-size: 15.5px;
-            font-weight: 400;
-            position: relative;
-            transition: color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), padding 0.4s var(--ease-premium);
-        }
-
-        .topics-vertical-stack a::before {
-            content: counter(subject-counter) ".";
-            position: absolute;
-            left: 4px;
-            color: var(--text-muted);
-            font-weight: 500;
             font-size: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            transition: color 0.4s var(--ease-premium);
+            font-weight: 400;
+            border-radius: 10px;
+            transition: background-color 0.2s var(--ease-smooth), opacity 0.2s var(--ease-smooth), color 0.2s var(--ease-smooth);
         }
 
-        .topics-vertical-stack li:hover a { opacity: 1 !important; }
-        .topics-vertical-stack li:hover a::before { color: var(--text-main); }
+        .subject-topic-link:hover {
+            opacity: 1;
+            background-color: var(--row-hover);
+        }
 
-        footer { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
-        .footer-links-row { display: flex; justify-content: center; align-items: center; gap: 32px; flex-wrap: wrap; width: 100%; }
-        .footer-links-row a { color: var(--text-muted) !important; text-decoration: none !important; font-size: 14px; font-weight: 400; display: inline-block; transition: color 0.4s var(--ease-premium); }
-        .footer-links-row a:hover { color: var(--text-main) !important; }
-        .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; letter-spacing: 0.2px; transition: color 0.8s var(--ease-premium); }
+        .topic-left-cluster {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-        .nav-text { 
-            display: inline-block !important; 
+        .topic-bullet {
+            color: var(--text-muted);
+            font-size: 16px;
+            line-height: 1;
+            user-select: none;
+        }
+
+        .topic-title {
+            font-size: 14.5px;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .topic-chevron {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-muted);
+            stroke-width: 2.2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+            transition: stroke 0.2s var(--ease-smooth), transform 0.2s var(--ease-smooth);
+        }
+
+        .subject-topic-link:hover .topic-chevron {
+            stroke: var(--text-main);
+            transform: translate3d(2px, 0, 0);
+        }
+
+        /* -------------------------------------------------------------
+           FOOTER
+           ------------------------------------------------------------- */
+        footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            margin-top: 24px;
+        }
+
+        .footer-links-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 26px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .footer-links-row a {
+            color: var(--text-muted) !important;
+            text-decoration: none !important;
+            font-size: 13.5px;
+            font-weight: 400;
+            transition: color 0.3s var(--ease-smooth);
+        }
+
+        .footer-links-row a:hover {
+            color: var(--text-main) !important;
+        }
+
+        .copyright-tag {
+            color: var(--text-muted);
+            opacity: 0.7;
+            font-size: 12px;
+            letter-spacing: 0.2px;
+        }
+
+        .nav-text {
+            display: inline-block !important;
             white-space: nowrap !important;
-            transform-origin: center center !important; 
-            will-change: transform, opacity, background-position !important; 
-            transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium); 
+            transform-origin: center center !important;
+            backface-visibility: hidden !important;
+            transition: transform 0.4s var(--ease-smooth), opacity 0.4s var(--ease-smooth);
         }
 
-        .footer-links-row a .nav-text { color: var(--text-muted) !important; }
-        .footer-links-row a:hover .nav-text { color: var(--text-main) !important; }
-
-        /* Zoom on hover ONLY for real mouse pointers (Laptop/Desktop). Touch screens will NOT trigger this. */
-        @media (hover: hover) and (pointer: fine) {
-            .topics-vertical-stack a:hover .nav-text, 
-            .breadcrumb-nav a:hover .nav-text, 
-            .footer-links-row a:hover .nav-text, 
-            .logo:hover .nav-text { 
-                transform: scale3d(1.04, 1.06, 1) !important; 
-            }
-        }
-
-        /* --- GPU-Accelerated Continuous Fluid Wave Engine --- */
-        @keyframes fluidWave {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* Continuous Hardware-Accelerated Wave Sweep */
-        a.is-wave-loading .nav-text {
-            background-image: linear-gradient(90deg, #ffffff 0%, #ffffff 25%, #555555 50%, #ffffff 75%, #ffffff 100%) !important;
-            background-size: 200% 100% !important;
-            -webkit-background-clip: text !important;
-            background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-            color: transparent !important;
-            animation: fluidWave 0.75s infinite linear !important;
-            will-change: background-position, transform !important;
-            opacity: 1 !important;
-        }
-
-        /* Light Mode Fluid Wave Engine */
-        body.light-mode a.is-wave-loading .nav-text {
-            background-image: linear-gradient(90deg, #111111 0%, #111111 25%, #8a8a8e 50%, #111111 75%, #111111 100%) !important;
-            background-size: 200% 100% !important;
-            -webkit-background-clip: text !important;
-            background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-            color: transparent !important;
-            animation: fluidWave 0.75s infinite linear !important;
-            will-change: background-position, transform !important;
-            opacity: 1 !important;
-        }
-
-        .kinetic-locked-frame { pointer-events: none !important; }
-        .kinetic-locked-frame .nav-text { transition: none !important; -webkit-transition: none !important; }
-
-        html.instant-landing header, 
-        html.instant-landing .breadcrumb-nav, 
-        html.instant-landing .page-main-heading,
-        html.instant-landing .wide-capsule, 
-        html.instant-landing footer {
-            animation: none !important;
-            opacity: 1 !important;
-            transform: none !important;
-            will-change: auto !important;
-        }
-
-        html.instant-landing,
-        html.instant-landing body,
-        html.instant-landing main,
-        html.instant-landing header,
-        html.instant-landing .wide-capsule,
-        html.instant-landing * {
-            transition: none !important;
-            transition-duration: 0s !important;
-        }
-
-        .activated-word-target {
-            display: inline !important;
-            position: relative !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            border-radius: 0 !important;
-            border: none !important;
-            background: transparent !important;
-            border-bottom: 2.5px solid var(--text-main) !important;
-            will-change: border-color, box-shadow;
-            animation: infiniteUnderlinePulse 1.8s infinite ease-in-out; 
-        }
-
-        @keyframes infiniteUnderlinePulse {
-            0%, 100% {
-                border-bottom-color: rgba(37, 122, 108, 0.3) !important;
-                box-shadow: none;
-            }
-            50% {
-                border-bottom-color: var(--text-main) !important;
-                box-shadow: 0 4px 10px rgba(37, 122, 108, 0.35);
-            }
-        }
-
-        /* Mobile Viewport Overrides */
+        /* Responsive Breakpoints */
         @media (max-width: 700px) {
-            body { padding: 40px 20px; }
-            header { margin-bottom: 40px; height: 64px; }
-            .header-inner-view { padding: 0 20px; }
-            .logo { font-size: 22px; }
-            .search-core-input { padding: 0 12px; font-size: 15px; }
-            .header-right-cluster { gap: 16px; }
-            .wide-capsule { padding: 32px 20px; border-radius: 24px; }
-            .topics-vertical-stack a { padding: 14px 0 14px 32px; font-size: 15px; }
+            body {
+                padding: 24px 16px 24px 16px;
+            }
+
+            .brand-pill {
+                font-size: 34px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .subject-card-header {
+                padding: 18px 18px;
+            }
+
+            .subject-title {
+                font-size: 17.5px;
+            }
+
+            .accordion-toggle-btn {
+                padding: 6px 16px;
+                font-size: 13px;
+            }
+
+            .subject-drawer-body {
+                padding: 2px 18px 18px 18px;
+            }
+
+            .subject-topic-link {
+                padding: 13px 4px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <header id="masterHeader">
-        <div class="header-inner-view" id="headerMainView">
-            <a href="/study/index.html" class="logo">sathya.</a>
-            <div class="header-right-cluster">
-                <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
-                    <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
-                    <svg class="moon-icon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+    <!-- Top Left Brand 's' with Animated Twinkling Star -->
+    <nav class="top-nav-bar" id="topNavBar">
+        <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="sathya.">
+            <span class="brand-letter">s</span>
+            <span class="brand-star-wrap" aria-hidden="true">
+                <svg class="brand-star" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z" fill="#ff9e79"/>
+                </svg>
+            </span>
+        </a>
+    </nav>
+
+    <!-- Header Row: Back Arrow + Subjects Title (Matches Image 1 & 2) -->
+    <div class="subjects-header-row">
+        <button type="button" class="back-icon-btn" onclick="goBackToHome()" aria-label="Go Back">
+            <svg viewBox="0 0 24 24">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        </button>
+        <h1 class="page-title">Subjects</h1>
+    </div>
+
+    <!-- Main Container: Subject Accordion Cards (Laptop & Mobile Responsive) -->
+    <main id="subjectsListContainer">
+
+        <!-- 1. History -->
+        <div class="subject-accordion-card" id="subject-history">
+            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
+                <h2 class="subject-title">History</h2>
+                <button type="button" class="accordion-toggle-btn" aria-label="Toggle History">Open</button>
+            </div>
+            <div class="accordion-content-wrapper">
+                <div class="accordion-content-inner">
+                    <div class="subject-drawer-body">
+                        <div class="subject-sub-heading">INDIAN HISTORY</div>
+                        <ul class="subject-topics-list">
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Ancient History</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Freedom Struggle</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Medieval History</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Post-Independence</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Modern History</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="subject-sub-heading">WORLD HISTORY</div>
+                        <ul class="subject-topics-list">
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Industrial Revolution</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Colonization &amp; Decolonization</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">World Wars</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Political Philosophies</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <button class="ctrl-btn" id="openSearchBtn" aria-label="Open Workspace Search">
-                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                </button>
             </div>
         </div>
 
-        <form class="header-inner-view" id="headerSearchView" action="/study/search.html" method="GET">
-            <button type="submit" aria-label="Submit search" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: inherit; display: flex; align-items: center; justify-content: center;">
-                <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </button>
-
-            <input type="text" class="search-core-input" id="searchCoreInput" name="q" placeholder="Search..." autocomplete="off" enterkeyhint="search">
-            
-            <div class="search-control-cluster">
-                <button type="button" class="ctrl-btn clear-text-btn" id="clearSearchBtn" aria-label="Clear typed text">
-                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-                <button type="button" class="ctrl-btn close-search-btn" id="closeSearchBtn" aria-label="Minimize search pill">
-                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                </button>
+        <!-- 2. Geography -->
+        <div class="subject-accordion-card" id="subject-geography">
+            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
+                <h2 class="subject-title">Geography</h2>
+                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Geography">Open</button>
             </div>
-        </form>
-    </header>
-    
-    <main class="subjects-container">
-        <nav class="breadcrumb-nav" id="dynamicBreadcrumbNav" aria-label="breadcrumb"></nav>
+            <div class="accordion-content-wrapper">
+                <div class="accordion-content-inner">
+                    <div class="subject-drawer-body">
+                        <div class="subject-sub-heading">INDIAN GEOGRAPHY</div>
+                        <ul class="subject-topics-list">
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Physiography &amp; Relief</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Soils &amp; Vegetation</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">River Systems &amp; Drainage</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Economic &amp; Human Geography</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Climate &amp; Monsoons</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                        </ul>
 
-        <h1 class="page-main-heading">Subjects</h1>
-
-        <div class="wide-capsule">
-            <ul class="topics-vertical-stack">
-                <li><a href="/study/contents.html#art-culture">Art and culture</a></li>
-                <li><a href="/study/contents.html#history">History</a></li>
-                <li><a href="/study/contents.html#indian-society">Indian society</a></li>
-                <li><a href="/study/contents.html#geography">Geography</a></li>
-                <li><a href="/study/contents.html#polity">Polity</a></li>
-                <li><a href="/study/contents.html#social-justice">Social justice</a></li>
-                <li><a href="/study/contents.html#governance">Governance</a></li>
-                <li><a href="/study/contents.html#international-relations">International relations</a></li>
-                <li><a href="/study/contents.html#economy">Economy</a></li>
-                <li><a href="/study/contents.html#science-technology">Science and technology</a></li>
-                <li><a href="/study/contents.html#environment">Environment</a></li>
-                <li><a href="/study/contents.html#disaster-management">Disaster management</a></li>
-                <li><a href="/study/contents.html#internal-security">Internal security</a></li>
-            </ul>
+                        <div class="subject-sub-heading">WORLD GEOGRAPHY</div>
+                        <ul class="subject-topics-list">
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Geomorphology</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Major Natural Regions</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Climatology</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Distribution of Key Resources</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Oceanography</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- 3. Polity -->
+        <div class="subject-accordion-card" id="subject-polity">
+            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
+                <h2 class="subject-title">Polity</h2>
+                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Polity">Open</button>
+            </div>
+            <div class="accordion-content-wrapper">
+                <div class="accordion-content-inner">
+                    <div class="subject-drawer-body">
+                        <ul class="subject-topics-list">
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Constitutional Framework</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Local Government</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">System of Government</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Judiciary</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Central Government</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Constitutional &amp; Non-Constitutional Bodies</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">State Government</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Economy -->
+        <div class="subject-accordion-card" id="subject-economy">
+            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
+                <h2 class="subject-title">Economy</h2>
+                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Economy">Open</button>
+            </div>
+            <div class="accordion-content-wrapper">
+                <div class="accordion-content-inner">
+                    <div class="subject-drawer-body">
+                        <ul class="subject-topics-list">
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Indian Economy &amp; Issues Relating to Planning</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Government Budgeting</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Mobilization of Resources</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Land Reforms in India</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Growth, Development &amp; Employment</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Infrastructure &amp; Investment Models</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Inclusive Growth</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Art and culture -->
+        <div class="subject-accordion-card" id="subject-art-culture">
+            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
+                <h2 class="subject-title">Art and culture</h2>
+                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Art and culture">Open</button>
+            </div>
+            <div class="accordion-content-wrapper">
+                <div class="accordion-content-inner">
+                    <div class="subject-drawer-body">
+                        <ul class="subject-topics-list">
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Dances</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Literature</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Art forms</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Folk songs</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Architecture</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Indian society -->
+        <div class="subject-accordion-card" id="subject-indian-society">
+            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
+                <h2 class="subject-title">Indian society</h2>
+                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Indian society">Open</button>
+            </div>
+            <div class="accordion-content-wrapper">
+                <div class="accordion-content-inner">
+                    <div class="subject-drawer-body">
+                        <ul class="subject-topics-list">
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Salient Features of Indian Society</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Urbanization</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Diversity of India</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Effects of Globalization</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Role of Women &amp; Organizations</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Social Empowerment &amp; Communalism</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Poverty &amp; Developmental Issues</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. Social justice -->
+        <div class="subject-accordion-card" id="subject-social-justice">
+            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
+                <h2 class="subject-title">Social justice</h2>
+                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Social justice">Open</button>
+            </div>
+            <div class="accordion-content-wrapper">
+                <div class="accordion-content-inner">
+                    <div class="subject-drawer-body">
+                        <ul class="subject-topics-list">
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Welfare Schemes for Vulnerable Sections</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Education System</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Mechanisms, Laws &amp; Institutions</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Human Resources</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Health Sector Issues</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Issues Relating to Poverty &amp; Hunger</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. Governance -->
+        <div class="subject-accordion-card" id="subject-governance">
+            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
+                <h2 class="subject-title">Governance</h2>
+                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Governance">Open</button>
+            </div>
+            <div class="accordion-content-wrapper">
+                <div class="accordion-content-inner">
+                    <div class="subject-drawer-body">
+                        <ul class="subject-topics-list">
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Important Aspects of Governance</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Citizens Charters</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Transparency &amp; Accountability</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Role of Civil Services in a Democracy</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">E-governance Applications &amp; Models</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. International relations -->
+        <div class="subject-accordion-card" id="subject-international-relations">
+            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
+                <h2 class="subject-title">International relations</h2>
+                <button type="button" class="accordion-toggle-btn" aria-label="Toggle International relations">Open</button>
+            </div>
+            <div class="accordion-content-wrapper">
+                <div class="accordion-content-inner">
+                    <div class="subject-drawer-body">
+                        <ul class="subject-topics-list">
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">India and its Neighborhood</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Effect of Policies of Developed Countries</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Bilateral, Regional &amp; Global Groupings</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Important International Institutions</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. Science and technology -->
+        <div class="subject-accordion-card" id="subject-science-technology">
+            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
+                <h2 class="subject-title">Science and technology</h2>
+                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Science and technology">Open</button>
+            </div>
+            <div class="accordion-content-wrapper">
+                <div class="accordion-content-inner">
+                    <div class="subject-drawer-body">
+                        <ul class="subject-topics-list">
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Developments &amp; Everyday Applications</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">IT, Space &amp; Computers</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Achievements of Indians in Sci-Tech</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Robotics &amp; Nanotech</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Indigenization of Technology</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Biotechnology &amp; IPR Issues</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 11. Environment -->
+        <div class="subject-accordion-card" id="subject-environment">
+            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
+                <h2 class="subject-title">Environment</h2>
+                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Environment">Open</button>
+            </div>
+            <div class="accordion-content-wrapper">
+                <div class="accordion-content-inner">
+                    <div class="subject-drawer-body">
+                        <ul class="subject-topics-list">
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Conservation &amp; Biodiversity</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Climate Change Mitigation</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Environmental Pollution &amp; Degradation</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Environmental Impact Assessment (EIA)</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 12. Disaster management -->
+        <div class="subject-accordion-card" id="subject-disaster-management">
+            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
+                <h2 class="subject-title">Disaster management</h2>
+                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Disaster management">Open</button>
+            </div>
+            <div class="accordion-content-wrapper">
+                <div class="accordion-content-inner">
+                    <div class="subject-drawer-body">
+                        <ul class="subject-topics-list">
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Disaster Profiles of India</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Mitigation Strategies</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Vulnerability &amp; Risk Assessment</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">NDMA Guidelines &amp; Frameworks</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 13. Internal security -->
+        <div class="subject-accordion-card" id="subject-internal-security">
+            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
+                <h2 class="subject-title">Internal security</h2>
+                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Internal security">Open</button>
+            </div>
+            <div class="accordion-content-wrapper">
+                <div class="accordion-content-inner">
+                    <div class="subject-drawer-body">
+                        <ul class="subject-topics-list">
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Linkages between Development &amp; Extremism</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Money Laundering &amp; its Prevention</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Role of External State &amp; Non-state Actors</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Border Area Management &amp; Security Forces</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <li class="subject-topic-item">
+                                <a href="#" class="subject-topic-link">
+                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Cyber Security Challenges</span></div>
+                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
+    <!-- Standard Footer -->
     <footer>
         <div class="footer-links-row">
-            <a href="/study/Footer/about.html">About</a>
-            <a href="/study/Footer/contact.html">Contact</a>
-            <a href="/study/Footer/privacy.html">Privacy Policy</a>
-            <a href="/study/Footer/terms.html">Terms &amp; Conditions</a>
-            <a href="/study/Footer/disclaimer.html">Disclaimer</a>
+            <a href="/study/Footer/about.html"><span class="nav-text">About</span></a>
+            <a href="/study/Footer/contact.html"><span class="nav-text">Contact</span></a>
+            <a href="/study/Footer/privacy.html"><span class="nav-text">Privacy Policy</span></a>
+            <a href="/study/Footer/terms.html"><span class="nav-text">Terms &amp; Conditions</span></a>
+            <a href="/study/Footer/disclaimer.html"><span class="nav-text">Disclaimer</span></a>
         </div>
         <div class="copyright-tag">&copy; 2026 Sathya. All rights reserved.</div>
     </footer>
 
+    <!-- Interactive Navigation & Accordion Engine -->
     <script>
-        // --- Universal Persistent Master Breadcrumb Engine ---
-        (function buildDynamicBreadcrumbs() {
-            const container = document.getElementById('dynamicBreadcrumbNav');
-            if (!container) return;
-
-            const searchPath = window.location.pathname;
-            const HOME_PATH = "/study/index.html";
-
-            const pageNames = {
-                "/study/index.html": "Home",
-                "/study/contents.html": "Contents",
-                "/study/csat.html": "CSAT",
-                "/study/ncert.html": "NCERT",
-                "/study/currentaffairs.html": "Current Affairs",
-                "/study/subjects.html": "Subjects",
-                "/study/ramsarsites.html": "Ramsar Sites",
-                "/study/search.html": "Search",
-                "/study/Footer/about.html": "About",
-                "/study/Footer/contact.html": "Contact",
-                "/study/Footer/privacy.html": "Privacy Policy",
-                "/study/Footer/terms.html": "Terms & Conditions",
-                "/study/Footer/disclaimer.html": "Disclaimer"
-            };
-
-            let currentPageName = pageNames[searchPath];
-            if (!currentPageName) {
-                const filename = searchPath.substring(searchPath.lastIndexOf('/') + 1).replace('.html', '');
-                currentPageName = filename.charAt(0).toUpperCase() + filename.slice(1);
-            }
-
-            let trail = [];
-            try {
-                const stored = sessionStorage.getItem('breadcrumbTrail');
-                trail = stored ? JSON.parse(stored) : [];
-            } catch (e) {
-                trail = [];
-            }
-
-            if (trail.length === 0 || (trail[0].path !== HOME_PATH && trail[0].path !== "/study/")) {
-                trail = [{ name: "Home", path: HOME_PATH }];
-            }
-
-            const existingIndex = trail.findIndex(step => step.path === searchPath);
-
-            if (existingIndex !== -1) {
-                trail = trail.slice(0, existingIndex + 1);
+        // Back navigation to home
+        function goBackToHome() {
+            if (window.history.length > 1) {
+                window.history.back();
             } else {
-                if (searchPath !== HOME_PATH && searchPath !== "/study/") {
-                    trail.push({ name: currentPageName, path: searchPath });
-                }
-            }
-
-            try {
-                sessionStorage.setItem('breadcrumbTrail', JSON.stringify(trail));
-            } catch (e) {}
-
-            let htmlMarkup = '';
-            trail.forEach((step) => {
-                if (step.path === searchPath) {
-                    htmlMarkup += `<span class="breadcrumb-current">${step.name}</span><span class="breadcrumb-separator">/</span>`;
-                } else {
-                    htmlMarkup += `<a href="${step.path}">${step.name}</a><span class="breadcrumb-separator">/</span>`;
-                }
-            });
-
-            if (htmlMarkup.endsWith('<span class="breadcrumb-separator">/</span>')) {
-                htmlMarkup = htmlMarkup.slice(0, -'<span class="breadcrumb-separator">/</span>'.length);
-            }
-
-            container.innerHTML = htmlMarkup;
-        })();
-
-        const toggleBtn = document.getElementById('themeToggleBtn');
-        const bodyElement = document.body;
-        const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
-        const masterHeader = document.getElementById('masterHeader');
-        const openSearchBtn = document.getElementById('openSearchBtn');
-        const closeSearchBtn = document.getElementById('closeSearchBtn');
-        const clearSearchBtn = document.getElementById('clearSearchBtn');
-        const searchCoreInput = document.getElementById('searchCoreInput');
-
-        function applyTargetPalette() {
-            const activeSessionOverride = sessionStorage.getItem('dashboard-theme');
-            if (activeSessionOverride) {
-                if (activeSessionOverride === 'light') { bodyElement.classList.add('light-mode'); }
-                else { bodyElement.classList.remove('light-mode'); }
-            } else {
-                if (systemLightQuery.matches) { bodyElement.classList.add('light-mode'); }
-                else { bodyElement.classList.remove('light-mode'); }
+                window.location.href = '/index.html';
             }
         }
-        applyTargetPalette();
 
-        systemLightQuery.addEventListener('change', (e) => {
-            sessionStorage.removeItem('dashboard-theme');
-            if (e.matches) { bodyElement.classList.add('light-mode'); }
-            else { bodyElement.classList.remove('light-mode'); }
-        });
+        // Accordion Toggle Function
+        function toggleSubjectAccordion(element) {
+            const card = element.closest('.subject-accordion-card');
+            if (!card) return;
 
-        toggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); 
-            if (bodyElement.classList.contains('light-mode')) {
-                bodyElement.classList.remove('light-mode');
-                sessionStorage.setItem('dashboard-theme', 'dark');
+            const isExpanded = card.classList.contains('is-expanded');
+            const toggleBtn = card.querySelector('.accordion-toggle-btn');
+
+            if (isExpanded) {
+                card.classList.remove('is-expanded');
+                if (toggleBtn) toggleBtn.textContent = 'Open';
             } else {
-                bodyElement.classList.add('light-mode');
-                sessionStorage.setItem('dashboard-theme', 'light');
+                card.classList.add('is-expanded');
+                if (toggleBtn) toggleBtn.textContent = 'Close';
             }
-        });
-
-        openSearchBtn.addEventListener('click', () => {
-            masterHeader.classList.remove('state-main'); masterHeader.classList.add('state-search');
-            searchCoreInput.focus({ preventScroll: true });
-        });
-        clearSearchBtn.addEventListener('click', () => { searchCoreInput.value = ""; searchCoreInput.focus(); });
-        closeSearchBtn.addEventListener('click', () => { masterHeader.classList.remove('state-search'); masterHeader.classList.add('state-main'); });
-
-        masterHeader.addEventListener('submit', (e) => {
-            if (searchCoreInput.value.trim() === "") {
-                e.preventDefault();
-                masterHeader.classList.remove('state-search');
-                masterHeader.classList.add('state-main');
-            }
-        });
-
-        const dynamicPortalLinks = document.querySelectorAll('.topics-vertical-stack a, .breadcrumb-nav a, footer .footer-links-row a, .logo');
-        
-        function executeLayoutSpans() {
-            dynamicPortalLinks.forEach(link => {
-                if (!link.querySelector('.nav-text')) {
-                    const wrapper = document.createElement('span'); wrapper.className = 'nav-text';
-                    while (link.firstChild) { wrapper.appendChild(link.firstChild); }
-                    link.appendChild(wrapper);
-                }
-            });
-        }
-        
-        if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
-            setTimeout(executeLayoutSpans, 1500);
-        } else {
-            executeLayoutSpans();
         }
 
-        dynamicPortalLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const destination = this.getAttribute('href');
-                if (!destination || destination === '#' || this.classList.contains('active-footer-page')) return;
-                
-                e.preventDefault();
-                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
-
-                dynamicPortalLinks.forEach(l => l.classList.remove('is-wave-loading'));
-
-                this.classList.add('is-wave-loading');
-
-                setTimeout(() => { window.location.href = destination; }, 750);
+        // Prevent button click from double toggling when bubbling to header
+        document.querySelectorAll('.accordion-toggle-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleSubjectAccordion(btn);
             });
         });
 
-        window.addEventListener('pageshow', () => {
-            if (document.activeElement && document.activeElement.blur) {
-                document.activeElement.blur();
-            }
-
-            dynamicPortalLinks.forEach(l => {
-                l.classList.remove('is-wave-loading');
-                l.classList.remove('kinetic-locked-frame');
-                const span = l.querySelector('.nav-text');
-                if (span) { 
-                    span.style.transform = ''; 
-                    span.style.opacity = ''; 
-                    span.style.background = '';
-                    span.style.webkitBackgroundClip = '';
-                    span.style.webkitTextFillColor = '';
+        // Auto-expand card if URL hash matches subject
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash) {
+                const rawHash = window.location.hash.replace('#', '').toLowerCase();
+                const targetCard = document.getElementById(rawHash) || 
+                                   document.getElementById('subject-' + rawHash) ||
+                                   document.getElementById(rawHash.replace('subject-', ''));
+                if (targetCard) {
+                    targetCard.classList.add('is-expanded');
+                    const toggleBtn = targetCard.querySelector('.accordion-toggle-btn');
+                    if (toggleBtn) toggleBtn.textContent = 'Close';
+                    setTimeout(() => {
+                        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
                 }
-            });
-
-            if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
-                sessionStorage.removeItem('activeUniversalTargetUrl');
-                return;
-            }
-
-            const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
-            if (savedTargetUrl) {
-                sessionStorage.removeItem('activeUniversalTargetUrl');
-            }
-        });
-
-        window.addEventListener('load', () => {
-            let rawTargetQuery = '';
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                rawTargetQuery = urlParams.get('shq') || urlParams.get('q');
-                
-                if (!rawTargetQuery && document.referrer) {
-                    const referenceViewUrl = new URL(document.referrer);
-                    rawTargetQuery = referenceViewUrl.searchParams.get('q') || referenceViewUrl.searchParams.get('shq');
-                }
-            } catch (e) {}
-
-            if (!rawTargetQuery) return;
-
-            const cleanTargetQuery = rawTargetQuery.trim().toLowerCase();
-            if (cleanTargetQuery.length === 0) return;
-
-            function executeGlobalTextHighlight(node, searchText) {
-                if (node.nodeType === 3) { 
-                    const nodeRawValue = node.nodeValue;
-                    const nodeLowerValue = nodeRawValue.toLowerCase();
-                    
-                    if (nodeLowerValue.includes(searchText)) {
-                        const safetyRegexPattern = searchText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-                        const globalRegexMatcher = new RegExp(`(${safetyRegexPattern})`, 'gi');
-                        
-                        const elementContainer = document.createElement('span');
-                        elementContainer.innerHTML = nodeRawValue.replace(globalRegexMatcher, '<span class="activated-word-target">$1</span>');
-                        
-                        const fragment = document.createDocumentFragment();
-                        while (elementContainer.firstChild) {
-                            fragment.appendChild(elementContainer.firstChild);
-                        }
-                        node.parentNode.insertBefore(fragment, node);
-                        node.parentNode.removeChild(node);
-                    }
-                } else if (node.nodeType === 1 && node.childNodes) {
-                    if (node.tagName === 'SCRIPT' || node.tagName === 'STYLE' || node.tagName === 'HEADER' || node.tagName === 'FOOTER') return;
-                    
-                    for (let i = node.childNodes.length - 1; i >= 0; i--) {
-                        executeGlobalTextHighlight(node.childNodes[i], searchText);
-                    }
-                }
-            }
-
-            const mainStudyDashboard = document.querySelector('main');
-            if (mainStudyDashboard) {
-                executeGlobalTextHighlight(mainStudyDashboard, cleanTargetQuery);
-
-                setTimeout(() => {
-                    const primaryFocusMatch = document.querySelector('.activated-word-target');
-                    if (primaryFocusMatch) {
-                        primaryFocusMatch.scrollIntoView({
-                            block: 'center',
-                            behavior: 'smooth'
-                        });
-                    }
-                }, 320);
-
-                setTimeout(() => {
-                    const activeHighlightSpans = document.querySelectorAll('.activated-word-target');
-                    activeHighlightSpans.forEach(span => {
-                        const directTextContentNode = document.createTextNode(span.textContent);
-                        span.parentNode.replaceChild(directTextContentNode, span);
-                    });
-                    mainStudyDashboard.normalize();
-                }, 10000);
             }
         });
     </script>

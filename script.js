@@ -1,81 +1,122 @@
 /* ==========================================================================
-   GLOBAL SITE THEME & UNIFIED HEADER ENGINE
+   MINSATHYA - UNIVERSAL THEME, BRANDMARK & NAVIGATION ENGINE
    ========================================================================== */
 
-// 1. GLOBAL THEME, DYNAMIC SHADOWS & UNIFIED HEADER INJECTION
+// 1. GLOBAL SYSTEM THEME & BRANDMARK STYLES INJECTION
 (function injectGlobalStyles() {
     const style = document.createElement('style');
     style.id = 'global-site-theme-rules';
     style.textContent = `
-        /* Site-wide Dark Mode: Shadows completely removed site-wide */
-        html:not(.light-mode), 
-        body:not(.light-mode) {
-            --bg-color: #000000 !important;
-            --panel-bg: #0d0d0d !important;
-            --panel-border: #141414 !important;
-            --row-divider: #141414 !important;
-            --shadow-ambient: none !important;
-            --shadow-lift: none !important;
+        /* Root CSS Variables - Dark Mode Default (#0b0b0b) */
+        :root {
+            --bg-color: #0b0b0b;
+            --text-main: #ffffff;
+            --text-muted: #737373;
+            --panel-bg: #121212;
+            --panel-border: #222222;
+            --row-divider: #1c1c1c;
+            --row-hover: rgba(255, 255, 255, 0.02);
+            --shadow-ambient: none;
+            --shadow-lift: none;
         }
 
-        /* Root Homepage & Nutrition Workspace: Panel Transparent BG & Hidden Border in Idle */
-        html:not(.light-mode) body.nutrition-workspace,
-        body:not(.light-mode).nutrition-workspace {
-            --bg-color: #0a130d !important;
-            background-color: #0a130d !important;
-            --panel-bg: transparent !important;
-            --panel-border: transparent !important;
-            --panel-border-hover: rgba(255, 255, 255, 0.12) !important;
-        }
-
-        /* Root Homepage: Always deep night blue sky bg (rich & slightly darker) */
-        html.root-home,
-        html.root-home body,
-        body.root-home {
-            background: radial-gradient(ellipse at 50% 22%, #191742 0%, #121132 50%, #0a0921 100%) fixed !important;
-            background-color: #0a0921 !important;
-            color: #ffffff !important;
-        }
-
-        body.root-home {
-            background: transparent !important;
-        }
-
-        /* Apple-Style Panels on Root Homepage & Nutrition Workspace: Transparent in Idle */
-        body.root-home .apple-panel,
-        body.nutrition-workspace .apple-panel {
-            background-color: transparent !important;
-            border: 1.5px solid transparent !important;
-        }
-
-        /* Border only appears on hover, active or lifted — Very light, silent contour */
-        body.root-home .apple-panel:hover,
-        body.root-home .apple-panel:active,
-        body.root-home .apple-panel.is-card-lifted {
-            border-color: var(--panel-border-hover) !important;
-            background-color: transparent !important;
-        }
-
-        body.nutrition-workspace .apple-panel:hover,
-        body.nutrition-workspace .apple-panel:active,
-        body.nutrition-workspace .apple-panel.is-card-lifted {
-            border-color: var(--panel-border-hover) !important;
-            background-color: transparent !important;
-        }
-
-        body.light-mode.nutrition-workspace .apple-panel:hover,
-        body.light-mode.nutrition-workspace .apple-panel:active,
-        body.light-mode.nutrition-workspace .apple-panel.is-card-lifted {
-            border-color: rgba(0, 0, 0, 0.08) !important;
-        }
-
-        /* Site-wide Light Mode: Shadows completely removed */
+        /* Root CSS Variables - Light Mode (#f5f5f7, Panel #ffffff) */
         html.light-mode, 
         body.light-mode {
             --bg-color: #f5f5f7 !important;
-            --header-bg: #ffffff !important;
+            --text-main: #111111 !important;
+            --text-muted: #8e8e93 !important;
+            --panel-bg: #ffffff !important;
+            --panel-border: #e2e2e7 !important;
+            --row-divider: #f2f2f7 !important;
+            --row-hover: rgba(0, 0, 0, 0.02) !important;
             --shadow-ambient: none !important;
             --shadow-lift: none !important;
+        }
+
+        html, body {
+            background-color: var(--bg-color) !important;
+            color: var(--text-main) !important;
+            transition: background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                        color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* -------------------------------------------------------------
+           TOP NAVIGATION: 's' BRANDMARK & PEACH TWINKLING STAR
+           ------------------------------------------------------------- */
+        .top-nav-bar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .brand-pill {
+            position: relative;
+            display: inline-flex;
+            align-items: baseline;
+            justify-content: flex-start;
+            height: auto;
+            padding: 0 4px;
+            background-color: transparent !important;
+            border: none !important;
+            text-decoration: none !important;
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -1.2px;
+            line-height: 1;
+            box-shadow: none !important;
+            touch-action: manipulation;
+            cursor: pointer;
+            user-select: none;
+            transform: translateZ(0);
+            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .brand-pill:hover,
+        .brand-pill:active {
+            transform: translate3d(0, -3px, 0) scale3d(1.02, 1.02, 1);
+        }
+
+        .brand-letter {
+            color: var(--text-main) !important;
+            line-height: 1;
+            transition: color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Brand Twinkling Star (Peach #ff9e79, Scales up to size of dot) */
+        .brand-star-wrap {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 10px;
+            height: 10px;
+            margin-left: 3px;
+            vertical-align: 2px;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .brand-star {
+            width: 9px;
+            height: 9px;
+            display: block;
+            transform-origin: center center;
+            animation: brandStarPulse 2.8s infinite ease-in-out;
+        }
+
+        @keyframes brandStarPulse {
+            0%   { transform: scale(0.35) translateZ(0); opacity: 0.45; filter: drop-shadow(0 0 2px rgba(255, 158, 121, 0.4)); }
+            50%  { transform: scale(1.0) translateZ(0);  opacity: 1;    filter: drop-shadow(0 0 6px rgba(255, 158, 121, 0.9)); }
+            100% { transform: scale(0.35) translateZ(0); opacity: 0.45; filter: drop-shadow(0 0 2px rgba(255, 158, 121, 0.4)); }
+        }
+
+        /* Hide any legacy brand dots */
+        .brand-dot {
+            display: none !important;
         }
 
         /* Universal Shadow Removal Across All Panels & Cards Site-wide */
@@ -87,71 +128,6 @@
         .wide-capsule,
         .macro-card {
             box-shadow: none !important;
-            transition: background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1),
-                        border-color 0.8s cubic-bezier(0.25, 1, 0.5, 1),
-                        transform 0.55s cubic-bezier(0.25, 1, 0.5, 1) !important;
-        }
-
-        .apple-panel {
-            box-shadow: none !important;
-        }
-
-        .article-card:hover,
-        .date-topics-capsule:hover,
-        .apple-panel:hover,
-        .apple-panel:active,
-        .apple-panel.is-card-lifted,
-        .wide-capsule:hover,
-        .wide-capsule.is-capsule-lifted {
-            box-shadow: none !important;
-        }
-
-        /* Standardize Header Design Across All Pages */
-        header#masterHeader,
-        header {
-            border-radius: 28px !important;
-            height: 72px !important;
-            border: 1px solid var(--header-border) !important;
-            background-color: var(--header-bg) !important;
-            box-shadow: none !important;
-            transition: transform 0.55s cubic-bezier(0.25, 1, 0.5, 1), 
-                        border-color 0.55s cubic-bezier(0.25, 1, 0.5, 1), 
-                        background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
-        }
-
-        /* Universal 3D Lift Animation on Hover / Tap */
-        header#masterHeader:hover,
-        header#masterHeader:focus-within,
-        header#masterHeader:active,
-        header#masterHeader.is-header-lifted,
-        header:hover,
-        header:focus-within,
-        header:active,
-        header.is-header-lifted {
-            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
-            border-color: #1E1E1E !important;
-            box-shadow: none !important;
-        }
-
-        body.light-mode header#masterHeader:hover,
-        body.light-mode header#masterHeader:focus-within,
-        body.light-mode header#masterHeader:active,
-        body.light-mode header#masterHeader.is-header-lifted,
-        body.light-mode header:hover,
-        body.light-mode header:focus-within,
-        body.light-mode header:active,
-        body.light-mode header.is-header-lifted {
-            border-color: #b8b8bc !important;
-            box-shadow: none !important;
-        }
-
-        /* Mobile Viewport Header Sizing */
-        @media (max-width: 700px) {
-            header#masterHeader,
-            header {
-                height: 64px !important;
-                border-radius: 24px !important;
-            }
         }
     `;
     if (document.head) {
@@ -161,109 +137,59 @@
     }
 })();
 
-// 2. IMMEDIATE THEME SYNCHRONIZATION
-(function syncInitialTheme() {
-    const currentPath = window.location.pathname.toLowerCase();
-    const isRootHome = currentPath === '' || currentPath === '/' || (currentPath.endsWith('/index.html') && !currentPath.includes('/study/') && !currentPath.includes('/nutrition/'));
-
-    // Root Homepage: Always maintain deep night sky background in any theme
-    if (isRootHome) {
-        document.documentElement.classList.remove('light-mode');
-        if (document.body) document.body.classList.remove('light-mode');
-        document.documentElement.classList.add('root-home');
-        if (document.body) document.body.classList.add('root-home');
-        return;
+// 2. AUTOMATIC SYSTEM THEME SYNCHRONIZATION (DARK: #0b0b0b, LIGHT: #f5f5f7)
+(function initAutomaticSystemTheme() {
+    function applySystemTheme() {
+        const isSystemLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+        if (isSystemLight) {
+            document.documentElement.classList.add('light-mode');
+            if (document.body) document.body.classList.add('light-mode');
+        } else {
+            document.documentElement.classList.remove('light-mode');
+            if (document.body) document.body.classList.remove('light-mode');
+        }
     }
 
-    const savedTheme = sessionStorage.getItem('dashboard-theme');
-    const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-    if (savedTheme === 'light' || (!savedTheme && systemPrefersLight)) {
-        document.documentElement.classList.add('light-mode');
-        if (document.body) document.body.classList.add('light-mode');
-    }
+    applySystemTheme();
 
-    if (currentPath.includes('/nutrition/') && !currentPath.includes('mm.html')) {
-        document.documentElement.classList.add('nutrition-workspace');
-        if (document.body) document.body.classList.add('nutrition-workspace');
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', applySystemTheme);
     }
 })();
 
-// 3. LOGO NAVIGATION & UNIVERSAL INTERACTIONS
+// 3. LOGO ENHANCEMENT & NAVIGATION
 document.addEventListener('DOMContentLoaded', () => {
-    const currentPath = window.location.pathname.toLowerCase();
-    const isRootHome = currentPath === '' || currentPath === '/' || (currentPath.endsWith('/index.html') && !currentPath.includes('/study/') && !currentPath.includes('/nutrition/'));
+    // Progressive upgrade: Ensure all logos have the animated star if they have an old dot
+    const brandPills = document.querySelectorAll('.brand-pill, .logo');
+    brandPills.forEach(pill => {
+        if (!pill.querySelector('.brand-star-wrap')) {
+            const oldDot = pill.querySelector('.brand-dot');
+            if (oldDot) oldDot.remove();
 
-    if (isRootHome) {
-        document.documentElement.classList.remove('light-mode');
-        if (document.body) document.body.classList.remove('light-mode');
-        if (document.body) document.body.classList.add('root-home');
-    } else {
-        if (document.documentElement.classList.contains('light-mode') && !document.body.classList.contains('light-mode')) {
-            document.body.classList.add('light-mode');
-        }
-    }
-
-    if (currentPath.includes('/nutrition/') && !currentPath.includes('mm.html')) {
-        document.body.classList.add('nutrition-workspace');
-    }
-
-    const masterHeader = document.getElementById('masterHeader') || document.querySelector('header');
-    const searchInput = document.getElementById('searchCoreInput');
-    const closeSearchBtn = document.getElementById('closeSearchBtn');
-    const clearSearchBtn = document.getElementById('clearSearchBtn');
-
-    if (masterHeader) {
-        function resetHeaderLift() {
-            if (masterHeader.classList.contains('state-search') && searchInput && searchInput.value.trim() === "") {
-                masterHeader.classList.remove('state-search');
-                masterHeader.classList.add('state-main');
-            }
-            if (searchInput) searchInput.blur();
-            masterHeader.classList.remove('is-header-lifted');
+            const starWrap = document.createElement('span');
+            starWrap.className = 'brand-star-wrap';
+            starWrap.setAttribute('aria-hidden', 'true');
+            starWrap.innerHTML = `
+                <svg class="brand-star" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z" fill="#ff9e79"/>
+                </svg>
+            `;
+            pill.appendChild(starWrap);
         }
 
-        masterHeader.addEventListener('pointerdown', (e) => {
-            masterHeader.classList.add('is-header-lifted');
-            if (masterHeader.classList.contains('state-search') && searchInput) {
-                if (document.activeElement !== searchInput && e.target !== closeSearchBtn && e.target !== clearSearchBtn) {
-                    searchInput.focus({ preventScroll: true });
-                }
-            }
-        });
-
-        masterHeader.addEventListener('pointerleave', () => {
-            if (masterHeader.classList.contains('state-search') && searchInput && searchInput.value.trim() !== "") {
-                return;
-            }
-            resetHeaderLift();
-        });
-
-        document.addEventListener('pointerdown', (e) => {
-            if (!masterHeader.contains(e.target)) {
-                resetHeaderLift();
-            }
-        });
-    }
-
-    // Logo ("sathya.") ALWAYS directs to the main homepage (/index.html) across the whole site
-    const logo = document.querySelector('.logo') || document.querySelector('header a.brand-pill') || document.querySelector('.brand-pill');
-
-    if (logo) {
-        logo.href = '/index.html';
-
-        logo.addEventListener('click', (e) => {
+        pill.setAttribute('href', '/index.html');
+        pill.addEventListener('click', (e) => {
             e.preventDefault();
-            logo.classList.add('is-card-lifted');
-            logo.classList.add('is-wave-loading');
-            document.body.classList.add('wave-active');
+            sessionStorage.removeItem('breadcrumbTrail');
+            pill.classList.add('is-wave-loading');
             setTimeout(() => {
                 window.location.href = '/index.html';
-            }, 750);
+            }, 450);
         });
-    }
+    });
 });
 
-// 4. UNIVERSAL BREADCRUMB LIFECYCLE & WORKSPACE HOME ROUTING
+// 4. UNIVERSAL BREADCRUMB LIFECYCLE & HOME ROUTING
 (function initBreadcrumbLifecycle() {
     try {
         const path = window.location.pathname.toLowerCase();
@@ -325,4 +251,3 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {}
     }, true);
 })();
-

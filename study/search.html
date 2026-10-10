@@ -257,6 +257,18 @@
 </head>
 <body>
 
+    <!-- Top Left Brand 's' with Animated Twinkling Star -->
+    <nav class="top-nav-bar" id="topNavBar" style="margin-bottom: 32px;">
+        <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="sathya.">
+            <span class="brand-letter">s</span>
+            <span class="brand-star-wrap" aria-hidden="true">
+                <svg class="brand-star" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z" fill="#ff9e79"/>
+                </svg>
+            </span>
+        </a>
+    </nav>
+
     <div class="workspace-animate-frame" id="searchWorkspace">
         <h1 class="status-title" id="statusTitle">Search</h1>
         <div class="search-subtitle" id="queryTarget">Showing results for: ""</div>
@@ -265,7 +277,7 @@
         
         <div class="capsule-container" id="capsuleContainer"></div>
 
-        <a href="/study/index.html" class="back-home-btn" id="backHomeBtn"><span class="nav-text">← Back to Home</span></a>
+        <a href="/index.html" class="back-home-btn" id="backHomeBtn"><span class="nav-text">← Back to Home</span></a>
     </div>
 
     <script>
@@ -321,16 +333,7 @@
                 title: "Subjects",
                 url: "/study/subjects.html",
                 words: [
-                    "subjects", "art and culture", "history", "indian society", "geography", "polity", 
-                    "social justice", "governance", "international relations", "economy", 
-                    "science and technology", "environment", "disaster management", "internal security"
-                ]
-            },
-            {
-                title: "Contents",
-                url: "/study/contents.html",
-                words: [
-                    "contents", "art and culture", "dances", "literature", "art forms", "folk songs", 
+                    "subjects", "contents", "art and culture", "dances", "literature", "art forms", "folk songs", 
                     "architecture", "history", "indian history", "ancient history", "freedom struggle", 
                     "medieval history", "post-independence", "modern history", "world history", 
                     "industrial revolution", "colonization & decolonization", "world wars", 
@@ -470,21 +473,21 @@
             }
         ];
 
-        // Section Mapping for /study/contents.html Anchor Navigation
+        // Section Mapping for /study/subjects.html Anchor Navigation
         const sectionMapping = {
-            "art and culture": "#art-culture", "dances": "#art-culture", "literature": "#art-culture", "art forms": "#art-culture", "folk songs": "#art-culture", "architecture": "#art-culture",
-            "history": "#history", "indian history": "#history", "ancient history": "#history", "freedom struggle": "#history", "medieval history": "#history", "post-independence": "#history", "modern history": "#history", "world history": "#history", "industrial revolution": "#history", "colonization & decolonization": "#history", "world wars": "#history", "political philosophies": "#history",
-            "indian society": "#indian-society", "salient features of indian society": "#indian-society", "urbanization": "#indian-society", "diversity of india": "#indian-society", "effects of globalization": "#indian-society", "role of women & organizations": "#indian-society", "social empowerment & communalism": "#indian-society", "poverty & developmental issues": "#indian-society",
-            "geography": "#geography", "indian geography": "#geography", "physiography & relief": "#geography", "soils & vegetation": "#geography", "river systems & drainage": "#geography", "economic & human geography": "#geography", "climate & monsoons": "#geography", "world geography": "#geography", "geomorphology": "#geography", "major natural regions": "#geography", "climatology": "#geography", "distribution of key resources": "#geography", "oceanography": "#geography",
-            "polity": "#polity", "constitutional framework": "#polity", "local government": "#polity", "system of government": "#polity", "judiciary": "#polity", "central government": "#polity", "constitutional & non-constitutional bodies": "#polity", "state government": "#polity",
-            "social justice": "#social-justice", "welfare schemes for vulnerable sections": "#social-justice", "education system": "#social-justice", "mechanisms, laws & institutions": "#social-justice", "human resources": "#social-justice", "health sector issues": "#social-justice", "issues relating to poverty & hunger": "#social-justice",
-            "governance": "#governance", "important aspects of governance": "#governance", "citizens charters": "#governance", "transparency & accountability": "#governance", "role of civil services in a democracy": "#governance", "e-governance applications & models": "#governance",
-            "international relations": "#international-relations", "india and its neighborhood": "#international-relations", "effect of policies of developed countries": "#international-relations", "bilateral, regional & global groupings": "#international-relations", "important international institutions": "#international-relations",
-            "economy": "#economy", "indian economy & issues relating to planning": "#economy", "government budgeting": "#economy", "mobilization of resources": "#economy", "land reforms in india": "#economy", "growth, development & employment": "#economy", "infrastructure & investment models": "#economy", "inclusive growth": "#economy",
-            "science and technology": "#science-technology", "developments & everyday applications": "#science-technology", "it, space & computers": "#science-technology", "achievements of indians in sci-tech": "#science-technology", "robotics & nanotech": "#science-technology", "indigenization of technology": "#science-technology", "biotechnology & ipr issues": "#science-technology",
-            "environment": "#environment", "conservation & biodiversity": "#environment", "climate change mitigation": "#environment", "environmental pollution & degradation": "#environment", "environmental impact assessment (eia)": "#environment",
-            "disaster management": "#disaster-management", "disaster profiles of india": "#disaster-management", "mitigation strategies": "#disaster-management", "vulnerability & risk assessment": "#disaster-management", "ndma guidelines & frameworks": "#disaster-management",
-            "internal security": "#internal-security", "linkages between development & extremism": "#internal-security", "money laundering & its prevention": "#internal-security", "role of external state & non-state actors": "#internal-security", "border area management & security forces": "#internal-security", "cyber security challenges": "#internal-security", "ngos": "#internal-security"
+            "art and culture": "#subject-art-culture", "dances": "#subject-art-culture", "literature": "#subject-art-culture", "art forms": "#subject-art-culture", "folk songs": "#subject-art-culture", "architecture": "#subject-art-culture",
+            "history": "#subject-history", "indian history": "#subject-history", "ancient history": "#subject-history", "freedom struggle": "#subject-history", "medieval history": "#subject-history", "post-independence": "#subject-history", "modern history": "#subject-history", "world history": "#subject-history", "industrial revolution": "#subject-history", "colonization & decolonization": "#subject-history", "world wars": "#subject-history", "political philosophies": "#subject-history",
+            "indian society": "#subject-indian-society", "salient features of indian society": "#subject-indian-society", "urbanization": "#subject-indian-society", "diversity of india": "#subject-indian-society", "effects of globalization": "#subject-indian-society", "role of women & organizations": "#subject-indian-society", "social empowerment & communalism": "#subject-indian-society", "poverty & developmental issues": "#subject-indian-society",
+            "geography": "#subject-geography", "indian geography": "#subject-geography", "physiography & relief": "#subject-geography", "soils & vegetation": "#subject-geography", "river systems & drainage": "#subject-geography", "economic & human geography": "#subject-geography", "climate & monsoons": "#subject-geography", "world geography": "#subject-geography", "geomorphology": "#subject-geography", "major natural regions": "#subject-geography", "climatology": "#subject-geography", "distribution of key resources": "#subject-geography", "oceanography": "#subject-geography",
+            "polity": "#subject-polity", "constitutional framework": "#subject-polity", "local government": "#subject-polity", "system of government": "#subject-polity", "judiciary": "#subject-polity", "central government": "#subject-polity", "constitutional & non-constitutional bodies": "#subject-polity", "state government": "#subject-polity",
+            "social justice": "#subject-social-justice", "welfare schemes for vulnerable sections": "#subject-social-justice", "education system": "#subject-social-justice", "mechanisms, laws & institutions": "#subject-social-justice", "human resources": "#subject-social-justice", "health sector issues": "#subject-social-justice", "issues relating to poverty & hunger": "#subject-social-justice",
+            "governance": "#subject-governance", "important aspects of governance": "#subject-governance", "citizens charters": "#subject-governance", "transparency & accountability": "#subject-governance", "role of civil services in a democracy": "#subject-governance", "e-governance applications & models": "#subject-governance",
+            "international relations": "#subject-international-relations", "india and its neighborhood": "#subject-international-relations", "effect of policies of developed countries": "#subject-international-relations", "bilateral, regional & global groupings": "#subject-international-relations", "important international institutions": "#subject-international-relations",
+            "economy": "#subject-economy", "indian economy & issues relating to planning": "#subject-economy", "government budgeting": "#subject-economy", "mobilization of resources": "#subject-economy", "land reforms in india": "#subject-economy", "growth, development & employment": "#subject-economy", "infrastructure & investment models": "#subject-economy", "inclusive growth": "#subject-economy",
+            "science and technology": "#subject-science-technology", "developments & everyday applications": "#subject-science-technology", "it, space & computers": "#subject-science-technology", "achievements of indians in sci-tech": "#subject-science-technology", "robotics & nanotech": "#subject-science-technology", "indigenization of technology": "#subject-science-technology", "biotechnology & ipr issues": "#subject-science-technology",
+            "environment": "#subject-environment", "conservation & biodiversity": "#subject-environment", "climate change mitigation": "#subject-environment", "environmental pollution & degradation": "#subject-environment", "environmental impact assessment (eia)": "#subject-environment",
+            "disaster management": "#subject-disaster-management", "disaster profiles of india": "#subject-disaster-management", "mitigation strategies": "#subject-disaster-management", "vulnerability & risk assessment": "#subject-disaster-management", "ndma guidelines & frameworks": "#subject-disaster-management",
+            "internal security": "#subject-internal-security", "linkages between development & extremism": "#subject-internal-security", "money laundering & its prevention": "#subject-internal-security", "role of external state & non-state actors": "#subject-internal-security", "border area management & security forces": "#subject-internal-security", "cyber security challenges": "#subject-internal-security", "ngos": "#subject-internal-security"
         };
 
         function bindFluidWaveNavigation() {
@@ -570,7 +573,7 @@
                 let singleDestinationPage = matchedPages[0];
                 let secureLandingRedirectUrl = singleDestinationPage.url;
 
-                if (singleDestinationPage.url === "/study/contents.html") {
+                if (singleDestinationPage.url === "/study/subjects.html") {
                     const matchingKeyword = singleDestinationPage.words.find(keyword => keyword.includes(cleanQuery));
                     if (matchingKeyword && sectionMapping[matchingKeyword]) {
                         secureLandingRedirectUrl += sectionMapping[matchingKeyword];
@@ -610,7 +613,7 @@
                 containerEl.innerHTML = matchedPages.map(page => {
                     let destinationLink = page.url;
 
-                    if (page.url === "/study/contents.html") {
+                    if (page.url === "/study/subjects.html") {
                         const matchingKeyword = page.words.find(keyword => keyword.includes(cleanQuery));
                         if (matchingKeyword && sectionMapping[matchingKeyword]) {
                             destinationLink += sectionMapping[matchingKeyword];

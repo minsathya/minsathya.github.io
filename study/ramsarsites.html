@@ -459,42 +459,17 @@
 </head>
 <body>
 
-    <header id="masterHeader">
-        <div class="header-inner-view" id="headerMainView">
-            <a href="/study/index.html" class="logo">sathya.</a>
-            <div class="header-right-cluster">
-                <div class="theme-toggle" id="themeToggleBtn" aria-label="Toggle visual palette theme">
-                    <svg class="sun-icon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="4"></circle>
-                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
-                    </svg>
-                    <svg class="moon-icon" viewBox="0 0 24 24">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                </div>
-                <button class="ctrl-btn" id="openSearchBtn" aria-label="Open Workspace Search">
-                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                </button>
-            </div>
-        </div>
-
-        <form class="header-inner-view" id="headerSearchView" action="/study/search.html" method="GET">
-            <button type="submit" aria-label="Submit search" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: inherit; display: flex; align-items: center; justify-content: center;">
-                <svg class="search-static-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </button>
-
-            <input type="text" class="search-core-input" id="searchCoreInput" name="q" placeholder="Search..." autocomplete="off" enterkeyhint="search">
-            
-            <div class="search-control-cluster">
-                <button type="button" class="ctrl-btn clear-text-btn" id="clearSearchBtn" aria-label="Clear typed text">
-                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-                <button type="button" class="ctrl-btn close-search-btn" id="closeSearchBtn" aria-label="Minimize search pill">
-                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                </button>
-            </div>
-        </form>
-    </header>
+        <!-- Top Left Brand 's' with Animated Twinkling Star -->
+    <nav class="top-nav-bar" id="topNavBar">
+        <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="sathya.">
+            <span class="brand-letter">s</span>
+            <span class="brand-star-wrap" aria-hidden="true">
+                <svg class="brand-star" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z" fill="#ff9e79"/>
+                </svg>
+            </span>
+        </a>
+    </nav>
 
     <main>
         <nav class="breadcrumb-nav" id="dynamicBreadcrumbNav" aria-label="breadcrumb"></nav>
@@ -873,7 +848,6 @@
 
             const pageNames = {
                 "/study/index.html": "Home",
-                "/study/contents.html": "Contents",
                 "/study/csat.html": "CSAT",
                 "/study/ncert.html": "NCERT",
                 "/study/currentaffairs.html": "Current Affairs",
