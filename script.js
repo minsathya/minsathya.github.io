@@ -2,7 +2,7 @@
    MINSATHYA - UNIVERSAL THEME, BRANDMARK & NAVIGATION ENGINE
    ========================================================================== */
 
-// 1. GLOBAL SYSTEM THEME & BRANDMARK STYLES INJECTION
+// 1. GLOBAL SYSTEM THEME, BRANDMARK & ENTRANCE ANIMATION STYLES
 (function injectGlobalStyles() {
     const style = document.createElement('style');
     style.id = 'global-site-theme-rules';
@@ -42,32 +42,43 @@
         }
 
         /* -------------------------------------------------------------
-           TOP NAVIGATION: 's' BRANDMARK & PEACH TWINKLING STAR
+           STANDARDIZED PAGE WIDTH & CONTAINER ALIGNMENT (MATCHES HOMEPAGE)
+           ------------------------------------------------------------- */
+        body:not(.nutrition-workspace) {
+            max-width: 1240px !important;
+            margin: 0 auto !important;
+            padding: 40px 24px 36px 24px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* -------------------------------------------------------------
+           TOP NAVIGATION: 's' BRANDMARK & ROUND TWINKLING STAR
            ------------------------------------------------------------- */
         .top-nav-bar {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            margin-bottom: 24px;
+            width: 100% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            margin-bottom: 28px !important;
             position: relative;
             z-index: 10;
         }
 
         .brand-pill {
             position: relative;
-            display: inline-flex;
-            align-items: baseline;
-            justify-content: flex-start;
+            display: inline-flex !important;
+            align-items: baseline !important;
+            justify-content: flex-start !important;
             height: auto;
-            padding: 0 4px;
+            padding: 0 4px !important;
             background-color: transparent !important;
             border: none !important;
             text-decoration: none !important;
-            font-size: 40px;
-            font-weight: 700;
-            letter-spacing: -1.2px;
-            line-height: 1;
+            font-size: 42px !important;
+            font-weight: 700 !important;
+            letter-spacing: -1.2px !important;
+            line-height: 1 !important;
             box-shadow: none !important;
             touch-action: manipulation;
             cursor: pointer;
@@ -78,45 +89,83 @@
 
         .brand-pill:hover,
         .brand-pill:active {
-            transform: translate3d(0, -3px, 0) scale3d(1.02, 1.02, 1);
+            transform: translate3d(0, -3px, 0) scale3d(1.02, 1.02, 1) !important;
         }
 
         .brand-letter {
             color: var(--text-main) !important;
-            line-height: 1;
+            line-height: 1 !important;
             transition: color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Brand Twinkling Star (Peach #ff9e79, Scales up to size of dot) */
-        .brand-star-wrap {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 10px;
-            height: 10px;
-            margin-left: 3px;
-            vertical-align: 2px;
-            flex-shrink: 0;
-            line-height: 1;
-        }
-
+        /* Round Twinkling Star: Round circle scaling small and large like the night sky stars */
         .brand-star {
-            width: 9px;
-            height: 9px;
-            display: block;
-            transform-origin: center center;
-            animation: brandStarPulse 2.8s infinite ease-in-out;
+            display: inline-block !important;
+            width: 8px !important;
+            height: 8px !important;
+            border-radius: 50% !important;
+            background-color: #ff9e79 !important;
+            box-shadow: 0 0 6px rgba(255, 158, 121, 0.75), 0 0 12px rgba(255, 158, 121, 0.4) !important;
+            margin-left: 2px !important;
+            margin-bottom: 0 !important;
+            vertical-align: -1px !important;
+            flex-shrink: 0 !important;
+            line-height: 1 !important;
+            transform-origin: center center !important;
+            animation: roundStarPulse 3s infinite ease-in-out alternate !important;
         }
 
-        @keyframes brandStarPulse {
-            0%   { transform: scale(0.35) translateZ(0); opacity: 0.45; filter: drop-shadow(0 0 2px rgba(255, 158, 121, 0.4)); }
-            50%  { transform: scale(1.0) translateZ(0);  opacity: 1;    filter: drop-shadow(0 0 6px rgba(255, 158, 121, 0.9)); }
-            100% { transform: scale(0.35) translateZ(0); opacity: 0.45; filter: drop-shadow(0 0 2px rgba(255, 158, 121, 0.4)); }
+        @keyframes roundStarPulse {
+            0% {
+                transform: scale(0.4) translateZ(0);
+                opacity: 0.5;
+                box-shadow: 0 0 3px rgba(255, 158, 121, 0.4);
+            }
+            50% {
+                transform: scale(1.0) translateZ(0);
+                opacity: 1;
+                box-shadow: 0 0 8px rgba(255, 158, 121, 0.85), 0 0 14px rgba(255, 158, 121, 0.45);
+            }
+            100% {
+                transform: scale(0.4) translateZ(0);
+                opacity: 0.5;
+                box-shadow: 0 0 3px rgba(255, 158, 121, 0.4);
+            }
         }
 
-        /* Hide any legacy brand dots */
-        .brand-dot {
+        /* Hide any outdated dot or svg wrapper elements */
+        .brand-dot,
+        .brand-star-wrap {
             display: none !important;
+        }
+
+        /* -------------------------------------------------------------
+           UNIVERSAL MASTER ENTRANCE ANIMATION (APPLIES TO ALL PAGES)
+           ------------------------------------------------------------- */
+        @keyframes masterEntrance {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 10px, 0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        .top-nav-bar {
+            animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+        }
+
+        main, 
+        .workspace-animate-frame,
+        .subjects-header-row,
+        #subjectsListContainer {
+            animation: masterEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both !important;
+        }
+
+        footer {
+            animation: masterEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both !important;
         }
 
         /* Universal Shadow Removal Across All Panels & Cards Site-wide */
@@ -128,6 +177,19 @@
         .wide-capsule,
         .macro-card {
             box-shadow: none !important;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 28px 18px 24px 18px !important;
+            }
+            .brand-pill {
+                font-size: 36px !important;
+            }
+            .brand-star {
+                width: 7px !important;
+                height: 7px !important;
+            }
         }
     `;
     if (document.head) {
@@ -159,22 +221,20 @@
 
 // 3. LOGO ENHANCEMENT & NAVIGATION
 document.addEventListener('DOMContentLoaded', () => {
-    // Progressive upgrade: Ensure all logos have the animated star if they have an old dot
+    // Ensure all brand logos use the round star
     const brandPills = document.querySelectorAll('.brand-pill, .logo');
     brandPills.forEach(pill => {
-        if (!pill.querySelector('.brand-star-wrap')) {
-            const oldDot = pill.querySelector('.brand-dot');
-            if (oldDot) oldDot.remove();
+        // Clean out any old dot or svg wrapper
+        const oldDot = pill.querySelector('.brand-dot');
+        if (oldDot) oldDot.remove();
+        const oldSvg = pill.querySelector('.brand-star-wrap');
+        if (oldSvg) oldSvg.remove();
 
-            const starWrap = document.createElement('span');
-            starWrap.className = 'brand-star-wrap';
-            starWrap.setAttribute('aria-hidden', 'true');
-            starWrap.innerHTML = `
-                <svg class="brand-star" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z" fill="#ff9e79"/>
-                </svg>
-            `;
-            pill.appendChild(starWrap);
+        if (!pill.querySelector('.brand-star')) {
+            const roundStar = document.createElement('span');
+            roundStar.className = 'brand-star';
+            roundStar.setAttribute('aria-hidden', 'true');
+            pill.appendChild(roundStar);
         }
 
         pill.setAttribute('href', '/index.html');

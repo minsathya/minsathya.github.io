@@ -186,31 +186,39 @@
             line-height: 1;
         }
 
-        /* Brand Twinkling Star (Scales up to size of dot in #ff9e79) */
-        .brand-star-wrap {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 10px;
-            height: 10px;
-            margin-left: 3px;
-            vertical-align: 2px;
+        /* Round Twinkling Star (Scales small to large in #ff9e79 with soft glow) */
+        .brand-star {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #ff9e79;
+            box-shadow: 0 0 6px rgba(255, 158, 121, 0.75), 0 0 12px rgba(255, 158, 121, 0.4);
+            margin-left: 2px;
+            margin-bottom: 0;
+            vertical-align: -1px;
             flex-shrink: 0;
             line-height: 1;
-        }
-
-        .brand-star {
-            width: 9px;
-            height: 9px;
-            display: block;
             transform-origin: center center;
-            animation: brandStarPulse 2.8s infinite ease-in-out;
+            animation: roundStarPulse 3s infinite ease-in-out alternate;
         }
 
-        @keyframes brandStarPulse {
-            0%   { transform: scale(0.35) translateZ(0); opacity: 0.45; filter: drop-shadow(0 0 2px rgba(255, 158, 121, 0.4)); }
-            50%  { transform: scale(1.0) translateZ(0);  opacity: 1;    filter: drop-shadow(0 0 6px rgba(255, 158, 121, 0.9)); }
-            100% { transform: scale(0.35) translateZ(0); opacity: 0.45; filter: drop-shadow(0 0 2px rgba(255, 158, 121, 0.4)); }
+        @keyframes roundStarPulse {
+            0% {
+                transform: scale(0.4) translateZ(0);
+                opacity: 0.5;
+                box-shadow: 0 0 3px rgba(255, 158, 121, 0.4);
+            }
+            50% {
+                transform: scale(1.0) translateZ(0);
+                opacity: 1;
+                box-shadow: 0 0 8px rgba(255, 158, 121, 0.85), 0 0 14px rgba(255, 158, 121, 0.45);
+            }
+            100% {
+                transform: scale(0.4) translateZ(0);
+                opacity: 0.5;
+                box-shadow: 0 0 3px rgba(255, 158, 121, 0.4);
+            }
         }
 
         /* -------------------------------------------------------------
@@ -458,11 +466,7 @@
     <nav class="top-nav-bar" id="topNavBar">
         <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="sathya.">
             <span class="brand-letter">s</span>
-            <span class="brand-star-wrap" aria-hidden="true">
-                <svg class="brand-star" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z" fill="#ff9e79"/>
-                </svg>
-            </span>
+            <span class="brand-star" aria-hidden="true"></span>
         </a>
     </nav>
     

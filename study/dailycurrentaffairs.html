@@ -116,8 +116,8 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 50px 24px 35px 24px;
-            max-width: 1440px;
+            padding: 40px 24px 36px 24px;
+            max-width: 1240px;
             margin: 0 auto;
             width: 100%;
             -webkit-font-smoothing: antialiased;
@@ -125,10 +125,91 @@
             transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
+        
+        /* TOP NAVIGATION: 's' BRANDMARK & ROUND TWINKLING STAR */
+        .top-nav-bar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 10;
+            animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .brand-pill {
+            position: relative;
+            display: inline-flex;
+            align-items: baseline;
+            justify-content: flex-start;
+            height: auto;
+            padding: 0 4px;
+            background-color: transparent !important;
+            border: none !important;
+            text-decoration: none !important;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -1.2px;
+            line-height: 1;
+            box-shadow: none !important;
+            touch-action: manipulation;
+            cursor: pointer;
+            user-select: none;
+            transform: translateZ(0);
+            transition: transform 0.45s var(--ease-smooth);
+        }
+
+        .brand-pill:hover,
+        .brand-pill:active {
+            transform: translate3d(0, -3px, 0) scale3d(1.02, 1.02, 1);
+        }
+
+        .brand-letter {
+            color: var(--text-main);
+            line-height: 1;
+            transition: color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Round Twinkling Star (Scales small to large in #ff9e79 with soft glow) */
+        .brand-star {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #ff9e79;
+            box-shadow: 0 0 6px rgba(255, 158, 121, 0.75), 0 0 12px rgba(255, 158, 121, 0.4);
+            margin-left: 2px;
+            margin-bottom: 0;
+            vertical-align: -1px;
+            flex-shrink: 0;
+            line-height: 1;
+            transform-origin: center center;
+            animation: roundStarPulse 3s infinite ease-in-out alternate;
+        }
+
+        @keyframes roundStarPulse {
+            0% {
+                transform: scale(0.4) translateZ(0);
+                opacity: 0.5;
+                box-shadow: 0 0 3px rgba(255, 158, 121, 0.4);
+            }
+            50% {
+                transform: scale(1.0) translateZ(0);
+                opacity: 1;
+                box-shadow: 0 0 8px rgba(255, 158, 121, 0.85), 0 0 14px rgba(255, 158, 121, 0.45);
+            }
+            100% {
+                transform: scale(0.4) translateZ(0);
+                opacity: 0.5;
+                box-shadow: 0 0 3px rgba(255, 158, 121, 0.4);
+            }
+        }
+    
         /* MASTER ENTRANCE */
         @keyframes masterEntrance {
-            from { opacity: 0; transform: translate3d(0, 24px, 0); }
-            to { opacity: 1; transform: translate3d(0, 0, 0); }
+            0% { opacity: 0; transform: translate3d(0, 10px, 0); }
+            100% { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
         header, .breadcrumb-nav, .date-topics-capsule, .topics-feed, footer {
@@ -162,7 +243,7 @@
             border: 1px solid var(--header-border);
             border-radius: 28px;
             width: 100%;
-            max-width: 880px;
+            max-width: 1200px;
             height: 72px;
             margin: 0 auto 50px auto;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
@@ -328,7 +409,7 @@
         main {
             flex-grow: 1;
             width: 100%;
-            max-width: 880px;
+            max-width: 1200px;
             margin: 0 auto 60px auto;
             display: flex;
             flex-direction: column;
@@ -614,10 +695,15 @@
             stroke-linejoin: round;
         }
 
-        @media (min-width: 1025px) {
+        @media (min-width: 1380px) {
             .side-nav-btn { display: flex; }
-            .side-nav-prev { left: max(20px, calc(50% - 440px - 72px)); }
-            .side-nav-next { right: max(20px, calc(50% - 440px - 72px)); }
+            .side-nav-prev { left: max(20px, calc(50% - 600px - 72px)); }
+            .side-nav-next { right: max(20px, calc(50% - 600px - 72px)); }
+        }
+        @media (min-width: 1025px) and (max-width: 1379px) {
+            .side-nav-btn { display: flex; }
+            .side-nav-prev { left: 16px; }
+            .side-nav-next { right: 16px; }
         }
 
         .side-nav-btn:hover:not(.is-disabled) {
@@ -1246,11 +1332,7 @@
     <nav class="top-nav-bar" id="topNavBar">
         <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="sathya.">
             <span class="brand-letter">s</span>
-            <span class="brand-star-wrap" aria-hidden="true">
-                <svg class="brand-star" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z" fill="#ff9e79"/>
-                </svg>
-            </span>
+            <span class="brand-star" aria-hidden="true"></span>
         </a>
     </nav>
 

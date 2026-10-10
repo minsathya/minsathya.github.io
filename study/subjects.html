@@ -108,8 +108,8 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 36px 24px 32px 24px;
-            max-width: 920px;
+            padding: 40px 24px 36px 24px;
+            max-width: 1240px;
             margin: 0 auto;
             width: 100%;
             -webkit-font-smoothing: antialiased;
@@ -120,12 +120,28 @@
         /* -------------------------------------------------------------
            TOP NAVIGATION: 's' BRANDMARK WITH TWINKLING STAR
            ------------------------------------------------------------- */
+        
+        /* 60FPS MASTER ENTRANCE ANIMATION */
+        @keyframes masterEntrance {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 10px, 0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
         .top-nav-bar {
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: flex-start;
             margin-bottom: 24px;
+            position: relative;
+            z-index: 10;
+            animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         .brand-pill {
@@ -135,13 +151,15 @@
             justify-content: flex-start;
             height: auto;
             padding: 0 4px;
-            background-color: transparent;
-            border: none;
+            background-color: transparent !important;
+            border: none !important;
             text-decoration: none !important;
-            font-size: 40px;
+            font-size: 42px;
             font-weight: 700;
             letter-spacing: -1.2px;
             line-height: 1;
+            box-shadow: none !important;
+            touch-action: manipulation;
             cursor: pointer;
             user-select: none;
             transform: translateZ(0);
@@ -159,42 +177,48 @@
             transition: color 0.4s var(--ease-smooth);
         }
 
-        /* Brand Twinkling Star (Scales up to size of dot in #ff9e79) */
-        .brand-star-wrap {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 10px;
-            height: 10px;
-            margin-left: 3px;
-            vertical-align: 2px;
+        /* Round Twinkling Star (Scales small to large in #ff9e79 with soft glow) */
+        .brand-star {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #ff9e79;
+            box-shadow: 0 0 6px rgba(255, 158, 121, 0.75), 0 0 12px rgba(255, 158, 121, 0.4);
+            margin-left: 2px;
+            margin-bottom: 0;
+            vertical-align: -1px;
             flex-shrink: 0;
             line-height: 1;
-        }
-
-        .brand-star {
-            width: 9px;
-            height: 9px;
-            display: block;
             transform-origin: center center;
-            animation: brandStarPulse 2.8s infinite ease-in-out;
+            animation: roundStarPulse 3s infinite ease-in-out alternate;
         }
 
-        @keyframes brandStarPulse {
-            0%   { transform: scale(0.35) translateZ(0); opacity: 0.45; filter: drop-shadow(0 0 2px rgba(255, 158, 121, 0.4)); }
-            50%  { transform: scale(1.0) translateZ(0);  opacity: 1;    filter: drop-shadow(0 0 6px rgba(255, 158, 121, 0.9)); }
-            100% { transform: scale(0.35) translateZ(0); opacity: 0.45; filter: drop-shadow(0 0 2px rgba(255, 158, 121, 0.4)); }
+        @keyframes roundStarPulse {
+            0% {
+                transform: scale(0.4) translateZ(0);
+                opacity: 0.5;
+                box-shadow: 0 0 3px rgba(255, 158, 121, 0.4);
+            }
+            50% {
+                transform: scale(1.0) translateZ(0);
+                opacity: 1;
+                box-shadow: 0 0 8px rgba(255, 158, 121, 0.85), 0 0 14px rgba(255, 158, 121, 0.45);
+            }
+            100% {
+                transform: scale(0.4) translateZ(0);
+                opacity: 0.5;
+                box-shadow: 0 0 3px rgba(255, 158, 121, 0.4);
+            }
         }
 
-        /* -------------------------------------------------------------
-           PAGE HEADER ROW: BACK ARROW + SUBJECTS TITLE
-           ------------------------------------------------------------- */
         .subjects-header-row {
             display: flex;
             align-items: center;
             gap: 14px;
             width: 100%;
-            margin-bottom: 24px;
+            max-width: 1200px;
+            margin: 0 auto 24px auto;
         }
 
         .back-icon-btn {
@@ -243,6 +267,8 @@
         main {
             flex-grow: 1;
             width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
             gap: 16px;
@@ -254,25 +280,40 @@
             border: 1px solid var(--panel-border);
             border-radius: 22px;
             overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-            transition: background-color 0.4s var(--ease-smooth),
-                        border-color 0.4s var(--ease-smooth),
-                        box-shadow 0.4s var(--ease-smooth),
-                        transform 0.3s var(--ease-smooth);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            transition: transform 0.45s var(--ease-smooth),
+                        box-shadow 0.45s var(--ease-smooth),
+                        background-color 0.4s var(--ease-smooth);
             will-change: transform;
         }
 
         body.light-mode .subject-accordion-card {
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
         }
 
+        /* Mouse Hover Zoom-Up (No Border Change) */
         @media (hover: hover) and (pointer: fine) {
             .subject-accordion-card:hover {
-                border-color: rgba(255, 255, 255, 0.18);
+                transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
+                box-shadow: 0 24px 48px rgba(0, 0, 0, 0.48);
             }
             body.light-mode .subject-accordion-card:hover {
-                border-color: rgba(0, 0, 0, 0.18);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
             }
+        }
+
+        /* Touch / Focus Elevation */
+        .subject-accordion-card:active,
+        .subject-accordion-card:focus-within {
+            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.48);
+        }
+
+        body.light-mode .subject-accordion-card:active,
+        body.light-mode .subject-accordion-card:focus-within {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
         }
 
         /* Header row inside each subject card */
@@ -534,11 +575,7 @@
     <nav class="top-nav-bar" id="topNavBar">
         <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="sathya.">
             <span class="brand-letter">s</span>
-            <span class="brand-star-wrap" aria-hidden="true">
-                <svg class="brand-star" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z" fill="#ff9e79"/>
-                </svg>
-            </span>
+            <span class="brand-star" aria-hidden="true"></span>
         </a>
     </nav>
 
