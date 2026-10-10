@@ -14,6 +14,7 @@
             --text-muted: #737373;
             --panel-bg: #121212;
             --panel-border: #222222;
+            --panel-border-hover: rgba(255, 255, 255, 0.11);
             --row-divider: #1c1c1c;
             --row-hover: rgba(255, 255, 255, 0.02);
             --shadow-ambient: none;
@@ -28,6 +29,7 @@
             --text-muted: #8e8e93 !important;
             --panel-bg: #ffffff !important;
             --panel-border: #e2e2e7 !important;
+            --panel-border-hover: rgba(0, 0, 0, 0.10) !important;
             --row-divider: #f2f2f7 !important;
             --row-hover: rgba(0, 0, 0, 0.02) !important;
             --shadow-ambient: none !important;
@@ -154,22 +156,26 @@
         }
 
         .top-nav-bar {
-            animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+            animation: masterEntrance 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         .page-header-row,
         .subjects-header-row {
-            animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.02s both !important;
+            animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.02s both;
         }
 
         main, 
         .workspace-animate-frame,
-        #subjectsListContainer {
-            animation: masterEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both !important;
+        #subjectsListContainer,
+        .matrix-canvas,
+        .contents-container,
+        .date-topics-capsule,
+        .topics-feed {
+            animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both;
         }
 
         footer {
-            animation: masterEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both !important;
+            animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.07s both;
         }
 
         /* -------------------------------------------------------------
@@ -199,9 +205,22 @@
         .card:active,
         .wide-capsule:hover,
         .wide-capsule:active,
+        .date-topics-capsule:hover,
+        .date-topics-capsule:active,
         .article-card:hover,
         .article-card:active {
             box-shadow: none !important;
+        }
+
+        /* Subtle, silent hover borders */
+        @media (hover: hover) and (pointer: fine) {
+            .capsule-panel:hover,
+            .subject-accordion-card:hover,
+            .card:hover,
+            .wide-capsule:hover,
+            .date-topics-capsule:hover {
+                border-color: var(--panel-border-hover) !important;
+            }
         }
 
         /* -------------------------------------------------------------
@@ -212,13 +231,15 @@
             .subject-accordion-card:hover,
             .card:hover,
             .wide-capsule:hover,
+            .date-topics-capsule:hover,
             .article-card:hover {
                 transform: none !important;
             }
             .capsule-panel:active,
             .subject-accordion-card:active,
             .card:active,
-            .wide-capsule:active {
+            .wide-capsule:active,
+            .date-topics-capsule:active {
                 transform: scale3d(0.985, 0.985, 1) !important;
                 transition: transform 0.12s ease-out !important;
             }
@@ -226,19 +247,27 @@
 
         /* -------------------------------------------------------------
            CLICKABLE WORDS ZOOM TOWARDS US STRAIGHT ACROSS SITE
+           Only the inner text span or word zooms, never the outer block/link!
            ------------------------------------------------------------- */
+        .nav-text {
+            display: inline-block !important;
+            white-space: nowrap !important;
+            transform-origin: center center !important;
+            backface-visibility: hidden !important;
+            -webkit-backface-visibility: hidden !important;
+            will-change: transform;
+            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), 
+                        opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+
         @media (hover: hover) and (pointer: fine) {
-            a:not(.brand-pill):not(.back-icon-btn):hover,
-            a:not(.brand-pill):not(.back-icon-btn):hover .nav-text,
-            .site-name:hover,
-            .sortable:hover,
+            .footer-links-row a:hover .nav-text,
+            .matrix-canvas a:hover .nav-text,
             .document-list a:hover .nav-text,
-            .topics-column-grid a:hover,
-            .footer-links-row a:hover,
-            .footer-links-row a:hover .nav-text {
+            .topics-column-grid a:hover .nav-text,
+            .site-name:hover,
+            .sortable:hover {
                 transform: scale3d(1.06, 1.06, 1) !important;
-                transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
-                transform-origin: center center !important;
             }
         }
 
@@ -375,12 +404,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }, true);
 })();
 
-// 4. ENSURE MASTER ENTRANCE RUNS ON RELOAD / REFRESH
+// 5. UNIVERSAL 120HZ BUTTERY SMOOTH MASTER ENTRANCE ON NAVIGATION & RETURN
+function executeMasterEntrance() {
+    const targets = document.querySelectorAll(
+        '.top-nav-bar, .page-header-row, .subjects-header-row, main, .matrix-canvas, .contents-container, #subjectsListContainer, .workspace-animate-frame, .date-topics-capsule, .topics-feed, footer'
+    );
+    targets.forEach(el => {
+        el.style.setProperty('animation', 'none', 'important');
+    });
+    void document.documentElement.offsetHeight; // trigger layout reflow
+    requestAnimationFrame(() => {
+        targets.forEach(el => {
+            el.style.removeProperty('animation');
+        });
+    });
+}
+
 window.addEventListener('pageshow', (event) => {
-    const animEls = document.querySelectorAll('.top-nav-bar, .page-header-row, .subjects-header-row, main, footer');
-    animEls.forEach(el => {
-        el.style.animation = 'none';
-        void el.offsetHeight; // trigger reflow
-        el.style.animation = '';
+    // Replay entrance on BFCache restore or backward/forward navigation
+    if (event.persisted || (window.performance && window.performance.navigation && window.performance.navigation.type === 2) || (window.performance && window.performance.getEntriesByType && window.performance.getEntriesByType('navigation')[0]?.type === 'back_forward')) {
+        executeMasterEntrance();
+    }
+    document.querySelectorAll('.is-wave-loading, .is-panel-lifted, .is-card-lifted').forEach(el => {
+        el.classList.remove('is-wave-loading', 'is-panel-lifted', 'is-card-lifted');
     });
 });
+

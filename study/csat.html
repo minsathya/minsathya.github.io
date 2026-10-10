@@ -1,9 +1,22 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSAT - sathya.</title>
+
+    <!-- Instant Theme Evaluation to Prevent Theme Flash on Reload -->
+    <script>
+      (function() {
+        const activeTheme = sessionStorage.getItem('dashboard-theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        const isLight = (activeTheme === 'light' || (!activeTheme && prefersLight));
+        if (isLight) {
+          document.documentElement.classList.add('light-mode');
+        }
+        document.documentElement.style.backgroundColor = isLight ? '#f5f5f7' : '#0b0b0b';
+      })();
+    </script>
 
     <!-- Universal iPad stabilization: catches text fragments instantly before document draw -->
     <script>
@@ -50,9 +63,10 @@
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
-            --text-muted: #555555;
+            --text-muted: #737373;
             --panel-bg: #121212;
             --panel-border: #222222;
+            --panel-border-hover: rgba(255, 255, 255, 0.11);
             --row-divider: #1c1c1c;
             --row-hover: rgba(255, 255, 255, 0.015);
             --header-bg: #1a231e;
@@ -64,15 +78,23 @@
         }
 
         body.light-mode {
-            --bg-color: #ebebe4;
+            --bg-color: #f5f5f7;
             --text-main: #111111;
-            --text-muted: #a1a1a6;
+            --text-muted: #8e8e93;
             --panel-bg: #ffffff;
             --panel-border: #e2e2e7;
+            --panel-border-hover: rgba(0, 0, 0, 0.10);
             --row-divider: #f2f2f7;
             --row-hover: rgba(0, 0, 0, 0.01);
             --header-bg: #e9ebe6;
             --header-border: #d4d8cf;
+        }
+
+        html {
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            min-height: 100dvh;
+            width: 100%;
         }
 
         * {
@@ -101,24 +123,14 @@
         }
 
         @keyframes masterEntrance {
-            from { opacity: 0; transform: translate3d(0, 24px, 0); }
-            to { opacity: 1; transform: translate3d(0, 0, 0); }
+            0% { opacity: 0; transform: translate3d(0, 10px, 0); }
+            100% { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
-        header, .wide-capsule, footer, .breadcrumb-nav, .page-main-heading {
-            opacity: 1;
-            will-change: transform, opacity;
-            animation: masterEntrance 1.2s var(--ease-premium) backwards;
-        }
-
-        header { animation-delay: 0.04s; }
-        .breadcrumb-nav { animation-delay: 0.08s; }
-        .page-main-heading { animation-delay: 0.12s; }
-        
-        .wide-capsule:nth-of-type(1) { animation-delay: 0.16s; }
-        .wide-capsule:nth-of-type(2) { animation-delay: 0.20s; }
-        .wide-capsule:nth-of-type(3) { animation-delay: 0.24s; }
-        footer { animation-delay: 0.36s; }
+        .top-nav-bar { animation: masterEntrance 0.42s cubic-bezier(0.16, 1, 0.3, 1) both; }
+        .page-header-row { animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.02s both; }
+        main, .contents-container { animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both; }
+        footer { animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.07s both; }
 
         @keyframes capsuleHighlightPulse {
             0% { transform: scale(1); }
@@ -554,11 +566,11 @@
 
     <footer>
         <div class="footer-links-row">
-            <a href="/study/Footer/about.html">About</a>
-            <a href="/study/Footer/contact.html">Contact</a>
-            <a href="/study/Footer/privacy.html">Privacy Policy</a>
-            <a href="/study/Footer/terms.html">Terms &amp; Conditions</a>
-            <a href="/study/Footer/disclaimer.html">Disclaimer</a>
+            <a href="/study/Footer/about.html"><span class="nav-text">About</span></a>
+            <a href="/study/Footer/contact.html"><span class="nav-text">Contact</span></a>
+            <a href="/study/Footer/privacy.html"><span class="nav-text">Privacy Policy</span></a>
+            <a href="/study/Footer/terms.html"><span class="nav-text">Terms &amp; Conditions</span></a>
+            <a href="/study/Footer/disclaimer.html"><span class="nav-text">Disclaimer</span></a>
         </div>
         <div class="copyright-tag">
             &copy; 2026 Sathya. All rights reserved.

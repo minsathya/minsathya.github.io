@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,9 +11,11 @@
       (function() {
         const activeTheme = sessionStorage.getItem('dashboard-theme');
         const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-        if (activeTheme === 'light' || (!activeTheme && prefersLight)) {
+        const isLight = (activeTheme === 'light' || (!activeTheme && prefersLight));
+        if (isLight) {
           document.documentElement.classList.add('light-mode');
         }
+        document.documentElement.style.backgroundColor = isLight ? '#f5f5f7' : '#0b0b0b';
       })();
     </script>
 
@@ -51,52 +53,64 @@
 
     <style>
       html {
+        background-color: #0b0b0b;
+        color: #ffffff;
+        min-height: 100vh;
+        min-height: 100dvh;
+        width: 100%;
         overflow-y: scroll;
         scrollbar-gutter: stable;
       }
-        :root {
-            /* Smooth 0.55s Gradual Deceleration Curve */
-            --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
-            --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
-            --bg-color: #000000;
-            --text-main: #ffffff;
-            --text-muted: #777777;
-            --panel-bg: #0a0a0a;
-            --panel-border: #0a0a0a;
-            --row-divider: #0a0a0a;
-            --header-bg: #1a231e;
-            --header-border: #222c26;
-            --accent-tag-bg: #1c2720;
-            --accent-tag-text: #6ec981;
-            --pill-box-bg: rgba(255, 255, 255, 0.025);
-            --pill-box-border: #222222;
 
-            --link-color: #2997ff;
-            --link-underline: rgba(41, 151, 255, 0.35);
+      html.light-mode {
+        background-color: #f5f5f7;
+        color: #111111;
+      }
 
-            --cascade-distance: 24px;
-            --cascade-duration-exit: 0.2s;
-            --cascade-duration-entry: 0.28s;
-        }
+      :root {
+        --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+        --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+        --bg-color: #0b0b0b;
+        --text-main: #ffffff;
+        --text-muted: #777777;
+        --panel-bg: #121212;
+        --panel-border: #222222;
+        --panel-border-hover: rgba(255, 255, 255, 0.11);
+        --row-divider: #1c1c1c;
+        --header-bg: #1a231e;
+        --header-border: #222c26;
+        --accent-tag-bg: #1c2720;
+        --accent-tag-text: #6ec981;
+        --pill-box-bg: rgba(255, 255, 255, 0.025);
+        --pill-box-border: #222222;
 
-        html.light-mode,
-        body.light-mode {
-            --bg-color: #f1f1f1;
-            --text-main: #111111;
-            --text-muted: #88888e;
-            --panel-bg: #ffffff;
-            --panel-border: #e2e2e7;
-            --row-divider: #f2f2f7;
-            --header-bg: #ffffff;
-            --header-border: #d4d8cf;
-            --accent-tag-bg: #e2ede5;
-            --accent-tag-text: #1d6e35;
-            --pill-box-bg: rgba(0, 0, 0, 0.025);
-            --pill-box-border: #e2e2e7;
+        --link-color: #2997ff;
+        --link-underline: rgba(41, 151, 255, 0.35);
 
-            --link-color: #0066cc;
-            --link-underline: rgba(0, 102, 204, 0.35);
-        }
+        --cascade-distance: 24px;
+        --cascade-duration-exit: 0.2s;
+        --cascade-duration-entry: 0.28s;
+      }
+
+      html.light-mode,
+      body.light-mode {
+        --bg-color: #f5f5f7;
+        --text-main: #111111;
+        --text-muted: #88888e;
+        --panel-bg: #ffffff;
+        --panel-border: #e2e2e7;
+        --panel-border-hover: rgba(0, 0, 0, 0.10);
+        --row-divider: #f2f2f7;
+        --header-bg: #ffffff;
+        --header-border: #d4d8cf;
+        --accent-tag-bg: #e2ede5;
+        --accent-tag-text: #1d6e35;
+        --pill-box-bg: rgba(0, 0, 0, 0.025);
+        --pill-box-border: #e2e2e7;
+
+        --link-color: #0066cc;
+        --link-underline: rgba(0, 102, 204, 0.35);
+      }
 
         * {
             box-sizing: border-box;
@@ -212,10 +226,8 @@
             100% { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
-        header, .breadcrumb-nav, .date-topics-capsule, .topics-feed, footer {
-            opacity: 1;
-            will-change: transform, opacity;
-            animation: masterEntrance 1.2s var(--ease-smooth) backwards;
+        .date-topics-capsule, .topics-feed {
+            animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both;
         }
 
         @keyframes sideNavEntrance {
@@ -226,15 +238,8 @@
         .side-nav-btn {
             opacity: 1;
             will-change: opacity;
-            animation: sideNavEntrance 1.2s var(--ease-smooth) backwards;
+            animation: sideNavEntrance 0.45s var(--ease-smooth) backwards;
         }
-
-        header { animation-delay: 0.04s; }
-        .breadcrumb-nav { animation-delay: 0.10s; }
-        .date-topics-capsule { animation-delay: 0.16s; }
-        .topics-feed { animation-delay: 0.22s; }
-        .side-nav-btn { animation-delay: 0.26s; }
-        footer { animation-delay: 0.30s; }
 
         /* HEADER */
         header {
@@ -1529,11 +1534,11 @@
 
     <footer>
         <div class="footer-links-row">
-            <a href="/study/Footer/about.html">About</a>
-            <a href="/study/Footer/contact.html">Contact</a>
-            <a href="/study/Footer/privacy.html">Privacy Policy</a>
-            <a href="/study/Footer/terms.html">Terms &amp; Conditions</a>
-            <a href="/study/Footer/disclaimer.html">Disclaimer</a>
+            <a href="/study/Footer/about.html"><span class="nav-text">About</span></a>
+            <a href="/study/Footer/contact.html"><span class="nav-text">Contact</span></a>
+            <a href="/study/Footer/privacy.html"><span class="nav-text">Privacy Policy</span></a>
+            <a href="/study/Footer/terms.html"><span class="nav-text">Terms &amp; Conditions</span></a>
+            <a href="/study/Footer/disclaimer.html"><span class="nav-text">Disclaimer</span></a>
         </div>
         <div class="copyright-tag">
             &copy; 2026 Sathya. All rights reserved.

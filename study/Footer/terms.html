@@ -1,6 +1,19 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Instant Theme Evaluation to Prevent Theme Flash on Reload -->
+    <script>
+      (function() {
+        const activeTheme = sessionStorage.getItem('dashboard-theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        const isLight = (activeTheme === 'light' || (!activeTheme && prefersLight));
+        if (isLight) {
+          document.documentElement.classList.add('light-mode');
+        }
+        document.documentElement.style.backgroundColor = isLight ? '#f5f5f7' : '#0b0b0b';
+      })();
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms &amp; Conditions - sathya.</title>
@@ -44,6 +57,7 @@
             --text-muted: #555555;
             --panel-bg: #121212;
             --panel-border: #222222;
+            --panel-border-hover: rgba(255, 255, 255, 0.11);
             --row-divider: #1c1c1c;
             --row-hover: rgba(255, 255, 255, 0.015);
 
@@ -61,6 +75,7 @@
             --text-muted: #a1a1a6;
             --panel-bg: #ffffff;
             --panel-border: #e2e2e7;
+            --panel-border-hover: rgba(0, 0, 0, 0.10);
             --row-divider: #f2f2f7;
             --row-hover: rgba(0, 0, 0, 0.01);
 
@@ -76,6 +91,13 @@
             tap-highlight-color: transparent !important;
         }
 
+        
+        html {
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            min-height: 100dvh;
+            width: 100%;
+        }
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
@@ -94,20 +116,14 @@
         }
 
         @keyframes masterEntrance {
-            from { opacity: 0; transform: translate3d(0, 24px, 0); }
-            to { opacity: 1; transform: translate3d(0, 0, 0); }
+            0% { opacity: 0; transform: translate3d(0, 10px, 0); }
+            100% { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
-        header, .breadcrumbs, .capsule-panel, footer {
-            opacity: 1;
-            will-change: transform, opacity;
-            animation: masterEntrance 1.2s var(--ease-premium) backwards;
-        }
-
-        header { animation-delay: 0.04s; }
-        .breadcrumbs { animation-delay: 0.14s; } 
-        .capsule-panel { animation-delay: 0.22s; }
-        footer { animation-delay: 0.32s; }
+        .top-nav-bar { animation: masterEntrance 0.42s cubic-bezier(0.16, 1, 0.3, 1) both; }
+        .page-header-row { animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.02s both; }
+        main, .contents-container, .capsule-panel, .wide-capsule, .card { animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both; }
+        footer { animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.07s both; }
 
         header {
             position: relative;
@@ -441,203 +457,7 @@
         .footer-links-row a.active-footer-page .nav-text { color: var(--text-main) !important; }
 
         /* Zoom on hover ONLY for real mouse pointers (Laptop/Desktop). Touch screens will NOT trigger this. */
-        @media (hover: hover) and (pointer: fine) {
-            .breadcrumbs a:hover .nav-text,
-            .footer-links-row a:hover .nav-text,
-            .logo:hover .nav-text {
-                transform: scale3d(1.06, 1.06, 1) !important;
-            }
-        }
-
-        /* --- GPU-Accelerated Continuous Fluid Wave Engine --- */
-        @keyframes fluidWave {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* Continuous Hardware-Accelerated Wave Sweep */
-        a.is-wave-loading .nav-text {
-            background-image: linear-gradient(90deg, #ffffff 0%, #ffffff 25%, #555555 50%, #ffffff 75%, #ffffff 100%) !important;
-            background-size: 200% 100% !important;
-            -webkit-background-clip: text !important;
-            background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-            color: transparent !important;
-            animation: fluidWave 0.75s infinite linear !important;
-            will-change: background-position, transform !important;
-            opacity: 1 !important;
-        }
-
-        /* Light Mode Fluid Wave Engine */
-        body.light-mode a.is-wave-loading .nav-text {
-            background-image: linear-gradient(90deg, #111111 0%, #111111 25%, #8a8a8e 50%, #111111 75%, #111111 100%) !important;
-            background-size: 200% 100% !important;
-            -webkit-background-clip: text !important;
-            background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-            color: transparent !important;
-            animation: fluidWave 0.75s infinite linear !important;
-            will-change: background-position, transform !important;
-            opacity: 1 !important;
-        }
-
-        .kinetic-locked-frame { pointer-events: none !important; }
-        .kinetic-locked-frame .nav-text { transition: none !important; -webkit-transition: none !important; }
-
-        @media (max-width: 700px) {
-            body {
-                padding: 40px 20px;
-            }
-            .capsule-panel {
-                padding: 32px 20px;
-                border-radius: 20px;
-            }
-            header {
-                margin-bottom: 20px; 
-                height: 64px; 
-            }
-            .header-inner-view {
-                padding: 0 20px; 
-            }
-            .logo {
-                font-size: 22px;
-            }
-            .search-core-input {
-                padding: 0 12px; 
-                font-size: 15px;
-            }
-            .header-right-cluster, .search-control-cluster {
-                gap: 16px; 
-            }
-            .breadcrumbs {
-                margin-bottom: 16px; 
-                padding: 0 4px;
-            }
-            .prose-text {
-                font-size: 15px;
-                line-height: 1.7;
-            }
-        }
-    
-        /* STANDARDIZED PAGE HEADER WITH BACK BUTTON */
-        .page-header-row,
-        .subjects-header-row {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto 24px auto;
-            position: relative;
-            z-index: 5;
-            animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.02s both;
-        }
-
-        .back-icon-btn {
-            background: transparent;
-            border: none;
-            outline: none;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--text-main);
-            padding: 0;
-            flex-shrink: 0;
-            touch-action: manipulation;
-            transition: background-color 0.2s cubic-bezier(0.25, 1, 0.5, 1), transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .back-icon-btn:hover {
-            background-color: rgba(255, 255, 255, 0.08);
-            transform: translate3d(-2px, 0, 0);
-        }
-
-        body.light-mode .back-icon-btn:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-
-        .back-icon-btn svg {
-            width: 22px;
-            height: 22px;
-            stroke: currentColor;
-            stroke-width: 2.4;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            fill: none;
-        }
-
-        .page-title {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.6px;
-            color: var(--text-main);
-            line-height: 1.2;
-        }
-
-        /* UNIVERSAL FLAT DESIGN: ZERO PANEL SHADOWS SITE-WIDE */
-        .capsule-panel,
-        .subject-accordion-card,
-        .card,
-        .wide-capsule,
-        .article-card,
-        .date-topics-capsule,
-        .macro-card,
-        .day-switcher-capsule {
-            box-shadow: none !important;
-        }
-
-        .capsule-panel:hover,
-        .capsule-panel:active,
-        .capsule-panel:focus-within,
-        .subject-accordion-card:hover,
-        .subject-accordion-card:active,
-        .subject-accordion-card:focus-within,
-        .card:hover,
-        .card:active,
-        .wide-capsule:hover,
-        .wide-capsule:active,
-        .article-card:hover,
-        .article-card:active {
-            box-shadow: none !important;
-        }
-
-        /* TOUCH OPTIMIZATION (IPAD / TOUCHSCREEN): NO STICKY HOVER LAG */
-        @media (hover: none) {
-            .capsule-panel:hover,
-            .subject-accordion-card:hover,
-            .card:hover,
-            .wide-capsule:hover,
-            .article-card:hover {
-                transform: none !important;
-            }
-            .capsule-panel:active,
-            .subject-accordion-card:active,
-            .card:active,
-            .wide-capsule:active {
-                transform: scale3d(0.985, 0.985, 1) !important;
-                transition: transform 0.12s ease-out !important;
-            }
-        }
-
-        /* CLICKABLE WORDS ZOOM TOWARDS US STRAIGHT */
-        @media (hover: hover) and (pointer: fine) {
-            a:not(.brand-pill):not(.back-icon-btn):hover,
-            a:not(.brand-pill):not(.back-icon-btn):hover .nav-text,
-            .site-name:hover,
-            .sortable:hover,
-            .document-list a:hover .nav-text,
-            .topics-column-grid a:hover,
-            .footer-links-row a:hover,
-            .footer-links-row a:hover .nav-text {
-                transform: scale3d(1.06, 1.06, 1) !important;
-                transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
-                transform-origin: center center !important;
-            }
-        }
+        
 
     </style>
 </head>
@@ -671,11 +491,11 @@
 
     <footer>
         <div class="footer-links-row">
-            <a href="/study/Footer/about.html">About</a>
-            <a href="/study/Footer/contact.html">Contact</a>
-            <a href="/study/Footer/privacy.html">Privacy Policy</a>
-            <a href="/study/Footer/terms.html" class="active-footer-page">Terms &amp; Conditions</a>
-            <a href="/study/Footer/disclaimer.html">Disclaimer</a>
+            <a href="/study/Footer/about.html"><span class="nav-text">About</span></a>
+            <a href="/study/Footer/contact.html"><span class="nav-text">Contact</span></a>
+            <a href="/study/Footer/privacy.html"><span class="nav-text">Privacy Policy</span></a>
+            <a href="/study/Footer/terms.html" class="active-footer-page"><span class="nav-text">Terms &amp; Conditions</span></a>
+            <a href="/study/Footer/disclaimer.html"><span class="nav-text">Disclaimer</span></a>
         </div>
         <div class="copyright-tag">
             &copy; 2026 Sathya. All rights reserved.
