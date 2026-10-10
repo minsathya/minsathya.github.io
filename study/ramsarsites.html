@@ -248,6 +248,62 @@
 
         main { flex-grow: 1; width: 100%; display: flex; flex-direction: column; }
 
+        
+        .page-header-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 20px auto;
+            animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.02s both;
+        }
+
+        .back-icon-btn {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-main);
+            padding: 0;
+            flex-shrink: 0;
+            touch-action: manipulation;
+            transition: background-color 0.2s var(--ease-premium), transform 0.2s var(--ease-premium);
+        }
+
+        .back-icon-btn:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            transform: translate3d(-2px, 0, 0);
+        }
+
+        body.light-mode .back-icon-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .back-icon-btn svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            stroke-width: 2.4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.6px;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
         /* Unified Master Breadcrumbs System */
         .breadcrumb-nav { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 400; margin-bottom: 8px; padding-left: 8px; flex-wrap: wrap; row-gap: 8px; }
         .breadcrumb-nav a, .breadcrumb-nav a:visited { color: var(--text-muted) !important; }
@@ -267,71 +323,343 @@
 
         h2.section-title { font-family: 'Poppins', sans-serif; color: var(--text-main); font-size: 20px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; transition: color 0.8s var(--ease-premium); }
         
-        .card { background-color: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 28px; padding: 32px 24px; margin-bottom: 35px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02); transition: border-color 0.8s var(--ease-premium), background-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium); }
-        body:not(.light-mode) .card { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
-        .card:hover { border-color: #444444; }
-        body.light-mode .card:hover { border-color: #b8b8bc; }
+        /* PANELS: FLAT MINIMALIST (NO SHADOWS) */
+        .card { 
+            background-color: var(--panel-bg); 
+            border: 1px solid var(--panel-border); 
+            border-radius: 28px; 
+            padding: 32px 28px; 
+            margin-bottom: 35px; 
+            box-shadow: none !important; 
+            transition: border-color 0.4s var(--ease-premium), background-color 0.4s var(--ease-premium); 
+        }
+        body:not(.light-mode) .card { box-shadow: none !important; }
+        .card:hover { border-color: rgba(255, 255, 255, 0.16); box-shadow: none !important; }
+        body.light-mode .card:hover { border-color: rgba(0, 0, 0, 0.14); box-shadow: none !important; }
 
-        .table-wrap { width: 100%; overflow-x: auto; overflow-y: hidden; border-radius: 12px; border: 1px solid var(--panel-border); -webkit-overflow-scrolling: touch; transition: border-color 0.8s var(--ease-premium); }
-        table { border-collapse: collapse; width: 100%; min-width: max-content; background: transparent; }
-        .table-wrap::-webkit-scrollbar { height: 8px; }
+        /* TABLES: NO VERTICAL/HORIZONTAL BORDER LINES - NATURAL SCROLL */
+        .table-wrap { 
+            width: 100%; 
+            overflow-x: auto; 
+            overflow-y: visible; 
+            border: none !important; 
+            border-radius: 0;
+            -webkit-overflow-scrolling: touch; 
+            scrollbar-width: thin;
+        }
+        table { 
+            border-collapse: collapse; 
+            width: 100%; 
+            min-width: 680px; 
+            background: transparent; 
+            border: none !important;
+        }
+        .table-wrap::-webkit-scrollbar { height: 6px; }
         .table-wrap::-webkit-scrollbar-track { background: transparent; }
-        .table-wrap::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 20px; }
+        .table-wrap::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 20px; }
+        body.light-mode .table-wrap::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.2); }
 
-        table th { background: var(--table-header); color: #ffffff; font-weight: 700; position: sticky; top: 0; z-index: 2; white-space: nowrap; user-select: none; padding: 14px 16px; text-align: left; border: 1px solid var(--panel-border); font-size: 14px; transition: background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium); }
-        table td { padding: 14px 16px; white-space: nowrap; text-align: left; border: 1px solid var(--panel-border); font-size: 14px; transition: border-color 0.8s var(--ease-premium); line-height: 1.8; }
+        /* TABLE HEADER: TRANSPARENT HORIZONTAL MATCHING PANEL BG */
+        table th { 
+            background: var(--panel-bg) !important; 
+            color: var(--text-muted) !important; 
+            font-size: 13px !important; 
+            font-weight: 600 !important; 
+            text-transform: uppercase !important; 
+            letter-spacing: 0.6px !important; 
+            position: sticky; 
+            top: 0; 
+            z-index: 2; 
+            white-space: nowrap; 
+            user-select: none; 
+            padding: 16px 18px !important; 
+            text-align: left; 
+            border: none !important; 
+            border-bottom: 1px solid var(--row-divider) !important; 
+        }
+
+        /* TABLE CELLS: CLEAN TYPOGRAPHY WITH SUBTLE ROW DIVIDER */
+        table td { 
+            padding: 16px 18px !important; 
+            white-space: normal !important; 
+            text-align: left; 
+            border: none !important; 
+            border-bottom: 1px solid var(--row-divider) !important; 
+            font-size: 14.5px !important; 
+            line-height: 1.6 !important; 
+            color: var(--text-main);
+            background: transparent !important;
+        }
+        table tr:last-child td { border-bottom: none !important; }
+
         table th.sortable { cursor: pointer; }
-        table th.sortable:hover { background: var(--table-header-hover); }
-        table tbody tr:nth-child(even) { background-color: var(--row-even); }
-        table tbody tr:nth-child(odd) { background-color: var(--row-odd); }
-        table tbody tr { transition: background-color 0.8s var(--ease-premium); }
+        table th.sortable:hover { color: var(--text-main) !important; }
+        
+        /* NO ALTERNATING COLORS - MATCH PANEL COLOR */
+        table tbody tr,
+        table tbody tr:nth-child(even),
+        table tbody tr:nth-child(odd) { 
+            background-color: transparent !important; 
+            transition: background-color 0.2s var(--ease-premium); 
+        }
         table tbody tr:hover { background-color: var(--row-hover) !important; }
 
-        .site-name { cursor: pointer !important; color: var(--text-main) !important; text-decoration: none !important; border-bottom: none !important; font-weight: 500; transition: color 0.8s var(--ease-premium); }
-        .site-name:hover { opacity: 0.6; }
-
-        .modal {
-            display: flex; visibility: hidden; opacity: 0; pointer-events: none; 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, .4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            justify-content: center; align-items: center; z-index: 9999; cursor: pointer;
-            -webkit-tap-highlight-color: transparent !important; tap-highlight-color: transparent !important;
-            transition: opacity 0.4s var(--ease-premium), visibility 0s linear 0.4s;
+        /* CLICKABLE SITE NAME */
+        .site-name { 
+            cursor: pointer !important; 
+            color: var(--text-main) !important; 
+            text-decoration: none !important; 
+            border-bottom: none !important; 
+            font-weight: 500; 
+            display: inline-block;
+            touch-action: manipulation;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s var(--ease-premium); 
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .site-name:hover { 
+                transform: scale3d(1.06, 1.06, 1) !important; 
+                opacity: 0.9;
+            }
         }
 
-        .modal.active { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity 0.4s var(--ease-premium), visibility 0s linear 0s; }
+        /* -------------------------------------------------------------
+           RAMSAR SITE MODAL DIALOG (MATCHES IMAGE 1 - LAPTOP & IPAD)
+           ------------------------------------------------------------- */
+        .modal {
+            display: flex; 
+            visibility: hidden; 
+            opacity: 0; 
+            pointer-events: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px);
+            justify-content: center; 
+            align-items: center; 
+            z-index: 9999; 
+            padding: 24px;
+            box-sizing: border-box;
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.35s;
+        }
+
+        .modal.active { 
+            visibility: visible; 
+            opacity: 1; 
+            pointer-events: auto; 
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0s; 
+        }
 
         .modal-card {
-            width: min(600px, 90%); background: var(--panel-bg); border: 1px solid var(--panel-border);
-            border-radius: 28px; padding: 32px; box-shadow: 0 25px 60px rgba(0,0,0,.3); cursor: default;
-            transform: scale(0.6); will-change: transform; -webkit-backface-visibility: hidden; backface-visibility: hidden;
-            transition: transform 0.4s var(--ease-premium), background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+            width: 100%;
+            max-width: 520px; 
+            max-height: 88vh;
+            overflow-y: auto;
+            background: #121212; 
+            border: 1px solid #222222;
+            border-radius: 28px; 
+            padding: 32px 30px; 
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7); 
+            cursor: default;
+            transform: scale3d(0.92, 0.92, 1); 
+            will-change: transform, opacity; 
+            -webkit-backface-visibility: hidden; 
+            backface-visibility: hidden;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            scrollbar-width: thin;
         }
 
-        .modal.active .modal-card { transform: scale(1); }
+        body.light-mode .modal-card {
+            background: #ffffff;
+            border: 1px solid #e2e2e7;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
+        }
 
-        .close-btn { float: right; font-size: 28px; cursor: pointer; color: var(--text-muted); line-height: 1; transition: color 0.4s var(--ease-premium); }
-        .close-btn:hover { color: var(--text-main); }
+        .modal.active .modal-card { 
+            transform: scale3d(1, 1, 1); 
+        }
 
-        .modal h2 {
+        .modal-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
             font-size: 24px;
-            font-weight: 600;
+            font-weight: 700;
             letter-spacing: -0.4px;
-            margin-bottom: 28px; 
             color: var(--text-main);
-            transition: color 0.8s var(--ease-premium);
+            margin: 0;
+            line-height: 1.25;
         }
-        .modal p {
+
+        .modal-close-icon-btn {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            padding: 0;
+            flex-shrink: 0;
+            touch-action: manipulation;
+            transition: background-color 0.2s, color 0.2s, transform 0.2s;
+        }
+
+        .modal-close-icon-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.08);
+        }
+
+        body.light-mode .modal-close-icon-btn:hover {
+            background: rgba(0, 0, 0, 0.06);
+        }
+
+        .modal-close-icon-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        /* PILLS CLUSTER: STATE, YEAR, AREA */
+        .modal-pills-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .modal-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            background: #1c1c1c;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: var(--text-muted);
+            font-size: 13.5px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        body.light-mode .modal-pill {
+            background: #f2f2f7;
+            border: 1px solid #e2e2e7;
+            color: #6e6e73;
+        }
+
+        .modal-pill strong {
+            color: var(--text-main);
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        .modal-pill.pill-state {
+            background: #242424;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        body.light-mode .modal-pill.pill-state {
+            background: #e5e5ea;
+            color: #111111;
+        }
+
+        /* LOCATION ROW */
+        .modal-location-row {
             font-size: 15px;
-            line-height: 1.8;
-            margin-bottom: 12px;
-            color: var(--text-main);
-            opacity: 0.85;
-            transition: color 0.8s var(--ease-premium);
+            color: var(--text-muted);
+            margin-bottom: 22px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--row-divider);
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            flex-wrap: wrap;
         }
-        .modal strong {
-            font-weight: 500; 
+
+        .modal-location-row strong {
             color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* SUB-CARDS FOR IMPORTANCE & MAJOR THREATS */
+        .modal-subcard {
+            background: #181818;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 20px 22px;
+            margin-bottom: 16px;
+        }
+
+        body.light-mode .modal-subcard {
+            background: #f8f8fa;
+            border: 1px solid #e5e5ea;
+        }
+
+        .modal-subcard:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-subcard-title {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .title-importance {
+            color: #56c77b;
+        }
+
+        .title-threats {
+            color: #ff5b5b;
+        }
+
+        .modal-bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .modal-bullet-list li {
+            position: relative;
+            padding-left: 16px;
+            font-size: 14.5px;
+            line-height: 1.55;
+            color: var(--text-main);
+            opacity: 0.9;
+        }
+
+        .modal-bullet-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--text-muted);
+            font-size: 16px;
+            line-height: 1.4;
         }
         
         footer { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; flex-shrink: 0; margin-top: 40px; }
@@ -468,7 +796,12 @@
     </nav>
 
     <main>
-        <nav class="breadcrumb-nav" id="dynamicBreadcrumbNav" aria-label="breadcrumb"></nav>
+        <div class="page-header-row">
+            <button type="button" class="back-icon-btn" onclick="if(window.history.length>1){window.history.back();}else{window.location.href='/index.html';}" aria-label="Go back">
+                <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <h1 class="page-title">Ramsar Sites</h1>
+        </div>
         
         <div class="instruction-text">&bull; Tap on Ramsar site names to know more</div>
          
@@ -810,13 +1143,15 @@
         </div>
     </main>
 
-    <div id="siteModal" class="modal">
+    <div id="siteModal" class="modal" onclick="if(event.target===this)closeSite();">
         <div class="modal-card">
-            <span class="close-btn" onclick="closeSite()">&times;</span>
-            <h2 id="modalTitle">Kolleru Lake</h2>
-            <div id="modalContent">
-                Information will come here.
+            <div class="modal-header-row">
+                <h2 class="modal-title" id="modalTitle">Kolleru Lake</h2>
+                <button type="button" class="modal-close-icon-btn" onclick="closeSite()" aria-label="Close">
+                    <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
             </div>
+            <div id="modalContent"></div>
         </div>
     </div>
 
@@ -1186,28 +1521,51 @@
             const data = ramsarData[id];
             
             if (data) {
-                title.innerHTML = data.name;
+                title.textContent = data.name;
+
+                // Format importance points
+                const impPoints = data.imp.split(',').map(s => s.trim()).filter(Boolean);
+                const impBullets = impPoints.map(p => `<li>${p}</li>`).join('');
+
+                // Format threats points
+                const thrPoints = data.thr.split(',').map(s => s.trim()).filter(Boolean);
+                const thrBullets = thrPoints.map(p => `<li>${p}</li>`).join('');
+
                 content.innerHTML = `
-                    <p><strong style="display:inline-block;width:110px;">State</strong><span style="display:inline-block;width:16px;text-align:center;">:</span>&nbsp;${data.state}</p>
-                    <p><strong style="display:inline-block;width:110px;">Year</strong><span style="display:inline-block;width:16px;text-align:center;">:</span>&nbsp;${data.year}</p>
-                    <p><strong style="display:inline-block;width:110px;">Area</strong><span style="display:inline-block;width:16px;text-align:center;">:</span>&nbsp;${data.area}</p>
-                    <p><strong style="display:inline-block;width:110px;">Location</strong><span style="display:inline-block;width:16px;text-align:center;">:</span>&nbsp;${data.district}</p>
-                    
-                    <div style="border-top: 1px solid var(--panel-border); margin: 20px 0;"></div>
-                    
-                    <p style="margin-bottom: 4px;"><strong>Importance:</strong></p>
-                    <p style="opacity: 0.8; font-size: 14.5px; margin-top: 0; line-height: 1.6; margin-bottom: 16px;">${data.imp}</p>
-                    
-                    <p style="margin-bottom: 4px;"><strong>Major Threats:</strong></p>
-                    <p style="opacity: 0.8; font-size: 14.5px; margin-top: 0; line-height: 1.6;">${data.thr}</p>
+                    <div class="modal-pills-row">
+                        <span class="modal-pill pill-state">${data.state}</span>
+                        <span class="modal-pill">year : <strong>${data.year}</strong></span>
+                        <span class="modal-pill">area : <strong>${data.area}</strong></span>
+                    </div>
+
+                    <div class="modal-location-row">
+                        Location : <strong>${data.district}</strong>
+                    </div>
+
+                    <div class="modal-subcard">
+                        <div class="modal-subcard-title title-importance">IMPORTANCE</div>
+                        <ul class="modal-bullet-list">
+                            ${impBullets}
+                        </ul>
+                    </div>
+
+                    <div class="modal-subcard">
+                        <div class="modal-subcard-title title-threats">MAJOR THREATS</div>
+                        <ul class="modal-bullet-list">
+                            ${thrBullets}
+                        </ul>
+                    </div>
                 `;
             }
             
             modal.classList.add("active");
+            document.body.style.overflow = "hidden";
         }
 
         function closeSite() {
-            document.getElementById("siteModal").classList.remove("active");
+            const modal = document.getElementById("siteModal");
+            if (modal) modal.classList.remove("active");
+            document.body.style.overflow = "";
         }
 
         document.getElementById("siteModal").addEventListener("click", function(event) {

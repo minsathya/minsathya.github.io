@@ -243,13 +243,13 @@
             align-items: stretch;
         }
 
-        /* 3D STUDY CAPSULE PANELS WITH SMOOTH 0.45s ELEVATION */
+        /* STUDY CAPSULE PANELS (FLAT MINIMALIST - NO SHADOWS) */
         .capsule-panel {
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 28px;
             padding: 32px 8px 16px 8px;
-            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+            box-shadow: none !important;
             display: flex;
             flex-direction: column;
             height: 100%;
@@ -257,35 +257,43 @@
             box-sizing: border-box;
             transform: translateZ(0);
             backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
             transition: transform 0.45s var(--ease-smooth), 
-                        box-shadow 0.45s var(--ease-smooth), 
                         border-color 0.45s var(--ease-smooth), 
                         background-color 0.4s var(--ease-smooth);
         }
 
         body.light-mode .capsule-panel {
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: none !important;
         }
 
-        /* Hover Elevation: Smooth lift and contour highlight */
+        /* Mouse Hover Elevation on Laptop: Smooth lift and contour highlight (No shadow) */
         @media (hover: hover) and (pointer: fine) {
             .capsule-panel:hover { 
                 border-color: var(--panel-border-hover); 
                 transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1); 
-                box-shadow: 0 24px 48px rgba(0, 0, 0, 0.48);
+                box-shadow: none !important;
             }
             body.light-mode .capsule-panel:hover {
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+                box-shadow: none !important;
             }
         }
 
-        /* Touch / Focus Elevation */
+        /* Touch Devices (iPad / Phone): Snappy, non-sticky touch response */
+        @media (hover: none) {
+            .capsule-panel:hover {
+                transform: none !important;
+            }
+            .capsule-panel:active {
+                transform: scale3d(0.985, 0.985, 1) !important;
+                transition: transform 0.12s ease-out !important;
+            }
+        }
+
         .capsule-panel:active,
         .capsule-panel:focus-within,
         .capsule-panel.is-panel-lifted {
-            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
-            border-color: var(--panel-border-hover);
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.48);
+            box-shadow: none !important;
         }
 
         .panel-title {
@@ -480,8 +488,7 @@
                     <li><a href="/study/subjects.html"><span class="nav-text">Subjects</span></a></li>
                     <li><a href="/study/ncert.html"><span class="nav-text">Ncert</span></a></li>
                     <li><a href="/study/csat.html"><span class="nav-text">Csat</span></a></li>
-                    <li><a href="/study/currentaffairs.html"><span class="nav-text">Current affairs</span></a></li>
-                </ul>
+                    </ul>
             </div>
 
             <!-- 2. Current affairs -->

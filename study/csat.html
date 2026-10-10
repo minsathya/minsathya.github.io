@@ -351,6 +351,127 @@
                 box-shadow: 0 4px 10px rgba(37, 122, 108, 0.35);
             }
         }
+    
+        /* STANDARDIZED PAGE HEADER WITH BACK BUTTON */
+        .page-header-row,
+        .subjects-header-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 24px auto;
+            position: relative;
+            z-index: 5;
+            animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.02s both;
+        }
+
+        .back-icon-btn {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-main);
+            padding: 0;
+            flex-shrink: 0;
+            touch-action: manipulation;
+            transition: background-color 0.2s cubic-bezier(0.25, 1, 0.5, 1), transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .back-icon-btn:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            transform: translate3d(-2px, 0, 0);
+        }
+
+        body.light-mode .back-icon-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .back-icon-btn svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            stroke-width: 2.4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.6px;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        /* UNIVERSAL FLAT DESIGN: ZERO PANEL SHADOWS SITE-WIDE */
+        .capsule-panel,
+        .subject-accordion-card,
+        .card,
+        .wide-capsule,
+        .article-card,
+        .date-topics-capsule,
+        .macro-card,
+        .day-switcher-capsule {
+            box-shadow: none !important;
+        }
+
+        .capsule-panel:hover,
+        .capsule-panel:active,
+        .capsule-panel:focus-within,
+        .subject-accordion-card:hover,
+        .subject-accordion-card:active,
+        .subject-accordion-card:focus-within,
+        .card:hover,
+        .card:active,
+        .wide-capsule:hover,
+        .wide-capsule:active,
+        .article-card:hover,
+        .article-card:active {
+            box-shadow: none !important;
+        }
+
+        /* TOUCH OPTIMIZATION (IPAD / TOUCHSCREEN): NO STICKY HOVER LAG */
+        @media (hover: none) {
+            .capsule-panel:hover,
+            .subject-accordion-card:hover,
+            .card:hover,
+            .wide-capsule:hover,
+            .article-card:hover {
+                transform: none !important;
+            }
+            .capsule-panel:active,
+            .subject-accordion-card:active,
+            .card:active,
+            .wide-capsule:active {
+                transform: scale3d(0.985, 0.985, 1) !important;
+                transition: transform 0.12s ease-out !important;
+            }
+        }
+
+        /* CLICKABLE WORDS ZOOM TOWARDS US STRAIGHT */
+        @media (hover: hover) and (pointer: fine) {
+            a:not(.brand-pill):not(.back-icon-btn):hover,
+            a:not(.brand-pill):not(.back-icon-btn):hover .nav-text,
+            .site-name:hover,
+            .sortable:hover,
+            .document-list a:hover .nav-text,
+            .topics-column-grid a:hover,
+            .footer-links-row a:hover,
+            .footer-links-row a:hover .nav-text {
+                transform: scale3d(1.06, 1.06, 1) !important;
+                transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
+                transform-origin: center center !important;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -365,9 +486,12 @@
 
     <main class="contents-container">
         
-        <nav class="breadcrumb-nav" id="dynamicBreadcrumbNav" aria-label="breadcrumb"></nav>
-
-        <h1 class="page-main-heading">CSAT</h1>
+        <div class="page-header-row">
+            <button type="button" class="back-icon-btn" onclick="if(window.history.length>1){window.history.back();}else{window.location.href='/index.html';}" aria-label="Go back">
+                <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <h1 class="page-title">CSAT</h1>
+        </div>
 
         <!-- Capsule 1: Aptitude -->
         <div class="wide-capsule" id="aptitude">

@@ -157,9 +157,13 @@
             animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) both !important;
         }
 
+        .page-header-row,
+        .subjects-header-row {
+            animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.02s both !important;
+        }
+
         main, 
         .workspace-animate-frame,
-        .subjects-header-row,
         #subjectsListContainer {
             animation: masterEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both !important;
         }
@@ -168,15 +172,74 @@
             animation: masterEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both !important;
         }
 
-        /* Universal Shadow Removal Across All Panels & Cards Site-wide */
+        /* -------------------------------------------------------------
+           UNIVERSAL FLAT DESIGN: ZERO PANEL SHADOWS SITE-WIDE
+           ------------------------------------------------------------- */
+        .capsule-panel,
+        .subject-accordion-card,
+        .card,
+        .wide-capsule,
         .article-card,
         .date-topics-capsule,
         .empty-placeholder-card,
         .info-callout,
-        .myspace-card:not(.apple-panel),
-        .wide-capsule,
-        .macro-card {
+        .myspace-card,
+        .macro-card,
+        .day-switcher-capsule {
             box-shadow: none !important;
+        }
+
+        .capsule-panel:hover,
+        .capsule-panel:active,
+        .capsule-panel:focus-within,
+        .subject-accordion-card:hover,
+        .subject-accordion-card:active,
+        .subject-accordion-card:focus-within,
+        .card:hover,
+        .card:active,
+        .wide-capsule:hover,
+        .wide-capsule:active,
+        .article-card:hover,
+        .article-card:active {
+            box-shadow: none !important;
+        }
+
+        /* -------------------------------------------------------------
+           TOUCH DEVICES (IPAD / TOUCHSCREEN): NO STICKY HOVER LAG
+           ------------------------------------------------------------- */
+        @media (hover: none) {
+            .capsule-panel:hover,
+            .subject-accordion-card:hover,
+            .card:hover,
+            .wide-capsule:hover,
+            .article-card:hover {
+                transform: none !important;
+            }
+            .capsule-panel:active,
+            .subject-accordion-card:active,
+            .card:active,
+            .wide-capsule:active {
+                transform: scale3d(0.985, 0.985, 1) !important;
+                transition: transform 0.12s ease-out !important;
+            }
+        }
+
+        /* -------------------------------------------------------------
+           CLICKABLE WORDS ZOOM TOWARDS US STRAIGHT ACROSS SITE
+           ------------------------------------------------------------- */
+        @media (hover: hover) and (pointer: fine) {
+            a:not(.brand-pill):not(.back-icon-btn):hover,
+            a:not(.brand-pill):not(.back-icon-btn):hover .nav-text,
+            .site-name:hover,
+            .sortable:hover,
+            .document-list a:hover .nav-text,
+            .topics-column-grid a:hover,
+            .footer-links-row a:hover,
+            .footer-links-row a:hover .nav-text {
+                transform: scale3d(1.06, 1.06, 1) !important;
+                transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
+                transform-origin: center center !important;
+            }
         }
 
         @media (max-width: 700px) {
@@ -311,3 +374,13 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {}
     }, true);
 })();
+
+// 4. ENSURE MASTER ENTRANCE RUNS ON RELOAD / REFRESH
+window.addEventListener('pageshow', (event) => {
+    const animEls = document.querySelectorAll('.top-nav-bar, .page-header-row, .subjects-header-row, main, footer');
+    animEls.forEach(el => {
+        el.style.animation = 'none';
+        void el.offsetHeight; // trigger reflow
+        el.style.animation = '';
+    });
+});

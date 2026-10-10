@@ -280,7 +280,7 @@
             border: 1px solid var(--panel-border);
             border-radius: 22px;
             overflow: hidden;
-            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+            box-shadow: none !important;
             transform: translateZ(0);
             backface-visibility: hidden;
             transition: transform 0.45s var(--ease-smooth),
@@ -289,18 +289,16 @@
             will-change: transform;
         }
 
-        body.light-mode .subject-accordion-card {
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
-        }
+        body.light-mode .subject-accordion-card { box-shadow: none !important; }
 
         /* Mouse Hover Zoom-Up (No Border Change) */
         @media (hover: hover) and (pointer: fine) {
             .subject-accordion-card:hover {
                 transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
-                box-shadow: 0 24px 48px rgba(0, 0, 0, 0.48);
+                box-shadow: none !important;
             }
             body.light-mode .subject-accordion-card:hover {
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+                box-shadow: none !important;
             }
         }
 
@@ -308,12 +306,12 @@
         .subject-accordion-card:active,
         .subject-accordion-card:focus-within {
             transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.48);
+            box-shadow: none !important;
         }
 
         body.light-mode .subject-accordion-card:active,
         body.light-mode .subject-accordion-card:focus-within {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            box-shadow: none !important;
         }
 
         /* Header row inside each subject card */
@@ -567,6 +565,68 @@
                 font-size: 14px;
             }
         }
+    
+        /* UNIVERSAL FLAT DESIGN: ZERO PANEL SHADOWS SITE-WIDE */
+        .capsule-panel,
+        .subject-accordion-card,
+        .card,
+        .wide-capsule,
+        .article-card,
+        .date-topics-capsule,
+        .macro-card,
+        .day-switcher-capsule {
+            box-shadow: none !important;
+        }
+
+        .capsule-panel:hover,
+        .capsule-panel:active,
+        .capsule-panel:focus-within,
+        .subject-accordion-card:hover,
+        .subject-accordion-card:active,
+        .subject-accordion-card:focus-within,
+        .card:hover,
+        .card:active,
+        .wide-capsule:hover,
+        .wide-capsule:active,
+        .article-card:hover,
+        .article-card:active {
+            box-shadow: none !important;
+        }
+
+        /* TOUCH OPTIMIZATION (IPAD / TOUCHSCREEN): NO STICKY HOVER LAG */
+        @media (hover: none) {
+            .capsule-panel:hover,
+            .subject-accordion-card:hover,
+            .card:hover,
+            .wide-capsule:hover,
+            .article-card:hover {
+                transform: none !important;
+            }
+            .capsule-panel:active,
+            .subject-accordion-card:active,
+            .card:active,
+            .wide-capsule:active {
+                transform: scale3d(0.985, 0.985, 1) !important;
+                transition: transform 0.12s ease-out !important;
+            }
+        }
+
+        /* CLICKABLE WORDS ZOOM TOWARDS US STRAIGHT */
+        @media (hover: hover) and (pointer: fine) {
+            a:not(.brand-pill):not(.back-icon-btn):hover,
+            a:not(.brand-pill):not(.back-icon-btn):hover .nav-text,
+            .site-name:hover,
+            .sortable:hover,
+            .document-list a:hover .nav-text,
+            .topics-column-grid a:hover,
+            .footer-links-row a:hover,
+            .footer-links-row a:hover .nav-text {
+                transform: scale3d(1.06, 1.06, 1) !important;
+                transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
+                transform-origin: center center !important;
+            }
+        }
+
     </style>
 </head>
 <body>
