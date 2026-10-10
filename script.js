@@ -28,16 +28,13 @@
             --panel-border-hover: rgba(255, 255, 255, 0.12) !important;
         }
 
-        /* Root Homepage: Always deep night blue sky bg (rich & slightly darker) and transparent idle borders */
+        /* Root Homepage: Always deep night blue sky bg (rich & slightly darker) */
         html.root-home,
         html.root-home body,
         body.root-home {
             background: radial-gradient(ellipse at 50% 22%, #191742 0%, #121132 50%, #0a0921 100%) fixed !important;
             background-color: #0a0921 !important;
             color: #ffffff !important;
-            --panel-bg: transparent !important;
-            --panel-border: transparent !important;
-            --panel-border-hover: rgba(255, 255, 255, 0.14) !important;
         }
 
         body.root-home {
@@ -274,10 +271,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const isStudyIndex = path.endsWith('/study') || path.endsWith('/study/') || path.endsWith('/study/index.html');
         const isNutritionIndex = path.endsWith('/nutrition') || path.endsWith('/nutrition/') || path.endsWith('/nutrition/index.html');
 
-        if (isRootIndex) {
+        if (isRootIndex || isStudyIndex) {
             sessionStorage.removeItem('breadcrumbTrail');
-        } else if (isStudyIndex) {
-            sessionStorage.setItem('breadcrumbTrail', JSON.stringify([{ name: "Home", path: "/study/index.html" }]));
         } else if (isNutritionIndex) {
             sessionStorage.setItem('breadcrumbTrail', JSON.stringify([{ name: "Home", path: "/nutrition/index.html" }]));
         }
@@ -300,18 +295,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 } else if (currentPath.includes('/study/')) {
                     e.preventDefault();
-                    sessionStorage.setItem('breadcrumbTrail', JSON.stringify([{ name: "Home", path: "/study/index.html" }]));
-                    window.location.href = '/study/index.html';
+                    sessionStorage.removeItem('breadcrumbTrail');
+                    window.location.href = '/index.html';
                     return;
                 }
             }
 
-            if (href === '/index.html' || href === '/') {
+            if (href === '/index.html' || href === '/' || href === '/study/index.html' || href === '/study/') {
                 sessionStorage.removeItem('breadcrumbTrail');
-                return;
-            }
-            if (href === '/study/index.html' || href === '/study/') {
-                sessionStorage.setItem('breadcrumbTrail', JSON.stringify([{ name: "Home", path: "/study/index.html" }]));
+                if (href === '/study/index.html' || href === '/study/') {
+                    window.location.href = '/index.html';
+                }
                 return;
             }
             if (href === '/nutrition/index.html' || href === '/nutrition/') {
