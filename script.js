@@ -14,28 +14,34 @@
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
             --text-muted: #737373;
+            --text-sub: #a0a0a5;
             --panel-bg: #121212;
             --panel-border: #222222;
             --panel-border-hover: rgba(255, 255, 255, 0.11);
             --row-divider: #1c1c1c;
             --row-hover: rgba(255, 255, 255, 0.02);
-            --panel-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
-            --panel-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.85);
+            --shadow-base: 0 4px 30px rgba(0, 0, 0, 0.4);
+            --shadow-hover: 0 25px 60px rgba(0, 0, 0, 0.8);
+            --panel-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            --panel-shadow-hover: 0 25px 60px rgba(0, 0, 0, 0.8);
         }
 
         /* Root CSS Variables - Light Mode (#f5f5f7, Panel #ffffff) */
         html.light-mode, 
         body.light-mode {
             --bg-color: #f5f5f7 !important;
-            --text-main: #111111 !important;
+            --text-main: #1d1d1f !important;
             --text-muted: #8e8e93 !important;
+            --text-sub: #6e6e73 !important;
             --panel-bg: #ffffff !important;
             --panel-border: #e2e2e7 !important;
             --panel-border-hover: rgba(0, 0, 0, 0.10) !important;
             --row-divider: #f2f2f7 !important;
             --row-hover: rgba(0, 0, 0, 0.02) !important;
+            --shadow-base: 0 4px 20px rgba(0, 0, 0, 0.02) !important;
+            --shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.08) !important;
             --panel-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important;
-            --panel-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.08) !important;
+            --panel-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.08) !important;
         }
 
         html {
@@ -305,6 +311,7 @@
             animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
         }
 
+        .bento-card,
         .capsule-panel,
         .wide-capsule,
         .card:not(:has(table)):not(:has(.table-wrap)),
@@ -321,6 +328,7 @@
            10/10 CORE TOUCH / HOVER INTERACTION SYSTEM
            Exact deceleration curves, deep ambient glow, and inner front-layer drift
            ------------------------------------------------------------- */
+        .bento-card,
         .panel-card,
         .capsule-panel,
         .subjects-detail-panel,
@@ -331,7 +339,7 @@
         .myspace-card,
         .macro-card,
         .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card) {
-            box-shadow: var(--panel-shadow) !important;
+            box-shadow: var(--shadow-base, var(--panel-shadow)) !important;
             border: 1px solid var(--panel-border);
             cursor: pointer;
             user-select: none;
@@ -341,7 +349,7 @@
             -webkit-backface-visibility: hidden;
             /* 0.5s deceleration ease-out curve handles a graceful return when mouse leaves */
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
-                        box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+                        box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
                         border-color 0.4s ease, 
                         background-color 0.4s ease !important;
         }
@@ -355,9 +363,12 @@
         }
 
         /* Inner Front-Layer Elements Setup (Handles smooth return on mouse leave) */
+        .card-parallax-content,
         .card-content,
         .capsule-panel .panel-title,
         .capsule-panel .document-list,
+        .bento-card h2,
+        .bento-card .list-wrapper,
         .subjects-detail-panel .panel-header-row,
         .subjects-detail-panel .panel-body,
         .wide-capsule .wide-panel-title,
@@ -372,6 +383,7 @@
 
         /* Outer Frame Zoom & Deep Ambient Glow (Laptop / fine pointer) */
         @media (hover: hover) and (pointer: fine) {
+            body:not(.popup-active) .bento-card:hover,
             body:not(.popup-active) .panel-card:hover,
             body:not(.popup-active) .capsule-panel:hover,
             body:not(.popup-active) .subjects-detail-panel:hover,
@@ -381,11 +393,13 @@
             body:not(.popup-active) .myspace-card:hover,
             body:not(.popup-active) .macro-card:hover {
                 transform: scale(1.02) !important;
-                box-shadow: var(--panel-shadow-hover) !important;
+                box-shadow: var(--shadow-hover, var(--panel-shadow-hover)) !important;
                 border-color: var(--panel-border-hover) !important;
             }
 
             /* Inner Front-Layer Drift (Text/content slides up independently and stays frozen) */
+            body:not(.popup-active) .bento-card:hover .card-parallax-content,
+            body:not(.popup-active) .capsule-panel:hover .card-parallax-content,
             body:not(.popup-active) .panel-card:hover .card-content,
             body:not(.popup-active) .capsule-panel:hover .panel-title,
             body:not(.popup-active) .capsule-panel:hover .document-list,
@@ -396,6 +410,11 @@
             body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card):hover .card-body,
             body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card):hover .card-content {
                 transform: translateY(-6px) !important;
+            }
+
+            body:not(.popup-active) .bento-card:hover .list-item,
+            body:not(.popup-active) .capsule-panel:hover .list-item {
+                color: var(--text-main);
             }
 
             .subject-accordion-card.is-open,
@@ -472,6 +491,8 @@
         .ncert-links a,
         .document-list a,
         .matrix-canvas a,
+        .bento-container a,
+        .list-item,
         .footer-links-row a,
         a:not(.brand-pill):not(.back-icon-btn) {
             cursor: pointer !important;
@@ -514,6 +535,9 @@
             .footer-links-row a:hover .nav-text,
             .matrix-canvas a:hover,
             .matrix-canvas a:hover .nav-text,
+            .bento-container a:hover,
+            .bento-container a:hover .nav-text,
+            .bento-container .list-item:hover,
             .document-list a:hover,
             .document-list a:hover .nav-text,
             .topics-column-grid a:hover,
@@ -542,6 +566,9 @@
             .footer-links-row a:active .nav-text,
             .matrix-canvas a:active,
             .matrix-canvas a:active .nav-text,
+            .bento-container a:active,
+            .bento-container a:active .nav-text,
+            .bento-container .list-item:active,
             .document-list a:active,
             .document-list a:active .nav-text,
             .topics-column-grid a:active,
@@ -582,6 +609,9 @@
             .footer-links-row a:active .nav-text,
             .matrix-canvas a:active,
             .matrix-canvas a:active .nav-text,
+            .bento-container a:active,
+            .bento-container a:active .nav-text,
+            .bento-container .list-item:active,
             .document-list a:active,
             .document-list a:active .nav-text,
             .topics-column-grid a:active,
@@ -675,7 +705,7 @@
 
 function wrapClickableWords() {
     const clickableLinks = document.querySelectorAll(
-        '.topics-column-grid a, .topics-vertical-stack a, .ncert-links a, .document-list a, .footer-links-row a, .article-card a, .topics-feed a, .day-switcher-capsule a'
+        '.topics-column-grid a, .topics-vertical-stack a, .ncert-links a, .document-list a, .footer-links-row a, .article-card a, .topics-feed a, .day-switcher-capsule a, .list-wrapper a, .bento-container a, .bento-card a'
     );
     clickableLinks.forEach(link => {
         if (!link.querySelector('.nav-text') && !link.querySelector('.brand-letter') && link.textContent.trim().length > 0) {
@@ -795,7 +825,7 @@ window.triggerMasterEntrance = triggerMasterEntrance;
 
 function executeMasterEntrance() {
     const targets = document.querySelectorAll(
-        '.top-nav-bar, .page-header-row, .subjects-header-row, main, .matrix-canvas, .date-topics-capsule, .article-card, .topics-feed, .capsule-panel, .subjects-detail-panel, .subjects-sidebar, footer'
+        '.top-nav-bar, .page-header-row, .subjects-header-row, main, .bento-container, .bento-card, .matrix-canvas, .date-topics-capsule, .article-card, .topics-feed, .capsule-panel, .subjects-detail-panel, .subjects-sidebar, footer'
     );
     targets.forEach(el => {
         triggerMasterEntrance(el);
