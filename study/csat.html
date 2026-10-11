@@ -114,19 +114,19 @@
 
         /* 1. Keyframe definition (GPU accelerated with translate3d) */
         @keyframes masterEntrance {
-            from {
+            0% {
                 opacity: 0;
-                transform: translate3d(0, 10px, 0);
+                transform: translate3d(0, 28px, 0) scale(0.98);
             }
-            to {
+            100% {
                 opacity: 1;
-                transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0) scale(1);
             }
         }
 
         /* 2. Animation runner class */
         .master-entrance-run {
-            animation: masterEntrance 0.42s var(--ease-premium) both !important;
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
             will-change: transform, opacity;
         }
 
@@ -139,8 +139,7 @@
             align-items: center;
             justify-content: flex-start;
             margin-bottom: 28px;
-            animation: masterEntrance 0.52s var(--ease-premium) both;
-            animation-delay: 0.02s;
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
         }
 
         .brand-pill {
@@ -303,9 +302,32 @@
             transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.25s var(--ease-smooth);
         }
 
-        .subject-nav-item:active {
-            transform: scale3d(0.97, 0.97, 1) !important;
-            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        @media (hover: hover) and (pointer: fine) {
+            .subject-nav-item:hover .subject-nav-name {
+                color: var(--text-main);
+                transform: scale3d(1.028, 1.028, 1) !important;
+            }
+
+            .subject-nav-item:hover .subject-nav-dot {
+                opacity: 1;
+                background-color: #ffffff;
+            }
+
+            body.light-mode .subject-nav-item:hover .subject-nav-dot {
+                background-color: #111111;
+            }
+
+            .subject-nav-item:active .subject-nav-name,
+            .subject-nav-item:active {
+                transform: scale3d(1, 1, 1) !important;
+            }
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            .subject-nav-item:active .subject-nav-name,
+            .subject-nav-item:active {
+                transform: scale3d(1.028, 1.028, 1) !important;
+            }
         }
 
         .subject-nav-name {
@@ -331,23 +353,6 @@
                         opacity 0.28s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Hover: dot becomes white smoothly, word zoom little straight */
-        @media (hover: hover) and (pointer: fine) {
-            .subject-nav-item:hover .subject-nav-name {
-                color: var(--text-main);
-                transform: scale3d(1.028, 1.028, 1) !important;
-            }
-
-            .subject-nav-item:hover .subject-nav-dot {
-                opacity: 1;
-                background-color: #ffffff;
-            }
-
-            body.light-mode .subject-nav-item:hover .subject-nav-dot {
-                background-color: #111111;
-            }
-        }
-
         /* Active / Selected Subject */
         .subject-nav-item.is-active .subject-nav-name {
             color: var(--text-main);
@@ -365,8 +370,10 @@
 
         /* Right Content Panel - Sizes according to points (fit-content) and matches homescreen zoom */
         .subjects-detail-panel {
-            flex: 1;
-            min-width: 0;
+            flex: 0 1 auto !important;
+            width: fit-content !important;
+            min-width: min(100%, 360px) !important;
+            max-width: 100% !important;
             align-self: flex-start !important;
             height: auto !important;
             height: fit-content !important;
@@ -428,7 +435,7 @@
         }
 
         .subject-topic-link {
-            display: flex !important;
+            display: inline-flex !important;
             align-items: baseline !important;
             gap: 10px !important;
             padding: 8px 4px !important;
@@ -436,9 +443,11 @@
             color: var(--text-main) !important;
             font-size: 17px !important;
             cursor: pointer !important;
-            width: 100% !important;
+            width: fit-content !important;
             max-width: 100% !important;
             transform-origin: left center !important;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent !important;
             transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), 
                         color 0.28s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
@@ -473,6 +482,15 @@
             .subject-topic-link:hover .topic-bullet,
             .subject-topic-link:hover .topic-title {
                 color: var(--text-main) !important;
+            }
+            .subject-topic-link:active {
+                transform: scale3d(1, 1, 1) !important;
+            }
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            .subject-topic-link:active {
+                transform: scale3d(1.028, 1.028, 1) !important;
             }
         }
 

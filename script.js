@@ -266,65 +266,51 @@
 
         /* -------------------------------------------------------------
            MASTER ENTRANCE ANIMATION (GPU ACCELERATED & PREMIUM FLUID)
-           Smoothly appearing with a calm, gentle rise from the background
+           Uses slideUpFade: translate3d(0, 28px, 0) scale(0.98) -> (0,0,0) scale(1)
+           0.65s cubic-bezier(0.16, 1, 0.3, 1) with sequential wave stagger
            ------------------------------------------------------------- */
         @keyframes masterEntrance {
-            from {
+            0% {
                 opacity: 0;
-                transform: translate3d(0, 10px, 0);
+                transform: translate3d(0, 28px, 0) scale(0.98);
             }
-            to {
+            100% {
                 opacity: 1;
-                transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0) scale(1);
             }
         }
 
         /* Animation runner class */
         .master-entrance-run {
-            animation: masterEntrance 0.42s var(--ease-premium) both !important;
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
             will-change: transform, opacity;
         }
 
         .top-nav-bar, 
-        main, 
-        footer,
         .page-header-row,
-        .subjects-header-row,
-        .workspace-animate-frame,
-        .contents-container,
-        .date-topics-capsule,
-        .topics-feed,
-        #subjectsListContainer,
-        #ncertListContainer,
-        #csatListContainer,
-        .subjects-main-layout,
-        .subjects-split-layout {
-            position: relative;
-            z-index: 1;
-            opacity: 1;
-            will-change: transform, opacity;
-            animation: masterEntrance 0.42s var(--ease-premium) both !important;
+        .subjects-header-row {
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
         }
 
-        .top-nav-bar { 
-            animation-delay: 0.02s !important; 
-        }
         main, 
-        .page-header-row, 
-        .subjects-header-row, 
-        .workspace-animate-frame, 
-        .contents-container, 
-        .date-topics-capsule, 
-        .topics-feed, 
-        #subjectsListContainer,
-        #ncertListContainer,
-        #csatListContainer,
+        .contents-container,
+        .date-topics-capsule,
+        .workspace-animate-frame,
         .subjects-main-layout,
         .subjects-split-layout { 
-            animation-delay: 0.05s !important; 
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
         }
+
+        .capsule-panel,
+        .wide-capsule,
+        .card:not(:has(table)):not(:has(.table-wrap)),
+        .subjects-detail-panel,
+        .topics-feed {
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.19s both;
+        }
+
         footer { 
-            animation-delay: 0.09s !important; 
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both;
         }
 
         /* -------------------------------------------------------------
@@ -352,23 +338,33 @@
                         background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
-        /* UPSC Detail Panel adapts height to its points */
+        /* UPSC Detail Panel sizes according to points (compact for 2, medium for 5, full for 10+) */
         .subjects-detail-panel {
+            flex: 0 1 auto !important;
+            width: fit-content !important;
+            min-width: min(100%, 360px) !important;
+            max-width: 100% !important;
             align-self: flex-start !important;
             height: auto !important;
             height: fit-content !important;
             min-height: auto !important;
         }
 
+        /* Tables and article cards MUST NEVER lift or shake on hover or touch */
+        .card:has(table),
+        .card:has(.table-wrap),
+        .article-card {
+            transform: none !important;
+        }
+
         /* Hover Elevation: Exact homescreen zoom across all devices with cursor/pointer */
         @media (hover: hover) and (pointer: fine) {
             .subject-accordion-card:not(.is-open):hover,
             .wide-capsule:hover,
-            .card:hover,
+            .card:not(:has(table)):not(:has(.table-wrap)):hover,
             .capsule-panel:hover,
             .subjects-detail-panel:hover,
             .date-topics-capsule:hover,
-            .article-card:hover,
             .myspace-card:hover,
             .macro-card:hover {
                 transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
@@ -383,50 +379,45 @@
             }
         }
 
-        /* Touch Devices (iPad / Phone) & Active Lift State */
+        /* Touch Devices (iPad / Phone) Active Lift State (Excludes tables and articles) */
         .capsule-panel.is-panel-lifted,
-        .card.is-panel-lifted,
+        .card:not(:has(table)):not(:has(.table-wrap)).is-panel-lifted,
         .wide-capsule.is-panel-lifted,
         .subjects-detail-panel.is-panel-lifted,
-        .date-topics-capsule.is-panel-lifted,
-        .article-card.is-panel-lifted {
+        .date-topics-capsule.is-panel-lifted {
             transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
             border-color: var(--panel-border-hover) !important;
             box-shadow: none !important;
         }
 
-        /* Subtle & Calm spring press on clickables (Pills & Nav Items) */
-        .subject-nav-item:active,
-        .meta-pill:active,
-        .topic-num-btn:active,
-        .image-action-btn:active,
-        .read-action-btn:active,
-        .side-nav-btn:active,
-        .back-icon-btn:active {
-            transform: scale3d(0.97, 0.97, 1) !important;
-            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
-        }
-
         /* -------------------------------------------------------------
-           CLICKABLE WORDS ZOOM TOWARDS US STRAIGHT ACROSS SITE
-           Subtle, gentle forward zoom (center-origin), no drift left or right
+           WORD ZOOM & TAP PHYSICS (MATCHED ACROSS ALL PLATFORMS)
+           - Laptop: Hover zooms up (scale 1.028). Tap/Click returns to normal (scale 1).
+           - iPad / Phone: Tap zooms up by the exact same amount (scale 1.028).
+           - Both bullet dot and word zoom together smoothly.
            ------------------------------------------------------------- */
         .nav-text,
         .site-name,
         .sortable,
         .subject-nav-name,
+        .subject-topic-link,
+        .meta-pill,
+        .read-action-btn,
+        .image-action-btn,
+        .topic-num-btn,
         .topics-column-grid a,
         .topics-vertical-stack a,
         .ncert-links a,
         .document-list a,
         .matrix-canvas a,
         .footer-links-row a,
-        a:not(.brand-pill):not(.back-icon-btn):not(.subject-topic-link) {
+        a:not(.brand-pill):not(.back-icon-btn) {
             cursor: pointer !important;
             display: inline-block !important;
             transform-origin: center center !important;
             backface-visibility: hidden !important;
             -webkit-backface-visibility: hidden !important;
+            -webkit-tap-highlight-color: transparent !important;
             transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), 
                         color 0.28s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
@@ -435,17 +426,13 @@
             transform-origin: left center !important;
         }
 
-        /* SUBJECT / NCERT / CSAT TOPIC LINKS: FLEX ROW SO BULLET & TITLE STAY ON SAME LINE */
         .subject-topic-link {
             display: inline-flex !important;
             align-items: baseline !important;
             gap: 10px !important;
             max-width: 100% !important;
             width: fit-content !important;
-            cursor: pointer !important;
             transform-origin: left center !important;
-            transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), 
-                        color 0.28s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
         .subject-topic-link .topic-bullet {
@@ -460,43 +447,105 @@
             word-break: normal !important;
         }
 
-        /* Subtle Forward Zoom Animation on Hover */
-        .footer-links-row a:hover .nav-text,
-        .matrix-canvas a:hover,
-        .matrix-canvas a:hover .nav-text,
-        .document-list a:hover,
-        .document-list a:hover .nav-text,
-        .topics-column-grid a:hover,
-        .topics-column-grid a:hover .nav-text,
-        .topics-vertical-stack a:hover,
-        .topics-vertical-stack a:hover .nav-text,
-        .ncert-links a:hover,
-        .site-name:hover,
-        .sortable:hover,
-        .subject-nav-item:hover .subject-nav-name,
-        a:not(.brand-pill):not(.back-icon-btn):not(.subject-topic-link):hover {
-            transform: scale3d(1.028, 1.028, 1) !important;
-        }
-
-        /* Hover zoom on entire topic link zooms BOTH the bullet dot and the word together */
+        /* 1. LAPTOP (Fine pointer with hover): Hover zooms up, click returns to resting scale 1 */
         @media (hover: hover) and (pointer: fine) {
-            .subject-topic-link:hover {
+            .footer-links-row a:hover .nav-text,
+            .matrix-canvas a:hover,
+            .matrix-canvas a:hover .nav-text,
+            .document-list a:hover,
+            .document-list a:hover .nav-text,
+            .topics-column-grid a:hover,
+            .topics-column-grid a:hover .nav-text,
+            .topics-vertical-stack a:hover,
+            .topics-vertical-stack a:hover .nav-text,
+            .ncert-links a:hover,
+            .site-name:hover,
+            .sortable:hover,
+            .meta-pill:hover,
+            .read-action-btn:hover,
+            .image-action-btn:hover,
+            .topic-num-btn:hover,
+            .subject-topic-link:hover,
+            .subject-nav-item:hover .subject-nav-name,
+            a:not(.brand-pill):not(.back-icon-btn):hover {
                 transform: scale3d(1.028, 1.028, 1) !important;
             }
+
             .subject-topic-link:hover .topic-bullet,
             .subject-topic-link:hover .topic-title {
                 color: var(--text-main) !important;
             }
+
+            /* Laptop Active (Click): Returns smoothly to resting position (scale 1) */
+            .footer-links-row a:active .nav-text,
+            .matrix-canvas a:active,
+            .matrix-canvas a:active .nav-text,
+            .document-list a:active,
+            .document-list a:active .nav-text,
+            .topics-column-grid a:active,
+            .topics-column-grid a:active .nav-text,
+            .topics-vertical-stack a:active,
+            .topics-vertical-stack a:active .nav-text,
+            .ncert-links a:active,
+            .site-name:active,
+            .sortable:active,
+            .meta-pill:active,
+            .read-action-btn:active,
+            .image-action-btn:active,
+            .topic-num-btn:active,
+            .subject-topic-link:active,
+            .subject-nav-item:active .subject-nav-name,
+            .subject-nav-item:active,
+            a:not(.brand-pill):not(.back-icon-btn):active {
+                transform: scale3d(1, 1, 1) !important;
+            }
+
+            /* Prevent nested double scale when parent <a> contains .nav-text */
+            a:has(> .nav-text):hover {
+                transform: none !important;
+            }
+            a:has(> .nav-text):active {
+                transform: none !important;
+            }
+            a:hover > .nav-text {
+                transform: scale3d(1.028, 1.028, 1) !important;
+            }
+            a:active > .nav-text {
+                transform: scale3d(1, 1, 1) !important;
+            }
         }
 
-        /* Prevent double scaling when both parent anchor and child span exist */
-        a:has(> .nav-text):hover {
-            transform: none !important;
-        }
-        a:hover > .nav-text {
-            transform: scale3d(1.028, 1.028, 1) !important;
-        }
-            transform: scale3d(1.028, 1.028, 1) !important;
+        /* 2. IPAD & PHONE (Touch coarse-pointer): Tap zooms up by the exact same length as laptop */
+        @media (hover: none), (pointer: coarse) {
+            .footer-links-row a:active .nav-text,
+            .matrix-canvas a:active,
+            .matrix-canvas a:active .nav-text,
+            .document-list a:active,
+            .document-list a:active .nav-text,
+            .topics-column-grid a:active,
+            .topics-column-grid a:active .nav-text,
+            .topics-vertical-stack a:active,
+            .topics-vertical-stack a:active .nav-text,
+            .ncert-links a:active,
+            .site-name:active,
+            .sortable:active,
+            .meta-pill:active,
+            .read-action-btn:active,
+            .image-action-btn:active,
+            .topic-num-btn:active,
+            .subject-topic-link:active,
+            .subject-nav-item:active .subject-nav-name,
+            .subject-nav-item:active,
+            a:not(.brand-pill):not(.back-icon-btn):active {
+                transform: scale3d(1.028, 1.028, 1) !important;
+            }
+
+            a:has(> .nav-text):active {
+                transform: none !important;
+            }
+            a:active > .nav-text {
+                transform: scale3d(1.028, 1.028, 1) !important;
+            }
         }
 
         @media (max-width: 700px) {
@@ -684,7 +733,7 @@ window.triggerMasterEntrance = triggerMasterEntrance;
 
 function executeMasterEntrance() {
     const targets = document.querySelectorAll(
-        '.top-nav-bar, .page-header-row, .subjects-header-row, main, .matrix-canvas, .contents-container, #subjectsListContainer, .subjects-main-layout, .subjects-split-layout, .subjects-detail-panel, .workspace-animate-frame, .date-topics-capsule, .topics-feed, footer'
+        '.top-nav-bar, .page-header-row, .subjects-header-row, main, .matrix-canvas, .date-topics-capsule, footer'
     );
     targets.forEach(el => {
         triggerMasterEntrance(el);
@@ -705,7 +754,9 @@ window.addEventListener('pageshow', (event) => {
 
 // 6. UNIVERSAL PANEL TOUCH LIFT FEEDBACK (MATCHES HOMESCREEN ON IPAD & PHONE)
 document.addEventListener('pointerdown', (e) => {
-    const panel = e.target.closest('.capsule-panel, .card, .wide-capsule, .subjects-detail-panel, .date-topics-capsule, .article-card');
+    // Never lift tables, article cards, or interactive modals
+    if (e.target.closest('.card:has(table), .card:has(.table-wrap), .article-card, table, .modal, .modal-card, button, a')) return;
+    const panel = e.target.closest('.capsule-panel, .card, .wide-capsule, .subjects-detail-panel, .date-topics-capsule');
     if (panel) {
         document.querySelectorAll('.is-panel-lifted').forEach(p => {
             if (p !== panel) p.classList.remove('is-panel-lifted');

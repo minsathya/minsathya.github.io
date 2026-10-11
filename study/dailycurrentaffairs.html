@@ -222,23 +222,23 @@
     
         /* MASTER ENTRANCE */
         @keyframes masterEntrance {
-            from {
+            0% {
                 opacity: 0;
-                transform: translate3d(0, 10px, 0);
+                transform: translate3d(0, 28px, 0) scale(0.98);
             }
-            to {
+            100% {
                 opacity: 1;
-                transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0) scale(1);
             }
         }
 
         .master-entrance-run {
-            animation: masterEntrance 0.42s var(--ease-premium) both !important;
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
             will-change: transform, opacity;
         }
 
         .date-topics-capsule, .topics-feed {
-            animation: masterEntrance 0.42s var(--ease-premium) 0.04s both;
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
         }
 
         @keyframes sideNavEntrance {
@@ -637,10 +637,16 @@
             user-select: text;
             -webkit-user-select: text;
             box-sizing: border-box;
-            will-change: transform;
+            transform: none !important;
             transition: background-color 0.8s var(--ease-smooth), 
                         border-color 0.8s var(--ease-smooth), 
                         box-shadow 0.8s var(--ease-smooth);
+        }
+
+        .article-card:hover,
+        .article-card:active,
+        .article-card.is-panel-lifted {
+            transform: none !important;
         }
 
         body:not(.light-mode) .article-card { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); }
@@ -648,7 +654,7 @@
         .article-card.is-active {
             display: block;
             position: relative;
-            transform: translate3d(0, 0, 0);
+            transform: none !important;
             opacity: 1;
         }
 
@@ -794,11 +800,23 @@
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s var(--ease-smooth), opacity 0.2s var(--ease-smooth);
+            transform-origin: center center;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent !important;
+            transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s var(--ease-smooth);
         }
 
-        .image-action-btn:hover,
-        .read-action-btn:hover { opacity: 0.9; transform: scale(1.05); }
+        @media (hover: hover) and (pointer: fine) {
+            .image-action-btn:hover,
+            .read-action-btn:hover { opacity: 0.95; transform: scale3d(1.028, 1.028, 1); }
+            .image-action-btn:active,
+            .read-action-btn:active { transform: scale3d(1, 1, 1) !important; }
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            .image-action-btn:active,
+            .read-action-btn:active { transform: scale3d(1.028, 1.028, 1) !important; }
+        }
 
         /* INLINE REFERENCE LINKS (APPLE BLUE) */
         a.inline-link {
@@ -1750,11 +1768,9 @@
                 btn.textContent = 'Full';
             }
 
-            const interval = setInterval(() => syncFeedHeight(targetIdx), 30);
-            setTimeout(() => {
-                clearInterval(interval);
-                syncFeedHeight(targetIdx);
-            }, 520);
+            if (topicsFeed) {
+                topicsFeed.style.height = 'auto';
+            }
         };
 
         // 4. DUAL-CARD STAGE ENGINE

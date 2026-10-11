@@ -123,14 +123,18 @@
         }
 
         @keyframes masterEntrance {
-            0% { opacity: 0; transform: translate3d(0, 10px, 0); }
-            100% { opacity: 1; transform: translate3d(0, 0, 0); }
+            0% { opacity: 0; transform: translate3d(0, 28px, 0) scale(0.98); }
+            100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
         }
 
-        .top-nav-bar { animation: masterEntrance 0.42s cubic-bezier(0.16, 1, 0.3, 1) both; }
-        .page-header-row { animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.02s both; }
-        main, .contents-container, .capsule-panel, .wide-capsule, .card { animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both; }
-        footer { animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.07s both; }
+        .master-entrance-run {
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            will-change: transform, opacity;
+        }
+
+        .top-nav-bar, .page-header-row { animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both; }
+        main, .contents-container, .capsule-panel, .wide-capsule, .card { animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both; }
+        footer { animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both; }
 
         @keyframes capsuleHighlightPulse {
             0% { transform: scale(1); }

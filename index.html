@@ -108,35 +108,27 @@
         }
 
         /* -------------------------------------------------------------
-           RESTORED MASTER ENTRANCE ANIMATION (SMOOTH SILKY APPEARING)
+           MASTER ENTRANCE ANIMATION (0.65s SLIDE UP FADE)
            ------------------------------------------------------------- */
         @keyframes masterEntrance {
-            from {
+            0% {
                 opacity: 0;
-                transform: translate3d(0, 10px, 0);
+                transform: translate3d(0, 28px, 0) scale(0.98);
             }
-            to {
+            100% {
                 opacity: 1;
-                transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0) scale(1);
             }
         }
 
         .master-entrance-run {
-            animation: masterEntrance 0.42s var(--ease-premium) both;
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
             will-change: transform, opacity;
         }
 
-        .top-nav-bar, main, footer {
-            position: relative;
-            z-index: 1;
-            opacity: 1;
-            will-change: transform, opacity;
-            animation: masterEntrance 0.42s var(--ease-premium) both;
-        }
-
-        .top-nav-bar { animation-delay: 0.02s; }
-        main { animation-delay: 0.05s; }
-        footer { animation-delay: 0.09s; }
+        .top-nav-bar { animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both; }
+        main { animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both; }
+        footer { animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both; }
 
         /* -------------------------------------------------------------
            TOP NAVIGATION: 's' BRANDMARK WITH TWINKLING STAR
