@@ -136,11 +136,11 @@
            TOP NAVIGATION: 's' BRANDMARK WITH TWINKLING STAR
            ------------------------------------------------------------- */
         
-        /* 60FPS / 120HZ MASTER ENTRANCE ANIMATION - SLOW & SMOOTH GLIDE FROM DOWN */
+        /* 60FPS / 120HZ MASTER ENTRANCE ANIMATION - SMOOTH SILKY APPEARING */
         @keyframes masterEntrance {
             from {
                 opacity: 0;
-                transform: translate3d(0, 26px, 0);
+                transform: translate3d(0, 10px, 0);
             }
             to {
                 opacity: 1;
@@ -150,7 +150,7 @@
 
         /* Animation runner class */
         .master-entrance-run {
-            animation: masterEntrance 0.52s var(--ease-premium) both !important;
+            animation: masterEntrance 0.42s var(--ease-premium) both !important;
             will-change: transform, opacity;
         }
 
@@ -326,8 +326,8 @@
         }
 
         .subject-nav-item:active {
-            transform: scale3d(0.92, 0.92, 1) !important;
-            transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+            transform: scale3d(0.97, 0.97, 1) !important;
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
         .subject-nav-name {
@@ -387,17 +387,38 @@
             background-color: #111111;
         }
 
-        /* Right Content Panel (Rounded capsule container matching Image 1) */
+        /* Right Content Panel - Sizes according to points (fit-content) and matches homescreen zoom */
         .subjects-detail-panel {
             flex: 1;
             min-width: 0;
+            align-self: flex-start !important;
+            height: auto !important;
+            height: fit-content !important;
+            min-height: auto !important;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 24px;
             padding: 32px 36px;
             box-shadow: none !important;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
             will-change: transform, opacity;
-            transition: background-color 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.45s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .subjects-detail-panel:hover {
+                transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
+                border-color: var(--panel-border-hover) !important;
+                box-shadow: none !important;
+            }
+        }
+
+        .subjects-detail-panel.is-panel-lifted {
+            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
+            border-color: var(--panel-border-hover) !important;
+            box-shadow: none !important;
         }
 
         .panel-header-row {

@@ -143,7 +143,7 @@
         @keyframes masterEntrance {
             from {
                 opacity: 0;
-                transform: translate3d(0, 26px, 0);
+                transform: translate3d(0, 10px, 0);
             }
             to {
                 opacity: 1;
@@ -152,14 +152,14 @@
         }
 
         .master-entrance-run {
-            animation: masterEntrance 0.52s var(--ease-premium) both !important;
+            animation: masterEntrance 0.42s var(--ease-premium) both !important;
             will-change: transform, opacity;
         }
 
-        .top-nav-bar { animation: masterEntrance 0.52s var(--ease-premium) both; }
-        .page-header-row { animation: masterEntrance 0.52s var(--ease-premium) 0.02s both; }
-        main, .contents-container, .instruction-text, .card { animation: masterEntrance 0.52s var(--ease-premium) 0.04s both; }
-        footer { animation: masterEntrance 0.52s var(--ease-premium) 0.06s both; }
+        .top-nav-bar { animation: masterEntrance 0.42s var(--ease-premium) both; }
+        .page-header-row { animation: masterEntrance 0.42s var(--ease-premium) 0.02s both; }
+        main, .contents-container, .instruction-text, .card { animation: masterEntrance 0.42s var(--ease-premium) 0.04s both; }
+        footer { animation: masterEntrance 0.42s var(--ease-premium) 0.06s both; }
 
         header {
             position: relative;
@@ -346,7 +346,7 @@
 
         h2.section-title { font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--text-main); font-size: 20px; font-weight: 400; letter-spacing: -0.3px; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; transition: color 0.8s var(--ease-premium); }
         
-        /* PANELS: FLAT MINIMALIST (NO SHADOWS, NO BORDER HIGHLIGHT ON TOUCH) */
+        /* PANELS: FLAT MINIMALIST (MATCHES HOMESCREEN ZOOM ACROSS ALL DEVICES) */
         .card { 
             background-color: var(--panel-bg); 
             border: 1px solid var(--panel-border); 
@@ -355,25 +355,25 @@
             margin-bottom: 35px; 
             box-shadow: none !important; 
             -webkit-touch-callout: none !important;
-            transition: border-color 0.4s var(--ease-premium), background-color 0.4s var(--ease-premium); 
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.45s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
         }
         body:not(.light-mode) .card { box-shadow: none !important; }
         
         @media (hover: hover) and (pointer: fine) {
-            .card:hover { border-color: rgba(255, 255, 255, 0.16); box-shadow: none !important; }
-            body.light-mode .card:hover { border-color: rgba(0, 0, 0, 0.14); box-shadow: none !important; }
+            .card:hover { 
+                border-color: var(--panel-border-hover); 
+                transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
+                box-shadow: none !important; 
+            }
         }
 
-        @media (hover: none), (pointer: coarse) {
-            .card,
-            .card:hover,
-            .card:active,
-            .card:focus,
-            .card:focus-within {
-                border-color: var(--panel-border) !important;
-                transform: none !important;
-                box-shadow: none !important;
-            }
+        .card.is-panel-lifted {
+            border-color: var(--panel-border-hover) !important;
+            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
+            box-shadow: none !important;
         }
 
         /* TABLES: NO VERTICAL/HORIZONTAL BORDER LINES - NATURAL SCROLL */
@@ -420,10 +420,10 @@
             border-bottom: 1px solid var(--row-divider) !important; 
         }
 
-        /* TABLE CELLS: CLEAN TYPOGRAPHY WITH SUBTLE ROW DIVIDER */
+        /* TABLE CELLS: CLEAN TYPOGRAPHY WITH SUBTLE ROW DIVIDER - STRICT SINGLE ROW (NO TWO LINES) */
         table td { 
             padding: 16px 18px !important; 
-            white-space: normal !important; 
+            white-space: nowrap !important; 
             text-align: left; 
             border: none !important; 
             border-bottom: 1px solid var(--row-divider) !important; 
@@ -460,6 +460,7 @@
             text-decoration: none !important; 
             border-bottom: none !important; 
             font-weight: 400; 
+            white-space: nowrap !important;
             display: inline-block !important;
             transform-origin: center center !important;
             touch-action: manipulation !important;
@@ -517,14 +518,14 @@
             z-index: 9999; 
             padding: 24px;
             box-sizing: border-box;
-            transition: opacity 0.38s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.38s;
+            transition: opacity 0.36s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.36s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .modal.active { 
             visibility: visible; 
             opacity: 1; 
             pointer-events: auto; 
-            transition: opacity 0.48s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0s; 
+            transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0s; 
         }
 
         .modal-card {
@@ -539,11 +540,11 @@
             box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7); 
             cursor: default;
             opacity: 0;
-            transform: translate3d(0, 32px, 0); 
+            transform: translate3d(0, 24px, 0) scale3d(0.96, 0.96, 1); 
             will-change: transform, opacity; 
             -webkit-backface-visibility: hidden; 
             backface-visibility: hidden;
-            transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.36s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.36s cubic-bezier(0.16, 1, 0.3, 1);
             scrollbar-width: thin;
         }
 
@@ -555,8 +556,8 @@
 
         .modal.active .modal-card { 
             opacity: 1;
-            transform: translate3d(0, 0, 0); 
-            transition: transform 0.48s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translate3d(0, 0, 0) scale3d(1, 1, 1); 
+            transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .modal-header-row {
@@ -1498,6 +1499,9 @@
             const title = document.getElementById("modalTitle");
             const content = document.getElementById("modalContent");
             if (!modal) return;
+            if (modal.classList.contains("active") && (Date.now() - modalOpenTimestamp < 350)) {
+                return;
+            }
             
             const data = ramsarData[id];
             
@@ -1556,7 +1560,11 @@
             if (document.activeElement && document.activeElement.blur) {
                 document.activeElement.blur();
             }
-            document.body.style.overflow = "";
+            setTimeout(() => {
+                if (!modal || !modal.classList.contains("active")) {
+                    document.body.style.overflow = "";
+                }
+            }, 360);
         }
         window.closeSite = closeSite;
 

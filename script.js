@@ -266,12 +266,12 @@
 
         /* -------------------------------------------------------------
            MASTER ENTRANCE ANIMATION (GPU ACCELERATED & PREMIUM FLUID)
-           Glides slowly and smoothly upward from the background
+           Smoothly appearing with a calm, gentle rise from the background
            ------------------------------------------------------------- */
         @keyframes masterEntrance {
             from {
                 opacity: 0;
-                transform: translate3d(0, 26px, 0);
+                transform: translate3d(0, 10px, 0);
             }
             to {
                 opacity: 1;
@@ -281,7 +281,7 @@
 
         /* Animation runner class */
         .master-entrance-run {
-            animation: masterEntrance 0.52s var(--ease-premium) both !important;
+            animation: masterEntrance 0.42s var(--ease-premium) both !important;
             will-change: transform, opacity;
         }
 
@@ -303,7 +303,7 @@
             z-index: 1;
             opacity: 1;
             will-change: transform, opacity;
-            animation: masterEntrance 0.52s var(--ease-premium) both !important;
+            animation: masterEntrance 0.42s var(--ease-premium) both !important;
         }
 
         .top-nav-bar { 
@@ -321,14 +321,15 @@
         #csatListContainer,
         .subjects-main-layout,
         .subjects-split-layout { 
-            animation-delay: 0.06s !important; 
+            animation-delay: 0.05s !important; 
         }
         footer { 
-            animation-delay: 0.12s !important; 
+            animation-delay: 0.09s !important; 
         }
 
         /* -------------------------------------------------------------
-           UNIVERSAL FLAT DESIGN: ZERO PANEL SHADOWS SITE-WIDE
+           UNIVERSAL FLAT DESIGN & HOMESCREEN-MATCHED PANEL ZOOM
+           Every panel site-wide matches homescreen hover/touch zoom
            ------------------------------------------------------------- */
         .capsule-panel,
         .subject-accordion-card,
@@ -343,40 +344,36 @@
         .macro-card,
         .day-switcher-capsule {
             box-shadow: none !important;
-            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), 
-                        border-color 0.35s cubic-bezier(0.25, 1, 0.5, 1),
-                        background-color 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+                        background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
-        .capsule-panel:hover,
-        .capsule-panel:active,
-        .capsule-panel:focus-within,
-        .subject-accordion-card:hover,
-        .subject-accordion-card:active,
-        .subject-accordion-card:focus-within,
-        .card:hover,
-        .card:active,
-        .wide-capsule:hover,
-        .wide-capsule:active,
-        .date-topics-capsule:hover,
-        .date-topics-capsule:active,
-        .article-card:hover,
-        .article-card:active {
-            box-shadow: none !important;
+        /* UPSC Detail Panel adapts height to its points */
+        .subjects-detail-panel {
+            align-self: flex-start !important;
+            height: auto !important;
+            height: fit-content !important;
+            min-height: auto !important;
         }
 
-        /* -------------------------------------------------------------
-           SUBTLE & GENTLE PANEL HOVER ZOOM (LAPTOP / DESKTOP)
-           ------------------------------------------------------------- */
+        /* Hover Elevation: Exact homescreen zoom across all devices with cursor/pointer */
         @media (hover: hover) and (pointer: fine) {
             .subject-accordion-card:not(.is-open):hover,
             .wide-capsule:hover,
             .card:hover,
             .capsule-panel:hover,
             .subjects-detail-panel:hover,
-            .date-topics-capsule:hover {
-                transform: scale3d(1.008, 1.008, 1) translate3d(0, -2px, 0) !important;
+            .date-topics-capsule:hover,
+            .article-card:hover,
+            .myspace-card:hover,
+            .macro-card:hover {
+                transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
                 border-color: var(--panel-border-hover) !important;
+                box-shadow: none !important;
             }
 
             .subject-accordion-card.is-open,
@@ -386,31 +383,28 @@
             }
         }
 
-        /* -------------------------------------------------------------
-           TOUCH DEVICES (IPAD / PHONE): RUBBER PRESS & TACTILE RESPONSE
-           ------------------------------------------------------------- */
-        @media (hover: none), (pointer: coarse) {
-            /* Pill rubber press: goes down on tap and springs back on release */
-            .subject-nav-item:active {
-                transform: scale3d(0.92, 0.92, 1) !important;
-                transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
-            }
+        /* Touch Devices (iPad / Phone) & Active Lift State */
+        .capsule-panel.is-panel-lifted,
+        .card.is-panel-lifted,
+        .wide-capsule.is-panel-lifted,
+        .subjects-detail-panel.is-panel-lifted,
+        .date-topics-capsule.is-panel-lifted,
+        .article-card.is-panel-lifted {
+            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
+            border-color: var(--panel-border-hover) !important;
+            box-shadow: none !important;
+        }
 
-            .capsule-panel:active,
-            .wide-capsule:active,
-            .date-topics-capsule:active {
-                transform: scale3d(0.985, 0.985, 1) !important;
-                transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
-            }
-
-            .capsule-panel:hover,
-            .subject-accordion-card:hover,
-            .card:hover,
-            .wide-capsule:hover,
-            .date-topics-capsule:hover,
-            .article-card:hover {
-                border-color: var(--panel-border) !important;
-            }
+        /* Subtle & Calm spring press on clickables (Pills & Nav Items) */
+        .subject-nav-item:active,
+        .meta-pill:active,
+        .topic-num-btn:active,
+        .image-action-btn:active,
+        .read-action-btn:active,
+        .side-nav-btn:active,
+        .back-icon-btn:active {
+            transform: scale3d(0.97, 0.97, 1) !important;
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
         /* -------------------------------------------------------------
@@ -708,4 +702,23 @@ window.addEventListener('pageshow', (event) => {
         el.classList.remove('is-wave-loading', 'is-panel-lifted', 'is-card-lifted');
     });
 });
+
+// 6. UNIVERSAL PANEL TOUCH LIFT FEEDBACK (MATCHES HOMESCREEN ON IPAD & PHONE)
+document.addEventListener('pointerdown', (e) => {
+    const panel = e.target.closest('.capsule-panel, .card, .wide-capsule, .subjects-detail-panel, .date-topics-capsule, .article-card');
+    if (panel) {
+        document.querySelectorAll('.is-panel-lifted').forEach(p => {
+            if (p !== panel) p.classList.remove('is-panel-lifted');
+        });
+        panel.classList.add('is-panel-lifted');
+    } else {
+        document.querySelectorAll('.is-panel-lifted').forEach(p => p.classList.remove('is-panel-lifted'));
+    }
+}, { passive: true });
+
+const releaseAllPanelLifts = () => {
+    document.querySelectorAll('.is-panel-lifted').forEach(p => p.classList.remove('is-panel-lifted'));
+};
+document.addEventListener('pointerup', releaseAllPanelLifts, { passive: true });
+document.addEventListener('pointercancel', releaseAllPanelLifts, { passive: true });
 
