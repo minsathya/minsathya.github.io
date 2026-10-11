@@ -399,31 +399,6 @@
                 transform: translateY(-6px) !important;
             }
 
-            /* Active (Click): Panel tactile compression 0.995, heading stays frozen at -6px */
-            .subject-accordion-card:not(.is-open):active,
-            .wide-capsule:active,
-            .card:not(:has(table)):not(:has(.table-wrap)):active,
-            .capsule-panel:active,
-            .subjects-detail-panel:active,
-            .date-topics-capsule:active,
-            .myspace-card:active,
-            .macro-card:active,
-            .panel-card:active {
-                transform: scale(0.995) !important;
-                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1) !important;
-            }
-
-            .capsule-panel:active .panel-title,
-            .subjects-detail-panel:active .panel-header-row,
-            .date-topics-capsule:active .capsule-date-cluster,
-            .wide-capsule:active .wide-panel-title,
-            .card:not(:has(table)):not(:has(.table-wrap)):active .card-header,
-            .card:not(:has(table)):not(:has(.table-wrap)):active .card-title,
-            .panel-card:active .card-content {
-                transform: translateY(-6px) !important;
-                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1) !important;
-            }
-
             .subject-accordion-card.is-open,
             .subject-accordion-card.is-open:hover,
             .subject-accordion-card:focus-within {
@@ -431,36 +406,31 @@
             }
         }
 
-        /* Touch Devices (iPad / Phone) Active Compression */
-        @media (hover: none), (pointer: coarse) {
-            .subject-accordion-card:not(.is-open):active,
-            .wide-capsule:active,
-            .card:not(:has(table)):not(:has(.table-wrap)):active,
-            .capsule-panel:active,
-            .subjects-detail-panel:active,
-            .date-topics-capsule:active,
-            .myspace-card:active,
-            .macro-card:active,
-            .panel-card:active {
-                transform: scale(0.995) !important;
-                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1) !important;
-            }
+        /* Reading panels stay completely freeze without any interaction animations */
+        .article-card,
+        .topics-feed,
+        .article-card:hover,
+        .article-card:active,
+        .topics-feed:hover,
+        .topics-feed:active {
+            transform: none !important;
         }
 
-        /* Outer Wrapper Container to facilitate page scaling during popups */
+        /* Outer Wrapper Container to facilitate page scaling during popups (GPU-accelerated for iPad & phone) */
         .page-wrapper {
             background-color: var(--bg-color);
             color: var(--text-main);
             min-height: 100vh;
             width: 100%;
-            transform: scale(1);
+            transform: scale3d(1, 1, 1);
+            -webkit-transform: scale3d(1, 1, 1);
             transform-origin: center center;
             box-sizing: border-box;
-            will-change: transform, border-radius;
+            will-change: transform;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-radius 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+                        -webkit-transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         body.popup-active {
@@ -468,9 +438,9 @@
         }
 
         body.popup-active .page-wrapper {
-            transform: scale(0.96) !important;
-            border-radius: 24px !important;
-            overflow: hidden !important;
+            transform: scale3d(0.96, 0.96, 1) !important;
+            -webkit-transform: scale3d(0.96, 0.96, 1) !important;
+            border-radius: 24px;
         }
 
         /* -------------------------------------------------------------
@@ -816,7 +786,7 @@ window.triggerMasterEntrance = triggerMasterEntrance;
 
 function executeMasterEntrance() {
     const targets = document.querySelectorAll(
-        '.top-nav-bar, .page-header-row, .subjects-header-row, main, .matrix-canvas, .date-topics-capsule, footer'
+        '.top-nav-bar, .page-header-row, .subjects-header-row, main, .matrix-canvas, .date-topics-capsule, .article-card, .topics-feed, .capsule-panel, .subjects-detail-panel, .subjects-sidebar, footer'
     );
     targets.forEach(el => {
         triggerMasterEntrance(el);
@@ -826,41 +796,12 @@ window.executeMasterEntrance = executeMasterEntrance;
 
 window.addEventListener('pageshow', (event) => {
     wrapClickableWords();
-    // Replay entrance on BFCache restore or backward/forward navigation
-    if (event.persisted || (window.performance && window.performance.navigation && window.performance.navigation.type === 2) || (window.performance && window.performance.getEntriesByType && window.performance.getEntriesByType('navigation')[0]?.type === 'back_forward')) {
-        executeMasterEntrance();
-    }
+    // Trigger smooth slideup fade animation whenever visiting homescreen or any page
+    executeMasterEntrance();
     document.querySelectorAll('.is-wave-loading, .is-panel-lifted, .is-card-lifted').forEach(el => {
         el.classList.remove('is-wave-loading', 'is-panel-lifted', 'is-card-lifted');
     });
 });
-
-// 6. UNIVERSAL PANEL TOUCH FEEDBACK (TACTILE COMPRESSION ON IPAD & PHONE)
-document.addEventListener('pointerdown', (e) => {
-    if (e.target.closest('.card:has(table), .card:has(.table-wrap), .article-card, table, .modal, .modal-card, button, a')) return;
-    const panel = e.target.closest('.capsule-panel, .card, .wide-capsule, .subjects-detail-panel, .date-topics-capsule, .panel-card');
-    if (panel) {
-        panel.style.transform = 'scale(0.995)';
-        panel.style.transition = 'transform 0.08s cubic-bezier(0.25, 1, 0.5, 1)';
-    }
-}, { passive: true });
-
-const resetAllPanelTouches = (e) => {
-    const panel = e && e.target ? e.target.closest('.capsule-panel, .card, .wide-capsule, .subjects-detail-panel, .date-topics-capsule, .panel-card') : null;
-    if (panel) {
-        panel.style.transform = '';
-        panel.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
-    } else {
-        document.querySelectorAll('.capsule-panel, .card, .wide-capsule, .subjects-detail-panel, .date-topics-capsule, .panel-card').forEach(p => {
-            if (p.style.transform && p.style.transform.includes('0.995')) {
-                p.style.transform = '';
-                p.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
-            }
-        });
-    }
-};
-document.addEventListener('pointerup', resetAllPanelTouches, { passive: true });
-document.addEventListener('pointercancel', resetAllPanelTouches, { passive: true });
 
 // 7. UNIVERSAL POPUP DEPTH CENTERING (SCALES BACK SYMMETRICALLY WITHOUT SHIFTING DOWN)
 function syncPopupOrigin() {

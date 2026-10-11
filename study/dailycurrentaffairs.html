@@ -500,21 +500,6 @@
             body:not(.popup-active) .date-topics-capsule:hover .capsule-date-cluster {
                 transform: translateY(-6px);
             }
-            .date-topics-capsule:active {
-                transform: scale(0.995);
-                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1);
-            }
-            .date-topics-capsule:active .capsule-date-cluster {
-                transform: translateY(-6px);
-                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1);
-            }
-        }
-
-        @media (hover: none), (pointer: coarse) {
-            .date-topics-capsule:active {
-                transform: scale(0.995) !important;
-                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1) !important;
-            }
         }
 
         .cal-trigger-btn {
@@ -525,10 +510,10 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.25s var(--ease-smooth);
+            transition: opacity 0.25s var(--ease-smooth);
         }
 
-        .cal-trigger-btn:hover { transform: scale(1.08); }
+        .cal-trigger-btn:hover { opacity: 0.8; }
 
         .cal-trigger-btn svg {
             width: 36px;

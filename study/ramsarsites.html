@@ -503,19 +503,17 @@
             width: 100%; 
             height: 100%;
             background: rgba(0, 0, 0, 0.72); 
-            backdrop-filter: blur(0px); 
-            -webkit-backdrop-filter: blur(0px);
+            backdrop-filter: blur(6px); 
+            -webkit-backdrop-filter: blur(6px);
             justify-content: center; 
             align-items: center; 
             z-index: 9999; 
             padding: 24px;
             box-sizing: border-box;
-            will-change: opacity, visibility, backdrop-filter;
+            will-change: opacity, visibility;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
-                        backdrop-filter 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-                        -webkit-backdrop-filter 1.2s cubic-bezier(0.16, 1, 0.3, 1),
                         visibility 1.2s;
         }
 
@@ -523,11 +521,7 @@
             visibility: visible; 
             opacity: 1; 
             pointer-events: auto; 
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
             transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
-                        backdrop-filter 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        -webkit-backdrop-filter 0.65s cubic-bezier(0.16, 1, 0.3, 1),
                         visibility 0.65s; 
         }
 
@@ -689,30 +683,24 @@
             font-weight: 600;
         }
 
-        /* SUB-CARDS FOR IMPORTANCE & MAJOR THREATS */
-        .modal-subcard {
-            background: #181818;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
-            padding: 20px 22px;
-            margin-bottom: 16px;
+        /* SECTIONS FOR IMPORTANCE & MAJOR THREATS (WRITTEN DIRECTLY IN PANEL, NO NESTED BOXES) */
+        .modal-section {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin-bottom: 22px;
         }
 
-        body.light-mode .modal-subcard {
-            background: #f8f8fa;
-            border: 1px solid #e5e5ea;
-        }
-
-        .modal-subcard:last-child {
+        .modal-section:last-child {
             margin-bottom: 0;
         }
 
-        .modal-subcard-title {
+        .modal-section-title {
             font-size: 13px;
             font-weight: 700;
             letter-spacing: 0.8px;
             text-transform: uppercase;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .title-importance {
@@ -1541,15 +1529,15 @@
                             Location : <strong>${data.district}</strong>
                         </div>
 
-                        <div class="modal-subcard">
-                            <div class="modal-subcard-title title-importance">IMPORTANCE</div>
+                        <div class="modal-section">
+                            <div class="modal-section-title title-importance">IMPORTANCE</div>
                             <ul class="modal-bullet-list">
                                 ${impBullets}
                             </ul>
                         </div>
 
-                        <div class="modal-subcard">
-                            <div class="modal-subcard-title title-threats">MAJOR THREATS</div>
+                        <div class="modal-section">
+                            <div class="modal-section-title title-threats">MAJOR THREATS</div>
                             <ul class="modal-bullet-list">
                                 ${thrBullets}
                             </ul>

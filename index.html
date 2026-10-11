@@ -268,23 +268,6 @@
                 transform: translateY(-6px);
             }
 
-            .capsule-panel:active {
-                transform: scale(0.995);
-                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1);
-            }
-
-            .capsule-panel:active .panel-title {
-                transform: translateY(-6px);
-                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1);
-            }
-        }
-
-        /* Touch Devices (iPad / Phone): Tactile physical compression */
-        @media (hover: none), (pointer: coarse) {
-            .capsule-panel:active {
-                transform: scale(0.995) !important;
-                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1) !important;
-            }
         }
 
         .panel-title {
@@ -566,27 +549,6 @@
             });
         });
 
-        function runMasterEntrance() {
-            const targets = document.querySelectorAll('.top-nav-bar, main, footer');
-            targets.forEach(el => el.style.setProperty('animation', 'none', 'important'));
-            void document.documentElement.offsetHeight;
-            requestAnimationFrame(() => {
-                targets.forEach(el => el.style.removeProperty('animation'));
-            });
-        }
-
-        window.addEventListener('pageshow', (event) => {
-            if (event.persisted || (window.performance && window.performance.navigation && window.performance.navigation.type === 2) || (window.performance && window.performance.getEntriesByType && window.performance.getEntriesByType('navigation')[0]?.type === 'back_forward')) {
-                runMasterEntrance();
-            }
-            if (document.activeElement && document.activeElement.blur) {
-                document.activeElement.blur();
-            }
-            document.querySelectorAll('.is-wave-loading, .is-panel-lifted').forEach(l => {
-                l.classList.remove('is-wave-loading');
-                l.classList.remove('is-panel-lifted');
-            });
-        });
     </script>
     <script src="/script.js"></script>
 </body>
