@@ -243,45 +243,44 @@
             height: 100%;
             touch-action: manipulation;
             box-sizing: border-box;
-            transform: translateZ(0);
+            transform: scale(1);
+            transform-origin: center center;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            transition: transform 0.45s var(--ease-smooth), 
-                        border-color 0.45s var(--ease-smooth), 
-                        background-color 0.4s var(--ease-smooth);
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 0.4s ease, 
+                        background-color 0.4s ease;
         }
 
         body.light-mode .capsule-panel {
             box-shadow: none !important;
         }
 
-        /* Mouse Hover Elevation on Laptop: Smooth lift and contour highlight (No shadow) */
+        /* 10/10 Micro-Interaction Core: Smooth Depth Zoom on Laptop */
         @media (hover: hover) and (pointer: fine) {
             .capsule-panel:hover { 
                 border-color: var(--panel-border-hover); 
-                transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1); 
+                transform: scale(1.02); 
                 box-shadow: none !important;
             }
-            body.light-mode .capsule-panel:hover {
-                box-shadow: none !important;
-            }
-        }
 
-        /* Touch Devices (iPad / Phone): Snappy, non-sticky touch response */
-        @media (hover: none) {
-            .capsule-panel:hover {
-                transform: none !important;
-            }
             .capsule-panel:active {
-                transform: scale3d(0.985, 0.985, 1) !important;
-                transition: transform 0.12s ease-out !important;
+                transform: scale(0.995);
+                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1);
             }
         }
 
-        .capsule-panel:active,
-        .capsule-panel:focus-within,
+        /* Touch Devices (iPad / Phone): Tactile physical compression */
         .capsule-panel.is-panel-lifted {
-            box-shadow: none !important;
+            transform: scale(1.02) !important;
+            border-color: var(--panel-border-hover) !important;
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            .capsule-panel:active {
+                transform: scale(0.995) !important;
+                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            }
         }
 
         .panel-title {

@@ -497,31 +497,39 @@
             position: fixed; 
             top: 0; 
             left: 0; 
-            width: 100%; 
-            height: 100%;
+            width: 100vw; 
+            height: 100vh;
             background: rgba(0, 0, 0, 0.72); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(0px); 
+            -webkit-backdrop-filter: blur(0px);
             justify-content: center; 
             align-items: center; 
             z-index: 9999; 
             padding: 24px;
             box-sizing: border-box;
-            will-change: opacity, visibility;
+            will-change: opacity, visibility, backdrop-filter;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.35s;
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                        backdrop-filter 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        -webkit-backdrop-filter 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        visibility 1.2s;
         }
 
         .modal.active { 
             visibility: visible; 
             opacity: 1; 
             pointer-events: auto; 
-            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0s; 
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
+                        backdrop-filter 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        -webkit-backdrop-filter 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        visibility 0.65s; 
         }
 
         .modal-card {
-            width: 100%;
+            width: 90%;
             max-width: 520px; 
             max-height: 88vh;
             overflow-y: auto;
@@ -529,14 +537,19 @@
             border: 1px solid #222222;
             border-radius: 28px; 
             padding: 32px 30px; 
-            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7); 
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5); 
             cursor: default;
+            position: fixed;
+            left: 50%;
             opacity: 0;
-            transform: scale3d(0.94, 0.94, 1); 
-            will-change: transform, opacity; 
+            top: 160%;
+            transform: translate(-50%, 0);
+            will-change: transform, top, opacity; 
             -webkit-backface-visibility: hidden; 
             backface-visibility: hidden;
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: top 1.2s cubic-bezier(0.075, 0.82, 0.165, 1),
+                        transform 1.2s cubic-bezier(0.075, 0.82, 0.165, 1),
+                        opacity 1.0s ease-out;
             scrollbar-width: thin;
         }
 
@@ -547,9 +560,12 @@
         }
 
         .modal.active .modal-card { 
-            opacity: 1;
-            transform: scale3d(1, 1, 1); 
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            top: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 1; 
+            transition: top 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .modal-header-row {
@@ -856,6 +872,7 @@
     </style>
 </head>
 <body>
+    <div class="page-wrapper" id="pageWrapper">
 
         <!-- Top Left Brand 's' with Animated Twinkling Star -->
     <nav class="top-nav-bar" id="topNavBar">
@@ -1213,18 +1230,6 @@
         </div>
     </main>
 
-    <div id="siteModal" class="modal" onclick="onModalBackdropClick(event)">
-        <div class="modal-card">
-            <div class="modal-header-row">
-                <h2 class="modal-title" id="modalTitle">Kolleru Lake</h2>
-                <button type="button" class="modal-close-icon-btn" onclick="closeSite()" aria-label="Close">
-                    <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                </button>
-            </div>
-            <div id="modalContent"></div>
-        </div>
-    </div>
-
     <footer>
         <div class="footer-links-row">
             <a href="/study/Footer/about.html"><span class="nav-text">About</span></a>
@@ -1237,6 +1242,19 @@
             &copy; 2026 Sathya. All rights reserved.
         </div>
     </footer>
+    </div>
+
+    <div id="siteModal" class="modal" onclick="onModalBackdropClick(event)">
+        <div class="modal-card">
+            <div class="modal-header-row">
+                <h2 class="modal-title" id="modalTitle">Kolleru Lake</h2>
+                <button type="button" class="modal-close-icon-btn" onclick="closeSite()" aria-label="Close">
+                    <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div id="modalContent"></div>
+        </div>
+    </div>
 
     <script>
         // --- Universal Persistent Master Breadcrumb Engine ---
@@ -1538,6 +1556,7 @@
             }
             
             modalOpenTimestamp = Date.now();
+            document.body.classList.add("popup-active");
             modal.classList.add("active");
             document.body.style.overflow = "hidden";
         }
@@ -1547,6 +1566,7 @@
             if (event && event.stopPropagation) {
                 event.stopPropagation();
             }
+            document.body.classList.remove("popup-active");
             const modal = document.getElementById("siteModal");
             if (modal) modal.classList.remove("active");
             if (document.activeElement && document.activeElement.blur) {
@@ -1556,7 +1576,7 @@
                 if (!modal || !modal.classList.contains("active")) {
                     document.body.style.overflow = "";
                 }
-            }, 360);
+            }, 1200);
         }
         window.closeSite = closeSite;
 

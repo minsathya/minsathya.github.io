@@ -1076,21 +1076,38 @@
             width: 100vw;
             height: 100vh;
             background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.35s var(--ease-smooth);
+            visibility: hidden;
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                        backdrop-filter 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        -webkit-backdrop-filter 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        visibility 1.2s;
         }
 
-        .picker-backdrop.is-open { opacity: 1; pointer-events: auto; }
+        .picker-backdrop.is-open { 
+            opacity: 1; 
+            pointer-events: auto; 
+            visibility: visible;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
+                        backdrop-filter 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        -webkit-backdrop-filter 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        visibility 0.65s;
+        }
 
         .picker-card {
-            position: relative;
+            position: fixed;
+            left: 50%;
+            top: 160%;
+            transform: translate(-50%, 0);
             width: 90%;
             max-width: 360px;
             background: #0a0a0a;
@@ -1098,10 +1115,13 @@
             border-radius: 28px;
             padding: 24px 20px;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
-            transform: scale(0.92) translate3d(0, 15px, 0);
-            transition: transform 0.35s var(--ease-smooth), 
-                        background-color 0.8s var(--ease-smooth), 
-                        border-color 0.8s var(--ease-smooth);
+            opacity: 0;
+            will-change: transform, top, opacity;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transition: top 1.2s cubic-bezier(0.075, 0.82, 0.165, 1),
+                        transform 1.2s cubic-bezier(0.075, 0.82, 0.165, 1),
+                        opacity 1.0s ease-out;
         }
 
         body.light-mode .picker-card {
@@ -1110,7 +1130,14 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
         }
 
-        .picker-backdrop.is-open .picker-card { transform: scale(1) translate3d(0, 0, 0); }
+        .picker-backdrop.is-open .picker-card { 
+            top: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 1;
+            transition: top 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
         .picker-header {
             display: flex;
@@ -1503,6 +1530,7 @@
     </style>
 </head>
 <body>
+    <div class="page-wrapper" id="pageWrapper">
 
     <!-- FLOATING MASTER HEADER -->
         <!-- Top Left Brand 's' with Animated Twinkling Star -->
@@ -1560,6 +1588,20 @@
         <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
     </button>
 
+    <footer>
+        <div class="footer-links-row">
+            <a href="/study/Footer/about.html"><span class="nav-text">About</span></a>
+            <a href="/study/Footer/contact.html"><span class="nav-text">Contact</span></a>
+            <a href="/study/Footer/privacy.html"><span class="nav-text">Privacy Policy</span></a>
+            <a href="/study/Footer/terms.html"><span class="nav-text">Terms &amp; Conditions</span></a>
+            <a href="/study/Footer/disclaimer.html"><span class="nav-text">Disclaimer</span></a>
+        </div>
+        <div class="copyright-tag">
+            &copy; 2026 Sathya. All rights reserved.
+        </div>
+    </footer>
+    </div>
+
     <!-- 3-COLUMN DRUM WHEEL DATE PICKER MODAL -->
     <div class="picker-backdrop" id="pickerModal">
         <div class="picker-card">
@@ -1582,19 +1624,6 @@
             </div>
         </div>
     </div>
-
-    <footer>
-        <div class="footer-links-row">
-            <a href="/study/Footer/about.html"><span class="nav-text">About</span></a>
-            <a href="/study/Footer/contact.html"><span class="nav-text">Contact</span></a>
-            <a href="/study/Footer/privacy.html"><span class="nav-text">Privacy Policy</span></a>
-            <a href="/study/Footer/terms.html"><span class="nav-text">Terms &amp; Conditions</span></a>
-            <a href="/study/Footer/disclaimer.html"><span class="nav-text">Disclaimer</span></a>
-        </div>
-        <div class="copyright-tag">
-            &copy; 2026 Sathya. All rights reserved.
-        </div>
-    </footer>
 
     <script>
         window.addEventListener('pageshow', () => {
@@ -2280,6 +2309,7 @@
 
         openCalendarBtn.addEventListener('click', () => {
             initPickerColumns();
+            document.body.classList.add('popup-active');
             pickerModal.classList.add('is-open');
             setTimeout(() => {
                 scrollColumnTo(dayCol, selectedDay);
@@ -2296,16 +2326,28 @@
 
             loadDateData(selectedYear, selectedMonth, selectedDay, (topics) => {
                 renderCards(topics, formattedDateText);
+                const dateCapsule = document.querySelector('.date-topics-capsule');
+                if (typeof triggerMasterEntrance === 'function') {
+                    triggerMasterEntrance(dateCapsule);
+                    triggerMasterEntrance(topicsFeed);
+                }
             }, () => {
                 renderCards([], formattedDateText);
+                const dateCapsule = document.querySelector('.date-topics-capsule');
+                if (typeof triggerMasterEntrance === 'function') {
+                    triggerMasterEntrance(dateCapsule);
+                    triggerMasterEntrance(topicsFeed);
+                }
             });
 
+            document.body.classList.remove('popup-active');
             pickerModal.classList.remove('is-open');
             window.scrollTo({ top: 0, behavior: 'instant' });
         });
 
         pickerModal.addEventListener('pointerdown', (e) => {
             if (e.target === pickerModal) {
+                document.body.classList.remove('popup-active');
                 pickerModal.classList.remove('is-open');
             }
         });

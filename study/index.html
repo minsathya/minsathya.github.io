@@ -355,23 +355,24 @@
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
             
-            transition: transform 0.55s var(--ease-smooth), 
-                        box-shadow 0.55s var(--ease-smooth), 
-                        border-color 0.55s var(--ease-smooth), 
-                        background-color 0.8s var(--ease-smooth);
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 0.4s ease, 
+                        background-color 0.4s ease;
         }
 
         body:not(.light-mode) .capsule-panel { box-shadow: none !important; }
 
-        /* Laptop Mouse Hover - Subtle & Gentle */
+        /* 10/10 Micro-Interaction Core: Smooth Depth Zoom on Laptop */
         @media (hover: hover) and (pointer: fine) {
             .capsule-panel:hover { 
                 border-color: var(--panel-border-hover); 
-                transform: translate3d(0, -2px, 0); 
+                transform: scale(1.02); 
                 box-shadow: none !important;
             }
-            body.light-mode .capsule-panel:hover { 
-                box-shadow: none !important;
+
+            .capsule-panel:active {
+                transform: scale(0.995);
+                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1);
             }
         }
 

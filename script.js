@@ -330,24 +330,21 @@
         .macro-card,
         .day-switcher-capsule {
             box-shadow: none !important;
-            transform: translateZ(0);
+            transform: scale(1);
+            transform-origin: center center;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), 
-                        border-color 0.45s cubic-bezier(0.25, 1, 0.5, 1),
-                        background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 0.4s ease, 
+                        background-color 0.4s ease !important;
         }
 
-        /* UPSC Detail Panel sizes according to points (compact for 2, medium for 5, full for 10+) */
+        /* UPSC Detail Panel: Uniform full length for all */
         .subjects-detail-panel {
-            flex: 0 1 auto !important;
-            width: fit-content !important;
-            min-width: min(100%, 360px) !important;
-            max-width: 100% !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+            width: 100% !important;
             align-self: flex-start !important;
-            height: auto !important;
-            height: fit-content !important;
-            min-height: auto !important;
         }
 
         /* Tables and article cards MUST NEVER lift or shake on hover or touch */
@@ -357,19 +354,31 @@
             transform: none !important;
         }
 
-        /* Hover Elevation: Exact homescreen zoom across all devices with cursor/pointer */
+        /* Hover Elevation: 10/10 Micro-Interaction Depth Zoom */
         @media (hover: hover) and (pointer: fine) {
-            .subject-accordion-card:not(.is-open):hover,
-            .wide-capsule:hover,
-            .card:not(:has(table)):not(:has(.table-wrap)):hover,
-            .capsule-panel:hover,
-            .subjects-detail-panel:hover,
-            .date-topics-capsule:hover,
-            .myspace-card:hover,
-            .macro-card:hover {
-                transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
+            body:not(.popup-active) .subject-accordion-card:not(.is-open):hover,
+            body:not(.popup-active) .wide-capsule:hover,
+            body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):hover,
+            body:not(.popup-active) .capsule-panel:hover,
+            body:not(.popup-active) .subjects-detail-panel:hover,
+            body:not(.popup-active) .date-topics-capsule:hover,
+            body:not(.popup-active) .myspace-card:hover,
+            body:not(.popup-active) .macro-card:hover {
+                transform: scale(1.02) !important;
                 border-color: var(--panel-border-hover) !important;
                 box-shadow: none !important;
+            }
+
+            .subject-accordion-card:not(.is-open):active,
+            .wide-capsule:active,
+            .card:not(:has(table)):not(:has(.table-wrap)):active,
+            .capsule-panel:active,
+            .subjects-detail-panel:active,
+            .date-topics-capsule:active,
+            .myspace-card:active,
+            .macro-card:active {
+                transform: scale(0.995) !important;
+                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1) !important;
             }
 
             .subject-accordion-card.is-open,
@@ -385,9 +394,49 @@
         .wide-capsule.is-panel-lifted,
         .subjects-detail-panel.is-panel-lifted,
         .date-topics-capsule.is-panel-lifted {
-            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
+            transform: scale(1.02) !important;
             border-color: var(--panel-border-hover) !important;
             box-shadow: none !important;
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            .subject-accordion-card:not(.is-open):active,
+            .wide-capsule:active,
+            .card:not(:has(table)):not(:has(.table-wrap)):active,
+            .capsule-panel:active,
+            .subjects-detail-panel:active,
+            .date-topics-capsule:active,
+            .myspace-card:active,
+            .macro-card:active {
+                transform: scale(0.995) !important;
+                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            }
+        }
+
+        /* Outer Wrapper Container to facilitate page scaling during popups */
+        .page-wrapper {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            width: 100%;
+            transform: scale(1);
+            transform-origin: center center;
+            box-sizing: border-box;
+            transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-radius 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        background-color 0.4s ease, 
+                        color 0.4s ease;
+        }
+
+        body.popup-active {
+            background-color: #000000 !important;
+            overflow: hidden !important;
+        }
+
+        body.popup-active .page-wrapper {
+            transform: scale(0.96) !important;
+            border-radius: 24px !important;
+            overflow: hidden !important;
         }
 
         /* -------------------------------------------------------------
