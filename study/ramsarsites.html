@@ -335,7 +335,7 @@
 
         h2.section-title { font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--text-main); font-size: 20px; font-weight: 400; letter-spacing: -0.3px; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; transition: color 0.8s var(--ease-premium); }
         
-        /* PANELS: FLAT MINIMALIST (NO SHADOWS) */
+        /* PANELS: FLAT MINIMALIST (NO SHADOWS, NO BORDER HIGHLIGHT ON TOUCH) */
         .card { 
             background-color: var(--panel-bg); 
             border: 1px solid var(--panel-border); 
@@ -343,11 +343,27 @@
             padding: 32px 28px; 
             margin-bottom: 35px; 
             box-shadow: none !important; 
+            -webkit-touch-callout: none !important;
             transition: border-color 0.4s var(--ease-premium), background-color 0.4s var(--ease-premium); 
         }
         body:not(.light-mode) .card { box-shadow: none !important; }
-        .card:hover { border-color: rgba(255, 255, 255, 0.16); box-shadow: none !important; }
-        body.light-mode .card:hover { border-color: rgba(0, 0, 0, 0.14); box-shadow: none !important; }
+        
+        @media (hover: hover) and (pointer: fine) {
+            .card:hover { border-color: rgba(255, 255, 255, 0.16); box-shadow: none !important; }
+            body.light-mode .card:hover { border-color: rgba(0, 0, 0, 0.14); box-shadow: none !important; }
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            .card,
+            .card:hover,
+            .card:active,
+            .card:focus,
+            .card:focus-within {
+                border-color: var(--panel-border) !important;
+                transform: none !important;
+                box-shadow: none !important;
+            }
+        }
 
         /* TABLES: NO VERTICAL/HORIZONTAL BORDER LINES - NATURAL SCROLL */
         .table-wrap { 
@@ -358,6 +374,7 @@
             border-radius: 0;
             -webkit-overflow-scrolling: touch; 
             scrollbar-width: thin;
+            -webkit-touch-callout: none !important;
         }
         table { 
             border-collapse: collapse; 
@@ -365,6 +382,7 @@
             min-width: 680px; 
             background: transparent; 
             border: none !important; 
+            -webkit-touch-callout: none !important;
         }
         .table-wrap::-webkit-scrollbar { height: 6px; }
         .table-wrap::-webkit-scrollbar-track { background: transparent; }
@@ -384,6 +402,7 @@
             z-index: 2; 
             white-space: nowrap; 
             user-select: none; 
+            -webkit-user-select: none;
             padding: 16px 18px !important; 
             text-align: left; 
             border: none !important; 
@@ -402,10 +421,15 @@
             color: var(--text-main);
             font-weight: 400 !important;
             background: transparent !important;
+            -webkit-touch-callout: none !important;
         }
         table tr:last-child td { border-bottom: none !important; }
 
-        table th.sortable { cursor: pointer; }
+        table th.sortable { 
+            cursor: pointer !important; 
+            touch-action: manipulation !important;
+            -webkit-tap-highlight-color: transparent !important;
+        }
         table th.sortable:hover { color: var(--text-main) !important; }
         
         /* NO ALTERNATING COLORS & NO ROW HOVER BACKGROUND (CLEAN & MINIMAL) */
@@ -418,7 +442,7 @@
             background-color: transparent !important; 
         }
 
-        /* CLICKABLE SITE NAME - STRAIGHT FORWARD ZOOM (CENTER ORIGIN) */
+        /* CLICKABLE SITE NAME - SUBTLE STRAIGHT FORWARD ZOOM (CENTER ORIGIN) */
         .site-name { 
             cursor: pointer !important; 
             color: var(--text-main) !important; 
@@ -427,12 +451,24 @@
             font-weight: 400; 
             display: inline-block !important;
             transform-origin: center center !important;
-            touch-action: manipulation;
+            touch-action: manipulation !important;
+            -webkit-touch-callout: none !important;
+            -webkit-tap-highlight-color: transparent !important;
             transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s var(--ease-premium); 
         }
-        .site-name:hover { 
-            transform: scale3d(1.06, 1.06, 1) !important; 
-            opacity: 0.95;
+
+        @media (hover: hover) and (pointer: fine) {
+            .site-name:hover { 
+                transform: scale3d(1.028, 1.028, 1) !important; 
+                opacity: 0.95;
+            }
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            .site-name:hover,
+            .site-name:active { 
+                transform: none !important; 
+            }
         }
 
         /* Non-zooming year label in Table 4 */
@@ -445,6 +481,7 @@
             font-size: 15px !important;
             opacity: 0.8 !important;
             user-select: none;
+            -webkit-user-select: none;
             margin-left: 2px;
         }
 
@@ -1502,30 +1539,55 @@
             }
             const modal = document.getElementById("siteModal");
             if (modal) modal.classList.remove("active");
+            if (document.activeElement && document.activeElement.blur) {
+                document.activeElement.blur();
+            }
             document.body.style.overflow = "";
         }
         window.closeSite = closeSite;
 
         function onModalBackdropClick(event) {
             // Guard against premature ghost-click from opening tap
-            if (Date.now() - modalOpenTimestamp < 350) return;
+            if (Date.now() - modalOpenTimestamp < 250) return;
             if (event.target === document.getElementById("siteModal")) {
                 closeSite(event);
             }
         }
         window.onModalBackdropClick = onModalBackdropClick;
 
-        // Cell-level delegation so tapping anywhere in a site-name table cell opens the modal
+        // Reliable touch & click delegation across iPad and laptop
         document.addEventListener('click', function(e) {
             const siteSpan = e.target.closest('.site-name');
-            if (siteSpan) return; // Handled directly by span onclick
+            if (siteSpan) {
+                const attr = siteSpan.getAttribute('onclick');
+                if (attr) {
+                    const match = attr.match(/openSite\(['"]([^'"]+)['"]\)/);
+                    if (match && match[1]) {
+                        openSite(match[1], e);
+                    }
+                }
+                return;
+            }
             const td = e.target.closest('td');
             if (td) {
-                const innerSite = td.querySelector('.site-name');
-                if (innerSite && td.querySelectorAll('.site-name').length === 1) {
-                    innerSite.click();
+                const innerSites = td.querySelectorAll('.site-name');
+                if (innerSites.length === 1) {
+                    const attr = innerSites[0].getAttribute('onclick');
+                    if (attr) {
+                        const match = attr.match(/openSite\(['"]([^'"]+)['"]\)/);
+                        if (match && match[1]) {
+                            openSite(match[1], e);
+                        }
+                    }
                 }
             }
+        });
+
+        // Bind Year sort header explicitly for touch reliability
+        document.querySelectorAll('th.sortable').forEach(th => {
+            th.addEventListener('click', function(e) {
+                sortYears(e);
+            });
         });
         
         // --- Universal High-End Text Node Multi-Match Highlight, Scroll & Self-Destruct Engine ---
