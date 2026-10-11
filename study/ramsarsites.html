@@ -57,7 +57,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600&display=swap" rel="stylesheet">
       
     <style>
         /* Modern Theme Token System */
@@ -397,7 +397,7 @@
             text-align: left; 
             border: none !important; 
             border-bottom: 1px solid var(--row-divider) !important; 
-            font-size: 14.5px !important; 
+            font-size: 17px !important; 
             line-height: 1.6 !important; 
             color: var(--text-main);
             font-weight: 400 !important;
@@ -408,30 +408,44 @@
         table th.sortable { cursor: pointer; }
         table th.sortable:hover { color: var(--text-main) !important; }
         
-        /* NO ALTERNATING COLORS - MATCH PANEL COLOR */
+        /* NO ALTERNATING COLORS & NO ROW HOVER BACKGROUND (CLEAN & MINIMAL) */
         table tbody tr,
         table tbody tr:nth-child(even),
         table tbody tr:nth-child(odd) { 
             background-color: transparent !important; 
-            transition: background-color 0.2s var(--ease-premium); 
         }
-        table tbody tr:hover { background-color: var(--row-hover) !important; }
+        table tbody tr:hover { 
+            background-color: transparent !important; 
+        }
 
-        /* CLICKABLE SITE NAME - FORWARD ZOOM (IMAGE 1) */
+        /* CLICKABLE SITE NAME - STRAIGHT FORWARD ZOOM (CENTER ORIGIN) */
         .site-name { 
             cursor: pointer !important; 
             color: var(--text-main) !important; 
             text-decoration: none !important; 
             border-bottom: none !important; 
             font-weight: 400; 
-            display: inline-block;
-            transform-origin: left center;
+            display: inline-block !important;
+            transform-origin: center center !important;
             touch-action: manipulation;
             transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s var(--ease-premium); 
         }
         .site-name:hover { 
             transform: scale3d(1.06, 1.06, 1) !important; 
             opacity: 0.95;
+        }
+
+        /* Non-zooming year label in Table 4 */
+        .site-year {
+            display: inline-block !important;
+            color: var(--text-muted) !important;
+            transform: none !important;
+            transform-origin: center center !important;
+            pointer-events: none !important;
+            font-size: 15px !important;
+            opacity: 0.8 !important;
+            user-select: none;
+            margin-left: 2px;
         }
 
         /* -------------------------------------------------------------
@@ -994,7 +1008,7 @@
         </div>
 
         <div class="card">
-            <h2 class="section-title"> States with Highest number of Ramsar Sites in India (2026)</h2>
+            <h2 class="section-title"> States with Highest number of Ramsar Sites in India <span class="site-year">(2026)</span></h2>
             <div class="table-wrap">
                 <table>
                     <thead>
@@ -1011,26 +1025,26 @@
                             <td>Tamil Nadu</td>
                             <td>20</td>
                             <td>
-                                <span class="site-name" onclick="openSite('s80')">Kazhuveli Bird Sanctuary</span> (2024)<br>
-                                <span class="site-name" onclick="openSite('s81')">Nanjarayan Bird Sanctuary</span> (2024)<br>
-                                <span class="site-name" onclick="openSite('s78')">Karaivetti Bird Sanctuary</span> (2024)<br>
-                                <span class="site-name" onclick="openSite('s79')">Longwood Shola Reserve Forest</span> (2024)<br>
-                                <span class="site-name" onclick="openSite('s82')">Sakkarakottai Bird Sanctuary</span> (2024)<br>
-                                <span class="site-name" onclick="openSite('s83')">Therthangal Bird Sanctuary</span> (2024)<br>
-                                <span class="site-name" onclick="openSite('s66')">Chitrangudi Bird Sanctuary</span> (2021)<br>
-                                <span class="site-name" onclick="openSite('s70')">Gulf of Mannar Marine Biosphere Reserve</span> (2022)<br>
-                                <span class="site-name" onclick="openSite('s77')">Kanjirankulam Bird Sanctuary</span> (2022)<br>
-                                <span class="site-name" onclick="openSite('s67')">Karikili Bird Sanctuary</span> (2022)<br>
-                                <span class="site-name" onclick="openSite('s65')">Koonthankulam Bird Sanctuary</span> (2021)<br>
-                                <span class="site-name" onclick="openSite('s69')">Pallikaranai Marsh Reserve Forest</span> (2022)<br>
-                                <span class="site-name" onclick="openSite('s68')">Pichavaram Mangrove</span> (2022)<br>
-                                <span class="site-name" onclick="openSite('s64')">Point Calimere Wildlife &amp; Bird Sanctuary</span> (2002)<br>
-                                <span class="site-name" onclick="openSite('s75')">Suchindram Theroor Wetland Complex</span> (2022)<br>
-                                <span class="site-name" onclick="openSite('s73')">Udayamarthandapuram Bird Sanctuary</span> (2022)<br>
-                                <span class="site-name" onclick="openSite('s76')">Vaduvur Bird Sanctuary</span> (2022)<br>
-                                <span class="site-name" onclick="openSite('s74')">Vedanthangal Bird Sanctuary</span> (2022)<br>
-                                <span class="site-name" onclick="openSite('s72')">Vellode Bird Sanctuary</span> (2022)<br>
-                                <span class="site-name" onclick="openSite('s71')">Vembannur Wetland Complex</span> (2022)
+                                <span class="site-name" onclick="openSite('s80')">Kazhuveli Bird Sanctuary</span> <span class="site-year">(2024)</span><br>
+                                <span class="site-name" onclick="openSite('s81')">Nanjarayan Bird Sanctuary</span> <span class="site-year">(2024)</span><br>
+                                <span class="site-name" onclick="openSite('s78')">Karaivetti Bird Sanctuary</span> <span class="site-year">(2024)</span><br>
+                                <span class="site-name" onclick="openSite('s79')">Longwood Shola Reserve Forest</span> <span class="site-year">(2024)</span><br>
+                                <span class="site-name" onclick="openSite('s82')">Sakkarakottai Bird Sanctuary</span> <span class="site-year">(2024)</span><br>
+                                <span class="site-name" onclick="openSite('s83')">Therthangal Bird Sanctuary</span> <span class="site-year">(2024)</span><br>
+                                <span class="site-name" onclick="openSite('s66')">Chitrangudi Bird Sanctuary</span> <span class="site-year">(2021)</span><br>
+                                <span class="site-name" onclick="openSite('s70')">Gulf of Mannar Marine Biosphere Reserve</span> <span class="site-year">(2022)</span><br>
+                                <span class="site-name" onclick="openSite('s77')">Kanjirankulam Bird Sanctuary</span> <span class="site-year">(2022)</span><br>
+                                <span class="site-name" onclick="openSite('s67')">Karikili Bird Sanctuary</span> <span class="site-year">(2022)</span><br>
+                                <span class="site-name" onclick="openSite('s65')">Koonthankulam Bird Sanctuary</span> <span class="site-year">(2021)</span><br>
+                                <span class="site-name" onclick="openSite('s69')">Pallikaranai Marsh Reserve Forest</span> <span class="site-year">(2022)</span><br>
+                                <span class="site-name" onclick="openSite('s68')">Pichavaram Mangrove</span> <span class="site-year">(2022)</span><br>
+                                <span class="site-name" onclick="openSite('s64')">Point Calimere Wildlife &amp; Bird Sanctuary</span> <span class="site-year">(2002)</span><br>
+                                <span class="site-name" onclick="openSite('s75')">Suchindram Theroor Wetland Complex</span> <span class="site-year">(2022)</span><br>
+                                <span class="site-name" onclick="openSite('s73')">Udayamarthandapuram Bird Sanctuary</span> <span class="site-year">(2022)</span><br>
+                                <span class="site-name" onclick="openSite('s76')">Vaduvur Bird Sanctuary</span> <span class="site-year">(2022)</span><br>
+                                <span class="site-name" onclick="openSite('s74')">Vedanthangal Bird Sanctuary</span> <span class="site-year">(2022)</span><br>
+                                <span class="site-name" onclick="openSite('s72')">Vellode Bird Sanctuary</span> <span class="site-year">(2022)</span><br>
+                                <span class="site-name" onclick="openSite('s71')">Vembannur Wetland Complex</span> <span class="site-year">(2022)</span>
                             </td>
                         </tr>
                         <tr>
@@ -1038,17 +1052,17 @@
                             <td>Uttar Pradesh</td>
                             <td>11</td>
                             <td>
-                                <span class="site-name" onclick="openSite('s85')">Upper Ganga River</span> (2005)<br>
-                                <span class="site-name" onclick="openSite('s86')">Nawabganj Bird Sanctuary</span> (2019)<br>
-                                <span class="site-name" onclick="openSite('s88')">Saman Bird Sanctuary</span> (2019)<br>
-                                <span class="site-name" onclick="openSite('s89')">Samaspur Bird Sanctuary</span> (2019)<br>
-                                <span class="site-name" onclick="openSite('s90')">Sandi Bird Sanctuary</span> (2019)<br>
-                                <span class="site-name" onclick="openSite('s91')">Sarsai Nawar Jheel</span> (2019)<br>
-                                <span class="site-name" onclick="openSite('s87')">Parvati Arga Bird Sanctuary</span> (2019)<br>
-                                <span class="site-name" onclick="openSite('s92')">Sur Sarovar</span> (2020)<br>
-                                <span class="site-name" onclick="openSite('s93')">Haiderpur Wetland</span> (2021)<br>
-                                <span class="site-name" onclick="openSite('s94')">Bakhira Wildlife Sanctuary</span> (2021)<br>
-                                <span class="site-name" onclick="openSite('s89')">Samaspur Bird Sanctuary</span> (2019)
+                                <span class="site-name" onclick="openSite('s85')">Upper Ganga River</span> <span class="site-year">(2005)</span><br>
+                                <span class="site-name" onclick="openSite('s86')">Nawabganj Bird Sanctuary</span> <span class="site-year">(2019)</span><br>
+                                <span class="site-name" onclick="openSite('s88')">Saman Bird Sanctuary</span> <span class="site-year">(2019)</span><br>
+                                <span class="site-name" onclick="openSite('s89')">Samaspur Bird Sanctuary</span> <span class="site-year">(2019)</span><br>
+                                <span class="site-name" onclick="openSite('s90')">Sandi Bird Sanctuary</span> <span class="site-year">(2019)</span><br>
+                                <span class="site-name" onclick="openSite('s91')">Sarsai Nawar Jheel</span> <span class="site-year">(2019)</span><br>
+                                <span class="site-name" onclick="openSite('s87')">Parvati Arga Bird Sanctuary</span> <span class="site-year">(2019)</span><br>
+                                <span class="site-name" onclick="openSite('s92')">Sur Sarovar</span> <span class="site-year">(2020)</span><br>
+                                <span class="site-name" onclick="openSite('s93')">Haiderpur Wetland</span> <span class="site-year">(2021)</span><br>
+                                <span class="site-name" onclick="openSite('s94')">Bakhira Wildlife Sanctuary</span> <span class="site-year">(2021)</span><br>
+                                <span class="site-name" onclick="openSite('s89')">Samaspur Bird Sanctuary</span> <span class="site-year">(2019)</span>
                             </td>
                         </tr>
                         <tr>
@@ -1056,12 +1070,12 @@
                             <td>Bihar</td>
                             <td>6</td>
                             <td>
-                                <span class="site-name" onclick="openSite('s3')">Kanwar Lake / Kabar Tal</span> (2020)<br>
-                                <span class="site-name" onclick="openSite('s4')">Nagi Bird Sanctuary</span> (2023)<br>
-                                <span class="site-name" onclick="openSite('s5')">Nakti Bird Sanctuary</span> (2023)<br>
-                                <span class="site-name" onclick="openSite('s8')">Gogabeel Lake</span> (2025)<br>
-                                <span class="site-name" onclick="openSite('s7')">Udaipur Lake</span> (2025)<br>
-                                <span class="site-name" onclick="openSite('s3')">Kabar Tal Wetland</span> (2020)
+                                <span class="site-name" onclick="openSite('s3')">Kanwar Lake / Kabar Tal</span> <span class="site-year">(2020)</span><br>
+                                <span class="site-name" onclick="openSite('s4')">Nagi Bird Sanctuary</span> <span class="site-year">(2023)</span><br>
+                                <span class="site-name" onclick="openSite('s5')">Nakti Bird Sanctuary</span> <span class="site-year">(2023)</span><br>
+                                <span class="site-name" onclick="openSite('s8')">Gogabeel Lake</span> <span class="site-year">(2025)</span><br>
+                                <span class="site-name" onclick="openSite('s7')">Udaipur Lake</span> <span class="site-year">(2025)</span><br>
+                                <span class="site-name" onclick="openSite('s3')">Kabar Tal Wetland</span> <span class="site-year">(2020)</span>
                             </td>
                         </tr>
                         <tr>
@@ -1069,12 +1083,12 @@
                             <td>Odisha</td>
                             <td>6</td>
                             <td>
-                                <span class="site-name" onclick="openSite('s46')">Chilika Lake</span> (1981)<br>
-                                <span class="site-name" onclick="openSite('s47')">Bhitarkanika Mangroves</span> (2002)<br>
-                                <span class="site-name" onclick="openSite('s48')">Satkosia Gorge</span> (2021)<br>
-                                <span class="site-name" onclick="openSite('s50')">Hirakud Reservoir</span> (2021)<br>
-                                <span class="site-name" onclick="openSite('s51')">Ansupa Lake</span> (2021)<br>
-                                <span class="site-name" onclick="openSite('s49')">Tampara Lake</span> (2021)
+                                <span class="site-name" onclick="openSite('s46')">Chilika Lake</span> <span class="site-year">(1981)</span><br>
+                                <span class="site-name" onclick="openSite('s47')">Bhitarkanika Mangroves</span> <span class="site-year">(2002)</span><br>
+                                <span class="site-name" onclick="openSite('s48')">Satkosia Gorge</span> <span class="site-year">(2021)</span><br>
+                                <span class="site-name" onclick="openSite('s50')">Hirakud Reservoir</span> <span class="site-year">(2021)</span><br>
+                                <span class="site-name" onclick="openSite('s51')">Ansupa Lake</span> <span class="site-year">(2021)</span><br>
+                                <span class="site-name" onclick="openSite('s49')">Tampara Lake</span> <span class="site-year">(2021)</span>
                             </td>
                         </tr>
                         <tr>
@@ -1082,12 +1096,12 @@
                             <td>Punjab</td>
                             <td>6</td>
                             <td>
-                                <span class="site-name" onclick="openSite('s52')">Harike Wetland</span> (1990)<br>
-                                <span class="site-name" onclick="openSite('s53')">Kanjli Wetland</span> (2002)<br>
-                                <span class="site-name" onclick="openSite('s54')">Ropar Wetland</span> (2002)<br>
-                                <span class="site-name" onclick="openSite('s55')">Beas Conservation Reserve</span> (2019)<br>
-                                <span class="site-name" onclick="openSite('s56')">Keshopur-Miani Community Reserve</span> (2019)<br>
-                                <span class="site-name" onclick="openSite('s57')">Nangal Wildlife Sanctuary</span> (2019)
+                                <span class="site-name" onclick="openSite('s52')">Harike Wetland</span> <span class="site-year">(1990)</span><br>
+                                <span class="site-name" onclick="openSite('s53')">Kanjli Wetland</span> <span class="site-year">(2002)</span><br>
+                                <span class="site-name" onclick="openSite('s54')">Ropar Wetland</span> <span class="site-year">(2002)</span><br>
+                                <span class="site-name" onclick="openSite('s55')">Beas Conservation Reserve</span> <span class="site-year">(2019)</span><br>
+                                <span class="site-name" onclick="openSite('s56')">Keshopur-Miani Community Reserve</span> <span class="site-year">(2019)</span><br>
+                                <span class="site-name" onclick="openSite('s57')">Nangal Wildlife Sanctuary</span> <span class="site-year">(2019)</span>
                             </td>
                         </tr>
                         <tr>
@@ -1095,11 +1109,11 @@
                             <td>Gujarat</td>
                             <td>5</td>
                             <td>
-                                <span class="site-name" onclick="openSite('s10')">Nalsarovar Lake</span> (2012)<br>
-                                <span class="site-name" onclick="openSite('s12')">Thol Lake Wildlife Sanctuary</span> (2021)<br>
-                                <span class="site-name" onclick="openSite('s11')">Wadhvana Wetland</span> (2021)<br>
-                                <span class="site-name" onclick="openSite('s13')">Khijadiya Bird Sanctuary</span> (2021)<br>
-                                <span class="site-name" onclick="openSite('s14')">Chhari-Dhand Wetland</span> (2025)
+                                <span class="site-name" onclick="openSite('s10')">Nalsarovar Lake</span> <span class="site-year">(2012)</span><br>
+                                <span class="site-name" onclick="openSite('s12')">Thol Lake Wildlife Sanctuary</span> <span class="site-year">(2021)</span><br>
+                                <span class="site-name" onclick="openSite('s11')">Wadhvana Wetland</span> <span class="site-year">(2021)</span><br>
+                                <span class="site-name" onclick="openSite('s13')">Khijadiya Bird Sanctuary</span> <span class="site-year">(2021)</span><br>
+                                <span class="site-name" onclick="openSite('s14')">Chhari-Dhand Wetland</span> <span class="site-year">(2025)</span>
                             </td>
                         </tr>
                         <tr>
@@ -1107,11 +1121,11 @@
                             <td>Rajasthan</td>
                             <td>5</td>
                             <td>
-                                <span class="site-name" onclick="openSite('s58')">Keoladeo National Park</span> (1981)<br>
-                                <span class="site-name" onclick="openSite('s59')">Sambhar Lake</span> (1990)<br>
-                                <span class="site-name" onclick="openSite('s60')">Menar Wetland Complex</span> (2025)<br>
-                                <span class="site-name" onclick="openSite('s61')">Khichan Wetland</span> (2025)<br>
-                                <span class="site-name" onclick="openSite('s62')">Siliserh Lake</span> (2025)
+                                <span class="site-name" onclick="openSite('s58')">Keoladeo National Park</span> <span class="site-year">(1981)</span><br>
+                                <span class="site-name" onclick="openSite('s59')">Sambhar Lake</span> <span class="site-year">(1990)</span><br>
+                                <span class="site-name" onclick="openSite('s60')">Menar Wetland Complex</span> <span class="site-year">(2025)</span><br>
+                                <span class="site-name" onclick="openSite('s61')">Khichan Wetland</span> <span class="site-year">(2025)</span><br>
+                                <span class="site-name" onclick="openSite('s62')">Siliserh Lake</span> <span class="site-year">(2025)</span>
                             </td>
                         </tr>
                         <tr>
@@ -1119,11 +1133,11 @@
                             <td>Madhya Pradesh</td>
                             <td>5</td>
                             <td>
-                                <span class="site-name" onclick="openSite('s36')">Bhoj Wetlands</span> (2002)<br>
-                                <span class="site-name" onclick="openSite('s37')">Sirpur Wetland</span> (2022)<br>
-                                <span class="site-name" onclick="openSite('s38')">Sakhya Sagar</span> (2022)<br>
-                                <span class="site-name" onclick="openSite('s39')">Yashwant Sagar</span> (2022)<br>
-                                <span class="site-name" onclick="openSite('s40')">Tawa Reservoir</span> (2024)
+                                <span class="site-name" onclick="openSite('s36')">Bhoj Wetlands</span> <span class="site-year">(2002)</span><br>
+                                <span class="site-name" onclick="openSite('s37')">Sirpur Wetland</span> <span class="site-year">(2022)</span><br>
+                                <span class="site-name" onclick="openSite('s38')">Sakhya Sagar</span> <span class="site-year">(2022)</span><br>
+                                <span class="site-name" onclick="openSite('s39')">Yashwant Sagar</span> <span class="site-year">(2022)</span><br>
+                                <span class="site-name" onclick="openSite('s40')">Tawa Reservoir</span> <span class="site-year">(2024)</span>
                             </td>
                         </tr>
                         <tr>
@@ -1131,11 +1145,11 @@
                             <td>Jammu &amp; Kashmir</td>
                             <td>5</td>
                             <td>
-                                <span class="site-name" onclick="openSite('s21')">Wular Lake</span> (1990)<br>
-                                <span class="site-name" onclick="openSite('s23')">Hokersar Wetland</span> (2005)<br>
-                                <span class="site-name" onclick="openSite('s22')">Surinsar–Mansar Lakes</span> (2005)<br>
-                                <span class="site-name" onclick="openSite('s35')">Tso Moriri</span> (2002)<br>
-                                <span class="site-name" onclick="openSite('s24')">Hygam Wetland</span> (2022)
+                                <span class="site-name" onclick="openSite('s21')">Wular Lake</span> <span class="site-year">(1990)</span><br>
+                                <span class="site-name" onclick="openSite('s23')">Hokersar Wetland</span> <span class="site-year">(2005)</span><br>
+                                <span class="site-name" onclick="openSite('s22')">Surinsar–Mansar Lakes</span> <span class="site-year">(2005)</span><br>
+                                <span class="site-name" onclick="openSite('s35')">Tso Moriri</span> <span class="site-year">(2002)</span><br>
+                                <span class="site-name" onclick="openSite('s24')">Hygam Wetland</span> <span class="site-year">(2022)</span>
                             </td>
                         </tr>
                         <tr>
@@ -1143,10 +1157,10 @@
                             <td>Karnataka</td>
                             <td>4</td>
                             <td>
-                                <span class="site-name" onclick="openSite('s27')">Ranganathittu Bird Sanctuary</span> (2022)<br>
-                                <span class="site-name" onclick="openSite('s30')">Magadi Kere Conservation Reserve</span> (2023)<br>
-                                <span class="site-name" onclick="openSite('s29')">Aghanashini Estuary</span> (2023)<br>
-                                <span class="site-name" onclick="openSite('s28')">Ankasamudra Bird Conservation Reserve</span> (2023)
+                                <span class="site-name" onclick="openSite('s27')">Ranganathittu Bird Sanctuary</span> <span class="site-year">(2022)</span><br>
+                                <span class="site-name" onclick="openSite('s30')">Magadi Kere Conservation Reserve</span> <span class="site-year">(2023)</span><br>
+                                <span class="site-name" onclick="openSite('s29')">Aghanashini Estuary</span> <span class="site-year">(2023)</span><br>
+                                <span class="site-name" onclick="openSite('s28')">Ankasamudra Bird Conservation Reserve</span> <span class="site-year">(2023)</span>
                             </td>
                         </tr>
                     </tbody>

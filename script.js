@@ -36,16 +36,73 @@
             --shadow-lift: none !important;
         }
 
-        html, body, button, input, textarea, select, h1, h2, h3, h4, h5, h6, p, span, a, div, li, th, td, strong, b, label {
+        html, body, button, input, textarea, select, span, a, div, li, td, p, label {
             font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif !important;
-            font-weight: 400 !important;
         }
 
-        html, body {
+        body {
+            font-size: 17px !important;
             background-color: var(--bg-color) !important;
             color: var(--text-main) !important;
             transition: background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
                         color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Headings & Brand: little bold (500) */
+        h1, h2, h3, h4, h5, h6, 
+        .panel-title, 
+        .section-title, 
+        .wide-panel-title, 
+        .subject-title, 
+        .page-title, 
+        .status-title, 
+        .section-heading, 
+        .article-title,
+        .subject-category-label {
+            font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-weight: 500 !important;
+        }
+
+        strong, b {
+            font-weight: 500 !important;
+        }
+
+        .brand-pill,
+        .brand-letter {
+            font-weight: 500 !important;
+        }
+
+        /* General text size 17px across site */
+        p, .prose-text, .prose-text p,
+        .topics-column-grid li a,
+        .topics-vertical-stack a,
+        .subject-topic-link .topic-title,
+        .note-p, .note-list li, .note-sub-row,
+        .info-callout-row,
+        table td {
+            font-size: 17px !important;
+        }
+
+        /* Homepage panel content font size 16px */
+        .document-list a {
+            font-size: 16px !important;
+        }
+
+        /* Footer font size: do not increase */
+        footer, .footer-links-row a, .footer-links-row a .nav-text {
+            font-size: 13.5px !important;
+            font-weight: 400 !important;
+        }
+        .copyright-tag {
+            font-size: 12px !important;
+            font-weight: 400 !important;
+        }
+
+        /* NO BREADCRUMBS ON SITE */
+        .breadcrumb-nav,
+        .breadcrumbs,
+        #dynamicBreadcrumbNav {
+            display: none !important;
         }
 
         /* -------------------------------------------------------------
@@ -83,7 +140,7 @@
             border: none !important;
             text-decoration: none !important;
             font-size: 42px !important;
-            font-weight: 400 !important;
+            font-weight: 500 !important;
             letter-spacing: -1.2px !important;
             line-height: 1 !important;
             box-shadow: none !important;
@@ -101,6 +158,7 @@
 
         .brand-letter {
             color: var(--text-main) !important;
+            font-weight: 500 !important;
             line-height: 1 !important;
             transition: color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -147,40 +205,109 @@
         }
 
         /* -------------------------------------------------------------
-           UNIVERSAL MASTER ENTRANCE ANIMATION (APPLIES TO ALL PAGES)
+           PAGE HEADER ROW & UNIFIED BACK BUTTON
+           ------------------------------------------------------------- */
+        .page-header-row,
+        .subjects-header-row {
+            display: flex !important;
+            align-items: center !important;
+            gap: 14px !important;
+            width: 100% !important;
+            max-width: 1200px !important;
+            margin: 0 auto 24px auto !important;
+        }
+
+        .back-icon-btn {
+            background: transparent !important;
+            border: none !important;
+            outline: none !important;
+            width: 38px !important;
+            height: 38px !important;
+            border-radius: 50% !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            color: var(--text-main) !important;
+            padding: 0 !important;
+            flex-shrink: 0 !important;
+            touch-action: manipulation;
+            transition: background-color 0.2s cubic-bezier(0.25, 1, 0.5, 1), transform 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+
+        .back-icon-btn:hover {
+            background-color: rgba(255, 255, 255, 0.08) !important;
+            transform: translate3d(-2px, 0, 0) !important;
+        }
+
+        body.light-mode .back-icon-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .back-icon-btn svg {
+            width: 22px !important;
+            height: 22px !important;
+            stroke: currentColor !important;
+            stroke-width: 2.4 !important;
+            stroke-linecap: round !important;
+            stroke-linejoin: round !important;
+            fill: none !important;
+        }
+
+        .page-title {
+            font-size: 28px !important;
+            font-weight: 500 !important;
+            letter-spacing: -0.6px !important;
+            color: var(--text-main) !important;
+            line-height: 1.2 !important;
+        }
+
+        /* -------------------------------------------------------------
+           RESTORED MASTER ENTRANCE ANIMATION (PRE-ARCHITECTURE COMMIT)
            ------------------------------------------------------------- */
         @keyframes masterEntrance {
-            0% {
+            from {
                 opacity: 0;
-                transform: translate3d(0, 10px, 0);
+                transform: translate3d(0, 18px, 0);
             }
-            100% {
+            to {
                 opacity: 1;
                 transform: translate3d(0, 0, 0);
             }
         }
 
-        .top-nav-bar {
-            animation: masterEntrance 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-
-        .page-header-row,
-        .subjects-header-row {
-            animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.02s both;
-        }
-
+        .top-nav-bar, 
         main, 
+        footer,
+        .page-header-row,
+        .subjects-header-row,
         .workspace-animate-frame,
-        #subjectsListContainer,
-        .matrix-canvas,
         .contents-container,
         .date-topics-capsule,
-        .topics-feed {
-            animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both;
+        .topics-feed,
+        #subjectsListContainer {
+            position: relative;
+            z-index: 1;
+            opacity: 1;
+            will-change: transform, opacity;
+            animation: masterEntrance 1s cubic-bezier(0.25, 1, 0.5, 1) backwards !important;
         }
 
-        footer {
-            animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.07s both;
+        .top-nav-bar { 
+            animation-delay: 0.04s !important; 
+        }
+        main, 
+        .page-header-row, 
+        .subjects-header-row, 
+        .workspace-animate-frame, 
+        .contents-container, 
+        .date-topics-capsule, 
+        .topics-feed, 
+        #subjectsListContainer { 
+            animation-delay: 0.14s !important; 
+        }
+        footer { 
+            animation-delay: 0.24s !important; 
         }
 
         /* -------------------------------------------------------------
@@ -217,14 +344,22 @@
             box-shadow: none !important;
         }
 
-        /* Subtle, silent hover borders */
+        /* -------------------------------------------------------------
+           SUBTLE & GENTLE PANEL HOVER SITE-WIDE (HOMEPAGE UNTOUCHED)
+           ------------------------------------------------------------- */
         @media (hover: hover) and (pointer: fine) {
-            .capsule-panel:hover,
-            .subject-accordion-card:hover,
-            .card:hover,
+            .subject-accordion-card:not(.is-open):hover,
             .wide-capsule:hover,
+            .card:hover,
             .date-topics-capsule:hover {
+                transform: translate3d(0, -2px, 0) !important;
                 border-color: var(--panel-border-hover) !important;
+            }
+
+            .subject-accordion-card.is-open,
+            .subject-accordion-card.is-open:hover,
+            .subject-accordion-card:focus-within {
+                transform: none !important;
             }
         }
 
@@ -252,7 +387,7 @@
 
         /* -------------------------------------------------------------
            CLICKABLE WORDS ZOOM TOWARDS US STRAIGHT ACROSS SITE (IMAGE 1)
-           Reliable across laptop cursor hover, tablets, and mobile
+           Straight forward zoom (center-origin), no drift left or right
            ------------------------------------------------------------- */
         .nav-text,
         .site-name,
@@ -269,6 +404,7 @@
         a:not(.brand-pill):not(.back-icon-btn) {
             cursor: pointer !important;
             display: inline-block !important;
+            transform-origin: center center !important;
             backface-visibility: hidden !important;
             -webkit-backface-visibility: hidden !important;
             will-change: transform;
@@ -276,27 +412,7 @@
                         color 0.28s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
-        .footer-links-row a,
-        .footer-links-row .nav-text,
-        .sortable {
-            transform-origin: center center !important;
-        }
-
-        .site-name,
-        .topic-title,
-        .subject-topic-link,
-        .subject-topic-link .topic-title,
-        .topics-column-grid a,
-        .topics-vertical-stack a,
-        .ncert-links a,
-        .document-list a,
-        .matrix-canvas a,
-        a:not(.brand-pill):not(.back-icon-btn) {
-            transform-origin: left center !important;
-        }
-
         /* Forward Zoom Animation on Hover */
-        .footer-links-row a:hover,
         .footer-links-row a:hover .nav-text,
         .matrix-canvas a:hover,
         .matrix-canvas a:hover .nav-text,
@@ -309,7 +425,6 @@
         .ncert-links a:hover,
         .site-name:hover,
         .sortable:hover,
-        .subject-topic-link:hover,
         .subject-topic-link:hover .topic-title,
         a:not(.brand-pill):not(.back-icon-btn):hover {
             transform: scale3d(1.06, 1.06, 1) !important;
@@ -381,7 +496,7 @@
 
         const link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href = 'https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400&display=swap';
+        link.href = 'https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600&display=swap';
         document.head.appendChild(link);
     }
 })();

@@ -46,7 +46,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         /* Modern Theme Token System */
         :root {
@@ -384,7 +384,7 @@
         }
 
         .prose-text {
-            font-size: 16px;
+            font-size: 17px;
             line-height: 1.8;
             color: var(--text-main);
             opacity: 0.85;
@@ -477,8 +477,14 @@
     </nav>
 
     <main>
+        <div class="page-header-row">
+            <button type="button" class="back-icon-btn" onclick="if(window.history.length>1){window.history.back();}else{window.location.href='/index.html';}" aria-label="Go back">
+                <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <h1 class="page-title">Privacy Policy</h1>
+        </div>
+
         <div class="capsule-panel">
-            <h1 class="panel-title">Privacy Policy</h1>
             <div class="prose-text">
                 <p>Your privacy is important to me. This Privacy Policy document outlines the types of personal information that is received and collected by this website and how it is used.</p>
                 <p>This website uses Google Analytics to track visitor interactions and optimize educational content layout engines. This service tracks information such as your IP address, browser type, and page view timings, but does not identify you personally or collect sensitive personal data.</p>

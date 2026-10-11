@@ -57,7 +57,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -306,26 +306,22 @@
 
         body.light-mode .subject-accordion-card { box-shadow: none !important; }
 
-        /* Mouse Hover Zoom-Up (No Border Change) */
+        /* Subtle, Gentle & Simple Hover Elevation for Closed Cards */
         @media (hover: hover) and (pointer: fine) {
-            .subject-accordion-card:hover {
-                transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
+            .subject-accordion-card:not(.is-expanded):hover {
+                transform: translate3d(0, -2px, 0);
                 box-shadow: none !important;
             }
-            body.light-mode .subject-accordion-card:hover {
+            body.light-mode .subject-accordion-card:not(.is-expanded):hover {
                 box-shadow: none !important;
             }
         }
 
-        /* Touch / Focus Elevation */
-        .subject-accordion-card:active,
+        /* Open/Expanded cards stay completely stationary and stable when interacting */
+        .subject-accordion-card.is-expanded,
+        .subject-accordion-card.is-expanded:hover,
         .subject-accordion-card:focus-within {
-            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
-            box-shadow: none !important;
-        }
-
-        body.light-mode .subject-accordion-card:active,
-        body.light-mode .subject-accordion-card:focus-within {
+            transform: none !important;
             box-shadow: none !important;
         }
 
@@ -342,7 +338,7 @@
 
         .subject-title {
             font-size: 19px;
-            font-weight: 400;
+            font-weight: 500;
             letter-spacing: -0.3px;
             color: var(--text-main);
             line-height: 1.2;
@@ -475,11 +471,11 @@
         }
 
         .topic-title {
-            font-size: 14.5px;
+            font-size: 17px;
             font-weight: 400;
             line-height: 1.4;
             display: inline-block;
-            transform-origin: left center;
+            transform-origin: center center !important;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             will-change: transform;

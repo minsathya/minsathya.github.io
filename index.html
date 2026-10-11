@@ -46,7 +46,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -108,39 +108,30 @@
         }
 
         /* -------------------------------------------------------------
-           60FPS MASTER ENTRANCE ANIMATION
+           RESTORED MASTER ENTRANCE ANIMATION (PRE-ARCHITECTURE)
            ------------------------------------------------------------- */
         @keyframes masterEntrance {
-            0% {
+            from {
                 opacity: 0;
-                transform: translate3d(0, 10px, 0);
+                transform: translate3d(0, 18px, 0);
             }
-            100% {
+            to {
                 opacity: 1;
                 transform: translate3d(0, 0, 0);
             }
         }
 
-        .top-nav-bar {
+        .top-nav-bar, main, footer {
             position: relative;
             z-index: 1;
             opacity: 1;
-            animation: masterEntrance 0.45s var(--ease-premium) both;
+            will-change: transform, opacity;
+            animation: masterEntrance 1s var(--ease-smooth) backwards;
         }
 
-        main {
-            position: relative;
-            z-index: 1;
-            opacity: 1;
-            animation: masterEntrance 0.5s var(--ease-premium) 0.04s both;
-        }
-
-        footer {
-            position: relative;
-            z-index: 1;
-            opacity: 1;
-            animation: masterEntrance 0.5s var(--ease-premium) 0.08s both;
-        }
+        .top-nav-bar { animation-delay: 0.04s; }
+        main { animation-delay: 0.14s; }
+        footer { animation-delay: 0.24s; }
 
         /* -------------------------------------------------------------
            TOP NAVIGATION: 's' BRANDMARK WITH TWINKLING STAR
@@ -298,7 +289,7 @@
 
         .panel-title {
             font-size: 20px;
-            font-weight: 400;
+            font-weight: 500;
             letter-spacing: -0.3px;
             color: var(--text-main);
             margin-bottom: 24px;
@@ -327,7 +318,7 @@
             color: var(--text-main);
             opacity: 0.85;
             text-decoration: none !important;
-            font-size: 14.5px;
+            font-size: 16px;
             font-weight: 400;
             backface-visibility: hidden;
             transition: color 0.3s var(--ease-smooth), opacity 0.3s var(--ease-smooth);

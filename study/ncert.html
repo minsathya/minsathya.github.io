@@ -56,7 +56,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
@@ -200,62 +200,44 @@
         .breadcrumb-current { color: var(--text-main); opacity: 0.8; }
 
         .contents-container { display: flex; flex-direction: column; gap: 32px; margin-bottom: 80px; width: 100%; }
-        .page-main-heading { font-size: 24px; font-weight: 600; letter-spacing: -0.5px; color: var(--text-main); margin-bottom: 12px; padding-left: 8px; transition: color 0.8s var(--ease-smooth); }
+        .page-main-heading { font-size: 24px; font-weight: 500; letter-spacing: -0.5px; color: var(--text-main); margin-bottom: 12px; padding-left: 8px; transition: color 0.8s var(--ease-smooth); }
 
-        /* WIDE CAPSULE WITH SMOOTH 0.55s GRADUAL TRANSITION */
+        /* WIDE CAPSULE: FLAT MINIMALIST WITH SUBTLE HOVER */
         .wide-capsule {
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 28px;
             padding: 40px 48px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+            box-shadow: none !important;
             display: flex;
             flex-direction: column;
             width: 100%;
             touch-action: manipulation;
-            
-            will-change: transform, box-shadow, border-color;
+            transform: translateZ(0);
+            will-change: transform, border-color;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
-            
-            /* Gentle 0.55s cubic-bezier curve for opening & falling back */
-            transition: transform 0.55s var(--ease-smooth), 
-                        box-shadow 0.55s var(--ease-smooth), 
-                        border-color 0.55s var(--ease-smooth), 
+            transition: transform 0.4s var(--ease-smooth), 
+                        border-color 0.4s var(--ease-smooth), 
                         background-color 0.8s var(--ease-smooth);
         }
 
-        body:not(.light-mode) .wide-capsule { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+        body:not(.light-mode) .wide-capsule { box-shadow: none !important; }
 
-        /* Mouse Hover for Laptop/Desktop */
+        /* Subtle & Gentle Mouse Hover for Laptop/Desktop */
         @media (hover: hover) and (pointer: fine) {
             .wide-capsule:hover { 
-                border-color: #1E1E1E; 
-                transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1);
-                box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+                border-color: var(--panel-border-hover); 
+                transform: translate3d(0, -2px, 0);
+                box-shadow: none !important;
             }
             body.light-mode .wide-capsule:hover { 
-                border-color: #b8b8bc; 
-                box-shadow: 0 16px 32px rgba(0, 0, 0, 0.09);
+                box-shadow: none !important;
             }
         }
 
-        /* Smooth Touch Elevation Lock (iPad / Phone) */
-        .wide-capsule.is-capsule-lifted {
-            transform: translate3d(0, -6px, 0) scale3d(1.015, 1.015, 1) !important;
-            border-color: #1E1E1E !important;
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45) !important;
-        }
-
-        body.light-mode .wide-capsule.is-capsule-lifted {
-            border-color: #b8b8bc !important;
-            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.09) !important;
-        }
-
-        .wide-panel-title { font-size: 20px; font-weight: 400; letter-spacing: -0.3px; color: var(--text-main); margin-bottom: 28px; transition: color 0.8s var(--ease-smooth); }
-        .sub-section-title { font-size: 13px; font-weight: 400; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin: 24px 0 20px 0; transition: color 0.8s var(--ease-smooth); }
+        .wide-panel-title { font-size: 20px; font-weight: 500; letter-spacing: -0.3px; color: var(--text-main); margin-bottom: 28px; transition: color 0.8s var(--ease-smooth); }
+        .sub-section-title { font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin: 24px 0 20px 0; transition: color 0.8s var(--ease-smooth); }
         .wide-capsule :first-child + .sub-section-title { margin-top: 0px; }
 
         /* SINGLE COLUMN ("ONE DOWN ONE") LAYOUT ACROSS ALL DEVICES */
@@ -293,9 +275,9 @@
             color: var(--text-main);
             opacity: 0.85;
             text-decoration: none !important;
-            font-size: 15.5px;
+            font-size: 17px;
             font-weight: 400;
-            transform-origin: left center !important;
+            transform-origin: center center !important;
             backface-visibility: hidden !important;
             -webkit-backface-visibility: hidden !important;
             will-change: transform;

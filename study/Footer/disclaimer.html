@@ -45,7 +45,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         /* Modern Theme Token System */
         :root {
@@ -202,7 +202,7 @@
         body:not(.light-mode) .capsule-panel { box-shadow: none !important; }
         .panel-title { font-size: 24px; font-weight: 400; letter-spacing: -0.4px; color: var(--text-main); margin-bottom: 24px; transition: color 0.8s var(--ease-premium); }
 
-        .prose-text { font-size: 16px; line-height: 1.8; color: var(--text-main); opacity: 0.85; font-weight: 400; transition: color 0.8s var(--ease-premium); }
+        .prose-text { font-size: 17px; line-height: 1.8; color: var(--text-main); opacity: 0.85; font-weight: 400; transition: color 0.8s var(--ease-premium); }
         .prose-text p { margin-bottom: 20px; }
         .prose-text p:last-child { margin-bottom: 0; }
 
@@ -236,8 +236,14 @@
     </nav>
 
     <main>
+        <div class="page-header-row">
+            <button type="button" class="back-icon-btn" onclick="if(window.history.length>1){window.history.back();}else{window.location.href='/index.html';}" aria-label="Go back">
+                <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <h1 class="page-title">Disclaimer</h1>
+        </div>
+
         <div class="capsule-panel">
-            <h1 class="panel-title">Disclaimer</h1>
             <div class="prose-text">
                 <p>The information contained on this website is for general educational and informational purposes only.</p>
                 <p>While I endeavor to keep the information up to date and correct, I make no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability, or availability with respect to the website or the information, products, services, or related graphics contained on the website for any purpose.</p>

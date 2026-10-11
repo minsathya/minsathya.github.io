@@ -46,7 +46,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         /* Modern Theme Token System */
         :root {
@@ -375,7 +375,7 @@
         }
 
         .prose-text {
-            font-size: 16px;
+            font-size: 17px;
             line-height: 1.8;
             color: var(--text-main);
             opacity: 0.85;
@@ -468,8 +468,14 @@
     </nav>
 
     <main>
+        <div class="page-header-row">
+            <button type="button" class="back-icon-btn" onclick="if(window.history.length>1){window.history.back();}else{window.location.href='/index.html';}" aria-label="Go back">
+                <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <h1 class="page-title">Terms &amp; Conditions</h1>
+        </div>
+
         <div class="capsule-panel">
-            <h1 class="panel-title">Terms &amp; Conditions</h1>
             <div class="prose-text">
                 <p>By accessing this website, you agree to be bound by these website Terms and Conditions of use. If you do not agree with any of these terms, you are prohibited from using or accessing this site.</p>
                 <p>The materials contained in this website are protected by applicable copyright and trademark law. Permission is granted to view the materials for personal, non-commercial transitory viewing only.</p>
