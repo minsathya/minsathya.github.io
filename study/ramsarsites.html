@@ -57,7 +57,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700;800&display=swap" rel="stylesheet">
       
     <style>
         /* Modern Theme Token System */
@@ -125,7 +125,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -200,7 +200,7 @@
 
         .search-core-input {
             flex-grow: 1; background: transparent; border: none; outline: none; color: var(--text-main);
-            font-family: 'Poppins', sans-serif; font-size: 16px; padding: 0 16px; width: 100%; min-width: 0; 
+            font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 16px; padding: 0 16px; width: 100%; min-width: 0; 
             will-change: transform, opacity; transform: translate3d(0, 0, 0); backface-visibility: hidden;
             -webkit-backface-visibility: hidden; transition: color 0.8s var(--ease-premium);
         }
@@ -333,7 +333,7 @@
             transition: color 0.8s var(--ease-premium);
         }
 
-        h2.section-title { font-family: 'Poppins', sans-serif; color: var(--text-main); font-size: 20px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; transition: color 0.8s var(--ease-premium); }
+        h2.section-title { font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--text-main); font-size: 20px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; transition: color 0.8s var(--ease-premium); }
         
         /* PANELS: FLAT MINIMALIST (NO SHADOWS) */
         .card { 
@@ -1252,79 +1252,6 @@
             container.innerHTML = htmlMarkup;
         })();
 
-        const toggleBtn = document.getElementById('themeToggleBtn');
-        const bodyElement = document.body;
-        const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
-
-        const masterHeader = document.getElementById('masterHeader');
-        const openSearchBtn = document.getElementById('openSearchBtn');
-        const closeSearchBtn = document.getElementById('closeSearchBtn');
-        const clearSearchBtn = document.getElementById('clearSearchBtn');
-        const searchCoreInput = document.getElementById('searchCoreInput');
-
-        function applyTargetPalette() {
-            const activeSessionOverride = sessionStorage.getItem('dashboard-theme');
-            if (activeSessionOverride) {
-                if (activeSessionOverride === 'light') {
-                    bodyElement.classList.add('light-mode');
-                } else {
-                    bodyElement.classList.remove('light-mode');
-                }
-            } else {
-                if (systemLightQuery.matches) {
-                    bodyElement.classList.add('light-mode');
-                } else {
-                    bodyElement.classList.remove('light-mode');
-                }
-            }
-        }
-
-        applyTargetPalette();
-
-        systemLightQuery.addEventListener('change', (e) => {
-            sessionStorage.removeItem('dashboard-theme');
-            if (e.matches) {
-                bodyElement.classList.add('light-mode');
-            } else {
-                bodyElement.classList.remove('light-mode');
-            }
-        });
-
-        toggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); 
-            const isCurrentlyLight = bodyElement.classList.contains('light-mode');
-            if (isCurrentlyLight) {
-                bodyElement.classList.remove('light-mode');
-                sessionStorage.setItem('dashboard-theme', 'dark');
-            } else {
-                bodyElement.classList.add('light-mode');
-                sessionStorage.setItem('dashboard-theme', 'light');
-            }
-        });
-
-        openSearchBtn.addEventListener('click', () => {
-            masterHeader.classList.remove('state-main');
-            masterHeader.classList.add('state-search');
-            searchCoreInput.focus({ preventScroll: true });
-        });
-
-        clearSearchBtn.addEventListener('click', () => {
-            searchCoreInput.value = "";
-            searchCoreInput.focus();
-        });
-
-        closeSearchBtn.addEventListener('click', () => {
-            masterHeader.classList.remove('state-search');
-            masterHeader.classList.add('state-main');
-        });
-
-        searchCoreInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && searchCoreInput.value.trim() === "") {
-                masterHeader.classList.remove('state-search');
-                masterHeader.classList.add('state-main');
-            }
-        });
-
         const universalTargetLinks = document.querySelectorAll('.breadcrumb-nav a, footer .footer-links-row a, .logo');
 
         function executeLayoutSpans() {
@@ -1346,59 +1273,14 @@
             executeLayoutSpans();
         }
 
-        universalTargetLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const destination = this.getAttribute('href');
-                if (!destination || destination === '#' || destination.startsWith('#') || this.classList.contains('active-footer-page')) return;
-
-                e.preventDefault();
-                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
-
-                universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
-
-                this.classList.add('is-wave-loading');
-
-                setTimeout(() => {
-                    window.location.href = destination;
-                }, 750);
-            });
-        });
-
-        window.addEventListener('pageshow', () => {
-            if (document.activeElement && document.activeElement.blur) {
-                document.activeElement.blur();
-            }
-
-            universalTargetLinks.forEach(l => {
-                l.classList.remove('is-wave-loading');
-                l.classList.remove('kinetic-locked-frame');
-                const span = l.querySelector('.nav-text');
-                if (span) {
-                    span.style.transform = '';
-                    span.style.opacity = '';
-                    span.style.background = '';
-                    span.style.webkitBackgroundClip = '';
-                    span.style.webkitTextFillColor = '';
-                }
-            });
-
-            if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
-                sessionStorage.removeItem('activeUniversalTargetUrl');
-                return;
-            }
-
-            const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
-            if (savedTargetUrl) {
-                sessionStorage.removeItem('activeUniversalTargetUrl');
-            }
-        });
-
         let sortState = 0;
         let originalRows = [];
 
         function sortYears() {
             const table = document.getElementById("mainRamsarTable");
+            if (!table) return;
             const tbody = table.querySelector("tbody");
+            if (!tbody) return;
             let rows = Array.from(tbody.querySelectorAll("tr"));
 
             if (originalRows.length === 0) {
@@ -1409,11 +1291,15 @@
 
             if (sortState === 1) {
                 rows.sort((a, b) => {
-                    return parseInt(b.children[3].innerText) - parseInt(a.children[3].innerText);
+                    const yA = parseInt(a.children[3]?.innerText?.trim() || '0', 10);
+                    const yB = parseInt(b.children[3]?.innerText?.trim() || '0', 10);
+                    return yB - yA;
                 });
             } else if (sortState === 2) {
                 rows.sort((a, b) => {
-                    return parseInt(a.children[3].innerText) - parseInt(b.children[3].innerText);
+                    const yA = parseInt(a.children[3]?.innerText?.trim() || '0', 10);
+                    const yB = parseInt(b.children[3]?.innerText?.trim() || '0', 10);
+                    return yA - yB;
                 });
             } else {
                 rows = originalRows.slice();
@@ -1422,6 +1308,7 @@
             tbody.innerHTML = "";
             rows.forEach(row => tbody.appendChild(row));
         }
+        window.sortYears = sortYears;
 
         const ramsarData = {
             "s1": { name: "Kolleru Lake", state: "Andhra Pradesh", year: "2002", area: "901 km²", district: "Krishna–Godavari Delta", imp: "One of India's largest freshwater lakes, flood buffer between Krishna & Godavari, major migratory bird habitat, rich fisheries", thr: "Aquaculture, encroachment, pollution, invasive weeds, siltation" },
@@ -1573,12 +1460,14 @@
             modal.classList.add("active");
             document.body.style.overflow = "hidden";
         }
+        window.openSite = openSite;
 
         function closeSite() {
             const modal = document.getElementById("siteModal");
             if (modal) modal.classList.remove("active");
             document.body.style.overflow = "";
         }
+        window.closeSite = closeSite;
 
         document.getElementById("siteModal").addEventListener("click", function(event) {
             if (event.target === this) closeSite();

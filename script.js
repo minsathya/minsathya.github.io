@@ -36,6 +36,10 @@
             --shadow-lift: none !important;
         }
 
+        html, body, button, input, textarea, select {
+            font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
         html, body {
             background-color: var(--bg-color) !important;
             color: var(--text-main) !important;
@@ -249,24 +253,54 @@
            CLICKABLE WORDS ZOOM TOWARDS US STRAIGHT ACROSS SITE
            Only the inner text span or word zooms, never the outer block/link!
            ------------------------------------------------------------- */
-        .nav-text {
+        .nav-text,
+        .site-name,
+        .sortable,
+        .topic-title,
+        .subject-topic-link .topic-title {
             display: inline-block !important;
-            white-space: nowrap !important;
-            transform-origin: center center !important;
+            transform-origin: left center !important;
             backface-visibility: hidden !important;
             -webkit-backface-visibility: hidden !important;
             will-change: transform;
-            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), 
-                        opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1), 
+                        opacity 0.32s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+
+        .footer-links-row a,
+        .footer-links-row .nav-text,
+        .sortable {
+            transform-origin: center center !important;
+        }
+
+        /* Generic inline clickable links */
+        a:not(.brand-pill):not(.back-icon-btn):not(.subject-topic-link):not(.document-list a) {
+            display: inline-block;
+            transform-origin: left center;
+            will-change: transform;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+
+        .footer-links-row a {
+            transform-origin: center center !important;
         }
 
         @media (hover: hover) and (pointer: fine) {
             .footer-links-row a:hover .nav-text,
+            .footer-links-row a:hover,
             .matrix-canvas a:hover .nav-text,
             .document-list a:hover .nav-text,
             .topics-column-grid a:hover .nav-text,
+            .topics-column-grid a:hover,
+            .topics-vertical-stack a:hover .nav-text,
+            .topics-vertical-stack a:hover,
             .site-name:hover,
-            .sortable:hover {
+            .sortable:hover,
+            .subject-topic-link:hover .topic-title,
+            a:not(.brand-pill):not(.back-icon-btn):hover .nav-text,
+            a:not(.brand-pill):not(.back-icon-btn):not(:has(.nav-text)):hover {
                 transform: scale3d(1.06, 1.06, 1) !important;
             }
         }
@@ -311,8 +345,49 @@
     }
 })();
 
+// Ensure Google Sans Flex is always dynamically loaded in <head>
+(function ensureGoogleSansFlex() {
+    if (typeof document === 'undefined') return;
+    const existing = document.querySelector('link[href*="Google+Sans+Flex"]');
+    if (!existing) {
+        const preconn1 = document.createElement('link');
+        preconn1.rel = 'preconnect';
+        preconn1.href = 'https://fonts.googleapis.com';
+        document.head.appendChild(preconn1);
+
+        const preconn2 = document.createElement('link');
+        preconn2.rel = 'preconnect';
+        preconn2.href = 'https://fonts.gstatic.com';
+        preconn2.crossOrigin = 'anonymous';
+        document.head.appendChild(preconn2);
+
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700;800&display=swap';
+        document.head.appendChild(link);
+    }
+})();
+
+function wrapClickableWords() {
+    const clickableLinks = document.querySelectorAll(
+        '.topics-column-grid a, .topics-vertical-stack a, .ncert-links a, .document-list a, .footer-links-row a, .article-card a, .topics-feed a, .day-switcher-capsule a'
+    );
+    clickableLinks.forEach(link => {
+        if (!link.querySelector('.nav-text') && !link.querySelector('.brand-letter') && link.textContent.trim().length > 0) {
+            const span = document.createElement('span');
+            span.className = 'nav-text';
+            while (link.firstChild) {
+                span.appendChild(link.firstChild);
+            }
+            link.appendChild(span);
+        }
+    });
+}
+
 // 3. LOGO ENHANCEMENT & NAVIGATION
 document.addEventListener('DOMContentLoaded', () => {
+    wrapClickableWords();
+
     // Ensure all brand logos use the round star
     const brandPills = document.querySelectorAll('.brand-pill, .logo');
     brandPills.forEach(pill => {
@@ -421,6 +496,7 @@ function executeMasterEntrance() {
 }
 
 window.addEventListener('pageshow', (event) => {
+    wrapClickableWords();
     // Replay entrance on BFCache restore or backward/forward navigation
     if (event.persisted || (window.performance && window.performance.navigation && window.performance.navigation.type === 2) || (window.performance && window.performance.getEntriesByType && window.performance.getEntriesByType('navigation')[0]?.type === 'back_forward')) {
         executeMasterEntrance();

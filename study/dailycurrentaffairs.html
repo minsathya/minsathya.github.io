@@ -43,10 +43,10 @@
       darkMode.addEventListener('change', updateFavicon);
     </script>
 
-    <!-- Google Fonts: Poppins -->
+    <!-- Google Fonts: Google Sans Flex -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Pre-load Current Affairs Data for Zero Network Wait on Refresh -->
     <script src="/study/currentaffairs-data/05-10-2026.js"></script>
@@ -123,7 +123,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
             min-height: 100dvh;
             display: flex;
@@ -367,7 +367,7 @@
             border: none;
             outline: none;
             color: var(--text-main);
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif;
             font-size: 16px;
             padding: 0 16px;
             width: 100%;
@@ -1434,18 +1434,40 @@
         }
 
         /* CLICKABLE WORDS ZOOM TOWARDS US STRAIGHT */
+        .topics-column-grid a,
+        .topics-column-grid a .nav-text,
+        .topics-feed a,
+        .topics-feed a .nav-text,
+        .day-switcher-capsule a,
+        .site-name,
+        .sortable {
+            display: inline-block !important;
+            transform-origin: left center !important;
+            will-change: transform !important;
+            backface-visibility: hidden !important;
+            -webkit-backface-visibility: hidden !important;
+            transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+
+        .footer-links-row a,
+        .footer-links-row a .nav-text,
+        .sortable {
+            transform-origin: center center !important;
+        }
+
         @media (hover: hover) and (pointer: fine) {
-            a:not(.brand-pill):not(.back-icon-btn):hover,
-            a:not(.brand-pill):not(.back-icon-btn):hover .nav-text,
+            .topics-column-grid a:hover,
+            .topics-column-grid a:hover .nav-text,
+            .topics-feed a:hover,
+            .topics-feed a:hover .nav-text,
             .site-name:hover,
             .sortable:hover,
-            .document-list a:hover .nav-text,
-            .topics-column-grid a:hover,
+            a:not(.brand-pill):not(.back-icon-btn):hover .nav-text {
+                transform: scale3d(1.06, 1.06, 1) !important;
+            }
             .footer-links-row a:hover,
             .footer-links-row a:hover .nav-text {
                 transform: scale3d(1.06, 1.06, 1) !important;
-                transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
-                transform-origin: center center !important;
             }
         }
 
