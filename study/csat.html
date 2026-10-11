@@ -381,6 +381,7 @@
             flex: 1 !important;
             min-width: 0 !important;
             width: 100% !important;
+            min-height: 560px;
             align-self: flex-start !important;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
@@ -388,7 +389,6 @@
             padding: 32px 36px;
             box-shadow: var(--shadow-base, var(--panel-shadow));
             user-select: none;
-            transform: none !important;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             transition: box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1),
@@ -403,18 +403,71 @@
                 box-shadow: var(--shadow-hover, var(--panel-shadow-hover)) !important;
                 border-color: var(--panel-border-hover) !important;
             }
+
+            /* Inner words/content slide up smoothly when hovering the card */
+            .subjects-detail-panel:hover .card-parallax-content {
+                transform: translateY(-6px) translateZ(0);
+            }
         }
 
         /* Inner Front-Layer Elements Setup */
         .card-parallax-content {
-            transform: none !important;
-            transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(0);
+            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         @media (hover: none), (pointer: coarse) {
             .subjects-detail-panel:active {
                 transform: none !important;
             }
+        }
+
+        /* Marvel Endgame Blip Dissolve Effect */
+        @keyframes blipDisintegrate {
+            0% {
+                opacity: 1;
+                filter: blur(0px);
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+            40% {
+                opacity: 0.65;
+                filter: blur(2.5px);
+                transform: translate3d(0, -2px, 0) scale(0.995);
+            }
+            100% {
+                opacity: 0;
+                filter: blur(8px);
+                transform: translate3d(0, -6px, 0) scale(0.985);
+            }
+        }
+
+        @keyframes blipMaterialize {
+            0% {
+                opacity: 0;
+                filter: blur(8px);
+                transform: translate3d(0, 6px, 0) scale(1.015);
+            }
+            60% {
+                opacity: 0.85;
+                filter: blur(2px);
+                transform: translate3d(0, 1px, 0) scale(1.003);
+            }
+            100% {
+                opacity: 1;
+                filter: blur(0px);
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+        }
+
+        .blip-exit {
+            animation: blipDisintegrate 0.25s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+            pointer-events: none;
+            will-change: opacity, filter, transform;
+        }
+
+        .blip-enter {
+            animation: blipMaterialize 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            will-change: opacity, filter, transform;
         }
 
         .panel-header-row {
@@ -890,7 +943,7 @@
             topicsHtml += '</ul>';
 
             const newContent = `
-                <div class="card-parallax-content">
+                <div class="card-parallax-content blip-enter">
                     <div class="panel-header-row">
                         <h2 class="panel-subject-title">${section.title}</h2>
                     </div>
@@ -902,23 +955,25 @@
 
             const currentStage = panel.querySelector('.card-parallax-content');
             if (animate && currentStage) {
-                currentStage.style.transition = 'opacity 0.15s ease-out, transform 0.15s ease-out';
-                currentStage.style.opacity = '0';
-                currentStage.style.transform = 'translateY(6px)';
-                setTimeout(() => {
+                if (window._csatSwitchTimer) clearTimeout(window._csatSwitchTimer);
+                currentStage.classList.remove('blip-enter');
+                currentStage.classList.add('blip-exit');
+                window._csatSwitchTimer = setTimeout(() => {
                     panel.innerHTML = newContent;
-                    const nextStage = panel.querySelector('.card-parallax-content');
-                    if (nextStage) {
-                        nextStage.style.opacity = '0';
-                        nextStage.style.transform = 'translateY(-6px)';
-                        void nextStage.offsetWidth;
-                        nextStage.style.transition = 'opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1)';
-                        nextStage.style.opacity = '1';
-                        nextStage.style.transform = 'translateY(0)';
-                    }
-                }, 150);
+                    if (typeof wrapClickableWords === 'function') wrapClickableWords();
+                }, 240);
             } else {
-                panel.innerHTML = newContent;
+                panel.innerHTML = `
+                    <div class="card-parallax-content">
+                        <div class="panel-header-row">
+                            <h2 class="panel-subject-title">${section.title}</h2>
+                        </div>
+                        <div class="panel-body">
+                            ${topicsHtml}
+                        </div>
+                    </div>
+                `;
+                if (typeof wrapClickableWords === 'function') wrapClickableWords();
             }
 
             // Sync URL hash without jumping

@@ -261,7 +261,6 @@
             flex-direction: column;
             touch-action: manipulation;
             box-sizing: border-box;
-            transform: none !important;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             transition: box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1),
@@ -277,6 +276,12 @@
                 box-shadow: var(--shadow-hover);
                 border-color: var(--panel-border-hover);
             }
+
+            /* Inner content layer: words slide up smoothly when hovering the card */
+            body:not(.popup-active) .bento-card:hover .card-parallax-content,
+            body:not(.popup-active) .capsule-panel:hover .card-parallax-content {
+                transform: translateY(-6px) translateZ(0);
+            }
         }
 
         /* Mobile / Touch: stationary (NO LIFT / NO ZOOM) */
@@ -289,7 +294,8 @@
 
         /* Inner isolated contents container wrapper */
         .card-parallax-content {
-            transform: none !important;
+            transform: translateY(0);
+            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
             display: flex;
             flex-direction: column;
             width: 100%;
@@ -329,9 +335,9 @@
             width: fit-content;
         }
 
-        /* Sibling muting on hover: Hovered item zooms up, others become muted */
+        /* Sibling muting ONLY when hovering a specific link/word */
         @media (hover: hover) and (pointer: fine) {
-            .list-wrapper:hover .list-item {
+            .list-wrapper:has(.list-item:hover) .list-item:not(:hover) {
                 opacity: 0.35 !important;
             }
 

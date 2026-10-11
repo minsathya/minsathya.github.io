@@ -338,15 +338,14 @@
         .info-callout,
         .myspace-card,
         .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card) {
-            box-shadow: var(--shadow-base, var(--panel-shadow)) !important;
+            box-shadow: var(--shadow-base, var(--panel-shadow));
             border: 1px solid var(--panel-border);
             user-select: none;
-            transform: none !important;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             transition: box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
                         border-color 0.4s ease, 
-                        background-color 0.4s ease !important;
+                        background-color 0.4s ease;
         }
 
         /* UPSC Detail Panel: Uniform full length for all */
@@ -354,7 +353,14 @@
             flex: 1 !important;
             min-width: 0 !important;
             width: 100% !important;
+            min-height: 560px;
             align-self: flex-start !important;
+        }
+
+        @media (max-width: 860px) {
+            .subjects-detail-panel {
+                min-height: 440px !important;
+            }
         }
 
         /* Panel Outer Frames: Stationary (NO ZOOM / NO LIFT) */
@@ -371,6 +377,21 @@
                 box-shadow: var(--shadow-hover, var(--panel-shadow-hover)) !important;
                 border-color: var(--panel-border-hover) !important;
             }
+
+            /* Inner Content Layer: Words & content slide up smoothly when hovering the card */
+            body:not(.popup-active) .bento-card:hover .card-parallax-content,
+            body:not(.popup-active) .panel-card:hover .card-parallax-content,
+            body:not(.popup-active) .capsule-panel:hover .card-parallax-content,
+            body:not(.popup-active) .subjects-detail-panel:hover .card-parallax-content,
+            body:not(.popup-active) .wide-capsule:not(.is-expanded):hover .capsule-header-row {
+                transform: translateY(-6px) translateZ(0);
+            }
+        }
+
+        /* Inner Content resting transform */
+        .card-parallax-content {
+            transform: translateY(0);
+            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         /* Mobile / Touch: Stationary (NO LIFT / NO ZOOM) */
@@ -398,10 +419,10 @@
             text-decoration: none !important;
         }
 
-        /* When hovering one item in a panel, sibling items become muted */
+        /* Sibling muting ONLY when hovering a specific link/word (untouched while just over panel) */
         @media (hover: hover) and (pointer: fine) {
-            .list-wrapper:hover .list-item,
-            .document-list:hover a {
+            .list-wrapper:has(.list-item:hover) .list-item:not(:hover),
+            .document-list:has(a:hover) a:not(:hover) {
                 opacity: 0.35 !important;
             }
 
@@ -728,6 +749,7 @@ function wrapClickableWords() {
 // 3. LOGO ENHANCEMENT & NAVIGATION
 document.addEventListener('DOMContentLoaded', () => {
     wrapClickableWords();
+    initSiblingMuting();
 
     // Ensure all brand logos use the round star
     const brandPills = document.querySelectorAll('.brand-pill, .logo');
@@ -836,7 +858,7 @@ window.triggerMasterEntrance = triggerMasterEntrance;
 
 function executeMasterEntrance() {
     const targets = document.querySelectorAll(
-        '.top-nav-bar, .page-header-row, .subjects-header-row, main, .bento-container, .bento-card, .matrix-canvas, .date-topics-capsule, .article-card, .topics-feed, .capsule-panel, .subjects-detail-panel, .subjects-sidebar, footer'
+        '.top-nav-bar, .page-header-row, .subjects-header-row, main, footer'
     );
     targets.forEach(el => {
         triggerMasterEntrance(el);
@@ -844,8 +866,35 @@ function executeMasterEntrance() {
 }
 window.executeMasterEntrance = executeMasterEntrance;
 
+// Bulletproof JS helper for scoped sibling muting on word hover
+function initSiblingMuting() {
+    document.querySelectorAll('.list-wrapper, .document-list').forEach(container => {
+        const items = container.querySelectorAll('.list-item, a');
+        items.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                items.forEach(sibling => {
+                    if (sibling !== item) {
+                        sibling.style.opacity = '0.35';
+                    } else {
+                        sibling.style.opacity = '1';
+                        sibling.style.transform = 'scale(1.04)';
+                    }
+                });
+            });
+            item.addEventListener('mouseleave', () => {
+                items.forEach(sibling => {
+                    sibling.style.opacity = '';
+                    sibling.style.transform = '';
+                });
+            });
+        });
+    });
+}
+window.initSiblingMuting = initSiblingMuting;
+
 window.addEventListener('pageshow', (event) => {
     wrapClickableWords();
+    initSiblingMuting();
     // Trigger smooth slideup fade animation whenever visiting homescreen or any page
     executeMasterEntrance();
     document.querySelectorAll('.is-wave-loading, .is-panel-lifted, .is-card-lifted').forEach(el => {
