@@ -266,11 +266,12 @@
 
         /* -------------------------------------------------------------
            MASTER ENTRANCE ANIMATION (GPU ACCELERATED & PREMIUM FLUID)
+           Glides slowly and smoothly upward from the background
            ------------------------------------------------------------- */
         @keyframes masterEntrance {
             from {
                 opacity: 0;
-                transform: translate3d(0, 16px, 0);
+                transform: translate3d(0, 26px, 0);
             }
             to {
                 opacity: 1;
@@ -280,7 +281,7 @@
 
         /* Animation runner class */
         .master-entrance-run {
-            animation: masterEntrance 0.38s var(--ease-premium) both !important;
+            animation: masterEntrance 0.52s var(--ease-premium) both !important;
             will-change: transform, opacity;
         }
 
@@ -294,13 +295,15 @@
         .date-topics-capsule,
         .topics-feed,
         #subjectsListContainer,
+        #ncertListContainer,
+        #csatListContainer,
         .subjects-main-layout,
         .subjects-split-layout {
             position: relative;
             z-index: 1;
             opacity: 1;
             will-change: transform, opacity;
-            animation: masterEntrance 0.38s var(--ease-premium) both !important;
+            animation: masterEntrance 0.52s var(--ease-premium) both !important;
         }
 
         .top-nav-bar { 
@@ -314,12 +317,14 @@
         .date-topics-capsule, 
         .topics-feed, 
         #subjectsListContainer,
+        #ncertListContainer,
+        #csatListContainer,
         .subjects-main-layout,
         .subjects-split-layout { 
             animation-delay: 0.06s !important; 
         }
         footer { 
-            animation-delay: 0.1s !important; 
+            animation-delay: 0.12s !important; 
         }
 
         /* -------------------------------------------------------------
@@ -329,6 +334,7 @@
         .subject-accordion-card,
         .card,
         .wide-capsule,
+        .subjects-detail-panel,
         .article-card,
         .date-topics-capsule,
         .empty-placeholder-card,
@@ -337,6 +343,9 @@
         .macro-card,
         .day-switcher-capsule {
             box-shadow: none !important;
+            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                        background-color 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
         .capsule-panel:hover,
@@ -357,14 +366,16 @@
         }
 
         /* -------------------------------------------------------------
-           SUBTLE & GENTLE PANEL HOVER SITE-WIDE (HOMEPAGE UNTOUCHED)
+           SUBTLE & GENTLE PANEL HOVER ZOOM (LAPTOP / DESKTOP)
            ------------------------------------------------------------- */
         @media (hover: hover) and (pointer: fine) {
             .subject-accordion-card:not(.is-open):hover,
             .wide-capsule:hover,
             .card:hover,
+            .capsule-panel:hover,
+            .subjects-detail-panel:hover,
             .date-topics-capsule:hover {
-                transform: translate3d(0, -2px, 0) !important;
+                transform: scale3d(1.008, 1.008, 1) translate3d(0, -2px, 0) !important;
                 border-color: var(--panel-border-hover) !important;
             }
 
@@ -376,24 +387,28 @@
         }
 
         /* -------------------------------------------------------------
-           TOUCH DEVICES (IPAD / TOUCHSCREEN): NO STICKY HOVER LAG
+           TOUCH DEVICES (IPAD / PHONE): RUBBER PRESS & TACTILE RESPONSE
            ------------------------------------------------------------- */
-        @media (hover: none) {
+        @media (hover: none), (pointer: coarse) {
+            /* Pill rubber press: goes down on tap and springs back on release */
+            .subject-nav-item:active {
+                transform: scale3d(0.92, 0.92, 1) !important;
+                transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+            }
+
+            .capsule-panel:active,
+            .wide-capsule:active,
+            .date-topics-capsule:active {
+                transform: scale3d(0.985, 0.985, 1) !important;
+                transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+            }
+
             .capsule-panel:hover,
             .subject-accordion-card:hover,
             .card:hover,
             .wide-capsule:hover,
             .date-topics-capsule:hover,
             .article-card:hover {
-                transform: none !important;
-                border-color: var(--panel-border) !important;
-            }
-            .capsule-panel:active,
-            .subject-accordion-card:active,
-            .card:active,
-            .wide-capsule:active,
-            .date-topics-capsule:active {
-                transform: none !important;
                 border-color: var(--panel-border) !important;
             }
         }
@@ -405,9 +420,6 @@
         .nav-text,
         .site-name,
         .sortable,
-        .topic-title,
-        .subject-topic-link,
-        .subject-topic-link .topic-title,
         .subject-nav-name,
         .topics-column-grid a,
         .topics-vertical-stack a,
@@ -415,7 +427,7 @@
         .document-list a,
         .matrix-canvas a,
         .footer-links-row a,
-        a:not(.brand-pill):not(.back-icon-btn) {
+        a:not(.brand-pill):not(.back-icon-btn):not(.subject-topic-link) {
             cursor: pointer !important;
             display: inline-block !important;
             transform-origin: center center !important;
@@ -427,6 +439,31 @@
 
         .subject-nav-name {
             transform-origin: left center !important;
+        }
+
+        /* SUBJECT / NCERT / CSAT TOPIC LINKS: FLEX ROW SO BULLET & TITLE STAY ON SAME LINE */
+        .subject-topic-link {
+            display: inline-flex !important;
+            align-items: baseline !important;
+            gap: 10px !important;
+            max-width: 100% !important;
+            width: fit-content !important;
+            cursor: pointer !important;
+            transform-origin: left center !important;
+            transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), 
+                        color 0.28s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+
+        .subject-topic-link .topic-bullet {
+            flex-shrink: 0 !important;
+            display: inline-block !important;
+            line-height: 1.4 !important;
+        }
+
+        .subject-topic-link .topic-title {
+            display: inline !important;
+            line-height: 1.4 !important;
+            word-break: normal !important;
         }
 
         /* Subtle Forward Zoom Animation on Hover */
@@ -442,10 +479,20 @@
         .ncert-links a:hover,
         .site-name:hover,
         .sortable:hover,
-        .subject-topic-link:hover .topic-title,
         .subject-nav-item:hover .subject-nav-name,
-        a:not(.brand-pill):not(.back-icon-btn):hover {
+        a:not(.brand-pill):not(.back-icon-btn):not(.subject-topic-link):hover {
             transform: scale3d(1.028, 1.028, 1) !important;
+        }
+
+        /* Hover zoom on entire topic link zooms BOTH the bullet dot and the word together */
+        @media (hover: hover) and (pointer: fine) {
+            .subject-topic-link:hover {
+                transform: scale3d(1.028, 1.028, 1) !important;
+            }
+            .subject-topic-link:hover .topic-bullet,
+            .subject-topic-link:hover .topic-title {
+                color: var(--text-main) !important;
+            }
         }
 
         /* Prevent double scaling when both parent anchor and child span exist */
@@ -453,6 +500,8 @@
             transform: none !important;
         }
         a:hover > .nav-text {
+            transform: scale3d(1.028, 1.028, 1) !important;
+        }
             transform: scale3d(1.028, 1.028, 1) !important;
         }
 
@@ -634,15 +683,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function triggerMasterEntrance(element) {
     if (!element) return;
     element.classList.remove('master-entrance-run');
-    element.style.opacity = '0';
-    element.style.transform = 'translate3d(0, 14px, 0)';
-    element.style.transition = 'none';
-    
-    requestAnimationFrame(() => {
-        element.style.transition = 'opacity 0.36s cubic-bezier(0.16, 1, 0.3, 1), transform 0.36s cubic-bezier(0.16, 1, 0.3, 1)';
-        element.style.opacity = '1';
-        element.style.transform = 'translate3d(0, 0, 0)';
-    });
+    void element.offsetWidth;
+    element.classList.add('master-entrance-run');
 }
 window.triggerMasterEntrance = triggerMasterEntrance;
 

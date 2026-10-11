@@ -116,7 +116,7 @@
         @keyframes masterEntrance {
             from {
                 opacity: 0;
-                transform: translate3d(0, 14px, 0);
+                transform: translate3d(0, 26px, 0);
             }
             to {
                 opacity: 1;
@@ -126,7 +126,7 @@
 
         /* 2. Animation runner class */
         .master-entrance-run {
-            animation: masterEntrance 0.38s var(--ease-premium) both !important;
+            animation: masterEntrance 0.52s var(--ease-premium) both !important;
             will-change: transform, opacity;
         }
 
@@ -139,7 +139,7 @@
             align-items: center;
             justify-content: flex-start;
             margin-bottom: 28px;
-            animation: masterEntrance 0.38s var(--ease-premium) both;
+            animation: masterEntrance 0.52s var(--ease-premium) both;
             animation-delay: 0.02s;
         }
 
@@ -212,7 +212,7 @@
             width: 100%;
             max-width: 1200px;
             margin: 0 auto 24px auto;
-            animation: masterEntrance 0.38s var(--ease-premium) both;
+            animation: masterEntrance 0.52s var(--ease-premium) both;
             animation-delay: 0.04s;
         }
 
@@ -300,7 +300,12 @@
             touch-action: manipulation;
             border-radius: 12px;
             -webkit-tap-highlight-color: transparent !important;
-            transition: color 0.25s var(--ease-smooth);
+            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.25s var(--ease-smooth);
+        }
+
+        .subject-nav-item:active {
+            transform: scale3d(0.92, 0.92, 1) !important;
+            transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
         }
 
         .subject-nav-name {
@@ -402,41 +407,51 @@
         }
 
         .subject-topic-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 4px;
+            display: flex !important;
+            align-items: baseline !important;
+            gap: 10px !important;
+            padding: 8px 4px !important;
             text-decoration: none !important;
-            color: var(--text-main);
-            font-size: 17px;
-            cursor: pointer;
-            width: fit-content;
+            color: var(--text-main) !important;
+            font-size: 17px !important;
+            cursor: pointer !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            transform-origin: left center !important;
+            transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), 
+                        color 0.28s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
         .topic-bullet {
             color: var(--text-muted);
             font-size: 16px;
-            line-height: 1;
+            line-height: 1.5;
             opacity: 0.6;
             user-select: none;
-            flex-shrink: 0;
+            flex-shrink: 0 !important;
+            display: inline-block !important;
+            transition: color 0.28s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .topic-title {
             font-size: 17px;
             font-weight: 400;
             color: var(--text-main);
-            line-height: 1.4;
-            display: inline-block;
-            transform-origin: left center !important;
-            transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), 
-                        color 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+            line-height: 1.5;
+            flex: 1 1 auto !important;
+            min-width: 0 !important;
+            display: inline !important;
+            word-break: normal !important;
+            transition: color 0.28s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         @media (hover: hover) and (pointer: fine) {
-            .subject-topic-link:hover .topic-title {
+            .subject-topic-link:hover {
                 transform: scale3d(1.028, 1.028, 1) !important;
-                color: var(--text-main);
+            }
+            .subject-topic-link:hover .topic-bullet,
+            .subject-topic-link:hover .topic-title {
+                color: var(--text-main) !important;
             }
         }
 
@@ -724,14 +739,8 @@
         function triggerMasterEntrance(element) {
             if (!element) return;
             element.classList.remove('master-entrance-run');
-            element.style.opacity = '0';
-            element.style.transform = 'translate3d(0, 14px, 0)';
-            element.style.transition = 'none';
-            requestAnimationFrame(() => {
-                element.style.transition = 'opacity 0.36s cubic-bezier(0.16, 1, 0.3, 1), transform 0.36s cubic-bezier(0.16, 1, 0.3, 1)';
-                element.style.opacity = '1';
-                element.style.transform = 'translate3d(0, 0, 0)';
-            });
+            void element.offsetWidth;
+            element.classList.add('master-entrance-run');
         }
 
         // Complete CSAT dataset

@@ -222,12 +222,23 @@
     
         /* MASTER ENTRANCE */
         @keyframes masterEntrance {
-            0% { opacity: 0; transform: translate3d(0, 10px, 0); }
-            100% { opacity: 1; transform: translate3d(0, 0, 0); }
+            from {
+                opacity: 0;
+                transform: translate3d(0, 26px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        .master-entrance-run {
+            animation: masterEntrance 0.52s var(--ease-premium) both !important;
+            will-change: transform, opacity;
         }
 
         .date-topics-capsule, .topics-feed {
-            animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both;
+            animation: masterEntrance 0.52s var(--ease-premium) 0.04s both;
         }
 
         @keyframes sideNavEntrance {
@@ -806,9 +817,8 @@
             opacity: 0.85 !important;
         }
 
-        /* DRAWERS */
-        .topic-image-drawer,
-        .topic-short-drawer {
+        /* DRAWERS & ARTICLE VIEWS */
+        .topic-image-drawer {
             display: grid;
             grid-template-rows: 0fr;
             transition: grid-template-rows 0.55s var(--ease-smooth), margin 0.55s var(--ease-smooth);
@@ -816,23 +826,20 @@
             margin: 0;
         }
 
-        .topic-image-drawer.is-open,
-        .topic-short-drawer.is-open {
+        .topic-image-drawer.is-open {
             grid-template-rows: 1fr;
             margin: 0 0 32px 0;
         }
 
-        .topic-image-inner,
-        .topic-short-inner {
+        .topic-image-inner {
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            align-items: center;
             opacity: 0;
             transform: translate3d(0, -12px, 0);
             transition: opacity 0.45s var(--ease-smooth), transform 0.45s var(--ease-smooth);
         }
-
-        .topic-image-inner { align-items: center; }
 
         .topic-image-drawer.is-open .topic-image-inner {
             opacity: 1;
@@ -840,10 +847,9 @@
             transition-delay: 0.1s;
         }
 
-        .topic-short-drawer.is-open .topic-short-inner {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-            transition-delay: 0.08s;
+        .topic-short-view,
+        .topic-full-view {
+            width: 100%;
         }
 
         .topic-image-inner img {
@@ -1711,20 +1717,41 @@
             setTimeout(() => syncFeedHeight(), 580);
         };
 
-        window.toggleShortArticle = function(btn, drawerId) {
-            const drawer = document.getElementById(drawerId);
-            if (!drawer) return;
-            const isOpen = drawer.classList.contains('is-open');
-            if (isOpen) {
-                drawer.classList.remove('is-open');
-                btn.textContent = 'Short';
-            } else {
-                drawer.classList.add('is-open');
-                btn.textContent = 'Full';
+        window.toggleShortArticle = function(btn, idx) {
+            let targetIdx = idx;
+            if (targetIdx === undefined || targetIdx === null) {
+                const card = btn.closest('.article-card');
+                if (card && card.dataset.index !== undefined) {
+                    targetIdx = parseInt(card.dataset.index);
+                }
             }
-            setTimeout(() => syncFeedHeight(), 80);
-            setTimeout(() => syncFeedHeight(), 350);
-            setTimeout(() => syncFeedHeight(), 580);
+            const shortView = document.getElementById(`shortArticle_${targetIdx}`);
+            const fullView = document.getElementById(`fullArticle_${targetIdx}`);
+            if (!shortView || !fullView) return;
+
+            const isCurrentlyShort = (btn.textContent.trim().toLowerCase() === 'full');
+
+            if (isCurrentlyShort) {
+                // Return to Full view exclusively: hide short, show full
+                shortView.style.display = 'none';
+                fullView.style.display = 'block';
+                btn.textContent = 'Short';
+                if (window.triggerMasterEntrance) {
+                    window.triggerMasterEntrance(fullView);
+                }
+            } else {
+                // Switch to Short view exclusively: hide full completely, show short
+                fullView.style.display = 'none';
+                shortView.style.display = 'block';
+                btn.textContent = 'Full';
+                if (window.triggerMasterEntrance) {
+                    window.triggerMasterEntrance(shortView);
+                }
+            }
+
+            setTimeout(() => syncFeedHeight(targetIdx), 30);
+            setTimeout(() => syncFeedHeight(targetIdx), 180);
+            setTimeout(() => syncFeedHeight(targetIdx), 400);
         };
 
         // 4. DUAL-CARD STAGE ENGINE
@@ -2126,7 +2153,6 @@
 
                 const hasImage = topic.image && topic.image.url;
                 const imgDrawerId = `imgDrawer_${idx}`;
-                const shortDrawerId = `shortDrawer_${idx}`;
                 const hasShort = !!topic.shortArticle;
 
                 const imagePillHtml = hasImage ? `
@@ -2137,7 +2163,7 @@
 
                 const readPillHtml = hasShort ? `
                     <span class="read-toggle-pill">
-                        Read : <button type="button" class="read-action-btn" onclick="toggleShortArticle(this, '${shortDrawerId}')">Short</button>
+                        Read : <button type="button" class="read-action-btn" onclick="toggleShortArticle(this, ${idx})">Short</button>
                     </span>
                 ` : '';
 
@@ -2150,16 +2176,17 @@
                     </div>
                 ` : '';
 
-                const shortDrawerHtml = hasShort ? `
-                    <div class="topic-short-drawer" id="${shortDrawerId}">
-                        <div class="topic-short-inner">
-                            ${renderArticleSections(topic.shortArticle)}
-                            <div class="article-separation-divider">
-                                <span class="divider-label-pill">Detailed Analysis Below</span>
-                            </div>
-                        </div>
+                const shortViewHtml = hasShort ? `
+                    <div class="topic-short-view" id="shortArticle_${idx}" style="display: none;">
+                        ${renderArticleSections(topic.shortArticle)}
                     </div>
                 ` : '';
+
+                const fullViewHtml = `
+                    <div class="topic-full-view" id="fullArticle_${idx}">
+                        ${renderArticleSections(topic)}
+                    </div>
+                `;
 
                 /* GS Paper pill now matches all other pills identically */
                 card.innerHTML = `
@@ -2174,8 +2201,8 @@
                     </div>
 
                     ${imageDrawerHtml}
-                    ${shortDrawerHtml}
-                    ${renderArticleSections(topic)}
+                    ${shortViewHtml}
+                    ${fullViewHtml}
                 `;
 
                 topicsFeed.appendChild(card);
