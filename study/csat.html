@@ -405,11 +405,12 @@
         @media (hover: hover) and (pointer: fine) {
             .subjects-detail-panel:hover {
                 transform: scale(1.02) !important;
-                box-shadow: var(--panel-shadow-hover) !important;
+                box-shadow: var(--shadow-hover, var(--panel-shadow-hover)) !important;
                 border-color: var(--panel-border-hover) !important;
             }
 
             /* Inner Front-Layer Drift (Header and content slide up independently and stay frozen) */
+            .subjects-detail-panel:hover .card-parallax-content,
             .subjects-detail-panel:hover .panel-header-row,
             .subjects-detail-panel:hover .panel-body {
                 transform: translateY(-6px) !important;
@@ -417,12 +418,20 @@
         }
 
         /* Inner Front-Layer Elements Setup */
+        .card-parallax-content,
         .panel-header-row,
         .subjects-detail-panel .panel-body {
             transform: translateY(0);
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .subjects-detail-panel:active {
+                transform: scale(0.98) !important;
+                transition: transform 0.15s ease-out !important;
+            }
         }
 
         .panel-header-row {
@@ -692,90 +701,92 @@
 
         <!-- Right Content Panel: Active CSAT Topic Display (No chapters tag) -->
         <section class="subjects-detail-panel master-entrance-run" id="csatDetailPanel" aria-live="polite">
-            <div class="panel-header-row">
-                <h2 class="panel-subject-title">Aptitude</h2>
-            </div>
-            <div class="panel-body">
-                <ul class="subject-topics-list">
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Percentages</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Profit &amp; Loss</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Simple &amp; Compound Interest</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Averages</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Alligations &amp; Mixtures</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Ages</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Ratio &amp; Proportion</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Time &amp; Distance</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Boats &amp; Streams</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Permutations &amp; Combinations</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Probability</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Mensuration</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">LCM &amp; HCF</span>
-                        </a>
-                    </li>
-                </ul>
+            <div class="card-parallax-content">
+                <div class="panel-header-row">
+                    <h2 class="panel-subject-title">Aptitude</h2>
+                </div>
+                <div class="panel-body">
+                    <ul class="subject-topics-list">
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Percentages</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Profit &amp; Loss</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Simple &amp; Compound Interest</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Averages</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Alligations &amp; Mixtures</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Ages</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Ratio &amp; Proportion</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Time &amp; Distance</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Boats &amp; Streams</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Permutations &amp; Combinations</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Probability</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Mensuration</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">LCM &amp; HCF</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </section>
 
@@ -896,11 +907,13 @@
             topicsHtml += '</ul>';
 
             panel.innerHTML = `
-                <div class="panel-header-row">
-                    <h2 class="panel-subject-title">${section.title}</h2>
-                </div>
-                <div class="panel-body">
-                    ${topicsHtml}
+                <div class="card-parallax-content">
+                    <div class="panel-header-row">
+                        <h2 class="panel-subject-title">${section.title}</h2>
+                    </div>
+                    <div class="panel-body">
+                        ${topicsHtml}
+                    </div>
                 </div>
             `;
 

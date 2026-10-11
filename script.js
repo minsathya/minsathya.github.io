@@ -337,7 +337,6 @@
         .empty-placeholder-card,
         .info-callout,
         .myspace-card,
-        .macro-card,
         .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card) {
             box-shadow: var(--shadow-base, var(--panel-shadow)) !important;
             border: 1px solid var(--panel-border);
@@ -365,12 +364,18 @@
         /* Inner Front-Layer Elements Setup (Handles smooth return on mouse leave) */
         .card-parallax-content,
         .card-content,
+        .capsule-panel .card-parallax-content,
         .capsule-panel .panel-title,
+        .capsule-panel .prose-text,
         .capsule-panel .document-list,
+        .bento-card .card-parallax-content,
         .bento-card h2,
         .bento-card .list-wrapper,
+        .subjects-detail-panel .card-parallax-content,
         .subjects-detail-panel .panel-header-row,
         .subjects-detail-panel .panel-body,
+        .wide-capsule .card-parallax-content,
+        .wide-capsule:not(.is-expanded) .capsule-header-row,
         .wide-capsule .wide-panel-title,
         .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card) .card-header,
         .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card) .card-body,
@@ -387,11 +392,10 @@
             body:not(.popup-active) .panel-card:hover,
             body:not(.popup-active) .capsule-panel:hover,
             body:not(.popup-active) .subjects-detail-panel:hover,
+            body:not(.popup-active) .wide-capsule:not(.is-expanded):hover,
             body:not(.popup-active) .subject-accordion-card:not(.is-open):hover,
-            body:not(.popup-active) .wide-capsule:hover,
             body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card):hover,
-            body:not(.popup-active) .myspace-card:hover,
-            body:not(.popup-active) .macro-card:hover {
+            body:not(.popup-active) .myspace-card:hover {
                 transform: scale(1.02) !important;
                 box-shadow: var(--shadow-hover, var(--panel-shadow-hover)) !important;
                 border-color: var(--panel-border-hover) !important;
@@ -400,12 +404,16 @@
             /* Inner Front-Layer Drift (Text/content slides up independently and stays frozen) */
             body:not(.popup-active) .bento-card:hover .card-parallax-content,
             body:not(.popup-active) .capsule-panel:hover .card-parallax-content,
-            body:not(.popup-active) .panel-card:hover .card-content,
             body:not(.popup-active) .capsule-panel:hover .panel-title,
+            body:not(.popup-active) .capsule-panel:hover .prose-text,
             body:not(.popup-active) .capsule-panel:hover .document-list,
+            body:not(.popup-active) .subjects-detail-panel:hover .card-parallax-content,
             body:not(.popup-active) .subjects-detail-panel:hover .panel-header-row,
             body:not(.popup-active) .subjects-detail-panel:hover .panel-body,
-            body:not(.popup-active) .wide-capsule:hover .wide-panel-title,
+            body:not(.popup-active) .wide-capsule:not(.is-expanded):hover .card-parallax-content,
+            body:not(.popup-active) .wide-capsule:not(.is-expanded):hover .capsule-header-row,
+            body:not(.popup-active) .wide-capsule:not(.is-expanded):hover .wide-panel-title,
+            body:not(.popup-active) .panel-card:hover .card-content,
             body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card):hover .card-header,
             body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card):hover .card-body,
             body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card):hover .card-content {
@@ -417,10 +425,24 @@
                 color: var(--text-main);
             }
 
+            .wide-capsule.is-expanded,
+            .wide-capsule.is-expanded:hover,
             .subject-accordion-card.is-open,
             .subject-accordion-card.is-open:hover,
             .subject-accordion-card:focus-within {
                 transform: none !important;
+            }
+        }
+
+        /* Mobile / Touch Screen (Rubber-press tap physics) */
+        @media (hover: none), (pointer: coarse) {
+            .bento-card:active,
+            .panel-card:active,
+            .capsule-panel:active,
+            .subjects-detail-panel:active,
+            .wide-capsule:not(.is-expanded):active {
+                transform: scale(0.98) !important;
+                transition: transform 0.15s ease-out !important;
             }
         }
 

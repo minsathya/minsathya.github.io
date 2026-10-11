@@ -51,18 +51,21 @@
         /* Modern Theme Token System */
         :root {
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
-            
+            --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
-            --text-muted: #555555;
+            --text-muted: #737373;
             --panel-bg: #121212;
             --panel-border: #222222;
             --panel-border-hover: rgba(255, 255, 255, 0.11);
             --row-divider: #1c1c1c;
-            --row-hover: rgba(255, 255, 255, 0.015);
-
+            --row-hover: rgba(255, 255, 255, 0.02);
             --header-bg: #1a231e;
             --header-border: #222c26;
+            --shadow-base: 0 4px 30px rgba(0, 0, 0, 0.4);
+            --shadow-hover: 0 25px 60px rgba(0, 0, 0, 0.8);
+            --panel-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            --panel-shadow-hover: 0 25px 60px rgba(0, 0, 0, 0.8);
             
             --cascade-distance: 24px;
             --cascade-duration-exit: 0.2s;
@@ -70,17 +73,20 @@
         }
 
         body.light-mode {
-            --bg-color: #ebebe4;
+            --bg-color: #f5f5f7;
             --text-main: #111111;
-            --text-muted: #a1a1a6;
+            --text-muted: #8e8e93;
             --panel-bg: #ffffff;
             --panel-border: #e2e2e7;
             --panel-border-hover: rgba(0, 0, 0, 0.10);
             --row-divider: #f2f2f7;
-            --row-hover: rgba(0, 0, 0, 0.01);
-
+            --row-hover: rgba(0, 0, 0, 0.02);
             --header-bg: #e9ebe6;
             --header-border: #d4d8cf;
+            --shadow-base: 0 4px 20px rgba(0, 0, 0, 0.02);
+            --shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.08);
+            --panel-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            --panel-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.08);
         }
 
         * {
@@ -354,18 +360,52 @@
             opacity: 0.9;
         }
 
-        .capsule-panel {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--panel-border);
-            border-radius: 28px;
-            padding: 40px;
-            margin-bottom: 80px;
-            box-shadow: none !important;
-            width: 100%;
-            transition: border-color 0.8s var(--ease-premium), background-color 0.8s var(--ease-premium);
+        .capsule-panel { 
+            background-color: var(--panel-bg); 
+            border: 1px solid var(--panel-border); 
+            border-radius: 24px; 
+            padding: 36px; 
+            margin-bottom: 80px; 
+            box-shadow: var(--shadow-base, var(--panel-shadow)); 
+            width: 100%; 
+            cursor: pointer;
+            user-select: none;
+            transform: scale(1);
+            transform-origin: center center;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 0.4s ease, 
+                        background-color 0.4s ease; 
         }
 
-        body:not(.light-mode) .capsule-panel { box-shadow: none !important; }
+        @media (hover: hover) and (pointer: fine) {
+            .capsule-panel:hover {
+                transform: scale(1.02) !important;
+                box-shadow: var(--shadow-hover, var(--panel-shadow-hover)) !important;
+                border-color: var(--panel-border-hover) !important;
+            }
+            .capsule-panel:hover .prose-text,
+            .capsule-panel:hover .panel-title,
+            .capsule-panel:hover .card-parallax-content {
+                transform: translateY(-6px) !important;
+            }
+        }
+
+        .prose-text,
+        .panel-title,
+        .card-parallax-content {
+            transform: translateY(0);
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .capsule-panel:active {
+                transform: scale(0.98) !important;
+                transition: transform 0.15s ease-out !important;
+            }
+        }
 
         .panel-title { font-size: 24px; font-weight: 400;
             letter-spacing: -0.4px;
@@ -476,10 +516,12 @@
         </div>
 
         <div class="capsule-panel">
-            <div class="prose-text">
-                <p>By accessing this website, you agree to be bound by these website Terms and Conditions of use. If you do not agree with any of these terms, you are prohibited from using or accessing this site.</p>
-                <p>The materials contained in this website are protected by applicable copyright and trademark law. Permission is granted to view the materials for personal, non-commercial transitory viewing only.</p>
-                <p>In no event shall Sathya or its suppliers be liable for any damages arising out of the use or inability to use the materials on this website, even if notified orally or in writing of the possibility of such damage.</p>
+            <div class="card-parallax-content">
+                <div class="prose-text">
+                    <p>By accessing this website, you agree to be bound by these website Terms and Conditions of use. If you do not agree with any of these terms, you are prohibited from using or accessing this site.</p>
+                    <p>The materials contained in this website are protected by applicable copyright and trademark law. Permission is granted to view the materials for personal, non-commercial transitory viewing only.</p>
+                    <p>In no event shall Sathya or its suppliers be liable for any damages arising out of the use or inability to use the materials on this website, even if notified orally or in writing of the possibility of such damage.</p>
+                </div>
             </div>
         </div>
     </main>

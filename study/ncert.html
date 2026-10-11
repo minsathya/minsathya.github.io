@@ -405,11 +405,12 @@
         @media (hover: hover) and (pointer: fine) {
             .subjects-detail-panel:hover {
                 transform: scale(1.02) !important;
-                box-shadow: var(--panel-shadow-hover) !important;
+                box-shadow: var(--shadow-hover, var(--panel-shadow-hover)) !important;
                 border-color: var(--panel-border-hover) !important;
             }
 
             /* Inner Front-Layer Drift (Header and content slide up independently and stay frozen) */
+            .subjects-detail-panel:hover .card-parallax-content,
             .subjects-detail-panel:hover .panel-header-row,
             .subjects-detail-panel:hover .panel-body {
                 transform: translateY(-6px) !important;
@@ -417,12 +418,20 @@
         }
 
         /* Inner Front-Layer Elements Setup */
+        .card-parallax-content,
         .panel-header-row,
         .subjects-detail-panel .panel-body {
             transform: translateY(0);
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .subjects-detail-panel:active {
+                transform: scale(0.98) !important;
+                transition: transform 0.15s ease-out !important;
+            }
         }
 
         .panel-header-row {
@@ -716,54 +725,56 @@
 
         <!-- Right Content Panel: Active NCERT Subject Display (No chapters tag) -->
         <section class="subjects-detail-panel master-entrance-run" id="ncertDetailPanel" aria-live="polite">
-            <div class="panel-header-row">
-                <h2 class="panel-subject-title">Indian society</h2>
-            </div>
-            <div class="panel-body">
-                <ul class="subject-topics-list">
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Class 06 : Social &amp; political life 1</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Class 07 : Social &amp; political life 2</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Class 08 : Social &amp; political life 3</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Class 11 : Understanding society</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Class 11 : Introducing sociology</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Class 12 : Indian society</span>
-                        </a>
-                    </li>
-                    <li class="subject-topic-item">
-                        <a href="#" class="subject-topic-link">
-                            <span class="topic-bullet">•</span>
-                            <span class="topic-title">Class 12 : Social change &amp; development in India</span>
-                        </a>
-                    </li>
-                </ul>
+            <div class="card-parallax-content">
+                <div class="panel-header-row">
+                    <h2 class="panel-subject-title">Indian society</h2>
+                </div>
+                <div class="panel-body">
+                    <ul class="subject-topics-list">
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Class 06 : Social &amp; political life 1</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Class 07 : Social &amp; political life 2</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Class 08 : Social &amp; political life 3</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Class 11 : Understanding society</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Class 11 : Introducing sociology</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Class 12 : Indian society</span>
+                            </a>
+                        </li>
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">Class 12 : Social change &amp; development in India</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </section>
 
@@ -930,11 +941,13 @@
             topicsHtml += '</ul>';
 
             panel.innerHTML = `
-                <div class="panel-header-row">
-                    <h2 class="panel-subject-title">${subject.title}</h2>
-                </div>
-                <div class="panel-body">
-                    ${topicsHtml}
+                <div class="card-parallax-content">
+                    <div class="panel-header-row">
+                        <h2 class="panel-subject-title">${subject.title}</h2>
+                    </div>
+                    <div class="panel-body">
+                        ${topicsHtml}
+                    </div>
                 </div>
             `;
 
