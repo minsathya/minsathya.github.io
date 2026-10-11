@@ -489,16 +489,19 @@
         /* -------------------------------------------------------------
            RAMSAR SITE MODAL DIALOG (SMOOTH SYMMETRIC POPUP ON LAPTOP, IPAD & PHONE)
            ------------------------------------------------------------- */
+        html {
+            scrollbar-gutter: stable;
+        }
+
         .modal {
             display: flex; 
             visibility: hidden; 
             opacity: 0; 
             pointer-events: none; 
             position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100vw; 
-            height: 100vh;
+            inset: 0;
+            width: 100%; 
+            height: 100%;
             background: rgba(0, 0, 0, 0.72); 
             backdrop-filter: blur(0px); 
             -webkit-backdrop-filter: blur(0px);
@@ -1556,9 +1559,9 @@
             }
             
             modalOpenTimestamp = Date.now();
+            if (typeof syncPopupOrigin === 'function') syncPopupOrigin();
             document.body.classList.add("popup-active");
             modal.classList.add("active");
-            document.body.style.overflow = "hidden";
         }
         window.openSite = openSite;
 
@@ -1572,11 +1575,6 @@
             if (document.activeElement && document.activeElement.blur) {
                 document.activeElement.blur();
             }
-            setTimeout(() => {
-                if (!modal || !modal.classList.contains("active")) {
-                    document.body.style.overflow = "";
-                }
-            }, 1200);
         }
         window.closeSite = closeSite;
 

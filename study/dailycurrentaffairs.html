@@ -467,8 +467,13 @@
             align-items: center;
             justify-content: space-between;
             gap: 20px;
-            transition: background-color 0.8s var(--ease-smooth), 
-                        border-color 0.8s var(--ease-smooth), 
+            transform: scale(1);
+            transform-origin: center center;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 0.4s ease, 
+                        background-color 0.8s var(--ease-smooth), 
                         box-shadow 0.8s var(--ease-smooth);
         }
 
@@ -481,6 +486,35 @@
             align-items: center;
             gap: 16px;
             flex-shrink: 0;
+            transform: translateY(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body:not(.popup-active) .date-topics-capsule:hover {
+                transform: scale(1.02);
+                border-color: var(--panel-border-hover);
+            }
+            body:not(.popup-active) .date-topics-capsule:hover .capsule-date-cluster {
+                transform: translateY(-6px);
+            }
+            .date-topics-capsule:active {
+                transform: scale(0.995);
+                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+            .date-topics-capsule:active .capsule-date-cluster {
+                transform: translateY(-6px);
+                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            .date-topics-capsule:active {
+                transform: scale(0.995) !important;
+                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            }
         }
 
         .cal-trigger-btn {
@@ -841,7 +875,7 @@
         .topic-full-drawer {
             display: grid;
             grid-template-rows: 0fr;
-            transition: grid-template-rows 0.48s var(--ease-smooth), margin 0.48s var(--ease-smooth);
+            transition: grid-template-rows 0.48s cubic-bezier(0.16, 1, 0.3, 1), margin 0.48s cubic-bezier(0.16, 1, 0.3, 1);
             width: 100%;
             margin: 0;
         }
@@ -863,18 +897,24 @@
             display: flex;
             flex-direction: column;
             opacity: 0;
-            transform: translate3d(0, -10px, 0);
-            transition: opacity 0.42s var(--ease-smooth), transform 0.42s var(--ease-smooth);
+            transform: translate3d(0, 18px, 0);
+            transition: opacity 0.26s cubic-bezier(0.25, 1, 0.5, 1), transform 0.28s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .topic-image-inner { align-items: center; }
 
-        .topic-image-drawer.is-open .topic-image-inner,
+        .topic-image-drawer.is-open .topic-image-inner {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+            transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1) 0.05s, transform 0.42s cubic-bezier(0.16, 1, 0.3, 1) 0.05s;
+        }
+
+        /* Seamless Reveal while exiting data descends */
         .topic-short-drawer.is-open .topic-short-inner,
         .topic-full-drawer.is-open .topic-full-inner {
             opacity: 1;
             transform: translate3d(0, 0, 0);
-            transition-delay: 0.05s;
+            transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1) 0.16s, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.16s;
         }
 
         .topic-image-inner img {
@@ -1070,11 +1110,16 @@
         }
 
         /* DRUM WHEEL MODAL */
+        html {
+            scrollbar-gutter: stable;
+        }
+
         .picker-backdrop {
             position: fixed;
             inset: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
             background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(0px);
             -webkit-backdrop-filter: blur(0px);
@@ -2309,6 +2354,7 @@
 
         openCalendarBtn.addEventListener('click', () => {
             initPickerColumns();
+            if (typeof syncPopupOrigin === 'function') syncPopupOrigin();
             document.body.classList.add('popup-active');
             pickerModal.classList.add('is-open');
             setTimeout(() => {

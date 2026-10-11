@@ -264,18 +264,22 @@
                 box-shadow: none !important;
             }
 
+            .capsule-panel:hover .panel-title {
+                transform: translateY(-6px);
+            }
+
             .capsule-panel:active {
                 transform: scale(0.995);
+                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+
+            .capsule-panel:active .panel-title {
+                transform: translateY(-6px);
                 transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1);
             }
         }
 
         /* Touch Devices (iPad / Phone): Tactile physical compression */
-        .capsule-panel.is-panel-lifted {
-            transform: scale(1.02) !important;
-            border-color: var(--panel-border-hover) !important;
-        }
-
         @media (hover: none), (pointer: coarse) {
             .capsule-panel:active {
                 transform: scale(0.995) !important;
@@ -290,7 +294,10 @@
             color: var(--text-main);
             margin-bottom: 24px;
             padding: 0 24px;
-            transition: color 0.4s var(--ease-smooth);
+            transform: translateY(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), color 0.4s var(--ease-smooth);
         }
 
         .document-list { 
@@ -540,31 +547,6 @@
         try {
             sessionStorage.removeItem('breadcrumbTrail');
         } catch (e) {}
-
-        // Capsule panel touch feedback
-        const capsulePanels = document.querySelectorAll('.capsule-panel');
-        capsulePanels.forEach(panel => {
-            panel.addEventListener('pointerdown', () => {
-                capsulePanels.forEach(p => {
-                    if (p !== panel) p.classList.remove('is-panel-lifted');
-                });
-                panel.classList.add('is-panel-lifted');
-            });
-
-            const releasePanelLift = () => {
-                panel.classList.remove('is-panel-lifted');
-            };
-
-            panel.addEventListener('pointerup', releasePanelLift);
-            panel.addEventListener('pointerleave', releasePanelLift);
-            panel.addEventListener('pointercancel', releasePanelLift);
-        });
-
-        document.addEventListener('pointerdown', (e) => {
-            if (!e.target.closest('.capsule-panel')) {
-                capsulePanels.forEach(p => p.classList.remove('is-panel-lifted'));
-            }
-        });
 
         // Target links with wave shimmer
         const targetLinks = document.querySelectorAll('.matrix-canvas a, footer .footer-links-row a, .brand-pill');

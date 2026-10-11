@@ -370,9 +370,26 @@
                 box-shadow: none !important;
             }
 
+            .capsule-panel:hover .panel-title {
+                transform: translateY(-6px);
+            }
+
             .capsule-panel:active {
                 transform: scale(0.995);
                 transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+
+            .capsule-panel:active .panel-title {
+                transform: translateY(-6px);
+                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+        }
+
+        /* Touch Devices (iPad / Phone): Tactile physical compression */
+        @media (hover: none), (pointer: coarse) {
+            .capsule-panel:active {
+                transform: scale(0.995) !important;
+                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1) !important;
             }
         }
 
@@ -383,7 +400,10 @@
             color: var(--text-main);
             margin-bottom: 24px;
             padding: 0 24px;
-            transition: color 0.8s var(--ease-smooth);
+            transform: translateY(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), color 0.8s var(--ease-smooth);
         }
 
         .document-list { list-style: none; display: flex; flex-direction: column; }
@@ -714,7 +734,7 @@
             }
         });
 
-        // Tactile Lift Handlers for All Capsule Panels
+        // Capsule Panels header dismissal
         const capsulePanels = document.querySelectorAll('.capsule-panel');
         capsulePanels.forEach(panel => {
             panel.addEventListener('pointerdown', () => {
@@ -724,16 +744,7 @@
                     searchCoreInput.blur();
                     masterHeader.classList.remove('is-header-lifted');
                 }
-                panel.classList.add('is-panel-lifted');
             });
-
-            const releasePanelLift = () => {
-                panel.classList.remove('is-panel-lifted');
-            };
-
-            panel.addEventListener('pointerup', releasePanelLift);
-            panel.addEventListener('pointerleave', releasePanelLift);
-            panel.addEventListener('pointercancel', releasePanelLift);
         });
 
         // Global Click-Outside Dismiss
@@ -829,15 +840,7 @@
                 if (!destination || destination === '#' || destination.startsWith('#')) return;
 
                 e.preventDefault();
-                // Clear active states across all panels and links
-                document.querySelectorAll('.capsule-panel').forEach(p => p.classList.remove('is-panel-lifted'));
                 universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
-
-                // Lift parent capsule panel if clicked link is inside one
-                const parentPanel = this.closest('.capsule-panel');
-                if (parentPanel) {
-                    parentPanel.classList.add('is-panel-lifted');
-                }
 
                 // Trigger wave shimmer animation
                 this.classList.add('is-wave-loading');
@@ -858,7 +861,6 @@
             requestAnimationFrame(() => {
                 document.body.offsetHeight; // Force layout paint frame
                 requestAnimationFrame(() => {
-                    document.querySelectorAll('.capsule-panel').forEach(p => p.classList.remove('is-panel-lifted'));
                     masterHeader.classList.remove('is-header-lifted');
                     universalTargetLinks.forEach(l => {
                         l.classList.remove('is-wave-loading');

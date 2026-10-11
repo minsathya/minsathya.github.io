@@ -38,6 +38,10 @@
             --shadow-lift: none !important;
         }
 
+        html {
+            scrollbar-gutter: stable;
+        }
+
         html, body, button, input, textarea, select, span, a, div, li, td, p, label {
             font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
@@ -354,7 +358,21 @@
             transform: none !important;
         }
 
-        /* Hover Elevation: 10/10 Micro-Interaction Depth Zoom */
+        /* Heading / Content Slide-Up Micro-Interaction Inside Panels */
+        .capsule-panel .panel-title,
+        .subjects-detail-panel .panel-header-row,
+        .date-topics-capsule .capsule-date-cluster,
+        .wide-capsule .wide-panel-title,
+        .card:not(:has(table)):not(:has(.table-wrap)) .card-header,
+        .card:not(:has(table)):not(:has(.table-wrap)) .card-title,
+        .panel-card .card-content {
+            transform: translateY(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+
+        /* Hover Elevation: 10/10 Micro-Interaction Depth Zoom & Heading Parallax Drift */
         @media (hover: hover) and (pointer: fine) {
             body:not(.popup-active) .subject-accordion-card:not(.is-open):hover,
             body:not(.popup-active) .wide-capsule:hover,
@@ -363,12 +381,25 @@
             body:not(.popup-active) .subjects-detail-panel:hover,
             body:not(.popup-active) .date-topics-capsule:hover,
             body:not(.popup-active) .myspace-card:hover,
-            body:not(.popup-active) .macro-card:hover {
+            body:not(.popup-active) .macro-card:hover,
+            body:not(.popup-active) .panel-card:hover {
                 transform: scale(1.02) !important;
                 border-color: var(--panel-border-hover) !important;
                 box-shadow: none !important;
             }
 
+            /* Heading slides up 6px and settles there while cursor is on panel */
+            body:not(.popup-active) .capsule-panel:hover .panel-title,
+            body:not(.popup-active) .subjects-detail-panel:hover .panel-header-row,
+            body:not(.popup-active) .date-topics-capsule:hover .capsule-date-cluster,
+            body:not(.popup-active) .wide-capsule:hover .wide-panel-title,
+            body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):hover .card-header,
+            body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):hover .card-title,
+            body:not(.popup-active) .panel-card:hover .card-content {
+                transform: translateY(-6px) !important;
+            }
+
+            /* Active (Click): Panel tactile compression 0.995, heading stays frozen at -6px */
             .subject-accordion-card:not(.is-open):active,
             .wide-capsule:active,
             .card:not(:has(table)):not(:has(.table-wrap)):active,
@@ -376,8 +407,20 @@
             .subjects-detail-panel:active,
             .date-topics-capsule:active,
             .myspace-card:active,
-            .macro-card:active {
+            .macro-card:active,
+            .panel-card:active {
                 transform: scale(0.995) !important;
+                transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            }
+
+            .capsule-panel:active .panel-title,
+            .subjects-detail-panel:active .panel-header-row,
+            .date-topics-capsule:active .capsule-date-cluster,
+            .wide-capsule:active .wide-panel-title,
+            .card:not(:has(table)):not(:has(.table-wrap)):active .card-header,
+            .card:not(:has(table)):not(:has(.table-wrap)):active .card-title,
+            .panel-card:active .card-content {
+                transform: translateY(-6px) !important;
                 transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1) !important;
             }
 
@@ -388,17 +431,7 @@
             }
         }
 
-        /* Touch Devices (iPad / Phone) Active Lift State (Excludes tables and articles) */
-        .capsule-panel.is-panel-lifted,
-        .card:not(:has(table)):not(:has(.table-wrap)).is-panel-lifted,
-        .wide-capsule.is-panel-lifted,
-        .subjects-detail-panel.is-panel-lifted,
-        .date-topics-capsule.is-panel-lifted {
-            transform: scale(1.02) !important;
-            border-color: var(--panel-border-hover) !important;
-            box-shadow: none !important;
-        }
-
+        /* Touch Devices (iPad / Phone) Active Compression */
         @media (hover: none), (pointer: coarse) {
             .subject-accordion-card:not(.is-open):active,
             .wide-capsule:active,
@@ -407,7 +440,8 @@
             .subjects-detail-panel:active,
             .date-topics-capsule:active,
             .myspace-card:active,
-            .macro-card:active {
+            .macro-card:active,
+            .panel-card:active {
                 transform: scale(0.995) !important;
                 transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1) !important;
             }
@@ -422,15 +456,15 @@
             transform: scale(1);
             transform-origin: center center;
             box-sizing: border-box;
+            will-change: transform, border-radius;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
             transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-radius 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        background-color 0.4s ease, 
-                        color 0.4s ease;
+                        border-radius 0.65s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         body.popup-active {
             background-color: #000000 !important;
-            overflow: hidden !important;
         }
 
         body.popup-active .page-wrapper {
@@ -801,24 +835,75 @@ window.addEventListener('pageshow', (event) => {
     });
 });
 
-// 6. UNIVERSAL PANEL TOUCH LIFT FEEDBACK (MATCHES HOMESCREEN ON IPAD & PHONE)
+// 6. UNIVERSAL PANEL TOUCH FEEDBACK (TACTILE COMPRESSION ON IPAD & PHONE)
 document.addEventListener('pointerdown', (e) => {
-    // Never lift tables, article cards, or interactive modals
     if (e.target.closest('.card:has(table), .card:has(.table-wrap), .article-card, table, .modal, .modal-card, button, a')) return;
-    const panel = e.target.closest('.capsule-panel, .card, .wide-capsule, .subjects-detail-panel, .date-topics-capsule');
+    const panel = e.target.closest('.capsule-panel, .card, .wide-capsule, .subjects-detail-panel, .date-topics-capsule, .panel-card');
     if (panel) {
-        document.querySelectorAll('.is-panel-lifted').forEach(p => {
-            if (p !== panel) p.classList.remove('is-panel-lifted');
-        });
-        panel.classList.add('is-panel-lifted');
-    } else {
-        document.querySelectorAll('.is-panel-lifted').forEach(p => p.classList.remove('is-panel-lifted'));
+        panel.style.transform = 'scale(0.995)';
+        panel.style.transition = 'transform 0.08s cubic-bezier(0.25, 1, 0.5, 1)';
     }
 }, { passive: true });
 
-const releaseAllPanelLifts = () => {
-    document.querySelectorAll('.is-panel-lifted').forEach(p => p.classList.remove('is-panel-lifted'));
+const resetAllPanelTouches = (e) => {
+    const panel = e && e.target ? e.target.closest('.capsule-panel, .card, .wide-capsule, .subjects-detail-panel, .date-topics-capsule, .panel-card') : null;
+    if (panel) {
+        panel.style.transform = '';
+        panel.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+    } else {
+        document.querySelectorAll('.capsule-panel, .card, .wide-capsule, .subjects-detail-panel, .date-topics-capsule, .panel-card').forEach(p => {
+            if (p.style.transform && p.style.transform.includes('0.995')) {
+                p.style.transform = '';
+                p.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+            }
+        });
+    }
 };
-document.addEventListener('pointerup', releaseAllPanelLifts, { passive: true });
-document.addEventListener('pointercancel', releaseAllPanelLifts, { passive: true });
+document.addEventListener('pointerup', resetAllPanelTouches, { passive: true });
+document.addEventListener('pointercancel', resetAllPanelTouches, { passive: true });
+
+// 7. UNIVERSAL POPUP DEPTH CENTERING (SCALES BACK SYMMETRICALLY WITHOUT SHIFTING DOWN)
+function syncPopupOrigin() {
+    const pageWrapper = document.getElementById('pageWrapper') || document.querySelector('.page-wrapper');
+    if (!pageWrapper) return;
+    const scrollY = window.scrollY || window.pageYOffset || 0;
+    const centerY = scrollY + (window.innerHeight / 2);
+    pageWrapper.style.transformOrigin = `center ${centerY}px`;
+}
+window.syncPopupOrigin = syncPopupOrigin;
+
+// Continuously keep origin centered on the user's visible viewport
+window.addEventListener('scroll', () => {
+    if (!document.body.classList.contains('popup-active')) {
+        syncPopupOrigin();
+    }
+}, { passive: true });
+
+window.addEventListener('resize', () => {
+    if (!document.body.classList.contains('popup-active')) {
+        syncPopupOrigin();
+    }
+}, { passive: true });
+
+// Initial sync on DOM ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', syncPopupOrigin);
+} else {
+    syncPopupOrigin();
+}
+
+if (typeof MutationObserver !== 'undefined') {
+    const popupObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'class') {
+                const hasPopup = document.body.classList.contains('popup-active');
+                if (hasPopup) {
+                    syncPopupOrigin();
+                }
+            }
+        });
+    });
+    popupObserver.observe(document.body, { attributes: true });
+}
+
 
