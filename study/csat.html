@@ -66,6 +66,8 @@
             --panel-border-hover: rgba(255, 255, 255, 0.11);
             --row-divider: #1c1c1c;
             --row-hover: rgba(255, 255, 255, 0.015);
+            --panel-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+            --panel-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.85);
         }
 
         body.light-mode {
@@ -77,6 +79,8 @@
             --panel-border-hover: rgba(0, 0, 0, 0.10);
             --row-divider: #f2f2f7;
             --row-hover: rgba(0, 0, 0, 0.01);
+            --panel-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            --panel-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.08);
         }
 
         html {
@@ -378,27 +382,43 @@
             border: 1px solid var(--panel-border);
             border-radius: 24px;
             padding: 32px 36px;
-            box-shadow: none !important;
+            box-shadow: var(--panel-shadow);
+            cursor: pointer;
+            user-select: none;
             transform: scale(1);
             transform-origin: center center;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             will-change: transform, opacity;
+            /* 0.5s deceleration ease-out curve handles graceful return when mouse leaves */
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1),
                         border-color 0.4s ease, 
                         background-color 0.4s ease;
         }
 
+        /* Outer Frame Zoom & Deep Ambient Glow (Laptop / fine pointer) */
         @media (hover: hover) and (pointer: fine) {
             .subjects-detail-panel:hover {
                 transform: scale(1.02) !important;
+                box-shadow: var(--panel-shadow-hover) !important;
                 border-color: var(--panel-border-hover) !important;
             }
 
-            .subjects-detail-panel:hover .panel-header-row {
+            /* Inner Front-Layer Drift (Header and content slide up independently and stay frozen) */
+            .subjects-detail-panel:hover .panel-header-row,
+            .subjects-detail-panel:hover .panel-body {
                 transform: translateY(-6px) !important;
             }
+        }
 
+        /* Inner Front-Layer Elements Setup */
+        .panel-header-row,
+        .subjects-detail-panel .panel-body {
+            transform: translateY(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .panel-header-row {
@@ -408,10 +428,6 @@
             padding-bottom: 20px;
             border-bottom: 1px solid var(--row-divider);
             margin-bottom: 24px;
-            transform: translateY(0);
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .panel-subject-title {

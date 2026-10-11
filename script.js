@@ -19,8 +19,8 @@
             --panel-border-hover: rgba(255, 255, 255, 0.11);
             --row-divider: #1c1c1c;
             --row-hover: rgba(255, 255, 255, 0.02);
-            --shadow-ambient: none;
-            --shadow-lift: none;
+            --panel-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+            --panel-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.85);
         }
 
         /* Root CSS Variables - Light Mode (#f5f5f7, Panel #ffffff) */
@@ -34,8 +34,8 @@
             --panel-border-hover: rgba(0, 0, 0, 0.10) !important;
             --row-divider: #f2f2f7 !important;
             --row-hover: rgba(0, 0, 0, 0.02) !important;
-            --shadow-ambient: none !important;
-            --shadow-lift: none !important;
+            --panel-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important;
+            --panel-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.08) !important;
         }
 
         html {
@@ -318,27 +318,30 @@
         }
 
         /* -------------------------------------------------------------
-           UNIVERSAL FLAT DESIGN & HOMESCREEN-MATCHED PANEL ZOOM
-           Every panel site-wide matches homescreen hover/touch zoom
+           10/10 CORE TOUCH / HOVER INTERACTION SYSTEM
+           Exact deceleration curves, deep ambient glow, and inner front-layer drift
            ------------------------------------------------------------- */
+        .panel-card,
         .capsule-panel,
-        .subject-accordion-card,
-        .card,
-        .wide-capsule,
         .subjects-detail-panel,
-        .article-card,
-        .date-topics-capsule,
+        .subject-accordion-card,
+        .wide-capsule,
         .empty-placeholder-card,
         .info-callout,
         .myspace-card,
         .macro-card,
-        .day-switcher-capsule {
-            box-shadow: none !important;
+        .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card) {
+            box-shadow: var(--panel-shadow) !important;
+            border: 1px solid var(--panel-border);
+            cursor: pointer;
+            user-select: none;
             transform: scale(1);
             transform-origin: center center;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
+            /* 0.5s deceleration ease-out curve handles a graceful return when mouse leaves */
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1),
                         border-color 0.4s ease, 
                         background-color 0.4s ease !important;
         }
@@ -351,51 +354,47 @@
             align-self: flex-start !important;
         }
 
-        /* Tables and article cards MUST NEVER lift or shake on hover or touch */
-        .card:has(table),
-        .card:has(.table-wrap),
-        .article-card {
-            transform: none !important;
-        }
-
-        /* Heading / Content Slide-Up Micro-Interaction Inside Panels */
+        /* Inner Front-Layer Elements Setup (Handles smooth return on mouse leave) */
+        .card-content,
         .capsule-panel .panel-title,
+        .capsule-panel .document-list,
         .subjects-detail-panel .panel-header-row,
-        .date-topics-capsule .capsule-date-cluster,
+        .subjects-detail-panel .panel-body,
         .wide-capsule .wide-panel-title,
-        .card:not(:has(table)):not(:has(.table-wrap)) .card-header,
-        .card:not(:has(table)):not(:has(.table-wrap)) .card-title,
-        .panel-card .card-content {
+        .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card) .card-header,
+        .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card) .card-body,
+        .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card) .card-content {
             transform: translateY(0);
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
-        /* Hover Elevation: 10/10 Micro-Interaction Depth Zoom & Heading Parallax Drift */
+        /* Outer Frame Zoom & Deep Ambient Glow (Laptop / fine pointer) */
         @media (hover: hover) and (pointer: fine) {
-            body:not(.popup-active) .subject-accordion-card:not(.is-open):hover,
-            body:not(.popup-active) .wide-capsule:hover,
-            body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):hover,
+            body:not(.popup-active) .panel-card:hover,
             body:not(.popup-active) .capsule-panel:hover,
             body:not(.popup-active) .subjects-detail-panel:hover,
-            body:not(.popup-active) .date-topics-capsule:hover,
+            body:not(.popup-active) .subject-accordion-card:not(.is-open):hover,
+            body:not(.popup-active) .wide-capsule:hover,
+            body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card):hover,
             body:not(.popup-active) .myspace-card:hover,
-            body:not(.popup-active) .macro-card:hover,
-            body:not(.popup-active) .panel-card:hover {
+            body:not(.popup-active) .macro-card:hover {
                 transform: scale(1.02) !important;
+                box-shadow: var(--panel-shadow-hover) !important;
                 border-color: var(--panel-border-hover) !important;
-                box-shadow: none !important;
             }
 
-            /* Heading slides up 6px and settles there while cursor is on panel */
+            /* Inner Front-Layer Drift (Text/content slides up independently and stays frozen) */
+            body:not(.popup-active) .panel-card:hover .card-content,
             body:not(.popup-active) .capsule-panel:hover .panel-title,
+            body:not(.popup-active) .capsule-panel:hover .document-list,
             body:not(.popup-active) .subjects-detail-panel:hover .panel-header-row,
-            body:not(.popup-active) .date-topics-capsule:hover .capsule-date-cluster,
+            body:not(.popup-active) .subjects-detail-panel:hover .panel-body,
             body:not(.popup-active) .wide-capsule:hover .wide-panel-title,
-            body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):hover .card-header,
-            body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):hover .card-title,
-            body:not(.popup-active) .panel-card:hover .card-content {
+            body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card):hover .card-header,
+            body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card):hover .card-body,
+            body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card):hover .card-content {
                 transform: translateY(-6px) !important;
             }
 
@@ -406,13 +405,23 @@
             }
         }
 
-        /* Reading panels stay completely freeze without any interaction animations */
+        /* CALENDAR PANEL, READING PANELS & TABLES MUST REMAIN COMPLETELY FREEZE (NO HARSH ZOOM) */
+        .card:has(table),
+        .card:has(.table-wrap),
         .article-card,
         .topics-feed,
+        .date-topics-capsule,
         .article-card:hover,
         .article-card:active,
         .topics-feed:hover,
-        .topics-feed:active {
+        .topics-feed:active,
+        .date-topics-capsule:hover,
+        .date-topics-capsule:active {
+            transform: none !important;
+        }
+
+        .date-topics-capsule .capsule-date-cluster,
+        .date-topics-capsule:hover .capsule-date-cluster {
             transform: none !important;
         }
 

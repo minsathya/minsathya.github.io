@@ -50,6 +50,9 @@
             --row-hover: rgba(255, 255, 255, 0.015);
             --header-bg: #1a231e;
             --header-border: #222c26;
+            --panel-border-hover: rgba(255, 255, 255, 0.11);
+            --panel-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+            --panel-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.85);
             
             /* Vertical cascade parameters */
             --cascade-distance: 24px;
@@ -67,6 +70,9 @@
             --row-hover: rgba(0, 0, 0, 0.01);
             --header-bg: #e9ebe6;
             --header-border: #d4d8cf;
+            --panel-border-hover: rgba(0, 0, 0, 0.10);
+            --panel-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            --panel-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.08);
         }
 
         * {
@@ -343,7 +349,9 @@
             border: 1px solid var(--panel-border);
             border-radius: 28px;
             padding: 32px 8px 16px 8px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+            box-shadow: var(--panel-shadow);
+            cursor: pointer;
+            user-select: none;
             display: flex;
             flex-direction: column;
             height: 100%;
@@ -355,25 +363,35 @@
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
             
+            /* 0.5s deceleration ease-out curve handles graceful return when mouse leaves */
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1),
                         border-color 0.4s ease, 
                         background-color 0.4s ease;
         }
 
-        body:not(.light-mode) .capsule-panel { box-shadow: none !important; }
-
-        /* 10/10 Micro-Interaction Core: Smooth Depth Zoom on Laptop */
+        /* Outer Frame Zoom & Deep Ambient Glow (Laptop / Fine pointer) */
         @media (hover: hover) and (pointer: fine) {
             .capsule-panel:hover { 
                 border-color: var(--panel-border-hover); 
                 transform: scale(1.02); 
-                box-shadow: none !important;
+                box-shadow: var(--panel-shadow-hover);
             }
 
-            .capsule-panel:hover .panel-title {
+            /* Inner Front-Layer Drift (Title and list slide up independently and stay frozen) */
+            .capsule-panel:hover .panel-title,
+            .capsule-panel:hover .document-list {
                 transform: translateY(-6px);
             }
+        }
 
+        /* Inner Front-Layer Elements Setup */
+        .panel-title,
+        .document-list {
+            transform: translateY(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .panel-title {
@@ -383,9 +401,6 @@
             color: var(--text-main);
             margin-bottom: 24px;
             padding: 0 24px;
-            transform: translateY(0);
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), color 0.8s var(--ease-smooth);
         }
 
