@@ -46,7 +46,7 @@
     <!-- Google Fonts: Google Sans Flex -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400&display=swap" rel="stylesheet">
 
     <!-- Pre-load Current Affairs Data for Zero Network Wait on Refresh -->
     <script src="/study/currentaffairs-data/05-10-2026.js"></script>
@@ -1237,11 +1237,9 @@
             transition: transform 0.4s var(--ease-smooth), opacity 0.4s var(--ease-smooth);
         }
 
-        @media (hover: hover) and (pointer: fine) {
-            .footer-links-row a:hover .nav-text,
-            .logo:hover .nav-text {
-                transform: scale3d(1.05, 1.05, 1) !important;
-            }
+        .footer-links-row a:hover .nav-text,
+        .logo:hover .nav-text {
+            transform: scale3d(1.06, 1.06, 1) !important;
         }
 
         @keyframes fluidWave {

@@ -56,7 +56,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400&display=swap" rel="stylesheet">
     <style>
         /* Unified Token System Mapped Directly From index.html */
         :root {
@@ -150,12 +150,12 @@
             width: 100%;
             height: 72px;
             margin: 0 auto 60px auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+            box-shadow: none !important;
             overflow: hidden;
-            transition: background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+            transition: background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium);
         }
 
-        body:not(.light-mode) header { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); }
+        body:not(.light-mode) header { box-shadow: none !important; }
 
         .header-inner-view {
             position: absolute; inset: 0; width: 100%; height: 100%;
@@ -176,7 +176,7 @@
         @keyframes skyfallEntry { 0% { transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0); opacity: 0; } 100% { transform: translate3d(0, 0, 0); opacity: 1; } }
 
         .header-right-cluster, .search-control-cluster { display: flex; align-items: center; gap: 20px; flex-shrink: 0; height: 100%; }
-        .logo { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; color: var(--text-main); text-decoration: none !important; transition: color 0.8s var(--ease-premium); flex-shrink: 0; }
+        .logo { font-size: 26px; font-weight: 400; letter-spacing: -0.5px; color: var(--text-main); text-decoration: none !important; transition: color 0.8s var(--ease-premium); flex-shrink: 0; }
         .ctrl-btn { background: none; border: none; outline: none; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; flex-shrink: 0; transition: opacity 0.2s var(--ease-premium), color 0.8s var(--ease-premium); }
         .ctrl-btn:hover { opacity: 0.6; }
         .ctrl-btn svg, .search-static-icon { width: 22px; height: 22px; fill: none; stroke: var(--text-main); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.8s var(--ease-premium); }
@@ -200,14 +200,14 @@
         .breadcrumb-current { color: var(--text-main); opacity: 0.8; }
 
         .contents-container { display: flex; flex-grow: 1; flex-direction: column; gap: 32px; margin-bottom: 80px; width: 100%; }
-        .page-main-heading { font-size: 24px; font-weight: 600; letter-spacing: -0.5px; color: var(--text-main); margin-bottom: 12px; padding-left: 8px; transition: color 0.8s var(--ease-premium); }
+        .page-main-heading { font-size: 24px; font-weight: 400; letter-spacing: -0.5px; color: var(--text-main); margin-bottom: 12px; padding-left: 8px; transition: color 0.8s var(--ease-premium); }
 
         .wide-capsule {
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 28px;
             padding: 32px 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+            box-shadow: none !important;
             display: flex;
             flex-direction: column;
             width: 100%;
@@ -217,10 +217,10 @@
             backface-visibility: hidden;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
-            transition: border-color 0.8s var(--ease-premium), background-color 0.8s var(--ease-premium), transform 0.5s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+            transition: border-color 0.8s var(--ease-premium), background-color 0.8s var(--ease-premium), transform 0.5s var(--ease-premium);
         }
 
-        body:not(.light-mode) .wide-capsule { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+        body:not(.light-mode) .wide-capsule { box-shadow: none !important; }
         .wide-capsule:hover { border-color: #1E1E1E; }
         body.light-mode .wide-capsule:hover { border-color: #b8b8bc; }
 
@@ -234,7 +234,7 @@
 
         .wide-panel-title { 
             font-size: 20px; 
-            font-weight: 600; 
+            font-weight: 400; 
             letter-spacing: -0.3px; 
             color: var(--text-main); 
             transition: color 0.8s var(--ease-premium); 
@@ -365,32 +365,41 @@
         .topics-vertical-stack li:last-child { border-bottom: none; }
 
         .topics-vertical-stack a {
-            display: block;
+            display: inline-flex;
+            align-items: center;
             width: 100%;
             padding: 14px 0 14px 24px;
             color: var(--text-main);
-            opacity: 0.8;
+            opacity: 0.85;
             text-decoration: none !important;
             font-size: 15.5px;
             font-weight: 400;
             position: relative;
-            transition: color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), padding 0.4s var(--ease-premium);
+            transform-origin: left center;
+            will-change: transform, opacity;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transition: color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), transform 0.4s var(--ease-premium);
         }
 
         .topics-vertical-stack a::before { 
             content: "·"; 
             position: absolute; 
-            left: 4px; 
+            left: 6px; 
             color: var(--text-muted); 
             font-size: 22px; 
-            font-weight: 700;
+            font-weight: 400;
             top: 50%; 
             transform: translateY(-50%); 
             transition: color 0.4s var(--ease-premium); 
         }
         
-        .topics-vertical-stack li:hover a { opacity: 1 !important; padding-left: 30px !important; }
-        .topics-vertical-stack li:hover a::before { color: var(--text-main); }
+        .topics-vertical-stack a:hover { 
+            opacity: 1 !important; 
+            color: var(--text-main) !important;
+            transform: scale3d(1.06, 1.06, 1);
+        }
+        .topics-vertical-stack a:hover::before { color: var(--text-main); }
 
         .capsule-bottom-row {
             display: flex;
@@ -414,11 +423,10 @@
         }
 
         .footer-links-row a .nav-text { color: var(--text-muted) !important; }
-        .footer-links-row a:hover .nav-text { color: var(--text-main) !important; }
-
-        /* Zoom on hover ONLY for real mouse pointers (Laptop/Desktop). Touch screens will NOT trigger this. */
-        
-
+        .footer-links-row a:hover .nav-text { 
+            color: var(--text-main) !important;
+            transform: scale3d(1.06, 1.06, 1) !important;
+        }
     </style>
 </head>
 <body>

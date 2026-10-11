@@ -34,7 +34,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -394,7 +394,7 @@
 
         .panel-title {
             font-size: 20px;
-            font-weight: 600;
+            font-weight: 400;
             letter-spacing: -0.3px;
             color: var(--text-main);
             margin-bottom: 24px;
@@ -478,7 +478,7 @@
 
         .view-more-link {
             color: #8a9a86 !important;
-            font-weight: 600;
+            font-weight: 400;
             text-decoration: none !important;
             font-size: 0.95rem;
             display: inline-block;
@@ -501,14 +501,12 @@
         .footer-links-row a:hover .nav-text { color: var(--text-main); }
         .view-more-link .nav-text { color: #8a9a86; }
 
-        /* Mouse Hover Zoom for Laptop/Desktop */
-        @media (hover: hover) and (pointer: fine) {
-            .matrix-canvas a:hover .nav-text,
-            .view-more-link:hover .nav-text,
-            .footer-links-row a:hover .nav-text,
-            .logo:hover .nav-text {
-                transform: scale3d(1.06, 1.06, 1) !important;
-            }
+        /* Mouse Hover Zoom */
+        .matrix-canvas a:hover .nav-text,
+        .view-more-link:hover .nav-text,
+        .footer-links-row a:hover .nav-text,
+        .logo:hover .nav-text {
+            transform: scale3d(1.06, 1.06, 1) !important;
         }
 
         /* Fluid Wave Animation Engine */

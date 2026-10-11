@@ -46,7 +46,7 @@
     <!-- Google Sans Flex Font Integration -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400&display=swap" rel="stylesheet">
     
     <style>
         /* Modern Token System */
@@ -128,7 +128,7 @@
 
         .status-title {
             font-size: 32px;
-            font-weight: 600;
+            font-weight: 400;
             margin-bottom: 8px;
             letter-spacing: -0.5px;
             color: var(--text-main);
@@ -172,14 +172,18 @@
             padding: 14px 32px;
             border-radius: 40px;
             font-size: 15px;
-            font-weight: 500;
+            font-weight: 400;
             cursor: pointer;
             white-space: nowrap;
             background-color: var(--panel-bg);
             color: var(--text-main);
             border: 1px solid var(--panel-border);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            box-shadow: none !important;
             transition: transform 0.2s var(--ease-premium), background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium), color 0.8s var(--ease-premium);
+        }
+
+        .capsule-panel:hover {
+            transform: scale3d(1.04, 1.04, 1);
         }
 
         .capsule-panel svg {
@@ -208,8 +212,10 @@
             transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
         }
 
-        /* Touch-Safe Hover Configurations */
-        
+        .back-home-btn:hover .nav-text {
+            color: var(--text-main);
+            transform: scale3d(1.06, 1.06, 1) !important;
+        }
 
     </style>
 </head>

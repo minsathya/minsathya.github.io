@@ -36,8 +36,9 @@
             --shadow-lift: none !important;
         }
 
-        html, body, button, input, textarea, select {
+        html, body, button, input, textarea, select, h1, h2, h3, h4, h5, h6, p, span, a, div, li, th, td, strong, b, label {
             font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-weight: 400 !important;
         }
 
         html, body {
@@ -82,7 +83,7 @@
             border: none !important;
             text-decoration: none !important;
             font-size: 42px !important;
-            font-weight: 700 !important;
+            font-weight: 400 !important;
             letter-spacing: -1.2px !important;
             line-height: 1 !important;
             box-shadow: none !important;
@@ -250,21 +251,29 @@
         }
 
         /* -------------------------------------------------------------
-           CLICKABLE WORDS ZOOM TOWARDS US STRAIGHT ACROSS SITE
-           Only the inner text span or word zooms, never the outer block/link!
+           CLICKABLE WORDS ZOOM TOWARDS US STRAIGHT ACROSS SITE (IMAGE 1)
+           Reliable across laptop cursor hover, tablets, and mobile
            ------------------------------------------------------------- */
         .nav-text,
         .site-name,
         .sortable,
         .topic-title,
-        .subject-topic-link .topic-title {
+        .subject-topic-link,
+        .subject-topic-link .topic-title,
+        .topics-column-grid a,
+        .topics-vertical-stack a,
+        .ncert-links a,
+        .document-list a,
+        .matrix-canvas a,
+        .footer-links-row a,
+        a:not(.brand-pill):not(.back-icon-btn) {
+            cursor: pointer !important;
             display: inline-block !important;
-            transform-origin: left center !important;
             backface-visibility: hidden !important;
             -webkit-backface-visibility: hidden !important;
             will-change: transform;
-            transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1), 
-                        opacity 0.32s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), 
+                        color 0.28s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
         .footer-links-row a,
@@ -273,36 +282,45 @@
             transform-origin: center center !important;
         }
 
-        /* Generic inline clickable links */
-        a:not(.brand-pill):not(.back-icon-btn):not(.subject-topic-link):not(.document-list a) {
-            display: inline-block;
-            transform-origin: left center;
-            will-change: transform;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        .site-name,
+        .topic-title,
+        .subject-topic-link,
+        .subject-topic-link .topic-title,
+        .topics-column-grid a,
+        .topics-vertical-stack a,
+        .ncert-links a,
+        .document-list a,
+        .matrix-canvas a,
+        a:not(.brand-pill):not(.back-icon-btn) {
+            transform-origin: left center !important;
         }
 
-        .footer-links-row a {
-            transform-origin: center center !important;
+        /* Forward Zoom Animation on Hover */
+        .footer-links-row a:hover,
+        .footer-links-row a:hover .nav-text,
+        .matrix-canvas a:hover,
+        .matrix-canvas a:hover .nav-text,
+        .document-list a:hover,
+        .document-list a:hover .nav-text,
+        .topics-column-grid a:hover,
+        .topics-column-grid a:hover .nav-text,
+        .topics-vertical-stack a:hover,
+        .topics-vertical-stack a:hover .nav-text,
+        .ncert-links a:hover,
+        .site-name:hover,
+        .sortable:hover,
+        .subject-topic-link:hover,
+        .subject-topic-link:hover .topic-title,
+        a:not(.brand-pill):not(.back-icon-btn):hover {
+            transform: scale3d(1.06, 1.06, 1) !important;
         }
 
-        @media (hover: hover) and (pointer: fine) {
-            .footer-links-row a:hover .nav-text,
-            .footer-links-row a:hover,
-            .matrix-canvas a:hover .nav-text,
-            .document-list a:hover .nav-text,
-            .topics-column-grid a:hover .nav-text,
-            .topics-column-grid a:hover,
-            .topics-vertical-stack a:hover .nav-text,
-            .topics-vertical-stack a:hover,
-            .site-name:hover,
-            .sortable:hover,
-            .subject-topic-link:hover .topic-title,
-            a:not(.brand-pill):not(.back-icon-btn):hover .nav-text,
-            a:not(.brand-pill):not(.back-icon-btn):not(:has(.nav-text)):hover {
-                transform: scale3d(1.06, 1.06, 1) !important;
-            }
+        /* Prevent double scaling when both parent anchor and child span exist */
+        a:has(> .nav-text):hover {
+            transform: none !important;
+        }
+        a:hover > .nav-text {
+            transform: scale3d(1.06, 1.06, 1) !important;
         }
 
         @media (max-width: 700px) {
@@ -345,7 +363,7 @@
     }
 })();
 
-// Ensure Google Sans Flex is always dynamically loaded in <head>
+// Ensure Google Sans Flex Regular (wght@400) is always dynamically loaded in <head>
 (function ensureGoogleSansFlex() {
     if (typeof document === 'undefined') return;
     const existing = document.querySelector('link[href*="Google+Sans+Flex"]');
@@ -363,7 +381,7 @@
 
         const link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href = 'https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700;800&display=swap';
+        link.href = 'https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400&display=swap';
         document.head.appendChild(link);
     }
 })();

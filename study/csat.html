@@ -56,7 +56,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400&display=swap" rel="stylesheet">
     <style>
         /* Unified Token System Mapped Directly From index.html */
         :root {
@@ -200,14 +200,14 @@
         .breadcrumb-current { color: var(--text-main); opacity: 0.8; }
 
         .contents-container { display: flex; flex-direction: column; gap: 32px; margin-bottom: 80px; width: 100%; }
-        .page-main-heading { font-size: 24px; font-weight: 600; letter-spacing: -0.5px; color: var(--text-main); margin-bottom: 12px; padding-left: 8px; transition: color 0.8s var(--ease-premium); }
+        .page-main-heading { font-size: 24px; font-weight: 400; letter-spacing: -0.5px; color: var(--text-main); margin-bottom: 12px; padding-left: 8px; transition: color 0.8s var(--ease-premium); }
 
         .wide-capsule {
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 28px;
             padding: 40px 48px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+            box-shadow: none !important;
             display: flex;
             flex-direction: column;
             width: 100%;
@@ -217,35 +217,39 @@
             backface-visibility: hidden;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
-            transition: border-color 0.8s var(--ease-premium), background-color 0.8s var(--ease-premium), transform 0.5s var(--ease-premium), box-shadow 0.8s var(--ease-premium);
+            transition: border-color 0.8s var(--ease-premium), background-color 0.8s var(--ease-premium), transform 0.5s var(--ease-premium);
         }
 
-        body:not(.light-mode) .wide-capsule { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
-        .wide-capsule:hover { border-color: #1E1E1E; }
-        body.light-mode .wide-capsule:hover { border-color: #b8b8bc; }
+        body:not(.light-mode) .wide-capsule { box-shadow: none !important; }
+        .wide-capsule:hover { border-color: rgba(255, 255, 255, 0.16); box-shadow: none !important; }
+        body.light-mode .wide-capsule:hover { border-color: rgba(0, 0, 0, 0.14); box-shadow: none !important; }
 
-        .wide-panel-title { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; color: var(--text-main); margin-bottom: 28px; transition: color 0.8s var(--ease-premium); }
+        .wide-panel-title { font-size: 20px; font-weight: 400; letter-spacing: -0.3px; color: var(--text-main); margin-bottom: 28px; transition: color 0.8s var(--ease-premium); }
         
         .topics-column-grid { list-style: none; display: grid; grid-template-columns: 1fr; gap: 0px 64px; }
-        .topics-column-grid li { border-bottom: 1px solid var(--row-divider); display: flex; align-items: center; transition: border-color 0.8s var(--ease-premium); }
+        .topics-column-grid li { border-bottom: 1px solid var(--row-divider); display: flex; align-items: center; padding: 14px 0 14px 8px; transition: border-color 0.8s var(--ease-premium); }
         .topics-column-grid li:last-child { border-bottom: none; }
+        .topics-column-grid li::before { content: "•"; margin-right: 12px; color: var(--text-muted); font-size: 16px; flex-shrink: 0; line-height: 1; transition: color 0.3s var(--ease-smooth); }
+        .topics-column-grid li:hover::before { color: var(--text-main); }
 
         .topics-column-grid a {
-            display: block;
-            width: 100%;
-            padding: 14px 0 14px 16px;
+            display: inline-block !important;
             color: var(--text-main);
-            opacity: 0.8;
+            opacity: 0.85;
             text-decoration: none !important;
             font-size: 15.5px;
             font-weight: 400;
-            position: relative;
-            transition: color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), padding 0.4s var(--ease-premium);
+            transform-origin: left center !important;
+            backface-visibility: hidden !important;
+            -webkit-backface-visibility: hidden !important;
+            will-change: transform;
+            transition: color 0.3s var(--ease-smooth), opacity 0.3s var(--ease-smooth), transform 0.28s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
-        .topics-column-grid a::before { content: "•"; position: absolute; left: 0; color: var(--text-muted); font-size: 16px; top: 50%; transform: translateY(-50%); transition: color 0.4s var(--ease-premium); }
-        .topics-column-grid li:hover a { opacity: 1 !important; padding-left: 20px !important; }
-        .topics-column-grid li:hover a::before { color: var(--text-main); }
+        .topics-column-grid a:hover {
+            opacity: 1 !important;
+            transform: scale3d(1.06, 1.06, 1) !important;
+        }
 
         footer { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
         .footer-links-row { display: flex; justify-content: center; align-items: center; gap: 32px; flex-wrap: wrap; width: 100%; }
@@ -264,14 +268,11 @@
         .footer-links-row a .nav-text { color: var(--text-muted) !important; }
         .footer-links-row a:hover .nav-text { color: var(--text-main) !important; }
 
-        /* Zoom on hover ONLY for real mouse pointers (Laptop/Desktop). Touch screens will NOT trigger this. */
-        @media (hover: hover) and (pointer: fine) {
-            .contents-container a:hover .nav-text, 
-            .breadcrumb-nav a:hover .nav-text, 
-            .footer-links-row a:hover .nav-text, 
-            .logo:hover .nav-text { 
-                transform: scale3d(1.06, 1.06, 1) !important; 
-            }
+        .contents-container a:hover .nav-text, 
+        .breadcrumb-nav a:hover .nav-text, 
+        .footer-links-row a:hover .nav-text, 
+        .logo:hover .nav-text { 
+            transform: scale3d(1.06, 1.06, 1) !important; 
         }
 
         /* --- GPU-Accelerated Continuous Fluid Wave Engine --- */
