@@ -113,7 +113,7 @@
         @keyframes masterEntrance {
             from {
                 opacity: 0;
-                transform: translate3d(0, 18px, 0);
+                transform: translate3d(0, 16px, 0);
             }
             to {
                 opacity: 1;
@@ -121,17 +121,22 @@
             }
         }
 
+        .master-entrance-run {
+            animation: masterEntrance 0.38s var(--ease-premium) backwards;
+            will-change: transform, opacity;
+        }
+
         .top-nav-bar, main, footer {
             position: relative;
             z-index: 1;
             opacity: 1;
             will-change: transform, opacity;
-            animation: masterEntrance 1s var(--ease-smooth) backwards;
+            animation: masterEntrance 0.38s var(--ease-premium) backwards;
         }
 
-        .top-nav-bar { animation-delay: 0.04s; }
-        main { animation-delay: 0.14s; }
-        footer { animation-delay: 0.24s; }
+        .top-nav-bar { animation-delay: 0.02s; }
+        main { animation-delay: 0.06s; }
+        footer { animation-delay: 0.1s; }
 
         /* -------------------------------------------------------------
            TOP NAVIGATION: 's' BRANDMARK WITH TWINKLING STAR

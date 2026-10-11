@@ -9,6 +9,8 @@
     style.textContent = `
         /* Root CSS Variables - Dark Mode Default (#0b0b0b) */
         :root {
+            --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
             --text-muted: #737373;
@@ -263,17 +265,23 @@
         }
 
         /* -------------------------------------------------------------
-           RESTORED MASTER ENTRANCE ANIMATION (PRE-ARCHITECTURE COMMIT)
+           MASTER ENTRANCE ANIMATION (GPU ACCELERATED & PREMIUM FLUID)
            ------------------------------------------------------------- */
         @keyframes masterEntrance {
             from {
                 opacity: 0;
-                transform: translate3d(0, 18px, 0);
+                transform: translate3d(0, 16px, 0);
             }
             to {
                 opacity: 1;
                 transform: translate3d(0, 0, 0);
             }
+        }
+
+        /* Animation runner class */
+        .master-entrance-run {
+            animation: masterEntrance 0.38s var(--ease-premium) backwards !important;
+            will-change: transform, opacity;
         }
 
         .top-nav-bar, 
@@ -285,16 +293,18 @@
         .contents-container,
         .date-topics-capsule,
         .topics-feed,
-        #subjectsListContainer {
+        #subjectsListContainer,
+        .subjects-main-layout,
+        .subjects-split-layout {
             position: relative;
             z-index: 1;
             opacity: 1;
             will-change: transform, opacity;
-            animation: masterEntrance 1s cubic-bezier(0.25, 1, 0.5, 1) backwards !important;
+            animation: masterEntrance 0.38s var(--ease-premium) backwards !important;
         }
 
         .top-nav-bar { 
-            animation-delay: 0.04s !important; 
+            animation-delay: 0.02s !important; 
         }
         main, 
         .page-header-row, 
@@ -303,11 +313,13 @@
         .contents-container, 
         .date-topics-capsule, 
         .topics-feed, 
-        #subjectsListContainer { 
-            animation-delay: 0.14s !important; 
+        #subjectsListContainer,
+        .subjects-main-layout,
+        .subjects-split-layout { 
+            animation-delay: 0.06s !important; 
         }
         footer { 
-            animation-delay: 0.24s !important; 
+            animation-delay: 0.1s !important; 
         }
 
         /* -------------------------------------------------------------
@@ -395,6 +407,7 @@
         .topic-title,
         .subject-topic-link,
         .subject-topic-link .topic-title,
+        .subject-nav-name,
         .topics-column-grid a,
         .topics-vertical-stack a,
         .ncert-links a,
@@ -412,6 +425,10 @@
                         color 0.28s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
+        .subject-nav-name {
+            transform-origin: left center !important;
+        }
+
         /* Forward Zoom Animation on Hover */
         .footer-links-row a:hover .nav-text,
         .matrix-canvas a:hover,
@@ -426,6 +443,7 @@
         .site-name:hover,
         .sortable:hover,
         .subject-topic-link:hover .topic-title,
+        .subject-nav-item:hover .subject-nav-name,
         a:not(.brand-pill):not(.back-icon-btn):hover {
             transform: scale3d(1.06, 1.06, 1) !important;
         }
@@ -613,20 +631,34 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 // 5. UNIVERSAL 120HZ BUTTERY SMOOTH MASTER ENTRANCE ON NAVIGATION & RETURN
+function triggerMasterEntrance(element) {
+    if (!element) return;
+    
+    // Remove if already running
+    element.classList.remove('master-entrance-run');
+    
+    // Force DOM reflow so the browser restarts the keyframe animation
+    void element.offsetWidth;
+    
+    // Trigger animation
+    element.classList.add('master-entrance-run');
+    
+    // Clean up class after 400ms (0.38s + small buffer)
+    setTimeout(() => {
+        element.classList.remove('master-entrance-run');
+    }, 400);
+}
+window.triggerMasterEntrance = triggerMasterEntrance;
+
 function executeMasterEntrance() {
     const targets = document.querySelectorAll(
-        '.top-nav-bar, .page-header-row, .subjects-header-row, main, .matrix-canvas, .contents-container, #subjectsListContainer, .workspace-animate-frame, .date-topics-capsule, .topics-feed, footer'
+        '.top-nav-bar, .page-header-row, .subjects-header-row, main, .matrix-canvas, .contents-container, #subjectsListContainer, .subjects-main-layout, .subjects-split-layout, .subjects-detail-panel, .workspace-animate-frame, .date-topics-capsule, .topics-feed, footer'
     );
     targets.forEach(el => {
-        el.style.setProperty('animation', 'none', 'important');
-    });
-    void document.documentElement.offsetHeight; // trigger layout reflow
-    requestAnimationFrame(() => {
-        targets.forEach(el => {
-            el.style.removeProperty('animation');
-        });
+        triggerMasterEntrance(el);
     });
 }
+window.executeMasterEntrance = executeMasterEntrance;
 
 window.addEventListener('pageshow', (event) => {
     wrapClickableWords();

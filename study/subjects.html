@@ -138,14 +138,20 @@
         
         /* 60FPS MASTER ENTRANCE ANIMATION */
         @keyframes masterEntrance {
-            0% {
+            from {
                 opacity: 0;
-                transform: translate3d(0, 10px, 0);
+                transform: translate3d(0, 16px, 0);
             }
-            100% {
+            to {
                 opacity: 1;
                 transform: translate3d(0, 0, 0);
             }
+        }
+
+        /* Animation runner class */
+        .master-entrance-run {
+            animation: masterEntrance 0.38s var(--ease-premium) backwards !important;
+            will-change: transform, opacity;
         }
 
         .top-nav-bar {
@@ -156,7 +162,7 @@
             margin-bottom: 24px;
             position: relative;
             z-index: 10;
-            animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation: masterEntrance 0.38s var(--ease-premium) both;
         }
 
         .brand-pill {
@@ -277,230 +283,218 @@
         }
 
         /* -------------------------------------------------------------
-           MAIN SUBJECTS LIST & 3D ACCORDION PANELS
+           SPLIT MASTER-DETAIL SUBJECTS LAYOUT (LAPTOP & IPAD RATIO)
            ------------------------------------------------------------- */
-        main {
+        main.subjects-main-container {
             flex-grow: 1;
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            flex-direction: column;
-            gap: 16px;
+            align-items: flex-start;
+            gap: 48px;
             padding-bottom: 48px;
         }
 
-        .subject-accordion-card {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--panel-border);
-            border-radius: 22px;
-            overflow: hidden;
-            box-shadow: none !important;
-            transform: translateZ(0);
-            backface-visibility: hidden;
-            transition: transform 0.45s var(--ease-smooth),
-                        box-shadow 0.45s var(--ease-smooth),
-                        background-color 0.4s var(--ease-smooth);
-            will-change: transform;
+        /* Left Sidebar - Subjects List (No background, muted dots to white on hover/active) */
+        .subjects-sidebar {
+            width: 270px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
-        body.light-mode .subject-accordion-card { box-shadow: none !important; }
-
-        /* Subtle, Gentle & Simple Hover Elevation for Closed Cards */
-        @media (hover: hover) and (pointer: fine) {
-            .subject-accordion-card:not(.is-expanded):hover {
-                transform: translate3d(0, -2px, 0);
-                box-shadow: none !important;
-            }
-            body.light-mode .subject-accordion-card:not(.is-expanded):hover {
-                box-shadow: none !important;
-            }
-        }
-
-        /* Open/Expanded cards stay completely stationary and stable when interacting */
-        .subject-accordion-card.is-expanded,
-        .subject-accordion-card.is-expanded:hover,
-        .subject-accordion-card:focus-within {
-            transform: none !important;
-            box-shadow: none !important;
-        }
-
-        /* Header row inside each subject card */
-        .subject-card-header {
+        .subject-nav-item {
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 20px 24px;
+            padding: 12px 14px;
+            background: transparent !important;
+            border: none !important;
+            outline: none !important;
             cursor: pointer;
+            text-align: left;
+            font-family: inherit;
             user-select: none;
             touch-action: manipulation;
+            border-radius: 12px;
+            -webkit-tap-highlight-color: transparent !important;
+            transition: color 0.25s var(--ease-smooth);
         }
 
-        .subject-title {
-            font-size: 19px;
+        .subject-nav-name {
+            font-size: 17px;
+            font-weight: 400;
+            color: var(--text-muted);
+            line-height: 1.3;
+            display: inline-block;
+            transform-origin: left center !important;
+            will-change: transform;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), 
+                        color 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Muted Dot - NO BLUE DOTS */
+        .subject-nav-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--text-muted);
+            opacity: 0.35;
+            flex-shrink: 0;
+            transition: background-color 0.28s cubic-bezier(0.25, 1, 0.5, 1), 
+                        opacity 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Hover: dot becomes white smoothly, word zoom little straight */
+        @media (hover: hover) and (pointer: fine) {
+            .subject-nav-item:hover .subject-nav-name {
+                color: var(--text-main);
+                transform: scale3d(1.06, 1.06, 1) !important;
+            }
+
+            .subject-nav-item:hover .subject-nav-dot {
+                opacity: 1;
+                background-color: #ffffff;
+            }
+
+            body.light-mode .subject-nav-item:hover .subject-nav-dot {
+                background-color: #111111;
+            }
+        }
+
+        /* Active / Selected Subject */
+        .subject-nav-item.is-active .subject-nav-name {
+            color: var(--text-main);
             font-weight: 500;
-            letter-spacing: -0.3px;
+        }
+
+        .subject-nav-item.is-active .subject-nav-dot {
+            opacity: 1;
+            background-color: #ffffff;
+        }
+
+        body.light-mode .subject-nav-item.is-active .subject-nav-dot {
+            background-color: #111111;
+        }
+
+        /* Right Content Panel (Rounded capsule container matching Image 1) */
+        .subjects-detail-panel {
+            flex: 1;
+            min-width: 0;
+            background-color: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 24px;
+            padding: 32px 36px;
+            box-shadow: none !important;
+            will-change: transform, opacity;
+            transition: background-color 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+        }
+
+        .panel-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--row-divider);
+            margin-bottom: 24px;
+        }
+
+        .panel-subject-title {
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: -0.4px;
             color: var(--text-main);
             line-height: 1.2;
-            transition: color 0.3s var(--ease-smooth);
         }
 
-        /* Open / Close Pill Button */
-        .accordion-toggle-btn {
-            background-color: var(--open-btn-bg);
-            color: var(--open-btn-text);
-            border: none;
-            outline: none;
-            border-radius: 20px;
-            padding: 7px 20px;
-            font-family: inherit;
-            font-size: 13.5px;
+        .panel-chapter-badge {
+            font-size: 13px;
             font-weight: 400;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 5px 14px;
+            border-radius: 999px;
             letter-spacing: 0.1px;
-            cursor: pointer;
-            flex-shrink: 0;
-            transition: background-color 0.28s var(--ease-smooth),
-                        color 0.28s var(--ease-smooth),
-                        transform 0.2s var(--ease-smooth);
+            user-select: none;
         }
 
-        .subject-accordion-card.is-expanded .accordion-toggle-btn {
-            background-color: var(--close-btn-bg) !important;
-            color: var(--close-btn-text) !important;
-            box-shadow: 0 4px 12px rgba(0, 128, 255, 0.35);
-        }
-
-        .accordion-toggle-btn:hover {
-            transform: scale(1.04);
-        }
-
-        .accordion-toggle-btn:active {
-            transform: scale(0.97);
-        }
-
-        /* -------------------------------------------------------------
-           SMOOTH CSS GRID ACCORDION CONTENT EXPANSION
-           ------------------------------------------------------------- */
-        .accordion-content-wrapper {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.36s var(--ease-premium);
-        }
-
-        .subject-accordion-card.is-expanded .accordion-content-wrapper {
-            grid-template-rows: 1fr;
-        }
-
-        .accordion-content-inner {
-            overflow: hidden;
-            opacity: 0;
-            transform: translate3d(0, -6px, 0);
-            transition: opacity 0.32s var(--ease-smooth), transform 0.32s var(--ease-smooth);
-        }
-
-        .subject-accordion-card.is-expanded .accordion-content-inner {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-        }
-
-        .subject-drawer-body {
-            padding: 4px 24px 22px 24px;
+        body.light-mode .panel-chapter-badge {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.06);
+            color: var(--text-muted);
         }
 
         /* Sub-section Uppercase Heading (e.g. INDIAN HISTORY, WORLD HISTORY) */
         .subject-sub-heading {
-            font-size: 11px;
-            font-weight: 400;
+            font-size: 11.5px;
+            font-weight: 500;
             letter-spacing: 1.2px;
             text-transform: uppercase;
             color: var(--text-muted);
-            margin: 18px 0 10px 4px;
+            margin: 24px 0 12px 0;
         }
 
         .subject-sub-heading:first-child {
-            margin-top: 6px;
+            margin-top: 4px;
         }
 
-        /* Topics List Inside Accordion */
+        /* Topics List Inside Content Panel */
         .subject-topics-list {
             list-style: none;
             display: flex;
             flex-direction: column;
+            gap: 2px;
         }
 
         .subject-topic-item {
-            border-bottom: 1px solid var(--row-divider);
-            transition: border-color 0.3s var(--ease-smooth);
-        }
-
-        .subject-topic-item:last-child {
-            border-bottom: none;
+            display: flex;
+            align-items: center;
         }
 
         .subject-topic-link {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 8px;
-            color: var(--text-main);
-            opacity: 0.9;
-            text-decoration: none !important;
-            font-size: 15px;
-            font-weight: 400;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.2s var(--ease-smooth), opacity 0.2s var(--ease-smooth), color 0.2s var(--ease-smooth);
-        }
-
-        .subject-topic-link:hover {
-            opacity: 1;
-            background-color: var(--row-hover);
-        }
-
-        .topic-left-cluster {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 12px;
+            padding: 10px 4px;
+            text-decoration: none !important;
+            color: var(--text-main);
+            font-size: 17px;
+            cursor: pointer;
+            width: fit-content;
         }
 
         .topic-bullet {
             color: var(--text-muted);
             font-size: 16px;
             line-height: 1;
+            opacity: 0.6;
             user-select: none;
+            flex-shrink: 0;
         }
 
         .topic-title {
             font-size: 17px;
             font-weight: 400;
+            color: var(--text-main);
             line-height: 1.4;
             display: inline-block;
-            transform-origin: center center !important;
+            transform-origin: left center !important;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             will-change: transform;
-            transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), 
+                        color 0.28s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .subject-topic-link:hover .topic-title {
             transform: scale3d(1.06, 1.06, 1) !important;
-        }
-
-        .topic-chevron {
-            width: 16px;
-            height: 16px;
-            stroke: var(--text-muted);
-            stroke-width: 2.2;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            flex-shrink: 0;
-            transition: stroke 0.2s var(--ease-smooth), transform 0.2s var(--ease-smooth);
-        }
-
-        .subject-topic-link:hover .topic-chevron {
-            stroke: var(--text-main);
-            transform: translate3d(2px, 0, 0);
+            color: var(--text-main);
         }
 
         /* -------------------------------------------------------------
@@ -552,6 +546,50 @@
         }
 
         /* Responsive Breakpoints */
+        @media (max-width: 860px) {
+            main.subjects-main-container {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .subjects-sidebar {
+                width: 100%;
+                flex-direction: row;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 6px;
+                gap: 8px;
+                scrollbar-width: none;
+            }
+
+            .subjects-sidebar::-webkit-scrollbar {
+                display: none;
+            }
+
+            .subject-nav-item {
+                flex-shrink: 0;
+                width: auto;
+                padding: 9px 16px;
+                border: 1px solid var(--panel-border) !important;
+                border-radius: 20px;
+                gap: 10px;
+            }
+
+            .subject-nav-name {
+                font-size: 15px;
+            }
+
+            .subjects-detail-panel {
+                width: 100%;
+                padding: 24px 20px;
+                border-radius: 20px;
+            }
+
+            .panel-subject-title {
+                font-size: 20px;
+            }
+        }
+
         @media (max-width: 700px) {
             body {
                 padding: 24px 16px 24px 16px;
@@ -563,28 +601,6 @@
 
             .page-title {
                 font-size: 24px;
-            }
-
-            .subject-card-header {
-                padding: 18px 18px;
-            }
-
-            .subject-title {
-                font-size: 17.5px;
-            }
-
-            .accordion-toggle-btn {
-                padding: 6px 16px;
-                font-size: 13px;
-            }
-
-            .subject-drawer-body {
-                padding: 2px 18px 18px 18px;
-            }
-
-            .subject-topic-link {
-                padding: 13px 4px;
-                font-size: 14px;
             }
         }
     
@@ -690,700 +706,100 @@
         <h1 class="page-title">Subjects</h1>
     </div>
 
-    <!-- Main Container: Subject Accordion Cards (Laptop & Mobile Responsive) -->
-    <main id="subjectsListContainer">
+    <!-- Main Container: Split Master-Detail Layout (Laptop & iPad) -->
+    <main class="subjects-main-container master-entrance-run" id="subjectsListContainer">
 
-        <!-- 1. History -->
-        <div class="subject-accordion-card" id="subject-history">
-            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
-                <h2 class="subject-title">History</h2>
-                <button type="button" class="accordion-toggle-btn" aria-label="Toggle History">Open</button>
-            </div>
-            <div class="accordion-content-wrapper">
-                <div class="accordion-content-inner">
-                    <div class="subject-drawer-body">
-                        <div class="subject-sub-heading">INDIAN HISTORY</div>
-                        <ul class="subject-topics-list">
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Ancient History</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Freedom Struggle</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Medieval History</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Post-Independence</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Modern History</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                        </ul>
+        <!-- Left Sidebar: Subjects List (No background, muted dots to white on hover/active) -->
+        <nav class="subjects-sidebar" id="subjectsSidebar" aria-label="Subjects Navigation">
+            <button type="button" class="subject-nav-item is-active" data-id="subject-environment" onclick="selectSubject('subject-environment', true)">
+                <span class="subject-nav-name">Environment</span>
+                <span class="subject-nav-dot"></span>
+            </button>
+            <button type="button" class="subject-nav-item" data-id="subject-history" onclick="selectSubject('subject-history', true)">
+                <span class="subject-nav-name">History</span>
+                <span class="subject-nav-dot"></span>
+            </button>
+            <button type="button" class="subject-nav-item" data-id="subject-geography" onclick="selectSubject('subject-geography', true)">
+                <span class="subject-nav-name">Geography</span>
+                <span class="subject-nav-dot"></span>
+            </button>
+            <button type="button" class="subject-nav-item" data-id="subject-polity" onclick="selectSubject('subject-polity', true)">
+                <span class="subject-nav-name">Polity</span>
+                <span class="subject-nav-dot"></span>
+            </button>
+            <button type="button" class="subject-nav-item" data-id="subject-economy" onclick="selectSubject('subject-economy', true)">
+                <span class="subject-nav-name">Economy</span>
+                <span class="subject-nav-dot"></span>
+            </button>
+            <button type="button" class="subject-nav-item" data-id="subject-art-culture" onclick="selectSubject('subject-art-culture', true)">
+                <span class="subject-nav-name">Art and culture</span>
+                <span class="subject-nav-dot"></span>
+            </button>
+            <button type="button" class="subject-nav-item" data-id="subject-indian-society" onclick="selectSubject('subject-indian-society', true)">
+                <span class="subject-nav-name">Indian society</span>
+                <span class="subject-nav-dot"></span>
+            </button>
+            <button type="button" class="subject-nav-item" data-id="subject-social-justice" onclick="selectSubject('subject-social-justice', true)">
+                <span class="subject-nav-name">Social justice</span>
+                <span class="subject-nav-dot"></span>
+            </button>
+            <button type="button" class="subject-nav-item" data-id="subject-governance" onclick="selectSubject('subject-governance', true)">
+                <span class="subject-nav-name">Governance</span>
+                <span class="subject-nav-dot"></span>
+            </button>
+            <button type="button" class="subject-nav-item" data-id="subject-international-relations" onclick="selectSubject('subject-international-relations', true)">
+                <span class="subject-nav-name">International relations</span>
+                <span class="subject-nav-dot"></span>
+            </button>
+            <button type="button" class="subject-nav-item" data-id="subject-science-technology" onclick="selectSubject('subject-science-technology', true)">
+                <span class="subject-nav-name">Science and technology</span>
+                <span class="subject-nav-dot"></span>
+            </button>
+            <button type="button" class="subject-nav-item" data-id="subject-disaster-management" onclick="selectSubject('subject-disaster-management', true)">
+                <span class="subject-nav-name">Disaster management</span>
+                <span class="subject-nav-dot"></span>
+            </button>
+            <button type="button" class="subject-nav-item" data-id="subject-internal-security" onclick="selectSubject('subject-internal-security', true)">
+                <span class="subject-nav-name">Internal security</span>
+                <span class="subject-nav-dot"></span>
+            </button>
+        </nav>
 
-                        <div class="subject-sub-heading">WORLD HISTORY</div>
-                        <ul class="subject-topics-list">
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Industrial Revolution</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Colonization &amp; Decolonization</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">World Wars</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Political Philosophies</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+        <!-- Right Content Panel: Active Subject Display (Matching Image 1) -->
+        <section class="subjects-detail-panel master-entrance-run" id="subjectDetailPanel" aria-live="polite">
+            <div class="panel-header-row">
+                <h2 class="panel-subject-title">Environment</h2>
+                <span class="panel-chapter-badge">4 Chapters</span>
             </div>
-        </div>
-
-        <!-- 2. Geography -->
-        <div class="subject-accordion-card" id="subject-geography">
-            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
-                <h2 class="subject-title">Geography</h2>
-                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Geography">Open</button>
+            <div class="panel-body">
+                <ul class="subject-topics-list">
+                    <li class="subject-topic-item">
+                        <a href="#" class="subject-topic-link">
+                            <span class="topic-bullet">•</span>
+                            <span class="topic-title">Conservation &amp; Biodiversity</span>
+                        </a>
+                    </li>
+                    <li class="subject-topic-item">
+                        <a href="#" class="subject-topic-link">
+                            <span class="topic-bullet">•</span>
+                            <span class="topic-title">Climate Change Mitigation</span>
+                        </a>
+                    </li>
+                    <li class="subject-topic-item">
+                        <a href="#" class="subject-topic-link">
+                            <span class="topic-bullet">•</span>
+                            <span class="topic-title">Environmental Pollution &amp; Degradation</span>
+                        </a>
+                    </li>
+                    <li class="subject-topic-item">
+                        <a href="#" class="subject-topic-link">
+                            <span class="topic-bullet">•</span>
+                            <span class="topic-title">Environmental Impact Assessment (EIA)</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <div class="accordion-content-wrapper">
-                <div class="accordion-content-inner">
-                    <div class="subject-drawer-body">
-                        <div class="subject-sub-heading">INDIAN GEOGRAPHY</div>
-                        <ul class="subject-topics-list">
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Physiography &amp; Relief</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Soils &amp; Vegetation</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">River Systems &amp; Drainage</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Economic &amp; Human Geography</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Climate &amp; Monsoons</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                        </ul>
-
-                        <div class="subject-sub-heading">WORLD GEOGRAPHY</div>
-                        <ul class="subject-topics-list">
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Geomorphology</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Major Natural Regions</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Climatology</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Distribution of Key Resources</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Oceanography</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. Polity -->
-        <div class="subject-accordion-card" id="subject-polity">
-            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
-                <h2 class="subject-title">Polity</h2>
-                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Polity">Open</button>
-            </div>
-            <div class="accordion-content-wrapper">
-                <div class="accordion-content-inner">
-                    <div class="subject-drawer-body">
-                        <ul class="subject-topics-list">
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Constitutional Framework</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Local Government</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">System of Government</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Judiciary</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Central Government</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Constitutional &amp; Non-Constitutional Bodies</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">State Government</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. Economy -->
-        <div class="subject-accordion-card" id="subject-economy">
-            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
-                <h2 class="subject-title">Economy</h2>
-                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Economy">Open</button>
-            </div>
-            <div class="accordion-content-wrapper">
-                <div class="accordion-content-inner">
-                    <div class="subject-drawer-body">
-                        <ul class="subject-topics-list">
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Indian Economy &amp; Issues Relating to Planning</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Government Budgeting</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Mobilization of Resources</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Land Reforms in India</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Growth, Development &amp; Employment</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Infrastructure &amp; Investment Models</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Inclusive Growth</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 5. Art and culture -->
-        <div class="subject-accordion-card" id="subject-art-culture">
-            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
-                <h2 class="subject-title">Art and culture</h2>
-                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Art and culture">Open</button>
-            </div>
-            <div class="accordion-content-wrapper">
-                <div class="accordion-content-inner">
-                    <div class="subject-drawer-body">
-                        <ul class="subject-topics-list">
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Dances</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Literature</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Art forms</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Folk songs</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Architecture</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 6. Indian society -->
-        <div class="subject-accordion-card" id="subject-indian-society">
-            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
-                <h2 class="subject-title">Indian society</h2>
-                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Indian society">Open</button>
-            </div>
-            <div class="accordion-content-wrapper">
-                <div class="accordion-content-inner">
-                    <div class="subject-drawer-body">
-                        <ul class="subject-topics-list">
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Salient Features of Indian Society</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Urbanization</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Diversity of India</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Effects of Globalization</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Role of Women &amp; Organizations</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Social Empowerment &amp; Communalism</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Poverty &amp; Developmental Issues</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 7. Social justice -->
-        <div class="subject-accordion-card" id="subject-social-justice">
-            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
-                <h2 class="subject-title">Social justice</h2>
-                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Social justice">Open</button>
-            </div>
-            <div class="accordion-content-wrapper">
-                <div class="accordion-content-inner">
-                    <div class="subject-drawer-body">
-                        <ul class="subject-topics-list">
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Welfare Schemes for Vulnerable Sections</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Education System</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Mechanisms, Laws &amp; Institutions</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Human Resources</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Health Sector Issues</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Issues Relating to Poverty &amp; Hunger</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 8. Governance -->
-        <div class="subject-accordion-card" id="subject-governance">
-            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
-                <h2 class="subject-title">Governance</h2>
-                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Governance">Open</button>
-            </div>
-            <div class="accordion-content-wrapper">
-                <div class="accordion-content-inner">
-                    <div class="subject-drawer-body">
-                        <ul class="subject-topics-list">
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Important Aspects of Governance</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Citizens Charters</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Transparency &amp; Accountability</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Role of Civil Services in a Democracy</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">E-governance Applications &amp; Models</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 9. International relations -->
-        <div class="subject-accordion-card" id="subject-international-relations">
-            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
-                <h2 class="subject-title">International relations</h2>
-                <button type="button" class="accordion-toggle-btn" aria-label="Toggle International relations">Open</button>
-            </div>
-            <div class="accordion-content-wrapper">
-                <div class="accordion-content-inner">
-                    <div class="subject-drawer-body">
-                        <ul class="subject-topics-list">
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">India and its Neighborhood</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Effect of Policies of Developed Countries</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Bilateral, Regional &amp; Global Groupings</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Important International Institutions</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 10. Science and technology -->
-        <div class="subject-accordion-card" id="subject-science-technology">
-            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
-                <h2 class="subject-title">Science and technology</h2>
-                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Science and technology">Open</button>
-            </div>
-            <div class="accordion-content-wrapper">
-                <div class="accordion-content-inner">
-                    <div class="subject-drawer-body">
-                        <ul class="subject-topics-list">
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Developments &amp; Everyday Applications</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">IT, Space &amp; Computers</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Achievements of Indians in Sci-Tech</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Robotics &amp; Nanotech</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Indigenization of Technology</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Biotechnology &amp; IPR Issues</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 11. Environment -->
-        <div class="subject-accordion-card" id="subject-environment">
-            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
-                <h2 class="subject-title">Environment</h2>
-                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Environment">Open</button>
-            </div>
-            <div class="accordion-content-wrapper">
-                <div class="accordion-content-inner">
-                    <div class="subject-drawer-body">
-                        <ul class="subject-topics-list">
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Conservation &amp; Biodiversity</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Climate Change Mitigation</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Environmental Pollution &amp; Degradation</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Environmental Impact Assessment (EIA)</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 12. Disaster management -->
-        <div class="subject-accordion-card" id="subject-disaster-management">
-            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
-                <h2 class="subject-title">Disaster management</h2>
-                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Disaster management">Open</button>
-            </div>
-            <div class="accordion-content-wrapper">
-                <div class="accordion-content-inner">
-                    <div class="subject-drawer-body">
-                        <ul class="subject-topics-list">
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Disaster Profiles of India</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Mitigation Strategies</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Vulnerability &amp; Risk Assessment</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">NDMA Guidelines &amp; Frameworks</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 13. Internal security -->
-        <div class="subject-accordion-card" id="subject-internal-security">
-            <div class="subject-card-header" onclick="toggleSubjectAccordion(this)">
-                <h2 class="subject-title">Internal security</h2>
-                <button type="button" class="accordion-toggle-btn" aria-label="Toggle Internal security">Open</button>
-            </div>
-            <div class="accordion-content-wrapper">
-                <div class="accordion-content-inner">
-                    <div class="subject-drawer-body">
-                        <ul class="subject-topics-list">
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Linkages between Development &amp; Extremism</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Money Laundering &amp; its Prevention</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Role of External State &amp; Non-state Actors</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Border Area Management &amp; Security Forces</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                            <li class="subject-topic-item">
-                                <a href="#" class="subject-topic-link">
-                                    <div class="topic-left-cluster"><span class="topic-bullet">•</span><span class="topic-title">Cyber Security Challenges</span></div>
-                                    <svg class="topic-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </section>
 
     </main>
 
@@ -1399,7 +815,7 @@
         <div class="copyright-tag">&copy; 2026 Sathya. All rights reserved.</div>
     </footer>
 
-    <!-- Interactive Navigation & Accordion Engine -->
+    <!-- Interactive Split Navigation & Master Entrance Engine -->
     <script>
         // Back navigation to home
         function goBackToHome() {
@@ -1410,45 +826,337 @@
             }
         }
 
-        // Accordion Toggle Function
-        function toggleSubjectAccordion(element) {
-            const card = element.closest('.subject-accordion-card');
-            if (!card) return;
+        // 2. JavaScript (Trigger / Re-trigger Function)
+        function triggerMasterEntrance(element) {
+            if (!element) return;
+            
+            // Remove if already running
+            element.classList.remove('master-entrance-run');
+            
+            // Force DOM reflow so the browser restarts the keyframe animation
+            void element.offsetWidth;
+            
+            // Trigger animation
+            element.classList.add('master-entrance-run');
+            
+            // Clean up class after 400ms (0.38s + small buffer)
+            setTimeout(() => {
+                element.classList.remove('master-entrance-run');
+            }, 400);
+        }
 
-            const isExpanded = card.classList.contains('is-expanded');
-            const toggleBtn = card.querySelector('.accordion-toggle-btn');
+        // Complete subjects dataset
+        const SUBJECTS_DATA = [
+            {
+                id: "subject-environment",
+                title: "Environment",
+                totalTopics: 4,
+                sections: [
+                    {
+                        subTitle: "",
+                        topics: [
+                            "Conservation & Biodiversity",
+                            "Climate Change Mitigation",
+                            "Environmental Pollution & Degradation",
+                            "Environmental Impact Assessment (EIA)"
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "subject-history",
+                title: "History",
+                totalTopics: 9,
+                sections: [
+                    {
+                        subTitle: "INDIAN HISTORY",
+                        topics: [
+                            "Ancient History",
+                            "Freedom Struggle",
+                            "Medieval History",
+                            "Post-Independence",
+                            "Modern History"
+                        ]
+                    },
+                    {
+                        subTitle: "WORLD HISTORY",
+                        topics: [
+                            "Industrial Revolution",
+                            "Colonization & Decolonization",
+                            "World Wars",
+                            "Political Philosophies"
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "subject-geography",
+                title: "Geography",
+                totalTopics: 10,
+                sections: [
+                    {
+                        subTitle: "INDIAN GEOGRAPHY",
+                        topics: [
+                            "Physiography & Relief",
+                            "Soils & Vegetation",
+                            "River Systems & Drainage",
+                            "Economic & Human Geography",
+                            "Climate & Monsoons"
+                        ]
+                    },
+                    {
+                        subTitle: "WORLD GEOGRAPHY",
+                        topics: [
+                            "Geomorphology",
+                            "Major Natural Regions",
+                            "Climatology",
+                            "Distribution of Key Resources",
+                            "Oceanography"
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "subject-polity",
+                title: "Polity",
+                totalTopics: 7,
+                sections: [
+                    {
+                        subTitle: "",
+                        topics: [
+                            "Constitutional Framework",
+                            "Local Government",
+                            "System of Government",
+                            "Judiciary",
+                            "Central Government",
+                            "Constitutional & Non-Constitutional Bodies",
+                            "State Government"
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "subject-economy",
+                title: "Economy",
+                totalTopics: 7,
+                sections: [
+                    {
+                        subTitle: "",
+                        topics: [
+                            "Indian Economy & Issues Relating to Planning",
+                            "Government Budgeting",
+                            "Mobilization of Resources",
+                            "Land Reforms in India",
+                            "Growth, Development & Employment",
+                            "Infrastructure & Investment Models",
+                            "Inclusive Growth"
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "subject-art-culture",
+                title: "Art and culture",
+                totalTopics: 5,
+                sections: [
+                    {
+                        subTitle: "",
+                        topics: [
+                            "Dances",
+                            "Literature",
+                            "Art forms",
+                            "Folk songs",
+                            "Architecture"
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "subject-indian-society",
+                title: "Indian society",
+                totalTopics: 7,
+                sections: [
+                    {
+                        subTitle: "",
+                        topics: [
+                            "Salient Features of Indian Society",
+                            "Urbanization",
+                            "Diversity of India",
+                            "Effects of Globalization",
+                            "Role of Women & Organizations",
+                            "Social Empowerment & Communalism",
+                            "Poverty & Developmental Issues"
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "subject-social-justice",
+                title: "Social justice",
+                totalTopics: 6,
+                sections: [
+                    {
+                        subTitle: "",
+                        topics: [
+                            "Welfare Schemes for Vulnerable Sections",
+                            "Education System",
+                            "Mechanisms, Laws & Institutions",
+                            "Human Resources",
+                            "Health Sector Issues",
+                            "Issues Relating to Poverty & Hunger"
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "subject-governance",
+                title: "Governance",
+                totalTopics: 5,
+                sections: [
+                    {
+                        subTitle: "",
+                        topics: [
+                            "Important Aspects of Governance",
+                            "Citizens Charters",
+                            "Transparency & Accountability",
+                            "Role of Civil Services in a Democracy",
+                            "E-governance Applications & Models"
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "subject-international-relations",
+                title: "International relations",
+                totalTopics: 4,
+                sections: [
+                    {
+                        subTitle: "",
+                        topics: [
+                            "India and its Neighborhood",
+                            "Effect of Policies of Developed Countries",
+                            "Bilateral, Regional & Global Groupings",
+                            "Important International Institutions"
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "subject-science-technology",
+                title: "Science and technology",
+                totalTopics: 6,
+                sections: [
+                    {
+                        subTitle: "",
+                        topics: [
+                            "Developments & Everyday Applications",
+                            "IT, Space & Computers",
+                            "Achievements of Indians in Sci-Tech",
+                            "Robotics & Nanotech",
+                            "Indigenization of Technology",
+                            "Biotechnology & IPR Issues"
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "subject-disaster-management",
+                title: "Disaster management",
+                totalTopics: 4,
+                sections: [
+                    {
+                        subTitle: "",
+                        topics: [
+                            "Disaster Profiles of India",
+                            "Mitigation Strategies",
+                            "Vulnerability & Risk Assessment",
+                            "NDMA Guidelines & Frameworks"
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "subject-internal-security",
+                title: "Internal security",
+                totalTopics: 5,
+                sections: [
+                    {
+                        subTitle: "",
+                        topics: [
+                            "Linkages between Development & Extremism",
+                            "Money Laundering & its Prevention",
+                            "Role of External State & Non-state Actors",
+                            "Border Area Management & Security Forces",
+                            "Cyber Security Challenges"
+                        ]
+                    }
+                ]
+            }
+        ];
 
-            if (isExpanded) {
-                card.classList.remove('is-expanded');
-                if (toggleBtn) toggleBtn.textContent = 'Open';
-            } else {
-                card.classList.add('is-expanded');
-                if (toggleBtn) toggleBtn.textContent = 'Close';
+        function selectSubject(subjectId, animate = true) {
+            const subject = SUBJECTS_DATA.find(s => s.id === subjectId || s.id.replace('subject-', '') === subjectId);
+            if (!subject) return;
+
+            // Update active state in sidebar
+            document.querySelectorAll('.subject-nav-item').forEach(item => {
+                if (item.getAttribute('data-id') === subject.id) {
+                    item.classList.add('is-active');
+                } else {
+                    item.classList.remove('is-active');
+                }
+            });
+
+            // Update right detail panel
+            const panel = document.getElementById('subjectDetailPanel');
+            if (!panel) return;
+
+            let sectionsHtml = '';
+            subject.sections.forEach(sec => {
+                if (sec.subTitle) {
+                    sectionsHtml += `<div class="subject-sub-heading">${sec.subTitle}</div>`;
+                }
+                sectionsHtml += '<ul class="subject-topics-list">';
+                sec.topics.forEach(topic => {
+                    sectionsHtml += `
+                        <li class="subject-topic-item">
+                            <a href="#" class="subject-topic-link">
+                                <span class="topic-bullet">•</span>
+                                <span class="topic-title">${topic}</span>
+                            </a>
+                        </li>`;
+                });
+                sectionsHtml += '</ul>';
+            });
+
+            panel.innerHTML = `
+                <div class="panel-header-row">
+                    <h2 class="panel-subject-title">${subject.title}</h2>
+                    <span class="panel-chapter-badge">${subject.totalTopics} Chapters</span>
+                </div>
+                <div class="panel-body">
+                    ${sectionsHtml}
+                </div>
+            `;
+
+            // Trigger smooth master entrance animation
+            if (animate) {
+                triggerMasterEntrance(panel);
+            }
+
+            // Sync URL hash without jumping
+            if (window.history && window.history.replaceState) {
+                window.history.replaceState(null, '', '#' + subject.id.replace('subject-', ''));
             }
         }
 
-        // Prevent button click from double toggling when bubbling to header
-        document.querySelectorAll('.accordion-toggle-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleSubjectAccordion(btn);
-            });
-        });
-
-        // Auto-expand card if URL hash matches subject
+        // Initialize based on URL hash if present
         window.addEventListener('DOMContentLoaded', () => {
             if (window.location.hash) {
-                const rawHash = window.location.hash.replace('#', '').toLowerCase();
-                const targetCard = document.getElementById(rawHash) || 
-                                   document.getElementById('subject-' + rawHash) ||
-                                   document.getElementById(rawHash.replace('subject-', ''));
-                if (targetCard) {
-                    targetCard.classList.add('is-expanded');
-                    const toggleBtn = targetCard.querySelector('.accordion-toggle-btn');
-                    if (toggleBtn) toggleBtn.textContent = 'Close';
-                    setTimeout(() => {
-                        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 300);
+                const hash = window.location.hash.replace('#', '').toLowerCase();
+                const matched = SUBJECTS_DATA.find(s => s.id === 'subject-' + hash || s.id === hash || s.id.replace('subject-', '') === hash);
+                if (matched) {
+                    selectSubject(matched.id, false);
                 }
             }
         });
