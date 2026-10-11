@@ -386,51 +386,34 @@
             border: 1px solid var(--panel-border);
             border-radius: 24px;
             padding: 32px 36px;
-            box-shadow: var(--panel-shadow);
-            cursor: pointer;
+            box-shadow: var(--shadow-base, var(--panel-shadow));
             user-select: none;
-            transform: scale(1);
-            transform-origin: center center;
+            transform: none !important;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            will-change: transform, opacity;
-            /* 0.5s deceleration ease-out curve handles graceful return when mouse leaves */
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
-                        box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+            transition: box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1),
                         border-color 0.4s ease, 
                         background-color 0.4s ease;
         }
 
-        /* Outer Frame Zoom & Deep Ambient Glow (Laptop / fine pointer) */
+        /* Outer Frame: Stationary (NO ZOOM / NO LIFT) */
         @media (hover: hover) and (pointer: fine) {
             .subjects-detail-panel:hover {
-                transform: scale(1.02) !important;
+                transform: none !important;
                 box-shadow: var(--shadow-hover, var(--panel-shadow-hover)) !important;
                 border-color: var(--panel-border-hover) !important;
-            }
-
-            /* Inner Front-Layer Drift (Header and content slide up independently and stay frozen) */
-            .subjects-detail-panel:hover .card-parallax-content,
-            .subjects-detail-panel:hover .panel-header-row,
-            .subjects-detail-panel:hover .panel-body {
-                transform: translateY(-6px) !important;
             }
         }
 
         /* Inner Front-Layer Elements Setup */
-        .card-parallax-content,
-        .panel-header-row,
-        .subjects-detail-panel .panel-body {
-            transform: translateY(0);
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        .card-parallax-content {
+            transform: none !important;
+            transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @media (hover: none) and (pointer: coarse) {
+        @media (hover: none), (pointer: coarse) {
             .subjects-detail-panel:active {
-                transform: scale(0.98) !important;
-                transition: transform 0.15s ease-out !important;
+                transform: none !important;
             }
         }
 
@@ -667,7 +650,7 @@
     <!-- Top Left Brand 's' with Animated Twinkling Star -->
     <nav class="top-nav-bar" id="topNavBar">
         <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="sathya.">
-            <span class="brand-letter">s</span>
+            <span class="brand-letter">sathya</span>
             <span class="brand-star" aria-hidden="true"></span>
         </a>
     </nav>
@@ -906,7 +889,7 @@
             });
             topicsHtml += '</ul>';
 
-            panel.innerHTML = `
+            const newContent = `
                 <div class="card-parallax-content">
                     <div class="panel-header-row">
                         <h2 class="panel-subject-title">${section.title}</h2>
@@ -917,9 +900,25 @@
                 </div>
             `;
 
-            // Trigger smooth master entrance animation
-            if (animate) {
-                triggerMasterEntrance(panel);
+            const currentStage = panel.querySelector('.card-parallax-content');
+            if (animate && currentStage) {
+                currentStage.style.transition = 'opacity 0.15s ease-out, transform 0.15s ease-out';
+                currentStage.style.opacity = '0';
+                currentStage.style.transform = 'translateY(6px)';
+                setTimeout(() => {
+                    panel.innerHTML = newContent;
+                    const nextStage = panel.querySelector('.card-parallax-content');
+                    if (nextStage) {
+                        nextStage.style.opacity = '0';
+                        nextStage.style.transform = 'translateY(-6px)';
+                        void nextStage.offsetWidth;
+                        nextStage.style.transition = 'opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1)';
+                        nextStage.style.opacity = '1';
+                        nextStage.style.transform = 'translateY(0)';
+                    }
+                }, 150);
+            } else {
+                panel.innerHTML = newContent;
             }
 
             // Sync URL hash without jumping

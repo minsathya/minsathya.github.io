@@ -226,25 +226,24 @@
             width: 100%;
             cursor: pointer;
             user-select: none;
-            transform: scale(1);
+            transform: none !important;
             transform-origin: center center;
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
-                        box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+            transition: box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
                         border-color 0.4s ease, 
                         background-color 0.4s ease;
         }
 
         @media (hover: hover) and (pointer: fine) {
             .wide-capsule:not(.is-expanded):hover { 
-                transform: scale(1.02) !important; 
+                transform: none !important; 
                 box-shadow: var(--shadow-hover, var(--panel-shadow-hover)) !important;
                 border-color: var(--panel-border-hover) !important;
             }
             .wide-capsule:not(.is-expanded):hover .capsule-header-row {
-                transform: translateY(-6px) !important;
+                transform: none !important;
             }
         }
 
@@ -468,10 +467,10 @@
 </head>
 <body>
 
-        <!-- Top Left Brand 's' with Animated Twinkling Star -->
+        <!-- Top Centered Brand 'sathya.' with Animated Twinkling Star -->
     <nav class="top-nav-bar" id="topNavBar">
         <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="sathya.">
-            <span class="brand-letter">s</span>
+            <span class="brand-letter">sathya</span>
             <span class="brand-star" aria-hidden="true"></span>
         </a>
     </nav>

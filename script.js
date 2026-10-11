@@ -135,7 +135,8 @@
             width: 100% !important;
             display: flex !important;
             align-items: center !important;
-            justify-content: flex-start !important;
+            justify-content: center !important;
+            text-align: center !important;
             margin-bottom: 28px !important;
             position: relative;
             z-index: 10;
@@ -145,15 +146,15 @@
             position: relative;
             display: inline-flex !important;
             align-items: baseline !important;
-            justify-content: flex-start !important;
+            justify-content: center !important;
             height: auto;
             padding: 0 4px !important;
             background-color: transparent !important;
             border: none !important;
             text-decoration: none !important;
-            font-size: 42px !important;
+            font-size: 34px !important;
             font-weight: 500 !important;
-            letter-spacing: -1.2px !important;
+            letter-spacing: -0.8px !important;
             line-height: 1 !important;
             box-shadow: none !important;
             touch-action: manipulation;
@@ -325,8 +326,7 @@
         }
 
         /* -------------------------------------------------------------
-           10/10 CORE TOUCH / HOVER INTERACTION SYSTEM
-           Exact deceleration curves, deep ambient glow, and inner front-layer drift
+           PANEL SETUP (PANELS DO NOT ZOOM UP - ONLY WORDS ZOOM)
            ------------------------------------------------------------- */
         .bento-card,
         .panel-card,
@@ -340,15 +340,11 @@
         .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card) {
             box-shadow: var(--shadow-base, var(--panel-shadow)) !important;
             border: 1px solid var(--panel-border);
-            cursor: pointer;
             user-select: none;
-            transform: scale(1);
-            transform-origin: center center;
+            transform: none !important;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            /* 0.5s deceleration ease-out curve handles a graceful return when mouse leaves */
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
-                        box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+            transition: box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
                         border-color 0.4s ease, 
                         background-color 0.4s ease !important;
         }
@@ -361,32 +357,7 @@
             align-self: flex-start !important;
         }
 
-        /* Inner Front-Layer Elements Setup (Handles smooth return on mouse leave) */
-        .card-parallax-content,
-        .card-content,
-        .capsule-panel .card-parallax-content,
-        .capsule-panel .panel-title,
-        .capsule-panel .prose-text,
-        .capsule-panel .document-list,
-        .bento-card .card-parallax-content,
-        .bento-card h2,
-        .bento-card .list-wrapper,
-        .subjects-detail-panel .card-parallax-content,
-        .subjects-detail-panel .panel-header-row,
-        .subjects-detail-panel .panel-body,
-        .wide-capsule .card-parallax-content,
-        .wide-capsule:not(.is-expanded) .capsule-header-row,
-        .wide-capsule .wide-panel-title,
-        .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card) .card-header,
-        .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card) .card-body,
-        .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card) .card-content {
-            transform: translateY(0);
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
-        }
-
-        /* Outer Frame Zoom & Deep Ambient Glow (Laptop / fine pointer) */
+        /* Panel Outer Frames: Stationary (NO ZOOM / NO LIFT) */
         @media (hover: hover) and (pointer: fine) {
             body:not(.popup-active) .bento-card:hover,
             body:not(.popup-active) .panel-card:hover,
@@ -396,57 +367,61 @@
             body:not(.popup-active) .subject-accordion-card:not(.is-open):hover,
             body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card):hover,
             body:not(.popup-active) .myspace-card:hover {
-                transform: scale(1.02) !important;
+                transform: none !important;
                 box-shadow: var(--shadow-hover, var(--panel-shadow-hover)) !important;
                 border-color: var(--panel-border-hover) !important;
             }
-
-            /* Inner Front-Layer Drift (Text/content slides up independently and stays frozen) */
-            body:not(.popup-active) .bento-card:hover .card-parallax-content,
-            body:not(.popup-active) .capsule-panel:hover .card-parallax-content,
-            body:not(.popup-active) .capsule-panel:hover .panel-title,
-            body:not(.popup-active) .capsule-panel:hover .prose-text,
-            body:not(.popup-active) .capsule-panel:hover .document-list,
-            body:not(.popup-active) .subjects-detail-panel:hover .card-parallax-content,
-            body:not(.popup-active) .subjects-detail-panel:hover .panel-header-row,
-            body:not(.popup-active) .subjects-detail-panel:hover .panel-body,
-            body:not(.popup-active) .wide-capsule:not(.is-expanded):hover .card-parallax-content,
-            body:not(.popup-active) .wide-capsule:not(.is-expanded):hover .capsule-header-row,
-            body:not(.popup-active) .wide-capsule:not(.is-expanded):hover .wide-panel-title,
-            body:not(.popup-active) .panel-card:hover .card-content,
-            body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card):hover .card-header,
-            body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card):hover .card-body,
-            body:not(.popup-active) .card:not(:has(table)):not(:has(.table-wrap)):not(.article-card):hover .card-content {
-                transform: translateY(-6px) !important;
-            }
-
-            body:not(.popup-active) .bento-card:hover .list-item,
-            body:not(.popup-active) .capsule-panel:hover .list-item {
-                color: var(--text-main);
-            }
-
-            .wide-capsule.is-expanded,
-            .wide-capsule.is-expanded:hover,
-            .subject-accordion-card.is-open,
-            .subject-accordion-card.is-open:hover,
-            .subject-accordion-card:focus-within {
-                transform: none !important;
-            }
         }
 
-        /* Mobile / Touch Screen (Rubber-press tap physics) */
+        /* Mobile / Touch: Stationary (NO LIFT / NO ZOOM) */
         @media (hover: none), (pointer: coarse) {
             .bento-card:active,
             .panel-card:active,
             .capsule-panel:active,
             .subjects-detail-panel:active,
             .wide-capsule:not(.is-expanded):active {
-                transform: scale(0.98) !important;
-                transition: transform 0.15s ease-out !important;
+                transform: none !important;
             }
         }
 
-        /* CALENDAR PANEL, READING PANELS & TABLES MUST REMAIN COMPLETELY FREEZE (NO HARSH ZOOM) */
+        /* Homescreen Panel Pages/Links: 16px font-size, normal weight (not bold) */
+        .list-wrapper .list-item,
+        .document-list a {
+            font-size: 16px !important;
+            font-weight: 400 !important;
+            color: var(--text-main) !important;
+            opacity: 0.85;
+            transition: opacity 0.25s cubic-bezier(0.25, 1, 0.5, 1), 
+                        transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), 
+                        color 0.25s ease !important;
+            display: inline-block;
+            text-decoration: none !important;
+        }
+
+        /* When hovering one item in a panel, sibling items become muted */
+        @media (hover: hover) and (pointer: fine) {
+            .list-wrapper:hover .list-item,
+            .document-list:hover a {
+                opacity: 0.35 !important;
+            }
+
+            .list-wrapper .list-item:hover,
+            .document-list a:hover {
+                opacity: 1 !important;
+                transform: scale(1.04) translateZ(0) !important;
+                color: var(--text-main) !important;
+            }
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            .list-wrapper .list-item:active,
+            .document-list a:active {
+                opacity: 1 !important;
+                transform: scale(1.04) translateZ(0) !important;
+            }
+        }
+
+        /* CALENDAR PANEL, READING PANELS & TABLES MUST REMAIN COMPLETELY FREEZE */
         .card:has(table),
         .card:has(.table-wrap),
         .article-card,
@@ -466,7 +441,7 @@
             transform: none !important;
         }
 
-        /* Outer Wrapper Container to facilitate page scaling during popups (GPU-accelerated for iPad & phone) */
+        /* Outer Wrapper Container to facilitate page scaling during popups */
         .page-wrapper {
             background-color: var(--bg-color);
             color: var(--text-main);
@@ -484,13 +459,22 @@
         }
 
         body.popup-active {
-            background-color: #000000 !important;
+            background-color: #0b0b0b !important;
+        }
+
+        body.light-mode.popup-active {
+            background-color: #f5f5f7 !important;
         }
 
         body.popup-active .page-wrapper {
             transform: scale3d(0.96, 0.96, 1) !important;
             -webkit-transform: scale3d(0.96, 0.96, 1) !important;
             border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6) !important;
+        }
+
+        body.light-mode.popup-active .page-wrapper {
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.12) !important;
         }
 
         /* -------------------------------------------------------------
@@ -753,6 +737,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (oldDot) oldDot.remove();
         const oldSvg = pill.querySelector('.brand-star-wrap');
         if (oldSvg) oldSvg.remove();
+
+        const brandLetter = pill.querySelector('.brand-letter');
+        if (brandLetter && brandLetter.textContent.trim() === 's') {
+            brandLetter.textContent = 'sathya';
+        }
 
         if (!pill.querySelector('.brand-star')) {
             const roundStar = document.createElement('span');
