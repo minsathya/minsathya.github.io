@@ -67,7 +67,7 @@
             --item-card-hover: rgba(255, 255, 255, 0.05);
             --row-divider: #1c1c1c;
 
-            /* Standard Brand Green */
+            /* Brand Green Tokens */
             --theme-green: #244b40;
             --theme-green-hover: #2e5c50;
             --btn-blue: #244b40;
@@ -138,7 +138,7 @@
             margin: 0 auto;
             width: 100%;
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
+            overflow-x: clip;
             transition: background-color 0.4s var(--ease-smooth), color 0.4s var(--ease-smooth);
         }
 
@@ -201,7 +201,7 @@
             flex-shrink: 0;
         }
 
-        /* HEADER ROW (STANDARDIZED WITH BACK BUTTON) */
+        /* STANDARDIZED HEADER ROW WITH BACK BUTTON */
         .page-header-row {
             display: flex;
             align-items: center;
@@ -254,7 +254,7 @@
             line-height: 1.2;
         }
 
-        /* CONTENT WRAPPER - EXACT MAX-WIDTH 1000PX */
+        /* CONTENT CONTAINER - UNIFIED 1000PX WIDTH */
         .content-wrapper {
             width: 100%;
             max-width: 1000px;
@@ -550,7 +550,7 @@
             border-radius: 26px;
             padding: 14px 18px;
             display: flex;
-            align-items: center; /* Centers thumbnail & right content vertically */
+            align-items: center;
             gap: 16px;
             cursor: pointer;
             text-decoration: none !important;
@@ -622,8 +622,8 @@
             min-height: 76px;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Title centered vertically to image */
-            padding-right: 90px; /* Space for bottom right date */
+            justify-content: center;
+            padding-right: 90px;
             box-sizing: border-box;
         }
         .organised-ca-card-title {
@@ -904,7 +904,7 @@
             color: var(--text-main);
             line-height: 1.34;
             margin-top: 0;
-            margin-bottom: 24px !important; /* EXACT 24PX MATCHING SPACING */
+            margin-bottom: 24px !important;
             text-align: left;
         }
 
@@ -933,7 +933,7 @@
             transition: opacity 0.36s ease;
         }
 
-        /* Standard Typography: Why in News, What/Concept, Important Facts, etc. */
+        /* Standard Typography */
         .note-section {
             margin-bottom: 24px;
             width: 100%;
@@ -999,7 +999,7 @@
         }
 
         /* ---------------------------------------------------- */
-        /* DRUM WHEEL DATE PICKER MODAL (IDENTICAL TO DCA)      */
+        /* DRUM WHEEL DATE PICKER MODAL (TAP-TO-SELECT ENABLED) */
         /* ---------------------------------------------------- */
         .picker-backdrop {
             position: fixed;
@@ -1179,7 +1179,7 @@
         }
 
         /* ---------------------------------------------------- */
-        /* FOOTER (MATCHING INDEX)                              */
+        /* FOOTER                                               */
         /* ---------------------------------------------------- */
         footer {
             width: 100%;
@@ -1282,7 +1282,7 @@
                                 <circle cx="44" cy="33" r="3.2" fill="#ffffff"/>
                                 <circle cx="20" cy="44" r="3.2" fill="#ffffff"/>
                                 <circle cx="32" cy="44" r="3.2" fill="#ffffff"/>
-                                <circle cx="44" cy="44" r="3.2" fill="rgba(255,255,255,0.4)"/>
+                                <circle cx="44" cy="44" r="3.2" fill="#ffffff"/>
                             </svg>
                             <span class="cal-active-dot" id="calActiveDot"></span>
                         </button>
@@ -1526,12 +1526,21 @@
                     const count = getCategoryTopicCount(cat, allTopics);
                     const isSelected = (cat === organisedCaSelectedCategory) ? ' is-selected' : '';
                     return (
-                        '<button type="button" class="day-item-btn' + isSelected + '" onclick="selectOrganisedCaCategory('' + cat.replace(/'/g, "\'") + '', event)">' +
+                        '<button type="button" class="day-item-btn' + isSelected + '" data-cat="' + encodeURIComponent(cat) + '">' +
                             '<span>' + cat + '</span>' +
                             '<span class="category-item-count-badge">' + count + '</span>' +
                         '</button>'
                     );
                 }).join('');
+
+                // Attach safe click listeners to category buttons
+                panelEl.querySelectorAll('.day-item-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const cat = decodeURIComponent(btn.getAttribute('data-cat'));
+                        selectOrganisedCaCategory(cat);
+                    });
+                });
             }
 
             // Sync Calendar Active Dot
@@ -1589,7 +1598,7 @@
                     '</div>');
 
                 return (
-                    '<div class="organised-ca-card" onclick="openOrganisedCaArticle('' + topic.topicTitle.replace(/'/g, "\'") + '')">' +
+                    '<div class="organised-ca-card" data-title="' + encodeURIComponent(topic.topicTitle) + '">' +
                         '<div class="organised-ca-card-left-thumb">' + thumbHtml + '</div>' +
                         '<div class="organised-ca-card-right-content">' +
                             '<h3 class="organised-ca-card-title">' + topic.topicTitle + '</h3>' +
@@ -1600,6 +1609,14 @@
                     '</div>'
                 );
             }).join('');
+
+            // Attach safe click & press listeners to cards
+            container.querySelectorAll('.organised-ca-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const title = decodeURIComponent(card.getAttribute('data-title'));
+                    openOrganisedCaArticle(title);
+                });
+            });
 
             // Attach touch / pointer feedback for bouncy press animation across all devices
             initCardPressFeedback();
@@ -1675,8 +1692,7 @@
         }
         window.closeOrganisedCaCategoryDropdown = closeOrganisedCaCategoryDropdown;
 
-        function selectOrganisedCaCategory(cat, e) {
-            if (e) e.stopPropagation();
+        function selectOrganisedCaCategory(cat) {
             organisedCaSelectedCategory = cat;
             closeOrganisedCaCategoryDropdown();
             setTimeout(() => {
@@ -1792,7 +1808,6 @@
         function openOrganisedCaDatePicker() {
             if (orgPickerModal) orgPickerModal.classList.add('is-open');
 
-            // Initialize to currently selected date or default 05-10-2026
             if (organisedCaSelectedDateKey) {
                 const p = organisedCaSelectedDateKey.split('-');
                 orgTempDay = parseInt(p[0], 10) || 5;
