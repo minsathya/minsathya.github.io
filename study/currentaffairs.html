@@ -154,11 +154,11 @@
         /* TOP NAVIGATION */
         .top-nav-bar {
             width: 100%;
-            max-width: 1000px;
+            max-width: 780px;
+            margin: 0 auto 28px auto;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            margin-bottom: 28px;
             position: relative;
             z-index: 10;
         }
@@ -207,7 +207,7 @@
             align-items: center;
             gap: 14px;
             width: 100%;
-            max-width: 1000px;
+            max-width: 780px;
             margin: 0 auto 24px auto;
             position: relative;
             z-index: 5;
@@ -257,8 +257,8 @@
         /* CONTENT CONTAINER - UNIFIED 1000PX WIDTH */
         .content-wrapper {
             width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
+            max-width: 780px;
+            margin: 0 auto 60px auto;
             display: flex;
             flex-direction: column;
             flex: 1;
@@ -272,11 +272,9 @@
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            max-width: 680px;
-            margin: 0 auto 20px auto;
-            padding: 0 4px;
+            margin-bottom: 24px;
             position: relative;
-            z-index: 110;
+            z-index: 100;
         }
 
         .category-title-text {
@@ -341,7 +339,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s var(--ease-smooth);
+            transition: transform 0.2s var(--ease-smooth), opacity 0.2s ease;
             user-select: none;
             -webkit-user-select: none;
             position: relative;
@@ -356,6 +354,7 @@
             width: 32px;
             height: 32px;
             display: block;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
         }
         .cal-active-dot {
             position: absolute;
@@ -538,8 +537,6 @@
             flex-direction: column;
             gap: 14px;
             width: 100%;
-            max-width: 680px;
-            margin: 0 auto;
         }
 
         /* Card: Photo on LEFT, Title & Bottom-Right Date on RIGHT */
@@ -1183,7 +1180,7 @@
         /* ---------------------------------------------------- */
         footer {
             width: 100%;
-            max-width: 1000px;
+            max-width: 780px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1267,22 +1264,15 @@
                         <!-- Calendar Icon Button: Opens Drum Wheel Date Picker -->
                         <button type="button" class="cal-trigger-action-btn" id="orgCalendarBtn" onclick="openOrganisedCaDatePicker()" aria-label="Filter by Date">
                             <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <linearGradient id="orgCalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#3a98f7"/>
-                                        <stop offset="100%" stop-color="#1b74d1"/>
-                                    </linearGradient>
-                                </defs>
-                                <rect x="7" y="13" width="50" height="44" rx="14" fill="url(#orgCalGrad)"/>
-                                <path d="M7 23 C7 17.477 11.477 13 17 13 L47 13 C52.523 13 57 17.477 57 23 L57 25 L7 25 Z" fill="#1565c0" opacity="0.9"/>
-                                <rect x="18" y="7" width="5" height="10" rx="2.5" fill="#ffffff"/>
-                                <rect x="41" y="7" width="5" height="10" rx="2.5" fill="#ffffff"/>
-                                <circle cx="20" cy="33" r="3.2" fill="#ffffff"/>
-                                <circle cx="32" cy="33" r="3.2" fill="#ffffff"/>
-                                <circle cx="44" cy="33" r="3.2" fill="#ffffff"/>
-                                <circle cx="20" cy="44" r="3.2" fill="#ffffff"/>
-                                <circle cx="32" cy="44" r="3.2" fill="#ffffff"/>
-                                <circle cx="44" cy="44" r="3.2" fill="#ffffff"/>
+                                <rect x="6" y="14" width="52" height="44" rx="14" fill="#E8EDF2"/>
+                                <path d="M6 24C6 16.268 12.268 10 20 10H44C51.732 10 58 16.268 58 24V26H6V24Z" fill="#258BF5"/>
+                                <rect x="18" y="4" width="6" height="12" rx="3" fill="#1A67B8"/>
+                                <rect x="40" y="4" width="6" height="12" rx="3" fill="#1A67B8"/>
+                                <rect x="14" y="32" width="8" height="8" rx="3" fill="#258BF5"/>
+                                <rect x="28" y="32" width="8" height="8" rx="3" fill="#258BF5"/>
+                                <rect x="42" y="32" width="8" height="8" rx="3" fill="#258BF5"/>
+                                <rect x="14" y="44" width="8" height="8" rx="3" fill="#258BF5"/>
+                                <rect x="28" y="44" width="8" height="8" rx="3" fill="#90C4F9"/>
                             </svg>
                             <span class="cal-active-dot" id="calActiveDot"></span>
                         </button>
@@ -1291,7 +1281,6 @@
                         <div class="day-action-wrap">
                             <button type="button" class="day-action-btn" id="organisedCaCategoryBtn" onclick="toggleOrganisedCaCategoryDropdown(event)">
                                 <span id="selectedCategoryLabel">All</span>
-                                <svg class="day-action-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
                             </button>
                             <!-- Attached Floating Category Dropdown Panel -->
                             <div class="floating-days-panel" id="floatingOrganisedCaCategoryPanel"></div>
