@@ -468,15 +468,17 @@
             color: var(--text-main);
             min-height: 100vh;
             width: 100%;
-            transform: scale3d(1, 1, 1);
-            -webkit-transform: scale3d(1, 1, 1);
+            transform: none;
+            -webkit-transform: none;
             transform-origin: center center;
             box-sizing: border-box;
-            will-change: transform;
+            will-change: filter, transform;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        -webkit-transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        -webkit-filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                        -webkit-transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         body.popup-active {
@@ -487,15 +489,19 @@
             background-color: #f5f5f7 !important;
         }
 
+        /* Modal active: Background ONLY blurs with ZERO scaling back or depth shift */
         body.popup-active .page-wrapper {
-            transform: scale3d(0.96, 0.96, 1) !important;
-            -webkit-transform: scale3d(0.96, 0.96, 1) !important;
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6) !important;
+            transform: none !important;
+            -webkit-transform: none !important;
+            filter: blur(8px) !important;
+            -webkit-filter: blur(8px) !important;
+            pointer-events: none;
+            user-select: none;
         }
 
         body.light-mode.popup-active .page-wrapper {
-            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.12) !important;
+            filter: blur(8px) !important;
+            -webkit-filter: blur(8px) !important;
         }
 
         /* -------------------------------------------------------------
@@ -887,19 +893,33 @@ function initSiblingMuting() {
                     sibling.style.transform = '';
                 });
             });
+            item.addEventListener('click', () => {
+                items.forEach(sibling => {
+                    sibling.style.opacity = '';
+                    sibling.style.transform = '';
+                });
+            });
         });
     });
 }
 window.initSiblingMuting = initSiblingMuting;
 
+function resetMutedState() {
+    document.querySelectorAll('.list-item, .document-list a, .footer-links-row a, .brand-pill, .nav-text, a').forEach(el => {
+        el.style.opacity = '';
+        el.style.transform = '';
+        el.classList.remove('is-wave-loading', 'is-panel-lifted', 'is-card-lifted', 'active');
+        if (el.blur) el.blur();
+    });
+}
+window.resetMutedState = resetMutedState;
+
 window.addEventListener('pageshow', (event) => {
+    resetMutedState();
     wrapClickableWords();
     initSiblingMuting();
     // Trigger smooth slideup fade animation whenever visiting homescreen or any page
     executeMasterEntrance();
-    document.querySelectorAll('.is-wave-loading, .is-panel-lifted, .is-card-lifted').forEach(el => {
-        el.classList.remove('is-wave-loading', 'is-panel-lifted', 'is-card-lifted');
-    });
 });
 
 // 7. UNIVERSAL POPUP DEPTH CENTERING (SCALES BACK SYMMETRICALLY WITHOUT SHIFTING DOWN)

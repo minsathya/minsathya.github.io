@@ -84,6 +84,12 @@
         --pill-box-bg: rgba(255, 255, 255, 0.025);
         --pill-box-border: #222222;
 
+        --btn-blue: #244b40;
+        --btn-blue-hover: #2e5c50;
+        --theme-green: #244b40;
+        --pill-bg: rgba(255, 255, 255, 0.06);
+        --pill-border: rgba(255, 255, 255, 0.08);
+
         --link-color: #2997ff;
         --link-underline: rgba(41, 151, 255, 0.35);
 
@@ -107,6 +113,12 @@
         --accent-tag-text: #1d6e35;
         --pill-box-bg: rgba(0, 0, 0, 0.025);
         --pill-box-border: #e2e2e7;
+
+        --btn-blue: #296556;
+        --btn-blue-hover: #1e4d42;
+        --theme-green: #296556;
+        --pill-bg: rgba(0, 0, 0, 0.05);
+        --pill-border: rgba(0, 0, 0, 0.08);
 
         --link-color: #0066cc;
         --link-underline: rgba(0, 102, 204, 0.35);
@@ -589,7 +601,7 @@
             bottom: 1px;
             left: 0;
             width: 0;
-            background: var(--accent-tag-bg);
+            background: var(--btn-blue);
             border-radius: 9999px;
             transition: transform 0.38s cubic-bezier(0.25, 1, 0.35, 1), width 0.38s cubic-bezier(0.25, 1, 0.35, 1), opacity 0.2s ease;
             pointer-events: none;
@@ -620,73 +632,499 @@
         }
 
         .topic-num-btn:hover { color: var(--text-main); }
-        .topic-num-btn.is-active { color: var(--accent-tag-text); font-weight: 600; }
+        .topic-num-btn.is-active { color: #ffffff !important; font-weight: 600; }
 
-        /* SEAMLESS ARTICLE FEED & CARDS */
-        .topics-feed {
+        /* MOBILE TOPICS CLUSTER (PHONE VIEW) */
+        .ca-topics-nav-cluster {
+            display: none;
+            align-items: center;
+            gap: 8px;
             position: relative;
-            width: 100%;
-            overflow: hidden;
-            touch-action: pan-y;
-            user-select: none;
-            -webkit-user-select: none;
-            transition: height 0.45s var(--ease-smooth);
-            will-change: height;
+            z-index: 100;
         }
 
-        .article-card {
+        .ca-nav-arrow-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            transition: opacity 0.22s var(--ease-smooth), transform 0.22s var(--ease-smooth);
+        }
+        .ca-nav-arrow-btn:active:not(.is-disabled) {
+            transform: scale(0.84);
+        }
+        .ca-nav-arrow-btn.is-disabled {
+            opacity: 0.22 !important;
+            pointer-events: none !important;
+        }
+        .ca-nav-arrow-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .ca-topic-number-pill {
+            position: relative;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--pill-bg);
+            border: 1px solid var(--pill-border);
+            color: var(--text-main);
+            font-size: 13.5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.2s;
+        }
+        .ca-topic-number-pill:active {
+            transform: scale(0.92);
+        }
+
+        .ca-floating-jump-pill {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 50%;
+            transform: translateX(50%) scale(0.9);
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 18px;
+            padding: 6px 4px;
             display: none;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 110 !important;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            min-width: 36px;
+            max-height: 220px;
+            overflow-y: auto;
+            transition: transform 0.25s var(--ease-smooth), opacity 0.25s var(--ease-smooth);
+        }
+        .ca-floating-jump-pill.is-open {
+            display: flex;
+            opacity: 1;
+            transform: translateX(50%) scale(1);
+            pointer-events: auto;
+        }
+        .ca-jump-item-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            height: 28px;
+            width: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin: 0 auto;
+            transition: color 0.2s, background-color 0.2s;
+        }
+        .ca-jump-item-btn:hover,
+        .ca-jump-item-btn:active {
+            color: var(--text-main);
+            background: var(--pill-bg);
+        }
+        .ca-jump-item-btn.is-active {
+            background: var(--btn-blue) !important;
+            color: #ffffff !important;
+        }
+
+        @media (max-width: 680px) {
+            .desktop-topics-pill { display: none !important; }
+            .ca-topics-nav-cluster { display: flex !important; }
+        }
+        @media (min-width: 681px) {
+            .desktop-topics-pill { display: inline-flex !important; }
+            .ca-topics-nav-cluster { display: none !important; }
+        }
+
+        /* 2. CONTROLS PANEL (MATCHING APP) */
+        .ca-controls-panel {
             width: 100%;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
-            border-radius: 28px;
-            padding: 44px 48px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
-            user-select: text;
-            -webkit-user-select: text;
+            border-radius: 24px;
+            padding: 14px 20px;
+            display: flex;
+            flex-direction: column;
             box-sizing: border-box;
-            transform: none !important;
-            transition: background-color 0.8s var(--ease-smooth), 
-                        border-color 0.8s var(--ease-smooth), 
-                        box-shadow 0.8s var(--ease-smooth);
+            margin-top: 16px;
+            transition: background-color 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
         }
 
-        .article-card:hover,
-        .article-card:active,
-        .article-card.is-panel-lifted {
-            transform: none !important;
+        .ca-controls-main-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 12px;
         }
 
-        body:not(.light-mode) .article-card { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); }
+        .ca-action-buttons-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
 
-        .article-card.is-active {
-            display: block;
-            position: relative;
-            transform: none !important;
+        .ca-action-label-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: transparent !important;
+            border: none !important;
+            padding: 0;
+        }
+
+        .ca-direct-action-btn {
+            background: var(--btn-blue);
+            color: #ffffff !important;
+            border: none;
+            outline: none;
+            padding: 5px 15px;
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: none !important;
+            transition: transform 0.18s var(--ease-smooth), opacity 0.18s var(--ease-smooth);
+        }
+        .ca-direct-action-btn:active {
+            transform: scale(0.93);
+            opacity: 0.9;
+        }
+
+        .ca-dropdown-toggle-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            transition: transform 0.3s var(--ease-smooth), color 0.3s var(--ease-smooth);
+        }
+        .ca-dropdown-toggle-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .ca-dropdown-toggle-btn.is-rotated {
+            transform: rotate(180deg);
+            color: var(--text-main);
+        }
+
+        /* Drawers */
+        .ca-image-drawer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.45s var(--ease-smooth);
+            width: 100%;
+            overflow: hidden;
+        }
+        .ca-image-drawer.is-open {
+            grid-template-rows: 1fr;
+        }
+        .ca-image-drawer-inner {
+            min-height: 0;
+            overflow: hidden;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            padding-top: 0;
+            transition: opacity 0.3s var(--ease-smooth), padding-top 0.35s var(--ease-smooth);
+        }
+        .ca-image-drawer.is-open .ca-image-drawer-inner {
             opacity: 1;
+            padding-top: 14px;
+        }
+        .ca-image-drawer-inner img {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            border-radius: 16px;
+            display: block;
+        }
+        .ca-image-caption {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            text-align: center;
         }
 
-        @keyframes stageSlideOutLeft { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
-        @keyframes stageSlideInRight { 0% { transform: translate3d(100%, 0, 0); } 100% { transform: translate3d(0, 0, 0); } }
-        @keyframes stageSlideOutRight { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(100%, 0, 0); } }
-        @keyframes stageSlideInLeft { 0% { transform: translate3d(-100%, 0, 0); } 100% { transform: translate3d(0, 0, 0); } }
+        .ca-meta-drawer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.45s var(--ease-smooth);
+            width: 100%;
+            overflow: hidden;
+        }
+        .ca-meta-drawer.is-open {
+            grid-template-rows: 1fr;
+        }
+        .ca-meta-drawer-inner {
+            min-height: 0;
+            overflow: hidden;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            opacity: 0;
+            padding-top: 0;
+            transition: opacity 0.3s var(--ease-smooth), padding-top 0.35s var(--ease-smooth);
+        }
+        .ca-meta-drawer.is-open .ca-meta-drawer-inner {
+            opacity: 1;
+            padding-top: 14px;
+        }
+        .ca-meta-row {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
 
-        .article-card.anim-out-left { display: block !important; position: absolute !important; top: 0; left: 0; width: 100%; z-index: 1; pointer-events: none; animation: stageSlideOutLeft 0.48s var(--ease-smooth) forwards !important; }
-        .article-card.anim-in-right { display: block !important; position: relative !important; z-index: 2; animation: stageSlideInRight 0.48s var(--ease-smooth) forwards !important; }
-        .article-card.anim-out-right { display: block !important; position: absolute !important; top: 0; left: 0; width: 100%; z-index: 1; pointer-events: none; animation: stageSlideOutRight 0.48s var(--ease-smooth) forwards !important; }
-        .article-card.anim-in-left { display: block !important; position: relative !important; z-index: 2; animation: stageSlideInLeft 0.48s var(--ease-smooth) forwards !important; }
+        /* 3. FULL-WIDTH ARTICLE CONTENT AREA (RESTS DIRECTLY ON BACKGROUND) */
+        .ca-article-feed-stage {
+            width: 100%;
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            box-sizing: border-box;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        .article-slide-up-run {
+            animation: articleSlideUpEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            will-change: transform, opacity;
+        }
+
+        @keyframes articleSlideUpEntrance {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 24px, 0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        .ca-article-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
 
         .article-title {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.35px;
             color: var(--text-main);
-            margin-bottom: 20px;
-            line-height: 1.35;
-            hyphens: none;
-            -webkit-hyphens: none;
-            word-break: normal;
-            transition: color 0.8s var(--ease-smooth);
+            line-height: 1.34;
+            margin-bottom: 22px;
+            text-align: left;
+        }
+
+        /* Smooth Content Drawers */
+        .ca-content-drawer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            width: 100%;
+            will-change: grid-template-rows;
+        }
+        .ca-content-drawer.is-open {
+            grid-template-rows: 1fr;
+            transition: grid-template-rows 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ca-content-overflow {
+            min-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translate3d(0, 0, 0);
+            transition: opacity 0.28s ease;
+            will-change: opacity;
+        }
+        .ca-content-drawer.is-open .ca-content-overflow {
+            opacity: 1;
+            transition: opacity 0.34s ease;
+        }
+
+        .ca-detailed-content-drawer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            width: 100%;
+            will-change: grid-template-rows;
+        }
+        .ca-detailed-content-drawer.is-open {
+            grid-template-rows: 1fr;
+            transition: grid-template-rows 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ca-detailed-overflow {
+            min-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translate3d(0, 0, 0);
+            transition: opacity 0.28s ease;
+            will-change: opacity;
+        }
+        .ca-detailed-content-drawer.is-open .ca-detailed-overflow {
+            opacity: 1;
+            transition: opacity 0.34s ease;
+        }
+
+        /* SECTIONS & TYPOGRAPHY */
+        .note-section {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--row-divider);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: left;
+        }
+        .note-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-heading {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-main);
+            letter-spacing: -0.2px;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        .note-p {
+            font-size: 15px;
+            line-height: 1.75;
+            color: var(--text-main);
+            opacity: 0.92;
+            padding-left: 0;
+            text-align: left;
+            margin: 0;
+        }
+
+        /* Clean Left-Aligned Bullet Points (No green dots) */
+        .note-items-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .note-item-group {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            text-align: left;
+        }
+
+        .point-subheading {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.5;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        .point-sublist {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .point-bullet-item {
+            position: relative;
+            padding-left: 18px;
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: var(--text-main);
+            opacity: 0.92;
+            text-align: left;
+        }
+
+        .point-bullet-item::before {
+            content: "•";
+            position: absolute;
+            left: 2px;
+            top: -1px;
+            font-size: 16px;
+            color: var(--text-main);
+        }
+
+        /* Organisation callout: rests directly on background */
+        .info-callout {
+            background: transparent !important;
+            border: none !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: left;
+            margin-top: 2px;
+        }
+
+        .info-callout-row {
+            position: relative;
+            padding-left: 0 !important;
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: var(--text-main);
+            text-align: left;
+        }
+        .info-callout-row::before {
+            display: none !important;
+        }
+        .info-callout-row strong {
+            font-weight: 600;
+            color: var(--text-main);
         }
 
         /* LAPTOP FLOATING SIDE NAVIGATION ARROWS */
@@ -1601,8 +2039,41 @@
             <div class="capsule-topics-cluster" id="topicsPillContainer"></div>
         </div>
 
-        <!-- ARTICLE FEED -->
-        <div class="topics-feed" id="topicsFeed"></div>
+        <!-- 2. CONTROLS PANEL (MATCHING APP) -->
+        <div class="ca-controls-panel" id="caControlsPanel">
+            <div class="ca-controls-main-bar">
+                <div class="ca-action-buttons-group">
+                    <span class="ca-action-label-wrap">Image : <button type="button" class="ca-direct-action-btn image-action-btn" id="caImageActionBtn" onclick="toggleActiveImage()">View</button></span>
+                    <span class="ca-action-label-wrap">Read : <button type="button" class="ca-direct-action-btn read-action-btn" id="caReadActionBtn" onclick="toggleActiveReadMode()">Short</button></span>
+                </div>
+                <button type="button" class="ca-dropdown-toggle-btn" id="caMetaDropdownBtn" onclick="toggleActiveMetaDropdown()" aria-label="Expand topic tags">
+                    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+            </div>
+            <!-- Expandable Image Drawer inside Controls Panel -->
+            <div class="ca-image-drawer" id="caImageDrawer">
+                <div class="ca-image-drawer-inner" id="caImageDrawerInner"></div>
+            </div>
+            <!-- Expandable Metadata Drawer inside Controls Panel -->
+            <div class="ca-meta-drawer" id="caMetaDrawer">
+                <div class="ca-meta-drawer-inner" id="caMetaDrawerInner"></div>
+            </div>
+        </div>
+
+        <!-- 3. ARTICLE FEED (CONTENT RESTS DIRECTLY ON BACKGROUND) -->
+        <div class="ca-article-feed-stage article-slide-up-run" id="caArticleFeedStage">
+            <div class="ca-article-wrapper">
+                <h1 class="article-title" id="caArticleTitle"></h1>
+                <!-- Short Revision Drawer -->
+                <div class="ca-content-drawer" id="caShortDrawer">
+                    <div class="ca-content-overflow" id="caShortContent"></div>
+                </div>
+                <!-- Detailed Analysis Drawer -->
+                <div class="ca-detailed-content-drawer is-open" id="caDetailedDrawer">
+                    <div class="ca-detailed-overflow" id="caDetailedContent"></div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- LAPTOP FLOATING SIDE NAVIGATION ARROWS -->
@@ -1779,82 +2250,37 @@
         setupScrollHighlight(monthCol, v => tempMonth = v);
         setupScrollHighlight(yearCol, v => tempYear = v);
 
-        // 3. IMAGE & SHORT REVISION INTERACTION ENGINES
-        window.toggleTopicImage = function(btn, drawerId) {
-            const drawer = document.getElementById(drawerId);
-            if (!drawer) return;
-            const isOpen = drawer.classList.contains('is-open');
-            if (isOpen) {
-                drawer.classList.remove('is-open');
-                btn.textContent = 'View';
-            } else {
-                drawer.classList.add('is-open');
-                btn.textContent = 'Close';
-            }
-            setTimeout(() => syncFeedHeight(), 80);
-            setTimeout(() => syncFeedHeight(), 350);
-            setTimeout(() => syncFeedHeight(), 580);
-        };
-
-        window.toggleShortArticle = function(btn, idx) {
-            let targetIdx = idx;
-            if (targetIdx === undefined || targetIdx === null) {
-                const card = btn.closest('.article-card');
-                if (card && card.dataset.index !== undefined) {
-                    targetIdx = parseInt(card.dataset.index);
-                }
-            }
-            const shortDrawer = document.getElementById(`shortDrawer_${targetIdx}`);
-            const fullDrawer = document.getElementById(`fullDrawer_${targetIdx}`);
-            if (!shortDrawer || !fullDrawer) return;
-
-            const isCurrentlyShort = (btn.textContent.trim().toLowerCase() === 'full');
-
-            if (isCurrentlyShort) {
-                // Currently in Short view -> Switch to Full view
-                shortDrawer.classList.remove('is-open');
-                fullDrawer.classList.add('is-open');
-                btn.textContent = 'Short';
-            } else {
-                // Currently in Full view -> Switch to Short view
-                fullDrawer.classList.remove('is-open');
-                shortDrawer.classList.add('is-open');
-                btn.textContent = 'Full';
-            }
-
-            if (topicsFeed) {
-                topicsFeed.style.height = 'auto';
-            }
-        };
-
-        // 4. DUAL-CARD STAGE ENGINE
+        // ----------------------------------------------------
+        // DAILY CURRENT AFFAIRS ENGINE (RESTS ON BACKGROUND)
+        // ----------------------------------------------------
+        let currentTopicsList = [];
         let currentActiveTopicIndex = 0;
         let totalLoadedTopics = 0;
-        let isTransitioning = false;
+        let caViewMode = 'detailed'; // 'detailed' | 'short'
+        let caImageDrawerOpen = false;
+        let caMetaDrawerOpen = false;
+        let caFloatingPickerOpen = false;
 
         function updateNavArrows() {
             const prevBtn = document.getElementById('sidePrevBtn');
             const nextBtn = document.getElementById('sideNextBtn');
-            if (!prevBtn || !nextBtn) return;
+            const mobPrevBtn = document.getElementById('caMobPrevBtn');
+            const mobNextBtn = document.getElementById('caMobNextBtn');
 
-            if (currentActiveTopicIndex <= 0) {
-                prevBtn.classList.add('is-disabled');
-            } else {
-                prevBtn.classList.remove('is-disabled');
-            }
+            const isFirst = currentActiveTopicIndex <= 0;
+            const isLast = currentActiveTopicIndex >= totalLoadedTopics - 1;
 
-            if (currentActiveTopicIndex >= totalLoadedTopics - 1) {
-                nextBtn.classList.add('is-disabled');
-            } else {
-                nextBtn.classList.remove('is-disabled');
-            }
+            if (prevBtn) prevBtn.classList.toggle('is-disabled', isFirst);
+            if (nextBtn) nextBtn.classList.toggle('is-disabled', isLast);
+            if (mobPrevBtn) mobPrevBtn.classList.toggle('is-disabled', isFirst);
+            if (mobNextBtn) mobNextBtn.classList.toggle('is-disabled', isLast);
         }
 
         function updatePillGlider(activeBtn) {
             const glider = document.getElementById('pillGlider');
             if (!glider || !activeBtn) return;
-            glider.style.width = `${activeBtn.offsetWidth}px`;
-            glider.style.transform = `translateX(${activeBtn.offsetLeft}px)`;
+            glider.style.width = activeBtn.offsetWidth + 'px';
+            glider.style.transform = 'translateX(' + activeBtn.offsetLeft + 'px)';
             glider.style.opacity = '1';
         }
 
@@ -1863,22 +2289,52 @@
             if (!container) return;
 
             if (totalTopics > 0) {
-                let buttonsHtml = '';
+                // Desktop / iPad Horizontal Expanding Pill
+                let deskButtonsHtml = '';
                 for (let i = 1; i <= totalTopics; i++) {
                     const activeClass = i === 1 ? ' is-active' : '';
-                    buttonsHtml += `<button type="button" class="topic-num-btn${activeClass}" data-topic-btn="${i - 1}" onclick="transitionTopic(${i - 1})">${i}</button>`;
+                    deskButtonsHtml += '<button type="button" class="topic-num-btn' + activeClass + '" data-topic-btn="' + (i - 1) + '" onclick="transitionTopic(' + (i - 1) + ')">' + i + '</button>';
                 }
-                container.innerHTML = `
-                    <div class="topics-nav-pill">
-                        <span class="pill-label">Topics :</span>
-                        <div class="topic-numbers-wrapper">
-                            <span class="pill-slider-glider" id="pillGlider"></span>
-                            ${buttonsHtml}
-                        </div>
-                    </div>
-                `;
+
+                // Phone Vertical Jump Buttons inside Floating Jump Pill
+                let mobJumpButtonsHtml = '';
+                for (let i = 1; i <= totalTopics; i++) {
+                    const activeClass = i === 1 ? ' is-active' : '';
+                    mobJumpButtonsHtml += '<button type="button" class="ca-jump-item-btn' + activeClass + '" data-jump-btn="' + (i - 1) + '" onclick="jumpToCaTopic(' + (i - 1) + ')">' + i + '</button>';
+                }
+
+                container.innerHTML = 
+                    '<!-- 1. Desktop / Laptop / iPad: Horizontal Expanding Pill -->' +
+                    '<div class="topics-nav-pill desktop-topics-pill">' +
+                        '<span class="pill-label">Topics :</span>' +
+                        '<div class="topic-numbers-wrapper">' +
+                            '<span class="pill-slider-glider" id="pillGlider"></span>' +
+                            deskButtonsHtml +
+                        '</div>' +
+                    '</div>' +
+
+                    '<!-- 2. Phone Browser: Native Cluster with Arrow & Center Number Pill -->' +
+                    '<div class="ca-topics-nav-cluster mobile-topics-cluster">' +
+                        '<button type="button" class="ca-nav-arrow-btn" id="caMobPrevBtn" onclick="transitionTopic(currentActiveTopicIndex - 1)" aria-label="Previous Topic">' +
+                            '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>' +
+                        '</button>' +
+
+                        '<div class="ca-topic-number-pill" id="caTopicNumBtn" onclick="toggleCaFloatingTopicPicker(event)" aria-label="Topic Number">' +
+                            '<span>1</span>' +
+                        '</div>' +
+
+                        '<!-- Narrow Vertical Floating Jump Pill -->' +
+                        '<div class="ca-floating-jump-pill" id="caFloatingJumpPill">' +
+                            mobJumpButtonsHtml +
+                        '</div>' +
+
+                        '<button type="button" class="ca-nav-arrow-btn" id="caMobNextBtn" onclick="transitionTopic(currentActiveTopicIndex + 1)" aria-label="Next Topic">' +
+                            '<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>' +
+                        '</button>' +
+                    '</div>';
+
                 const syncGlider = () => {
-                    const firstBtn = container.querySelector('.topic-num-btn.is-active');
+                    const firstBtn = container.querySelector('.desktop-topics-pill .topic-num-btn.is-active');
                     if (firstBtn) updatePillGlider(firstBtn);
                 };
                 requestAnimationFrame(syncGlider);
@@ -1890,409 +2346,404 @@
             }
         }
 
-        function syncFeedHeight(idx = currentActiveTopicIndex) {
-            const card = document.getElementById(`topic-card-${idx}`);
-            if (topicsFeed && card) {
-                const targetH = card.offsetHeight;
-                if (targetH > 0) {
-                    topicsFeed.style.height = `${targetH}px`;
+        window.toggleCaFloatingTopicPicker = function(e) {
+            if (e) e.stopPropagation();
+            caFloatingPickerOpen = !caFloatingPickerOpen;
+            const pill = document.getElementById('caFloatingJumpPill');
+            if (pill) {
+                pill.classList.toggle('is-open', caFloatingPickerOpen);
+            }
+        };
+
+        window.jumpToCaTopic = function(idx) {
+            caFloatingPickerOpen = false;
+            const pill = document.getElementById('caFloatingJumpPill');
+            if (pill) pill.classList.remove('is-open');
+            transitionTopic(idx);
+        };
+
+        // Dismiss floating picker when clicking outside
+        document.addEventListener('click', (e) => {
+            if (caFloatingPickerOpen) {
+                const pill = document.getElementById('caFloatingJumpPill');
+                const btn = document.getElementById('caTopicNumBtn');
+                if (pill && !pill.contains(e.target) && (!btn || !btn.contains(e.target))) {
+                    caFloatingPickerOpen = false;
+                    pill.classList.remove('is-open');
                 }
             }
-        }
+        });
 
-        function transitionTopic(targetIndex, direction = null) {
-            if (isTransitioning || targetIndex < 0 || targetIndex >= totalLoadedTopics || targetIndex === currentActiveTopicIndex) return;
-
-            const isNext = direction ? (direction === 'next') : (targetIndex > currentActiveTopicIndex);
-            const currentIndex = currentActiveTopicIndex;
-            currentActiveTopicIndex = targetIndex;
-            isTransitioning = true;
-
-            const cards = topicsFeed.querySelectorAll('.article-card');
-            const currentCard = cards[currentIndex];
-            const targetCard = cards[targetIndex];
-
-            const buttons = document.querySelectorAll('.topic-num-btn');
-            buttons.forEach((btn, i) => {
-                const isSelected = (i === targetIndex);
+        function syncTopicNavButtons(idx) {
+            // Update desktop buttons
+            const deskButtons = document.querySelectorAll('.desktop-topics-pill .topic-num-btn');
+            deskButtons.forEach((btn, i) => {
+                const isSelected = (i === idx);
                 btn.classList.toggle('is-active', isSelected);
                 if (isSelected) updatePillGlider(btn);
             });
 
-            updateNavArrows();
+            // Update mobile number pill and vertical jump buttons
+            const numBtnSpan = document.querySelector('#caTopicNumBtn span');
+            if (numBtnSpan) numBtnSpan.textContent = idx + 1;
 
-            targetCard.style.display = 'block';
-            targetCard.style.visibility = 'hidden';
-            const incomingHeight = targetCard.offsetHeight;
-            targetCard.style.display = '';
-            targetCard.style.visibility = '';
-
-            topicsFeed.style.height = `${currentCard.offsetHeight}px`;
-            void topicsFeed.offsetHeight;
-            if (incomingHeight > 0) {
-                topicsFeed.style.height = `${incomingHeight}px`;
-            }
-
-            window.scrollTo({ top: 0, behavior: 'instant' });
-
-            if (isNext) {
-                currentCard.className = 'article-card anim-out-left';
-                targetCard.className = 'article-card anim-in-right';
-            } else {
-                currentCard.className = 'article-card anim-out-right';
-                targetCard.className = 'article-card anim-in-left';
-            }
-
-            setTimeout(() => {
-                cards.forEach((card, idx) => {
-                    card.className = idx === targetIndex ? 'article-card is-active' : 'article-card';
-                });
-                topicsFeed.style.height = 'auto';
-                isTransitioning = false;
-                packAllMetaPills();
-            }, 400);
+            const mobJumpButtons = document.querySelectorAll('.ca-jump-item-btn');
+            mobJumpButtons.forEach((btn, i) => {
+                btn.classList.toggle('is-active', i === idx);
+            });
         }
 
-        // 5. SIDE ARROWS CLICK LISTENERS
+        function renderActiveTopic(index, animate) {
+            if (animate === undefined) animate = true;
+            if (!currentTopicsList || currentTopicsList.length === 0) return;
+            const topic = currentTopicsList[index];
+            if (!topic) return;
+
+            // Update Controls Panel
+            const hasImage = !!(topic.image && topic.image.url);
+            const imgBtn = document.getElementById('caImageActionBtn');
+            if (imgBtn) {
+                imgBtn.textContent = caImageDrawerOpen ? 'Close' : 'View';
+                imgBtn.style.opacity = hasImage ? '1' : '0.4';
+                imgBtn.style.pointerEvents = hasImage ? 'auto' : 'none';
+            }
+            const imgInner = document.getElementById('caImageDrawerInner');
+            if (imgInner) {
+                imgInner.innerHTML = hasImage ? 
+                    ('<img src="' + topic.image.url + '" alt="' + (topic.image.caption || 'Topic Graphic') + '" loading="lazy">' +
+                    (topic.image.caption ? '<div class="ca-image-caption">' + topic.image.caption + '</div>' : ''))
+                    : '<div style="font-size: 13px; color: var(--text-muted); padding: 8px 0;">No graphic or infographic attached for this topic.</div>';
+            }
+
+            const metaInner = document.getElementById('caMetaDrawerInner');
+            if (metaInner) {
+                metaInner.innerHTML = 
+                    '<div class="ca-meta-row">' +
+                        '<span class="meta-pill">GS Paper : <strong>' + (topic.gsPaper || 'General Studies') + '</strong></span>' +
+                    '</div>' +
+                    '<div class="ca-meta-row">' +
+                        '<span class="meta-pill">Category : <strong>' + (topic.category || 'National') + '</strong></span>' +
+                    '</div>' +
+                    '<div class="ca-meta-row">' +
+                        '<span class="meta-pill">Comes under : <strong>' + (topic.comesUnder || 'Prelims & Mains') + '</strong></span>' +
+                    '</div>';
+            }
+
+            // Article title
+            const titleEl = document.getElementById('caArticleTitle');
+            if (titleEl) titleEl.textContent = topic.topicTitle;
+
+            // Article drawers content
+            const shortContent = document.getElementById('caShortContent');
+            if (shortContent) shortContent.innerHTML = renderCaShortRevision(topic);
+
+            const detailedContent = document.getElementById('caDetailedContent');
+            if (detailedContent) detailedContent.innerHTML = renderCaArticleSections(topic);
+
+            // Sync drawer states
+            const shortDrawer = document.getElementById('caShortDrawer');
+            const detailedDrawer = document.getElementById('caDetailedDrawer');
+            if (caViewMode === 'short') {
+                if (shortDrawer) shortDrawer.classList.add('is-open');
+                if (detailedDrawer) detailedDrawer.classList.remove('is-open');
+            } else {
+                if (shortDrawer) shortDrawer.classList.remove('is-open');
+                if (detailedDrawer) detailedDrawer.classList.add('is-open');
+            }
+
+            const readBtn = document.getElementById('caReadActionBtn');
+            if (readBtn) {
+                readBtn.textContent = caViewMode === 'short' ? 'Full' : 'Short';
+            }
+
+            // Smooth Slide-Up Transition Entrance on Every Topic Change
+            if (animate) {
+                const stage = document.getElementById('caArticleFeedStage');
+                if (stage) {
+                    stage.classList.remove('article-slide-up-run');
+                    void stage.offsetWidth;
+                    stage.classList.add('article-slide-up-run');
+                }
+            }
+
+            // Sync navigation buttons & arrows
+            syncTopicNavButtons(index);
+            updateNavArrows();
+            if (typeof wrapClickableWords === 'function') wrapClickableWords();
+        }
+
+        function transitionTopic(targetIndex) {
+            if (targetIndex < 0 || targetIndex >= totalLoadedTopics || targetIndex === currentActiveTopicIndex) return;
+            currentActiveTopicIndex = targetIndex;
+            renderActiveTopic(currentActiveTopicIndex, true);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        window.transitionTopic = transitionTopic;
+
+        window.toggleActiveReadMode = function() {
+            caViewMode = (caViewMode === 'detailed') ? 'short' : 'detailed';
+            const readBtn = document.getElementById('caReadActionBtn');
+            if (readBtn) {
+                readBtn.textContent = caViewMode === 'short' ? 'Full' : 'Short';
+            }
+            const shortDrawer = document.getElementById('caShortDrawer');
+            const detailedDrawer = document.getElementById('caDetailedDrawer');
+            if (caViewMode === 'short') {
+                if (shortDrawer) shortDrawer.classList.add('is-open');
+                if (detailedDrawer) detailedDrawer.classList.remove('is-open');
+            } else {
+                if (shortDrawer) shortDrawer.classList.remove('is-open');
+                if (detailedDrawer) detailedDrawer.classList.add('is-open');
+            }
+        };
+
+        window.toggleActiveImage = function() {
+            caImageDrawerOpen = !caImageDrawerOpen;
+            const imgBtn = document.getElementById('caImageActionBtn');
+            if (imgBtn) {
+                imgBtn.textContent = caImageDrawerOpen ? 'Close' : 'View';
+            }
+            const drawer = document.getElementById('caImageDrawer');
+            if (drawer) {
+                drawer.classList.toggle('is-open', caImageDrawerOpen);
+            }
+        };
+
+        window.toggleActiveMetaDropdown = function() {
+            caMetaDrawerOpen = !caMetaDrawerOpen;
+            const btn = document.getElementById('caMetaDropdownBtn');
+            if (btn) btn.classList.toggle('is-rotated', caMetaDrawerOpen);
+            const drawer = document.getElementById('caMetaDrawer');
+            if (drawer) drawer.classList.toggle('is-open', caMetaDrawerOpen);
+        };
+
+        // Laptop Floating Side Navigation Arrows
         document.getElementById('sidePrevBtn').addEventListener('click', () => {
             if (currentActiveTopicIndex > 0) {
-                transitionTopic(currentActiveTopicIndex - 1, 'prev');
+                transitionTopic(currentActiveTopicIndex - 1);
             }
         });
 
         document.getElementById('sideNextBtn').addEventListener('click', () => {
             if (currentActiveTopicIndex < totalLoadedTopics - 1) {
-                transitionTopic(currentActiveTopicIndex + 1, 'next');
+                transitionTopic(currentActiveTopicIndex + 1);
             }
         });
 
-        // 6. TOUCH CONTROLLER
+        // Touch swipe handling on article stage
         let touchStartX = 0;
         let touchStartY = 0;
         let isHorizontalSwipe = false;
         let isTouchActive = false;
 
-        topicsFeed.addEventListener('touchstart', (e) => {
-            if (isTransitioning) return;
-            if (e.target.closest('button, a, input, .info-callout')) return;
-            if (e.touches.length === 1) {
-                touchStartX = e.touches[0].clientX;
-                touchStartY = e.touches[0].clientY;
-                isHorizontalSwipe = false;
-                isTouchActive = true;
-            }
-        }, { passive: true });
+        const stageEl = document.getElementById('caArticleFeedStage');
+        if (stageEl) {
+            stageEl.addEventListener('touchstart', (e) => {
+                if (e.target.closest('button, a, input, .info-callout')) return;
+                if (e.touches.length === 1) {
+                    touchStartX = e.touches[0].clientX;
+                    touchStartY = e.touches[0].clientY;
+                    isHorizontalSwipe = false;
+                    isTouchActive = true;
+                }
+            }, { passive: true });
 
-        topicsFeed.addEventListener('touchmove', (e) => {
-            if (!isTouchActive || isTransitioning) return;
-            const diffX = e.touches[0].clientX - touchStartX;
-            const diffY = e.touches[0].clientY - touchStartY;
+            stageEl.addEventListener('touchmove', (e) => {
+                if (!isTouchActive) return;
+                const diffX = e.touches[0].clientX - touchStartX;
+                const diffY = e.touches[0].clientY - touchStartY;
+                if (!isHorizontalSwipe && Math.abs(diffX) > 8 && Math.abs(diffX) > Math.abs(diffY)) {
+                    isHorizontalSwipe = true;
+                }
+            }, { passive: true });
 
-            if (!isHorizontalSwipe && Math.abs(diffX) > 8 && Math.abs(diffX) > Math.abs(diffY)) {
-                isHorizontalSwipe = true;
-            }
-        }, { passive: true });
-
-        topicsFeed.addEventListener('touchend', (e) => {
-            if (!isTouchActive || isTransitioning) return;
-            isTouchActive = false;
-
-            if (isHorizontalSwipe) {
-                const diffX = e.changedTouches[0].clientX - touchStartX;
-                const diffY = e.changedTouches[0].clientY - touchStartY;
-                if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
-                    if (diffX < 0) {
-                        if (currentActiveTopicIndex < totalLoadedTopics - 1) {
-                            transitionTopic(currentActiveTopicIndex + 1, 'next');
-                        }
-                    } else {
-                        if (currentActiveTopicIndex > 0) {
-                            transitionTopic(currentActiveTopicIndex - 1, 'prev');
+            stageEl.addEventListener('touchend', (e) => {
+                if (!isTouchActive) return;
+                isTouchActive = false;
+                if (isHorizontalSwipe) {
+                    const diffX = e.changedTouches[0].clientX - touchStartX;
+                    const diffY = e.changedTouches[0].clientY - touchStartY;
+                    if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
+                        if (diffX < 0 && currentActiveTopicIndex < totalLoadedTopics - 1) {
+                            transitionTopic(currentActiveTopicIndex + 1);
+                        } else if (diffX > 0 && currentActiveTopicIndex > 0) {
+                            transitionTopic(currentActiveTopicIndex - 1);
                         }
                     }
                 }
-            }
-        }, { passive: true });
+            }, { passive: true });
+        }
 
         window.addEventListener('keydown', (e) => {
             if (document.activeElement.tagName === 'INPUT') return;
             if (e.key === 'ArrowRight' && currentActiveTopicIndex < totalLoadedTopics - 1) {
-                transitionTopic(currentActiveTopicIndex + 1, 'next');
+                transitionTopic(currentActiveTopicIndex + 1);
             } else if (e.key === 'ArrowLeft' && currentActiveTopicIndex > 0) {
-                transitionTopic(currentActiveTopicIndex - 1, 'prev');
+                transitionTopic(currentActiveTopicIndex - 1);
             }
         });
 
-        // 7. DYNAMIC DATA RENDERER
-        function formatSubListItems(rawText) {
-            if (!rawText || typeof rawText !== 'string' || !rawText.includes(';')) {
-                return rawText;
-            }
+        // 7. ARTICLE DATA RENDERERS (CLEAN LEFT-ALIGNED BULLETS WITHOUT GREEN DOTS)
+        function renderCaListBlock(list) {
+            if (!list || !list.length) return '';
+            return list.map(rawText => {
+                if (!rawText || typeof rawText !== 'string') return '';
 
-            let labelPart = '';
-            let restPart = rawText;
+                let labelPart = '';
+                let restPart = rawText;
 
-            if (rawText.includes('</strong>')) {
-                const parts = rawText.split('</strong>');
-                labelPart = parts[0] + '</strong>';
-                restPart = parts.slice(1).join('</strong>').trim();
-                if (restPart.startsWith(':')) {
-                    labelPart += ' :';
-                    restPart = restPart.substring(1).trim();
+                if (rawText.includes('</strong>')) {
+                    const parts = rawText.split('</strong>');
+                    labelPart = parts[0].replace(/<[^>]+>/g, '').trim();
+                    restPart = parts.slice(1).join('</strong>').trim();
+                    if (restPart.startsWith(':')) {
+                        labelPart += ' :';
+                        restPart = restPart.substring(1).trim();
+                    }
+                } else if (rawText.includes(':')) {
+                    const colonIdx = rawText.indexOf(':');
+                    labelPart = rawText.substring(0, colonIdx + 1).trim();
+                    restPart = rawText.substring(colonIdx + 1).trim();
                 }
-            } else if (rawText.includes(':') && rawText.indexOf(':') < rawText.indexOf(';')) {
-                const colonIdx = rawText.indexOf(':');
-                labelPart = rawText.substring(0, colonIdx + 1);
-                restPart = rawText.substring(colonIdx + 1).trim();
-            }
 
-            const subItems = restPart.split(';').map(s => s.trim().replace(/^,\s*/, '')).filter(Boolean);
-            if (subItems.length > 1) {
-                const subRows = subItems.map(s => `
-                    <div class="note-sub-row"><span class="sub-bullet">▸</span><span>${s}</span></div>
-                `).join('');
-                return `${labelPart ? labelPart : ''}<div class="note-sub-list">${subRows}</div>`;
-            }
-            return rawText;
+                const subItems = restPart ? restPart.split(';').map(s => s.trim().replace(/^,s*/, '')).filter(Boolean) : [];
+                if (subItems.length === 0 && restPart) {
+                    subItems.push(restPart);
+                }
+
+                if (labelPart) {
+                    return (
+                        '<div class="note-item-group">' +
+                            '<div class="point-subheading">' + labelPart + '</div>' +
+                            '<ul class="point-sublist">' +
+                                subItems.map(s => '<li class="point-bullet-item">' + s + '</li>').join('') +
+                            '</ul>' +
+                        '</div>'
+                    );
+                } else {
+                    return (
+                        '<div class="note-item-group">' +
+                            '<ul class="point-sublist">' +
+                                subItems.map(s => '<li class="point-bullet-item">' + s + '</li>').join('') +
+                            '</ul>' +
+                        '</div>'
+                    );
+                }
+            }).join('');
         }
 
-        function renderArticleSections(data) {
-            const buildListItems = (list) => {
-                if (!list || list.length === 0) return '';
-                return list.map(item => `<li>${formatSubListItems(item)}</li>`).join('');
-            };
+        function renderCaShortRevision(topic) {
+            if (!topic) return '';
+            const why = (topic.shortArticle && topic.shortArticle.whyInNews) || topic.whyInNews;
+            const concept = (topic.shortArticle && topic.shortArticle.whatConcept) || topic.whatConcept;
+            return (
+                '<section class="note-section">' +
+                    '<h3 class="section-heading">Quick Revision</h3>' +
+                    (why ? '<p class="note-p">' + why + '</p>' : '') +
+                    (concept ? '<p class="note-p" style="margin-top: 10px;">' + concept + '</p>' : '') +
+                '</section>'
+            );
+        }
+
+        function renderCaArticleSections(data) {
+            if (!data) return '';
 
             let orgRowsHtml = '';
             if (data.whoOrg && data.whoOrg.length > 0) {
-                orgRowsHtml = data.whoOrg.map(row => `
-                    <div class="info-callout-row"><strong>${row.label} :</strong> ${row.val}</div>
-                `).join('');
+                orgRowsHtml = data.whoOrg.map(row => (
+                    '<div class="info-callout-row"><strong>' + row.label + ' :</strong> ' + row.val + '</div>'
+                )).join('');
             }
 
-            return `
-                ${data.whyInNews ? `
-                <section class="note-section">
-                    <h3 class="section-heading">Why in News?</h3>
-                    <p class="note-p">${data.whyInNews}</p>
-                </section>` : ''}
+            return (
+                (data.whyInNews ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">Why in News?</h3>' +
+                        '<p class="note-p">' + data.whyInNews + '</p>' +
+                    '</section>' : '') +
 
-                ${data.whatConcept ? `
-                <section class="note-section">
-                    <h3 class="section-heading">What / Concept</h3>
-                    <p class="note-p">${data.whatConcept}</p>
-                </section>` : ''}
+                (data.whatConcept ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">What / Concept</h3>' +
+                        '<p class="note-p">' + data.whatConcept + '</p>' +
+                    '</section>' : '') +
 
-                ${orgRowsHtml ? `
-                <section class="note-section">
-                    <h3 class="section-heading">Who / Organisation</h3>
-                    <div class="info-callout">${orgRowsHtml}</div>
-                </section>` : ''}
+                (orgRowsHtml ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">Who / Organisation</h3>' +
+                        '<div class="info-callout">' + orgRowsHtml + '</div>' +
+                    '</section>' : '') +
 
-                ${data.importantFacts && data.importantFacts.length > 0 ? `
-                <section class="note-section">
-                    <h3 class="section-heading">Important Facts ⭐</h3>
-                    <ul class="note-list">${buildListItems(data.importantFacts)}</ul>
-                </section>` : ''}
+                (data.importantFacts && data.importantFacts.length > 0 ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">Important Facts ⭐</h3>' +
+                        '<div class="note-items-wrapper">' + renderCaListBlock(data.importantFacts) + '</div>' +
+                    '</section>' : '') +
 
-                ${data.background && data.background.length > 0 ? `
-                <section class="note-section">
-                    <h3 class="section-heading">Background / Static Linkage</h3>
-                    <ul class="note-list">${buildListItems(data.background)}</ul>
-                </section>` : ''}
+                (data.background && data.background.length > 0 ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">Background / Static Linkage</h3>' +
+                        '<div class="note-items-wrapper">' + renderCaListBlock(data.background) + '</div>' +
+                    '</section>' : '') +
 
-                ${data.significance && data.significance.length > 0 ? `
-                <section class="note-section">
-                    <h3 class="section-heading">Significance</h3>
-                    <ul class="note-list">${buildListItems(data.significance)}</ul>
-                </section>` : ''}
+                (data.significance && data.significance.length > 0 ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">Significance</h3>' +
+                        '<div class="note-items-wrapper">' + renderCaListBlock(data.significance) + '</div>' +
+                    '</section>' : '') +
 
-                ${data.challenges && data.challenges.length > 0 ? `
-                <section class="note-section">
-                    <h3 class="section-heading">Challenges / Concerns</h3>
-                    <ul class="note-list">${buildListItems(data.challenges)}</ul>
-                </section>` : ''}
+                (data.challenges && data.challenges.length > 0 ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">Challenges / Concerns</h3>' +
+                        '<div class="note-items-wrapper">' + renderCaListBlock(data.challenges) + '</div>' +
+                    '</section>' : '') +
 
-                ${data.wayForward && data.wayForward.length > 0 ? `
-                <section class="note-section">
-                    <h3 class="section-heading">Way Forward</h3>
-                    <ul class="note-list">${buildListItems(data.wayForward)}</ul>
-                </section>` : ''}
-            `;
-        }
-
-        // SMART GAP-FILLING PILL PACKER
-        function packMetaPills(row) {
-            if (!row) return;
-            const pills = Array.from(row.querySelectorAll('.meta-pill, .image-toggle-pill, .read-toggle-pill'));
-            if (pills.length <= 1) return;
-
-            pills.forEach(p => p.style.order = '');
-            const availableWidth = row.clientWidth;
-            if (availableWidth <= 0) return;
-
-            const gap = 10;
-            const items = pills.map((p) => ({
-                el: p,
-                width: p.getBoundingClientRect().width,
-                placed: false
-            }));
-
-            const finalOrder = [];
-            let unplacedCount = items.length;
-
-            while (unplacedCount > 0) {
-                let currentLineWidth = 0;
-                let addedAny = false;
-
-                for (let i = 0; i < items.length; i++) {
-                    if (!items[i].placed) {
-                        items[i].placed = true;
-                        finalOrder.push(items[i]);
-                        currentLineWidth = items[i].width;
-                        unplacedCount--;
-                        addedAny = true;
-                        break;
-                    }
-                }
-                if (!addedAny) break;
-
-                let canFit = true;
-                while (canFit && unplacedCount > 0) {
-                    let bestCandidate = null;
-                    for (let i = 0; i < items.length; i++) {
-                        const candidate = items[i];
-                        if (!candidate.placed && (currentLineWidth + gap + candidate.width <= availableWidth)) {
-                            bestCandidate = candidate;
-                            break;
-                        }
-                    }
-
-                    if (bestCandidate) {
-                        bestCandidate.placed = true;
-                        finalOrder.push(bestCandidate);
-                        currentLineWidth += gap + bestCandidate.width;
-                        unplacedCount--;
-                    } else {
-                        canFit = false;
-                    }
-                }
-            }
-
-            finalOrder.forEach((item, visualIndex) => {
-                item.el.style.order = visualIndex;
-            });
-        }
-
-        function packAllMetaPills() {
-            document.querySelectorAll('.meta-pills-row').forEach(packMetaPills);
+                (data.wayForward && data.wayForward.length > 0 ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">Way Forward</h3>' +
+                        '<div class="note-items-wrapper">' + renderCaListBlock(data.wayForward) + '</div>' +
+                    '</section>' : '')
+            );
         }
 
         window.addEventListener('resize', () => {
-            packAllMetaPills();
-            const activeBtn = document.querySelector('.topic-num-btn.is-active');
+            const activeBtn = document.querySelector('.desktop-topics-pill .topic-num-btn.is-active');
             if (activeBtn) updatePillGlider(activeBtn);
         });
 
         function renderCards(topics, dateText) {
             activeDateDisplay.textContent = dateText;
-            topicsFeed.innerHTML = '';
 
             if (!topics || topics.length === 0) {
+                currentTopicsList = [];
                 totalLoadedTopics = 0;
                 currentActiveTopicIndex = 0;
-                topicsFeed.style.height = 'auto';
                 renderTopicsPill(0);
                 updateNavArrows();
-                topicsFeed.innerHTML = `
-                    <div class="empty-placeholder-card">
-                        No current affairs entries found for ${dateText}.
-                    </div>
-                `;
+                const titleEl = document.getElementById('caArticleTitle');
+                if (titleEl) titleEl.textContent = 'No current affairs entries found for ' + dateText + '.';
+                const controls = document.getElementById('caControlsPanel');
+                if (controls) controls.style.display = 'none';
+                const shortContent = document.getElementById('caShortContent');
+                if (shortContent) shortContent.innerHTML = '';
+                const detailedContent = document.getElementById('caDetailedContent');
+                if (detailedContent) detailedContent.innerHTML = '';
                 return;
             }
 
-            const displayTopics = Array.isArray(topics) ? [...topics].reverse() : [];
-            totalLoadedTopics = displayTopics.length;
+            const controls = document.getElementById('caControlsPanel');
+            if (controls) controls.style.display = '';
+
+            currentTopicsList = Array.isArray(topics) ? [...topics].reverse() : [];
+            totalLoadedTopics = currentTopicsList.length;
             currentActiveTopicIndex = 0;
 
             renderTopicsPill(totalLoadedTopics);
-            updateNavArrows();
-
-            displayTopics.forEach((topic, idx) => {
-                const card = document.createElement('article');
-                card.className = `article-card${idx === 0 ? ' is-active' : ''}`;
-                card.id = `topic-card-${idx}`;
-                card.dataset.index = idx;
-
-                const hasImage = topic.image && topic.image.url;
-                const imgDrawerId = `imgDrawer_${idx}`;
-                const hasShort = !!topic.shortArticle;
-
-                const imagePillHtml = hasImage ? `
-                    <span class="image-toggle-pill">
-                        Image : <button type="button" class="image-action-btn" onclick="toggleTopicImage(this, '${imgDrawerId}')">View</button>
-                    </span>
-                ` : '';
-
-                const readPillHtml = hasShort ? `
-                    <span class="read-toggle-pill">
-                        Read : <button type="button" class="read-action-btn" onclick="toggleShortArticle(this, ${idx})">Short</button>
-                    </span>
-                ` : '';
-
-                const imageDrawerHtml = hasImage ? `
-                    <div class="topic-image-drawer" id="${imgDrawerId}">
-                        <div class="topic-image-inner">
-                            <img src="${topic.image.url}" alt="${topic.image.caption || 'Topic Image'}" loading="lazy" referrerpolicy="no-referrer">
-                            ${topic.image.caption ? `<div class="topic-image-caption">${topic.image.caption}</div>` : ''}
-                        </div>
-                    </div>
-                ` : '';
-
-                const shortDrawerHtml = hasShort ? `
-                    <div class="topic-short-drawer" id="shortDrawer_${idx}">
-                        <div class="topic-short-inner">
-                            ${renderArticleSections(topic.shortArticle)}
-                        </div>
-                    </div>
-                ` : '';
-
-                const fullDrawerHtml = `
-                    <div class="topic-full-drawer is-open" id="fullDrawer_${idx}">
-                        <div class="topic-full-inner">
-                            ${renderArticleSections(topic)}
-                        </div>
-                    </div>
-                `;
-
-                /* GS Paper pill now matches all other pills identically */
-                card.innerHTML = `
-                    <h2 class="article-title">${topic.topicTitle}</h2>
-
-                    <div class="meta-pills-row">
-                        <span class="meta-pill">GS Paper : <strong>${topic.gsPaper}</strong></span>
-                        <span class="meta-pill">Category : <strong>${topic.category}</strong></span>
-                        <span class="meta-pill">Comes under : <strong>${topic.comesUnder}</strong></span>
-                        ${imagePillHtml}
-                        ${readPillHtml}
-                    </div>
-
-                    ${imageDrawerHtml}
-                    ${shortDrawerHtml}
-                    ${fullDrawerHtml}
-                `;
-
-                topicsFeed.appendChild(card);
-            });
-
-            topicsFeed.style.height = 'auto';
-            requestAnimationFrame(() => {
-                packAllMetaPills();
-            });
+            renderActiveTopic(0, true);
         }
 
         function loadDateData(year, month, day, onSuccess, onFail) {
-            const dateKey = `${String(day).padStart(2, '0')}-${String(month).padStart(2, '0')}-${year}`;
+            const dateKey = String(day).padStart(2, '0') + '-' + String(month).padStart(2, '0') + '-' + year;
             const existingScript = document.getElementById('currentAffairsDataScript');
             if (existingScript) existingScript.remove();
 
@@ -2300,7 +2751,7 @@
 
             const script = document.createElement('script');
             script.id = 'currentAffairsDataScript';
-            script.src = `/study/currentaffairs-data/${dateKey}.js?t=${Date.now()}`;
+            script.src = '/study/currentaffairs-data/' + dateKey + '.js?t=' + Date.now();
 
             script.onload = () => {
                 if (window.currentDailyTopics) {
@@ -2353,16 +2804,20 @@
             loadDateData(selectedYear, selectedMonth, selectedDay, (topics) => {
                 renderCards(topics, formattedDateText);
                 const dateCapsule = document.querySelector('.date-topics-capsule');
+                const controls = document.getElementById('caControlsPanel');
+                const stage = document.getElementById('caArticleFeedStage');
                 if (typeof triggerMasterEntrance === 'function') {
-                    triggerMasterEntrance(dateCapsule);
-                    triggerMasterEntrance(topicsFeed);
+                    if (dateCapsule) triggerMasterEntrance(dateCapsule);
+                    if (controls) triggerMasterEntrance(controls);
+                    if (stage) triggerMasterEntrance(stage);
                 }
             }, () => {
                 renderCards([], formattedDateText);
                 const dateCapsule = document.querySelector('.date-topics-capsule');
+                const stage = document.getElementById('caArticleFeedStage');
                 if (typeof triggerMasterEntrance === 'function') {
-                    triggerMasterEntrance(dateCapsule);
-                    triggerMasterEntrance(topicsFeed);
+                    if (dateCapsule) triggerMasterEntrance(dateCapsule);
+                    if (stage) triggerMasterEntrance(stage);
                 }
             });
 

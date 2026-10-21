@@ -515,7 +515,7 @@
                     <h2>Current affairs</h2>
                     <div class="list-wrapper">
                         <a href="/study/dailycurrentaffairs.html" class="list-item"><span class="nav-text">Daily current affairs</span></a>
-                        <a href="/study/currentaffairs.html" class="list-item"><span class="nav-text">Topic-wise current affairs</span></a>
+                        <a href="/study/currentaffairs.html" class="list-item"><span class="nav-text">Organised current affairs</span></a>
                     </div>
                 </div>
             </div>
@@ -593,6 +593,15 @@
                 setTimeout(() => {
                     window.location.href = destination;
                 }, 220);
+            });
+        });
+
+        window.addEventListener('pageshow', function() {
+            targetLinks.forEach(l => l.classList.remove('is-wave-loading'));
+            document.querySelectorAll('.list-item, a, .nav-text').forEach(el => {
+                el.style.opacity = '';
+                el.style.transform = '';
+                if (el.blur) el.blur();
             });
         });
 

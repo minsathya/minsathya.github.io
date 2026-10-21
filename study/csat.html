@@ -422,52 +422,38 @@
             }
         }
 
-        /* Marvel Endgame Blip Dissolve Effect */
-        @keyframes blipDisintegrate {
+        /* Smooth Slide-Up Transition for Detail Content Panel */
+        @keyframes panelSlideOut {
             0% {
                 opacity: 1;
-                filter: blur(0px);
-                transform: translate3d(0, 0, 0) scale(1);
-            }
-            40% {
-                opacity: 0.65;
-                filter: blur(2.5px);
-                transform: translate3d(0, -2px, 0) scale(0.995);
+                transform: translate3d(0, 0, 0);
             }
             100% {
                 opacity: 0;
-                filter: blur(8px);
-                transform: translate3d(0, -6px, 0) scale(0.985);
+                transform: translate3d(0, -12px, 0);
             }
         }
 
-        @keyframes blipMaterialize {
+        @keyframes panelSlideUpEntrance {
             0% {
                 opacity: 0;
-                filter: blur(8px);
-                transform: translate3d(0, 6px, 0) scale(1.015);
-            }
-            60% {
-                opacity: 0.85;
-                filter: blur(2px);
-                transform: translate3d(0, 1px, 0) scale(1.003);
+                transform: translate3d(0, 26px, 0);
             }
             100% {
                 opacity: 1;
-                filter: blur(0px);
-                transform: translate3d(0, 0, 0) scale(1);
+                transform: translate3d(0, 0, 0);
             }
         }
 
         .blip-exit {
-            animation: blipDisintegrate 0.25s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+            animation: panelSlideOut 0.14s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
             pointer-events: none;
-            will-change: opacity, filter, transform;
+            will-change: opacity, transform;
         }
 
         .blip-enter {
-            animation: blipMaterialize 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-            will-change: opacity, filter, transform;
+            animation: panelSlideUpEntrance 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            will-change: opacity, transform;
         }
 
         .panel-header-row {
@@ -961,7 +947,7 @@
                 window._csatSwitchTimer = setTimeout(() => {
                     panel.innerHTML = newContent;
                     if (typeof wrapClickableWords === 'function') wrapClickableWords();
-                }, 240);
+                }, 140);
             } else {
                 panel.innerHTML = `
                     <div class="card-parallax-content">

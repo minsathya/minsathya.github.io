@@ -513,16 +513,16 @@
             will-change: opacity, visibility;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
-                        visibility 1.2s;
+            transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), 
+                        visibility 0.32s;
         }
 
         .modal.active { 
             visibility: visible; 
             opacity: 1; 
             pointer-events: auto; 
-            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
-                        visibility 0.65s; 
+            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
+                        visibility 0.45s; 
         }
 
         body.light-mode .modal {
@@ -550,9 +550,9 @@
             will-change: transform, top, opacity; 
             -webkit-backface-visibility: hidden; 
             backface-visibility: hidden;
-            transition: top 1.2s cubic-bezier(0.075, 0.82, 0.165, 1),
-                        transform 1.2s cubic-bezier(0.075, 0.82, 0.165, 1),
-                        opacity 1.0s ease-out;
+            transition: top 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.28s ease-out;
             scrollbar-width: thin;
         }
 
@@ -566,9 +566,9 @@
             top: 50%;
             transform: translate(-50%, -50%);
             opacity: 1; 
-            transition: top 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
-                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
-                        opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: top 0.48s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.48s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.48s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .modal-header-row {

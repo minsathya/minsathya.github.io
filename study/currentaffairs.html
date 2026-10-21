@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organised Current Affairs - sathya.</title>
+
     <!-- Instant Theme Evaluation to Prevent Theme Flash on Reload -->
     <script>
       (function() {
@@ -14,19 +18,8 @@
       })();
     </script>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Current Affairs - sathya.</title>
-
-    <!-- Universal iPad stabilization: catches text fragments instantly before document draw -->
-    <script>
-      if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
-        document.documentElement.classList.add('instant-landing');
-      }
-    </script>
-
-    <meta name="description" content="Current Affairs syllabus for upsc, Current Affairs syllabus for upsc cse.">
-    <meta name="keywords" content="UPSC current affairs, Civil Services Examination, Current affairs syllabus, Prelims tracker, Mains current affairs, Currrent affairs syllabus for upsc.">
+    <meta name="description" content="Organised Current Affairs for UPSC Civil Services Examination.">
+    <meta name="keywords" content="UPSC current affairs, Organised current affairs, Prelims, Mains, Civil Services.">
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
     <script>
@@ -36,67 +29,68 @@
       gtag('config', 'G-5VGX2K64Y4');
     </script>
     
-    <!-- Relative paths for files inside /study/ -->
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
     <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=3">
     <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png?v=3">
-    <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png?v=3?v=3">
+    <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png?v=3">
 
     <script>
       const favicon = document.getElementById('favicon');
       const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
-      
       function updateFavicon(e) {
         favicon.href = e.matches ? '../favicon-dark.png?v=3' : '../favicon-light.png?v=3';
       }
-      
       updateFavicon(darkMode);
       darkMode.addEventListener('change', updateFavicon);
     </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Study Data Engine -->
+    <script src="/study-data.js"></script>
+
     <style>
-        /* Unified Token System Mapped Directly From index.html */
         :root {
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
             --bg-color: #0b0b0b;
             --text-main: #ffffff;
-            --text-muted: #737373;
+            --text-muted: #88888e;
             --panel-bg: #121212;
             --panel-border: #222222;
             --panel-border-hover: rgba(255, 255, 255, 0.11);
             --row-divider: #1c1c1c;
-            --row-hover: rgba(255, 255, 255, 0.02);
-            --header-bg: #1a231e;
-            --header-border: #222c26;
-            --shadow-base: 0 4px 30px rgba(0, 0, 0, 0.4);
-            --shadow-hover: 0 25px 60px rgba(0, 0, 0, 0.8);
-            --panel-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-            --panel-shadow-hover: 0 25px 60px rgba(0, 0, 0, 0.8);
-            
-            --cascade-distance: 24px;
-            --cascade-duration-exit: 0.2s;
-            --cascade-duration-entry: 0.28s;
+            --btn-blue: #244b40;
+            --btn-blue-hover: #2e5c50;
+            --theme-green: #244b40;
+            --pill-bg: rgba(255, 255, 255, 0.06);
+            --pill-border: rgba(255, 255, 255, 0.08);
+            --floating-bg: #161616;
+            --floating-border: #2a2a2a;
+            --pill-selected-bg: #1c3830;
+            --item-card-bg: #181818;
         }
 
+        html.light-mode,
         body.light-mode {
             --bg-color: #f5f5f7;
             --text-main: #111111;
-            --text-muted: #8e8e93;
+            --text-muted: #88888e;
             --panel-bg: #ffffff;
             --panel-border: #e2e2e7;
             --panel-border-hover: rgba(0, 0, 0, 0.10);
             --row-divider: #f2f2f7;
-            --row-hover: rgba(0, 0, 0, 0.02);
-            --header-bg: #e9ebe6;
-            --header-border: #d4d8cf;
-            --shadow-base: 0 4px 20px rgba(0, 0, 0, 0.02);
-            --shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.08);
-            --panel-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-            --panel-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.08);
+            --btn-blue: #296556;
+            --btn-blue-hover: #1e4d42;
+            --theme-green: #296556;
+            --pill-bg: rgba(0, 0, 0, 0.05);
+            --pill-border: rgba(0, 0, 0, 0.08);
+            --floating-bg: #ffffff;
+            --floating-border: #e5e5ea;
+            --pill-selected-bg: #296556;
+            --item-card-bg: #f2f2f7;
         }
 
         * {
@@ -104,1606 +98,1376 @@
             margin: 0;
             padding: 0;
             -webkit-tap-highlight-color: transparent !important;
-            tap-highlight-color: transparent !important;
         }
 
-        
         html {
             background-color: var(--bg-color);
+            color: var(--text-main);
             min-height: 100vh;
             min-height: 100dvh;
             width: 100%;
+            overflow-y: scroll;
+            scrollbar-gutter: stable;
         }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            align-items: center;
             padding: 40px 24px 36px 24px;
             max-width: 1240px;
             margin: 0 auto;
             width: 100%;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            transition: background-color 0.8s var(--ease-premium), color 0.8s var(--ease-premium);
+            transition: background-color 0.4s var(--ease-smooth), color 0.4s var(--ease-smooth);
         }
 
-        @keyframes masterEntrance {
-            0% { opacity: 0; transform: translate3d(0, 28px, 0) scale(0.98); }
-            100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
-        }
-
-        .master-entrance-run {
-            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-            will-change: transform, opacity;
-        }
-
-        .top-nav-bar, .page-header-row { animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both; }
-        main, .contents-container, .capsule-panel, .wide-capsule, .card { animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both; }
-        footer { animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both; }
-
-        @keyframes capsuleHighlightPulse {
-            0% { transform: scale(1); }
-            30% { transform: scale(1.015); border-color: var(--text-main); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); }
-            100% { transform: scale(1); }
-        }
-
-        .wide-capsule.activated-target {
-            animation: capsuleHighlightPulse 1s var(--ease-premium) both;
-        }
-
-        header {
-            position: relative;
-            background-color: var(--header-bg);
-            border: 1px solid var(--header-border);
-            border-radius: 50px;
+        .page-wrapper {
             width: 100%;
-            height: 72px;
-            margin: 0 auto 60px auto;
-            box-shadow: none !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100%;
+        }
+
+        /* Top Brand Header */
+        .top-nav-bar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 28px;
+            position: relative;
+        }
+
+        .brand-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            font-size: 19px;
+            font-weight: 500;
+            color: var(--text-main);
+            text-decoration: none !important;
+            letter-spacing: -0.4px;
+            transition: transform 0.35s var(--ease-smooth);
+        }
+        .brand-pill:hover {
+            transform: translate3d(0, -2px, 0);
+        }
+        .brand-letter { font-weight: 500; }
+        .brand-star {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: #ff9e79;
+            margin-left: 2px;
+            animation: brandStarTwinkle 2.8s infinite ease-in-out;
+        }
+        @keyframes brandStarTwinkle {
+            0%, 100% { opacity: 0.4; transform: scale(0.6); }
+            50% { opacity: 1; transform: scale(1.1); box-shadow: 0 0 6px #ff9e79; }
+        }
+
+        main {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            margin-bottom: 60px;
+        }
+
+        /* Standard Page Header */
+        .page-header-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            margin-bottom: 24px;
+            animation: pageSlideUpEntrance 0.5s var(--ease-premium) both;
+        }
+
+        .back-icon-btn {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-main);
+            padding: 0;
+            flex-shrink: 0;
+            transition: background-color 0.2s var(--ease-smooth), transform 0.2s var(--ease-smooth);
+        }
+        .back-icon-btn:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            transform: translate3d(-2px, 0, 0);
+        }
+        body.light-mode .back-icon-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        .back-icon-btn svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            stroke-width: 2.3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        /* Category Header Row (Schedule style) */
+        .category-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .category-heading {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+        }
+
+        .day-action-wrap {
+            position: relative;
+            z-index: 100;
+        }
+
+        .day-action-btn {
+            background: var(--btn-blue);
+            color: #ffffff;
+            border: none;
+            outline: none;
+            padding: 6px 18px;
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 600;
+            letter-spacing: -0.1px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 76px;
+            transition: transform 0.2s var(--ease-smooth), opacity 0.2s var(--ease-smooth);
+        }
+        .day-action-btn:active {
+            transform: scale(0.94);
+            opacity: 0.9;
+        }
+
+        /* Floating Backdrop for category menu blur */
+        .floating-backdrop {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 99;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.28s var(--ease-smooth);
+        }
+        .floating-backdrop.is-active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Floating Category Dropdown Panel */
+        .floating-days-panel {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            min-width: 220px;
+            max-width: calc(100vw - 36px);
+            width: max-content;
+            background-color: var(--floating-bg);
+            border: 1px solid var(--floating-border);
+            border-radius: 20px;
+            padding: 7px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+            z-index: 110;
+            display: none;
+            pointer-events: none;
             overflow: hidden;
-            transition: background-color 0.8s var(--ease-premium), border-color 0.8s var(--ease-premium);
+        }
+        body.light-mode .floating-days-panel {
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
+        }
+        .floating-days-panel.is-open {
+            display: flex;
+            flex-direction: column;
+            animation: floatingMasterEntrance 0.32s var(--ease-smooth) forwards;
+            pointer-events: auto;
+        }
+        .floating-days-panel.is-closing {
+            display: flex;
+            flex-direction: column;
+            animation: floatingMasterExit 0.2s var(--ease-smooth) forwards;
+            pointer-events: none;
+        }
+        @keyframes floatingMasterEntrance {
+            0% { opacity: 0; transform: translate3d(0, 14px, 0); }
+            100% { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+        @keyframes floatingMasterExit {
+            0% { opacity: 1; transform: translate3d(0, 0, 0); }
+            100% { opacity: 0; transform: translate3d(0, 10px, 0); }
         }
 
-        body:not(.light-mode) header { box-shadow: none !important; }
-
-        .header-inner-view {
-            position: absolute; inset: 0; width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 32px; will-change: transform, opacity;
-            backface-visibility: hidden; -webkit-backface-visibility: hidden;
+        .day-item-btn {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 10px 16px;
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-main);
+            text-align: left;
+            cursor: pointer;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.18s ease, color 0.18s ease;
+        }
+        .day-item-btn:hover {
+            background-color: var(--pill-bg);
+        }
+        .day-item-btn.is-selected {
+            background-color: var(--pill-selected-bg) !important;
+            color: #ffffff !important;
+        }
+        body.light-mode .day-item-btn.is-selected {
+            background-color: var(--btn-blue) !important;
+            color: #ffffff !important;
         }
 
-        #headerMainView { opacity: 1; transform: translate3d(0, 0, 0); pointer-events: auto; z-index: 2; }
-        #headerSearchView { opacity: 0; transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0); pointer-events: none; z-index: 1; }
+        /* ---------------------------------------------------- */
+        /* CARDS LIST & RESPONSIVE DIMENSIONS                   */
+        /* ---------------------------------------------------- */
+        .organised-ca-cards-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            width: 100%;
+        }
+        @media (max-width: 768px) {
+            .organised-ca-cards-list {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+        }
 
-        header.state-search #headerMainView { animation: skyfallExit var(--cascade-duration-exit) ease-in both; pointer-events: none; }
-        header.state-search #headerSearchView { animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: var(--cascade-duration-exit); pointer-events: auto; }
-        header.state-main #headerSearchView { animation: skyfallExit var(--cascade-duration-exit) ease-in both; pointer-events: none; }
-        header.state-main #headerMainView { animation: skyfallEntry var(--cascade-duration-entry) cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: var(--cascade-duration-exit); pointer-events: auto; }
+        .organised-ca-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 26px;
+            padding: 16px 18px;
+            display: flex;
+            align-items: stretch;
+            gap: 14px;
+            cursor: pointer;
+            text-decoration: none !important;
+            box-sizing: border-box;
+            transition: transform 0.24s var(--ease-smooth), border-color 0.2s ease, box-shadow 0.24s ease;
+            animation: pageSlideUpEntrance 0.45s var(--ease-premium) both;
+        }
+        .organised-ca-card:hover {
+            border-color: var(--panel-border-hover);
+            transform: translate3d(0, -3px, 0);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+        }
+        .organised-ca-card:active {
+            transform: scale3d(0.985, 0.985, 1);
+        }
 
-        @keyframes skyfallExit { 0% { transform: translate3d(0, 0, 0); opacity: 1; } 100% { transform: translate3d(0, var(--cascade-distance), 0); opacity: 0; } }
-        @keyframes skyfallEntry { 0% { transform: translate3d(0, calc(-1 * var(--cascade-distance)), 0); opacity: 0; } 100% { transform: translate3d(0, 0, 0); opacity: 1; } }
+        .organised-ca-card-left-thumb {
+            flex-shrink: 0;
+            width: 76px;
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: center;
+        }
+        .ca-card-thumb-img {
+            width: 76px;
+            height: 76px;
+            border-radius: 18px;
+            object-fit: cover;
+            display: block;
+            border: 1px solid var(--panel-border);
+        }
+        .ca-card-no-image {
+            width: 76px;
+            height: 76px;
+            border-radius: 18px;
+            background-color: var(--item-card-bg);
+            border: 1px solid var(--panel-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: var(--text-muted);
+        }
+        .ca-card-no-image svg { opacity: 0.6; }
+        .ca-card-no-image-text {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
 
-        .header-right-cluster, .search-control-cluster { display: flex; align-items: center; gap: 20px; flex-shrink: 0; height: 100%; }
-        .logo { font-size: 26px; font-weight: 400; letter-spacing: -0.5px; color: var(--text-main); text-decoration: none !important; transition: color 0.8s var(--ease-premium); flex-shrink: 0; }
-        .ctrl-btn { background: none; border: none; outline: none; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; flex-shrink: 0; transition: opacity 0.2s var(--ease-premium), color 0.8s var(--ease-premium); }
-        .ctrl-btn:hover { opacity: 0.6; }
-        .ctrl-btn svg, .search-static-icon { width: 22px; height: 22px; fill: none; stroke: var(--text-main); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.8s var(--ease-premium); }
-        .search-static-icon { opacity: 0.4; flex-shrink: 0; }
-        .search-core-input { flex-grow: 1; background: transparent; border: none; outline: none; color: var(--text-main); font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 16px; padding: 0 16px; width: 100%; min-width: 0; will-change: transform, opacity; transform: translate3d(0, 0, 0); backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: color 0.8s var(--ease-premium); }
+        .organised-ca-card-right-content {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2px 0;
+        }
+        .organised-ca-card-title {
+            font-size: 15.5px;
+            font-weight: 500;
+            line-height: 1.38;
+            color: var(--text-main);
+            margin: 0;
+            text-align: left;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .organised-ca-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-top: 8px;
+        }
+        .organised-ca-card-footer .note-card-date {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
 
-        .clear-text-btn svg { opacity: 0.4; }
-        .close-search-btn svg { opacity: 0.7; }
+        /* ---------------------------------------------------- */
+        /* ARTICLE DETAIL VIEW (MATCHES DAILY CA STYLING)        */
+        /* ---------------------------------------------------- */
+        #organisedCaArticleView {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+        }
+        #organisedCaArticleView.is-active {
+            display: flex;
+            animation: pageSlideUpEntrance 0.45s var(--ease-premium) both;
+        }
 
-        .theme-toggle { width: 32px; height: 32px; position: relative; cursor: pointer; user-select: none; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .theme-toggle svg { position: absolute; top: 50%; left: 50%; width: 22px; height: 22px; fill: none; stroke: var(--text-main); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; will-change: transform, opacity; -webkit-backface-visibility: hidden; backface-visibility: hidden; transition: transform 0.8s var(--ease-premium), opacity 0.8s var(--ease-premium), stroke 0.8s var(--ease-premium); }
-        .theme-toggle .sun-icon { opacity: 0; transform: translate(-50%, -50%) rotate(-90deg) scale(0.4); }
-        .theme-toggle .moon-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
-        body.light-mode .theme-toggle .sun-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
-        body.light-mode .theme-toggle .moon-icon { opacity: 0; transform: translate(-50%, -50%) rotate(90deg) scale(0.4); }
-
-        .breadcrumb-nav { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 400; margin-bottom: 8px; padding-left: 8px; flex-wrap: wrap; row-gap: 8px; }
-        .breadcrumb-nav a, .breadcrumb-nav a:visited { color: var(--text-muted) !important; }
-        .breadcrumb-nav a { color: var(--text-muted) !important; text-decoration: none !important; transition: color 0.4s var(--ease-premium); }
-        .breadcrumb-separator { color: var(--text-muted); opacity: 0.4; user-select: none; }
-        .breadcrumb-current { color: var(--text-main); opacity: 0.8; }
-
-        .contents-container { display: flex; flex-grow: 1; flex-direction: column; gap: 32px; margin-bottom: 80px; width: 100%; }
-        .page-main-heading { font-size: 24px; font-weight: 500; letter-spacing: -0.5px; color: var(--text-main); margin-bottom: 12px; padding-left: 8px; transition: color 0.8s var(--ease-premium); }
-
-        .wide-capsule {
+        .ca-controls-panel {
+            width: 100%;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 24px;
-            padding: 32px 36px;
-            box-shadow: var(--shadow-base, var(--panel-shadow));
+            padding: 14px 20px;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            margin-bottom: 24px;
+            transition: background-color 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+        }
+
+        .ca-controls-main-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 12px;
+        }
+        .ca-action-buttons-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .ca-action-label-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        .ca-direct-action-btn {
+            background: var(--btn-blue);
+            color: #ffffff !important;
+            border: none;
+            outline: none;
+            padding: 5px 15px;
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.18s var(--ease-smooth), opacity 0.18s var(--ease-smooth);
+        }
+        .ca-direct-action-btn:active {
+            transform: scale(0.93);
+            opacity: 0.9;
+        }
+        .ca-dropdown-toggle-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            transition: transform 0.3s var(--ease-smooth), color 0.3s var(--ease-smooth);
+        }
+        .ca-dropdown-toggle-btn.is-rotated {
+            transform: rotate(180deg);
+            color: var(--text-main);
+        }
+        .ca-dropdown-toggle-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Drawers inside panel */
+        .ca-image-drawer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.45s var(--ease-smooth);
+            width: 100%;
+            overflow: hidden;
+        }
+        .ca-image-drawer.is-open {
+            grid-template-rows: 1fr;
+        }
+        .ca-image-drawer-inner {
+            min-height: 0;
+            overflow: hidden;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            padding-top: 0;
+            transition: opacity 0.3s var(--ease-smooth), padding-top 0.35s var(--ease-smooth);
+        }
+        .ca-image-drawer.is-open .ca-image-drawer-inner {
+            opacity: 1;
+            padding-top: 14px;
+        }
+        .ca-image-drawer-inner img {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            border-radius: 16px;
+            display: block;
+        }
+        .ca-image-caption {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .ca-meta-drawer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.45s var(--ease-smooth);
+            width: 100%;
+            overflow: hidden;
+        }
+        .ca-meta-drawer.is-open {
+            grid-template-rows: 1fr;
+        }
+        .ca-meta-drawer-inner {
+            min-height: 0;
+            overflow: hidden;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            opacity: 0;
+            padding-top: 0;
+            transition: opacity 0.3s var(--ease-smooth), padding-top 0.35s var(--ease-smooth);
+        }
+        .ca-meta-drawer.is-open .ca-meta-drawer-inner {
+            opacity: 1;
+            padding-top: 14px;
+        }
+        .ca-meta-row {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .meta-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 18px;
+            font-size: 12.5px;
+            font-weight: 500;
+            background: var(--pill-bg);
+            border: 1px solid var(--pill-border);
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+        .meta-pill strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Article stage rests on background */
+        .ca-article-feed-stage {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            box-sizing: border-box;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        .article-title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.35px;
+            color: var(--text-main);
+            line-height: 1.34;
+            margin-bottom: 22px;
+            text-align: left;
+        }
+
+        .ca-content-drawer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            width: 100%;
+            will-change: grid-template-rows;
+        }
+        .ca-content-drawer.is-open {
+            grid-template-rows: 1fr;
+            transition: grid-template-rows 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ca-content-overflow {
+            min-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translate3d(0, 0, 0);
+            transition: opacity 0.28s ease;
+            will-change: opacity;
+        }
+        .ca-content-drawer.is-open .ca-content-overflow {
+            opacity: 1;
+            transition: opacity 0.34s ease;
+        }
+
+        .ca-detailed-content-drawer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            width: 100%;
+            will-change: grid-template-rows;
+        }
+        .ca-detailed-content-drawer.is-open {
+            grid-template-rows: 1fr;
+            transition: grid-template-rows 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ca-detailed-overflow {
+            min-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translate3d(0, 0, 0);
+            transition: opacity 0.28s ease;
+            will-change: opacity;
+        }
+        .ca-detailed-content-drawer.is-open .ca-detailed-overflow {
+            opacity: 1;
+            transition: opacity 0.34s ease;
+        }
+
+        .note-section {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--row-divider);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: left;
+        }
+        .note-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-heading {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-main);
+            letter-spacing: -0.2px;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+        .note-p {
+            font-size: 15px;
+            line-height: 1.75;
+            color: var(--text-main);
+            opacity: 0.92;
+            padding-left: 0;
+            text-align: left;
+            margin: 0;
+        }
+
+        .note-items-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+        .note-item-group {
             display: flex;
             flex-direction: column;
             width: 100%;
-            cursor: pointer;
-            user-select: none;
-            transform: none !important;
-            transform-origin: center center;
-            will-change: transform, opacity;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            transition: box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
-                        border-color 0.4s ease, 
-                        background-color 0.4s ease;
+            text-align: left;
         }
-
-        @media (hover: hover) and (pointer: fine) {
-            .wide-capsule:not(.is-expanded):hover { 
-                transform: none !important; 
-                box-shadow: var(--shadow-hover, var(--panel-shadow-hover)) !important;
-                border-color: var(--panel-border-hover) !important;
-            }
-            .wide-capsule:not(.is-expanded):hover .capsule-header-row {
-                transform: translateY(-6px) !important;
-            }
-        }
-
-        .capsule-header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            user-select: none;
-            transform: translateY(0);
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .wide-capsule.is-expanded,
-        .wide-capsule.is-expanded:hover {
-            transform: none !important;
-            box-shadow: var(--shadow-base, var(--panel-shadow)) !important;
-        }
-
-        .wide-capsule.is-expanded .capsule-header-row,
-        .wide-capsule.is-expanded:hover .capsule-header-row {
-            transform: none !important;
-        }
-
-        .wide-panel-title { 
-            font-size: 20px; 
-            font-weight: 500; 
-            letter-spacing: -0.3px; 
-            color: var(--text-main); 
-            transition: color 0.8s var(--ease-premium); 
-        }
-
-        .capsule-toggle-btn {
-            font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif !important;
-            background-color: transparent;
-            border: 1px solid var(--panel-border);
+        .point-subheading {
+            font-size: 15px;
+            font-weight: 600;
             color: var(--text-main);
+            line-height: 1.5;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+        .point-sublist {
+            list-style: none;
+            margin: 0;
             padding: 0;
-            width: 84px;
-            height: 42px;
-            border-radius: 12px;
-            cursor: pointer;
-            display: block;
-            position: relative;
-            overflow: hidden;
-            outline: none !important;
-            outline: 0 !important;
-            box-shadow: none !important;
-            -webkit-tap-highlight-color: transparent !important;
-            transition: border-color 0.4s var(--ease-premium), background-color 0.4s var(--ease-premium);
-        }
-        
-        .capsule-toggle-btn:hover {
-            background-color: var(--row-hover);
-            border-color: rgba(255, 255, 255, 0.12);
-        }
-        body.light-mode .capsule-toggle-btn:hover {
-            border-color: rgba(0, 0, 0, 0.12);
-        }
-
-        .capsule-toggle-btn:focus, 
-        .capsule-toggle-btn:active, 
-        .capsule-toggle-btn:focus-visible,
-        .capsule-toggle-btn:hover:focus {
-            outline: none !important;
-            outline: 0 !important;
-            box-shadow: none !important;
-            background-color: transparent !important;
-            border-color: var(--panel-border) !important;
-        }
-
-        .btn-txt-frame {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            pointer-events: none;
-        }
-
-        .txt-view, .txt-hide {
-            position: absolute;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            top: 50%;
-            font-size: 13.5px;
-            font-weight: 500;
-            font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif !important;
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
-        }
-
-        .txt-view { opacity: 1; transform: translate3d(0, -50%, 0); }
-        .txt-hide { opacity: 0; transform: translate3d(0, -150%, 0); }
-
-        .wide-capsule.is-expanded .txt-view { opacity: 0; transform: translate3d(0, 50%, 0); }
-        .wide-capsule.is-expanded .txt-hide { opacity: 1; transform: translate3d(0, -50%, 0); }
-
-        .capsule-divider {
-            border: none;
-            border-top: 1px solid var(--row-divider);
-            margin: 24px 0 12px 0;
-            width: 100%;
-            display: none;
-        }
-
-        .wide-capsule.is-expanded .capsule-divider {
-            display: block;
-        }
-
-        .capsule-content-wrapper {
-            height: 0px;
-            overflow: hidden;
-            display: block;
-            width: 100%;
-            will-change: height;
-            transition: height 0.58s cubic-bezier(0.16, 1, 0.3, 1);
-            contain: layout paint;
-        }
-
-        .capsule-content-inner {
-            width: 100%;
-            display: block;
-            opacity: 0;
-            transform: translate3d(0, -12px, 0);
-            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: transform, opacity;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            transform: translateZ(0);
-            contain: layout paint style !important;
-        }
-
-        .wide-capsule.is-expanded .capsule-content-inner {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-        }
-
-        .sub-section-title { 
-            font-size: 13px; 
-            font-weight: 600; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            color: var(--text-muted); 
-            margin: 28px 0 16px 0; 
-            transition: color 0.8s var(--ease-premium); 
-        }
-        
-        .capsule-content-inner > :first-child { margin-top: 4px; }
-        .sub-section-guide-note { font-size: 13.5px; font-style: italic; color: var(--text-muted); margin: -8px 0 16px 4px; }
-
-        .topics-vertical-stack { list-style: none; display: flex; flex-direction: column; width: 100%; }
-        .topics-vertical-stack li { border-bottom: 1px solid var(--row-divider); display: flex; align-items: center; transition: border-color 0.8s var(--ease-premium); width: 100%; }
-        .topics-vertical-stack li:last-child { border-bottom: none; }
-
-        .topics-vertical-stack a {
-            display: inline-flex;
-            align-items: center;
-            width: 100%;
-            padding: 14px 0 14px 24px;
-            color: var(--text-main);
-            opacity: 0.85;
-            text-decoration: none !important;
-            font-size: 17px;
-            font-weight: 400;
-            position: relative;
-            transform-origin: center center !important;
-            will-change: transform, opacity;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            transition: color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium), transform 0.4s var(--ease-premium);
-        }
-
-        .topics-vertical-stack a::before { 
-            content: "·"; 
-            position: absolute; 
-            left: 6px; 
-            color: var(--text-muted); 
-            font-size: 22px; 
-            font-weight: 400;
-            top: 50%; 
-            transform: translateY(-50%); 
-            transition: color 0.4s var(--ease-premium); 
-        }
-        
-        .topics-vertical-stack a:hover { 
-            opacity: 1 !important; 
-            color: var(--text-main) !important;
-            transform: scale3d(1.06, 1.06, 1);
-        }
-        .topics-vertical-stack a:hover::before { color: var(--text-main); }
-
-        .capsule-bottom-row {
             display: flex;
-            justify-content: flex-end;
-            margin-top: 32px;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .point-bullet-item {
+            position: relative;
+            padding-left: 18px;
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: var(--text-main);
+            opacity: 0.92;
+            text-align: left;
+        }
+        .point-bullet-item::before {
+            content: "•";
+            position: absolute;
+            left: 2px;
+            top: -1px;
+            font-size: 16px;
+            color: var(--text-main);
+        }
+
+        .info-callout {
+            background: transparent !important;
+            border: none !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: left;
+            margin-top: 2px;
+        }
+        .info-callout-row {
+            position: relative;
+            padding-left: 0 !important;
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: var(--text-main);
+            text-align: left;
+        }
+        .info-callout-row::before { display: none !important; }
+        .info-callout-row strong {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        @keyframes pageSlideUpEntrance {
+            0% { opacity: 0; transform: translate3d(0, 24px, 0); }
+            100% { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+
+        /* Footer */
+        footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            margin-top: auto;
+        }
+        .footer-links-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 28px;
+            flex-wrap: wrap;
             width: 100%;
         }
-
-        footer { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
-        .footer-links-row { display: flex; justify-content: center; align-items: center; gap: 32px; flex-wrap: wrap; width: 100%; }
-        .footer-links-row a { color: var(--text-muted) !important; text-decoration: none !important; font-size: 14px; font-weight: 400; display: inline-block; will-change: transform, opacity; -webkit-backface-visibility: hidden; backface-visibility: hidden; transition: color 0.4s var(--ease-premium); }
-        .footer-links-row a:hover { color: var(--text-main) !important; }
-        .copyright-tag { color: var(--text-muted); opacity: 0.6; font-size: 12.5px; letter-spacing: 0.2px; transition: color 0.8s var(--ease-premium); }
-
-        .nav-text { 
-            display: inline-block !important; 
-            white-space: nowrap !important;
-            transform-origin: center center !important; 
-            will-change: transform, opacity, background-position !important; 
-            transition: transform 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium); 
+        .footer-links-row a {
+            color: var(--text-muted) !important;
+            text-decoration: none !important;
+            font-size: 13.5px;
+            transition: color 0.2s ease;
         }
-
-        .footer-links-row a .nav-text { color: var(--text-muted) !important; }
-        .footer-links-row a:hover .nav-text { 
+        .footer-links-row a:hover {
             color: var(--text-main) !important;
-            transform: scale3d(1.06, 1.06, 1) !important;
+        }
+        .copyright-tag {
+            color: var(--text-muted);
+            opacity: 0.7;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
+    <div class="page-wrapper" id="pageWrapper">
+        <!-- Floating Backdrop for Category Menu Blur -->
+        <div class="floating-backdrop" id="floatingBackdrop" onclick="closeOrganisedCaCategoryDropdown()"></div>
 
-        <!-- Top Centered Brand 'sathya.' with Animated Twinkling Star -->
-    <nav class="top-nav-bar" id="topNavBar">
-        <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="sathya.">
-            <span class="brand-letter">sathya</span>
-            <span class="brand-star" aria-hidden="true"></span>
-        </a>
-    </nav>
+        <!-- Top Navigation -->
+        <nav class="top-nav-bar" id="topNavBar">
+            <a href="/index.html" class="brand-pill" id="brandPill" aria-label="sathya.">
+                <span class="brand-letter">sathya</span>
+                <span class="brand-star" aria-hidden="true"></span>
+            </a>
+        </nav>
 
-    <main class="contents-container">
-        
-        <div class="page-header-row">
-            <button type="button" class="back-icon-btn" onclick="if(window.history.length>1){window.history.back();}else{window.location.href='/index.html';}" aria-label="Go back">
-                <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            </button>
-            <h1 class="page-title">Current Affairs</h1>
-        </div>
-
-        <!-- 1. POLITY & GOVERNANCE -->
-        <div class="wide-capsule" id="polity-governance">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">1. Polity & Governance</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
+        <main>
+            <!-- Standard Header Row with Smart Back Navigation -->
+            <div class="page-header-row">
+                <button type="button" class="back-icon-btn" id="pageBackBtn" onclick="handleOrganisedBack()" aria-label="Go back">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                </button>
+                <h1 class="page-title" id="pageTitleText">Organised current affairs</h1>
             </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <h3 class="sub-section-title">Constitution</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Constitutional Articles</a></li>
-                        <li><a href="#">Schedules</a></li>
-                        <li><a href="#">Parts</a></li>
-                        <li><a href="#">Amendments</a></li>
-                        <li><a href="#">Constitutional provisions in news</a></li>
-                        <li><a href="#">Landmark constitutional debates</a></li>
-                    </ul>
 
-                    <h3 class="sub-section-title">Parliament</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Bills</a></li>
-                        <li><a href="#">Acts</a></li>
-                        <li><a href="#">Ordinances</a></li>
-                        <li><a href="#">Joint Sessions</a></li>
-                        <li><a href="#">Parliamentary Committees</a></li>
-                        <li><a href="#">Standing Committees</a></li>
-                        <li><a href="#">Select Committees</a></li>
-                        <li><a href="#">Parliamentary procedures</a></li>
-                        <li><a href="#">Parliamentary privileges</a></li>
-                        <li><a href="#">Money Bill</a></li>
-                        <li><a href="#">Finance Bill</a></li>
-                        <li><a href="#">Constitutional Amendment Bills</a></li>
-                    </ul>
+            <!-- 1. DIRECTORY VIEW (CARDS LIST) -->
+            <div id="organisedCaDirectoryView">
+                <!-- Category Selector Row -->
+                <div class="category-header-row">
+                    <span class="category-heading">Category</span>
+                    <div class="day-action-wrap">
+                        <button type="button" class="day-action-btn" id="organisedCaCategoryBtn" onclick="toggleOrganisedCaCategoryDropdown(event)">
+                            <span id="selectedCategoryLabel">All</span>
+                        </button>
+                        <!-- Attached Floating Category Dropdown Panel -->
+                        <div class="floating-days-panel" id="floatingOrganisedCaCategoryPanel"></div>
+                    </div>
+                </div>
 
-                    <h3 class="sub-section-title">Judiciary</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Supreme Court judgments</a></li>
-                        <li><a href="#">High Court judgments</a></li>
-                        <li><a href="#">Constitution Bench cases</a></li>
-                        <li><a href="#">PILs</a></li>
-                        <li><a href="#">Important legal interpretations</a></li>
-                        <li><a href="#">Review petitions</a></li>
-                        <li><a href="#">Curative petitions</a></li>
-                        <li><a href="#">Judicial appointments</a></li>
-                        <li><a href="#">Collegium</a></li>
-                        <li><a href="#">NJAC related issues</a></li>
-                        <li><a href="#">Tribunals</a></li>
-                    </ul>
+                <!-- Cards Grid -->
+                <div class="organised-ca-cards-list" id="organisedCaCardsContainer"></div>
+            </div>
 
-                    <h3 class="sub-section-title">Executive</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">President</a></li>
-                        <li><a href="#">Vice President</a></li>
-                        <li><a href="#">Governor</a></li>
-                        <li><a href="#">Prime Minister</a></li>
-                        <li><a href="#">Cabinet</a></li>
-                        <li><a href="#">Cabinet Committees</a></li>
-                        <li><a href="#">Constitutional offices</a></li>
-                        <li><a href="#">Statutory offices</a></li>
-                        <li><a href="#">Executive powers</a></li>
-                    </ul>
+            <!-- 2. ARTICLE DETAIL VIEW -->
+            <div id="organisedCaArticleView">
+                <!-- Controls Panel -->
+                <div class="ca-controls-panel" id="caControlsPanel">
+                    <div class="ca-controls-main-bar">
+                        <div class="ca-action-buttons-group">
+                            <span class="ca-action-label-wrap">Image : <button type="button" class="ca-direct-action-btn image-action-btn" id="orgImageActionBtn" onclick="toggleOrgImage()">View</button></span>
+                            <span class="ca-action-label-wrap">Read : <button type="button" class="ca-direct-action-btn read-action-btn" id="orgReadActionBtn" onclick="toggleOrgReadMode()">Short</button></span>
+                        </div>
+                        <button type="button" class="ca-dropdown-toggle-btn" id="orgMetaDropdownBtn" onclick="toggleOrgMetaDropdown()" aria-label="Expand topic tags">
+                            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                    </div>
+                    <!-- Expandable Image Drawer -->
+                    <div class="ca-image-drawer" id="orgImageDrawer">
+                        <div class="ca-image-drawer-inner" id="orgImageDrawerInner"></div>
+                    </div>
+                    <!-- Expandable Metadata Drawer -->
+                    <div class="ca-meta-drawer" id="orgMetaDrawer">
+                        <div class="ca-meta-drawer-inner" id="orgMetaDrawerInner"></div>
+                    </div>
+                </div>
 
-                    <h3 class="sub-section-title">Election</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Election Commission</a></li>
-                        <li><a href="#">Electoral reforms</a></li>
-                        <li><a href="#">Delimitation</a></li>
-                        <li><a href="#">Election laws</a></li>
-                        <li><a href="#">Model Code of Conduct</a></li>
-                        <li><a href="#">Political funding</a></li>
-                        <li><a href="#">EVM</a></li>
-                        <li><a href="#">VVPAT</a></li>
-                        <li><a href="#">One Nation One Election</a></li>
-                        <li><a href="#">Anti-defection</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Governance</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Government schemes</a></li>
-                        <li><a href="#">Welfare programmes</a></li>
-                        <li><a href="#">Digital governance</a></li>
-                        <li><a href="#">E-governance</a></li>
-                        <li><a href="#">Citizen charters</a></li>
-                        <li><a href="#">RTI</a></li>
-                        <li><a href="#">Social audits</a></li>
-                        <li><a href="#">Good governance</a></li>
-                        <li><a href="#">Administrative reforms</a></li>
-                        <li><a href="#">Civil services reforms</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Local Government</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Panchayati Raj</a></li>
-                        <li><a href="#">Municipalities</a></li>
-                        <li><a href="#">Finance Commission grants</a></li>
-                        <li><a href="#">Urban governance</a></li>
-                        <li><a href="#">Rural governance</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Constitutional Bodies</h3>
-                    <p class="sub-section-guide-note">Study: composition, powers, functions, appointment, removal, reports, current developments</p>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Election Commission</a></li>
-                        <li><a href="#">UPSC</a></li>
-                        <li><a href="#">Finance Commission</a></li>
-                        <li><a href="#">CAG</a></li>
-                        <li><a href="#">Attorney General</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Statutory Bodies</h3>
-                    <p class="sub-section-guide-note">Study: composition, powers, functions, appointment, removal, reports, current developments</p>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">NHRC</a></li>
-                        <li><a href="#">NGT</a></li>
-                        <li><a href="#">CIC</a></li>
-                        <li><a href="#">CBI</a></li>
-                        <li><a href="#">Lokpal</a></li>
-                        <li><a href="#">CVC</a></li>
-                        <li><a href="#">National Commission for Women</a></li>
-                        <li><a href="#">National Commission for Minorities</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Regulatory Bodies</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">RBI</a></li>
-                        <li><a href="#">SEBI</a></li>
-                        <li><a href="#">IRDAI</a></li>
-                        <li><a href="#">TRAI</a></li>
-                        <li><a href="#">PFRDA</a></li>
-                        <li><a href="#">Competition Commission</a></li>
-                        <li><a href="#">Food Safety Authority</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">International Governance</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">UN reforms</a></li>
-                        <li><a href="#">Global governance</a></li>
-                        <li><a href="#">International law</a></li>
-                        <li><a href="#">Treaties</a></li>
-                    </ul>
-                    
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
+                <!-- Full-Width Article Stage (Rests directly on background) -->
+                <div class="ca-article-feed-stage">
+                    <h1 class="article-title" id="orgArticleTitle"></h1>
+                    <!-- Short Revision Drawer -->
+                    <div class="ca-content-drawer" id="orgShortDrawer">
+                        <div class="ca-content-overflow" id="orgShortContent"></div>
+                    </div>
+                    <!-- Detailed Analysis Drawer -->
+                    <div class="ca-detailed-content-drawer is-open" id="orgDetailedDrawer">
+                        <div class="ca-detailed-overflow" id="orgDetailedContent"></div>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
 
-        <!-- 2. ECONOMY -->
-        <div class="wide-capsule" id="economy">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">2. Economy</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
+        <footer>
+            <div class="footer-links-row">
+                <a href="/study/Footer/about.html"><span class="nav-text">About</span></a>
+                <a href="/study/Footer/contact.html"><span class="nav-text">Contact</span></a>
+                <a href="/study/Footer/privacy.html"><span class="nav-text">Privacy Policy</span></a>
+                <a href="/study/Footer/terms.html"><span class="nav-text">Terms &amp; Conditions</span></a>
+                <a href="/study/Footer/disclaimer.html"><span class="nav-text">Disclaimer</span></a>
             </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <h3 class="sub-section-title">Banking</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">RBI policies</a></li>
-                        <li><a href="#">Repo rate</a></li>
-                        <li><a href="#">Reverse repo</a></li>
-                        <li><a href="#">CRR</a></li>
-                        <li><a href="#">SLR</a></li>
-                        <li><a href="#">Inflation</a></li>
-                        <li><a href="#">Liquidity</a></li>
-                        <li><a href="#">Monetary policy</a></li>
-                        <li><a href="#">Digital currency</a></li>
-                        <li><a href="#">UPI</a></li>
-                        <li><a href="#">Banking reforms</a></li>
-                        <li><a href="#">NPAs</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Finance</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Budget</a></li>
-                        <li><a href="#">Interim Budget</a></li>
-                        <li><a href="#">Finance Bill</a></li>
-                        <li><a href="#">Economic Survey</a></li>
-                        <li><a href="#">Fiscal deficit</a></li>
-                        <li><a href="#">Revenue deficit</a></li>
-                        <li><a href="#">Capital expenditure</a></li>
-                        <li><a href="#">Tax reforms</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Taxation</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">GST</a></li>
-                        <li><a href="#">Direct tax</a></li>
-                        <li><a href="#">Indirect tax</a></li>
-                        <li><a href="#">Customs</a></li>
-                        <li><a href="#">Income tax reforms</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Agriculture Economy</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">MSP</a></li>
-                        <li><a href="#">Procurement</a></li>
-                        <li><a href="#">FCI</a></li>
-                        <li><a href="#">Crop insurance</a></li>
-                        <li><a href="#">Agri exports</a></li>
-                        <li><a href="#">Agri imports</a></li>
-                        <li><a href="#">Food inflation</a></li>
-                        <li><a href="#">Agri reforms</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">External Sector</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">IMF</a></li>
-                        <li><a href="#">World Bank</a></li>
-                        <li><a href="#">WTO</a></li>
-                        <li><a href="#">FTA</a></li>
-                        <li><a href="#">Trade agreements</a></li>
-                        <li><a href="#">Export-import</a></li>
-                        <li><a href="#">Balance of Payments</a></li>
-                        <li><a href="#">Current account</a></li>
-                        <li><a href="#">Forex reserves</a></li>
-                        <li><a href="#">Rupee</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Industry</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">MSMEs</a></li>
-                        <li><a href="#">Manufacturing</a></li>
-                        <li><a href="#">Startup ecosystem</a></li>
-                        <li><a href="#">Semiconductor mission</a></li>
-                        <li><a href="#">PLI Scheme</a></li>
-                        <li><a href="#">Industrial policy</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Infrastructure</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Roads</a></li>
-                        <li><a href="#">Railways</a></li>
-                        <li><a href="#">Ports</a></li>
-                        <li><a href="#">Airports</a></li>
-                        <li><a href="#">Logistics</a></li>
-                        <li><a href="#">Inland waterways</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Employment</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Labour laws</a></li>
-                        <li><a href="#">Employment schemes</a></li>
-                        <li><a href="#">Gig economy</a></li>
-                        <li><a href="#">Platform workers</a></li>
-                        <li><a href="#">Unemployment</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Reports</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">IMF</a></li>
-                        <li><a href="#">World Bank</a></li>
-                        <li><a href="#">ADB</a></li>
-                        <li><a href="#">NITI</a></li>
-                        <li><a href="#">RBI</a></li>
-                        <li><a href="#">Economic Survey</a></li>
-                    </ul>
-                    
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-                    </div>
-                </div>
+            <div class="copyright-tag">
+                &copy; 2026 Sathya. All rights reserved.
             </div>
-        </div>
+        </footer>
+    </div>
 
-        <!-- 3. ENVIRONMENT -->
-        <div class="wide-capsule" id="environment">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">3. Environment</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-            </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <h3 class="sub-section-title">Biodiversity</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">National Parks</a></li>
-                        <li><a href="#">Wildlife Sanctuaries</a></li>
-                        <li><a href="#">Biosphere Reserves</a></li>
-                        <li><a href="#">Ramsar Sites</a></li>
-                        <li><a href="#">Tiger Reserves</a></li>
-                        <li><a href="#">Elephant Reserves</a></li>
-                        <li><a href="#">Conservation Reserves</a></li>
-                        <li><a href="#">Community Reserves</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Species</h3>
-                    <p class="sub-section-guide-note">Study: habitat, IUCN status, Schedule under WPA, endemic status, location, threats, conservation programme</p>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Every species in news</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Protected Areas</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">New protected areas</a></li>
-                        <li><a href="#">Boundary changes</a></li>
-                        <li><a href="#">Eco Sensitive Zones</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Climate Change</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">COP meetings</a></li>
-                        <li><a href="#">Paris Agreement</a></li>
-                        <li><a href="#">Kyoto Protocol</a></li>
-                        <li><a href="#">UNFCCC</a></li>
-                        <li><a href="#">Carbon market</a></li>
-                        <li><a href="#">Carbon trading</a></li>
-                        <li><a href="#">Climate finance</a></li>
-                        <li><a href="#">Net Zero</a></li>
-                        <li><a href="#">Adaptation</a></li>
-                        <li><a href="#">Mitigation</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Pollution</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Air pollution</a></li>
-                        <li><a href="#">Water pollution</a></li>
-                        <li><a href="#">Soil pollution</a></li>
-                        <li><a href="#">Plastic pollution</a></li>
-                        <li><a href="#">Noise pollution</a></li>
-                        <li><a href="#">Light pollution</a></li>
-                        <li><a href="#">Waste management</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Environmental Laws</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">EPA</a></li>
-                        <li><a href="#">Forest Conservation</a></li>
-                        <li><a href="#">Wildlife Protection</a></li>
-                        <li><a href="#">Biological Diversity</a></li>
-                        <li><a href="#">CAMPA</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">International Organizations</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">UNEP</a></li>
-                        <li><a href="#">IUCN</a></li>
-                        <li><a href="#">IPCC</a></li>
-                        <li><a href="#">CBD</a></li>
-                        <li><a href="#">CITES</a></li>
-                        <li><a href="#">CMS</a></li>
-                        <li><a href="#">Ramsar Convention</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Ecology</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Food chains</a></li>
-                        <li><a href="#">Food webs</a></li>
-                        <li><a href="#">Biomes</a></li>
-                        <li><a href="#">Ecological succession</a></li>
-                        <li><a href="#">Ecological pyramids</a></li>
-                        <li><a href="#">Nutrient cycles</a></li>
-                    </ul>
-                    
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. SCIENCE & TECHNOLOGY -->
-        <div class="wide-capsule" id="science-technology">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">4. Science & Technology</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-            </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <h3 class="sub-section-title">Space</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">ISRO missions</a></li>
-                        <li><a href="#">NASA</a></li>
-                        <li><a href="#">ESA</a></li>
-                        <li><a href="#">JAXA</a></li>
-                        <li><a href="#">SpaceX</a></li>
-                        <li><a href="#">Satellites</a></li>
-                        <li><a href="#">Rockets</a></li>
-                        <li><a href="#">Moon</a></li>
-                        <li><a href="#">Mars</a></li>
-                        <li><a href="#">Venus</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Biotechnology</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">CRISPR</a></li>
-                        <li><a href="#">Gene editing</a></li>
-                        <li><a href="#">Stem cells</a></li>
-                        <li><a href="#">Vaccines</a></li>
-                        <li><a href="#">DNA technology</a></li>
-                        <li><a href="#">GM crops</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">AI</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Artificial Intelligence</a></li>
-                        <li><a href="#">Machine Learning</a></li>
-                        <li><a href="#">Deep Learning</a></li>
-                        <li><a href="#">Generative AI</a></li>
-                        <li><a href="#">Ethics</a></li>
-                        <li><a href="#">AI regulation</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Quantum</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Quantum computing</a></li>
-                        <li><a href="#">Quantum communication</a></li>
-                        <li><a href="#">Quantum sensing</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Semiconductor</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Chips</a></li>
-                        <li><a href="#">Fabrication</a></li>
-                        <li><a href="#">Lithography</a></li>
-                        <li><a href="#">Silicon</a></li>
-                        <li><a href="#">Gallium</a></li>
-                        <li><a href="#">Rare Earths</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Defence Technology</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Missiles</a></li>
-                        <li><a href="#">Fighter aircraft</a></li>
-                        <li><a href="#">UAV</a></li>
-                        <li><a href="#">Drones</a></li>
-                        <li><a href="#">Hypersonics</a></li>
-                        <li><a href="#">Naval technology</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Cyber Security</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Data Protection</a></li>
-                        <li><a href="#">Encryption</a></li>
-                        <li><a href="#">Cyber attacks</a></li>
-                        <li><a href="#">CERT-In</a></li>
-                        <li><a href="#">Digital Personal Data Protection</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Health</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Vaccines</a></li>
-                        <li><a href="#">WHO</a></li>
-                        <li><a href="#">Diseases</a></li>
-                        <li><a href="#">Epidemics</a></li>
-                        <li><a href="#">Nutrition</a></li>
-                        <li><a href="#">New viruses</a></li>
-                    </ul>
-                    
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 5. GEOGRAPHY -->
-        <div class="wide-capsule" id="geography">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">5. Geography</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-            </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <h3 class="sub-section-title">Physical Geography</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Earthquakes</a></li>
-                        <li><a href="#">Volcanoes</a></li>
-                        <li><a href="#">Cyclones</a></li>
-                        <li><a href="#">Tsunami</a></li>
-                        <li><a href="#">Ocean currents</a></li>
-                        <li><a href="#">El Niño</a></li>
-                        <li><a href="#">La Niña</a></li>
-                        <li><a href="#">Jet streams</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Indian Geography</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Rivers</a></li>
-                        <li><a href="#">Dams</a></li>
-                        <li><a href="#">Wetlands</a></li>
-                        <li><a href="#">Mountains</a></li>
-                        <li><a href="#">Deserts</a></li>
-                        <li><a href="#">Plateaus</a></li>
-                        <li><a href="#">Passes</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">World Geography</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Straits</a></li>
-                        <li><a href="#">Seas</a></li>
-                        <li><a href="#">Lakes</a></li>
-                        <li><a href="#">Rivers</a></li>
-                        <li><a href="#">Mountains</a></li>
-                        <li><a href="#">Islands</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Mapping</h3>
-                    <p class="sub-section-guide-note">Study: neighboring countries, seas, rivers, mountains, capitals, strategic importance</p>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Whenever a place is in news</a></li>
-                    </ul>
-                    
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 6. INTERNATIONAL RELATIONS -->
-        <div class="wide-capsule" id="international-relations">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">6. International Relations</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-            </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <h3 class="sub-section-title">Organizations</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">UN</a></li>
-                        <li><a href="#">IMF</a></li>
-                        <li><a href="#">WTO</a></li>
-                        <li><a href="#">WHO</a></li>
-                        <li><a href="#">BRICS</a></li>
-                        <li><a href="#">SCO</a></li>
-                        <li><a href="#">G20</a></li>
-                        <li><a href="#">ASEAN</a></li>
-                        <li><a href="#">BIMSTEC</a></li>
-                        <li><a href="#">QUAD</a></li>
-                        <li><a href="#">IPEF</a></li>
-                        <li><a href="#">IORA</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Summits</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">G20</a></li>
-                        <li><a href="#">BRICS</a></li>
-                        <li><a href="#">SCO</a></li>
-                        <li><a href="#">COP</a></li>
-                        <li><a href="#">ASEAN</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Agreements</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">FTAs</a></li>
-                        <li><a href="#">Defence agreements</a></li>
-                        <li><a href="#">Strategic partnerships</a></li>
-                        <li><a href="#">Maritime agreements</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">Countries in News</h3>
-                    <p class="sub-section-guide-note">Study: location, capital, bordering countries, important straits, conflicts, relations with India</p>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Every country in headline news</a></li>
-                    </ul>
-                    
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 7. AGRICULTURE -->
-        <div class="wide-capsule" id="agriculture">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">7. Agriculture</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-            </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">New crop varieties</a></li>
-                        <li><a href="#">Diseases</a></li>
-                        <li><a href="#">GI tags</a></li>
-                        <li><a href="#">Millets</a></li>
-                        <li><a href="#">Irrigation</a></li>
-                        <li><a href="#">Fertilizers</a></li>
-                        <li><a href="#">Soil health</a></li>
-                        <li><a href="#">Organic farming</a></li>
-                        <li><a href="#">Natural farming</a></li>
-                        <li><a href="#">Agricultural research</a></li>
-                        <li><a href="#">ICAR</a></li>
-                        <li><a href="#">Seeds</a></li>
-                        <li><a href="#">Pollinators</a></li>
-                    </ul>
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 8. ART & CULTURE -->
-        <div class="wide-capsule" id="art-culture">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">8. Art & Culture</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-            </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Festivals</a></li>
-                        <li><a href="#">Temples</a></li>
-                        <li><a href="#">Dances</a></li>
-                        <li><a href="#">Music</a></li>
-                        <li><a href="#">Paintings</a></li>
-                        <li><a href="#">GI Tags</a></li>
-                        <li><a href="#">UNESCO sites</a></li>
-                        <li><a href="#">Classical languages</a></li>
-                        <li><a href="#">Literature</a></li>
-                        <li><a href="#">Architecture</a></li>
-                        <li><a href="#">Buddhism</a></li>
-                        <li><a href="#">Jainism</a></li>
-                        <li><a href="#">Sikhism</a></li>
-                        <li><a href="#">Cultural institutions</a></li>
-                    </ul>
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 9. HISTORY -->
-        <div class="wide-capsule" id="history">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">9. History</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-            </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Archaeological discoveries</a></li>
-                        <li><a href="#">Excavations</a></li>
-                        <li><a href="#">New inscriptions</a></li>
-                        <li><a href="#">Museums</a></li>
-                        <li><a href="#">Heritage conservation</a></li>
-                        <li><a href="#">Anniversaries</a></li>
-                        <li><a href="#">Freedom movement personalities</a></li>
-                    </ul>
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 10. DEFENCE & INTERNAL SECURITY -->
-        <div class="wide-capsule" id="defence-internal-security">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">10. Defence & Internal Security</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-            </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Military exercises</a></li>
-                        <li><a href="#">Defence agreements</a></li>
-                        <li><a href="#">Defence procurements</a></li>
-                        <li><a href="#">New missiles</a></li>
-                        <li><a href="#">Armed forces</a></li>
-                        <li><a href="#">CAPFs</a></li>
-                        <li><a href="#">Border issues</a></li>
-                        <li><a href="#">Maritime security</a></li>
-                        <li><a href="#">Cyber security</a></li>
-                        <li><a href="#">Space security</a></li>
-                    </ul>
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 11. DISASTER MANAGEMENT -->
-        <div class="wide-capsule" id="disaster-management">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">11. Disaster Management</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-            </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">NDMA</a></li>
-                        <li><a href="#">SDRF</a></li>
-                        <li><a href="#">NDRF</a></li>
-                        <li><a href="#">Cyclones</a></li>
-                        <li><a href="#">Floods</a></li>
-                        <li><a href="#">Drought</a></li>
-                        <li><a href="#">Heat waves</a></li>
-                        <li><a href="#">Landslides</a></li>
-                        <li><a href="#">Glacier Lake Outburst Floods (GLOFs)</a></li>
-                        <li><a href="#">Earthquakes</a></li>
-                        <li><a href="#">Tsunami</a></li>
-                        <li><a href="#">Forest fires</a></li>
-                        <li><a href="#">Early warning systems</a></li>
-                    </ul>
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 12. SOCIAL ISSUES -->
-        <div class="wide-capsule" id="social-issues">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">12. Social Issues</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-            </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Education</a></li>
-                        <li><a href="#">Health</a></li>
-                        <li><a href="#">Nutrition</a></li>
-                        <li><a href="#">Women</a></li>
-                        <li><a href="#">Children</a></li>
-                        <li><a href="#">Elderly</a></li>
-                        <li><a href="#">Disability</a></li>
-                        <li><a href="#">Tribal welfare</a></li>
-                        <li><a href="#">Poverty</a></li>
-                        <li><a href="#">Hunger</a></li>
-                        <li><a href="#">SDGs</a></li>
-                        <li><a href="#">Demography</a></li>
-                        <li><a href="#">Census-related developments</a></li>
-                    </ul>
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 13. GOVERNMENT REPORTS & INDICES -->
-        <div class="wide-capsule" id="government-reports-indices">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">13. Government Reports & Indices</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-            </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <h3 class="sub-section-title">Indian</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Economic Survey</a></li>
-                        <li><a href="#">Union Budget</a></li>
-                        <li><a href="#">NITI Aayog reports</a></li>
-                        <li><a href="#">RBI reports</a></li>
-                        <li><a href="#">NFHS</a></li>
-                        <li><a href="#">NCRB</a></li>
-                        <li><a href="#">ASER</a></li>
-                        <li><a href="#">SDG India Index</a></li>
-                        <li><a href="#">India State of Forest Report</a></li>
-                    </ul>
-
-                    <h3 class="sub-section-title">International</h3>
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Human Development Report</a></li>
-                        <li><a href="#">Global Hunger Index</a></li>
-                        <li><a href="#">Global Innovation Index</a></li>
-                        <li><a href="#">World Happiness Report</a></li>
-                        <li><a href="#">Global Gender Gap Report</a></li>
-                        <li><a href="#">World Competitiveness Report</a></li>
-                        <li><a href="#">SIPRI reports</a></li>
-                        <li><a href="#">IPCC reports</a></li>
-                        <li><a href="#">UNDP reports</a></li>
-                        <li><a href="#">FAO reports</a></li>
-                    </ul>
-                    
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 14. AWARDS & PERSONALITIES -->
-        <div class="wide-capsule" id="awards-personalities">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">14. Awards & Personalities</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-            </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Nobel Prizes</a></li>
-                        <li><a href="#">Major international awards</a></li>
-                        <li><a href="#">Important Indian awards</a></li>
-                        <li><a href="#">Significant appointments</a></li>
-                        <li><a href="#">Obituaries of nationally or internationally important personalities</a></li>
-                    </ul>
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 15. PLACES IN NEWS -->
-        <div class="wide-capsule" id="places-news">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">15. Places in News</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-            </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Country/state</a></li>
-                        <li><a href="#">Capital (if applicable)</a></li>
-                        <li><a href="#">Map location</a></li>
-                        <li><a href="#">Borders</a></li>
-                        <li><a href="#">Rivers</a></li>
-                        <li><a href="#">Mountains</a></li>
-                        <li><a href="#">Nearby seas/oceans</a></li>
-                        <li><a href="#">Strategic importance</a></li>
-                        <li><a href="#">Why it is in the news</a></li>
-                    </ul>
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 16. MISCELLANEOUS -->
-        <div class="wide-capsule" id="miscellaneous">
-            <div class="capsule-header-row">
-                <h2 class="wide-panel-title">16. Miscellaneous</h2>
-                <button class="capsule-toggle-btn top-btn" aria-label="Toggle section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-            </div>
-            <hr class="capsule-divider">
-            <div class="capsule-content-wrapper">
-                <div class="capsule-content-inner">
-                    <ul class="topics-vertical-stack">
-                        <li><a href="#">Important books and authors</a></li>
-                        <li><a href="#">New museums and memorials</a></li>
-                        <li><a href="#">Major anniversaries</a></li>
-                        <li><a href="#">Commemorative years declared by UN or GoI</a></li>
-                        <li><a href="#">National and international days</a></li>
-                        <li><a href="#">Sports events when they have governance or national significance</a></li>
-                        <li><a href="#">Major scientific prizes and recognitions</a></li>
-                    </ul>
-                    <div class="capsule-bottom-row">
-                        <button class="capsule-toggle-btn bottom-btn" aria-label="Hide section view"><div class="btn-txt-frame"><span class="txt-view">View</span><span class="txt-hide">Hide</span></div></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <footer>
-        <div class="footer-links-row">
-            <a href="/study/Footer/about.html"><span class="nav-text">About</span></a>
-            <a href="/study/Footer/contact.html"><span class="nav-text">Contact</span></a>
-            <a href="/study/Footer/privacy.html"><span class="nav-text">Privacy Policy</span></a>
-            <a href="/study/Footer/terms.html"><span class="nav-text">Terms &amp; Conditions</span></a>
-            <a href="/study/Footer/disclaimer.html"><span class="nav-text">Disclaimer</span></a>
-        </div>
-        <div class="copyright-tag">
-            &copy; 2026 Sathya. All rights reserved.
-        </div>
-    </footer>
-
+    <!-- Interactive Organised CA Script -->
     <script>
-        // --- Universal Persistent Master Breadcrumb Engine ---
-        (function buildDynamicBreadcrumbs() {
-            const container = document.getElementById('dynamicBreadcrumbNav');
+        let organisedCaSelectedCategory = 'All';
+        let organisedCaFloatingOpen = false;
+        let organisedCaCurrentTopic = null;
+        let organisedCaViewMode = 'full'; // 'full' | 'short'
+        let organisedCaImageDrawerOpen = false;
+        let organisedCaMetaDrawerOpen = false;
+
+        function splitTopicCategories(rawCategory) {
+            if (!rawCategory || typeof rawCategory !== 'string') return [];
+            let s = rawCategory.trim();
+
+            const protectedTerms = [
+                { regex: /energy\s*(?:&|\/|and)\s*mineral\s*resources/gi, replacement: '__ENERGY_MINERAL__' },
+                { regex: /art\s*(?:&|and)\s*culture/gi, replacement: '__ART_CULTURE__' },
+                { regex: /science\s*(?:&|and)\s*technology/gi, replacement: '__SCI_TECH__' },
+                { regex: /international\s*relations/gi, replacement: '__INTL_REL__' },
+                { regex: /indian\s*society/gi, replacement: '__IND_SOC__' },
+                { regex: /social\s*justice/gi, replacement: '__SOC_JUST__' },
+                { regex: /internal\s*security/gi, replacement: '__INT_SEC__' },
+                { regex: /disaster\s*management/gi, replacement: '__DIS_MGMT__' },
+                { regex: /polity\s*(?:&|and)\s*governance/gi, replacement: '__POLITY_GOV__' }
+            ];
+
+            s = s.replace(/geography\s*(?:&|\/|and)\s*energy\s*\/\s*mineral\s*resources/gi, 'Geography / Energy and mineral resources');
+            s = s.replace(/economy\s*\/\s*energy\s*&?\s*infrastructure/gi, 'Economy / Energy and mineral resources');
+
+            protectedTerms.forEach(p => {
+                s = s.replace(p.regex, p.replacement);
+            });
+
+            const rawTokens = s.split(/[\/;,&]|(?:\s+and\s+)/i);
+            const result = [];
+
+            rawTokens.forEach(token => {
+                let clean = token.trim();
+                if (!clean) return;
+
+                clean = clean
+                    .replace(/__ENERGY_MINERAL__/g, 'Energy and mineral resources')
+                    .replace(/__ART_CULTURE__/g, 'Culture')
+                    .replace(/__SCI_TECH__/g, 'Science and technology')
+                    .replace(/__INTL_REL__/g, 'International relations')
+                    .replace(/__IND_SOC__/g, 'Indian society')
+                    .replace(/__SOC_JUST__/g, 'Social justice')
+                    .replace(/__INT_SEC__/g, 'Internal security')
+                    .replace(/__DIS_MGMT__/g, 'Disaster management')
+                    .replace(/__POLITY_GOV__/g, 'Polity');
+
+                const low = clean.toLowerCase();
+                if (low === 'geography') clean = 'Geography';
+                else if (low === 'economy') clean = 'Economy';
+                else if (low === 'energy and mineral resources' || low === 'mineral resources' || low === 'energy') clean = 'Energy and mineral resources';
+                else if (low === 'sports') clean = 'Sports';
+                else if (low === 'culture' || low === 'art & culture' || low === 'art and culture') clean = 'Culture';
+                else if (low === 'polity') clean = 'Polity';
+                else if (low === 'history') clean = 'History';
+                else if (low === 'indian society') clean = 'Indian society';
+                else {
+                    clean = clean.charAt(0).toUpperCase() + clean.slice(1);
+                }
+
+                if (clean && !result.includes(clean)) {
+                    result.push(clean);
+                }
+            });
+
+            return result;
+        }
+
+        function getAllOrganisedCaTopics() {
+            const caAll = window.RAW_STUDY_DATA && window.RAW_STUDY_DATA.dailyCurrentAffairsData;
+            if (!caAll) return [];
+
+            const allTopics = [];
+            Object.entries(caAll).forEach(([dateKey, dateObj]) => {
+                const dateStr = dateObj.dateStr || dateKey;
+                if (dateObj.topics && Array.isArray(dateObj.topics)) {
+                    dateObj.topics.forEach(t => {
+                        const categories = splitTopicCategories(t.category);
+                        allTopics.push({
+                            ...t,
+                            categories: categories.length > 0 ? categories : [(t.category || 'General')],
+                            dateKey: dateKey,
+                            dateStr: dateStr
+                        });
+                    });
+                }
+            });
+
+            return allTopics;
+        }
+
+        function getOrganisedCaCategories() {
+            const topics = getAllOrganisedCaTopics();
+            const discoveredSet = new Set();
+
+            topics.forEach(t => {
+                if (t.categories && Array.isArray(t.categories)) {
+                    t.categories.forEach(c => discoveredSet.add(c));
+                }
+            });
+
+            const preferredOrder = [
+                'All',
+                'Geography',
+                'Economy',
+                'Energy and mineral resources',
+                'Sports',
+                'Culture',
+                'Polity',
+                'Indian society',
+                'History'
+            ];
+
+            const orderedCategories = [];
+            preferredOrder.forEach(cat => {
+                if (cat === 'All' || discoveredSet.has(cat)) {
+                    orderedCategories.push(cat);
+                    discoveredSet.delete(cat);
+                }
+            });
+
+            Array.from(discoveredSet).sort().forEach(cat => {
+                orderedCategories.push(cat);
+            });
+
+            return orderedCategories;
+        }
+
+        function renderDirectoryView() {
+            const dirView = document.getElementById('organisedCaDirectoryView');
+            const artView = document.getElementById('organisedCaArticleView');
+            const pageTitle = document.getElementById('pageTitleText');
+            if (dirView) dirView.style.display = 'block';
+            if (artView) artView.classList.remove('is-active');
+            if (pageTitle) pageTitle.textContent = 'Organised current affairs';
+
+            const allTopics = getAllOrganisedCaTopics();
+            const categories = getOrganisedCaCategories();
+
+            if (!categories.includes(organisedCaSelectedCategory)) {
+                organisedCaSelectedCategory = 'All';
+            }
+
+            const labelEl = document.getElementById('selectedCategoryLabel');
+            if (labelEl) labelEl.textContent = organisedCaSelectedCategory;
+
+            // Render floating panel category buttons
+            const panelEl = document.getElementById('floatingOrganisedCaCategoryPanel');
+            if (panelEl) {
+                panelEl.innerHTML = categories.map(cat => 
+                    '<button type="button" class="day-item-btn ' + (cat === organisedCaSelectedCategory ? 'is-selected' : '') + '" onclick="selectOrganisedCaCategory(\'' + cat.replace(/'/g, "\\'") + '\', event)">' + cat + '</button>'
+                ).join('');
+            }
+
+            const filteredTopics = (organisedCaSelectedCategory === 'All')
+                ? allTopics
+                : allTopics.filter(t => t.categories && t.categories.includes(organisedCaSelectedCategory));
+
+            const container = document.getElementById('organisedCaCardsContainer');
             if (!container) return;
 
-            const searchPath = window.location.pathname;
-            const HOME_PATH = "/study/index.html";
-
-            const pageNames = {
-                "/study/index.html": "Home",
-                "/study/currentaffairs.html": "Current Affairs",
-                "/study/csat.html": "CSAT",
-                "/study/subjects.html": "Subjects",
-                "/study/ramsarsites.html": "Ramsar Sites",
-                "/study/Footer/about.html": "About",
-                "/study/Footer/contact.html": "Contact",
-                "/study/Footer/privacy.html": "Privacy Policy",
-                "/study/Footer/terms.html": "Terms & Conditions",
-                "/study/Footer/disclaimer.html": "Disclaimer"
-            };
-
-            let currentPageName = pageNames[searchPath];
-            if (!currentPageName) {
-                const filename = searchPath.substring(searchPath.lastIndexOf('/') + 1).replace('.html', '');
-                currentPageName = filename.charAt(0).toUpperCase() + filename.slice(1);
-            }
-
-            let trail = [];
-            try {
-                const stored = sessionStorage.getItem('breadcrumbTrail');
-                trail = stored ? JSON.parse(stored) : [];
-            } catch (e) {
-                trail = [];
-            }
-
-            if (trail.length === 0 || (trail[0].path !== HOME_PATH && trail[0].path !== "/study/")) {
-                trail = [{ name: "Home", path: HOME_PATH }];
-            }
-
-            const existingIndex = trail.findIndex(step => step.path === searchPath);
-
-            if (existingIndex !== -1) {
-                trail = trail.slice(0, existingIndex + 1);
-            } else {
-                if (searchPath !== HOME_PATH && searchPath !== "/study/") {
-                    trail.push({ name: currentPageName, path: searchPath });
-                }
-            }
-
-            try {
-                sessionStorage.setItem('breadcrumbTrail', JSON.stringify(trail));
-            } catch (e) {}
-
-            let htmlMarkup = '';
-            trail.forEach((step) => {
-                if (step.path === searchPath) {
-                    htmlMarkup += `<span class="breadcrumb-current">${step.name}</span><span class="breadcrumb-separator">/</span>`;
-                } else {
-                    htmlMarkup += `<a href="${step.path}">${step.name}</a><span class="breadcrumb-separator">/</span>`;
-                }
-            });
-
-            if (htmlMarkup.endsWith('<span class="breadcrumb-separator">/</span>')) {
-                htmlMarkup = htmlMarkup.slice(0, -'<span class="breadcrumb-separator">/</span>'.length);
-            }
-
-            container.innerHTML = htmlMarkup;
-        })();
-
-        // --- Hardware-Accelerated Layout-Thrashing-Free Accordion Architecture Engine ---
-        document.querySelectorAll('.wide-capsule').forEach(capsule => {
-            const toggleButtons = capsule.querySelectorAll('.capsule-toggle-btn');
-            const wrapper = capsule.querySelector('.capsule-content-wrapper');
-            const inner = capsule.querySelector('.capsule-content-inner');
-            
-            if (wrapper) wrapper.style.height = '0px';
-
-            toggleButtons.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const isOpen = capsule.classList.contains('is-expanded');
-                    const targetScrollY = capsule.offsetTop - 40;
-                    
-                    if (isOpen) {
-                        window.scrollTo({
-                            top: Math.max(targetScrollY, 0),
-                            behavior: 'smooth'
-                        });
-
-                        wrapper.style.height = inner.scrollHeight + 'px';
-                        void wrapper.offsetHeight;
-                        
-                        wrapper.style.height = '0px';
-                        capsule.classList.remove('is-expanded');
-                    } else {
-                        capsule.classList.add('is-expanded');
-                        wrapper.style.height = inner.scrollHeight + 'px';
-                        
-                        const handleExpandEnd = (event) => {
-                            if (event.propertyName === 'height' && capsule.classList.contains('is-expanded')) {
-                                wrapper.style.height = 'auto';
-                                wrapper.removeEventListener('transitionend', handleExpandEnd);
-                            }
-                        };
-                        wrapper.addEventListener('transitionend', handleExpandEnd);
-                    }
-                });
-            });
-        });
-
-        const toggleBtn = document.getElementById('themeToggleBtn');
-        const bodyElement = document.body;
-        const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
-
-        const masterHeader = document.getElementById('masterHeader');
-        const openSearchBtn = document.getElementById('openSearchBtn');
-        const closeSearchBtn = document.getElementById('closeSearchBtn');
-        const clearSearchBtn = document.getElementById('clearSearchBtn');
-        const searchCoreInput = document.getElementById('searchCoreInput');
-
-        function applyTargetPalette() {
-            const activeSessionOverride = sessionStorage.getItem('dashboard-theme');
-            if (activeSessionOverride) {
-                if (activeSessionOverride === 'light') {
-                    bodyElement.classList.add('light-mode');
-                } else {
-                    bodyElement.classList.remove('light-mode');
-                }
-            } else {
-                if (systemLightQuery.matches) {
-                    bodyElement.classList.add('light-mode');
-                } else {
-                    bodyElement.classList.remove('light-mode');
-                }
-            }
-        }
-
-        applyTargetPalette();
-
-        systemLightQuery.addEventListener('change', (e) => {
-            sessionStorage.removeItem('dashboard-theme');
-            if (e.matches) {
-                bodyElement.classList.add('light-mode');
-            } else {
-                bodyElement.classList.remove('light-mode');
-            }
-        });
-
-        toggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isCurrentlyLight = bodyElement.classList.contains('light-mode');
-            if (isCurrentlyLight) {
-                bodyElement.classList.remove('light-mode');
-                sessionStorage.setItem('dashboard-theme', 'dark');
-            } else {
-                bodyElement.classList.add('light-mode');
-                sessionStorage.setItem('dashboard-theme', 'light');
-            }
-        });
-
-        openSearchBtn.addEventListener('click', () => {
-            masterHeader.classList.remove('state-main');
-            masterHeader.classList.add('state-search');
-            searchCoreInput.focus({ preventScroll: true });
-        });
-
-        clearSearchBtn.addEventListener('click', () => {
-            searchCoreInput.value = "";
-            searchCoreInput.focus();
-        });
-
-        closeSearchBtn.addEventListener('click', () => {
-            masterHeader.classList.remove('state-search');
-            masterHeader.classList.add('state-main');
-        });
-
-        masterHeader.addEventListener('submit', (e) => {
-            if (searchCoreInput.value.trim() === "") {
-                e.preventDefault();
-                masterHeader.classList.remove('state-search');
-                masterHeader.classList.add('state-main');
-            }
-        });
-
-        const universalTargetLinks = document.querySelectorAll('.contents-container a, .breadcrumb-nav a, footer .footer-links-row a, .logo');
-
-        function executeLayoutSpans() {
-            universalTargetLinks.forEach(link => {
-                if (!link.querySelector('.nav-text') && !link.classList.contains('capsule-toggle-btn')) {
-                    const wrapper = document.createElement('span');
-                    wrapper.className = 'nav-text';
-                    while (link.firstChild) {
-                        wrapper.appendChild(link.firstChild);
-                    }
-                    link.appendChild(wrapper);
-                }
-            });
-        }
-
-        if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
-            setTimeout(executeLayoutSpans, 1500);
-        } else {
-            executeLayoutSpans();
-        }
-
-        universalTargetLinks.forEach(link => {
-            if (link.classList.contains('capsule-toggle-btn')) return;
-            link.addEventListener('click', function(e) {
-                const destination = this.getAttribute('href');
-                if (!destination || destination === '#' || destination.startsWith('#') || this.classList.contains('active-footer-page')) return;
-
-                e.preventDefault();
-                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
-
-                universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
-
-                this.classList.add('is-wave-loading');
-
-                setTimeout(() => {
-                    window.location.href = destination;
-                }, 750);
-            });
-        });
-
-        window.addEventListener('pageshow', () => {
-            if (document.activeElement && document.activeElement.blur) {
-                document.activeElement.blur();
-            }
-
-            universalTargetLinks.forEach(l => {
-                l.classList.remove('is-wave-loading');
-                l.classList.remove('kinetic-locked-frame');
-                const span = l.querySelector('.nav-text');
-                if (span) {
-                    span.style.transform = '';
-                    span.style.opacity = '';
-                    span.style.background = '';
-                    span.style.webkitBackgroundClip = '';
-                    span.style.webkitTextFillColor = '';
-                }
-            });
-
-            if (window.location.search.includes('tf=1') || window.location.href.includes(':~:text=')) {
-                sessionStorage.removeItem('activeUniversalTargetUrl');
+            if (filteredTopics.length === 0) {
+                container.innerHTML = '<div style="padding: 48px 16px; text-align: center; color: var(--text-muted); grid-column: 1 / -1;">No articles found in this category.</div>';
                 return;
             }
 
-            const savedTargetUrl = sessionStorage.getItem('activeUniversalTargetUrl');
-            if (savedTargetUrl) {
-                sessionStorage.removeItem('activeUniversalTargetUrl');
-            }
-        });
+            container.innerHTML = filteredTopics.map(topic => {
+                const hasThumb = topic.image && topic.image.url;
+                const thumbHtml = hasThumb ? 
+                    '<img src="' + topic.image.url + '" alt="' + topic.topicTitle + '" class="ca-card-thumb-img" loading="lazy">' :
+                    ('<div class="ca-card-no-image">' +
+                        '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                            '<rect x="3" y="3" width="18" height="18" rx="4"></rect>' +
+                            '<circle cx="8.5" cy="8.5" r="1.5"></circle>' +
+                            '<polyline points="21 15 16 10 5 21"></polyline>' +
+                        '</svg>' +
+                        '<span class="ca-card-no-image-text">no image</span>' +
+                    '</div>');
 
-        function clearAndScrollToHashTarget() {
-            const activeHash = window.location.hash;
-            if (!activeHash) return;
-
-            const targetedCapsule = document.querySelector(activeHash);
-            if (targetedCapsule && targetedCapsule.classList.contains('wide-capsule')) {
-                setTimeout(() => {
-                    targetedCapsule.scrollIntoView({
-                        block: 'center',
-                        behavior: 'smooth'
-                    });
-
-                    targetedCapsule.classList.remove('activated-target');
-                    void targetedCapsule.offsetWidth; 
-                    targetedCapsule.classList.add('activated-target');
-                }, 150); 
-            }
+                return (
+                    '<div class="organised-ca-card" onclick="openOrganisedCaArticle(\'' + topic.topicTitle.replace(/'/g, "\\'") + '\')">' +
+                        '<div class="organised-ca-card-left-thumb">' + thumbHtml + '</div>' +
+                        '<div class="organised-ca-card-right-content">' +
+                            '<h3 class="organised-ca-card-title">' + topic.topicTitle + '</h3>' +
+                            '<div class="organised-ca-card-footer">' +
+                                '<span class="note-card-date">' + (topic.dateStr || 'Recent') + '</span>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>'
+                );
+            }).join('');
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            if (window.location.hash) {
-                window.scrollTo(0, 0); 
-                setTimeout(clearAndScrollToHashTarget, 50);
+        function toggleOrganisedCaCategoryDropdown(e) {
+            if (e) e.stopPropagation();
+            const panel = document.getElementById('floatingOrganisedCaCategoryPanel');
+            const backdrop = document.getElementById('floatingBackdrop');
+            if (!panel) return;
+
+            if (panel.classList.contains('is-open')) {
+                closeOrganisedCaCategoryDropdown();
+            } else {
+                panel.classList.remove('is-closing');
+                panel.classList.add('is-open');
+                if (backdrop) backdrop.classList.add('is-active');
+                organisedCaFloatingOpen = true;
+            }
+        }
+        window.toggleOrganisedCaCategoryDropdown = toggleOrganisedCaCategoryDropdown;
+
+        function closeOrganisedCaCategoryDropdown() {
+            const panel = document.getElementById('floatingOrganisedCaCategoryPanel');
+            const backdrop = document.getElementById('floatingBackdrop');
+            if (backdrop) backdrop.classList.remove('is-active');
+            if (!panel || !panel.classList.contains('is-open') || panel.classList.contains('is-closing')) {
+                organisedCaFloatingOpen = false;
+                return;
+            }
+            panel.classList.add('is-closing');
+            organisedCaFloatingOpen = false;
+            setTimeout(() => {
+                panel.classList.remove('is-open', 'is-closing');
+            }, 200);
+        }
+        window.closeOrganisedCaCategoryDropdown = closeOrganisedCaCategoryDropdown;
+
+        function selectOrganisedCaCategory(cat, e) {
+            if (e) e.stopPropagation();
+            organisedCaSelectedCategory = cat;
+            closeOrganisedCaCategoryDropdown();
+            setTimeout(() => {
+                renderDirectoryView();
+            }, 160);
+        }
+        window.selectOrganisedCaCategory = selectOrganisedCaCategory;
+
+        // Dismiss dropdown on outside click
+        document.addEventListener('click', (e) => {
+            if (organisedCaFloatingOpen) {
+                const panel = document.getElementById('floatingOrganisedCaCategoryPanel');
+                const btn = document.getElementById('organisedCaCategoryBtn');
+                if (panel && !panel.contains(e.target) && (!btn || !btn.contains(e.target))) {
+                    closeOrganisedCaCategoryDropdown();
+                }
             }
         });
-        window.addEventListener('hashchange', clearAndScrollToHashTarget);
 
-        // --- Universal Drop-In Text Node Highlight Matrix ---
-        window.addEventListener('load', () => {
-            let rawTargetQuery = '';
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                rawTargetQuery = urlParams.get('shq') || urlParams.get('q');
-                
-                if (!rawTargetQuery && document.referrer) {
-                    const referenceViewUrl = new URL(document.referrer);
-                    rawTargetQuery = referenceViewUrl.searchParams.get('q') || referenceViewUrl.searchParams.get('shq');
-                }
-            } catch (e) {}
+        function openOrganisedCaArticle(topicTitle) {
+            const allTopics = getAllOrganisedCaTopics();
+            const topic = allTopics.find(t => t.topicTitle && t.topicTitle.toLowerCase() === topicTitle.toLowerCase());
+            if (!topic) return;
 
-            if (!rawTargetQuery) return;
+            organisedCaCurrentTopic = topic;
+            organisedCaViewMode = 'full';
+            organisedCaImageDrawerOpen = false;
+            organisedCaMetaDrawerOpen = false;
 
-            const cleanTargetQuery = rawTargetQuery.trim().toLowerCase();
-            if (cleanTargetQuery.length === 0) return;
+            const dirView = document.getElementById('organisedCaDirectoryView');
+            const artView = document.getElementById('organisedCaArticleView');
+            const pageTitle = document.getElementById('pageTitleText');
 
-            function executeGlobalTextHighlight(node, searchText) {
-                if (node.nodeType === 3) { 
-                    const nodeRawValue = node.nodeValue;
-                    const nodeLowerValue = nodeRawValue.toLowerCase();
-                    
-                    if (nodeLowerValue.includes(searchText)) {
-                        const safetyRegexPattern = searchText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-                        const globalRegexMatcher = new RegExp(`(${safetyRegexPattern})`, 'gi');
-                        
-                        const elementContainer = document.createElement('span');
-                        elementContainer.innerHTML = nodeRawValue.replace(globalRegexMatcher, '<span class="activated-word-target">$1</span>');
-                        
-                        const fragment = document.createDocumentFragment();
-                        while (elementContainer.firstChild) {
-                            fragment.appendChild(elementContainer.firstChild);
-                        }
-                        node.parentNode.insertBefore(fragment, node);
-                        node.parentNode.removeChild(node);
-                    }
-                } else if (node.nodeType === 1 && node.childNodes) {
-                    if (node.tagName === 'SCRIPT' || node.tagName === 'STYLE' || node.tagName === 'HEADER' || node.tagName === 'FOOTER' || node.classList.contains('capsule-toggle-btn')) return;
-                    
-                    for (let i = node.childNodes.length - 1; i >= 0; i--) {
-                        executeGlobalTextHighlight(node.childNodes[i], searchText);
-                    }
+            if (dirView) dirView.style.display = 'none';
+            if (artView) {
+                artView.classList.remove('is-active');
+                void artView.offsetWidth;
+                artView.classList.add('is-active');
+            }
+
+            if (pageTitle) {
+                if (organisedCaSelectedCategory && organisedCaSelectedCategory !== 'All') {
+                    pageTitle.textContent = organisedCaSelectedCategory;
+                } else if (topic.categories && topic.categories.length > 0) {
+                    pageTitle.textContent = topic.categories[0];
+                } else {
+                    pageTitle.textContent = 'Organised current affairs';
                 }
             }
 
-            const mainStudyDashboard = document.querySelector('main');
-            if (mainStudyDashboard) {
-                executeGlobalTextHighlight(mainStudyDashboard, cleanTargetQuery);
-
-                setTimeout(() => {
-                    const activeHighlightSpans = document.querySelectorAll('.activated-word-target');
-                    activeHighlightSpans.forEach(span => {
-                        const directTextContentNode = document.createTextNode(span.textContent);
-                        span.parentNode.replaceChild(directTextContentNode, span);
-                    });
-                    mainStudyDashboard.normalize();
-                }, 10000);
+            // Controls panel
+            const hasImage = !!(topic.image && topic.image.url);
+            const imgBtn = document.getElementById('orgImageActionBtn');
+            if (imgBtn) {
+                imgBtn.textContent = 'View';
+                imgBtn.style.opacity = hasImage ? '1' : '0.4';
+                imgBtn.style.pointerEvents = hasImage ? 'auto' : 'none';
             }
+            const imgInner = document.getElementById('orgImageDrawerInner');
+            if (imgInner) {
+                imgInner.innerHTML = hasImage ? 
+                    ('<img src="' + topic.image.url + '" alt="' + (topic.image.caption || 'Topic Graphic') + '" loading="lazy">' +
+                    (topic.image.caption ? '<div class="ca-image-caption">' + topic.image.caption + '</div>' : ''))
+                    : '<div style="font-size: 13px; color: var(--text-muted); padding: 8px 0;">No graphic or infographic attached for this topic.</div>';
+            }
+
+            const metaInner = document.getElementById('orgMetaDrawerInner');
+            if (metaInner) {
+                metaInner.innerHTML = 
+                    '<div class="ca-meta-row">' +
+                        '<span class="meta-pill">GS Paper : <strong>' + (topic.gsPaper || 'General Studies') + '</strong></span>' +
+                    '</div>' +
+                    '<div class="ca-meta-row">' +
+                        '<span class="meta-pill">Category : <strong>' + (topic.category || 'National') + '</strong></span>' +
+                    '</div>' +
+                    '<div class="ca-meta-row">' +
+                        '<span class="meta-pill">Comes under : <strong>' + (topic.comesUnder || 'Prelims & Mains') + '</strong></span>' +
+                    '</div>';
+            }
+
+            const readBtn = document.getElementById('orgReadActionBtn');
+            if (readBtn) readBtn.textContent = 'Short';
+
+            // Article content
+            const titleEl = document.getElementById('orgArticleTitle');
+            if (titleEl) titleEl.textContent = topic.topicTitle;
+
+            const shortContent = document.getElementById('orgShortContent');
+            if (shortContent) shortContent.innerHTML = renderOrganisedCaShortRevision(topic);
+
+            const detailedContent = document.getElementById('orgDetailedContent');
+            if (detailedContent) detailedContent.innerHTML = renderOrganisedCaArticleSections(topic);
+
+            const shortDrawer = document.getElementById('orgShortDrawer');
+            const detailedDrawer = document.getElementById('orgDetailedDrawer');
+            if (shortDrawer) shortDrawer.classList.remove('is-open');
+            if (detailedDrawer) detailedDrawer.classList.add('is-open');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        window.openOrganisedCaArticle = openOrganisedCaArticle;
+
+        function handleOrganisedBack() {
+            const artView = document.getElementById('organisedCaArticleView');
+            if (artView && artView.classList.contains('is-active')) {
+                renderDirectoryView();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                if (window.history.length > 1) {
+                    window.history.back();
+                } else {
+                    window.location.href = '/index.html';
+                }
+            }
+        }
+        window.handleOrganisedBack = handleOrganisedBack;
+
+        function toggleOrgImage() {
+            organisedCaImageDrawerOpen = !organisedCaImageDrawerOpen;
+            const imgBtn = document.getElementById('orgImageActionBtn');
+            if (imgBtn) imgBtn.textContent = organisedCaImageDrawerOpen ? 'Close' : 'View';
+            const drawer = document.getElementById('orgImageDrawer');
+            if (drawer) drawer.classList.toggle('is-open', organisedCaImageDrawerOpen);
+        }
+        window.toggleOrgImage = toggleOrgImage;
+
+        function toggleOrgReadMode() {
+            organisedCaViewMode = (organisedCaViewMode === 'full') ? 'short' : 'full';
+            const readBtn = document.getElementById('orgReadActionBtn');
+            if (readBtn) readBtn.textContent = (organisedCaViewMode === 'short') ? 'Full' : 'Short';
+            const shortDrawer = document.getElementById('orgShortDrawer');
+            const detailedDrawer = document.getElementById('orgDetailedDrawer');
+            if (organisedCaViewMode === 'short') {
+                if (shortDrawer) shortDrawer.classList.add('is-open');
+                if (detailedDrawer) detailedDrawer.classList.remove('is-open');
+            } else {
+                if (shortDrawer) shortDrawer.classList.remove('is-open');
+                if (detailedDrawer) detailedDrawer.classList.add('is-open');
+            }
+        }
+        window.toggleOrgReadMode = toggleOrgReadMode;
+
+        function toggleOrgMetaDropdown() {
+            organisedCaMetaDrawerOpen = !organisedCaMetaDrawerOpen;
+            const btn = document.getElementById('orgMetaDropdownBtn');
+            if (btn) btn.classList.toggle('is-rotated', organisedCaMetaDrawerOpen);
+            const drawer = document.getElementById('orgMetaDrawer');
+            if (drawer) drawer.classList.toggle('is-open', organisedCaMetaDrawerOpen);
+        }
+        window.toggleOrgMetaDropdown = toggleOrgMetaDropdown;
+
+        function renderOrganisedCaListBlock(list) {
+            if (!list || !list.length) return '';
+            return list.map(rawText => {
+                if (!rawText || typeof rawText !== 'string') return '';
+
+                let labelPart = '';
+                let restPart = rawText;
+
+                if (rawText.includes('</strong>')) {
+                    const parts = rawText.split('</strong>');
+                    labelPart = parts[0].replace(/<[^>]+>/g, '').trim();
+                    restPart = parts.slice(1).join('</strong>').trim();
+                    if (restPart.startsWith(':')) {
+                        labelPart += ' :';
+                        restPart = restPart.substring(1).trim();
+                    }
+                } else if (rawText.includes(':')) {
+                    const colonIdx = rawText.indexOf(':');
+                    labelPart = rawText.substring(0, colonIdx + 1).trim();
+                    restPart = rawText.substring(colonIdx + 1).trim();
+                }
+
+                const subItems = restPart ? restPart.split(';').map(s => s.trim().replace(/^,\s*/, '')).filter(Boolean) : [];
+                if (subItems.length === 0 && restPart) subItems.push(restPart);
+
+                if (labelPart) {
+                    return (
+                        '<div class="note-item-group">' +
+                            '<div class="point-subheading">' + labelPart + '</div>' +
+                            '<ul class="point-sublist">' +
+                                subItems.map(s => '<li class="point-bullet-item">' + s + '</li>').join('') +
+                            '</ul>' +
+                        '</div>'
+                    );
+                } else {
+                    return (
+                        '<div class="note-item-group">' +
+                            '<ul class="point-sublist">' +
+                                subItems.map(s => '<li class="point-bullet-item">' + s + '</li>').join('') +
+                            '</ul>' +
+                        '</div>'
+                    );
+                }
+            }).join('');
+        }
+
+        function renderOrganisedCaShortRevision(topic) {
+            if (!topic) return '';
+            const why = (topic.shortArticle && topic.shortArticle.whyInNews) || topic.whyInNews;
+            const concept = (topic.shortArticle && topic.shortArticle.whatConcept) || topic.whatConcept;
+            return (
+                '<section class="note-section">' +
+                    '<h3 class="section-heading">Quick Revision</h3>' +
+                    (why ? '<p class="note-p">' + why + '</p>' : '') +
+                    (concept ? '<p class="note-p" style="margin-top: 10px;">' + concept + '</p>' : '') +
+                '</section>'
+            );
+        }
+
+        function renderOrganisedCaArticleSections(data) {
+            if (!data) return '';
+
+            let orgRowsHtml = '';
+            if (data.whoOrg && data.whoOrg.length > 0) {
+                orgRowsHtml = data.whoOrg.map(row => (
+                    '<div class="info-callout-row"><strong>' + row.label + ' :</strong> ' + row.val + '</div>'
+                )).join('');
+            }
+
+            return (
+                (data.whyInNews ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">Why in News?</h3>' +
+                        '<p class="note-p">' + data.whyInNews + '</p>' +
+                    '</section>' : '') +
+
+                (data.whatConcept ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">What / Concept</h3>' +
+                        '<p class="note-p">' + data.whatConcept + '</p>' +
+                    '</section>' : '') +
+
+                (orgRowsHtml ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">Who / Organisation</h3>' +
+                        '<div class="info-callout">' + orgRowsHtml + '</div>' +
+                    '</section>' : '') +
+
+                (data.importantFacts && data.importantFacts.length > 0 ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">Important Facts ⭐</h3>' +
+                        '<div class="note-items-wrapper">' + renderOrganisedCaListBlock(data.importantFacts) + '</div>' +
+                    '</section>' : '') +
+
+                (data.background && data.background.length > 0 ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">Background / Static Linkage</h3>' +
+                        '<div class="note-items-wrapper">' + renderOrganisedCaListBlock(data.background) + '</div>' +
+                    '</section>' : '') +
+
+                (data.significance && data.significance.length > 0 ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">Significance</h3>' +
+                        '<div class="note-items-wrapper">' + renderOrganisedCaListBlock(data.significance) + '</div>' +
+                    '</section>' : '') +
+
+                (data.challenges && data.challenges.length > 0 ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">Challenges / Concerns</h3>' +
+                        '<div class="note-items-wrapper">' + renderOrganisedCaListBlock(data.challenges) + '</div>' +
+                    '</section>' : '') +
+
+                (data.wayForward && data.wayForward.length > 0 ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">Way Forward</h3>' +
+                        '<div class="note-items-wrapper">' + renderOrganisedCaListBlock(data.wayForward) + '</div>' +
+                    '</section>' : '')
+            );
+        }
+
+        // Initialize on DOM load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderDirectoryView();
         });
     </script>
     <script src="/script.js"></script>
