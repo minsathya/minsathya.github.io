@@ -155,11 +155,11 @@
         /* TOP NAVIGATION: 's' BRANDMARK & ROUND TWINKLING STAR */
         .top-nav-bar {
             width: 100%;
-            max-width: 780px;
+            max-width: 1000px;
             margin: 0 auto 28px auto;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             position: relative;
             z-index: 10;
             animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -438,7 +438,7 @@
         main {
             flex-grow: 1;
             width: 100%;
-            max-width: 780px;
+            max-width: 1000px;
             margin: 0 auto 60px auto;
             display: flex;
             flex-direction: column;
@@ -1173,7 +1173,7 @@
         }
 
         
-        /* LAPTOP FLOATING SIDE NAVIGATION ARROWS - PERMANENTLY FIXED OUTSIDE CONTENT */
+        /* LAPTOP FLOATING SIDE NAVIGATION ARROWS - FIXED ON EMPTY SPACE OF BOTH SIDES */
         .side-nav-btn {
             display: none;
             position: fixed !important;
@@ -1212,16 +1212,17 @@
             stroke-linejoin: round;
         }
 
-        @media (min-width: 921px) {
+        /* Only show when screen is wider than 1160px so buttons sit purely in empty space outside 1000px content */
+        @media (min-width: 1160px) {
             .side-nav-btn { display: flex !important; }
-            .side-nav-prev { left: max(20px, calc(50vw - 390px - 68px)) !important; }
-            .side-nav-next { right: max(20px, calc(50vw - 390px - 68px)) !important; }
+            .side-nav-prev { left: max(16px, calc(50vw - 500px - 68px)) !important; }
+            .side-nav-next { right: max(16px, calc(50vw - 500px - 68px)) !important; }
         }
-        @media (max-width: 920px) {
+        @media (max-width: 1159px) {
             .side-nav-btn { display: none !important; }
         }
 
-        /* Hover & active: subtle scale, absolutely NO green color change */
+        /* Hover & active: subtle scale, absolutely NO green color changing */
         .side-nav-btn:hover:not(.is-disabled) {
             border-color: var(--panel-border-hover);
             transform: translateY(-50%) scale(1.08) translateZ(0) !important;

@@ -154,11 +154,11 @@
         /* TOP NAVIGATION */
         .top-nav-bar {
             width: 100%;
-            max-width: 780px;
+            max-width: 1000px;
             margin: 0 auto 28px auto;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             position: relative;
             z-index: 10;
         }
@@ -167,38 +167,71 @@
             position: relative;
             display: inline-flex;
             align-items: baseline;
-            justify-content: flex-start;
+            justify-content: center;
+            height: auto;
+            padding: 0 4px;
             background-color: transparent !important;
             border: none !important;
             text-decoration: none !important;
+            font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif !important;
             font-size: 42px;
             font-weight: 700;
             letter-spacing: -1.2px;
             line-height: 1;
+            box-shadow: none !important;
             touch-action: manipulation;
             cursor: pointer;
             user-select: none;
             -webkit-user-select: none;
-            transition: transform 0.3s var(--ease-smooth);
+            transform: translateZ(0);
+            transition: transform 0.45s var(--ease-smooth);
         }
+
         .brand-pill:hover,
         .brand-pill:active {
-            transform: translate3d(0, -2px, 0);
+            transform: translate3d(0, -3px, 0) scale3d(1.02, 1.02, 1);
         }
+
         .brand-letter {
             color: var(--text-main);
+            font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif !important;
             line-height: 1;
+            transition: color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
+
+        /* Round Twinkling Star (Scales small to large in #ff9e79 with soft glow) */
         .brand-star {
             display: inline-block;
             width: 8px;
             height: 8px;
             border-radius: 50%;
             background-color: #ff9e79;
-            box-shadow: 0 0 6px rgba(255, 158, 121, 0.75);
+            box-shadow: 0 0 6px rgba(255, 158, 121, 0.75), 0 0 12px rgba(255, 158, 121, 0.4);
             margin-left: 2px;
+            margin-bottom: 0;
             vertical-align: -1px;
             flex-shrink: 0;
+            line-height: 1;
+            transform-origin: center center;
+            animation: roundStarPulse 3s infinite ease-in-out alternate;
+        }
+
+        @keyframes roundStarPulse {
+            0% {
+                transform: scale(0.4) translateZ(0);
+                opacity: 0.5;
+                box-shadow: 0 0 3px rgba(255, 158, 121, 0.4);
+            }
+            50% {
+                transform: scale(1.0) translateZ(0);
+                opacity: 1;
+                box-shadow: 0 0 8px rgba(255, 158, 121, 0.85), 0 0 14px rgba(255, 158, 121, 0.45);
+            }
+            100% {
+                transform: scale(0.4) translateZ(0);
+                opacity: 0.5;
+                box-shadow: 0 0 3px rgba(255, 158, 121, 0.4);
+            }
         }
 
         /* STANDARDIZED HEADER ROW WITH BACK BUTTON */
@@ -207,7 +240,7 @@
             align-items: center;
             gap: 14px;
             width: 100%;
-            max-width: 780px;
+            max-width: 1000px;
             margin: 0 auto 24px auto;
             position: relative;
             z-index: 5;
@@ -257,7 +290,7 @@
         /* CONTENT CONTAINER - UNIFIED 1000PX WIDTH */
         .content-wrapper {
             width: 100%;
-            max-width: 780px;
+            max-width: 1000px;
             margin: 0 auto 60px auto;
             display: flex;
             flex-direction: column;
@@ -545,7 +578,7 @@
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 26px;
-            padding: 14px 18px;
+            padding: 16px 20px;
             display: flex;
             align-items: center;
             gap: 16px;
@@ -555,24 +588,18 @@
             width: 100%;
             min-height: 104px;
             will-change: transform;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
             user-select: none;
             -webkit-user-select: none;
-            transition: transform 0.22s var(--ease-smooth), border-color 0.2s ease, box-shadow 0.22s ease;
+            touch-action: manipulation;
+            transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.2s ease, box-shadow 0.22s ease;
             animation: cardsSlideUpEntrance 0.45s var(--ease-premium) both;
         }
         .organised-ca-card:hover {
             border-color: var(--panel-border-hover);
-            transform: translate3d(0, -3px, 0);
-            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.16);
         }
-
-        /* Tapping animation: goes down and comes up little like in app */
-        .organised-ca-card:active,
-        .organised-ca-card.is-card-pressed {
-            transform: translate3d(0, 3px, 0) scale3d(0.975, 0.975, 1) !important;
-            transition: transform 0.14s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        /* Gentle smooth touch panel feedback matching mobile app - never gets stuck */
+        .organised-ca-card:active {
+            transform: scale(0.985) !important;
         }
 
         /* Left thumbnail / placeholder */
@@ -1180,14 +1207,14 @@
         /* ---------------------------------------------------- */
         footer {
             width: 100%;
-            max-width: 780px;
+            max-width: 1000px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 16px;
             margin-top: 60px;
-            padding-top: 24px;
-            border-top: 1px solid var(--row-divider);
+            padding-top: 12px;
+            border-top: none !important;
         }
         .footer-links-row {
             display: flex;
@@ -1233,10 +1260,11 @@
 
         <!-- Top Navigation -->
         <nav class="top-nav-bar" id="topNavBar">
-            <a href="/index.html" class="brand-pill" id="brandPill" aria-label="sathya.">
-                <span class="brand-letter">sathya</span><span class="brand-star"></span>
-            </a>
-        </nav>
+        <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="sathya.">
+            <span class="brand-letter">sathya</span>
+            <span class="brand-star" aria-hidden="true"></span>
+        </a>
+    </nav>
 
         <!-- Standardized Page Header Row -->
         <div class="page-header-row" id="pageHeaderRow">
@@ -1406,6 +1434,70 @@
             return 0;
         }
 
+        // 1. INTELLIGENT CATEGORY SPLITTER & DATA EXTRACTION
+        function splitTopicCategories(rawCategory) {
+            if (!rawCategory || typeof rawCategory !== 'string') return [];
+            
+            let s = rawCategory.trim();
+            
+            const protectedTerms = [
+                { regex: /energy\s*(?:&|\/|and)\s*mineral\s*resources/gi, replacement: '__ENERGY_MINERAL__' },
+                { regex: /art\s*(?:&|and)\s*culture/gi, replacement: '__ART_CULTURE__' },
+                { regex: /science\s*(?:&|and)\s*technology/gi, replacement: '__SCI_TECH__' },
+                { regex: /international\s*relations/gi, replacement: '__INTL_REL__' },
+                { regex: /indian\s*society/gi, replacement: '__IND_SOC__' },
+                { regex: /social\s*justice/gi, replacement: '__SOC_JUST__' },
+                { regex: /internal\s*security/gi, replacement: '__INT_SEC__' },
+                { regex: /disaster\s*management/gi, replacement: '__DIS_MGMT__' },
+                { regex: /polity\s*(?:&|and)\s*governance/gi, replacement: '__POLITY_GOV__' }
+            ];
+            
+            s = s.replace(/geography\s*(?:&|\/|and)\s*energy\s*\/\s*mineral\s*resources/gi, 'Geography / Energy and mineral resources');
+            s = s.replace(/economy\s*\/\s*energy\s*&?\s*infrastructure/gi, 'Economy / Energy and mineral resources');
+            
+            protectedTerms.forEach(p => {
+                s = s.replace(p.regex, p.replacement);
+            });
+            
+            const rawTokens = s.split(/[\/;,&]|(?:\s+and\s+)/i);
+            const result = [];
+            
+            rawTokens.forEach(token => {
+                let clean = token.trim();
+                if (!clean) return;
+                
+                clean = clean
+                    .replace(/__ENERGY_MINERAL__/g, 'Energy and mineral resources')
+                    .replace(/__ART_CULTURE__/g, 'Culture')
+                    .replace(/__SCI_TECH__/g, 'Science and technology')
+                    .replace(/__INTL_REL__/g, 'International relations')
+                    .replace(/__IND_SOC__/g, 'Indian society')
+                    .replace(/__SOC_JUST__/g, 'Social justice')
+                    .replace(/__INT_SEC__/g, 'Internal security')
+                    .replace(/__DIS_MGMT__/g, 'Disaster management')
+                    .replace(/__POLITY_GOV__/g, 'Polity');
+                
+                const low = clean.toLowerCase();
+                if (low === 'geography') clean = 'Geography';
+                else if (low === 'economy') clean = 'Economy';
+                else if (low === 'energy and mineral resources' || low === 'mineral resources' || low === 'energy') clean = 'Energy and mineral resources';
+                else if (low === 'sports') clean = 'Sports';
+                else if (low === 'culture' || low === 'art & culture' || low === 'art and culture') clean = 'Culture';
+                else if (low === 'polity') clean = 'Polity';
+                else if (low === 'history') clean = 'History';
+                else if (low === 'indian society') clean = 'Indian society';
+                else {
+                    clean = clean.charAt(0).toUpperCase() + clean.slice(1);
+                }
+                
+                if (clean && !result.includes(clean)) {
+                    result.push(clean);
+                }
+            });
+            
+            return result;
+        }
+
         // Fetch All Topics Across all dates
         function getAllOrganisedCaTopics() {
             const raw = window.RAW_STUDY_DATA && window.RAW_STUDY_DATA.dailyCurrentAffairsData;
@@ -1421,8 +1513,10 @@
                     const timestamp = parseDateKeyTimestamp(dateKey);
 
                     dayObj.topics.forEach((topic, idx) => {
+                        const categories = splitTopicCategories(topic.category);
                         allTopics.push({
                             ...topic,
+                            categories: categories.length > 0 ? categories : [(topic.category || 'General')],
                             dateKey: dateKey,
                             dateStr: dateStr,
                             timestamp: timestamp,
@@ -1446,16 +1540,17 @@
                 }
             });
 
+            // Specific order requested: geography, sports, culture, etc., with long words like energy and mineral resources on last
             const preferredOrder = [
                 'All',
                 'Geography',
-                'Economy',
-                'Energy and mineral resources',
                 'Sports',
                 'Culture',
+                'Economy',
                 'Polity',
                 'Indian society',
-                'History'
+                'History',
+                'Energy and mineral resources'
             ];
 
             const orderedCategories = [];
@@ -1466,7 +1561,9 @@
                 }
             });
 
-            Array.from(discoveredSet).sort().forEach(cat => {
+            // Append any remaining categories: shorter first, long words on last
+            const remaining = Array.from(discoveredSet).sort((a, b) => a.length - b.length || a.localeCompare(b));
+            remaining.forEach(cat => {
                 orderedCategories.push(cat);
             });
 
@@ -1608,7 +1705,7 @@
             });
 
             // Attach touch / pointer feedback for bouncy press animation across all devices
-            initCardPressFeedback();
+            // pure CSS active touch feedback
 
             // Smooth slide-up transition animation on list change
             if (playSlideUp) {
@@ -1618,20 +1715,6 @@
                     container.classList.add('article-slide-up-run');
                 });
             }
-        }
-
-        // Card Touch / Pointer Feedback: Goes down and comes up little like mobile app
-        function initCardPressFeedback() {
-            const cards = document.querySelectorAll('.organised-ca-card');
-            cards.forEach(card => {
-                card.addEventListener('pointerdown', () => {
-                    card.classList.add('is-card-pressed');
-                });
-                const clearPressed = () => card.classList.remove('is-card-pressed');
-                card.addEventListener('pointerup', clearPressed);
-                card.addEventListener('pointercancel', clearPressed);
-                card.addEventListener('mouseleave', clearPressed);
-            });
         }
 
         // Toggle Sort Order
@@ -1860,13 +1943,17 @@
             }
 
             if (pageTitle) {
+                let catTitle = '';
                 if (organisedCaSelectedCategory && organisedCaSelectedCategory !== 'All') {
-                    pageTitle.textContent = organisedCaSelectedCategory;
+                    catTitle = organisedCaSelectedCategory;
                 } else if (topic.categories && topic.categories.length > 0) {
-                    pageTitle.textContent = topic.categories[0];
+                    catTitle = topic.categories[0];
+                } else if (topic.category) {
+                    catTitle = topic.category;
                 } else {
-                    pageTitle.textContent = 'Organised current affairs';
+                    catTitle = 'Current affairs';
                 }
+                pageTitle.textContent = catTitle;
             }
 
             // Populate Title
@@ -1983,6 +2070,7 @@
         // ----------------------------------------------------
         // ARTICLE DATA TEMPLATING (LEFT-ALIGNED, NO GREEN DOTS)
         // ----------------------------------------------------
+        // 7. ARTICLE DATA RENDERERS (EXACT DCA PARITY)
         function renderCaListBlock(list) {
             if (!list || !list.length) return '';
             return list.map(rawText => {
@@ -1990,15 +2078,25 @@
 
                 let labelPart = '';
                 let restPart = rawText;
-                const colonIdx = rawText.indexOf(':');
 
-                if (colonIdx > 0 && colonIdx < 45) {
-                    labelPart = rawText.substring(0, colonIdx).trim();
+                if (rawText.includes('</strong>')) {
+                    const parts = rawText.split('</strong>');
+                    labelPart = parts[0].replace(/<[^>]+>/g, '').trim();
+                    restPart = parts.slice(1).join('</strong>').trim();
+                    if (restPart.startsWith(':')) {
+                        labelPart += ' :';
+                        restPart = restPart.substring(1).trim();
+                    }
+                } else if (rawText.includes(':')) {
+                    const colonIdx = rawText.indexOf(':');
+                    labelPart = rawText.substring(0, colonIdx + 1).trim();
                     restPart = rawText.substring(colonIdx + 1).trim();
                 }
 
-                const subItems = restPart ? restPart.split(';').map(s => s.trim().replace(/^,\s*/, '')).filter(Boolean) : [];
-                if (subItems.length === 0 && restPart) subItems.push(restPart);
+                const subItems = restPart ? restPart.split(';').map(s => s.trim().replace(/^,s*/, '')).filter(Boolean) : [];
+                if (subItems.length === 0 && restPart) {
+                    subItems.push(restPart);
+                }
 
                 if (labelPart) {
                     return (
@@ -2024,33 +2122,22 @@
         function renderCaShortRevision(topic) {
             if (!topic) return '';
             const why = (topic.shortArticle && topic.shortArticle.whyInNews) || topic.whyInNews;
-            const points = (topic.shortArticle && topic.shortArticle.points) || topic.shortArticle || [];
-
-            let html = '';
-            if (why) {
-                html += '<section class="note-section">' +
-                    '<h3 class="section-heading">Why in News?</h3>' +
-                    '<p class="note-p">' + why + '</p>' +
-                '</section>';
-            }
-            if (Array.isArray(points) && points.length > 0) {
-                html += '<section class="note-section">' +
-                    '<h3 class="section-heading">Key Points</h3>' +
-                    '<ul class="point-sublist">' +
-                        points.map(p => '<li class="point-bullet-item">' + p + '</li>').join('') +
-                    '</ul>' +
-                '</section>';
-            }
-            return html;
+            const concept = (topic.shortArticle && topic.shortArticle.whatConcept) || topic.whatConcept;
+            return (
+                '<section class="note-section">' +
+                    '<h3 class="section-heading">Quick Revision</h3>' +
+                    (why ? '<p class="note-p">' + why + '</p>' : '') +
+                    (concept ? '<p class="note-p" style="margin-top: 10px;">' + concept + '</p>' : '') +
+                '</section>'
+            );
         }
 
-        function renderCaArticleSections(topic) {
-            if (!topic) return '';
-            const data = (topic.detailedAnalysis && typeof topic.detailedAnalysis === 'object') ? topic.detailedAnalysis : topic;
+        function renderCaArticleSections(data) {
+            if (!data) return '';
 
             let orgRowsHtml = '';
-            if (data.whoOrOrganisation && Array.isArray(data.whoOrOrganisation)) {
-                orgRowsHtml = data.whoOrOrganisation.map(row => (
+            if (data.whoOrg && data.whoOrg.length > 0) {
+                orgRowsHtml = data.whoOrg.map(row => (
                     '<div class="info-callout-row"><strong>' + row.label + ' :</strong> ' + row.val + '</div>'
                 )).join('');
             }
@@ -2062,10 +2149,10 @@
                         '<p class="note-p">' + data.whyInNews + '</p>' +
                     '</section>' : '') +
 
-                (data.whatOrConcept ? 
+                (data.whatConcept ? 
                     '<section class="note-section">' +
                         '<h3 class="section-heading">What / Concept</h3>' +
-                        '<p class="note-p">' + data.whatOrConcept + '</p>' +
+                        '<p class="note-p">' + data.whatConcept + '</p>' +
                     '</section>' : '') +
 
                 (orgRowsHtml ? 
@@ -2076,19 +2163,25 @@
 
                 (data.importantFacts && data.importantFacts.length > 0 ? 
                     '<section class="note-section">' +
-                        '<h3 class="section-heading">Important Facts ?</h3>' +
+                        '<h3 class="section-heading">Important Facts ⭐</h3>' +
                         '<div class="note-items-wrapper">' + renderCaListBlock(data.importantFacts) + '</div>' +
                     '</section>' : '') +
 
                 (data.background && data.background.length > 0 ? 
                     '<section class="note-section">' +
-                        '<h3 class="section-heading">Background</h3>' +
+                        '<h3 class="section-heading">Background / Static Linkage</h3>' +
                         '<div class="note-items-wrapper">' + renderCaListBlock(data.background) + '</div>' +
+                    '</section>' : '') +
+
+                (data.significance && data.significance.length > 0 ? 
+                    '<section class="note-section">' +
+                        '<h3 class="section-heading">Significance</h3>' +
+                        '<div class="note-items-wrapper">' + renderCaListBlock(data.significance) + '</div>' +
                     '</section>' : '') +
 
                 (data.challenges && data.challenges.length > 0 ? 
                     '<section class="note-section">' +
-                        '<h3 class="section-heading">Challenges</h3>' +
+                        '<h3 class="section-heading">Challenges / Concerns</h3>' +
                         '<div class="note-items-wrapper">' + renderCaListBlock(data.challenges) + '</div>' +
                     '</section>' : '') +
 
@@ -2100,7 +2193,6 @@
             );
         }
 
-        // Initialize on DOM Ready
         document.addEventListener('DOMContentLoaded', () => {
             initPickerColumns();
             setupDrumScrollHighlight(orgDayCol, v => orgTempDay = v);
