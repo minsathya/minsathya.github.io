@@ -762,6 +762,7 @@
         /* 2. CONTROLS PANEL (MATCHING APP) */
         .ca-controls-panel {
             width: 100%;
+            max-width: 1000px;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 24px;
@@ -769,7 +770,7 @@
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
-            margin-top: 0 !important; margin-bottom: 24px !important;
+            margin: 0 auto 24px auto !important;
             transition: background-color 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
         }
 
@@ -785,6 +786,7 @@
             display: flex;
             align-items: center;
             gap: 16px;
+            flex-wrap: wrap;
         }
 
         .ca-action-label-wrap {
@@ -810,6 +812,11 @@
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
+            min-width: 58px;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             box-shadow: none !important;
             transition: transform 0.18s var(--ease-smooth), opacity 0.18s var(--ease-smooth);
         }
@@ -1000,11 +1007,11 @@
 
         .article-title {
             font-size: 24px;
-            font-weight: 700;
+            font-weight: 600;
             letter-spacing: -0.35px;
             color: var(--text-main);
             line-height: 1.34;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
             text-align: left;
         }
 
@@ -1915,7 +1922,40 @@
         }
     
         /* STANDARDIZED PAGE HEADER WITH BACK BUTTON */
-        .page-header-row,
+        .page-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto 20px auto;
+            position: relative;
+            z-index: 5;
+            animation: masterEntrance 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.02s both;
+        }
+
+        .header-left-cluster {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .header-date-cluster {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .header-date-cluster .date-text-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            text-align: right;
+            align-items: flex-end;
+        }
+
         .subjects-header-row {
             display: flex;
             align-items: center;
@@ -2051,6 +2091,7 @@
             }
         }
 
+            @media (min-width: 769px) { .brand-pill { font-size: 36px; } }
     </style>
 </head>
 <body>
@@ -2066,19 +2107,24 @@
     </nav>
 
     <main>
+        <!-- Page Header Row: Title on Left, Calendar on Right End -->
         <div class="page-header-row">
-            <button type="button" class="back-icon-btn" onclick="if(window.history.length>1){window.history.back();}else{window.location.href='/index.html';}" aria-label="Go back">
-                <svg viewBox="0 0 24 24">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
-            </button>
-            <h1 class="page-title">Daily Current Affairs</h1>
-        </div>
+            <div class="header-left-cluster">
+                <button type="button" class="back-icon-btn" onclick="if(window.history.length>1){window.history.back();}else{window.location.href='/index.html';}" aria-label="Go back">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </button>
+                <h1 class="page-title">Daily Current Affairs</h1>
+            </div>
 
-        <!-- DATE & TOPICS COMBINED CAPSULE -->
-        <div class="date-topics-capsule">
-            <div class="capsule-date-cluster">
+            <!-- Calendar & Date on the Right Side End of the Title -->
+            <div class="header-date-cluster">
+                <div class="date-text-stack">
+                    <span class="date-label-tiny">Selected Date</span>
+                    <span class="date-value-main" id="activeDateDisplay">05 October 2026</span>
+                </div>
                 <button class="cal-trigger-btn" id="openCalendarBtn" aria-label="Open Date Picker">
                     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="6" y="14" width="52" height="44" rx="14" fill="#E8EDF2"/>
@@ -2092,23 +2138,16 @@
                         <rect x="28" y="44" width="8" height="8" rx="3" fill="#90C4F9"/>
                     </svg>
                 </button>
-                <div class="date-text-stack">
-                    <span class="date-label-tiny">Selected Date</span>
-                    <span class="date-value-main" id="activeDateDisplay">05 October 2026</span>
-                </div>
             </div>
-
-            <div class="capsule-divider"></div>
-
-            <div class="capsule-topics-cluster" id="topicsPillContainer"></div>
         </div>
 
-        <!-- 2. CONTROLS PANEL (MATCHING APP) -->
+        <!-- SINGLE CONTROLS PANEL (Image, Read, and Topics Cluster) -->
         <div class="ca-controls-panel" id="caControlsPanel">
             <div class="ca-controls-main-bar">
                 <div class="ca-action-buttons-group">
                     <span class="ca-action-label-wrap">Image : <button type="button" class="ca-direct-action-btn image-action-btn" id="caImageActionBtn" onclick="toggleActiveImage()">View</button></span>
                     <span class="ca-action-label-wrap">Read : <button type="button" class="ca-direct-action-btn read-action-btn" id="caReadActionBtn" onclick="toggleActiveReadMode()">Short</button></span>
+                    <div class="capsule-topics-cluster" id="topicsPillContainer"></div>
                 </div>
                 <button type="button" class="ca-dropdown-toggle-btn" id="caMetaDropdownBtn" onclick="toggleActiveMetaDropdown()" aria-label="Expand topic tags">
                     <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -2495,7 +2534,7 @@
                     '<div class="ca-meta-row">' +
                         '<span class="meta-pill">GS Paper : <strong>' + (topic.gsPaper || 'General Studies') + '</strong></span>' +
                         '<span class="meta-pill">Category : <strong>' + (topic.category || 'National') + '</strong></span>' +
-                        '<span class="meta-pill">Date : <strong>' + activeDateKey + '</strong></span>' +
+                        '<span class="meta-pill">Date : <strong>' + (String(selectedDay).padStart(2, '0') + '-' + String(selectedMonth).padStart(2, '0') + '-' + selectedYear) + '</strong></span>' +
                     '</div>';
             }
 
