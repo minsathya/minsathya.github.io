@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Organised Current Affairs - sathya.</title>
 
     <!-- Instant Theme Evaluation to Prevent Theme Flash on Reload -->
@@ -20,7 +20,8 @@
 
     <meta name="description" content="Organised Current Affairs for UPSC Civil Services Examination.">
     <meta name="keywords" content="UPSC current affairs, Organised current affairs, Prelims, Mains, Civil Services.">
-    
+
+    <!-- Google Tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -28,12 +29,12 @@
       gtag('js', new Date());
       gtag('config', 'G-5VGX2K64Y4');
     </script>
-    
+
+    <!-- Favicon Engine -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
     <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=3">
     <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png?v=3">
     <link id="favicon" rel="icon" type="image/png" href="/favicon-light.png?v=3">
-
     <script>
       const favicon = document.getElementById('favicon');
       const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
@@ -43,13 +44,14 @@
       updateFavicon(darkMode);
       darkMode.addEventListener('change', updateFavicon);
     </script>
-    
+
+    <!-- Google Fonts: Google Sans Flex -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Study Data Engine -->
-    <script src="/study-data.js"></script>
+    <!-- Pre-load Current Affairs Knowledge Base -->
+    <script src="/study/study-data.js"></script>
 
     <style>
         :root {
@@ -60,37 +62,47 @@
             --text-muted: #88888e;
             --panel-bg: #121212;
             --panel-border: #222222;
-            --panel-border-hover: rgba(255, 255, 255, 0.11);
+            --panel-border-hover: rgba(255, 255, 255, 0.14);
+            --item-card-bg: rgba(255, 255, 255, 0.03);
+            --item-card-hover: rgba(255, 255, 255, 0.05);
             --row-divider: #1c1c1c;
+
+            /* Standard Brand Green */
+            --theme-green: #244b40;
+            --theme-green-hover: #2e5c50;
             --btn-blue: #244b40;
             --btn-blue-hover: #2e5c50;
-            --theme-green: #244b40;
+            --pill-selected-bg: #244b40;
+
             --pill-bg: rgba(255, 255, 255, 0.06);
             --pill-border: rgba(255, 255, 255, 0.08);
-            --floating-bg: #161616;
-            --floating-border: #2a2a2a;
-            --pill-selected-bg: #1c3830;
-            --item-card-bg: #181818;
+            --accent-tag-bg: #1c2720;
+            --accent-tag-text: #6ec981;
         }
 
         html.light-mode,
         body.light-mode {
             --bg-color: #f5f5f7;
             --text-main: #111111;
-            --text-muted: #88888e;
+            --text-muted: #77777e;
             --panel-bg: #ffffff;
             --panel-border: #e2e2e7;
-            --panel-border-hover: rgba(0, 0, 0, 0.10);
+            --panel-border-hover: rgba(0, 0, 0, 0.12);
+            --item-card-bg: rgba(0, 0, 0, 0.025);
+            --item-card-hover: rgba(0, 0, 0, 0.045);
             --row-divider: #f2f2f7;
+
+            /* Light mode Brand Green */
+            --theme-green: #296556;
+            --theme-green-hover: #1e4d42;
             --btn-blue: #296556;
             --btn-blue-hover: #1e4d42;
-            --theme-green: #296556;
+            --pill-selected-bg: #296556;
+
             --pill-bg: rgba(0, 0, 0, 0.05);
             --pill-border: rgba(0, 0, 0, 0.08);
-            --floating-bg: #ffffff;
-            --floating-border: #e5e5ea;
-            --pill-selected-bg: #296556;
-            --item-card-bg: #f2f2f7;
+            --accent-tag-bg: #e2ede5;
+            --accent-tag-text: #1d6e35;
         }
 
         * {
@@ -98,6 +110,8 @@
             margin: 0;
             padding: 0;
             -webkit-tap-highlight-color: transparent !important;
+            tap-highlight-color: transparent !important;
+            outline: none;
         }
 
         html {
@@ -118,7 +132,6 @@
             min-height: 100dvh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             align-items: center;
             padding: 40px 24px 36px 24px;
             max-width: 1240px;
@@ -134,135 +147,243 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100%;
+            min-height: calc(100vh - 76px);
+            position: relative;
         }
 
-        /* Top Brand Header */
+        /* TOP NAVIGATION */
         .top-nav-bar {
             width: 100%;
+            max-width: 1000px;
             display: flex;
             align-items: center;
             justify-content: flex-start;
             margin-bottom: 28px;
             position: relative;
+            z-index: 10;
         }
 
         .brand-pill {
+            position: relative;
             display: inline-flex;
-            align-items: center;
-            gap: 2px;
-            font-size: 19px;
-            font-weight: 500;
-            color: var(--text-main);
+            align-items: baseline;
+            justify-content: flex-start;
+            background-color: transparent !important;
+            border: none !important;
             text-decoration: none !important;
-            letter-spacing: -0.4px;
-            transition: transform 0.35s var(--ease-smooth);
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -1.2px;
+            line-height: 1;
+            touch-action: manipulation;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: transform 0.3s var(--ease-smooth);
         }
-        .brand-pill:hover {
+        .brand-pill:hover,
+        .brand-pill:active {
             transform: translate3d(0, -2px, 0);
         }
-        .brand-letter { font-weight: 500; }
+        .brand-letter {
+            color: var(--text-main);
+            line-height: 1;
+        }
         .brand-star {
-            width: 5px;
-            height: 5px;
+            display: inline-block;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background-color: #ff9e79;
+            box-shadow: 0 0 6px rgba(255, 158, 121, 0.75);
             margin-left: 2px;
-            animation: brandStarTwinkle 2.8s infinite ease-in-out;
-        }
-        @keyframes brandStarTwinkle {
-            0%, 100% { opacity: 0.4; transform: scale(0.6); }
-            50% { opacity: 1; transform: scale(1.1); box-shadow: 0 0 6px #ff9e79; }
+            vertical-align: -1px;
+            flex-shrink: 0;
         }
 
-        main {
-            width: 100%;
-            max-width: 1000px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            margin-bottom: 60px;
-        }
-
-        /* Standard Page Header */
+        /* HEADER ROW (STANDARDIZED WITH BACK BUTTON) */
         .page-header-row {
             display: flex;
             align-items: center;
             gap: 14px;
             width: 100%;
-            margin-bottom: 24px;
-            animation: pageSlideUpEntrance 0.5s var(--ease-premium) both;
+            max-width: 1000px;
+            margin: 0 auto 24px auto;
+            position: relative;
+            z-index: 5;
         }
 
         .back-icon-btn {
-            background: transparent;
+            background: none;
             border: none;
             outline: none;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
+            cursor: pointer;
+            padding: 6px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
+            border-radius: 50%;
             color: var(--text-main);
-            padding: 0;
-            flex-shrink: 0;
-            transition: background-color 0.2s var(--ease-smooth), transform 0.2s var(--ease-smooth);
+            transition: transform 0.2s var(--ease-smooth), opacity 0.2s ease;
+            user-select: none;
+            -webkit-user-select: none;
         }
         .back-icon-btn:hover {
-            background-color: rgba(255, 255, 255, 0.08);
-            transform: translate3d(-2px, 0, 0);
+            transform: translate3d(-3px, 0, 0);
+            opacity: 0.85;
         }
-        body.light-mode .back-icon-btn:hover {
-            background-color: rgba(0, 0, 0, 0.05);
+        .back-icon-btn:active {
+            transform: translate3d(-5px, 0, 0) scale(0.94);
         }
         .back-icon-btn svg {
             width: 22px;
             height: 22px;
             stroke: currentColor;
-            stroke-width: 2.3;
+            stroke-width: 2.2;
             fill: none;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
 
         .page-title {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 600;
             letter-spacing: -0.5px;
             color: var(--text-main);
+            margin: 0;
+            line-height: 1.2;
         }
 
-        /* Category Header Row (Schedule style) */
-        .category-header-row {
+        /* CONTENT WRAPPER - EXACT MAX-WIDTH 1000PX */
+        .content-wrapper {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        /* ---------------------------------------------------- */
+        /* CATEGORY & CONTROLS ROW                             */
+        /* ---------------------------------------------------- */
+        .category-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            margin-bottom: 24px;
+            max-width: 680px;
+            margin: 0 auto 20px auto;
+            padding: 0 4px;
             position: relative;
-            z-index: 100;
+            z-index: 110;
         }
 
-        .category-heading {
-            font-size: 20px;
+        .category-title-text {
+            font-size: 16px;
             font-weight: 600;
             color: var(--text-main);
-            letter-spacing: -0.3px;
+            letter-spacing: -0.2px;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
+        .category-controls-cluster {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 110;
+        }
+
+        /* Sort Button */
+        .sort-action-btn {
+            background: var(--pill-bg);
+            border: 1px solid var(--pill-border);
+            color: var(--text-main);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: transform 0.2s var(--ease-smooth), background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .sort-action-btn:hover {
+            background-color: var(--item-card-hover);
+        }
+        .sort-action-btn:active {
+            transform: scale(0.92);
+        }
+        .sort-action-btn svg {
+            width: 17px;
+            height: 17px;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.28s var(--ease-smooth);
+        }
+        .sort-action-btn.is-asc svg {
+            transform: rotate(180deg);
+        }
+
+        /* Calendar Trigger Button */
+        .cal-trigger-action-btn {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s var(--ease-smooth);
+            user-select: none;
+            -webkit-user-select: none;
+            position: relative;
+        }
+        .cal-trigger-action-btn:hover {
+            transform: scale(1.05);
+        }
+        .cal-trigger-action-btn:active {
+            transform: scale(0.92);
+        }
+        .cal-trigger-action-btn svg {
+            width: 32px;
+            height: 32px;
+            display: block;
+        }
+        .cal-active-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #4caf50;
+            box-shadow: 0 0 6px rgba(76, 175, 80, 0.8);
+            display: none;
+        }
+        .cal-active-dot.is-visible {
+            display: block;
+        }
+
+        /* Category Dropdown Pill */
         .day-action-wrap {
             position: relative;
-            z-index: 100;
+            z-index: 110;
         }
 
         .day-action-btn {
             background: var(--btn-blue);
-            color: #ffffff;
+            color: #ffffff !important;
             border: none;
             outline: none;
-            padding: 6px 18px;
+            padding: 6px 16px;
             border-radius: 16px;
             font-family: inherit;
             font-size: 13.5px;
@@ -271,13 +392,29 @@
             cursor: pointer;
             display: inline-flex;
             align-items: center;
+            gap: 6px;
+            min-width: 68px;
             justify-content: center;
-            min-width: 76px;
-            transition: transform 0.2s var(--ease-smooth), opacity 0.2s var(--ease-smooth);
+            user-select: none;
+            -webkit-user-select: none;
+            transition: transform 0.2s var(--ease-smooth), opacity 0.2s ease, background-color 0.2s ease;
         }
         .day-action-btn:active {
             transform: scale(0.94);
             opacity: 0.9;
+        }
+        .day-action-chevron {
+            width: 12px;
+            height: 12px;
+            stroke: currentColor;
+            stroke-width: 2.4;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.25s var(--ease-smooth);
+        }
+        .day-action-btn.is-expanded .day-action-chevron {
+            transform: rotate(180deg);
         }
 
         /* Floating Backdrop for category menu blur */
@@ -289,9 +426,11 @@
             background: rgba(0, 0, 0, 0.45);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            z-index: 99;
+            z-index: 100 !important;
             opacity: 0;
             pointer-events: none;
+            user-select: none;
+            -webkit-user-select: none;
             transition: opacity 0.28s var(--ease-smooth);
         }
         .floating-backdrop.is-active {
@@ -304,18 +443,19 @@
             position: absolute;
             top: calc(100% + 10px);
             right: 0;
-            min-width: 220px;
+            min-width: 230px;
             max-width: calc(100vw - 36px);
             width: max-content;
-            background-color: var(--floating-bg);
-            border: 1px solid var(--floating-border);
+            background-color: var(--panel-bg);
+            border: 1px solid var(--panel-border);
             border-radius: 20px;
-            padding: 7px;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
-            z-index: 110;
+            padding: 8px 6px;
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+            z-index: 120 !important;
             display: none;
-            pointer-events: none;
-            overflow: hidden;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
         }
         body.light-mode .floating-days-panel {
             box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
@@ -346,7 +486,7 @@
             border: none;
             outline: none;
             width: 100%;
-            padding: 10px 16px;
+            padding: 10px 14px;
             border-radius: 14px;
             font-family: inherit;
             font-size: 14px;
@@ -357,6 +497,10 @@
             margin-bottom: 2px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            user-select: none;
+            -webkit-user-select: none;
             transition: background-color 0.18s ease, color 0.18s ease;
         }
         .day-item-btn:hover {
@@ -371,45 +515,70 @@
             color: #ffffff !important;
         }
 
-        /* ---------------------------------------------------- */
-        /* CARDS LIST & RESPONSIVE DIMENSIONS                   */
-        /* ---------------------------------------------------- */
-        .organised-ca-cards-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            width: 100%;
+        .category-item-count-badge {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: var(--pill-bg);
+            padding: 2px 7px;
+            border-radius: 10px;
+            line-height: 1.2;
+            flex-shrink: 0;
         }
-        @media (max-width: 768px) {
-            .organised-ca-cards-list {
-                grid-template-columns: 1fr;
-                gap: 14px;
-            }
+        .day-item-btn.is-selected .category-item-count-badge {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.2);
         }
 
+        /* ---------------------------------------------------- */
+        /* CARDS LIST & SINGLE COLUMN RESPONSIVE DIMENSIONS     */
+        /* ---------------------------------------------------- */
+        .organised-ca-cards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        /* Card: Photo on LEFT, Title & Bottom-Right Date on RIGHT */
         .organised-ca-card {
+            position: relative;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 26px;
-            padding: 16px 18px;
+            padding: 14px 18px;
             display: flex;
-            align-items: stretch;
-            gap: 14px;
+            align-items: center; /* Centers thumbnail & right content vertically */
+            gap: 16px;
             cursor: pointer;
             text-decoration: none !important;
             box-sizing: border-box;
-            transition: transform 0.24s var(--ease-smooth), border-color 0.2s ease, box-shadow 0.24s ease;
-            animation: pageSlideUpEntrance 0.45s var(--ease-premium) both;
+            width: 100%;
+            min-height: 104px;
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: transform 0.22s var(--ease-smooth), border-color 0.2s ease, box-shadow 0.22s ease;
+            animation: cardsSlideUpEntrance 0.45s var(--ease-premium) both;
         }
         .organised-ca-card:hover {
             border-color: var(--panel-border-hover);
             transform: translate3d(0, -3px, 0);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
-        }
-        .organised-ca-card:active {
-            transform: scale3d(0.985, 0.985, 1);
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.16);
         }
 
+        /* Tapping animation: goes down and comes up little like in app */
+        .organised-ca-card:active,
+        .organised-ca-card.is-card-pressed {
+            transform: translate3d(0, 3px, 0) scale3d(0.975, 0.975, 1) !important;
+            transition: transform 0.14s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+
+        /* Left thumbnail / placeholder */
         .organised-ca-card-left-thumb {
             flex-shrink: 0;
             width: 76px;
@@ -417,7 +586,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            align-self: center;
         }
         .ca-card-thumb-img {
             width: 76px;
@@ -447,13 +615,16 @@
             color: var(--text-muted);
         }
 
+        /* Right content: Title vertically centered to thumbnail */
         .organised-ca-card-right-content {
             flex: 1;
             min-width: 0;
+            min-height: 76px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            padding: 2px 0;
+            justify-content: center; /* Title centered vertically to image */
+            padding-right: 90px; /* Space for bottom right date */
+            box-sizing: border-box;
         }
         .organised-ca-card-title {
             font-size: 15.5px;
@@ -462,36 +633,85 @@
             color: var(--text-main);
             margin: 0;
             text-align: left;
+            text-wrap: wrap !important;
+            hyphens: none !important;
+            -webkit-hyphens: none !important;
+            word-break: normal !important;
+            overflow-wrap: break-word !important;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
+
+        /* Bottom-Right Date Tag */
         .organised-ca-card-footer {
+            position: absolute;
+            right: 18px;
+            bottom: 12px;
             display: flex;
             align-items: center;
-            justify-content: flex-end;
-            margin-top: 8px;
         }
-        .organised-ca-card-footer .note-card-date {
-            font-size: 12.5px;
+        .note-card-date {
+            font-size: 12px;
             color: var(--text-muted);
             font-weight: 400;
+            white-space: nowrap;
         }
 
         /* ---------------------------------------------------- */
-        /* ARTICLE DETAIL VIEW (MATCHES DAILY CA STYLING)        */
+        /* ARTICLE DETAIL VIEW (SLIDE-UP ENTRANCE, EXACT GAP)   */
         /* ---------------------------------------------------- */
         #organisedCaArticleView {
             display: none;
             width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
             flex-direction: column;
         }
         #organisedCaArticleView.is-active {
             display: flex;
-            animation: pageSlideUpEntrance 0.45s var(--ease-premium) both;
         }
 
+        .article-slide-up-run {
+            animation: articleSlideUpEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            will-change: transform, opacity;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        @keyframes articleSlideUpEntrance {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 24px, 0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+        @-webkit-keyframes articleSlideUpEntrance {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, 24px, 0);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0);
+            }
+        }
+
+        @keyframes cardsSlideUpEntrance {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 22px, 0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        /* Controls Panel: EXACT 24px margin to title */
         .ca-controls-panel {
             width: 100%;
             background-color: var(--panel-bg);
@@ -501,7 +721,7 @@
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
-            margin-bottom: 24px;
+            margin-bottom: 24px !important;
             transition: background-color 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
         }
 
@@ -510,13 +730,14 @@
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            gap: 12px;
         }
+
         .ca-action-buttons-group {
             display: flex;
             align-items: center;
             gap: 16px;
         }
+
         .ca-action-label-wrap {
             display: inline-flex;
             align-items: center;
@@ -524,9 +745,14 @@
             font-size: 13.5px;
             font-weight: 500;
             color: var(--text-muted);
+            user-select: none;
+            -webkit-user-select: none;
         }
-        .ca-direct-action-btn {
-            background: var(--btn-blue);
+
+        .ca-direct-action-btn,
+        .image-action-btn,
+        .read-action-btn {
+            background: var(--btn-blue) !important;
             color: #ffffff !important;
             border: none;
             outline: none;
@@ -536,12 +762,16 @@
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.18s var(--ease-smooth), opacity 0.18s var(--ease-smooth);
+            box-shadow: none !important;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: transform 0.18s var(--ease-smooth), opacity 0.18s ease;
         }
         .ca-direct-action-btn:active {
             transform: scale(0.93);
             opacity: 0.9;
         }
+
         .ca-dropdown-toggle-btn {
             background: transparent;
             border: none;
@@ -554,7 +784,9 @@
             align-items: center;
             justify-content: center;
             padding: 0;
-            transition: transform 0.3s var(--ease-smooth), color 0.3s var(--ease-smooth);
+            transition: color 0.2s ease, transform 0.25s var(--ease-smooth);
+            user-select: none;
+            -webkit-user-select: none;
         }
         .ca-dropdown-toggle-btn.is-rotated {
             transform: rotate(180deg);
@@ -570,7 +802,7 @@
             stroke-linejoin: round;
         }
 
-        /* Drawers inside panel */
+        /* Image Drawer: Uncropped natural image presentation */
         .ca-image-drawer {
             display: grid;
             grid-template-rows: 0fr;
@@ -597,11 +829,14 @@
             padding-top: 14px;
         }
         .ca-image-drawer-inner img {
-            width: 100%;
-            max-height: 420px;
-            object-fit: cover;
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            max-height: 80vh;
+            object-fit: contain;
             border-radius: 16px;
             display: block;
+            margin: 0 auto;
         }
         .ca-image-caption {
             font-size: 12px;
@@ -610,10 +845,11 @@
             text-align: center;
         }
 
+        /* Metadata Drawer */
         .ca-meta-drawer {
             display: grid;
             grid-template-rows: 0fr;
-            transition: grid-template-rows 0.45s var(--ease-smooth);
+            transition: grid-template-rows 0.42s var(--ease-smooth);
             width: 100%;
             overflow: hidden;
         }
@@ -637,237 +873,359 @@
         }
         .ca-meta-row {
             display: flex;
-            align-items: center;
-            width: 100%;
+            flex-wrap: wrap;
+            gap: 8px;
         }
         .meta-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 12px;
-            border-radius: 18px;
-            font-size: 12.5px;
-            font-weight: 500;
+            font-size: 12px;
             background: var(--pill-bg);
             border: 1px solid var(--pill-border);
+            padding: 4px 10px;
+            border-radius: 8px;
             color: var(--text-muted);
-            white-space: nowrap;
         }
         .meta-pill strong {
             color: var(--text-main);
-            font-weight: 600;
+            font-weight: 500;
         }
 
-        /* Article stage rests on background */
+        /* ARTICLE CONTENT AREA: Rest on background without boxed panel */
         .ca-article-feed-stage {
             width: 100%;
             display: flex;
             flex-direction: column;
-            padding: 0;
-            box-sizing: border-box;
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
+            margin-top: 0;
         }
+
         .article-title {
             font-size: 24px;
             font-weight: 700;
             letter-spacing: -0.35px;
             color: var(--text-main);
             line-height: 1.34;
-            margin-bottom: 22px;
+            margin-top: 0;
+            margin-bottom: 24px !important; /* EXACT 24PX MATCHING SPACING */
             text-align: left;
         }
 
-        .ca-content-drawer {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.42s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow: hidden;
-            width: 100%;
-            will-change: grid-template-rows;
-        }
-        .ca-content-drawer.is-open {
-            grid-template-rows: 1fr;
-            transition: grid-template-rows 0.48s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .ca-content-overflow {
-            min-height: 0;
-            overflow: hidden;
-            opacity: 0;
-            transform: translate3d(0, 0, 0);
-            transition: opacity 0.28s ease;
-            will-change: opacity;
-        }
-        .ca-content-drawer.is-open .ca-content-overflow {
-            opacity: 1;
-            transition: opacity 0.34s ease;
-        }
-
+        /* Smooth Content Drawers */
+        .ca-content-drawer,
         .ca-detailed-content-drawer {
             display: grid;
             grid-template-rows: 0fr;
-            transition: grid-template-rows 0.42s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow: hidden;
+            transition: grid-template-rows 0.48s cubic-bezier(0.16, 1, 0.3, 1);
             width: 100%;
-            will-change: grid-template-rows;
         }
+        .ca-content-drawer.is-open,
         .ca-detailed-content-drawer.is-open {
             grid-template-rows: 1fr;
-            transition: grid-template-rows 0.48s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        .ca-content-overflow,
         .ca-detailed-overflow {
             min-height: 0;
             overflow: hidden;
             opacity: 0;
-            transform: translate3d(0, 0, 0);
-            transition: opacity 0.28s ease;
-            will-change: opacity;
+            transition: opacity 0.3s ease;
         }
+        .ca-content-drawer.is-open .ca-content-overflow,
         .ca-detailed-content-drawer.is-open .ca-detailed-overflow {
             opacity: 1;
-            transition: opacity 0.34s ease;
+            transition: opacity 0.36s ease;
         }
 
+        /* Standard Typography: Why in News, What/Concept, Important Facts, etc. */
         .note-section {
             margin-bottom: 24px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--row-divider);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            width: 100%;
             text-align: left;
-        }
-        .note-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
         }
 
         .section-heading {
             font-size: 18px;
             font-weight: 600;
-            color: var(--text-main);
             letter-spacing: -0.2px;
-            margin-bottom: 6px;
-            text-align: left;
-        }
-        .note-p {
-            font-size: 15px;
-            line-height: 1.75;
             color: var(--text-main);
-            opacity: 0.92;
-            padding-left: 0;
+            margin-bottom: 12px;
             text-align: left;
-            margin: 0;
         }
 
-        .note-items-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 100%;
-        }
-        .note-item-group {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
+        /* Matching Font Size for ALL content including Important Facts downwards */
+        .note-p,
+        .point-bullet-item,
+        .info-callout-row {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--text-main);
+            opacity: 0.92;
+            hyphens: none;
+            -webkit-hyphens: none;
+            word-break: normal;
             text-align: left;
         }
+
+        .point-bullet-item {
+            position: relative;
+            padding-left: 0;
+            margin-bottom: 6px;
+        }
+
         .point-subheading {
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 600;
+            line-height: 1.7;
             color: var(--text-main);
-            line-height: 1.5;
+            margin-top: 14px;
             margin-bottom: 6px;
             text-align: left;
         }
+
         .point-sublist {
             list-style: none;
+            padding-left: 0;
             margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .point-bullet-item {
-            position: relative;
-            padding-left: 18px;
-            font-size: 14.5px;
-            line-height: 1.6;
-            color: var(--text-main);
-            opacity: 0.92;
-            text-align: left;
-        }
-        .point-bullet-item::before {
-            content: "•";
-            position: absolute;
-            left: 2px;
-            top: -1px;
-            font-size: 16px;
-            color: var(--text-main);
         }
 
         .info-callout {
             background: transparent !important;
             border: none !important;
-            border-radius: 0 !important;
-            padding: 0 !important;
+            padding: 0;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            text-align: left;
-            margin-top: 2px;
+            gap: 10px;
         }
-        .info-callout-row {
-            position: relative;
-            padding-left: 0 !important;
-            font-size: 14.5px;
-            line-height: 1.6;
-            color: var(--text-main);
-            text-align: left;
-        }
-        .info-callout-row::before { display: none !important; }
         .info-callout-row strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* ---------------------------------------------------- */
+        /* DRUM WHEEL DATE PICKER MODAL (IDENTICAL TO DCA)      */
+        /* ---------------------------------------------------- */
+        .picker-backdrop {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            opacity: 0;
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .picker-backdrop.is-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .picker-card {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 28px;
+            padding: 24px 20px 28px 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transform: translate3d(0, 100vh, 0);
+            transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
+            box-sizing: border-box;
+        }
+        .picker-backdrop.is-open .picker-card {
+            transform: translate3d(0, 0, 0);
+        }
+        .picker-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            padding: 0 6px;
+        }
+        .picker-title {
+            font-size: 17px;
             font-weight: 600;
             color: var(--text-main);
         }
-
-        @keyframes pageSlideUpEntrance {
-            0% { opacity: 0; transform: translate3d(0, 24px, 0); }
-            100% { opacity: 1; transform: translate3d(0, 0, 0); }
+        .picker-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-
-        /* Footer */
-        footer {
+        .picker-clear-btn {
+            background: transparent;
+            border: 1px solid var(--pill-border);
+            color: var(--text-muted);
+            padding: 5px 12px;
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 12.5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .picker-clear-btn:hover {
+            color: var(--text-main);
+            border-color: var(--panel-border-hover);
+        }
+        .picker-apply-btn {
+            background: var(--btn-blue) !important;
+            color: #ffffff !important;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 18px;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .picker-apply-btn:active {
+            transform: scale(0.94);
+        }
+        .picker-col-headers {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            width: 100%;
+            margin-bottom: 6px;
+            padding: 0 4px;
+        }
+        .picker-col-hdr {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .picker-drum-stage {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            height: 200px;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.25);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%);
+        }
+        html.light-mode .picker-drum-stage {
+            background: rgba(0, 0, 0, 0.04);
+        }
+        .picker-center-capsule {
+            position: absolute;
+            top: 50%;
+            left: 8px;
+            right: 8px;
+            height: 48px;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 22px;
+            pointer-events: none;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        html.light-mode .picker-center-capsule {
+            background: rgba(0, 0, 0, 0.06);
+            border-color: rgba(0, 0, 0, 0.06);
+        }
+        .drum-column {
+            height: 100%;
+            width: 100%;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            touch-action: pan-y;
+            overscroll-behavior-y: contain;
+            scroll-snap-type: y mandatory;
+            scrollbar-width: none;
+            padding: 76px 0;
+            z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+        }
+        .drum-column::-webkit-scrollbar {
+            display: none;
+        }
+        .drum-cell {
             width: 100%;
-            margin-top: auto;
+            height: 48px;
+            min-height: 48px;
+            max-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 19px;
+            font-weight: 500;
+            color: var(--text-muted);
+            scroll-snap-align: center;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: color 0.2s;
+        }
+        .drum-cell.is-selected {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* ---------------------------------------------------- */
+        /* FOOTER (MATCHING INDEX)                              */
+        /* ---------------------------------------------------- */
+        footer {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-top: 60px;
+            padding-top: 24px;
+            border-top: 1px solid var(--row-divider);
         }
         .footer-links-row {
             display: flex;
-            justify-content: center;
             align-items: center;
-            gap: 28px;
+            justify-content: center;
+            gap: 24px;
             flex-wrap: wrap;
-            width: 100%;
         }
         .footer-links-row a {
-            color: var(--text-muted) !important;
-            text-decoration: none !important;
+            color: var(--text-muted);
             font-size: 13.5px;
+            text-decoration: none !important;
             transition: color 0.2s ease;
         }
         .footer-links-row a:hover {
-            color: var(--text-main) !important;
+            color: var(--text-main);
         }
         .copyright-tag {
+            font-size: 12px;
             color: var(--text-muted);
             opacity: 0.7;
-            font-size: 12px;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 24px 16px 28px 16px; }
+            .brand-pill { font-size: 34px; }
+            .page-title { font-size: 22px; }
+            .category-row { max-width: 100%; margin-bottom: 16px; }
+            .organised-ca-card { padding: 12px 14px; min-height: 96px; gap: 12px; }
+            .organised-ca-card-left-thumb { width: 70px; height: 70px; }
+            .ca-card-thumb-img, .ca-card-no-image { width: 70px; height: 70px; border-radius: 16px; }
+            .organised-ca-card-right-content { min-height: 70px; padding-right: 76px; }
+            .organised-ca-card-title { font-size: 14.5px; }
+            .note-p, .point-bullet-item, .info-callout-row { font-size: 15.5px; }
+            .point-subheading { font-size: 15.5px; }
         }
     </style>
 </head>
@@ -879,35 +1237,69 @@
         <!-- Top Navigation -->
         <nav class="top-nav-bar" id="topNavBar">
             <a href="/index.html" class="brand-pill" id="brandPill" aria-label="sathya.">
-                <span class="brand-letter">sathya</span>
-                <span class="brand-star" aria-hidden="true"></span>
+                <span class="brand-letter">sathya</span><span class="brand-star"></span>
             </a>
         </nav>
 
-        <main>
-            <!-- Standard Header Row with Smart Back Navigation -->
-            <div class="page-header-row">
-                <button type="button" class="back-icon-btn" id="pageBackBtn" onclick="handleOrganisedBack()" aria-label="Go back">
-                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                </button>
-                <h1 class="page-title" id="pageTitleText">Organised current affairs</h1>
-            </div>
+        <!-- Standardized Page Header Row -->
+        <div class="page-header-row" id="pageHeaderRow">
+            <button type="button" class="back-icon-btn" id="headerBackBtn" onclick="handleOrganisedBack()" aria-label="Go back">
+                <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <h1 class="page-title" id="pageTitleText">Organised current affairs</h1>
+        </div>
 
-            <!-- 1. DIRECTORY VIEW (CARDS LIST) -->
+        <main class="content-wrapper">
+            <!-- 1. DIRECTORY / LIST VIEW -->
             <div id="organisedCaDirectoryView">
-                <!-- Category Selector Row -->
-                <div class="category-header-row">
-                    <span class="category-heading">Category</span>
-                    <div class="day-action-wrap">
-                        <button type="button" class="day-action-btn" id="organisedCaCategoryBtn" onclick="toggleOrganisedCaCategoryDropdown(event)">
-                            <span id="selectedCategoryLabel">All</span>
+                <!-- Category, Sort, and Calendar Row -->
+                <div class="category-row">
+                    <span class="category-title-text" id="categoryHeaderLabel">Category</span>
+
+                    <div class="category-controls-cluster">
+                        <!-- Sort Button: Toggles New to Old <-> Old to New -->
+                        <button type="button" class="sort-action-btn" id="orgSortBtn" onclick="toggleOrganisedCaSort()" aria-label="Toggle Date Sort Order" title="Sort: New to Old">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M3 6h18M6 12h12M9 18h6"/>
+                            </svg>
                         </button>
-                        <!-- Attached Floating Category Dropdown Panel -->
-                        <div class="floating-days-panel" id="floatingOrganisedCaCategoryPanel"></div>
+
+                        <!-- Calendar Icon Button: Opens Drum Wheel Date Picker -->
+                        <button type="button" class="cal-trigger-action-btn" id="orgCalendarBtn" onclick="openOrganisedCaDatePicker()" aria-label="Filter by Date">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="orgCalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#3a98f7"/>
+                                        <stop offset="100%" stop-color="#1b74d1"/>
+                                    </linearGradient>
+                                </defs>
+                                <rect x="7" y="13" width="50" height="44" rx="14" fill="url(#orgCalGrad)"/>
+                                <path d="M7 23 C7 17.477 11.477 13 17 13 L47 13 C52.523 13 57 17.477 57 23 L57 25 L7 25 Z" fill="#1565c0" opacity="0.9"/>
+                                <rect x="18" y="7" width="5" height="10" rx="2.5" fill="#ffffff"/>
+                                <rect x="41" y="7" width="5" height="10" rx="2.5" fill="#ffffff"/>
+                                <circle cx="20" cy="33" r="3.2" fill="#ffffff"/>
+                                <circle cx="32" cy="33" r="3.2" fill="#ffffff"/>
+                                <circle cx="44" cy="33" r="3.2" fill="#ffffff"/>
+                                <circle cx="20" cy="44" r="3.2" fill="#ffffff"/>
+                                <circle cx="32" cy="44" r="3.2" fill="#ffffff"/>
+                                <circle cx="44" cy="44" r="3.2" fill="rgba(255,255,255,0.4)"/>
+                            </svg>
+                            <span class="cal-active-dot" id="calActiveDot"></span>
+                        </button>
+
+                        <!-- Category Pill with Chevron Dropdown -->
+                        <div class="day-action-wrap">
+                            <button type="button" class="day-action-btn" id="organisedCaCategoryBtn" onclick="toggleOrganisedCaCategoryDropdown(event)">
+                                <span id="selectedCategoryLabel">All</span>
+                                <svg class="day-action-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <!-- Attached Floating Category Dropdown Panel -->
+                            <div class="floating-days-panel" id="floatingOrganisedCaCategoryPanel"></div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Cards Grid -->
+                <!-- Single-column Cards Feed (one down one) -->
                 <div class="organised-ca-cards-list" id="organisedCaCardsContainer"></div>
             </div>
 
@@ -924,23 +1316,27 @@
                             <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
                         </button>
                     </div>
+
                     <!-- Expandable Image Drawer -->
                     <div class="ca-image-drawer" id="orgImageDrawer">
                         <div class="ca-image-drawer-inner" id="orgImageDrawerInner"></div>
                     </div>
+
                     <!-- Expandable Metadata Drawer -->
                     <div class="ca-meta-drawer" id="orgMetaDrawer">
                         <div class="ca-meta-drawer-inner" id="orgMetaDrawerInner"></div>
                     </div>
                 </div>
 
-                <!-- Full-Width Article Stage (Rests directly on background) -->
-                <div class="ca-article-feed-stage">
+                <!-- Article Content Resting Directly on Background -->
+                <div class="ca-article-feed-stage" id="caArticleFeedStage">
                     <h1 class="article-title" id="orgArticleTitle"></h1>
+
                     <!-- Short Revision Drawer -->
                     <div class="ca-content-drawer" id="orgShortDrawer">
                         <div class="ca-content-overflow" id="orgShortContent"></div>
                     </div>
+
                     <!-- Detailed Analysis Drawer -->
                     <div class="ca-detailed-content-drawer is-open" id="orgDetailedDrawer">
                         <div class="ca-detailed-overflow" id="orgDetailedContent"></div>
@@ -949,106 +1345,99 @@
             </div>
         </main>
 
+        <!-- 3. DRUM WHEEL DATE PICKER MODAL -->
+        <div class="picker-backdrop" id="orgPickerModal" onclick="if(event.target===this)closeOrganisedCaDatePicker()">
+            <div class="picker-card" onclick="event.stopPropagation()">
+                <div class="picker-header">
+                    <span class="picker-title">Select Date</span>
+                    <div class="picker-header-actions">
+                        <button type="button" class="picker-clear-btn" onclick="clearOrganisedCaDateFilter()">All Dates</button>
+                        <button type="button" class="picker-apply-btn" id="orgPickerApplyBtn" onclick="applyOrganisedCaDateFilter()">Apply</button>
+                    </div>
+                </div>
+
+                <div class="picker-col-headers">
+                    <div class="picker-col-hdr">Day</div>
+                    <div class="picker-col-hdr">Month</div>
+                    <div class="picker-col-hdr">Year</div>
+                </div>
+
+                <div class="picker-drum-stage">
+                    <div class="picker-center-capsule"></div>
+                    <div class="drum-column" id="orgDayCol"></div>
+                    <div class="drum-column" id="orgMonthCol"></div>
+                    <div class="drum-column" id="orgYearCol"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
         <footer>
             <div class="footer-links-row">
-                <a href="/study/Footer/about.html"><span class="nav-text">About</span></a>
-                <a href="/study/Footer/contact.html"><span class="nav-text">Contact</span></a>
-                <a href="/study/Footer/privacy.html"><span class="nav-text">Privacy Policy</span></a>
-                <a href="/study/Footer/terms.html"><span class="nav-text">Terms &amp; Conditions</span></a>
-                <a href="/study/Footer/disclaimer.html"><span class="nav-text">Disclaimer</span></a>
+                <a href="/study/Footer/about.html">About</a>
+                <a href="/study/Footer/contact.html">Contact</a>
+                <a href="/study/Footer/privacy.html">Privacy Policy</a>
+                <a href="/study/Footer/terms.html">Terms &amp; Conditions</a>
+                <a href="/study/Footer/disclaimer.html">Disclaimer</a>
             </div>
-            <div class="copyright-tag">
-                &copy; 2026 Sathya. All rights reserved.
-            </div>
+            <div class="copyright-tag">&copy; 2026 Sathya. All rights reserved.</div>
         </footer>
     </div>
 
-    <!-- Interactive Organised CA Script -->
+    <!-- MAIN ENGINE SCRIPT -->
     <script>
+        // State Management
         let organisedCaSelectedCategory = 'All';
+        let organisedCaSelectedDateKey = null; // null = all dates
+        let organisedCaSortOrder = 'newest'; // 'newest' | 'oldest'
+        let organisedCaActiveTopic = null;
+        let orgViewMode = 'detailed'; // 'detailed' | 'short'
+        let orgImageDrawerOpen = false;
+        let orgMetaDrawerOpen = false;
         let organisedCaFloatingOpen = false;
-        let organisedCaCurrentTopic = null;
-        let organisedCaViewMode = 'full'; // 'full' | 'short'
-        let organisedCaImageDrawerOpen = false;
-        let organisedCaMetaDrawerOpen = false;
 
-        function splitTopicCategories(rawCategory) {
-            if (!rawCategory || typeof rawCategory !== 'string') return [];
-            let s = rawCategory.trim();
+        // Drum Picker Temporary State
+        let orgTempDay = 5;
+        let orgTempMonth = 10;
+        let orgTempYear = 2026;
+        const CELL_HEIGHT = 48;
 
-            const protectedTerms = [
-                { regex: /energy\s*(?:&|\/|and)\s*mineral\s*resources/gi, replacement: '__ENERGY_MINERAL__' },
-                { regex: /art\s*(?:&|and)\s*culture/gi, replacement: '__ART_CULTURE__' },
-                { regex: /science\s*(?:&|and)\s*technology/gi, replacement: '__SCI_TECH__' },
-                { regex: /international\s*relations/gi, replacement: '__INTL_REL__' },
-                { regex: /indian\s*society/gi, replacement: '__IND_SOC__' },
-                { regex: /social\s*justice/gi, replacement: '__SOC_JUST__' },
-                { regex: /internal\s*security/gi, replacement: '__INT_SEC__' },
-                { regex: /disaster\s*management/gi, replacement: '__DIS_MGMT__' },
-                { regex: /polity\s*(?:&|and)\s*governance/gi, replacement: '__POLITY_GOV__' }
-            ];
+        const orgDayCol = document.getElementById('orgDayCol');
+        const orgMonthCol = document.getElementById('orgMonthCol');
+        const orgYearCol = document.getElementById('orgYearCol');
+        const orgPickerModal = document.getElementById('orgPickerModal');
 
-            s = s.replace(/geography\s*(?:&|\/|and)\s*energy\s*\/\s*mineral\s*resources/gi, 'Geography / Energy and mineral resources');
-            s = s.replace(/economy\s*\/\s*energy\s*&?\s*infrastructure/gi, 'Economy / Energy and mineral resources');
-
-            protectedTerms.forEach(p => {
-                s = s.replace(p.regex, p.replacement);
-            });
-
-            const rawTokens = s.split(/[\/;,&]|(?:\s+and\s+)/i);
-            const result = [];
-
-            rawTokens.forEach(token => {
-                let clean = token.trim();
-                if (!clean) return;
-
-                clean = clean
-                    .replace(/__ENERGY_MINERAL__/g, 'Energy and mineral resources')
-                    .replace(/__ART_CULTURE__/g, 'Culture')
-                    .replace(/__SCI_TECH__/g, 'Science and technology')
-                    .replace(/__INTL_REL__/g, 'International relations')
-                    .replace(/__IND_SOC__/g, 'Indian society')
-                    .replace(/__SOC_JUST__/g, 'Social justice')
-                    .replace(/__INT_SEC__/g, 'Internal security')
-                    .replace(/__DIS_MGMT__/g, 'Disaster management')
-                    .replace(/__POLITY_GOV__/g, 'Polity');
-
-                const low = clean.toLowerCase();
-                if (low === 'geography') clean = 'Geography';
-                else if (low === 'economy') clean = 'Economy';
-                else if (low === 'energy and mineral resources' || low === 'mineral resources' || low === 'energy') clean = 'Energy and mineral resources';
-                else if (low === 'sports') clean = 'Sports';
-                else if (low === 'culture' || low === 'art & culture' || low === 'art and culture') clean = 'Culture';
-                else if (low === 'polity') clean = 'Polity';
-                else if (low === 'history') clean = 'History';
-                else if (low === 'indian society') clean = 'Indian society';
-                else {
-                    clean = clean.charAt(0).toUpperCase() + clean.slice(1);
-                }
-
-                if (clean && !result.includes(clean)) {
-                    result.push(clean);
-                }
-            });
-
-            return result;
+        // Helper: Convert DD-MM-YYYY to Timestamp for accurate sorting
+        function parseDateKeyTimestamp(key) {
+            if (!key) return 0;
+            const parts = key.split('-');
+            if (parts.length === 3) {
+                return new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10)).getTime();
+            }
+            return 0;
         }
 
+        // Fetch All Topics Across all dates
         function getAllOrganisedCaTopics() {
-            const caAll = window.RAW_STUDY_DATA && window.RAW_STUDY_DATA.dailyCurrentAffairsData;
-            if (!caAll) return [];
+            const raw = window.RAW_STUDY_DATA && window.RAW_STUDY_DATA.dailyCurrentAffairsData;
+            if (!raw) return [];
 
             const allTopics = [];
-            Object.entries(caAll).forEach(([dateKey, dateObj]) => {
-                const dateStr = dateObj.dateStr || dateKey;
-                if (dateObj.topics && Array.isArray(dateObj.topics)) {
-                    dateObj.topics.forEach(t => {
-                        const categories = splitTopicCategories(t.category);
+            const dateKeys = Object.keys(raw);
+
+            dateKeys.forEach(dateKey => {
+                const dayObj = raw[dateKey];
+                if (dayObj && Array.isArray(dayObj.topics)) {
+                    const dateStr = dayObj.dateText || dateKey;
+                    const timestamp = parseDateKeyTimestamp(dateKey);
+
+                    dayObj.topics.forEach((topic, idx) => {
                         allTopics.push({
-                            ...t,
-                            categories: categories.length > 0 ? categories : [(t.category || 'General')],
+                            ...topic,
                             dateKey: dateKey,
-                            dateStr: dateStr
+                            dateStr: dateStr,
+                            timestamp: timestamp,
+                            originalIndex: idx
                         });
                     });
                 }
@@ -1057,6 +1446,7 @@
             return allTopics;
         }
 
+        // Fetch list of available categories
         function getOrganisedCaCategories() {
             const topics = getAllOrganisedCaTopics();
             const discoveredSet = new Set();
@@ -1094,10 +1484,26 @@
             return orderedCategories;
         }
 
-        function renderDirectoryView() {
+        // Calculate count of topics for a given category (respecting active date filter)
+        function getCategoryTopicCount(cat, allTopics) {
+            let list = allTopics;
+            if (organisedCaSelectedDateKey) {
+                list = list.filter(t => t.dateKey === organisedCaSelectedDateKey);
+            }
+            if (cat === 'All') return list.length;
+            return list.filter(t => t.categories && t.categories.includes(cat)).length;
+        }
+
+        // ----------------------------------------------------
+        // DIRECTORY / LIST VIEW RENDERING
+        // ----------------------------------------------------
+        function renderDirectoryView(playSlideUp) {
+            if (playSlideUp === undefined) playSlideUp = true;
+
             const dirView = document.getElementById('organisedCaDirectoryView');
             const artView = document.getElementById('organisedCaArticleView');
             const pageTitle = document.getElementById('pageTitleText');
+
             if (dirView) dirView.style.display = 'block';
             if (artView) artView.classList.remove('is-active');
             if (pageTitle) pageTitle.textContent = 'Organised current affairs';
@@ -1109,30 +1515,67 @@
                 organisedCaSelectedCategory = 'All';
             }
 
+            // Sync category label & active button state
             const labelEl = document.getElementById('selectedCategoryLabel');
             if (labelEl) labelEl.textContent = organisedCaSelectedCategory;
 
-            // Render floating panel category buttons
+            // Render floating panel category buttons with post count badges
             const panelEl = document.getElementById('floatingOrganisedCaCategoryPanel');
             if (panelEl) {
-                panelEl.innerHTML = categories.map(cat => 
-                    '<button type="button" class="day-item-btn ' + (cat === organisedCaSelectedCategory ? 'is-selected' : '') + '" onclick="selectOrganisedCaCategory(\'' + cat.replace(/'/g, "\\'") + '\', event)">' + cat + '</button>'
-                ).join('');
+                panelEl.innerHTML = categories.map(cat => {
+                    const count = getCategoryTopicCount(cat, allTopics);
+                    const isSelected = (cat === organisedCaSelectedCategory) ? ' is-selected' : '';
+                    return (
+                        '<button type="button" class="day-item-btn' + isSelected + '" onclick="selectOrganisedCaCategory('' + cat.replace(/'/g, "\'") + '', event)">' +
+                            '<span>' + cat + '</span>' +
+                            '<span class="category-item-count-badge">' + count + '</span>' +
+                        '</button>'
+                    );
+                }).join('');
             }
 
-            const filteredTopics = (organisedCaSelectedCategory === 'All')
-                ? allTopics
-                : allTopics.filter(t => t.categories && t.categories.includes(organisedCaSelectedCategory));
+            // Sync Calendar Active Dot
+            const calDot = document.getElementById('calActiveDot');
+            if (calDot) {
+                calDot.classList.toggle('is-visible', !!organisedCaSelectedDateKey);
+            }
+
+            // Sync Sort Button
+            const sortBtn = document.getElementById('orgSortBtn');
+            if (sortBtn) {
+                sortBtn.classList.toggle('is-asc', organisedCaSortOrder === 'oldest');
+                sortBtn.title = (organisedCaSortOrder === 'newest') ? 'Sort: New to Old' : 'Sort: Old to New';
+            }
+
+            // Apply Filters: 1. Category 2. Date
+            let filtered = allTopics;
+
+            if (organisedCaSelectedCategory !== 'All') {
+                filtered = filtered.filter(t => t.categories && t.categories.includes(organisedCaSelectedCategory));
+            }
+
+            if (organisedCaSelectedDateKey) {
+                filtered = filtered.filter(t => t.dateKey === organisedCaSelectedDateKey);
+            }
+
+            // Apply Sorting: 'newest' (recent to oldest) | 'oldest' (oldest to recent)
+            filtered.sort((a, b) => {
+                if (organisedCaSortOrder === 'newest') {
+                    return b.timestamp - a.timestamp;
+                } else {
+                    return a.timestamp - b.timestamp;
+                }
+            });
 
             const container = document.getElementById('organisedCaCardsContainer');
             if (!container) return;
 
-            if (filteredTopics.length === 0) {
-                container.innerHTML = '<div style="padding: 48px 16px; text-align: center; color: var(--text-muted); grid-column: 1 / -1;">No articles found in this category.</div>';
+            if (filtered.length === 0) {
+                container.innerHTML = '<div style="padding: 48px 16px; text-align: center; color: var(--text-muted); font-size: 15px;">No current affairs entries found for this selection.</div>';
                 return;
             }
 
-            container.innerHTML = filteredTopics.map(topic => {
+            container.innerHTML = filtered.map(topic => {
                 const hasThumb = topic.image && topic.image.url;
                 const thumbHtml = hasThumb ? 
                     '<img src="' + topic.image.url + '" alt="' + topic.topicTitle + '" class="ca-card-thumb-img" loading="lazy">' :
@@ -1146,23 +1589,60 @@
                     '</div>');
 
                 return (
-                    '<div class="organised-ca-card" onclick="openOrganisedCaArticle(\'' + topic.topicTitle.replace(/'/g, "\\'") + '\')">' +
+                    '<div class="organised-ca-card" onclick="openOrganisedCaArticle('' + topic.topicTitle.replace(/'/g, "\'") + '')">' +
                         '<div class="organised-ca-card-left-thumb">' + thumbHtml + '</div>' +
                         '<div class="organised-ca-card-right-content">' +
                             '<h3 class="organised-ca-card-title">' + topic.topicTitle + '</h3>' +
-                            '<div class="organised-ca-card-footer">' +
-                                '<span class="note-card-date">' + (topic.dateStr || 'Recent') + '</span>' +
-                            '</div>' +
+                        '</div>' +
+                        '<div class="organised-ca-card-footer">' +
+                            '<span class="note-card-date">' + topic.dateStr + '</span>' +
                         '</div>' +
                     '</div>'
                 );
             }).join('');
+
+            // Attach touch / pointer feedback for bouncy press animation across all devices
+            initCardPressFeedback();
+
+            // Smooth slide-up transition animation on list change
+            if (playSlideUp) {
+                container.classList.remove('article-slide-up-run');
+                void container.offsetWidth;
+                requestAnimationFrame(() => {
+                    container.classList.add('article-slide-up-run');
+                });
+            }
         }
 
+        // Card Touch / Pointer Feedback: Goes down and comes up little like mobile app
+        function initCardPressFeedback() {
+            const cards = document.querySelectorAll('.organised-ca-card');
+            cards.forEach(card => {
+                card.addEventListener('pointerdown', () => {
+                    card.classList.add('is-card-pressed');
+                });
+                const clearPressed = () => card.classList.remove('is-card-pressed');
+                card.addEventListener('pointerup', clearPressed);
+                card.addEventListener('pointercancel', clearPressed);
+                card.addEventListener('mouseleave', clearPressed);
+            });
+        }
+
+        // Toggle Sort Order
+        function toggleOrganisedCaSort() {
+            organisedCaSortOrder = (organisedCaSortOrder === 'newest') ? 'oldest' : 'newest';
+            renderDirectoryView(true);
+        }
+        window.toggleOrganisedCaSort = toggleOrganisedCaSort;
+
+        // ----------------------------------------------------
+        // FLOATING CATEGORY DROPDOWN LOGIC
+        // ----------------------------------------------------
         function toggleOrganisedCaCategoryDropdown(e) {
             if (e) e.stopPropagation();
             const panel = document.getElementById('floatingOrganisedCaCategoryPanel');
             const backdrop = document.getElementById('floatingBackdrop');
+            const btn = document.getElementById('organisedCaCategoryBtn');
             if (!panel) return;
 
             if (panel.classList.contains('is-open')) {
@@ -1170,6 +1650,7 @@
             } else {
                 panel.classList.remove('is-closing');
                 panel.classList.add('is-open');
+                if (btn) btn.classList.add('is-expanded');
                 if (backdrop) backdrop.classList.add('is-active');
                 organisedCaFloatingOpen = true;
             }
@@ -1179,7 +1660,9 @@
         function closeOrganisedCaCategoryDropdown() {
             const panel = document.getElementById('floatingOrganisedCaCategoryPanel');
             const backdrop = document.getElementById('floatingBackdrop');
+            const btn = document.getElementById('organisedCaCategoryBtn');
             if (backdrop) backdrop.classList.remove('is-active');
+            if (btn) btn.classList.remove('is-expanded');
             if (!panel || !panel.classList.contains('is-open') || panel.classList.contains('is-closing')) {
                 organisedCaFloatingOpen = false;
                 return;
@@ -1197,8 +1680,8 @@
             organisedCaSelectedCategory = cat;
             closeOrganisedCaCategoryDropdown();
             setTimeout(() => {
-                renderDirectoryView();
-            }, 160);
+                renderDirectoryView(true);
+            }, 140);
         }
         window.selectOrganisedCaCategory = selectOrganisedCaCategory;
 
@@ -1213,15 +1696,153 @@
             }
         });
 
+        // ----------------------------------------------------
+        // DRUM WHEEL DATE PICKER MODAL & FILTERING
+        // ----------------------------------------------------
+        function initPickerColumns() {
+            if (!orgDayCol || !orgMonthCol || !orgYearCol) return;
+
+            // Day loop (5 repetitions of 1..31)
+            orgDayCol.innerHTML = '';
+            const DAY_LOOPS = 5;
+            for (let l = 0; l < DAY_LOOPS; l++) {
+                for (let d = 1; d <= 31; d++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'drum-cell';
+                    cell.textContent = String(d).padStart(2, '0');
+                    cell.dataset.val = d;
+                    /* Tap to select date */
+                    cell.addEventListener('click', () => {
+                        orgDayCol.scrollTo({ top: (l * 31 + d - 1) * CELL_HEIGHT, behavior: 'smooth' });
+                    });
+                    orgDayCol.appendChild(cell);
+                }
+            }
+
+            // Month loop
+            orgMonthCol.innerHTML = '';
+            for (let m = 1; m <= 12; m++) {
+                const cell = document.createElement('div');
+                cell.className = 'drum-cell';
+                cell.textContent = String(m).padStart(2, '0');
+                cell.dataset.val = m;
+                /* Tap to select month */
+                cell.addEventListener('click', () => {
+                    orgMonthCol.scrollTo({ top: (m - 1) * CELL_HEIGHT, behavior: 'smooth' });
+                });
+                orgMonthCol.appendChild(cell);
+            }
+
+            // Year loop
+            orgYearCol.innerHTML = '';
+            const minYear = 2026;
+            const maxYear = 2027;
+            for (let y = minYear; y <= maxYear; y++) {
+                const cell = document.createElement('div');
+                cell.className = 'drum-cell';
+                cell.textContent = y;
+                cell.dataset.val = y;
+                /* Tap to select year */
+                cell.addEventListener('click', () => {
+                    orgYearCol.scrollTo({ top: (y - minYear) * CELL_HEIGHT, behavior: 'smooth' });
+                });
+                orgYearCol.appendChild(cell);
+            }
+        }
+
+        function scrollDrumTo(col, val) {
+            if (!col) return;
+            if (col === orgDayCol) {
+                const middleTargetIndex = 2 * 31 + (parseInt(val, 10) - 1);
+                col.scrollTo({ top: middleTargetIndex * CELL_HEIGHT, behavior: 'instant' });
+                return;
+            }
+            const cells = Array.from(col.querySelectorAll('.drum-cell'));
+            const target = cells.find(c => parseInt(c.dataset.val, 10) === parseInt(val, 10));
+            if (target) {
+                const index = cells.indexOf(target);
+                col.scrollTo({ top: index * CELL_HEIGHT, behavior: 'instant' });
+            }
+        }
+
+        function setupDrumScrollHighlight(col, onSelected) {
+            if (!col) return;
+            col.addEventListener('scroll', () => {
+                if (col === orgDayCol) {
+                    const loopHeight = 31 * CELL_HEIGHT;
+                    if (col.scrollTop < loopHeight * 0.8) {
+                        col.scrollTop += loopHeight * 2;
+                    } else if (col.scrollTop > loopHeight * 3.8) {
+                        col.scrollTop -= loopHeight * 2;
+                    }
+                }
+
+                const index = Math.round(col.scrollTop / CELL_HEIGHT);
+                const cells = col.querySelectorAll('.drum-cell');
+                cells.forEach((cell, i) => {
+                    const isSelected = (i === index);
+                    cell.classList.toggle('is-selected', isSelected);
+                    if (isSelected && onSelected) {
+                        onSelected(parseInt(cell.dataset.val, 10));
+                    }
+                });
+            });
+        }
+
+        function openOrganisedCaDatePicker() {
+            if (orgPickerModal) orgPickerModal.classList.add('is-open');
+
+            // Initialize to currently selected date or default 05-10-2026
+            if (organisedCaSelectedDateKey) {
+                const p = organisedCaSelectedDateKey.split('-');
+                orgTempDay = parseInt(p[0], 10) || 5;
+                orgTempMonth = parseInt(p[1], 10) || 10;
+                orgTempYear = parseInt(p[2], 10) || 2026;
+            } else {
+                orgTempDay = 5;
+                orgTempMonth = 10;
+                orgTempYear = 2026;
+            }
+
+            setTimeout(() => {
+                scrollDrumTo(orgDayCol, orgTempDay);
+                scrollDrumTo(orgMonthCol, orgTempMonth);
+                scrollDrumTo(orgYearCol, orgTempYear);
+            }, 60);
+        }
+        window.openOrganisedCaDatePicker = openOrganisedCaDatePicker;
+
+        function closeOrganisedCaDatePicker() {
+            if (orgPickerModal) orgPickerModal.classList.remove('is-open');
+        }
+        window.closeOrganisedCaDatePicker = closeOrganisedCaDatePicker;
+
+        function applyOrganisedCaDateFilter() {
+            organisedCaSelectedDateKey = String(orgTempDay).padStart(2, '0') + '-' + String(orgTempMonth).padStart(2, '0') + '-' + orgTempYear;
+            closeOrganisedCaDatePicker();
+            renderDirectoryView(true);
+        }
+        window.applyOrganisedCaDateFilter = applyOrganisedCaDateFilter;
+
+        function clearOrganisedCaDateFilter() {
+            organisedCaSelectedDateKey = null;
+            closeOrganisedCaDatePicker();
+            renderDirectoryView(true);
+        }
+        window.clearOrganisedCaDateFilter = clearOrganisedCaDateFilter;
+
+        // ----------------------------------------------------
+        // ARTICLE DETAIL VIEW LOGIC
+        // ----------------------------------------------------
         function openOrganisedCaArticle(topicTitle) {
             const allTopics = getAllOrganisedCaTopics();
-            const topic = allTopics.find(t => t.topicTitle && t.topicTitle.toLowerCase() === topicTitle.toLowerCase());
+            const topic = allTopics.find(t => t.topicTitle === topicTitle);
             if (!topic) return;
 
-            organisedCaCurrentTopic = topic;
-            organisedCaViewMode = 'full';
-            organisedCaImageDrawerOpen = false;
-            organisedCaMetaDrawerOpen = false;
+            organisedCaActiveTopic = topic;
+            orgImageDrawerOpen = false;
+            orgMetaDrawerOpen = false;
+            orgViewMode = 'detailed';
 
             const dirView = document.getElementById('organisedCaDirectoryView');
             const artView = document.getElementById('organisedCaArticleView');
@@ -1229,9 +1850,9 @@
 
             if (dirView) dirView.style.display = 'none';
             if (artView) {
-                artView.classList.remove('is-active');
+                artView.classList.remove('is-active', 'article-slide-up-run');
                 void artView.offsetWidth;
-                artView.classList.add('is-active');
+                artView.classList.add('is-active', 'article-slide-up-run');
             }
 
             if (pageTitle) {
@@ -1244,62 +1865,68 @@
                 }
             }
 
-            // Controls panel
+            // Populate Title
+            const titleEl = document.getElementById('orgArticleTitle');
+            if (titleEl) titleEl.textContent = topic.topicTitle;
+
+            // Populate Image Drawer (Uncropped & always enabled)
             const hasImage = !!(topic.image && topic.image.url);
             const imgBtn = document.getElementById('orgImageActionBtn');
             if (imgBtn) {
                 imgBtn.textContent = 'View';
-                imgBtn.style.opacity = hasImage ? '1' : '0.4';
-                imgBtn.style.pointerEvents = hasImage ? 'auto' : 'none';
+                imgBtn.style.opacity = '1';
+                imgBtn.style.pointerEvents = 'auto';
             }
+            const imgDrawer = document.getElementById('orgImageDrawer');
+            if (imgDrawer) imgDrawer.classList.remove('is-open');
+
             const imgInner = document.getElementById('orgImageDrawerInner');
             if (imgInner) {
-                imgInner.innerHTML = hasImage ? 
-                    ('<img src="' + topic.image.url + '" alt="' + (topic.image.caption || 'Topic Graphic') + '" loading="lazy">' +
-                    (topic.image.caption ? '<div class="ca-image-caption">' + topic.image.caption + '</div>' : ''))
-                    : '<div style="font-size: 13px; color: var(--text-muted); padding: 8px 0;">No graphic or infographic attached for this topic.</div>';
+                imgInner.innerHTML = hasImage ?
+                    ('<img src="' + topic.image.url + '" alt="' + (topic.image.caption || 'Topic Image') + '" loading="lazy">' +
+                    (topic.image.caption ? '<div class="ca-image-caption">' + topic.image.caption + '</div>' : '')) :
+                    '<div style="font-size: 14px; color: var(--text-muted); padding: 14px 0; text-align: center;">No graphic or infographic attached for this topic.</div>';
             }
+
+            // Populate Metadata Drawer
+            const metaDrawer = document.getElementById('orgMetaDrawer');
+            const metaBtn = document.getElementById('orgMetaDropdownBtn');
+            if (metaDrawer) metaDrawer.classList.remove('is-open');
+            if (metaBtn) metaBtn.classList.remove('is-rotated');
 
             const metaInner = document.getElementById('orgMetaDrawerInner');
             if (metaInner) {
                 metaInner.innerHTML = 
                     '<div class="ca-meta-row">' +
                         '<span class="meta-pill">GS Paper : <strong>' + (topic.gsPaper || 'General Studies') + '</strong></span>' +
-                    '</div>' +
-                    '<div class="ca-meta-row">' +
-                        '<span class="meta-pill">Category : <strong>' + (topic.category || 'National') + '</strong></span>' +
-                    '</div>' +
-                    '<div class="ca-meta-row">' +
-                        '<span class="meta-pill">Comes under : <strong>' + (topic.comesUnder || 'Prelims & Mains') + '</strong></span>' +
+                        '<span class="meta-pill">Category : <strong>' + (topic.category || (topic.categories ? topic.categories.join(', ') : 'National')) + '</strong></span>' +
+                        '<span class="meta-pill">Date : <strong>' + topic.dateStr + '</strong></span>' +
                     '</div>';
             }
 
+            // Populate Short & Detailed Drawers
             const readBtn = document.getElementById('orgReadActionBtn');
             if (readBtn) readBtn.textContent = 'Short';
 
-            // Article content
-            const titleEl = document.getElementById('orgArticleTitle');
-            if (titleEl) titleEl.textContent = topic.topicTitle;
-
             const shortContent = document.getElementById('orgShortContent');
-            if (shortContent) shortContent.innerHTML = renderOrganisedCaShortRevision(topic);
+            if (shortContent) shortContent.innerHTML = renderCaShortRevision(topic);
 
             const detailedContent = document.getElementById('orgDetailedContent');
-            if (detailedContent) detailedContent.innerHTML = renderOrganisedCaArticleSections(topic);
+            if (detailedContent) detailedContent.innerHTML = renderCaArticleSections(topic);
 
             const shortDrawer = document.getElementById('orgShortDrawer');
             const detailedDrawer = document.getElementById('orgDetailedDrawer');
             if (shortDrawer) shortDrawer.classList.remove('is-open');
             if (detailedDrawer) detailedDrawer.classList.add('is-open');
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'instant' });
         }
         window.openOrganisedCaArticle = openOrganisedCaArticle;
 
         function handleOrganisedBack() {
             const artView = document.getElementById('organisedCaArticleView');
             if (artView && artView.classList.contains('is-active')) {
-                renderDirectoryView();
+                renderDirectoryView(true);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
                 if (window.history.length > 1) {
@@ -1311,22 +1938,25 @@
         }
         window.handleOrganisedBack = handleOrganisedBack;
 
+        // Article Controls: Image Drawer Toggle
         function toggleOrgImage() {
-            organisedCaImageDrawerOpen = !organisedCaImageDrawerOpen;
-            const imgBtn = document.getElementById('orgImageActionBtn');
-            if (imgBtn) imgBtn.textContent = organisedCaImageDrawerOpen ? 'Close' : 'View';
+            orgImageDrawerOpen = !orgImageDrawerOpen;
             const drawer = document.getElementById('orgImageDrawer');
-            if (drawer) drawer.classList.toggle('is-open', organisedCaImageDrawerOpen);
+            const btn = document.getElementById('orgImageActionBtn');
+            if (drawer) drawer.classList.toggle('is-open', orgImageDrawerOpen);
+            if (btn) btn.textContent = orgImageDrawerOpen ? 'Close' : 'View';
         }
         window.toggleOrgImage = toggleOrgImage;
 
+        // Article Controls: Read Mode Toggle (Short <-> Full)
         function toggleOrgReadMode() {
-            organisedCaViewMode = (organisedCaViewMode === 'full') ? 'short' : 'full';
+            orgViewMode = (orgViewMode === 'detailed') ? 'short' : 'detailed';
             const readBtn = document.getElementById('orgReadActionBtn');
-            if (readBtn) readBtn.textContent = (organisedCaViewMode === 'short') ? 'Full' : 'Short';
+            if (readBtn) readBtn.textContent = (orgViewMode === 'short') ? 'Full' : 'Short';
+
             const shortDrawer = document.getElementById('orgShortDrawer');
             const detailedDrawer = document.getElementById('orgDetailedDrawer');
-            if (organisedCaViewMode === 'short') {
+            if (orgViewMode === 'short') {
                 if (shortDrawer) shortDrawer.classList.add('is-open');
                 if (detailedDrawer) detailedDrawer.classList.remove('is-open');
             } else {
@@ -1336,34 +1966,30 @@
         }
         window.toggleOrgReadMode = toggleOrgReadMode;
 
+        // Article Controls: Metadata Drawer Toggle
         function toggleOrgMetaDropdown() {
-            organisedCaMetaDrawerOpen = !organisedCaMetaDrawerOpen;
-            const btn = document.getElementById('orgMetaDropdownBtn');
-            if (btn) btn.classList.toggle('is-rotated', organisedCaMetaDrawerOpen);
+            orgMetaDrawerOpen = !orgMetaDrawerOpen;
             const drawer = document.getElementById('orgMetaDrawer');
-            if (drawer) drawer.classList.toggle('is-open', organisedCaMetaDrawerOpen);
+            const btn = document.getElementById('orgMetaDropdownBtn');
+            if (drawer) drawer.classList.toggle('is-open', orgMetaDrawerOpen);
+            if (btn) btn.classList.toggle('is-rotated', orgMetaDrawerOpen);
         }
         window.toggleOrgMetaDropdown = toggleOrgMetaDropdown;
 
-        function renderOrganisedCaListBlock(list) {
+        // ----------------------------------------------------
+        // ARTICLE DATA TEMPLATING (LEFT-ALIGNED, NO GREEN DOTS)
+        // ----------------------------------------------------
+        function renderCaListBlock(list) {
             if (!list || !list.length) return '';
             return list.map(rawText => {
                 if (!rawText || typeof rawText !== 'string') return '';
 
                 let labelPart = '';
                 let restPart = rawText;
+                const colonIdx = rawText.indexOf(':');
 
-                if (rawText.includes('</strong>')) {
-                    const parts = rawText.split('</strong>');
-                    labelPart = parts[0].replace(/<[^>]+>/g, '').trim();
-                    restPart = parts.slice(1).join('</strong>').trim();
-                    if (restPart.startsWith(':')) {
-                        labelPart += ' :';
-                        restPart = restPart.substring(1).trim();
-                    }
-                } else if (rawText.includes(':')) {
-                    const colonIdx = rawText.indexOf(':');
-                    labelPart = rawText.substring(0, colonIdx + 1).trim();
+                if (colonIdx > 0 && colonIdx < 45) {
+                    labelPart = rawText.substring(0, colonIdx).trim();
                     restPart = rawText.substring(colonIdx + 1).trim();
                 }
 
@@ -1391,25 +2017,36 @@
             }).join('');
         }
 
-        function renderOrganisedCaShortRevision(topic) {
+        function renderCaShortRevision(topic) {
             if (!topic) return '';
             const why = (topic.shortArticle && topic.shortArticle.whyInNews) || topic.whyInNews;
-            const concept = (topic.shortArticle && topic.shortArticle.whatConcept) || topic.whatConcept;
-            return (
-                '<section class="note-section">' +
-                    '<h3 class="section-heading">Quick Revision</h3>' +
-                    (why ? '<p class="note-p">' + why + '</p>' : '') +
-                    (concept ? '<p class="note-p" style="margin-top: 10px;">' + concept + '</p>' : '') +
-                '</section>'
-            );
+            const points = (topic.shortArticle && topic.shortArticle.points) || topic.shortArticle || [];
+
+            let html = '';
+            if (why) {
+                html += '<section class="note-section">' +
+                    '<h3 class="section-heading">Why in News?</h3>' +
+                    '<p class="note-p">' + why + '</p>' +
+                '</section>';
+            }
+            if (Array.isArray(points) && points.length > 0) {
+                html += '<section class="note-section">' +
+                    '<h3 class="section-heading">Key Points</h3>' +
+                    '<ul class="point-sublist">' +
+                        points.map(p => '<li class="point-bullet-item">' + p + '</li>').join('') +
+                    '</ul>' +
+                '</section>';
+            }
+            return html;
         }
 
-        function renderOrganisedCaArticleSections(data) {
-            if (!data) return '';
+        function renderCaArticleSections(topic) {
+            if (!topic) return '';
+            const data = (topic.detailedAnalysis && typeof topic.detailedAnalysis === 'object') ? topic.detailedAnalysis : topic;
 
             let orgRowsHtml = '';
-            if (data.whoOrg && data.whoOrg.length > 0) {
-                orgRowsHtml = data.whoOrg.map(row => (
+            if (data.whoOrOrganisation && Array.isArray(data.whoOrOrganisation)) {
+                orgRowsHtml = data.whoOrOrganisation.map(row => (
                     '<div class="info-callout-row"><strong>' + row.label + ' :</strong> ' + row.val + '</div>'
                 )).join('');
             }
@@ -1421,10 +2058,10 @@
                         '<p class="note-p">' + data.whyInNews + '</p>' +
                     '</section>' : '') +
 
-                (data.whatConcept ? 
+                (data.whatOrConcept ? 
                     '<section class="note-section">' +
                         '<h3 class="section-heading">What / Concept</h3>' +
-                        '<p class="note-p">' + data.whatConcept + '</p>' +
+                        '<p class="note-p">' + data.whatOrConcept + '</p>' +
                     '</section>' : '') +
 
                 (orgRowsHtml ? 
@@ -1435,41 +2072,54 @@
 
                 (data.importantFacts && data.importantFacts.length > 0 ? 
                     '<section class="note-section">' +
-                        '<h3 class="section-heading">Important Facts ⭐</h3>' +
-                        '<div class="note-items-wrapper">' + renderOrganisedCaListBlock(data.importantFacts) + '</div>' +
+                        '<h3 class="section-heading">Important Facts ?</h3>' +
+                        '<div class="note-items-wrapper">' + renderCaListBlock(data.importantFacts) + '</div>' +
                     '</section>' : '') +
 
                 (data.background && data.background.length > 0 ? 
                     '<section class="note-section">' +
-                        '<h3 class="section-heading">Background / Static Linkage</h3>' +
-                        '<div class="note-items-wrapper">' + renderOrganisedCaListBlock(data.background) + '</div>' +
-                    '</section>' : '') +
-
-                (data.significance && data.significance.length > 0 ? 
-                    '<section class="note-section">' +
-                        '<h3 class="section-heading">Significance</h3>' +
-                        '<div class="note-items-wrapper">' + renderOrganisedCaListBlock(data.significance) + '</div>' +
+                        '<h3 class="section-heading">Background</h3>' +
+                        '<div class="note-items-wrapper">' + renderCaListBlock(data.background) + '</div>' +
                     '</section>' : '') +
 
                 (data.challenges && data.challenges.length > 0 ? 
                     '<section class="note-section">' +
-                        '<h3 class="section-heading">Challenges / Concerns</h3>' +
-                        '<div class="note-items-wrapper">' + renderOrganisedCaListBlock(data.challenges) + '</div>' +
+                        '<h3 class="section-heading">Challenges</h3>' +
+                        '<div class="note-items-wrapper">' + renderCaListBlock(data.challenges) + '</div>' +
                     '</section>' : '') +
 
                 (data.wayForward && data.wayForward.length > 0 ? 
                     '<section class="note-section">' +
                         '<h3 class="section-heading">Way Forward</h3>' +
-                        '<div class="note-items-wrapper">' + renderOrganisedCaListBlock(data.wayForward) + '</div>' +
+                        '<div class="note-items-wrapper">' + renderCaListBlock(data.wayForward) + '</div>' +
                     '</section>' : '')
             );
         }
 
-        // Initialize on DOM load
-        window.addEventListener('DOMContentLoaded', () => {
-            renderDirectoryView();
+        // Initialize on DOM Ready
+        document.addEventListener('DOMContentLoaded', () => {
+            initPickerColumns();
+            setupDrumScrollHighlight(orgDayCol, v => orgTempDay = v);
+            setupDrumScrollHighlight(orgMonthCol, v => orgTempMonth = v);
+            setupDrumScrollHighlight(orgYearCol, v => orgTempYear = v);
+
+            // Fresh load: Always reset to unselected date and category 'All'
+            organisedCaSelectedDateKey = null;
+            organisedCaSelectedCategory = 'All';
+            organisedCaSortOrder = 'newest';
+
+            renderDirectoryView(false);
+        });
+
+        // Reset state freshly whenever navigating back
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                organisedCaSelectedDateKey = null;
+                organisedCaSelectedCategory = 'All';
+                organisedCaSortOrder = 'newest';
+                renderDirectoryView(false);
+            }
         });
     </script>
-    <script src="/script.js"></script>
 </body>
 </html>

@@ -396,16 +396,16 @@
             }
             .capsule-panel:hover .prose-text,
             .capsule-panel:hover .panel-title,
-            .capsule-panel:hover .card-parallax-content {
-                transform: translateY(-6px) !important;
-            }
+        .capsule-panel:hover .card-parallax-content {
+            transform: none !important;
+        }
         }
 
         .prose-text,
         .panel-title,
         .card-parallax-content {
-            transform: translateY(0);
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: none !important;
+            transition: none !important;
         }
 
         @media (hover: none) and (pointer: coarse) {
@@ -503,6 +503,14 @@
         /* Zoom on hover ONLY for real mouse pointers (Laptop/Desktop). Touch screens will NOT trigger this. */
         
 
+            /* Footer Static Words Override */
+        .card-parallax-content, .prose-text, .panel-title, p, span, a {
+            transform: none !important;
+        }
+        .capsule-panel:hover .card-parallax-content,
+        .capsule-panel:active .card-parallax-content {
+            transform: none !important;
+        }
     </style>
 </head>
 <body>

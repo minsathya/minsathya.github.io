@@ -437,7 +437,7 @@
         main {
             flex-grow: 1;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto 60px auto;
             display: flex;
             flex-direction: column;
@@ -473,7 +473,7 @@
             border: 1px solid var(--panel-border);
             border-radius: 24px;
             padding: 16px 28px;
-            margin-bottom: 32px;
+            margin-bottom: 12px !important;
             box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
@@ -767,7 +767,7 @@
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
-            margin-top: 16px;
+            margin-top: 0 !important; margin-bottom: 24px !important;
             transition: background-color 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
         }
 
@@ -871,9 +871,11 @@
             padding-top: 14px;
         }
         .ca-image-drawer-inner img {
-            width: 100%;
-            max-height: 420px;
-            object-fit: cover;
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            max-height: 80vh;
+            object-fit: contain;
             border-radius: 16px;
             display: block;
         }
@@ -1081,9 +1083,9 @@
 
         .point-bullet-item {
             position: relative;
-            padding-left: 18px;
-            font-size: 14.5px;
-            line-height: 1.6;
+            padding-left: 0;
+            font-size: 17px;
+            line-height: 1.8;
             color: var(--text-main);
             opacity: 0.92;
             text-align: left;
@@ -1189,7 +1191,7 @@
             flex-wrap: wrap;
             align-items: center;
             gap: 10px;
-            margin-bottom: 32px;
+            margin-bottom: 12px !important;
             padding-bottom: 22px;
             border-bottom: 1px solid var(--row-divider);
             width: 100%;
@@ -1236,7 +1238,7 @@
 
         .image-action-btn,
         .read-action-btn {
-            background: #258bf5;
+            background: var(--btn-blue) !important;
             color: #ffffff;
             border: none;
             outline: none;
@@ -1855,7 +1857,7 @@
             align-items: center;
             gap: 14px;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto 24px auto;
             position: relative;
             z-index: 5;
@@ -2181,6 +2183,8 @@
                     cell.className = 'drum-cell';
                     cell.textContent = String(d).padStart(2, '0');
                     cell.dataset.val = d;
+                    /* Tap to select date in drum wheel */
+                    cell.addEventListener("click", () => { dayCol.scrollTo({ top: (l * 31 + d - 1) * 48, behavior: "smooth" }); });
                     dayCol.appendChild(cell);
                 }
             }
@@ -2191,6 +2195,7 @@
                 cell.className = 'drum-cell';
                 cell.textContent = String(m).padStart(2, '0');
                 cell.dataset.val = m;
+                cell.addEventListener("click", () => { monthCol.scrollTo({ top: (m - 1) * 48, behavior: "smooth" }); });
                 monthCol.appendChild(cell);
             }
 
@@ -2202,6 +2207,7 @@
                 cell.className = 'drum-cell';
                 cell.textContent = y;
                 cell.dataset.val = y;
+                cell.addEventListener("click", () => { yearCol.scrollTo({ top: (y - minYear) * 48, behavior: "smooth" }); });
                 yearCol.appendChild(cell);
             }
         }
@@ -2404,8 +2410,8 @@
             const imgBtn = document.getElementById('caImageActionBtn');
             if (imgBtn) {
                 imgBtn.textContent = caImageDrawerOpen ? 'Close' : 'View';
-                imgBtn.style.opacity = hasImage ? '1' : '0.4';
-                imgBtn.style.pointerEvents = hasImage ? 'auto' : 'none';
+                imgBtn.style.opacity = "1";
+            imgBtn.style.pointerEvents = "auto";
             }
             const imgInner = document.getElementById('caImageDrawerInner');
             if (imgInner) {
@@ -2462,7 +2468,9 @@
                 if (stage) {
                     stage.classList.remove('article-slide-up-run');
                     void stage.offsetWidth;
-                    stage.classList.add('article-slide-up-run');
+                    requestAnimationFrame(() => {
+                        stage.classList.add('article-slide-up-run');
+                    });
                 }
             }
 
