@@ -247,43 +247,42 @@
         }
 
         .back-icon-btn {
-            background: none;
+            background: transparent;
             border: none;
             outline: none;
-            cursor: pointer;
-            padding: 6px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
+            cursor: pointer;
             color: var(--text-main);
-            transition: transform 0.2s var(--ease-smooth), opacity 0.2s ease;
-            user-select: none;
-            -webkit-user-select: none;
+            padding: 0;
+            flex-shrink: 0;
+            transition: background-color 0.2s var(--ease-smooth), transform 0.2s var(--ease-smooth);
         }
+
         .back-icon-btn:hover {
-            transform: translate3d(-3px, 0, 0);
-            opacity: 0.85;
+            background-color: var(--item-card-hover, rgba(255, 255, 255, 0.08));
+            transform: translate3d(-2px, 0, 0);
         }
-        .back-icon-btn:active {
-            transform: translate3d(-5px, 0, 0) scale(0.94);
-        }
+
         .back-icon-btn svg {
             width: 22px;
             height: 22px;
             stroke: currentColor;
-            stroke-width: 2.2;
-            fill: none;
+            stroke-width: 2.4;
             stroke-linecap: round;
             stroke-linejoin: round;
+            fill: none;
         }
 
         .page-title {
-            font-size: 26px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
+            font-size: 28px;
+            font-weight: 400;
+            letter-spacing: -0.6px;
             color: var(--text-main);
-            margin: 0;
             line-height: 1.2;
         }
 
@@ -591,15 +590,20 @@
             user-select: none;
             -webkit-user-select: none;
             touch-action: manipulation;
-            transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.2s ease, box-shadow 0.22s ease;
+            /* Spring return animation: goes inside then comes out like a spring */
+            transform: scale3d(1, 1, 1);
+            transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        border-color 0.2s ease, 
+                        box-shadow 0.22s ease;
             animation: cardsSlideUpEntrance 0.45s var(--ease-premium) both;
         }
         .organised-ca-card:hover {
             border-color: var(--panel-border-hover);
         }
-        /* Gentle smooth touch panel feedback matching mobile app - never gets stuck */
+        /* Tap feedback: compresses smoothly inside, springs out on release */
         .organised-ca-card:active {
-            transform: scale(0.985) !important;
+            transform: scale3d(0.97, 0.97, 1) !important;
+            transition: transform 0.12s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
         /* Left thumbnail / placeholder */
@@ -960,8 +964,18 @@
         /* Standard Typography */
         .note-section {
             margin-bottom: 24px;
-            width: 100%;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--row-divider);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
             text-align: left;
+            width: 100%;
+        }
+        .note-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
 
         .section-heading {
@@ -989,8 +1003,22 @@
 
         .point-bullet-item {
             position: relative;
-            padding-left: 0;
+            padding-left: 20px;
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--text-main);
+            opacity: 0.92;
+            text-align: left;
             margin-bottom: 6px;
+        }
+
+        .point-bullet-item::before {
+            content: "•";
+            position: absolute;
+            left: 4px;
+            top: 0;
+            font-size: 16px;
+            color: var(--text-main);
         }
 
         .point-subheading {
@@ -1269,7 +1297,10 @@
         <!-- Standardized Page Header Row -->
         <div class="page-header-row" id="pageHeaderRow">
             <button type="button" class="back-icon-btn" id="headerBackBtn" onclick="handleOrganisedBack()" aria-label="Go back">
-                <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <svg viewBox="0 0 24 24">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
             </button>
             <h1 class="page-title" id="pageTitleText">Organised current affairs</h1>
         </div>
@@ -1696,11 +1727,13 @@
                 );
             }).join('');
 
-            // Attach safe click & press listeners to cards
+            // Attach safe click & press listeners to cards with spring tactile delay
             container.querySelectorAll('.organised-ca-card').forEach(card => {
                 card.addEventListener('click', () => {
                     const title = decodeURIComponent(card.getAttribute('data-title'));
-                    openOrganisedCaArticle(title);
+                    setTimeout(() => {
+                        openOrganisedCaArticle(title);
+                    }, 80);
                 });
             });
 
