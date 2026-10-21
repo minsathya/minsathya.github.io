@@ -147,7 +147,7 @@
             margin: 0 auto;
             width: 100%;
             -webkit-font-smoothing: antialiased;
-            overflow-x: clip;
+            /* overflow-x on html */
             transition: background-color 0.8s var(--ease-smooth), color 0.8s var(--ease-smooth);
         }
 
@@ -915,7 +915,9 @@
         }
         .ca-meta-row {
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
+            gap: 8px;
             width: 100%;
         }
 
@@ -1059,13 +1061,14 @@
 
         /* SECTIONS & TYPOGRAPHY */
         .note-section {
-            margin-bottom: 24px;
-            padding-bottom: 20px;
+            margin-bottom: 18px;
+            padding-bottom: 16px;
             border-bottom: 1px solid var(--row-divider);
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             text-align: left;
+            width: 100%;
         }
         .note-section:last-child {
             border-bottom: none;
@@ -1074,20 +1077,21 @@
         }
 
         .section-heading {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 600;
             color: var(--text-main);
             letter-spacing: -0.2px;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             text-align: left;
         }
 
         .note-p {
-            font-size: 15px;
-            line-height: 1.75;
+            font-size: 16px;
+            line-height: 1.6;
             color: var(--text-main);
             opacity: 0.92;
             padding-left: 0;
+            margin: 0;
             text-align: left;
             margin: 0;
         }
@@ -1096,7 +1100,7 @@
         .note-items-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 6px;
             width: 100%;
         }
 
@@ -1122,25 +1126,26 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
         }
 
         .point-bullet-item {
             position: relative;
-            padding-left: 20px;
-            font-size: 17px;
-            line-height: 1.8;
+            padding-left: 18px;
+            font-size: 16px;
+            line-height: 1.6;
             color: var(--text-main);
             opacity: 0.92;
             text-align: left;
+            margin-bottom: 4px;
         }
 
         .point-bullet-item::before {
             content: "•";
             position: absolute;
-            left: 4px;
+            left: 3px;
             top: 0;
-            font-size: 16px;
+            font-size: 15px;
             color: var(--text-main);
         }
 
@@ -1178,7 +1183,7 @@
         .side-nav-btn {
             display: none;
             position: fixed !important;
-            top: 50vh !important;
+            top: 50% !important;
             transform: translateY(-50%) translateZ(0) !important;
             width: 48px;
             height: 48px;
@@ -1257,15 +1262,15 @@
             align-items: center;
             gap: 6px;
             padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--panel-border);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 400;
+            background: var(--pill-bg, rgba(255, 255, 255, 0.04));
+            border: 1px solid var(--pill-border, rgba(255, 255, 255, 0.08));
             color: var(--text-muted);
-            transition: background-color 0.8s var(--ease-smooth), 
-                        border-color 0.8s var(--ease-smooth), 
-                        color 0.8s var(--ease-smooth);
+            transition: background-color 0.4s var(--ease-smooth), 
+                        border-color 0.4s var(--ease-smooth), 
+                        color 0.4s var(--ease-smooth);
         }
 
         body.light-mode .meta-pill { background: rgba(0, 0, 0, 0.03); }
@@ -1449,14 +1454,6 @@
         }
 
         /* CONTENT SECTIONS */
-        .note-section {
-            margin-bottom: 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .note-section:last-child { margin-bottom: 0; }
 
         .section-heading {
             font-size: 18.5px;
@@ -2335,6 +2332,12 @@
         function updateNavArrows() {
             const prevBtn = document.getElementById('sidePrevBtn');
             const nextBtn = document.getElementById('sideNextBtn');
+            if (prevBtn && prevBtn.parentElement !== document.documentElement) {
+                document.documentElement.appendChild(prevBtn);
+            }
+            if (nextBtn && nextBtn.parentElement !== document.documentElement) {
+                document.documentElement.appendChild(nextBtn);
+            }
             const mobPrevBtn = document.getElementById('caMobPrevBtn');
             const mobNextBtn = document.getElementById('caMobNextBtn');
 
@@ -2491,12 +2494,8 @@
                 metaInner.innerHTML = 
                     '<div class="ca-meta-row">' +
                         '<span class="meta-pill">GS Paper : <strong>' + (topic.gsPaper || 'General Studies') + '</strong></span>' +
-                    '</div>' +
-                    '<div class="ca-meta-row">' +
                         '<span class="meta-pill">Category : <strong>' + (topic.category || 'National') + '</strong></span>' +
-                    '</div>' +
-                    '<div class="ca-meta-row">' +
-                        '<span class="meta-pill">Comes under : <strong>' + (topic.comesUnder || 'Prelims & Mains') + '</strong></span>' +
+                        '<span class="meta-pill">Date : <strong>' + activeDateKey + '</strong></span>' +
                     '</div>';
             }
 
@@ -2574,14 +2573,27 @@ window.toggleActiveReadMode = function() {
             if (readBtn) {
                 readBtn.textContent = caViewMode === 'short' ? 'Full' : 'Short';
             }
+            const stage = document.getElementById('caArticleFeedStage');
             const shortDrawer = document.getElementById('caShortDrawer');
             const detailedDrawer = document.getElementById('caDetailedDrawer');
+
+            if (stage) {
+                stage.classList.remove('article-slide-up-run');
+                void stage.offsetWidth;
+            }
+
             if (caViewMode === 'short') {
                 if (shortDrawer) shortDrawer.classList.add('is-open');
                 if (detailedDrawer) detailedDrawer.classList.remove('is-open');
             } else {
                 if (shortDrawer) shortDrawer.classList.remove('is-open');
                 if (detailedDrawer) detailedDrawer.classList.add('is-open');
+            }
+
+            if (stage) {
+                requestAnimationFrame(() => {
+                    stage.classList.add('article-slide-up-run');
+                });
             }
         };
 

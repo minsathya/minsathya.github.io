@@ -908,12 +908,19 @@
             gap: 8px;
         }
         .meta-pill {
-            font-size: 12px;
-            background: var(--pill-bg);
-            border: 1px solid var(--pill-border);
-            padding: 4px 10px;
-            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 400;
+            background: var(--pill-bg, rgba(255, 255, 255, 0.04));
+            border: 1px solid var(--pill-border, rgba(255, 255, 255, 0.08));
             color: var(--text-muted);
+            transition: background-color 0.4s var(--ease-smooth), 
+                        border-color 0.4s var(--ease-smooth), 
+                        color 0.4s var(--ease-smooth);
         }
         .meta-pill strong {
             color: var(--text-main);
@@ -935,7 +942,7 @@
             color: var(--text-main);
             line-height: 1.34;
             margin-top: 0;
-            margin-bottom: 24px !important;
+            margin-bottom: 20px !important;
             text-align: left;
         }
 
@@ -966,12 +973,12 @@
 
         /* Standard Typography */
         .note-section {
-            margin-bottom: 24px;
-            padding-bottom: 20px;
+            margin-bottom: 18px;
+            padding-bottom: 16px;
             border-bottom: 1px solid var(--row-divider);
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             text-align: left;
             width: 100%;
         }
@@ -982,11 +989,11 @@
         }
 
         .section-heading {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 600;
-            letter-spacing: -0.2px;
             color: var(--text-main);
-            margin-bottom: 12px;
+            letter-spacing: -0.2px;
+            margin-bottom: 4px;
             text-align: left;
         }
 
@@ -1006,21 +1013,21 @@
 
         .point-bullet-item {
             position: relative;
-            padding-left: 20px;
-            font-size: 17px;
-            line-height: 1.8;
+            padding-left: 18px;
+            font-size: 16px;
+            line-height: 1.6;
             color: var(--text-main);
             opacity: 0.92;
             text-align: left;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .point-bullet-item::before {
             content: "•";
             position: absolute;
-            left: 4px;
+            left: 3px;
             top: 0;
-            font-size: 16px;
+            font-size: 15px;
             color: var(--text-main);
         }
 
@@ -1961,6 +1968,10 @@
             if (!topic) return;
 
             organisedCaActiveTopic = topic;
+            try {
+                sessionStorage.setItem('oca_active_topic', topicTitle);
+                history.replaceState(null, '', '#' + encodeURIComponent(topicTitle));
+            } catch(e) {}
             orgImageDrawerOpen = false;
             orgMetaDrawerOpen = false;
             orgViewMode = 'detailed';
@@ -2051,6 +2062,10 @@
         function handleOrganisedBack() {
             const artView = document.getElementById('organisedCaArticleView');
             if (artView && artView.classList.contains('is-active')) {
+                try {
+                    sessionStorage.removeItem('oca_active_topic');
+                    history.replaceState(null, '', window.location.pathname + window.location.search);
+                } catch(e) {}
                 renderDirectoryView(true);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
@@ -2079,14 +2094,27 @@
             const readBtn = document.getElementById('orgReadActionBtn');
             if (readBtn) readBtn.textContent = (orgViewMode === 'short') ? 'Full' : 'Short';
 
+            const stage = document.getElementById('caArticleFeedStage');
             const shortDrawer = document.getElementById('orgShortDrawer');
             const detailedDrawer = document.getElementById('orgDetailedDrawer');
+
+            if (stage) {
+                stage.classList.remove('article-slide-up-run');
+                void stage.offsetWidth;
+            }
+
             if (orgViewMode === 'short') {
                 if (shortDrawer) shortDrawer.classList.add('is-open');
                 if (detailedDrawer) detailedDrawer.classList.remove('is-open');
             } else {
                 if (shortDrawer) shortDrawer.classList.remove('is-open');
                 if (detailedDrawer) detailedDrawer.classList.add('is-open');
+            }
+
+            if (stage) {
+                requestAnimationFrame(() => {
+                    stage.classList.add('article-slide-up-run');
+                });
             }
         }
         window.toggleOrgReadMode = toggleOrgReadMode;
@@ -2232,6 +2260,22 @@
             organisedCaSortOrder = 'newest';
 
             renderDirectoryView(false);
+
+            // If page was refreshed while viewing an article, stay on that article!
+            let savedTopic = '';
+            if (window.location.hash && window.location.hash.length > 1) {
+                savedTopic = decodeURIComponent(window.location.hash.substring(1));
+            } else {
+                try { savedTopic = sessionStorage.getItem('oca_active_topic') || ''; } catch(e) {}
+            }
+
+            if (savedTopic) {
+                const allTopics = getAllOrganisedCaTopics();
+                const matched = allTopics.find(t => t.topicTitle === savedTopic);
+                if (matched) {
+                    openOrganisedCaArticle(savedTopic);
+                }
+            }
         });
 
         // Reset state freshly whenever navigating back

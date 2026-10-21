@@ -1,6 +1,6 @@
 window.currentDailyTopics = [
   {
-    topicTitle: "Major Uranium Mines in India",
+    topicTitle: "Major Uranium Mines in India & Diamond Jubilee of Jaduguda Operations",
     gsPaper: "GS-1 & GS-3",
     category: "Geography & Energy",
     comesUnder: "Prelims and Mains",
