@@ -1119,10 +1119,11 @@
         }
 
         .point-subheading {
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 600;
             color: var(--text-main);
-            line-height: 1.5;
+            line-height: 1.8;
+            margin-top: 10px;
             margin-bottom: 6px;
             text-align: left;
         }
@@ -1139,12 +1140,12 @@
         .point-bullet-item {
             position: relative;
             padding-left: 18px;
-            font-size: 16px;
-            line-height: 1.6;
+            font-size: 17px;
+            line-height: 1.8;
             color: var(--text-main);
             opacity: 0.92;
             text-align: left;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .point-bullet-item::before {
@@ -1228,8 +1229,8 @@
         /* Fixed on empty space of both sides - never sits on content */
         @media (min-width: 901px) {
             .side-nav-btn { display: flex !important; }
-            .side-nav-prev { left: 20px !important; }
-            .side-nav-next { right: 20px !important; }
+            .side-nav-prev { left: max(20px, calc(50% - 500px - 70px)) !important; }
+            .side-nav-next { right: max(20px, calc(50% - 500px - 70px)) !important; }
         }
         @media (max-width: 900px) {
             .side-nav-btn { display: none !important; }
@@ -1916,7 +1917,7 @@
             .article-card { padding: 30px 20px; border-radius: 22px; }
             .article-title { font-size: 22px; }
             .section-heading { font-size: 17px; }
-            .note-p, .note-list li, .note-sub-row, .info-callout-row { font-size: 17px; }
+            .note-p, .note-list li, .note-sub-row, .info-callout-row, .point-subheading, .point-bullet-item { font-size: 17px; }
             .info-callout { padding: 18px 18px; border-radius: 16px; }
             .footer-links-row { gap: 12px 20px; max-width: 320px; }
         }
@@ -2612,14 +2613,8 @@ window.toggleActiveReadMode = function() {
             if (readBtn) {
                 readBtn.textContent = caViewMode === 'short' ? 'Full' : 'Short';
             }
-            const stage = document.getElementById('caArticleFeedStage');
             const shortDrawer = document.getElementById('caShortDrawer');
             const detailedDrawer = document.getElementById('caDetailedDrawer');
-
-            if (stage) {
-                stage.classList.remove('article-slide-up-run');
-                void stage.offsetWidth;
-            }
 
             if (caViewMode === 'short') {
                 if (shortDrawer) shortDrawer.classList.add('is-open');
@@ -2627,12 +2622,6 @@ window.toggleActiveReadMode = function() {
             } else {
                 if (shortDrawer) shortDrawer.classList.remove('is-open');
                 if (detailedDrawer) detailedDrawer.classList.add('is-open');
-            }
-
-            if (stage) {
-                requestAnimationFrame(() => {
-                    stage.classList.add('article-slide-up-run');
-                });
             }
         };
 
