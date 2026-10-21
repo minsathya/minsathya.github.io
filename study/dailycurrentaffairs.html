@@ -169,20 +169,21 @@
             position: relative;
             display: inline-flex;
             align-items: baseline;
-            justify-content: flex-start;
+            justify-content: center;
             height: auto;
             padding: 0 4px;
             background-color: transparent !important;
             border: none !important;
             text-decoration: none !important;
-            font-size: 42px;
-            font-weight: 700;
-            letter-spacing: -1.2px;
+            font-size: 34px;
+            font-weight: 500;
+            letter-spacing: -0.8px;
             line-height: 1;
             box-shadow: none !important;
             touch-action: manipulation;
             cursor: pointer;
             user-select: none;
+            -webkit-user-select: none;
             transform: translateZ(0);
             transition: transform 0.45s var(--ease-smooth);
         }
@@ -1215,8 +1216,8 @@
         /* Fixed on empty space of both sides - never sits on content */
         @media (min-width: 901px) {
             .side-nav-btn { display: flex !important; }
-            .side-nav-prev { left: 36px !important; }
-            .side-nav-next { right: 36px !important; }
+            .side-nav-prev { left: 20px !important; }
+            .side-nav-next { right: 20px !important; }
         }
         @media (max-width: 900px) {
             .side-nav-btn { display: none !important; }
@@ -1289,35 +1290,48 @@
         body.light-mode .image-toggle-pill,
         body.light-mode .read-toggle-pill { background: rgba(0, 0, 0, 0.03); }
 
+        .ca-direct-action-btn,
         .image-action-btn,
         .read-action-btn {
             background: var(--btn-blue) !important;
-            color: #ffffff;
+            color: #ffffff !important;
             border: none;
             outline: none;
-            padding: 3px 12px;
+            padding: 5px 15px;
             border-radius: 14px;
             font-family: inherit;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
+            box-shadow: none !important;
+            user-select: none;
+            -webkit-user-select: none;
+            min-width: 58px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-sizing: border-box;
             transform-origin: center center;
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent !important;
-            transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s var(--ease-smooth);
+            transition: transform 0.18s var(--ease-smooth), opacity 0.18s ease;
         }
 
-        @media (hover: hover) and (pointer: fine) {
-            .image-action-btn:hover,
-            .read-action-btn:hover { opacity: 0.95; transform: scale3d(1.028, 1.028, 1); }
-            .image-action-btn:active,
-            .read-action-btn:active { transform: scale3d(1, 1, 1) !important; }
+        .ca-direct-action-btn:hover,
+        .image-action-btn:hover,
+        .read-action-btn:hover {
+            opacity: 0.94;
         }
 
-        @media (hover: none), (pointer: coarse) {
-            .image-action-btn:active,
-            .read-action-btn:active { transform: scale3d(1.028, 1.028, 1) !important; }
+        .ca-direct-action-btn:active,
+        .image-action-btn:active,
+        .read-action-btn:active {
+            transform: scale(0.95) !important;
+            opacity: 0.9;
         }
+
+        
 
         /* INLINE REFERENCE LINKS (APPLE BLUE) */
         a.inline-link {
@@ -2708,15 +2722,8 @@ window.toggleActiveReadMode = function() {
 
         function renderCaShortRevision(topic) {
             if (!topic) return '';
-            const why = (topic.shortArticle && topic.shortArticle.whyInNews) || topic.whyInNews;
-            const concept = (topic.shortArticle && topic.shortArticle.whatConcept) || topic.whatConcept;
-            return (
-                '<section class="note-section">' +
-                    '<h3 class="section-heading">Quick Revision</h3>' +
-                    (why ? '<p class="note-p">' + why + '</p>' : '') +
-                    (concept ? '<p class="note-p" style="margin-top: 10px;">' + concept + '</p>' : '') +
-                '</section>'
-            );
+            const shortData = topic.shortArticle || topic;
+            return renderCaArticleSections(shortData);
         }
 
         function renderCaArticleSections(data) {

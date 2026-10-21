@@ -1,8 +1,8 @@
 window.currentDailyTopics = [
   {
-    topicTitle: "Major Uranium Mines in India & Diamond Jubilee of Jaduguda Operations",
+    topicTitle: "Major Uranium Mines in India",
     gsPaper: "GS-1 & GS-3",
-    category: "Geography & Energy / Mineral Resources",
+    category: "Geography & Energy",
     comesUnder: "Prelims and Mains",
     location: "East Singhbhum (Jharkhand), Kadapa (Andhra Pradesh), West Khasi Hills (Meghalaya), Yadgir (Karnataka), Sikar (Rajasthan)",
     image: null,

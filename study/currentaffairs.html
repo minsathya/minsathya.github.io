@@ -173,10 +173,9 @@
             background-color: transparent !important;
             border: none !important;
             text-decoration: none !important;
-            font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif !important;
-            font-size: 42px;
-            font-weight: 700;
-            letter-spacing: -1.2px;
+            font-size: 34px;
+            font-weight: 500;
+            letter-spacing: -0.8px;
             line-height: 1;
             box-shadow: none !important;
             touch-action: manipulation;
@@ -586,13 +585,11 @@
             box-sizing: border-box;
             width: 100%;
             min-height: 104px;
-            will-change: transform;
             user-select: none;
             -webkit-user-select: none;
             touch-action: manipulation;
-            /* Spring return animation: goes inside then comes out like a spring */
-            transform: scale3d(1, 1, 1);
-            transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), 
+            transition: transform 0.2s var(--ease-smooth), 
+                        opacity 0.2s ease, 
                         border-color 0.2s ease, 
                         box-shadow 0.22s ease;
             animation: cardsSlideUpEntrance 0.45s var(--ease-premium) both;
@@ -600,10 +597,10 @@
         .organised-ca-card:hover {
             border-color: var(--panel-border-hover);
         }
-        /* Tap feedback: compresses smoothly inside, springs out on release */
+        /* Tap behavior matching the 'All' button */
         .organised-ca-card:active {
-            transform: scale3d(0.97, 0.97, 1) !important;
-            transition: transform 0.12s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            transform: scale(0.96) !important;
+            opacity: 0.92;
         }
 
         /* Left thumbnail / placeholder */
@@ -793,6 +790,12 @@
             box-shadow: none !important;
             user-select: none;
             -webkit-user-select: none;
+            min-width: 58px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-sizing: border-box;
             transition: transform 0.18s var(--ease-smooth), opacity 0.18s ease;
         }
         .ca-direct-action-btn:active {
@@ -1731,9 +1734,7 @@
             container.querySelectorAll('.organised-ca-card').forEach(card => {
                 card.addEventListener('click', () => {
                     const title = decodeURIComponent(card.getAttribute('data-title'));
-                    setTimeout(() => {
-                        openOrganisedCaArticle(title);
-                    }, 80);
+                    openOrganisedCaArticle(title);
                 });
             });
 
@@ -2154,15 +2155,8 @@
 
         function renderCaShortRevision(topic) {
             if (!topic) return '';
-            const why = (topic.shortArticle && topic.shortArticle.whyInNews) || topic.whyInNews;
-            const concept = (topic.shortArticle && topic.shortArticle.whatConcept) || topic.whatConcept;
-            return (
-                '<section class="note-section">' +
-                    '<h3 class="section-heading">Quick Revision</h3>' +
-                    (why ? '<p class="note-p">' + why + '</p>' : '') +
-                    (concept ? '<p class="note-p" style="margin-top: 10px;">' + concept + '</p>' : '') +
-                '</section>'
-            );
+            const shortData = topic.shortArticle || topic;
+            return renderCaArticleSections(shortData);
         }
 
         function renderCaArticleSections(data) {
