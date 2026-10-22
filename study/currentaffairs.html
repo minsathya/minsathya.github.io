@@ -683,18 +683,23 @@
             word-break: normal !important;
             overflow-wrap: break-word !important;
             display: inline-block;
-            transform-origin: left center !important;
+            width: fit-content;
+            max-width: 100%;
+            transform-origin: center center !important;
             transition: transform 0.28s var(--ease-smooth), color 0.2s ease;
+            will-change: transform;
+            -webkit-font-smoothing: antialiased;
+            backface-visibility: hidden;
         }
 
         .organised-ca-card:hover .organised-ca-card-title {
-            transform: scale3d(1.028, 1.028, 1) !important;
+            transform: scale(1.024) !important;
             color: var(--text-main);
         }
 
         @media (hover: none), (pointer: coarse) {
             .organised-ca-card:active .organised-ca-card-title {
-                transform: scale3d(1.028, 1.028, 1) !important;
+                transform: scale(1.024) !important;
             }
         }
 
@@ -976,8 +981,39 @@
             text-align: left !important;
         }
 
-        /* Smooth Content Drawers */
-        .ca-content-drawer,
+        /* Smooth Transition for Short Revision Drawer (Matches minsathya-app) */
+        .ca-content-drawer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            width: 100%;
+            margin: 0;
+            will-change: grid-template-rows;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        .ca-content-drawer.is-open {
+            grid-template-rows: 1fr;
+            transition: grid-template-rows 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ca-content-overflow {
+            min-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translate3d(0, 0, 0);
+            transition: opacity 0.28s ease;
+            will-change: opacity;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        .ca-content-drawer.is-open .ca-content-overflow {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+            transition: opacity 0.34s ease;
+        }
+
+        /* Smooth Transition for Detailed Analysis Drawer (Matches minsathya-app) */
         .ca-detailed-content-drawer {
             display: grid;
             grid-template-rows: 0fr;
@@ -989,27 +1025,24 @@
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
-        .ca-content-drawer.is-open,
         .ca-detailed-content-drawer.is-open {
             grid-template-rows: 1fr;
             transition: grid-template-rows 0.48s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .ca-content-overflow,
         .ca-detailed-overflow {
             min-height: 0;
             overflow: hidden;
             opacity: 0;
-            transform: translate3d(0, 14px, 0);
-            transition: opacity 0.28s ease, transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
+            transform: translate3d(0, 0, 0);
+            transition: opacity 0.28s ease;
+            will-change: opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
-        .ca-content-drawer.is-open .ca-content-overflow,
         .ca-detailed-content-drawer.is-open .ca-detailed-overflow {
             opacity: 1;
             transform: translate3d(0, 0, 0);
-            transition: opacity 0.34s ease, transform 0.44s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.34s ease;
         }
 
         /* Standard Typography */
