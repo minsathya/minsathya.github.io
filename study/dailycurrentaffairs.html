@@ -2619,7 +2619,10 @@
         }
         window.transitionTopic = transitionTopic;
 
-window.toggleActiveReadMode = function() {
+        window.toggleActiveReadMode = function() {
+            if (navigator.vibrate) {
+                try { navigator.vibrate(8); } catch(e) {}
+            }
             caViewMode = (caViewMode === 'detailed') ? 'short' : 'detailed';
             const readBtn = document.getElementById('caReadActionBtn');
             if (readBtn) {

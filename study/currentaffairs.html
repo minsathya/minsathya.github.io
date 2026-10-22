@@ -2167,6 +2167,9 @@
 
         // Article Controls: Read Mode Toggle (Short <-> Full) - Smooth Drawer Animation Matching minsathya-app
         function toggleOrgReadMode() {
+            if (navigator.vibrate) {
+                try { navigator.vibrate(8); } catch(e) {}
+            }
             orgViewMode = (orgViewMode === 'detailed') ? 'short' : 'detailed';
             const readBtn = document.getElementById('orgReadActionBtn');
             if (readBtn) readBtn.textContent = (orgViewMode === 'short') ? 'Full' : 'Short';
