@@ -1362,7 +1362,6 @@
                                 <path d="M3 6h18M6 12h12M9 18h6"/>
                             </svg>
                         </button>
-                        </div>
 
                         <!-- Calendar Icon Button: Opens Drum Wheel Date Picker -->
                         <button type="button" class="cal-trigger-action-btn" id="orgCalendarBtn" onclick="openOrganisedCaDatePicker()" aria-label="Filter by Date">
@@ -1714,7 +1713,7 @@
             const sortBtn = document.getElementById('orgSortBtn');
             if (sortBtn) {
                 sortBtn.classList.toggle('is-asc', organisedCaSortOrder === 'oldest');
-                sortBtn.title = (organisedCaSortOrder === 'newest') ? 'Sort: New to Old' : 'Sort: Old to New';
+                sortBtn.removeAttribute('title');
             }
 
             // Apply Filters: 1. Category 2. Date
@@ -1771,21 +1770,12 @@
                 );
             }).join('');
 
-            // Attach safe click & press listeners to cards with spring tactile delay
+            // Attach click listeners to cards matching the smooth All button behavior
             container.querySelectorAll('.organised-ca-card').forEach(card => {
                 card.addEventListener('click', (e) => {
                     e.preventDefault();
-                    // Smooth spring touch: scale back, spring front, then navigate
-                    card.style.transform = 'scale(0.95)';
-                    card.style.opacity = '0.9';
-                    setTimeout(() => {
-                        card.style.transform = '';
-                        card.style.opacity = '';
-                        setTimeout(() => {
-                            const title = decodeURIComponent(card.getAttribute('data-title'));
-                            openOrganisedCaArticle(title);
-                        }, 110);
-                    }, 90);
+                    const title = decodeURIComponent(card.getAttribute('data-title'));
+                    openOrganisedCaArticle(title);
                 });
             });
 
