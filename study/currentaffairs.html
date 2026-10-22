@@ -242,7 +242,7 @@
         /* STANDARDIZED HEADER ROW WITH BACK BUTTON */
         .page-header-row {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 14px;
             width: 100%;
             max-width: 1000px;
@@ -252,6 +252,7 @@
         }
 
         .back-icon-btn {
+            margin-top: 2px;
             background: transparent;
             border: none;
             outline: none;
@@ -284,11 +285,20 @@
         }
 
         .page-title {
-            font-size: 28px !important;
+            font-size: 24px !important;
             font-weight: 500 !important;
-            letter-spacing: -0.6px !important;
+            letter-spacing: -0.4px !important;
             color: var(--text-main);
-            line-height: 1.2 !important;
+            line-height: 1.3 !important;
+            margin: 0;
+            flex: 1;
+        }
+
+        @media (max-width: 700px) {
+            .page-title {
+                font-size: 21px !important;
+                line-height: 1.35 !important;
+            }
         }
 
         /* CONTENT CONTAINER - UNIFIED 1000PX WIDTH */
@@ -1047,12 +1057,26 @@
         }
 
         .section-heading {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 9px;
             font-size: 17px;
             font-weight: 600;
             color: var(--text-main);
             letter-spacing: -0.2px;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             text-align: left;
+        }
+
+        .section-heading::before {
+            content: '';
+            display: inline-block;
+            width: 3.5px;
+            height: 16px;
+            background-color: #8aafe8;
+            border-radius: 2px;
+            flex-shrink: 0;
         }
 
         /* Matching Font Size for ALL content including Important Facts downwards */
@@ -1093,10 +1117,14 @@
             font-size: 17px;
             font-weight: 600;
             line-height: 1.8;
-            color: var(--text-main);
+            color: #8aafe8 !important;
             margin-top: 12px;
             margin-bottom: 6px;
             text-align: left;
+        }
+
+        .info-callout-row strong {
+            color: #8aafe8 !important;
         }
 
         .point-sublist {
@@ -1438,8 +1466,6 @@
 
                 <!-- Article Content Resting Directly on Background -->
                 <div class="ca-article-feed-stage" id="caArticleFeedStage">
-                    <h1 class="article-title" id="orgArticleTitle"></h1>
-
                     <!-- Dynamic Height Frame -->
                     <div class="grid-animator" id="orgViewWindow">
                         <div class="grid-content">
@@ -1689,6 +1715,7 @@
             if (dirView) dirView.style.display = 'block';
             if (artView) artView.classList.remove('is-active');
             if (pageTitle) pageTitle.textContent = 'Organised current affairs';
+            try { document.title = 'Organised Current Affairs - sathya.'; } catch(e) {}
 
             const allTopics = getAllOrganisedCaTopics();
             const categories = getOrganisedCaCategories();
@@ -2066,20 +2093,13 @@
             }
 
             if (pageTitle) {
-                let catTitle = '';
-                if (organisedCaSelectedCategory && organisedCaSelectedCategory !== 'All') {
-                    catTitle = organisedCaSelectedCategory;
-                } else if (topic.categories && topic.categories.length > 0) {
-                    catTitle = topic.categories[0];
-                } else if (topic.category) {
-                    catTitle = topic.category;
-                } else {
-                    catTitle = 'Current affairs';
-                }
-                pageTitle.textContent = catTitle;
+                pageTitle.textContent = topic.topicTitle;
             }
+            try {
+                document.title = topic.topicTitle + ' - sathya.';
+            } catch(e) {}
 
-            // Populate Title
+            // Populate Title if present in DOM
             const titleEl = document.getElementById('orgArticleTitle');
             if (titleEl) titleEl.textContent = topic.topicTitle;
 
