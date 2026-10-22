@@ -555,27 +555,40 @@
             .ramsar-side-nav-btn {
                 display: none !important;
             }
-            .ramsar-mobile-nav-bar {
+            .modal.active .ramsar-mobile-nav-bar {
                 display: flex;
+            }
+            .ramsar-mobile-nav-bar {
+                display: none;
+                position: fixed;
+                bottom: 24px;
+                left: 50%;
+                transform: translateX(-50%) translateZ(0);
+                z-index: 10005;
                 align-items: center;
                 justify-content: center;
-                gap: 16px;
-                margin-top: 24px;
-                padding-top: 16px;
-                border-top: 1px solid var(--row-divider, rgba(255, 255, 255, 0.08));
+                gap: 20px;
+                pointer-events: auto;
             }
             .ramsar-mobile-nav-btn {
-                width: 44px;
-                height: 44px;
+                width: 48px;
+                height: 48px;
                 border-radius: 50%;
-                background: var(--pill-bg, rgba(255, 255, 255, 0.06));
-                border: 1px solid var(--pill-border, rgba(255, 255, 255, 0.1));
+                background: var(--panel-bg, #121212);
+                border: 1px solid var(--panel-border, #222222);
                 color: var(--text-main, #ffffff);
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
+                box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5);
                 transition: transform 0.2s var(--ease-smooth, ease), opacity 0.2s ease;
+            }
+            body.light-mode .ramsar-mobile-nav-btn {
+                background: #ffffff;
+                border-color: #e2e2e7;
+                color: #111111;
+                box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
             }
             .ramsar-mobile-nav-btn:active {
                 transform: scale(0.92);
@@ -588,6 +601,10 @@
                 fill: none;
                 stroke-linecap: round;
                 stroke-linejoin: round;
+            }
+            .modal-card {
+                max-height: calc(85vh - 76px) !important;
+                margin-bottom: 56px;
             }
         }
 
@@ -1392,15 +1409,16 @@
                 </button>
             </div>
             <div id="modalContent"></div>
-            <!-- Mobile side-by-side arrows down at bottom center -->
-            <div class="ramsar-mobile-nav-bar">
-                <button type="button" class="ramsar-mobile-nav-btn" onclick="navigateRamsar(-1, event)" aria-label="Previous Ramsar Site">
-                    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                </button>
-                <button type="button" class="ramsar-mobile-nav-btn" onclick="navigateRamsar(1, event)" aria-label="Next Ramsar Site">
-                    <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </button>
-            </div>
+        </div>
+
+        <!-- Phone Floating Navigation Buttons BELOW the panel at center -->
+        <div class="ramsar-mobile-nav-bar" id="ramsarMobileNavBar">
+            <button type="button" class="ramsar-mobile-nav-btn" id="ramsarMobilePrevBtn" onclick="navigateRamsar(-1, event)" aria-label="Previous Ramsar Site">
+                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button type="button" class="ramsar-mobile-nav-btn" id="ramsarMobileNextBtn" onclick="navigateRamsar(1, event)" aria-label="Next Ramsar Site">
+                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
         </div>
     </div>
 
@@ -1648,23 +1666,35 @@
         };
 
         let modalOpenTimestamp = 0;
-        let currentRamsarId = null;
+        let activeTableSiteIds = [];
+        let activeTableSiteIndex = 0;
 
-        function navigateRamsar(direction, event) {
-            if (event && event.stopPropagation) event.stopPropagation();
-            if (typeof ramsarData === 'undefined') return;
-            const keys = Object.keys(ramsarData);
-            if (!keys.length) return;
+        function updateRamsarNavArrows() {
+            const isFirst = activeTableSiteIndex <= 0;
+            const isLast = activeTableSiteIndex >= activeTableSiteIds.length - 1;
 
-            let idx = keys.indexOf(currentRamsarId);
-            if (idx === -1) idx = 0;
-            let nextIdx = idx + direction;
-            if (nextIdx < 0) nextIdx = keys.length - 1;
-            if (nextIdx >= keys.length) nextIdx = 0;
+            const prevBtns = [document.getElementById('ramsarSidePrevBtn'), document.getElementById('ramsarMobilePrevBtn')];
+            const nextBtns = [document.getElementById('ramsarSideNextBtn'), document.getElementById('ramsarMobileNextBtn')];
 
-            const nextId = keys[nextIdx];
-            currentRamsarId = nextId;
-            const data = ramsarData[nextId];
+            prevBtns.forEach(btn => {
+                if (btn) {
+                    btn.disabled = isFirst;
+                    btn.style.opacity = isFirst ? '0.2' : '1';
+                    btn.style.pointerEvents = isFirst ? 'none' : 'auto';
+                }
+            });
+
+            nextBtns.forEach(btn => {
+                if (btn) {
+                    btn.disabled = isLast;
+                    btn.style.opacity = isLast ? '0.2' : '1';
+                    btn.style.pointerEvents = isLast ? 'none' : 'auto';
+                }
+            });
+        }
+
+        function renderRamsarPopup(id, animate) {
+            const data = ramsarData[id];
             if (!data) return;
 
             const title = document.getElementById("modalTitle");
@@ -1677,8 +1707,10 @@
             const thrBullets = thrPoints.map(p => '<li>' + p + '</li>').join('');
 
             if (content) {
-                content.classList.remove('ramsar-slide-up');
-                void content.offsetWidth;
+                if (animate) {
+                    content.classList.remove('ramsar-slide-up');
+                    void content.offsetWidth;
+                }
                 content.innerHTML = 
                     '<div class="modal-pills-row">' +
                         '<span class="modal-pill pill-state">' + data.state + '</span>' +
@@ -1694,72 +1726,63 @@
                         '<div class="modal-section-title title-threats">MAJOR THREATS</div>' +
                         '<ul class="modal-bullet-list">' + thrBullets + '</ul>' +
                     '</div>';
-                content.classList.add('ramsar-slide-up');
+                if (animate) {
+                    content.classList.add('ramsar-slide-up');
+                }
             }
         }
-        window.navigateRamsar = navigateRamsar;
 
         function openSite(id, event) {
             if (event && event.stopPropagation) {
                 event.stopPropagation();
             }
-            const modal = document.getElementById("siteModal");
-            const title = document.getElementById("modalTitle");
-            const content = document.getElementById("modalContent");
-            if (!modal) return;
-            if (modal.classList.contains("active") && (Date.now() - modalOpenTimestamp < 350)) {
-                return;
+            
+            // Detect enclosing table to follow exact table order
+            let targetEl = (event && event.target) ? event.target : null;
+            if (!targetEl && typeof window._lastRamsarClickedEl !== 'undefined') {
+                targetEl = window._lastRamsarClickedEl;
             }
-            
-            currentRamsarId = id;
-            const data = ramsarData[id];
-            
-            if (data) {
-                if (title) title.textContent = data.name;
-
-                // Format importance points
-                const impPoints = (data.imp || '').split(',').map(s => s.trim()).filter(Boolean);
-                const impBullets = impPoints.map(p => `<li>${p}</li>`).join('');
-
-                // Format threats points
-                const thrPoints = (data.thr || '').split(',').map(s => s.trim()).filter(Boolean);
-                const thrBullets = thrPoints.map(p => `<li>${p}</li>`).join('');
-
-                if (content) {
-                    content.innerHTML = `
-                        <div class="modal-pills-row">
-                            <span class="modal-pill pill-state">${data.state}</span>
-                            <span class="modal-pill">year : <strong>${data.year}</strong></span>
-                            <span class="modal-pill">area : <strong>${data.area}</strong></span>
-                        </div>
-
-                        <div class="modal-location-row">
-                            Location : <strong>${data.district}</strong>
-                        </div>
-
-                        <div class="modal-section">
-                            <div class="modal-section-title title-importance">IMPORTANCE</div>
-                            <ul class="modal-bullet-list">
-                                ${impBullets}
-                            </ul>
-                        </div>
-
-                        <div class="modal-section">
-                            <div class="modal-section-title title-threats">MAJOR THREATS</div>
-                            <ul class="modal-bullet-list">
-                                ${thrBullets}
-                            </ul>
-                        </div>
-                    `;
+            const table = targetEl ? targetEl.closest('table') : document.getElementById('mainRamsarTable');
+            if (table) {
+                const siteNodes = Array.from(table.querySelectorAll('.site-name'));
+                activeTableSiteIds = siteNodes.map(el => {
+                    const oc = el.getAttribute('onclick') || '';
+                    const m = oc.match(/openSite\(['"]([^'"]+)['"]/);
+                    return m ? m[1] : null;
+                }).filter(Boolean);
+                activeTableSiteIndex = activeTableSiteIds.indexOf(id);
+                if (activeTableSiteIndex === -1) {
+                    activeTableSiteIds = [id];
+                    activeTableSiteIndex = 0;
                 }
+            } else {
+                activeTableSiteIds = [id];
+                activeTableSiteIndex = 0;
             }
-            
+
+            renderRamsarPopup(id, false);
+            updateRamsarNavArrows();
+
+            const modal = document.getElementById("siteModal");
+            if (!modal) return;
             modalOpenTimestamp = Date.now();
-            if (typeof syncPopupOrigin === 'function') syncPopupOrigin();
             document.body.classList.add("popup-active");
             modal.classList.add("active");
+            modal.classList.remove("is-closing");
         }
         window.openSite = openSite;
+
+        function navigateRamsar(direction, event) {
+            if (event && event.stopPropagation) event.stopPropagation();
+            const nextIdx = activeTableSiteIndex + direction;
+            if (nextIdx < 0 || nextIdx >= activeTableSiteIds.length) return;
+
+            activeTableSiteIndex = nextIdx;
+            const nextId = activeTableSiteIds[activeTableSiteIndex];
+            renderRamsarPopup(nextId, true);
+            updateRamsarNavArrows();
+        }
+        window.navigateRamsar = navigateRamsar;
 
         function closeSite(event) {
             if (event && event.stopPropagation) {
