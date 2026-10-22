@@ -686,37 +686,42 @@
             width: fit-content;
             max-width: 100%;
             transform-origin: center center !important;
-            transition: transform 0.28s var(--ease-smooth), color 0.2s ease;
+            transition: transform 0.26s cubic-bezier(0.25, 1, 0.5, 1), color 0.2s ease;
             will-change: transform;
             -webkit-font-smoothing: antialiased;
             backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
 
-        .organised-ca-card:hover .organised-ca-card-title {
-            transform: scale(1.024) !important;
-            color: var(--text-main);
-        }
-
-        /* Press feedback: when tapping on that panel or word, go back to normal resting place (scale(1)) then comes zoom */
-        .organised-ca-card:active .organised-ca-card-title {
-            transform: scale(1) !important;
-            transition: transform 0.1s ease !important;
-        }
-
-        @keyframes titlePressSpring {
-            0% {
+        @media (hover: hover) and (pointer: fine) {
+            .organised-ca-card:hover .organised-ca-card-title {
                 transform: scale(1.024) !important;
+                color: var(--text-main);
             }
-            40% {
-                transform: scale(1) !important;
+        }
+
+        /* Press feedback: when pressing/tapping down on that panel or word, go back to normal resting place (scale(1)) */
+        .organised-ca-card:active .organised-ca-card-title,
+        .organised-ca-card.is-pressing .organised-ca-card-title {
+            transform: scale(1) !important;
+            transition: transform 0.08s ease !important;
+        }
+
+        /* Tactile press spring bounce: goes back to resting place, springs up, then settles at zoom */
+        @keyframes ocaTitlePressBounce {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.036);
             }
             100% {
-                transform: scale(1.024) !important;
+                transform: scale(1.024);
             }
         }
 
         .organised-ca-card-title.is-title-pressed {
-            animation: titlePressSpring 0.32s var(--ease-smooth) both !important;
+            animation: ocaTitlePressBounce 0.26s cubic-bezier(0.25, 1, 0.5, 1) both !important;
         }
 
         /* Bottom-Right Date Tag */
@@ -1001,7 +1006,7 @@
         .ca-content-drawer {
             display: grid;
             grid-template-rows: 0fr;
-            transition: grid-template-rows 0.44s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: grid-template-rows 0.46s cubic-bezier(0.25, 1, 0.5, 1);
             overflow: hidden;
             width: 100%;
             margin: 0;
@@ -1011,29 +1016,28 @@
         }
         .ca-content-drawer.is-open {
             grid-template-rows: 1fr;
-            transition: grid-template-rows 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: grid-template-rows 0.48s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .ca-content-overflow {
             min-height: 0;
             overflow: hidden;
-            opacity: 0;
-            transform: translate3d(0, -12px, 0);
-            transition: opacity 0.28s ease, transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
+            opacity: 1 !important;
+            transform: translate3d(0, 0, 0) !important;
+            transition: none !important;
+            will-change: auto;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
         .ca-content-drawer.is-open .ca-content-overflow {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-            transition: opacity 0.34s ease, transform 0.44s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 1 !important;
+            transform: translate3d(0, 0, 0) !important;
         }
 
         /* Smooth Transition for Detailed Analysis Drawer */
         .ca-detailed-content-drawer {
             display: grid;
             grid-template-rows: 0fr;
-            transition: grid-template-rows 0.44s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: grid-template-rows 0.46s cubic-bezier(0.25, 1, 0.5, 1);
             overflow: hidden;
             width: 100%;
             margin: 0;
@@ -1043,22 +1047,21 @@
         }
         .ca-detailed-content-drawer.is-open {
             grid-template-rows: 1fr;
-            transition: grid-template-rows 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: grid-template-rows 0.48s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .ca-detailed-overflow {
             min-height: 0;
             overflow: hidden;
-            opacity: 0;
-            transform: translate3d(0, -12px, 0);
-            transition: opacity 0.28s ease, transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
+            opacity: 1 !important;
+            transform: translate3d(0, 0, 0) !important;
+            transition: none !important;
+            will-change: auto;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
         .ca-detailed-content-drawer.is-open .ca-detailed-overflow {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-            transition: opacity 0.34s ease, transform 0.44s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 1 !important;
+            transform: translate3d(0, 0, 0) !important;
         }
 
         /* Standard Typography */
@@ -1829,8 +1832,18 @@
 
             // Attach click listeners to cards matching the smooth All button behavior
             container.querySelectorAll('.organised-ca-card').forEach(card => {
+                // Immediate press-down feedback
+                card.addEventListener('pointerdown', () => {
+                    card.classList.add('is-pressing');
+                });
+                const clearCardPress = () => card.classList.remove('is-pressing');
+                card.addEventListener('pointerup', clearCardPress);
+                card.addEventListener('pointercancel', clearCardPress);
+                card.addEventListener('pointerleave', clearCardPress);
+
                 card.addEventListener('click', (e) => {
                     e.preventDefault();
+                    clearCardPress();
                     const titleEl = card.querySelector('.organised-ca-card-title');
                     if (titleEl) {
                         titleEl.classList.remove('is-title-pressed');
@@ -1840,7 +1853,7 @@
                     const title = decodeURIComponent(card.getAttribute('data-title'));
                     setTimeout(() => {
                         openOrganisedCaArticle(title);
-                    }, 140);
+                    }, 270);
                 });
             });
 
@@ -2341,6 +2354,9 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Enable CSS :active state on touch devices (iPad / iOS Safari)
+            document.addEventListener('touchstart', () => {}, { passive: true });
+
             initPickerColumns();
             setupDrumScrollHighlight(orgDayCol, v => orgTempDay = v);
             setupDrumScrollHighlight(orgMonthCol, v => orgTempMonth = v);
