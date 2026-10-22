@@ -697,10 +697,26 @@
             color: var(--text-main);
         }
 
-        @media (hover: none), (pointer: coarse) {
-            .organised-ca-card:active .organised-ca-card-title {
+        /* Press feedback: when tapping on that panel or word, go back to normal resting place (scale(1)) then comes zoom */
+        .organised-ca-card:active .organised-ca-card-title {
+            transform: scale(1) !important;
+            transition: transform 0.1s ease !important;
+        }
+
+        @keyframes titlePressSpring {
+            0% {
                 transform: scale(1.024) !important;
             }
+            40% {
+                transform: scale(1) !important;
+            }
+            100% {
+                transform: scale(1.024) !important;
+            }
+        }
+
+        .organised-ca-card-title.is-title-pressed {
+            animation: titlePressSpring 0.32s var(--ease-smooth) both !important;
         }
 
         /* Bottom-Right Date Tag */
@@ -981,11 +997,11 @@
             text-align: left !important;
         }
 
-        /* Smooth Transition for Short Revision Drawer (Matches minsathya-app) */
+        /* Smooth Transition for Short Revision Drawer */
         .ca-content-drawer {
             display: grid;
             grid-template-rows: 0fr;
-            transition: grid-template-rows 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: grid-template-rows 0.44s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
             width: 100%;
             margin: 0;
@@ -1001,23 +1017,23 @@
             min-height: 0;
             overflow: hidden;
             opacity: 0;
-            transform: translate3d(0, 0, 0);
-            transition: opacity 0.28s ease;
-            will-change: opacity;
+            transform: translate3d(0, -12px, 0);
+            transition: opacity 0.28s ease, transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
         .ca-content-drawer.is-open .ca-content-overflow {
             opacity: 1;
             transform: translate3d(0, 0, 0);
-            transition: opacity 0.34s ease;
+            transition: opacity 0.34s ease, transform 0.44s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Smooth Transition for Detailed Analysis Drawer (Matches minsathya-app) */
+        /* Smooth Transition for Detailed Analysis Drawer */
         .ca-detailed-content-drawer {
             display: grid;
             grid-template-rows: 0fr;
-            transition: grid-template-rows 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: grid-template-rows 0.44s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
             width: 100%;
             margin: 0;
@@ -1033,16 +1049,16 @@
             min-height: 0;
             overflow: hidden;
             opacity: 0;
-            transform: translate3d(0, 0, 0);
-            transition: opacity 0.28s ease;
-            will-change: opacity;
+            transform: translate3d(0, -12px, 0);
+            transition: opacity 0.28s ease, transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
         .ca-detailed-content-drawer.is-open .ca-detailed-overflow {
             opacity: 1;
             transform: translate3d(0, 0, 0);
-            transition: opacity 0.34s ease;
+            transition: opacity 0.34s ease, transform 0.44s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* Standard Typography */
@@ -1815,8 +1831,16 @@
             container.querySelectorAll('.organised-ca-card').forEach(card => {
                 card.addEventListener('click', (e) => {
                     e.preventDefault();
+                    const titleEl = card.querySelector('.organised-ca-card-title');
+                    if (titleEl) {
+                        titleEl.classList.remove('is-title-pressed');
+                        void titleEl.offsetWidth;
+                        titleEl.classList.add('is-title-pressed');
+                    }
                     const title = decodeURIComponent(card.getAttribute('data-title'));
-                    openOrganisedCaArticle(title);
+                    setTimeout(() => {
+                        openOrganisedCaArticle(title);
+                    }, 140);
                 });
             });
 

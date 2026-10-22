@@ -1037,16 +1037,16 @@
             min-height: 0;
             overflow: hidden;
             opacity: 0;
-            transform: translate3d(0, 0, 0);
-            transition: opacity 0.28s ease;
-            will-change: opacity;
+            transform: translate3d(0, -12px, 0);
+            transition: opacity 0.28s ease, transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
         .ca-content-drawer.is-open .ca-content-overflow {
             opacity: 1;
             transform: translate3d(0, 0, 0);
-            transition: opacity 0.34s ease;
+            transition: opacity 0.34s ease, transform 0.44s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .ca-detailed-content-drawer {
@@ -1068,16 +1068,16 @@
             min-height: 0;
             overflow: hidden;
             opacity: 0;
-            transform: translate3d(0, 0, 0);
-            transition: opacity 0.28s ease;
-            will-change: opacity;
+            transform: translate3d(0, -12px, 0);
+            transition: opacity 0.28s ease, transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
         .ca-detailed-content-drawer.is-open .ca-detailed-overflow {
             opacity: 1;
             transform: translate3d(0, 0, 0);
-            transition: opacity 0.34s ease;
+            transition: opacity 0.34s ease, transform 0.44s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* SECTIONS & TYPOGRAPHY */
