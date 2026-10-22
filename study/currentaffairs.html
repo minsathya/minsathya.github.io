@@ -608,18 +608,20 @@
             user-select: none;
             -webkit-user-select: none;
             touch-action: manipulation;
-            transform: none !important;
-            transition: background-color 0.2s ease, border-color 0.2s ease;
+            transform: translate3d(0, 0, 0);
+            will-change: transform, border-color;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transition: transform 0.45s var(--ease-smooth),
+                        border-color 0.35s var(--ease-smooth),
+                        background-color 0.5s var(--ease-smooth);
             animation: cardsSlideUpEntrance 0.45s var(--ease-premium) both;
         }
-        .organised-ca-card:hover {
-            border-color: var(--panel-border) !important;
-            transform: none !important;
-        }
-        /* Static Card Container on Active/Tap */
-        .organised-ca-card:active {
-            transform: none !important;
-            opacity: 1 !important;
+        .organised-ca-card:hover,
+        .organised-ca-card:active,
+        .organised-ca-card.is-panel-lifted {
+            transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1) !important;
+            border-color: var(--panel-border-hover) !important;
         }
 
         /* Left thumbnail / placeholder */
@@ -685,23 +687,8 @@
             display: inline-block;
             width: fit-content;
             max-width: 100%;
-            transform-origin: center center !important;
-            transition: transform 0.28s var(--ease-smooth), color 0.2s ease;
-            will-change: transform;
-            -webkit-font-smoothing: antialiased;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-        }
-
-        .organised-ca-card:hover .organised-ca-card-title {
-            transform: scale(1.024) !important;
-            color: var(--text-main);
-        }
-
-        @media (hover: none), (pointer: coarse) {
-            .organised-ca-card:active .organised-ca-card-title {
-                transform: scale(1.024) !important;
-            }
+            transform: none !important;
+            transition: color 0.2s ease;
         }
 
         /* Bottom-Right Date Tag */
@@ -982,66 +969,58 @@
             text-align: left !important;
         }
 
-        /* Smooth Transition for Short Revision Drawer */
-        .ca-content-drawer {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: none;
-            overflow: hidden;
+        /* Smooth Content Layers for Reading Mode Transition */
+        .ca-article-stage-container {
+            position: relative;
             width: 100%;
-            margin: 0;
-            will-change: grid-template-rows;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-        .ca-content-drawer.is-open {
-            grid-template-rows: 1fr;
-            transition: grid-template-rows 0.48s cubic-bezier(0.25, 1, 0.5, 1) !important;
-        }
-        .ca-content-overflow {
-            min-height: 0;
-            overflow: hidden;
-            opacity: 1 !important;
-            transform: translate3d(0, 0, 0) !important;
-            transition: none !important;
-            will-change: auto;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-        .ca-content-drawer.is-open .ca-content-overflow {
-            opacity: 1 !important;
-            transform: translate3d(0, 0, 0) !important;
+            min-height: 200px;
         }
 
-        /* Smooth Transition for Detailed Analysis Drawer */
-        .ca-detailed-content-drawer {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: none;
-            overflow: hidden;
+        .ca-content-layer {
             width: 100%;
-            margin: 0;
-            will-change: grid-template-rows;
+            will-change: opacity, transform;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
-        .ca-detailed-content-drawer.is-open {
-            grid-template-rows: 1fr;
-            transition: grid-template-rows 0.48s cubic-bezier(0.25, 1, 0.5, 1) !important;
+
+        .ca-content-layer.is-active {
+            position: relative;
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+            visibility: visible;
+            pointer-events: auto;
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .ca-detailed-overflow {
-            min-height: 0;
-            overflow: hidden;
-            opacity: 1 !important;
-            transform: translate3d(0, 0, 0) !important;
-            transition: none !important;
-            will-change: auto;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
+
+        .ca-content-layer.is-leaving {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform: translate3d(0, -8px, 0);
+            visibility: visible;
+            pointer-events: none;
+            transition: opacity 0.22s ease-out, transform 0.22s ease-out;
         }
-        .ca-detailed-content-drawer.is-open .ca-detailed-overflow {
-            opacity: 1 !important;
-            transform: translate3d(0, 0, 0) !important;
+
+        .ca-content-layer.is-hidden {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform: translate3d(0, 10px, 0);
+            visibility: hidden;
+            pointer-events: none;
+            transition: none;
+        }
+
+        .ca-content-layer.is-entering {
+            position: relative;
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+            visibility: visible;
+            pointer-events: auto;
+            transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* Standard Typography */
@@ -1463,14 +1442,16 @@
                 <div class="ca-article-feed-stage" id="caArticleFeedStage">
                     <h1 class="article-title" id="orgArticleTitle"></h1>
 
-                    <!-- Short Revision Drawer -->
-                    <div class="ca-content-drawer" id="orgShortDrawer">
-                        <div class="ca-content-overflow" id="orgShortContent"></div>
-                    </div>
+                    <div class="ca-article-stage-container" id="orgStageContainer">
+                        <!-- Short Revision Layer -->
+                        <div class="ca-content-layer is-hidden" id="orgShortDrawer">
+                            <div class="ca-content-overflow" id="orgShortContent"></div>
+                        </div>
 
-                    <!-- Detailed Analysis Drawer -->
-                    <div class="ca-detailed-content-drawer is-open" id="orgDetailedDrawer">
-                        <div class="ca-detailed-overflow" id="orgDetailedContent"></div>
+                        <!-- Detailed Analysis Layer -->
+                        <div class="ca-content-layer is-active" id="orgDetailedDrawer">
+                            <div class="ca-detailed-overflow" id="orgDetailedContent"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1810,12 +1791,16 @@
                 );
             }).join('');
 
-            // Attach click listeners to cards with immediate open
+            // Attach click listeners to cards with exact app panel lift animation
             container.querySelectorAll('.organised-ca-card').forEach(card => {
                 card.addEventListener('click', (e) => {
                     e.preventDefault();
+                    card.classList.add('is-panel-lifted');
                     const title = decodeURIComponent(card.getAttribute('data-title'));
-                    openOrganisedCaArticle(title);
+                    setTimeout(() => {
+                        card.classList.remove('is-panel-lifted');
+                        openOrganisedCaArticle(title);
+                    }, 260);
                 });
             });
 
@@ -2125,8 +2110,8 @@
 
             const shortDrawer = document.getElementById('orgShortDrawer');
             const detailedDrawer = document.getElementById('orgDetailedDrawer');
-            if (shortDrawer) shortDrawer.classList.remove('is-open');
-            if (detailedDrawer) detailedDrawer.classList.add('is-open');
+            if (shortDrawer) shortDrawer.className = 'ca-content-layer is-hidden';
+            if (detailedDrawer) detailedDrawer.className = 'ca-content-layer is-active';
 
             window.scrollTo({ top: 0, behavior: 'instant' });
         }
@@ -2161,7 +2146,7 @@
         }
         window.toggleOrgImage = toggleOrgImage;
 
-        // Article Controls: Read Mode Toggle (Short <-> Full) - Smooth Drawer Animation Matching minsathya-app
+        // Article Controls: Read Mode Toggle (Short <-> Full) - Buttery-Smooth Cross-Dissolve Transition
         function toggleOrgReadMode() {
             if (navigator.vibrate) {
                 try { navigator.vibrate(8); } catch(e) {}
@@ -2172,21 +2157,28 @@
 
             const shortDrawer = document.getElementById('orgShortDrawer');
             const detailedDrawer = document.getElementById('orgDetailedDrawer');
+            if (!shortDrawer || !detailedDrawer) return;
 
             if (orgViewMode === 'short') {
-                if (detailedDrawer) detailedDrawer.classList.remove('is-open');
-                if (shortDrawer) {
-                    shortDrawer.classList.remove('is-open');
-                    void shortDrawer.offsetHeight; // trigger reflow so it unrolls cleanly from 0fr including Why in News?
-                    shortDrawer.classList.add('is-open');
-                }
+                detailedDrawer.className = 'ca-content-layer is-leaving';
+                shortDrawer.className = 'ca-content-layer is-hidden';
+                void shortDrawer.offsetHeight;
+                shortDrawer.className = 'ca-content-layer is-entering';
+
+                setTimeout(() => {
+                    detailedDrawer.className = 'ca-content-layer is-hidden';
+                    shortDrawer.className = 'ca-content-layer is-active';
+                }, 320);
             } else {
-                if (shortDrawer) shortDrawer.classList.remove('is-open');
-                if (detailedDrawer) {
-                    detailedDrawer.classList.remove('is-open');
-                    void detailedDrawer.offsetHeight; // trigger reflow so it unrolls cleanly from 0fr including Why in News?
-                    detailedDrawer.classList.add('is-open');
-                }
+                shortDrawer.className = 'ca-content-layer is-leaving';
+                detailedDrawer.className = 'ca-content-layer is-hidden';
+                void detailedDrawer.offsetHeight;
+                detailedDrawer.className = 'ca-content-layer is-entering';
+
+                setTimeout(() => {
+                    shortDrawer.className = 'ca-content-layer is-hidden';
+                    detailedDrawer.className = 'ca-content-layer is-active';
+                }, 320);
             }
         }
         window.toggleOrgReadMode = toggleOrgReadMode;
