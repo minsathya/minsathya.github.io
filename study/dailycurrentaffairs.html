@@ -1037,13 +1037,16 @@
             min-height: 0;
             overflow: hidden;
             opacity: 0;
-            transform: translate3d(0, 0, 0);
-            transition: opacity 0.28s ease;
-            will-change: opacity;
+            transform: translate3d(0, 14px, 0);
+            transition: opacity 0.28s ease, transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
         .ca-content-drawer.is-open .ca-content-overflow {
             opacity: 1;
-            transition: opacity 0.34s ease;
+            transform: translate3d(0, 0, 0);
+            transition: opacity 0.34s ease, transform 0.44s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .ca-detailed-content-drawer {
@@ -1052,7 +1055,10 @@
             transition: grid-template-rows 0.42s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
             width: 100%;
+            margin: 0;
             will-change: grid-template-rows;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
         .ca-detailed-content-drawer.is-open {
             grid-template-rows: 1fr;
@@ -1062,13 +1068,16 @@
             min-height: 0;
             overflow: hidden;
             opacity: 0;
-            transform: translate3d(0, 0, 0);
-            transition: opacity 0.28s ease;
-            will-change: opacity;
+            transform: translate3d(0, 14px, 0);
+            transition: opacity 0.28s ease, transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
         .ca-detailed-content-drawer.is-open .ca-detailed-overflow {
             opacity: 1;
-            transition: opacity 0.34s ease;
+            transform: translate3d(0, 0, 0);
+            transition: opacity 0.34s ease, transform 0.44s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* SECTIONS & TYPOGRAPHY */

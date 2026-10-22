@@ -687,14 +687,9 @@
             transition: transform 0.28s var(--ease-smooth), color 0.2s ease;
         }
 
-        @media (hover: hover) and (pointer: fine) {
-            .organised-ca-card:hover .organised-ca-card-title {
-                transform: scale3d(1.028, 1.028, 1) !important;
-                color: var(--text-main);
-            }
-            .organised-ca-card:active .organised-ca-card-title {
-                transform: scale3d(1, 1, 1) !important;
-            }
+        .organised-ca-card:hover .organised-ca-card-title {
+            transform: scale3d(1.028, 1.028, 1) !important;
+            color: var(--text-main);
         }
 
         @media (hover: none), (pointer: coarse) {
@@ -1004,9 +999,9 @@
             min-height: 0;
             overflow: hidden;
             opacity: 0;
-            transform: translate3d(0, 0, 0);
-            transition: opacity 0.28s ease;
-            will-change: opacity;
+            transform: translate3d(0, 14px, 0);
+            transition: opacity 0.28s ease, transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
@@ -1014,7 +1009,7 @@
         .ca-detailed-content-drawer.is-open .ca-detailed-overflow {
             opacity: 1;
             transform: translate3d(0, 0, 0);
-            transition: opacity 0.34s ease;
+            transition: opacity 0.34s ease, transform 0.44s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* Standard Typography */

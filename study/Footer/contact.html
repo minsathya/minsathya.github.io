@@ -328,7 +328,7 @@
             <div class="card-parallax-content">
                 <div class="prose-text">
                     <p>If you have any questions, suggestions, or feedback, feel free to get in touch.</p>
-                    <p>Email : <a href="mailto:iminsathya@gmail.com" class="contact-mail-link" target="_top">iminsathya@gmail.com</a></p>
+                    <p>Email : <a href="mailto:iminsathya@gmail.com" class="contact-mail-link" target="_top" onclick="handleEmailClick(event)">iminsathya@gmail.com</a></p>
                     <p>I will try to respond as soon as possible.</p>
                 </div>
             </div>
@@ -523,6 +523,22 @@
                 }, 750);
             });
         });
+
+        function handleEmailClick(e) {
+            if (e) e.preventDefault();
+            const email = 'iminsathya@gmail.com';
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            if (isMobile) {
+                window.location.href = 'mailto:' + email;
+            } else {
+                const gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(email);
+                const win = window.open(gmailUrl, '_blank');
+                if (!win || win.closed || typeof win.closed === 'undefined') {
+                    window.location.href = 'mailto:' + email;
+                }
+            }
+        }
+        window.handleEmailClick = handleEmailClick;
 
         window.addEventListener('pageshow', () => {
             if (document.activeElement && document.activeElement.blur) {
