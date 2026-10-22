@@ -1020,58 +1020,32 @@
             text-align: left !important;
         }
 
-        /* Smooth Content Layers for Reading Mode Transition */
-        .ca-article-stage-container {
-            position: relative;
+        /* --- STABLE VERTICAL CROSS-DISSOLVE ENGINE --- */
+        .content-area {
+            display: grid;
+            grid-template-columns: 1fr;
             width: 100%;
-            min-height: 200px;
-        }
-
-        .ca-content-layer {
-            width: 100%;
-            will-change: opacity, transform;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-
-        .ca-content-layer.is-active {
             position: relative;
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-            visibility: visible;
-            pointer-events: auto;
-            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: height;
+            overflow: hidden;
         }
 
-        .ca-content-layer.is-leaving {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .content-pane {
+            grid-area: 1 / 1; /* Locks both panes onto identical layout coordinate */
             opacity: 0;
-            transform: translate3d(0, -8px, 0);
-            visibility: visible;
             pointer-events: none;
-            transition: opacity 0.22s ease-out, transform 0.22s ease-out;
+            transform: translateY(6px);
+            transition: opacity 0.22s cubic-bezier(0.25, 1, 0.5, 1), 
+                        transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .ca-content-layer.is-hidden {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            transform: translate3d(0, 10px, 0);
-            visibility: hidden;
-            pointer-events: none;
-            transition: none;
-        }
-
-        .ca-content-layer.is-entering {
-            position: relative;
+        .content-pane.active {
             opacity: 1;
-            transform: translate3d(0, 0, 0);
-            visibility: visible;
             pointer-events: auto;
-            transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(0);
+            transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1) 0.08s, 
+                        transform 0.32s cubic-bezier(0.25, 1, 0.5, 1) 0.08s;
         }
         .ca-detailed-overflow {
             min-height: 0;
@@ -2188,14 +2162,15 @@
         <div class="ca-article-feed-stage article-slide-up-run" id="caArticleFeedStage">
             <div class="ca-article-wrapper">
                 <h1 class="article-title" id="caArticleTitle"></h1>
-                <div class="ca-article-stage-container" id="caStageContainer">
-                    <!-- Short Revision Layer -->
-                    <div class="ca-content-layer is-hidden" id="caShortDrawer">
-                        <div class="ca-content-overflow" id="caShortContent"></div>
+                <!-- Vertical Dynamic Height Window Frame -->
+                <div class="content-area" id="caViewWindow">
+                    <!-- ================= SHORT REVISION PANE ================= -->
+                    <div class="content-pane" id="ca-pane-short">
+                        <div id="caShortContent"></div>
                     </div>
-                    <!-- Detailed Analysis Layer -->
-                    <div class="ca-content-layer is-active" id="caDetailedDrawer">
-                        <div class="ca-detailed-overflow" id="caDetailedContent"></div>
+                    <!-- ================= LONG ARTICLE PANE (DEFAULT ACTIVE) ================= -->
+                    <div class="content-pane active" id="ca-pane-full">
+                        <div id="caDetailedContent"></div>
                     </div>
                 </div>
             </div>
@@ -2572,15 +2547,29 @@
             const detailedContent = document.getElementById('caDetailedContent');
             if (detailedContent) detailedContent.innerHTML = renderCaArticleSections(topic);
 
-            // Sync layer states
-            const shortDrawer = document.getElementById('caShortDrawer');
-            const detailedDrawer = document.getElementById('caDetailedDrawer');
+            // Sync pane states
+            const paneShort = document.getElementById('ca-pane-short');
+            const paneFull = document.getElementById('ca-pane-full');
+            const viewWindow = document.getElementById('caViewWindow');
+
             if (caViewMode === 'short') {
-                if (shortDrawer) shortDrawer.className = 'ca-content-layer is-active';
-                if (detailedDrawer) detailedDrawer.className = 'ca-content-layer is-hidden';
+                if (paneFull) paneFull.classList.remove('active');
+                if (paneShort) paneShort.classList.add('active');
+                if (viewWindow && paneShort) {
+                    viewWindow.style.height = paneShort.offsetHeight + 'px';
+                    requestAnimationFrame(() => {
+                        if (viewWindow && paneShort) viewWindow.style.height = paneShort.offsetHeight + 'px';
+                    });
+                }
             } else {
-                if (shortDrawer) shortDrawer.className = 'ca-content-layer is-hidden';
-                if (detailedDrawer) detailedDrawer.className = 'ca-content-layer is-active';
+                if (paneShort) paneShort.classList.remove('active');
+                if (paneFull) paneFull.classList.add('active');
+                if (viewWindow && paneFull) {
+                    viewWindow.style.height = paneFull.offsetHeight + 'px';
+                    requestAnimationFrame(() => {
+                        if (viewWindow && paneFull) viewWindow.style.height = paneFull.offsetHeight + 'px';
+                    });
+                }
             }
 
             const readBtn = document.getElementById('caReadActionBtn');
@@ -2633,37 +2622,46 @@
             if (navigator.vibrate) {
                 try { navigator.vibrate(8); } catch(e) {}
             }
-            caViewMode = (caViewMode === 'detailed') ? 'short' : 'detailed';
             const readBtn = document.getElementById('caReadActionBtn');
-            if (readBtn) {
-                readBtn.textContent = caViewMode === 'short' ? 'Full' : 'Short';
-            }
-            const shortDrawer = document.getElementById('caShortDrawer');
-            const detailedDrawer = document.getElementById('caDetailedDrawer');
-            if (!shortDrawer || !detailedDrawer) return;
+            const viewWindow = document.getElementById('caViewWindow');
+            const paneShort = document.getElementById('ca-pane-short');
+            const paneFull = document.getElementById('ca-pane-full');
 
-            if (caViewMode === 'short') {
-                detailedDrawer.className = 'ca-content-layer is-leaving';
-                shortDrawer.className = 'ca-content-layer is-hidden';
-                void shortDrawer.offsetHeight;
-                shortDrawer.className = 'ca-content-layer is-entering';
+            if (caViewMode === 'detailed') {
+                caViewMode = 'short';
+                if (readBtn) readBtn.textContent = 'Full';
 
-                setTimeout(() => {
-                    detailedDrawer.className = 'ca-content-layer is-hidden';
-                    shortDrawer.className = 'ca-content-layer is-active';
-                }, 320);
+                if (paneFull) paneFull.classList.remove('active');
+                if (paneShort) paneShort.classList.add('active');
+
+                // Smoothly morph container down to short text height
+                if (viewWindow && paneShort) {
+                    viewWindow.style.height = paneShort.offsetHeight + 'px';
+                }
             } else {
-                shortDrawer.className = 'ca-content-layer is-leaving';
-                detailedDrawer.className = 'ca-content-layer is-hidden';
-                void detailedDrawer.offsetHeight;
-                detailedDrawer.className = 'ca-content-layer is-entering';
+                caViewMode = 'detailed';
+                if (readBtn) readBtn.textContent = 'Short';
 
-                setTimeout(() => {
-                    shortDrawer.className = 'ca-content-layer is-hidden';
-                    detailedDrawer.className = 'ca-content-layer is-active';
-                }, 320);
+                if (paneShort) paneShort.classList.remove('active');
+                if (paneFull) paneFull.classList.add('active');
+
+                // Smoothly morph container up to match long text length
+                if (viewWindow && paneFull) {
+                    viewWindow.style.height = paneFull.offsetHeight + 'px';
+                }
             }
         };
+
+        // Keeps height scaling perfectly accurate even if users resize the window or rotate phones
+        window.addEventListener('resize', () => {
+            const viewWindow = document.getElementById('caViewWindow');
+            const paneShort = document.getElementById('ca-pane-short');
+            const paneFull = document.getElementById('ca-pane-full');
+            if (viewWindow && paneShort && paneFull) {
+                const targetPane = caViewMode === 'short' ? paneShort : paneFull;
+                viewWindow.style.height = targetPane.offsetHeight + 'px';
+            }
+        });
 
         window.toggleActiveImage = function() {
             caImageDrawerOpen = !caImageDrawerOpen;

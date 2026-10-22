@@ -608,20 +608,12 @@
             user-select: none;
             -webkit-user-select: none;
             touch-action: manipulation;
-            transform: translate3d(0, 0, 0);
-            will-change: transform, border-color;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            transition: transform 0.45s var(--ease-smooth),
-                        border-color 0.35s var(--ease-smooth),
-                        background-color 0.5s var(--ease-smooth);
-            animation: cardsSlideUpEntrance 0.45s var(--ease-premium) both;
+            transform: none !important;
+            transition: none !important;
         }
         .organised-ca-card:hover,
-        .organised-ca-card:active,
-        .organised-ca-card.is-panel-lifted {
-            transform: translate3d(0, -6px, 0) scale3d(1.02, 1.02, 1) !important;
-            border-color: var(--panel-border-hover) !important;
+        .organised-ca-card:active {
+            transform: none !important;
         }
 
         /* Left thumbnail / placeholder */
@@ -969,58 +961,32 @@
             text-align: left !important;
         }
 
-        /* Smooth Content Layers for Reading Mode Transition */
-        .ca-article-stage-container {
-            position: relative;
+        /* --- STABLE VERTICAL CROSS-DISSOLVE ENGINE --- */
+        .content-area {
+            display: grid;
+            grid-template-columns: 1fr;
             width: 100%;
-            min-height: 200px;
-        }
-
-        .ca-content-layer {
-            width: 100%;
-            will-change: opacity, transform;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-
-        .ca-content-layer.is-active {
             position: relative;
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-            visibility: visible;
-            pointer-events: auto;
-            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: height;
+            overflow: hidden;
         }
 
-        .ca-content-layer.is-leaving {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .content-pane {
+            grid-area: 1 / 1; /* Locks both panes onto identical layout coordinate */
             opacity: 0;
-            transform: translate3d(0, -8px, 0);
-            visibility: visible;
             pointer-events: none;
-            transition: opacity 0.22s ease-out, transform 0.22s ease-out;
+            transform: translateY(6px);
+            transition: opacity 0.22s cubic-bezier(0.25, 1, 0.5, 1), 
+                        transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .ca-content-layer.is-hidden {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            transform: translate3d(0, 10px, 0);
-            visibility: hidden;
-            pointer-events: none;
-            transition: none;
-        }
-
-        .ca-content-layer.is-entering {
-            position: relative;
+        .content-pane.active {
             opacity: 1;
-            transform: translate3d(0, 0, 0);
-            visibility: visible;
             pointer-events: auto;
-            transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(0);
+            transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1) 0.08s, 
+                        transform 0.32s cubic-bezier(0.25, 1, 0.5, 1) 0.08s;
         }
 
         /* Standard Typography */
@@ -1442,15 +1408,16 @@
                 <div class="ca-article-feed-stage" id="caArticleFeedStage">
                     <h1 class="article-title" id="orgArticleTitle"></h1>
 
-                    <div class="ca-article-stage-container" id="orgStageContainer">
-                        <!-- Short Revision Layer -->
-                        <div class="ca-content-layer is-hidden" id="orgShortDrawer">
-                            <div class="ca-content-overflow" id="orgShortContent"></div>
+                    <!-- Vertical Dynamic Height Window Frame -->
+                    <div class="content-area" id="orgViewWindow">
+                        <!-- ================= SHORT REVISION PANE ================= -->
+                        <div class="content-pane" id="pane-short">
+                            <div id="orgShortContent"></div>
                         </div>
 
-                        <!-- Detailed Analysis Layer -->
-                        <div class="ca-content-layer is-active" id="orgDetailedDrawer">
-                            <div class="ca-detailed-overflow" id="orgDetailedContent"></div>
+                        <!-- ================= LONG ARTICLE PANE (DEFAULT ACTIVE) ================= -->
+                        <div class="content-pane active" id="pane-full">
+                            <div id="orgDetailedContent"></div>
                         </div>
                     </div>
                 </div>
@@ -1791,16 +1758,12 @@
                 );
             }).join('');
 
-            // Attach click listeners to cards with exact app panel lift animation
+            // Attach click listeners to cards: immediate navigation, completely static
             container.querySelectorAll('.organised-ca-card').forEach(card => {
                 card.addEventListener('click', (e) => {
                     e.preventDefault();
-                    card.classList.add('is-panel-lifted');
                     const title = decodeURIComponent(card.getAttribute('data-title'));
-                    setTimeout(() => {
-                        card.classList.remove('is-panel-lifted');
-                        openOrganisedCaArticle(title);
-                    }, 260);
+                    openOrganisedCaArticle(title);
                 });
             });
 
@@ -2098,7 +2061,7 @@
                     '</div>';
             }
 
-            // Populate Short & Detailed Drawers
+            // Populate Short & Detailed Panes
             const readBtn = document.getElementById('orgReadActionBtn');
             if (readBtn) readBtn.textContent = 'Short';
 
@@ -2108,10 +2071,23 @@
             const detailedContent = document.getElementById('orgDetailedContent');
             if (detailedContent) detailedContent.innerHTML = renderCaArticleSections(topic);
 
-            const shortDrawer = document.getElementById('orgShortDrawer');
-            const detailedDrawer = document.getElementById('orgDetailedDrawer');
-            if (shortDrawer) shortDrawer.className = 'ca-content-layer is-hidden';
-            if (detailedDrawer) detailedDrawer.className = 'ca-content-layer is-active';
+            orgViewMode = 'detailed';
+            const paneShort = document.getElementById('pane-short');
+            const paneFull = document.getElementById('pane-full');
+            const viewWindow = document.getElementById('orgViewWindow');
+
+            if (paneShort) paneShort.classList.remove('active');
+            if (paneFull) paneFull.classList.add('active');
+
+            if (viewWindow && paneFull) {
+                // Establish the starting container height based on the default full layout length
+                viewWindow.style.height = paneFull.offsetHeight + 'px';
+                requestAnimationFrame(() => {
+                    if (viewWindow && paneFull) {
+                        viewWindow.style.height = paneFull.offsetHeight + 'px';
+                    }
+                });
+            }
 
             window.scrollTo({ top: 0, behavior: 'instant' });
         }
@@ -2146,42 +2122,52 @@
         }
         window.toggleOrgImage = toggleOrgImage;
 
-        // Article Controls: Read Mode Toggle (Short <-> Full) - Buttery-Smooth Cross-Dissolve Transition
+        // Article Controls: Read Mode Toggle (Short <-> Full) - Stable Vertical Cross-Dissolve Engine
         function toggleOrgReadMode() {
             if (navigator.vibrate) {
                 try { navigator.vibrate(8); } catch(e) {}
             }
-            orgViewMode = (orgViewMode === 'detailed') ? 'short' : 'detailed';
-            const readBtn = document.getElementById('orgReadActionBtn');
-            if (readBtn) readBtn.textContent = (orgViewMode === 'short') ? 'Full' : 'Short';
+            const actionToggle = document.getElementById('orgReadActionBtn');
+            const viewWindow = document.getElementById('orgViewWindow');
+            const paneShort = document.getElementById('pane-short');
+            const paneFull = document.getElementById('pane-full');
 
-            const shortDrawer = document.getElementById('orgShortDrawer');
-            const detailedDrawer = document.getElementById('orgDetailedDrawer');
-            if (!shortDrawer || !detailedDrawer) return;
+            if (orgViewMode === 'detailed') {
+                orgViewMode = 'short';
+                if (actionToggle) actionToggle.textContent = 'Full';
 
-            if (orgViewMode === 'short') {
-                detailedDrawer.className = 'ca-content-layer is-leaving';
-                shortDrawer.className = 'ca-content-layer is-hidden';
-                void shortDrawer.offsetHeight;
-                shortDrawer.className = 'ca-content-layer is-entering';
+                if (paneFull) paneFull.classList.remove('active');
+                if (paneShort) paneShort.classList.add('active');
 
-                setTimeout(() => {
-                    detailedDrawer.className = 'ca-content-layer is-hidden';
-                    shortDrawer.className = 'ca-content-layer is-active';
-                }, 320);
+                // Smoothly morph container down to short text height
+                if (viewWindow && paneShort) {
+                    viewWindow.style.height = paneShort.offsetHeight + 'px';
+                }
             } else {
-                shortDrawer.className = 'ca-content-layer is-leaving';
-                detailedDrawer.className = 'ca-content-layer is-hidden';
-                void detailedDrawer.offsetHeight;
-                detailedDrawer.className = 'ca-content-layer is-entering';
+                orgViewMode = 'detailed';
+                if (actionToggle) actionToggle.textContent = 'Short';
 
-                setTimeout(() => {
-                    shortDrawer.className = 'ca-content-layer is-hidden';
-                    detailedDrawer.className = 'ca-content-layer is-active';
-                }, 320);
+                if (paneShort) paneShort.classList.remove('active');
+                if (paneFull) paneFull.classList.add('active');
+
+                // Smoothly morph container up to match long text length
+                if (viewWindow && paneFull) {
+                    viewWindow.style.height = paneFull.offsetHeight + 'px';
+                }
             }
         }
         window.toggleOrgReadMode = toggleOrgReadMode;
+
+        // Keeps height scaling perfectly accurate even if users resize the window or rotate phones
+        window.addEventListener('resize', () => {
+            const viewWindow = document.getElementById('orgViewWindow');
+            const paneShort = document.getElementById('pane-short');
+            const paneFull = document.getElementById('pane-full');
+            if (viewWindow && paneShort && paneFull) {
+                const targetPane = orgViewMode === 'short' ? paneShort : paneFull;
+                viewWindow.style.height = targetPane.offsetHeight + 'px';
+            }
+        });
 
         // Article Controls: Metadata Drawer Toggle
         function toggleOrgMetaDropdown() {
