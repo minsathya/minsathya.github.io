@@ -267,6 +267,10 @@
             display: inline-block;
             transform-origin: left center;
             transition: transform 0.28s var(--ease-smooth), color 0.2s ease;
+            user-select: text !important;
+            -webkit-user-select: text !important;
+            cursor: pointer !important;
+            pointer-events: auto !important;
         }
 
         .contact-mail-link:hover {
@@ -324,7 +328,7 @@
             <div class="card-parallax-content">
                 <div class="prose-text">
                     <p>If you have any questions, suggestions, or feedback, feel free to get in touch.</p>
-                    <p>Email : <a href="mailto:iminsathya@gmail.com" class="contact-mail-link">iminsathya@gmail.com</a></p>
+                    <p>Email : <a href="mailto:iminsathya@gmail.com" class="contact-mail-link" target="_top">iminsathya@gmail.com</a></p>
                     <p>I will try to respond as soon as possible.</p>
                 </div>
             </div>

@@ -590,7 +590,7 @@
             width: 100%;
         }
 
-        /* Card: Photo on LEFT, Title & Bottom-Right Date on RIGHT */
+        /* Card: Static Outer Panel (Stationary, No Movement) */
         .organised-ca-card {
             position: relative;
             background-color: var(--panel-bg);
@@ -608,16 +608,18 @@
             user-select: none;
             -webkit-user-select: none;
             touch-action: manipulation;
-            transition: transform 0.22s var(--ease-smooth), opacity 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+            transform: none !important;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
             animation: cardsSlideUpEntrance 0.45s var(--ease-premium) both;
         }
         .organised-ca-card:hover {
             border-color: var(--panel-border) !important;
+            transform: none !important;
         }
-        /* Tap behavior matching the 'All' button */
+        /* Static Card Container on Active/Tap */
         .organised-ca-card:active {
-            transform: scale(0.95) !important;
-            opacity: 0.9 !important;
+            transform: none !important;
+            opacity: 1 !important;
         }
 
         /* Left thumbnail / placeholder */
@@ -681,13 +683,24 @@
             word-break: normal !important;
             overflow-wrap: break-word !important;
             display: inline-block;
-            transform-origin: left center;
+            transform-origin: left center !important;
             transition: transform 0.28s var(--ease-smooth), color 0.2s ease;
         }
 
-        .organised-ca-card:hover .organised-ca-card-title {
-            transform: scale3d(1.028, 1.028, 1);
-            color: var(--text-main);
+        @media (hover: hover) and (pointer: fine) {
+            .organised-ca-card:hover .organised-ca-card-title {
+                transform: scale3d(1.028, 1.028, 1) !important;
+                color: var(--text-main);
+            }
+            .organised-ca-card:active .organised-ca-card-title {
+                transform: scale3d(1, 1, 1) !important;
+            }
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            .organised-ca-card:active .organised-ca-card-title {
+                transform: scale3d(1.028, 1.028, 1) !important;
+            }
         }
 
         /* Bottom-Right Date Tag */
@@ -2124,20 +2137,14 @@
         }
         window.toggleOrgImage = toggleOrgImage;
 
-        // Article Controls: Read Mode Toggle (Short <-> Full)
+        // Article Controls: Read Mode Toggle (Short <-> Full) - Smooth Drawer Animation Matching minsathya-app
         function toggleOrgReadMode() {
             orgViewMode = (orgViewMode === 'detailed') ? 'short' : 'detailed';
             const readBtn = document.getElementById('orgReadActionBtn');
             if (readBtn) readBtn.textContent = (orgViewMode === 'short') ? 'Full' : 'Short';
 
-            const stage = document.getElementById('caArticleFeedStage');
             const shortDrawer = document.getElementById('orgShortDrawer');
             const detailedDrawer = document.getElementById('orgDetailedDrawer');
-
-            if (stage) {
-                stage.classList.remove('article-slide-up-run');
-                void stage.offsetWidth;
-            }
 
             if (orgViewMode === 'short') {
                 if (shortDrawer) shortDrawer.classList.add('is-open');
@@ -2145,12 +2152,6 @@
             } else {
                 if (shortDrawer) shortDrawer.classList.remove('is-open');
                 if (detailedDrawer) detailedDrawer.classList.add('is-open');
-            }
-
-            if (stage) {
-                requestAnimationFrame(() => {
-                    stage.classList.add('article-slide-up-run');
-                });
             }
         }
         window.toggleOrgReadMode = toggleOrgReadMode;
