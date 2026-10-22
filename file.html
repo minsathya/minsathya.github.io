@@ -3,6 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Instant Theme Evaluation to Prevent Theme Flash on Reload -->
+    <script>
+      (function() {
+        try {
+          const activeTheme = localStorage.getItem('dashboard-theme') || sessionStorage.getItem('dashboard-theme');
+          const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+          const isLight = (activeTheme === 'light' || (!activeTheme && prefersLight));
+          if (isLight) {
+            document.documentElement.classList.add('light-mode');
+          } else {
+            document.documentElement.classList.remove('light-mode');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <title>mm - sathya.</title>
 
     <!-- Google Tag (gtag.js) -->
@@ -65,6 +81,12 @@
             --cascade-duration-entry: 0.28s;
         }
 
+        html.light-mode {
+            background-color: #f5f5f7 !important;
+            color: #1d1d1f !important;
+        }
+
+        html.light-mode,
         body.light-mode {
             --bg-color: #ebebe4;
             --text-main: #111111;
@@ -1391,35 +1413,34 @@
         const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
 
         function applyTargetPalette() {
-            const activeSessionOverride = sessionStorage.getItem('dashboard-theme');
-            if (activeSessionOverride) {
-                if (activeSessionOverride === 'light') {
-                    bodyElement.classList.add('light-mode');
+            try {
+                const activeOverride = localStorage.getItem('dashboard-theme') || sessionStorage.getItem('dashboard-theme');
+                const isLight = activeOverride ? (activeOverride === 'light') : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches);
+                if (isLight) {
+                    if (typeof bodyElement !== 'undefined' && bodyElement) bodyElement.classList.add('light-mode');
+                    document.documentElement.classList.add('light-mode');
                 } else {
-                    bodyElement.classList.remove('light-mode');
+                    if (typeof bodyElement !== 'undefined' && bodyElement) bodyElement.classList.remove('light-mode');
+                    document.documentElement.classList.remove('light-mode');
                 }
-            } else {
-                if (systemLightQuery.matches) {
-                    bodyElement.classList.add('light-mode');
-                } else {
-                    bodyElement.classList.remove('light-mode');
-                }
-            }
+            } catch(e) {}
         }
-
         applyTargetPalette();
 
-        systemLightQuery.addEventListener('change', (e) => {
-            sessionStorage.removeItem('dashboard-theme');
-            if (e.matches) {
-                bodyElement.classList.add('light-mode');
-            } else {
-                bodyElement.classList.remove('light-mode');
-            }
-            recalculateTotals();
-            const activePill = document.querySelector('.day-pill.active');
-            if (activePill) updateDayLine(activePill, 0);
-        });
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+                const hasManualTheme = localStorage.getItem('dashboard-theme') || sessionStorage.getItem('dashboard-theme');
+                if (!hasManualTheme) {
+                    if (e.matches) {
+                        if (typeof bodyElement !== 'undefined' && bodyElement) bodyElement.classList.add('light-mode');
+                        document.documentElement.classList.add('light-mode');
+                    } else {
+                        if (typeof bodyElement !== 'undefined' && bodyElement) bodyElement.classList.remove('light-mode');
+                        document.documentElement.classList.remove('light-mode');
+                    }
+                }
+            });
+        }
 
         window.addEventListener('resize', () => {
             const activePill = document.querySelector('.day-pill.active');

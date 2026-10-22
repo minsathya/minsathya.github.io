@@ -8,7 +8,7 @@
     <!-- Instant Theme Evaluation to Prevent Theme Flash on Reload -->
     <script>
       (function() {
-        const activeTheme = sessionStorage.getItem('dashboard-theme');
+        const activeTheme = localStorage.getItem('dashboard-theme') || sessionStorage.getItem('dashboard-theme');
         const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
         const isLight = (activeTheme === 'light' || (!activeTheme && prefersLight));
         if (isLight) {
@@ -619,13 +619,7 @@
 
         @media (hover: hover) {
             .organised-ca-card:hover {
-                background-color: #18181c;
-                border-color: rgba(255, 255, 255, 0.08);
                 transform: translateY(-3px) scale(1.01);
-                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.02);
-            }
-            .organised-ca-card:hover .organised-ca-card-title {
-                color: #ffffff;
             }
             .organised-ca-card:hover .organised-ca-card-left-thumb {
                 transform: scale(1.03);
@@ -635,10 +629,7 @@
         .organised-ca-card:active,
         .organised-ca-card.is-card-pressed {
             transform: scale(0.985) translateY(1px) !important;
-            background-color: #1a1a20 !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
-            transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1),
-                        background-color 0.22s ease !important;
+            transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
         /* Left thumbnail / placeholder */
@@ -820,7 +811,7 @@
             color: #ffffff !important;
             border: none;
             outline: none;
-            padding: 5px 15px;
+            padding: 5px 0;
             border-radius: 14px;
             font-family: inherit;
             font-size: 13px;
@@ -829,16 +820,29 @@
             box-shadow: none !important;
             user-select: none;
             -webkit-user-select: none;
-            min-width: 58px;
+            min-width: 68px;
+            width: 68px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             box-sizing: border-box;
+            transform-origin: center center;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent !important;
             transition: transform 0.18s var(--ease-smooth), opacity 0.18s ease;
         }
-        .ca-direct-action-btn:active {
-            transform: scale(0.93);
+
+        .ca-direct-action-btn:hover,
+        .image-action-btn:hover,
+        .read-action-btn:hover {
+            opacity: 0.94;
+        }
+
+        .ca-direct-action-btn:active,
+        .image-action-btn:active,
+        .read-action-btn:active {
+            transform: scale(0.93) !important;
             opacity: 0.9;
         }
 
@@ -1349,14 +1353,6 @@
     <div class="page-wrapper" id="pageWrapper">
         <!-- Floating Backdrop for Category Menu Blur -->
         <div class="floating-backdrop" id="floatingBackdrop" onclick="closeOrganisedCaCategoryDropdown()"></div>
-
-        <!-- Top Navigation -->
-        <nav class="top-nav-bar" id="topNavBar">
-        <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="sathya.">
-            <span class="brand-letter">sathya</span>
-            <span class="brand-star" aria-hidden="true"></span>
-        </a>
-    </nav>
 
         <!-- Standardized Page Header Row -->
         <div class="page-header-row" id="pageHeaderRow">

@@ -693,23 +693,42 @@
     }
 })();
 
-// 2. AUTOMATIC SYSTEM THEME SYNCHRONIZATION (DARK: #0b0b0b, LIGHT: #f5f5f7)
+// 2. UNIVERSAL SYSTEM & USER THEME SYNCHRONIZATION
 (function initAutomaticSystemTheme() {
-    function applySystemTheme() {
-        const isSystemLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-        if (isSystemLight) {
-            document.documentElement.classList.add('light-mode');
-            if (document.body) document.body.classList.add('light-mode');
-        } else {
-            document.documentElement.classList.remove('light-mode');
-            if (document.body) document.body.classList.remove('light-mode');
-        }
+    function applyTheme() {
+        try {
+            const savedTheme = localStorage.getItem('dashboard-theme') || sessionStorage.getItem('dashboard-theme');
+            let isLight;
+            if (savedTheme) {
+                isLight = (savedTheme === 'light');
+            } else {
+                isLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            }
+            if (isLight) {
+                document.documentElement.classList.add('light-mode');
+                if (document.body) document.body.classList.add('light-mode');
+            } else {
+                document.documentElement.classList.remove('light-mode');
+                if (document.body) document.body.classList.remove('light-mode');
+            }
+        } catch(e) {}
     }
 
-    applySystemTheme();
+    applyTheme();
 
     if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', applySystemTheme);
+        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+            const savedTheme = localStorage.getItem('dashboard-theme') || sessionStorage.getItem('dashboard-theme');
+            if (!savedTheme) {
+                if (e.matches) {
+                    document.documentElement.classList.add('light-mode');
+                    if (document.body) document.body.classList.add('light-mode');
+                } else {
+                    document.documentElement.classList.remove('light-mode');
+                    if (document.body) document.body.classList.remove('light-mode');
+                }
+            }
+        });
     }
 })();
 
@@ -757,37 +776,44 @@ document.addEventListener('DOMContentLoaded', () => {
     wrapClickableWords();
     initSiblingMuting();
 
-    // Ensure all brand logos use the round star
-    const brandPills = document.querySelectorAll('.brand-pill, .logo');
-    brandPills.forEach(pill => {
-        // Clean out any old dot or svg wrapper
-        const oldDot = pill.querySelector('.brand-dot');
-        if (oldDot) oldDot.remove();
-        const oldSvg = pill.querySelector('.brand-star-wrap');
-        if (oldSvg) oldSvg.remove();
+    const path = window.location.pathname.toLowerCase();
+    const isHomePage = path === '/' || path === '/index.html' || path.endsWith('/minsathya.github.io/') || path.endsWith('/minsathya.github.io/index.html') || (path.endsWith('/index.html') && !path.includes('/study/') && !path.includes('/nutrition/') && !path.includes('/footer/'));
 
-        const brandLetter = pill.querySelector('.brand-letter');
-        if (brandLetter && brandLetter.textContent.trim() === 's') {
-            brandLetter.textContent = 'sathya';
-        }
+    // The brand title 'sathya.' should only ever exist on the homepage
+    if (!isHomePage) {
+        document.querySelectorAll('.top-nav-bar, #topNavBar, .brand-pill').forEach(el => el.remove());
+    } else {
+        // Ensure all brand logos use the round star
+        const brandPills = document.querySelectorAll('.brand-pill, .logo');
+        brandPills.forEach(pill => {
+            const oldDot = pill.querySelector('.brand-dot');
+            if (oldDot) oldDot.remove();
+            const oldSvg = pill.querySelector('.brand-star-wrap');
+            if (oldSvg) oldSvg.remove();
 
-        if (!pill.querySelector('.brand-star')) {
-            const roundStar = document.createElement('span');
-            roundStar.className = 'brand-star';
-            roundStar.setAttribute('aria-hidden', 'true');
-            pill.appendChild(roundStar);
-        }
+            const brandLetter = pill.querySelector('.brand-letter');
+            if (brandLetter && brandLetter.textContent.trim() === 's') {
+                brandLetter.textContent = 'sathya';
+            }
 
-        pill.setAttribute('href', '/index.html');
-        pill.addEventListener('click', (e) => {
-            e.preventDefault();
-            sessionStorage.removeItem('breadcrumbTrail');
-            pill.classList.add('is-wave-loading');
-            setTimeout(() => {
-                window.location.href = '/index.html';
-            }, 450);
+            if (!pill.querySelector('.brand-star')) {
+                const roundStar = document.createElement('span');
+                roundStar.className = 'brand-star';
+                roundStar.setAttribute('aria-hidden', 'true');
+                pill.appendChild(roundStar);
+            }
+
+            pill.setAttribute('href', '/index.html');
+            pill.addEventListener('click', (e) => {
+                e.preventDefault();
+                sessionStorage.removeItem('breadcrumbTrail');
+                pill.classList.add('is-wave-loading');
+                setTimeout(() => {
+                    window.location.href = '/index.html';
+                }, 450);
+            });
         });
-    });
+    }
 });
 
 // 4. UNIVERSAL BREADCRUMB LIFECYCLE & HOME ROUTING

@@ -13,7 +13,7 @@
     <!-- Instant Theme Evaluation to Prevent Theme Flash on Reload -->
     <script>
       (function() {
-        const activeTheme = sessionStorage.getItem('dashboard-theme');
+        const activeTheme = (localStorage.getItem('dashboard-theme') || sessionStorage.getItem('dashboard-theme'));
         const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
         const isLight = (activeTheme === 'light' || (!activeTheme && prefersLight));
         if (isLight) {
@@ -86,6 +86,12 @@
             --back-btn-hover: rgba(255, 255, 255, 0.08);
         }
 
+        html.light-mode {
+            background-color: #f5f5f7 !important;
+            color: #1d1d1f !important;
+        }
+
+        html.light-mode,
         body.light-mode {
             --bg-color: #f5f5f7;
             --text-main: #111111;
@@ -789,12 +795,6 @@
 <body>
 
     <!-- Top Left Brand 's' with Animated Twinkling Star -->
-    <nav class="top-nav-bar" id="topNavBar">
-        <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="sathya.">
-            <span class="brand-letter">sathya</span>
-            <span class="brand-star" aria-hidden="true"></span>
-        </a>
-    </nav>
 
     <!-- Header Row: Back Arrow + Subjects Title (Matches Image 1 & 2) -->
     <div class="subjects-header-row">

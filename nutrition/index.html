@@ -3,6 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Instant Theme Evaluation to Prevent Theme Flash on Reload -->
+    <script>
+      (function() {
+        try {
+          const activeTheme = localStorage.getItem('dashboard-theme') || sessionStorage.getItem('dashboard-theme');
+          const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+          const isLight = (activeTheme === 'light' || (!activeTheme && prefersLight));
+          if (isLight) {
+            document.documentElement.classList.add('light-mode');
+          } else {
+            document.documentElement.classList.remove('light-mode');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -83,6 +99,12 @@
             --section-gap: 48px;
         }
 
+        html.light-mode {
+            background-color: #f5f5f7 !important;
+            color: #1d1d1f !important;
+        }
+
+        html.light-mode,
         body.light-mode {
             --bg-color: #ebebe4;
             --text-main: #111111;
@@ -843,14 +865,8 @@
 </head>
 <body class="nutrition-workspace">
 
-    <!-- 1. Top Section: 's.' Brand (left) & Matte Blur Capsule Search Bar (top right) -->
-    <nav class="top-nav-bar" id="topNavBar">
-        <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="s.">
-            <span class="brand-letter">sathya</span>
-            <span class="brand-star" aria-hidden="true"></span>
-        </a>
-
-        <!-- Matte Blur Capsule Search Bar at Top Right Corner (Matches user reference) -->
+    <!-- 1. Top Section: Matte Blur Capsule Search Bar (top right) -->
+    <div class="nutrition-header-row" style="width: 100%; display: flex; align-items: center; justify-content: flex-end; padding: 0 var(--page-gutter); margin-bottom: 24px; box-sizing: border-box;">
         <div class="matte-search-capsule" id="matteSearchCapsule">
             <div class="matte-search-inner">
                 <input type="text" id="nutritionSearchInput" class="matte-search-input" placeholder="fire" autocomplete="off" spellcheck="false" aria-label="Search nutrients">
@@ -866,7 +882,7 @@
             </div>
             <div class="matte-toast-pill" id="matteToastPill">Link copied</div>
         </div>
-    </nav>
+    </div>
 
     <!-- 2. Middle Section: 'Nutrition' Heading moved down closer to panels -->
     <div class="workspace-heading-area" id="workspaceHeadingArea">
@@ -1777,7 +1793,7 @@
         const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
 
         function applyDeviceTheme() {
-            const saved = sessionStorage.getItem('dashboard-theme');
+            const saved = (localStorage.getItem('dashboard-theme') || sessionStorage.getItem('dashboard-theme'));
             if (saved) {
                 bodyElement.classList.toggle('light-mode', saved === 'light');
                 document.documentElement.classList.toggle('light-mode', saved === 'light');

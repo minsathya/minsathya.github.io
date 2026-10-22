@@ -9,7 +9,7 @@
     <!-- Instant Theme Evaluation to Prevent Theme Flash on Reload -->
     <script>
       (function() {
-        const activeTheme = sessionStorage.getItem('dashboard-theme');
+        const activeTheme = localStorage.getItem('dashboard-theme') || sessionStorage.getItem('dashboard-theme');
         const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
         const isLight = (activeTheme === 'light' || (!activeTheme && prefersLight));
         if (isLight) {
@@ -810,22 +810,29 @@
             color: #ffffff !important;
             border: none;
             outline: none;
-            padding: 5px 15px;
+            padding: 5px 0;
             border-radius: 14px;
             font-family: inherit;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            min-width: 58px;
+            min-width: 68px;
+            width: 68px;
             text-align: center;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             box-shadow: none !important;
-            transition: transform 0.18s var(--ease-smooth), opacity 0.18s var(--ease-smooth);
+            user-select: none;
+            -webkit-user-select: none;
+            box-sizing: border-box;
+            transition: transform 0.18s var(--ease-smooth), opacity 0.18s ease;
+        }
+        .ca-direct-action-btn:hover {
+            opacity: 0.94;
         }
         .ca-direct-action-btn:active {
-            transform: scale(0.93);
+            transform: scale(0.93) !important;
             opacity: 0.9;
         }
 
@@ -1317,7 +1324,7 @@
             color: #ffffff !important;
             border: none;
             outline: none;
-            padding: 5px 15px;
+            padding: 5px 0;
             border-radius: 14px;
             font-family: inherit;
             font-size: 13px;
@@ -1326,7 +1333,8 @@
             box-shadow: none !important;
             user-select: none;
             -webkit-user-select: none;
-            min-width: 58px;
+            min-width: 68px;
+            width: 68px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -1347,7 +1355,7 @@
         .ca-direct-action-btn:active,
         .image-action-btn:active,
         .read-action-btn:active {
-            transform: scale(0.95) !important;
+            transform: scale(0.93) !important;
             opacity: 0.9;
         }
 
@@ -1949,17 +1957,16 @@
         .header-date-cluster {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             user-select: none;
             -webkit-user-select: none;
         }
-
-        .header-date-cluster .date-text-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            text-align: right;
-            align-items: flex-end;
+        .header-date-cluster .date-value-main {
+            display: inline-flex;
+            align-items: center;
+            line-height: 1;
+            margin: 0;
+            white-space: nowrap;
         }
 
         .subjects-header-row {
@@ -2103,15 +2110,6 @@
 <body>
     <div class="page-wrapper" id="pageWrapper">
 
-    <!-- FLOATING MASTER HEADER -->
-        <!-- Top Left Brand 's' with Animated Twinkling Star -->
-    <nav class="top-nav-bar" id="topNavBar">
-        <a href="/index.html" class="logo brand-pill" id="brandPill" aria-label="sathya.">
-            <span class="brand-letter">sathya</span>
-            <span class="brand-star" aria-hidden="true"></span>
-        </a>
-    </nav>
-
     <main>
         <!-- Page Header Row: Title on Left, Calendar on Right End -->
         <div class="page-header-row">
@@ -2127,10 +2125,7 @@
 
             <!-- Calendar & Date on the Right Side End of the Title -->
             <div class="header-date-cluster">
-                <div class="date-text-stack">
-                    <span class="date-label-tiny">Selected Date</span>
-                    <span class="date-value-main" id="activeDateDisplay">05 October 2026</span>
-                </div>
+                <span class="date-value-main" id="activeDateDisplay">05 October 2026</span>
                 <button class="cal-trigger-btn" id="openCalendarBtn" aria-label="Open Date Picker">
                     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="6" y="14" width="52" height="44" rx="14" fill="#E8EDF2"/>
@@ -2997,118 +2992,46 @@
             }
         });
 
-        // 9. THEME PALETTE ENGINE
-        const toggleBtn = document.getElementById('themeToggleBtn');
-        const bodyElement = document.body;
-        const systemLightQuery = window.matchMedia('(prefers-color-scheme: light)');
-        const masterHeader = document.getElementById('masterHeader');
-        const openSearchBtn = document.getElementById('openSearchBtn');
-        const closeSearchBtn = document.getElementById('closeSearchBtn');
-        const clearSearchBtn = document.getElementById('clearSearchBtn');
-        const searchCoreInput = document.getElementById('searchCoreInput');
-
-        function handleHeaderLeaveOrBlur(isExplicitClose = false) {
-            const isSearchActive = masterHeader.classList.contains('state-search');
-            if (isSearchActive) {
-                const isEmpty = searchCoreInput.value.trim() === "";
-                if (isEmpty || isExplicitClose) {
-                    masterHeader.classList.remove('state-search');
-                    masterHeader.classList.add('state-main');
-                    searchCoreInput.value = "";
-                }
-            }
-            searchCoreInput.blur();
-            masterHeader.classList.remove('is-header-lifted');
-        }
-
-        masterHeader.addEventListener('pointerdown', (e) => {
-            masterHeader.classList.add('is-header-lifted');
-            if (masterHeader.classList.contains('state-search')) {
-                if (document.activeElement !== searchCoreInput && e.target !== closeSearchBtn && e.target !== clearSearchBtn) {
-                    searchCoreInput.focus({ preventScroll: true });
-                }
-            }
-        });
-
-        masterHeader.addEventListener('pointerleave', () => {
-            if (masterHeader.classList.contains('state-search') && searchCoreInput.value.trim() === "") {
-                handleHeaderLeaveOrBlur(false);
-            } else {
-                searchCoreInput.blur();
-                masterHeader.classList.remove('is-header-lifted');
-            }
-        });
-
-        masterHeader.addEventListener('pointerup', () => {
-            if (document.activeElement !== searchCoreInput && !masterHeader.matches(':hover')) {
-                masterHeader.classList.remove('is-header-lifted');
-            }
-        });
-
-        document.addEventListener('pointerdown', (e) => {
-            if (!masterHeader.contains(e.target)) {
-                if (masterHeader.classList.contains('state-search') && searchCoreInput.value.trim() === "") {
-                    handleHeaderLeaveOrBlur(false);
-                } else {
-                    searchCoreInput.blur();
-                    masterHeader.classList.remove('is-header-lifted');
-                }
-            }
-        });
-
+        // 9. THEME PALETTE SYNCHRONIZATION
         function applyTargetPalette() {
-            const activeSessionOverride = sessionStorage.getItem('dashboard-theme');
-            if (activeSessionOverride) {
-                if (activeSessionOverride === 'light') {
-                    bodyElement.classList.add('light-mode');
-                    document.documentElement.classList.add('light-mode');
+            try {
+                const activeOverride = localStorage.getItem('dashboard-theme') || sessionStorage.getItem('dashboard-theme');
+                if (activeOverride) {
+                    if (activeOverride === 'light') {
+                        document.body.classList.add('light-mode');
+                        document.documentElement.classList.add('light-mode');
+                    } else {
+                        document.body.classList.remove('light-mode');
+                        document.documentElement.classList.remove('light-mode');
+                    }
                 } else {
-                    bodyElement.classList.remove('light-mode');
-                    document.documentElement.classList.remove('light-mode');
+                    const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+                    if (prefersLight) {
+                        document.body.classList.add('light-mode');
+                        document.documentElement.classList.add('light-mode');
+                    } else {
+                        document.body.classList.remove('light-mode');
+                        document.documentElement.classList.remove('light-mode');
+                    }
                 }
-            } else {
-                if (systemLightQuery.matches) {
-                    bodyElement.classList.add('light-mode');
-                    document.documentElement.classList.add('light-mode');
-                } else {
-                    bodyElement.classList.remove('light-mode');
-                    document.documentElement.classList.remove('light-mode');
-                }
-            }
+            } catch(e) {}
         }
         applyTargetPalette();
 
-        systemLightQuery.addEventListener('change', (e) => {
-            sessionStorage.removeItem('dashboard-theme');
-            if (e.matches) {
-                bodyElement.classList.add('light-mode');
-                document.documentElement.classList.add('light-mode');
-            } else {
-                bodyElement.classList.remove('light-mode');
-                document.documentElement.classList.remove('light-mode');
-            }
-        });
-
-        toggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isCurrentlyLight = bodyElement.classList.contains('light-mode');
-            if (isCurrentlyLight) {
-                bodyElement.classList.remove('light-mode');
-                document.documentElement.classList.remove('light-mode');
-                sessionStorage.setItem('dashboard-theme', 'dark');
-            } else {
-                bodyElement.classList.add('light-mode');
-                document.documentElement.classList.add('light-mode');
-                sessionStorage.setItem('dashboard-theme', 'light');
-            }
-        });
-
-        openSearchBtn.addEventListener('click', () => {
-            masterHeader.classList.remove('state-main');
-            masterHeader.classList.add('state-search');
-            masterHeader.classList.add('is-header-lifted');
-            searchCoreInput.focus({ preventScroll: true });
-        });
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+                const hasManualTheme = localStorage.getItem('dashboard-theme') || sessionStorage.getItem('dashboard-theme');
+                if (!hasManualTheme) {
+                    if (e.matches) {
+                        document.body.classList.add('light-mode');
+                        document.documentElement.classList.add('light-mode');
+                    } else {
+                        document.body.classList.remove('light-mode');
+                        document.documentElement.classList.remove('light-mode');
+                    }
+                }
+            });
+        }
 
         clearSearchBtn.addEventListener('click', () => {
             searchCoreInput.value = "";

@@ -3,6 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Instant Theme Evaluation to Prevent Theme Flash on Reload -->
+    <script>
+      (function() {
+        try {
+          const activeTheme = localStorage.getItem('dashboard-theme') || sessionStorage.getItem('dashboard-theme');
+          const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+          const isLight = (activeTheme === 'light' || (!activeTheme && prefersLight));
+          if (isLight) {
+            document.documentElement.classList.add('light-mode');
+          } else {
+            document.documentElement.classList.remove('light-mode');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <title>sathya.</title>
@@ -69,6 +85,12 @@
             --row-divider: #1c1c1c;
         }
 
+        html.light-mode {
+            background-color: #f5f5f7 !important;
+            color: #1d1d1f !important;
+        }
+
+        html.light-mode,
         body.light-mode {
             --bg-color: #f5f5f7;
             --panel-color: #ffffff;
