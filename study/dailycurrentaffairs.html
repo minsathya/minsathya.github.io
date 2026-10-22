@@ -1024,7 +1024,7 @@
         .ca-content-drawer {
             display: grid;
             grid-template-rows: 0fr;
-            transition: grid-template-rows 0.46s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: none;
             overflow: hidden;
             width: 100%;
             will-change: grid-template-rows;
@@ -1033,7 +1033,7 @@
         }
         .ca-content-drawer.is-open {
             grid-template-rows: 1fr;
-            transition: grid-template-rows 0.48s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: grid-template-rows 0.48s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
         .ca-content-overflow {
             min-height: 0;
@@ -1053,7 +1053,7 @@
         .ca-detailed-content-drawer {
             display: grid;
             grid-template-rows: 0fr;
-            transition: grid-template-rows 0.46s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: none;
             overflow: hidden;
             width: 100%;
             margin: 0;
@@ -1063,7 +1063,7 @@
         }
         .ca-detailed-content-drawer.is-open {
             grid-template-rows: 1fr;
-            transition: grid-template-rows 0.48s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: grid-template-rows 0.48s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
         .ca-detailed-overflow {
             min-height: 0;
@@ -2632,11 +2632,19 @@
             const detailedDrawer = document.getElementById('caDetailedDrawer');
 
             if (caViewMode === 'short') {
-                if (shortDrawer) shortDrawer.classList.add('is-open');
                 if (detailedDrawer) detailedDrawer.classList.remove('is-open');
+                if (shortDrawer) {
+                    shortDrawer.classList.remove('is-open');
+                    void shortDrawer.offsetHeight; // trigger reflow so it unrolls cleanly from 0fr including Why in News?
+                    shortDrawer.classList.add('is-open');
+                }
             } else {
                 if (shortDrawer) shortDrawer.classList.remove('is-open');
-                if (detailedDrawer) detailedDrawer.classList.add('is-open');
+                if (detailedDrawer) {
+                    detailedDrawer.classList.remove('is-open');
+                    void detailedDrawer.offsetHeight; // trigger reflow so it unrolls cleanly from 0fr including Why in News?
+                    detailedDrawer.classList.add('is-open');
+                }
             }
         };
 
