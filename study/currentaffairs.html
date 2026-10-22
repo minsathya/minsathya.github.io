@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Organised Current Affairs - sathya.</title>
+    <title>Daily Current Affairs - sathya.</title>
 
     <!-- Instant Theme Evaluation to Prevent Theme Flash on Reload -->
     <script>
@@ -18,8 +18,8 @@
       })();
     </script>
 
-    <meta name="description" content="Organised Current Affairs for UPSC Civil Services Examination.">
-    <meta name="keywords" content="UPSC current affairs, Organised current affairs, Prelims, Mains, Civil Services.">
+    <meta name="description" content="Daily Current Affairs for UPSC Civil Services Examination.">
+    <meta name="keywords" content="UPSC current affairs, Daily current affairs, Prelims, Mains, Civil Services.">
 
     <!-- Google Tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VGX2K64Y4"></script>
@@ -63,6 +63,7 @@
             --panel-bg: #121212;
             --panel-border: #222222;
             --panel-border-hover: rgba(255, 255, 255, 0.14);
+            --heading-accent-bar: #8aafe8;
             --item-card-bg: rgba(255, 255, 255, 0.03);
             --item-card-hover: rgba(255, 255, 255, 0.05);
             --row-divider: #1c1c1c;
@@ -88,6 +89,7 @@
             --panel-bg: #ffffff;
             --panel-border: #e2e2e7;
             --panel-border-hover: rgba(0, 0, 0, 0.12);
+            --heading-accent-bar: #0064ff;
             --item-card-bg: rgba(0, 0, 0, 0.025);
             --item-card-hover: rgba(0, 0, 0, 0.045);
             --row-divider: #f2f2f7;
@@ -242,7 +244,7 @@
         /* STANDARDIZED HEADER ROW WITH BACK BUTTON */
         .page-header-row {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 14px;
             width: 100%;
             max-width: 1000px;
@@ -252,7 +254,6 @@
         }
 
         .back-icon-btn {
-            margin-top: 2px;
             background: transparent;
             border: none;
             outline: none;
@@ -265,6 +266,7 @@
             cursor: pointer;
             color: var(--text-main);
             padding: 0;
+            margin: 0;
             flex-shrink: 0;
             transition: background-color 0.2s var(--ease-smooth), transform 0.2s var(--ease-smooth);
         }
@@ -289,8 +291,10 @@
             font-weight: 500 !important;
             letter-spacing: -0.4px !important;
             color: var(--text-main);
-            line-height: 1.3 !important;
+            line-height: 1.25 !important;
             margin: 0;
+            display: flex;
+            align-items: center;
             flex: 1;
         }
 
@@ -410,12 +414,17 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background-color: #4caf50;
-            box-shadow: 0 0 6px rgba(76, 175, 80, 0.8);
+            background-color: #ffffff;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.85);
             display: none;
         }
         .cal-active-dot.is-visible {
             display: block;
+        }
+        html.light-mode .cal-active-dot,
+        body.light-mode .cal-active-dot {
+            background-color: #000000;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
         }
 
         /* Category Dropdown Pill */
@@ -777,12 +786,13 @@
         }
 
         /* Controls Panel: EXACT 24px margin to title */
+        /* Redesigned Article Controls Panel */
         .ca-controls-panel {
             width: 100%;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 24px;
-            padding: 14px 20px;
+            padding: 16px 20px;
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
@@ -790,32 +800,100 @@
             transition: background-color 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
         }
 
-        .ca-controls-main-bar {
+        .ca-panel-layout {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .ca-panel-thumb {
+            width: 96px;
+            height: 96px;
+            min-width: 96px;
+            border-radius: 18px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .ca-panel-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 18px;
+            display: block;
+        }
+
+        .ca-panel-thumb .ca-thumb-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: var(--text-muted);
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .ca-panel-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 96px;
+            min-width: 0;
+            box-sizing: border-box;
+            padding: 4px 0;
+        }
+
+        .ca-panel-meta-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
+            gap: 12px;
         }
 
-        .ca-action-buttons-group {
-            display: flex;
+        .meta-pill {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            padding: 6px 14px;
+            border-radius: 14px;
+            font-size: 13px;
+            display: inline-flex;
             align-items: center;
-            gap: 16px;
+            gap: 6px;
+            white-space: nowrap;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            max-width: 60%;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .ca-action-label-wrap {
+        .meta-pill strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .read-toggle-pill {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            padding: 4px 6px 4px 14px;
+            border-radius: 18px;
+            font-size: 13px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 13.5px;
-            font-weight: 500;
-            color: var(--text-muted);
-            user-select: none;
-            -webkit-user-select: none;
+            white-space: nowrap;
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
         .ca-direct-action-btn,
-        .image-action-btn,
         .read-action-btn {
             background: var(--btn-blue) !important;
             color: #ffffff !important;
@@ -844,140 +922,60 @@
         }
 
         .ca-direct-action-btn:hover,
-        .image-action-btn:hover,
         .read-action-btn:hover {
             opacity: 0.94;
         }
 
         .ca-direct-action-btn:active,
-        .image-action-btn:active,
         .read-action-btn:active {
             transform: scale(0.93) !important;
             opacity: 0.9;
         }
 
-        .ca-dropdown-toggle-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            transition: color 0.2s ease, transform 0.25s var(--ease-smooth);
-            user-select: none;
-            -webkit-user-select: none;
+        html.light-mode .meta-pill,
+        body.light-mode .meta-pill,
+        html.light-mode .read-toggle-pill,
+        body.light-mode .read-toggle-pill {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.05);
         }
-        .ca-dropdown-toggle-btn.is-rotated {
-            transform: rotate(180deg);
+
+        html.light-mode .ca-panel-thumb,
+        body.light-mode .ca-panel-thumb {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.06);
+        }
+
+        /* Today Action Button */
+        .today-action-btn {
+            background-color: var(--panel-bg);
             color: var(--text-main);
-        }
-        .ca-dropdown-toggle-btn svg {
-            width: 18px;
-            height: 18px;
-            stroke: currentColor;
-            stroke-width: 2.2;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        /* Image Drawer: Uncropped natural image presentation */
-        .ca-image-drawer {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.45s var(--ease-smooth);
-            width: 100%;
-            overflow: hidden;
-        }
-        .ca-image-drawer.is-open {
-            grid-template-rows: 1fr;
-        }
-        .ca-image-drawer-inner {
-            min-height: 0;
-            overflow: hidden;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0;
-            padding-top: 0;
-            transition: opacity 0.3s var(--ease-smooth), padding-top 0.35s var(--ease-smooth);
-        }
-        .ca-image-drawer.is-open .ca-image-drawer-inner {
-            opacity: 1;
-            padding-top: 14px;
-        }
-        .ca-image-drawer-inner img {
-            max-width: 100%;
-            width: auto;
-            height: auto;
-            max-height: 80vh;
-            object-fit: contain;
-            border-radius: 16px;
-            display: block;
-            margin: 0 auto;
-        }
-        .ca-image-caption {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 8px;
-            text-align: center;
-        }
-
-        /* Metadata Drawer */
-        .ca-meta-drawer {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.42s var(--ease-smooth);
-            width: 100%;
-            overflow: hidden;
-        }
-        .ca-meta-drawer.is-open {
-            grid-template-rows: 1fr;
-        }
-        .ca-meta-drawer-inner {
-            min-height: 0;
-            overflow: hidden;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            opacity: 0;
-            padding-top: 0;
-            transition: opacity 0.3s var(--ease-smooth), padding-top 0.35s var(--ease-smooth);
-        }
-        .ca-meta-drawer.is-open .ca-meta-drawer-inner {
-            opacity: 1;
-            padding-top: 14px;
-        }
-        .ca-meta-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .meta-pill {
+            border: 1px solid var(--panel-border);
+            border-radius: 18px;
+            padding: 7px 16px;
+            font-size: 14px;
+            font-weight: 500;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 400;
-            background: var(--pill-bg, rgba(255, 255, 255, 0.04));
-            border: 1px solid var(--pill-border, rgba(255, 255, 255, 0.08));
-            color: var(--text-muted);
-            transition: background-color 0.4s var(--ease-smooth), 
-                        border-color 0.4s var(--ease-smooth), 
-                        color 0.4s var(--ease-smooth);
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: background-color 0.2s var(--ease-smooth), border-color 0.2s var(--ease-smooth), transform 0.15s ease;
         }
-        .meta-pill strong {
-            color: var(--text-main);
-            font-weight: 500;
+
+        .today-action-btn:hover {
+            background-color: var(--item-card-hover, rgba(255, 255, 255, 0.08));
+        }
+
+        .today-action-btn:active {
+            transform: scale(0.95);
+        }
+
+        .today-action-btn.is-active {
+            background-color: var(--btn-blue, #258BF5) !important;
+            color: #ffffff !important;
+            border-color: transparent !important;
         }
 
         /* ARTICLE CONTENT AREA: Rest on background without boxed panel */
@@ -1074,7 +1072,7 @@
             display: inline-block;
             width: 3.5px;
             height: 16px;
-            background-color: #8aafe8;
+            background-color: var(--heading-accent-bar, #8aafe8);
             border-radius: 2px;
             flex-shrink: 0;
         }
@@ -1114,17 +1112,31 @@
         }
 
         .point-subheading {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-size: 17px;
             font-weight: 600;
             line-height: 1.8;
-            color: #8aafe8 !important;
+            color: var(--text-main) !important;
             margin-top: 12px;
             margin-bottom: 6px;
             text-align: left;
         }
 
+        .point-subheading::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 14px;
+            background-color: var(--heading-accent-bar, #8aafe8);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
         .info-callout-row strong {
-            color: #8aafe8 !important;
+            color: var(--text-main) !important;
         }
 
         .point-sublist {
@@ -1240,7 +1252,7 @@
         }
         .picker-col-headers {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1.35fr 1fr;
             width: 100%;
             margin-bottom: 6px;
             padding: 0 4px;
@@ -1256,7 +1268,7 @@
         .picker-drum-stage {
             position: relative;
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1.35fr 1fr;
             height: 200px;
             width: 100%;
             overflow: hidden;
@@ -1364,6 +1376,28 @@
 
         @media (max-width: 700px) {
             body { padding: 24px 16px 28px 16px; }
+            .footer-links-row {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 6px 16px !important;
+                gap: 24px !important;
+                scrollbar-width: none !important;
+                box-sizing: border-box !important;
+            }
+            .footer-links-row::-webkit-scrollbar {
+                display: none !important;
+            }
+            .footer-links-row a {
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+            }
+        }
             .brand-pill { font-size: 34px; }
             /* .page-title consistent on all devices */
             .category-row { max-width: 100%; margin-bottom: 16px; }
@@ -1390,7 +1424,7 @@
                     <polyline points="12 19 5 12 12 5"></polyline>
                 </svg>
             </button>
-            <h1 class="page-title" id="pageTitleText">Organised current affairs</h1>
+            <h1 class="page-title" id="pageTitleText">Daily current affairs</h1>
         </div>
 
         <main class="content-wrapper">
@@ -1424,6 +1458,9 @@
                             <span class="cal-active-dot" id="calActiveDot"></span>
                         </button>
 
+                        <!-- Today Filter Button -->
+                        <button type="button" class="today-action-btn" id="orgTodayBtn" onclick="toggleOrganisedCaToday()" aria-label="Filter Today's Current Affairs">Today</button>
+
                         <!-- Category Pill with Chevron Dropdown -->
                         <div class="day-action-wrap">
                             <button type="button" class="day-action-btn" id="organisedCaCategoryBtn" onclick="toggleOrganisedCaCategoryDropdown(event)">
@@ -1441,26 +1478,26 @@
 
             <!-- 2. ARTICLE DETAIL VIEW -->
             <div id="organisedCaArticleView">
-                <!-- Controls Panel -->
+                <!-- Controls Panel: Left Image & Right Pill Rows -->
                 <div class="ca-controls-panel" id="caControlsPanel">
-                    <div class="ca-controls-main-bar">
-                        <div class="ca-action-buttons-group">
-                            <span class="ca-action-label-wrap">Image : <button type="button" class="ca-direct-action-btn image-action-btn" id="orgImageActionBtn" onclick="toggleOrgImage()">View</button></span>
-                            <span class="ca-action-label-wrap">Read : <button type="button" class="ca-direct-action-btn read-action-btn" id="orgReadActionBtn" onclick="toggleOrgReadMode()">Short</button></span>
+                    <div class="ca-panel-layout">
+                        <!-- Left Corner: Image with round edges -->
+                        <div class="ca-panel-thumb" id="orgPanelThumb"></div>
+
+                        <!-- Right Side: 2 Rows of Metadata & Read Action -->
+                        <div class="ca-panel-content">
+                            <!-- Top Row: GS Paper pill (left) & Category pill (right edge) -->
+                            <div class="ca-panel-meta-row">
+                                <span class="meta-pill" id="orgGsPaperPill">GS Paper : <strong id="orgGsPaperVal">GS-1</strong></span>
+                                <span class="meta-pill" id="orgCategoryPill">Category : <strong id="orgCategoryVal">National</strong></span>
+                            </div>
+
+                            <!-- Bottom Row: Date pill (left) & Read pill [Short] (right edge) -->
+                            <div class="ca-panel-meta-row">
+                                <span class="meta-pill" id="orgDatePill">Date : <strong id="orgDateVal">05 October 2026</strong></span>
+                                <span class="read-toggle-pill" id="orgReadPill">Read : <button type="button" class="ca-direct-action-btn read-action-btn" id="orgReadActionBtn" onclick="toggleOrgReadMode()">Short</button></span>
+                            </div>
                         </div>
-                        <button type="button" class="ca-dropdown-toggle-btn" id="orgMetaDropdownBtn" onclick="toggleOrgMetaDropdown()" aria-label="Expand topic tags">
-                            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                        </button>
-                    </div>
-
-                    <!-- Expandable Image Drawer -->
-                    <div class="ca-image-drawer" id="orgImageDrawer">
-                        <div class="ca-image-drawer-inner" id="orgImageDrawerInner"></div>
-                    </div>
-
-                    <!-- Expandable Metadata Drawer -->
-                    <div class="ca-meta-drawer" id="orgMetaDrawer">
-                        <div class="ca-meta-drawer-inner" id="orgMetaDrawerInner"></div>
                     </div>
                 </div>
 
@@ -1539,6 +1576,50 @@
         let orgTempDay = 5;
         let orgTempMonth = 10;
         let orgTempYear = 2026;
+        const CALENDAR_MONTH_NAMES = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        function formatDisplayDate(dateKey, fallbackText) {
+            if (fallbackText && /[a-zA-Z]/.test(fallbackText)) return fallbackText;
+            if (!dateKey) return '';
+            const parts = dateKey.split('-');
+            if (parts.length === 3) {
+                const day = String(parseInt(parts[0], 10)).padStart(2, '0');
+                const mIdx = parseInt(parts[1], 10) - 1;
+                const year = parts[2];
+                if (mIdx >= 0 && mIdx < 12) {
+                    return day + ' ' + CALENDAR_MONTH_NAMES[mIdx] + ' ' + year;
+                }
+            }
+            return fallbackText || dateKey;
+        }
+
+        let isOrganisedCaTodayActive = false;
+
+        function getTodayDateKey() {
+            const now = new Date();
+            const d = String(now.getDate()).padStart(2, '0');
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const y = now.getFullYear();
+            return d + '-' + m + '-' + y;
+        }
+
+        function toggleOrganisedCaToday() {
+            isOrganisedCaTodayActive = !isOrganisedCaTodayActive;
+            const btn = document.getElementById('orgTodayBtn');
+            if (btn) btn.classList.toggle('is-active', isOrganisedCaTodayActive);
+
+            if (isOrganisedCaTodayActive) {
+                organisedCaSelectedDateKey = getTodayDateKey();
+            } else {
+                organisedCaSelectedDateKey = null;
+            }
+            renderDirectoryView(true);
+        }
+        window.toggleOrganisedCaToday = toggleOrganisedCaToday;
+
         const CELL_HEIGHT = 48;
 
         const orgDayCol = document.getElementById('orgDayCol');
@@ -1631,7 +1712,7 @@
             dateKeys.forEach(dateKey => {
                 const dayObj = raw[dateKey];
                 if (dayObj && Array.isArray(dayObj.topics)) {
-                    const dateStr = dayObj.dateText || dateKey;
+                    const dateStr = formatDisplayDate(dateKey, dayObj.dateText);
                     const timestamp = parseDateKeyTimestamp(dateKey);
 
                     dayObj.topics.forEach((topic, idx) => {
@@ -1714,8 +1795,8 @@
 
             if (dirView) dirView.style.display = 'block';
             if (artView) artView.classList.remove('is-active');
-            if (pageTitle) pageTitle.textContent = 'Organised current affairs';
-            try { document.title = 'Organised Current Affairs - sathya.'; } catch(e) {}
+            if (pageTitle) pageTitle.textContent = 'Daily current affairs';
+            try { document.title = 'Daily Current Affairs - sathya.'; } catch(e) {}
 
             const allTopics = getAllOrganisedCaTopics();
             const categories = getOrganisedCaCategories();
@@ -1789,7 +1870,7 @@
             if (!container) return;
 
             if (filtered.length === 0) {
-                container.innerHTML = '<div style="padding: 48px 16px; text-align: center; color: var(--text-muted); font-size: 15px;">No current affairs entries found for this selection.</div>';
+                container.innerHTML = '<div style="padding: 48px 16px; text-align: center; color: var(--text-muted); font-size: 15px;">coming soon...</div>';
                 return;
             }
 
@@ -1958,7 +2039,7 @@
             for (let m = 1; m <= 12; m++) {
                 const cell = document.createElement('div');
                 cell.className = 'drum-cell';
-                cell.textContent = String(m).padStart(2, '0');
+                cell.textContent = CALENDAR_MONTH_NAMES[m - 1];
                 cell.dataset.val = m;
                 /* Tap to select month */
                 cell.addEventListener('click', () => {
@@ -2103,39 +2184,38 @@
             const titleEl = document.getElementById('orgArticleTitle');
             if (titleEl) titleEl.textContent = topic.topicTitle;
 
-            // Populate Image Drawer (Uncropped & always enabled)
-            const hasImage = !!(topic.image && topic.image.url);
-            const imgBtn = document.getElementById('orgImageActionBtn');
-            if (imgBtn) {
-                imgBtn.textContent = 'View';
-                imgBtn.style.opacity = '1';
-                imgBtn.style.pointerEvents = 'auto';
-            }
-            const imgDrawer = document.getElementById('orgImageDrawer');
-            if (imgDrawer) imgDrawer.classList.remove('is-open');
-
-            const imgInner = document.getElementById('orgImageDrawerInner');
-            if (imgInner) {
-                imgInner.innerHTML = hasImage ?
-                    ('<img src="' + topic.image.url + '" alt="' + (topic.image.caption || 'Topic Image') + '" loading="lazy">' +
-                    (topic.image.caption ? '<div class="ca-image-caption">' + topic.image.caption + '</div>' : '')) :
-                    '<div style="font-size: 14px; color: var(--text-muted); padding: 14px 0; text-align: center;">No graphic or infographic attached for this topic.</div>';
+            // Populate Left Image (with rounded edges) or sleek placeholder
+            const thumbWrap = document.getElementById('orgPanelThumb');
+            if (thumbWrap) {
+                if (topic.image && topic.image.url) {
+                    thumbWrap.innerHTML = '<img src="' + topic.image.url + '" alt="' + (topic.image.caption || 'Article graphic') + '" loading="lazy">';
+                } else {
+                    thumbWrap.innerHTML = '<div class="ca-thumb-placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>no image</span></div>';
+                }
             }
 
-            // Populate Metadata Drawer
-            const metaDrawer = document.getElementById('orgMetaDrawer');
-            const metaBtn = document.getElementById('orgMetaDropdownBtn');
-            if (metaDrawer) metaDrawer.classList.remove('is-open');
-            if (metaBtn) metaBtn.classList.remove('is-rotated');
+            // Populate Metadata Pills
+            const gsVal = document.getElementById('orgGsPaperVal');
+            if (gsVal) gsVal.textContent = topic.gsPaper || 'General Studies';
 
-            const metaInner = document.getElementById('orgMetaDrawerInner');
-            if (metaInner) {
-                metaInner.innerHTML = 
-                    '<div class="ca-meta-row">' +
-                        '<span class="meta-pill">GS Paper : <strong>' + (topic.gsPaper || 'General Studies') + '</strong></span>' +
-                        '<span class="meta-pill">Category : <strong>' + (topic.category || (topic.categories ? topic.categories.join(', ') : 'National')) + '</strong></span>' +
-                        '<span class="meta-pill">Date : <strong>' + topic.dateStr + '</strong></span>' +
-                    '</div>';
+            const catVal = document.getElementById('orgCategoryVal');
+            if (catVal) catVal.textContent = topic.category || (topic.categories ? topic.categories.join(', ') : 'National');
+
+            const dateVal = document.getElementById('orgDateVal');
+            if (dateVal) dateVal.textContent = topic.dateStr;
+
+            // Trigger slide-up entrance animation on detail view & controls
+            const controls = document.getElementById('caControlsPanel');
+            const stage = document.getElementById('caArticleFeedStage');
+            if (controls) {
+                controls.classList.remove('article-slide-up-run');
+                void controls.offsetWidth;
+                controls.classList.add('article-slide-up-run');
+            }
+            if (stage) {
+                stage.classList.remove('article-slide-up-run');
+                void stage.offsetWidth;
+                stage.classList.add('article-slide-up-run');
             }
 
             // Populate Short & Detailed Panes
@@ -2420,5 +2500,6 @@
             }
         });
     </script>
+    <script src="/script.js"></script>
 </body>
 </html>

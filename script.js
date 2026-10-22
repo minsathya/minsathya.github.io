@@ -101,6 +101,29 @@
         }
 
         /* Footer font size: do not increase */
+        @media (max-width: 700px) {
+            .footer-links-row {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 6px 16px !important;
+                gap: 24px !important;
+                scrollbar-width: none !important;
+                box-sizing: border-box !important;
+            }
+            .footer-links-row::-webkit-scrollbar {
+                display: none !important;
+            }
+            .footer-links-row a {
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+            }
+        }
         footer, .footer-links-row a, .footer-links-row a .nav-text {
             font-size: 13.5px !important;
             font-weight: 400 !important;

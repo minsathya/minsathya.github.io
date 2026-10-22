@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Current Affairs - sathya.</title>
-    <meta name="description" content="Daily Current Affairs for UPSC Civil Services Examination.">
+    <title>Current Affairs - sathya.</title>
+    <meta name="description" content="Current Affairs for UPSC Civil Services Examination.">
 
     <!-- Instant Theme Evaluation to Prevent Theme Flash on Reload -->
     <script>
@@ -1115,7 +1115,7 @@
             display: inline-block;
             width: 3.5px;
             height: 16px;
-            background-color: #8aafe8;
+            background-color: var(--heading-accent-bar, #8aafe8);
             border-radius: 2px;
             flex-shrink: 0;
         }
@@ -1147,17 +1147,31 @@
         }
 
         .point-subheading {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-size: 17px;
             font-weight: 600;
-            color: #8aafe8 !important;
+            color: var(--text-main) !important;
             line-height: 1.8;
             margin-top: 10px;
             margin-bottom: 6px;
             text-align: left;
         }
 
+        .point-subheading::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 14px;
+            background-color: var(--heading-accent-bar, #8aafe8);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
         .info-callout-row strong {
-            color: #8aafe8 !important;
+            color: var(--text-main) !important;
         }
 
         .point-sublist {
@@ -1516,7 +1530,7 @@
             display: inline-block;
             width: 3.5px;
             height: 16px;
-            background-color: #8aafe8;
+            background-color: var(--heading-accent-bar, #8aafe8);
             border-radius: 2px;
             flex-shrink: 0;
         }
@@ -1747,7 +1761,7 @@
 
         .picker-col-headers {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1.35fr 1fr;
             width: 100%;
             margin-bottom: 8px;
             padding: 0 6px;
@@ -1766,7 +1780,7 @@
         .picker-drum-stage {
             position: relative;
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1.35fr 1fr;
             height: 220px;
             width: 100%;
             overflow: hidden;
@@ -1963,7 +1977,27 @@
             .section-heading { font-size: 17px; }
             .note-p, .note-list li, .note-sub-row, .info-callout-row, .point-subheading, .point-bullet-item { font-size: 17px; }
             .info-callout { padding: 18px 18px; border-radius: 16px; }
-            .footer-links-row { gap: 12px 20px; max-width: 320px; }
+            .footer-links-row {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 6px 16px !important;
+                gap: 24px !important;
+                scrollbar-width: none !important;
+                box-sizing: border-box !important;
+            }
+            .footer-links-row::-webkit-scrollbar {
+                display: none !important;
+            }
+            .footer-links-row a {
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+            }
         }
     
         /* STANDARDIZED PAGE HEADER WITH BACK BUTTON */
@@ -2151,7 +2185,7 @@
                         <polyline points="12 19 5 12 12 5"></polyline>
                     </svg>
                 </button>
-                <h1 class="page-title">Daily Current Affairs</h1>
+                <h1 class="page-title">Current Affairs</h1>
             </div>
 
             <!-- Calendar & Date on the Right Side End of the Title -->
@@ -2287,7 +2321,7 @@
             const CURRENT_PATH = "/study/dailycurrentaffairs.html";
             const structuralTrail = [
                 { name: "Home", path: HOME_PATH },
-                { name: "Daily Current Affairs", path: CURRENT_PATH }
+                { name: "Current Affairs", path: CURRENT_PATH }
             ];
             try {
                 sessionStorage.setItem('breadcrumbTrail', JSON.stringify(structuralTrail));
@@ -2331,7 +2365,8 @@
             for (let m = 1; m <= 12; m++) {
                 const cell = document.createElement('div');
                 cell.className = 'drum-cell';
-                cell.textContent = String(m).padStart(2, '0');
+                const DCA_MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                cell.textContent = DCA_MONTH_NAMES[m - 1];
                 cell.dataset.val = m;
                 cell.addEventListener("click", () => { monthCol.scrollTo({ top: (m - 1) * 48, behavior: "smooth" }); });
                 monthCol.appendChild(cell);
