@@ -1020,32 +1020,43 @@
             text-align: left !important;
         }
 
-        /* --- STABLE VERTICAL CROSS-DISSOLVE ENGINE --- */
-        .content-area {
+        /* 
+           The Anti-Jerk Mechanism: CSS Grid Row Animation
+           Smoothly scales container height between content states dynamically.
+        */
+        .grid-animator {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-rows: 0fr; /* Adjusted by JS on initialization */
+            transition: grid-template-rows 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             width: 100%;
-            position: relative;
-            transition: height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            will-change: height;
+        }
+
+        .grid-content {
             overflow: hidden;
+            width: 100%;
         }
 
-        .content-pane {
-            grid-area: 1 / 1; /* Locks both panes onto identical layout coordinate */
+        /* Cross-fading View Panes */
+        .view-pane {
             opacity: 0;
-            pointer-events: none;
-            transform: translateY(6px);
-            transition: opacity 0.22s cubic-bezier(0.25, 1, 0.5, 1), 
-                        transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateY(4px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            width: 100%;
         }
 
-        .content-pane.active {
+        /* Active Text State */
+        .view-pane.active {
             opacity: 1;
-            pointer-events: auto;
             transform: translateY(0);
-            transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1) 0.08s, 
-                        transform 0.32s cubic-bezier(0.25, 1, 0.5, 1) 0.08s;
+        }
+
+        /* Safe dynamic layout collapsing without layout snaps */
+        .view-pane.hidden-layout {
+            height: 0;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            pointer-events: none;
         }
         .ca-detailed-overflow {
             min-height: 0;
@@ -2162,15 +2173,17 @@
         <div class="ca-article-feed-stage article-slide-up-run" id="caArticleFeedStage">
             <div class="ca-article-wrapper">
                 <h1 class="article-title" id="caArticleTitle"></h1>
-                <!-- Vertical Dynamic Height Window Frame -->
-                <div class="content-area" id="caViewWindow">
-                    <!-- ================= SHORT REVISION PANE ================= -->
-                    <div class="content-pane" id="ca-pane-short">
-                        <div id="caShortContent"></div>
-                    </div>
-                    <!-- ================= LONG ARTICLE PANE (DEFAULT ACTIVE) ================= -->
-                    <div class="content-pane active" id="ca-pane-full">
-                        <div id="caDetailedContent"></div>
+                <!-- Dynamic Height Frame -->
+                <div class="grid-animator" id="caViewWindow">
+                    <div class="grid-content">
+                        <!-- Short View -->
+                        <div id="ca-pane-short" class="view-pane hidden-layout">
+                            <div id="caShortContent"></div>
+                        </div>
+                        <!-- Full View (Default active) -->
+                        <div id="ca-pane-full" class="view-pane active">
+                            <div id="caDetailedContent"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2553,24 +2566,13 @@
             const viewWindow = document.getElementById('caViewWindow');
 
             if (caViewMode === 'short') {
-                if (paneFull) paneFull.classList.remove('active');
-                if (paneShort) paneShort.classList.add('active');
-                if (viewWindow && paneShort) {
-                    viewWindow.style.height = paneShort.offsetHeight + 'px';
-                    requestAnimationFrame(() => {
-                        if (viewWindow && paneShort) viewWindow.style.height = paneShort.offsetHeight + 'px';
-                    });
-                }
+                if (paneFull) { paneFull.classList.remove('active'); paneFull.classList.add('hidden-layout'); }
+                if (paneShort) { paneShort.classList.remove('hidden-layout'); paneShort.classList.add('active'); }
             } else {
-                if (paneShort) paneShort.classList.remove('active');
-                if (paneFull) paneFull.classList.add('active');
-                if (viewWindow && paneFull) {
-                    viewWindow.style.height = paneFull.offsetHeight + 'px';
-                    requestAnimationFrame(() => {
-                        if (viewWindow && paneFull) viewWindow.style.height = paneFull.offsetHeight + 'px';
-                    });
-                }
+                if (paneShort) { paneShort.classList.remove('active'); paneShort.classList.add('hidden-layout'); }
+                if (paneFull) { paneFull.classList.remove('hidden-layout'); paneFull.classList.add('active'); }
             }
+            if (viewWindow) viewWindow.style.gridTemplateRows = '1fr';
 
             const readBtn = document.getElementById('caReadActionBtn');
             if (readBtn) {
@@ -2623,45 +2625,48 @@
                 try { navigator.vibrate(8); } catch(e) {}
             }
             const readBtn = document.getElementById('caReadActionBtn');
-            const viewWindow = document.getElementById('caViewWindow');
             const paneShort = document.getElementById('ca-pane-short');
             const paneFull = document.getElementById('ca-pane-full');
+            if (!paneShort || !paneFull) return;
 
             if (caViewMode === 'detailed') {
                 caViewMode = 'short';
-                if (readBtn) readBtn.textContent = 'Full';
 
-                if (paneFull) paneFull.classList.remove('active');
-                if (paneShort) paneShort.classList.add('active');
+                // 1. Start fading out full content
+                paneFull.classList.remove('active');
 
-                // Smoothly morph container down to short text height
-                if (viewWindow && paneShort) {
-                    viewWindow.style.height = paneShort.offsetHeight + 'px';
-                }
+                // 2. Mid-way through fade, shift layout parameters to eliminate structural jerks
+                setTimeout(() => {
+                    if (readBtn) readBtn.textContent = 'Full';
+
+                    paneFull.classList.add('hidden-layout');
+                    paneShort.classList.remove('hidden-layout');
+
+                    // 3. Gracefully scale height and fade in short content
+                    requestAnimationFrame(() => {
+                        paneShort.classList.add('active');
+                    });
+                }, 150);
             } else {
                 caViewMode = 'detailed';
-                if (readBtn) readBtn.textContent = 'Short';
 
-                if (paneShort) paneShort.classList.remove('active');
-                if (paneFull) paneFull.classList.add('active');
+                // 1. Start fading out short content
+                paneShort.classList.remove('active');
 
-                // Smoothly morph container up to match long text length
-                if (viewWindow && paneFull) {
-                    viewWindow.style.height = paneFull.offsetHeight + 'px';
-                }
+                // 2. Mid-way through fade, swap layout properties
+                setTimeout(() => {
+                    if (readBtn) readBtn.textContent = 'Short';
+
+                    paneShort.classList.add('hidden-layout');
+                    paneFull.classList.remove('hidden-layout');
+
+                    // 3. Gracefully scale height and fade in full content
+                    requestAnimationFrame(() => {
+                        paneFull.classList.add('active');
+                    });
+                }, 150);
             }
         };
-
-        // Keeps height scaling perfectly accurate even if users resize the window or rotate phones
-        window.addEventListener('resize', () => {
-            const viewWindow = document.getElementById('caViewWindow');
-            const paneShort = document.getElementById('ca-pane-short');
-            const paneFull = document.getElementById('ca-pane-full');
-            if (viewWindow && paneShort && paneFull) {
-                const targetPane = caViewMode === 'short' ? paneShort : paneFull;
-                viewWindow.style.height = targetPane.offsetHeight + 'px';
-            }
-        });
 
         window.toggleActiveImage = function() {
             caImageDrawerOpen = !caImageDrawerOpen;

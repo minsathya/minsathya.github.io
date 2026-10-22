@@ -583,119 +583,88 @@
         /* ---------------------------------------------------- */
         /* CARDS LIST & SINGLE COLUMN RESPONSIVE DIMENSIONS     */
         /* ---------------------------------------------------- */
-        .feed-container,
         .organised-ca-cards-list {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 14px;
             width: 100%;
         }
 
-        /* --- THE ADVANCED ELASTIC WARP PANEL --- */
-        .article-card,
+        /* Card: Outer Panel (Previous sizes & gentle, calm tap animation) */
         .organised-ca-card {
-            background-color: #121214;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 20px;
-            padding: 24px;
+            position: relative;
+            background-color: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 26px;
+            padding: 16px 20px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 16px;
             cursor: pointer;
-            position: relative;
-            user-select: none;
-            -webkit-user-select: none;
             text-decoration: none !important;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
             box-sizing: border-box;
             width: 100%;
             min-height: 104px;
-            
-            /* Performance Optimization Strategy */
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+
             will-change: transform, background-color, box-shadow;
-            
-            /* High-fidelity custom physics cubic-bezier curve (simulates a fluid snap mechanical spring) */
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                        background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-                        box-shadow 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                        border-color 0.4s ease;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+                        background-color 0.3s ease,
+                        box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+                        border-color 0.3s ease;
         }
 
-        /* 1. HIGH-END HOVER EFFECT: Depth Isolation & Subtle Radial Shadow */
         @media (hover: hover) {
-            .article-card:hover,
             .organised-ca-card:hover {
                 background-color: #18181c;
                 border-color: rgba(255, 255, 255, 0.08);
-                /* Gives the illusion of floating towards the user's eye */
-                transform: translateY(-4px) scale(1.015);
-                box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6), 
-                            0 0 20px rgba(255, 255, 255, 0.02);
+                transform: translateY(-3px) scale(1.01);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.02);
+            }
+            .organised-ca-card:hover .organised-ca-card-title {
+                color: #ffffff;
+            }
+            .organised-ca-card:hover .organised-ca-card-left-thumb {
+                transform: scale(1.03);
             }
         }
 
-        /* 2. ULTRALIGHT INTERACTIVE PRESS: Natural Inertial Cushion */
-        .article-card:active,
-        .article-card.is-card-pressed,
         .organised-ca-card:active,
         .organised-ca-card.is-card-pressed {
-            /* Shrinks slightly and absorbs the hit dynamically with a sharper response tracking curve */
-            transform: scale(0.96) translateY(1px) !important;
-            background-color: #1e1e24 !important;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8) !important;
-            transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1),
-                        background-color 0.08s ease !important;
+            transform: scale(0.985) translateY(1px) !important;
+            background-color: #1a1a20 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
+            transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1),
+                        background-color 0.22s ease !important;
         }
 
-        /* --- Internal Structural Styling --- */
-        .left-block,
-        .organised-ca-card-left-block {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding-right: 16px;
-            flex: 1;
-            min-width: 0;
-        }
-
-        .thumbnail-box,
+        /* Left thumbnail / placeholder */
         .organised-ca-card-left-thumb {
+            flex-shrink: 0;
             width: 76px;
             height: 76px;
-            border-radius: 14px;
-            background-color: #1c1c22;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
-
-        /* Micro-action: The thumbnail pops slightly when the panel is hovered */
-        .article-card:hover .thumbnail-box,
-        .article-card:hover .organised-ca-card-left-thumb,
-        .organised-ca-card:hover .thumbnail-box,
-        .organised-ca-card:hover .organised-ca-card-left-thumb {
-            transform: scale(1.05);
-        }
-
-        .thumbnail-box img,
         .ca-card-thumb-img {
-            width: 100%;
-            height: 100%;
+            width: 76px;
+            height: 76px;
+            border-radius: 18px;
             object-fit: cover;
-            border-radius: 14px;
             display: block;
+            border: 1px solid var(--panel-border);
         }
-
         .ca-card-no-image {
-            width: 100%;
-            height: 100%;
-            border-radius: 14px;
-            background-color: #1c1c22;
+            width: 76px;
+            height: 76px;
+            border-radius: 18px;
+            background-color: var(--item-card-bg);
+            border: 1px solid var(--panel-border);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -704,47 +673,54 @@
             color: var(--text-muted);
         }
         .ca-card-no-image svg { opacity: 0.6; }
-
-        .no-image-text,
         .ca-card-no-image-text {
-            font-size: 0.65rem;
-            color: #8e8e93;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            text-align: center;
-            line-height: 1.2;
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
         }
 
-        .article-title,
+        /* Right content: Title vertically centered to thumbnail */
+        .organised-ca-card-right-content {
+            flex: 1;
+            min-width: 0;
+            min-height: 76px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-right: 90px;
+            box-sizing: border-box;
+        }
         .organised-ca-card-title {
-            font-size: 1.08rem;
-            color: #e5e5ea;
+            font-size: 15.5px;
             font-weight: 500;
-            line-height: 1.45;
+            line-height: 1.38;
+            color: var(--text-main);
             margin: 0;
-            letter-spacing: -0.1px;
-            transition: color 0.3s ease;
             text-align: left;
             text-wrap: wrap !important;
+            hyphens: none !important;
+            -webkit-hyphens: none !important;
             word-break: normal !important;
             overflow-wrap: break-word !important;
+            display: inline-block;
+            width: fit-content;
+            max-width: 100%;
+            transition: color 0.25s ease;
         }
 
-        .article-card:hover .article-title,
-        .article-card:hover .organised-ca-card-title,
-        .organised-ca-card:hover .article-title,
-        .organised-ca-card:hover .organised-ca-card-title {
-            color: #ffffff;
+        /* Bottom-Right Date Tag */
+        .organised-ca-card-footer {
+            position: absolute;
+            right: 18px;
+            bottom: 12px;
+            display: flex;
+            align-items: center;
         }
-
-        .date-stamp,
         .note-card-date {
-            font-size: 0.85rem;
-            color: #636366;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 400;
             white-space: nowrap;
-            align-self: flex-end;
-            margin-bottom: 2px;
-            font-variant-numeric: tabular-nums; /* Prevents text shifting during transitions */
         }
 
         /* ---------------------------------------------------- */
@@ -1010,32 +986,43 @@
             text-align: left !important;
         }
 
-        /* --- STABLE VERTICAL CROSS-DISSOLVE ENGINE --- */
-        .content-area {
+        /* 
+           The Anti-Jerk Mechanism: CSS Grid Row Animation
+           Smoothly scales container height between content states dynamically.
+        */
+        .grid-animator {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-rows: 0fr; /* Adjusted by JS on initialization */
+            transition: grid-template-rows 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             width: 100%;
-            position: relative;
-            transition: height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            will-change: height;
+        }
+
+        .grid-content {
             overflow: hidden;
+            width: 100%;
         }
 
-        .content-pane {
-            grid-area: 1 / 1; /* Locks both panes onto identical layout coordinate */
+        /* Cross-fading View Panes */
+        .view-pane {
             opacity: 0;
-            pointer-events: none;
-            transform: translateY(6px);
-            transition: opacity 0.22s cubic-bezier(0.25, 1, 0.5, 1), 
-                        transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateY(4px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            width: 100%;
         }
 
-        .content-pane.active {
+        /* Active Text State */
+        .view-pane.active {
             opacity: 1;
-            pointer-events: auto;
             transform: translateY(0);
-            transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1) 0.08s, 
-                        transform 0.32s cubic-bezier(0.25, 1, 0.5, 1) 0.08s;
+        }
+
+        /* Safe dynamic layout collapsing without layout snaps */
+        .view-pane.hidden-layout {
+            height: 0;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            pointer-events: none;
         }
 
         /* Standard Typography */
@@ -1348,16 +1335,11 @@
             .brand-pill { font-size: 34px; }
             /* .page-title consistent on all devices */
             .category-row { max-width: 100%; margin-bottom: 16px; }
-            .organised-ca-card,
-            .article-card { padding: 16px 18px; min-height: 90px; }
-            .thumbnail-box,
-            .organised-ca-card-left-thumb { width: 68px; height: 68px; border-radius: 12px; }
-            .thumbnail-box img, .ca-card-thumb-img, .ca-card-no-image { width: 68px; height: 68px; border-radius: 12px; }
-            .left-block { gap: 14px; padding-right: 12px; }
-            .article-title,
-            .organised-ca-card-title { font-size: 14.5px; line-height: 1.4; }
-            .date-stamp,
-            .note-card-date { font-size: 0.78rem; }
+            .organised-ca-card { padding: 12px 14px; min-height: 96px; gap: 12px; }
+            .organised-ca-card-left-thumb { width: 70px; height: 70px; }
+            .ca-card-thumb-img, .ca-card-no-image { width: 70px; height: 70px; border-radius: 16px; }
+            .organised-ca-card-right-content { min-height: 70px; padding-right: 76px; }
+            .organised-ca-card-title { font-size: 14.5px; }
             .note-p, .point-bullet-item, .info-callout-row, .point-subheading { font-size: 15.5px; }
         }
             @media (min-width: 769px) { .brand-pill { font-size: 36px; } }
@@ -1462,16 +1444,18 @@
                 <div class="ca-article-feed-stage" id="caArticleFeedStage">
                     <h1 class="article-title" id="orgArticleTitle"></h1>
 
-                    <!-- Vertical Dynamic Height Window Frame -->
-                    <div class="content-area" id="orgViewWindow">
-                        <!-- ================= SHORT REVISION PANE ================= -->
-                        <div class="content-pane" id="pane-short">
-                            <div id="orgShortContent"></div>
-                        </div>
+                    <!-- Dynamic Height Frame -->
+                    <div class="grid-animator" id="orgViewWindow">
+                        <div class="grid-content">
+                            <!-- Short View -->
+                            <div id="pane-short" class="view-pane hidden-layout">
+                                <div id="orgShortContent"></div>
+                            </div>
 
-                        <!-- ================= LONG ARTICLE PANE (DEFAULT ACTIVE) ================= -->
-                        <div class="content-pane active" id="pane-full">
-                            <div id="orgDetailedContent"></div>
+                            <!-- Full View (Default active) -->
+                            <div id="pane-full" class="view-pane active">
+                                <div id="orgDetailedContent"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1796,25 +1780,27 @@
                             '<circle cx="8.5" cy="8.5" r="1.5"></circle>' +
                             '<polyline points="21 15 16 10 5 21"></polyline>' +
                         '</svg>' +
-                        '<span class="no-image-text ca-card-no-image-text">no image</span>' +
+                        '<span class="ca-card-no-image-text">no image</span>' +
                     '</div>');
 
                 return (
-                    '<div class="article-card organised-ca-card" data-title="' + encodeURIComponent(topic.topicTitle) + '">' +
-                        '<div class="left-block">' +
-                            '<div class="thumbnail-box organised-ca-card-left-thumb">' + thumbHtml + '</div>' +
-                            '<h3 class="article-title organised-ca-card-title">' + topic.topicTitle + '</h3>' +
+                    '<div class="organised-ca-card" data-title="' + encodeURIComponent(topic.topicTitle) + '">' +
+                        '<div class="organised-ca-card-left-thumb">' + thumbHtml + '</div>' +
+                        '<div class="organised-ca-card-right-content">' +
+                            '<h3 class="organised-ca-card-title">' + topic.topicTitle + '</h3>' +
                         '</div>' +
-                        '<div class="date-stamp note-card-date">' + topic.dateStr + '</div>' +
+                        '<div class="organised-ca-card-footer">' +
+                            '<span class="note-card-date">' + topic.dateStr + '</span>' +
+                        '</div>' +
                     '</div>'
                 );
             }).join('');
 
-            // Attach click listeners to cards: allows the fluid warp cushion & snap animation to play when tapped
+            // Attach click listeners to cards: gentle and calm tap animation before navigation
             container.querySelectorAll('.organised-ca-card').forEach(card => {
                 let isNavigating = false;
 
-                // Immediate press-down feedback for touch and pointer
+                // Gentle press-down feedback for touch and pointer
                 card.addEventListener('pointerdown', () => {
                     if (!isNavigating) card.classList.add('is-card-pressed');
                 });
@@ -1830,15 +1816,15 @@
                     if (isNavigating) return;
                     isNavigating = true;
 
-                    // Ensure the press cushion is visually rendered
+                    // Ensure the gentle press cushion is visibly rendered
                     card.classList.add('is-card-pressed');
 
-                    // Allow the user to feel the mechanical spring cushion before view transition
+                    // Gentle and calm transition into the article view
                     setTimeout(() => {
                         card.classList.remove('is-card-pressed');
                         const title = decodeURIComponent(card.getAttribute('data-title'));
                         openOrganisedCaArticle(title);
-                    }, 150);
+                    }, 220);
                 });
             });
 
@@ -2151,17 +2137,16 @@
             const paneFull = document.getElementById('pane-full');
             const viewWindow = document.getElementById('orgViewWindow');
 
-            if (paneShort) paneShort.classList.remove('active');
-            if (paneFull) paneFull.classList.add('active');
-
-            if (viewWindow && paneFull) {
-                // Establish the starting container height based on the default full layout length
-                viewWindow.style.height = paneFull.offsetHeight + 'px';
-                requestAnimationFrame(() => {
-                    if (viewWindow && paneFull) {
-                        viewWindow.style.height = paneFull.offsetHeight + 'px';
-                    }
-                });
+            if (paneShort) {
+                paneShort.classList.remove('active');
+                paneShort.classList.add('hidden-layout');
+            }
+            if (paneFull) {
+                paneFull.classList.remove('hidden-layout');
+                paneFull.classList.add('active');
+            }
+            if (viewWindow) {
+                viewWindow.style.gridTemplateRows = '1fr';
             }
 
             window.scrollTo({ top: 0, behavior: 'instant' });
@@ -2197,52 +2182,55 @@
         }
         window.toggleOrgImage = toggleOrgImage;
 
-        // Article Controls: Read Mode Toggle (Short <-> Full) - Stable Vertical Cross-Dissolve Engine
+        // Article Controls: Read Mode Toggle (Short <-> Full) - Fluid Single Button Switcher
         function toggleOrgReadMode() {
             if (navigator.vibrate) {
                 try { navigator.vibrate(8); } catch(e) {}
             }
-            const actionToggle = document.getElementById('orgReadActionBtn');
-            const viewWindow = document.getElementById('orgViewWindow');
+            const actionBtn = document.getElementById('orgReadActionBtn');
             const paneShort = document.getElementById('pane-short');
             const paneFull = document.getElementById('pane-full');
+            if (!paneShort || !paneFull) return;
 
             if (orgViewMode === 'detailed') {
                 orgViewMode = 'short';
-                if (actionToggle) actionToggle.textContent = 'Full';
 
-                if (paneFull) paneFull.classList.remove('active');
-                if (paneShort) paneShort.classList.add('active');
+                // 1. Start fading out full content
+                paneFull.classList.remove('active');
 
-                // Smoothly morph container down to short text height
-                if (viewWindow && paneShort) {
-                    viewWindow.style.height = paneShort.offsetHeight + 'px';
-                }
+                // 2. Mid-way through fade, shift layout parameters to eliminate structural jerks
+                setTimeout(() => {
+                    if (actionBtn) actionBtn.textContent = 'Full';
+
+                    paneFull.classList.add('hidden-layout');
+                    paneShort.classList.remove('hidden-layout');
+
+                    // 3. Gracefully scale height and fade in short content
+                    requestAnimationFrame(() => {
+                        paneShort.classList.add('active');
+                    });
+                }, 150);
             } else {
                 orgViewMode = 'detailed';
-                if (actionToggle) actionToggle.textContent = 'Short';
 
-                if (paneShort) paneShort.classList.remove('active');
-                if (paneFull) paneFull.classList.add('active');
+                // 1. Start fading out short content
+                paneShort.classList.remove('active');
 
-                // Smoothly morph container up to match long text length
-                if (viewWindow && paneFull) {
-                    viewWindow.style.height = paneFull.offsetHeight + 'px';
-                }
+                // 2. Mid-way through fade, swap layout properties
+                setTimeout(() => {
+                    if (actionBtn) actionBtn.textContent = 'Short';
+
+                    paneShort.classList.add('hidden-layout');
+                    paneFull.classList.remove('hidden-layout');
+
+                    // 3. Gracefully scale height and fade in full content
+                    requestAnimationFrame(() => {
+                        paneFull.classList.add('active');
+                    });
+                }, 150);
             }
         }
         window.toggleOrgReadMode = toggleOrgReadMode;
-
-        // Keeps height scaling perfectly accurate even if users resize the window or rotate phones
-        window.addEventListener('resize', () => {
-            const viewWindow = document.getElementById('orgViewWindow');
-            const paneShort = document.getElementById('pane-short');
-            const paneFull = document.getElementById('pane-full');
-            if (viewWindow && paneShort && paneFull) {
-                const targetPane = orgViewMode === 'short' ? paneShort : paneFull;
-                viewWindow.style.height = targetPane.offsetHeight + 'px';
-            }
-        });
 
         // Article Controls: Metadata Drawer Toggle
         function toggleOrgMetaDropdown() {
