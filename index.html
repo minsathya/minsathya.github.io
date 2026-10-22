@@ -596,7 +596,23 @@
             });
         });
 
-        window.addEventListener('pageshow', function() {
+        function triggerHomepageEntrance() {
+            const nav = document.querySelector('.top-nav-bar');
+            const mainEl = document.querySelector('main');
+            const foot = document.querySelector('footer');
+            [nav, mainEl, foot].forEach(el => {
+                if (el) {
+                    el.style.animation = 'none';
+                    void el.offsetWidth;
+                }
+            });
+            if (nav) nav.style.animation = 'masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both';
+            if (mainEl) mainEl.style.animation = 'masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both';
+            if (foot) foot.style.animation = 'masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both';
+        }
+
+        window.addEventListener('pageshow', function(event) {
+            triggerHomepageEntrance();
             targetLinks.forEach(l => l.classList.remove('is-wave-loading'));
             document.querySelectorAll('.list-item, a, .nav-text').forEach(el => {
                 el.style.opacity = '';

@@ -493,6 +493,141 @@
             scrollbar-gutter: stable;
         }
 
+        /* Ramsar Pop-up Navigation Arrows */
+        .ramsar-side-nav-btn {
+            display: none;
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%) translateZ(0);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--panel-bg, #121212);
+            border: 1px solid var(--panel-border, #222222);
+            color: var(--text-main, #ffffff);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            z-index: 10002;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+            user-select: none;
+            -webkit-user-select: none;
+            transition: transform 0.2s var(--ease-smooth, ease), opacity 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        body.light-mode .ramsar-side-nav-btn {
+            background: #ffffff;
+            border-color: #e2e2e7;
+            color: #111111;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .ramsar-side-nav-btn:active {
+            transform: translateY(-50%) scale(0.92) translateZ(0);
+        }
+
+        .ramsar-side-nav-btn svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            stroke-width: 2.3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        @media (min-width: 641px) {
+            .modal.active .ramsar-side-nav-btn {
+                display: flex;
+            }
+            .ramsar-nav-prev {
+                left: max(16px, calc(50% - 260px - 64px));
+            }
+            .ramsar-nav-next {
+                right: max(16px, calc(50% - 260px - 64px));
+            }
+            .ramsar-mobile-nav-bar {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .ramsar-side-nav-btn {
+                display: none !important;
+            }
+            .ramsar-mobile-nav-bar {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 16px;
+                margin-top: 24px;
+                padding-top: 16px;
+                border-top: 1px solid var(--row-divider, rgba(255, 255, 255, 0.08));
+            }
+            .ramsar-mobile-nav-btn {
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                background: var(--pill-bg, rgba(255, 255, 255, 0.06));
+                border: 1px solid var(--pill-border, rgba(255, 255, 255, 0.1));
+                color: var(--text-main, #ffffff);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: transform 0.2s var(--ease-smooth, ease), opacity 0.2s ease;
+            }
+            .ramsar-mobile-nav-btn:active {
+                transform: scale(0.92);
+            }
+            .ramsar-mobile-nav-btn svg {
+                width: 20px;
+                height: 20px;
+                stroke: currentColor;
+                stroke-width: 2.3;
+                fill: none;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
+        }
+
+        /* Slide-up transition when changing Ramsar site */
+        .ramsar-slide-up {
+            animation: ramsarContentSlideUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            will-change: transform, opacity;
+        }
+
+        @keyframes ramsarContentSlideUp {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 20px, 0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        /* iPad & All Devices exit animation fix: keep visible while sliding down */
+        .modal.is-closing {
+            opacity: 0 !important;
+            visibility: visible !important;
+            pointer-events: none !important;
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal.is-closing .modal-card {
+            top: 150% !important;
+            transform: translate3d(-50%, 0, 0) !important;
+            opacity: 0 !important;
+            transition: top 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.28s ease !important;
+        }
+        .modal.is-closing .ramsar-side-nav-btn {
+            opacity: 0 !important;
+            transition: opacity 0.2s ease;
+        }
+
         .modal {
             display: flex; 
             visibility: hidden; 
@@ -1242,6 +1377,13 @@
     </div>
 
     <div id="siteModal" class="modal" onclick="onModalBackdropClick(event)">
+        <!-- Desktop / iPad floating side navigation arrows on both sides -->
+        <button type="button" class="ramsar-side-nav-btn ramsar-nav-prev" id="ramsarSidePrevBtn" onclick="navigateRamsar(-1, event)" aria-label="Previous Ramsar Site">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button type="button" class="ramsar-side-nav-btn ramsar-nav-next" id="ramsarSideNextBtn" onclick="navigateRamsar(1, event)" aria-label="Next Ramsar Site">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
         <div class="modal-card">
             <div class="modal-header-row">
                 <h2 class="modal-title" id="modalTitle">Kolleru Lake</h2>
@@ -1250,6 +1392,15 @@
                 </button>
             </div>
             <div id="modalContent"></div>
+            <!-- Mobile side-by-side arrows down at bottom center -->
+            <div class="ramsar-mobile-nav-bar">
+                <button type="button" class="ramsar-mobile-nav-btn" onclick="navigateRamsar(-1, event)" aria-label="Previous Ramsar Site">
+                    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button type="button" class="ramsar-mobile-nav-btn" onclick="navigateRamsar(1, event)" aria-label="Next Ramsar Site">
+                    <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1497,6 +1648,56 @@
         };
 
         let modalOpenTimestamp = 0;
+        let currentRamsarId = null;
+
+        function navigateRamsar(direction, event) {
+            if (event && event.stopPropagation) event.stopPropagation();
+            if (typeof ramsarData === 'undefined') return;
+            const keys = Object.keys(ramsarData);
+            if (!keys.length) return;
+
+            let idx = keys.indexOf(currentRamsarId);
+            if (idx === -1) idx = 0;
+            let nextIdx = idx + direction;
+            if (nextIdx < 0) nextIdx = keys.length - 1;
+            if (nextIdx >= keys.length) nextIdx = 0;
+
+            const nextId = keys[nextIdx];
+            currentRamsarId = nextId;
+            const data = ramsarData[nextId];
+            if (!data) return;
+
+            const title = document.getElementById("modalTitle");
+            const content = document.getElementById("modalContent");
+            if (title) title.textContent = data.name;
+
+            const impPoints = (data.imp || '').split(',').map(s => s.trim()).filter(Boolean);
+            const impBullets = impPoints.map(p => '<li>' + p + '</li>').join('');
+            const thrPoints = (data.thr || '').split(',').map(s => s.trim()).filter(Boolean);
+            const thrBullets = thrPoints.map(p => '<li>' + p + '</li>').join('');
+
+            if (content) {
+                content.classList.remove('ramsar-slide-up');
+                void content.offsetWidth;
+                content.innerHTML = 
+                    '<div class="modal-pills-row">' +
+                        '<span class="modal-pill pill-state">' + data.state + '</span>' +
+                        '<span class="modal-pill">year : <strong>' + data.year + '</strong></span>' +
+                        '<span class="modal-pill">area : <strong>' + data.area + '</strong></span>' +
+                    '</div>' +
+                    '<div class="modal-location-row">Location : <strong>' + data.district + '</strong></div>' +
+                    '<div class="modal-section">' +
+                        '<div class="modal-section-title title-importance">IMPORTANCE</div>' +
+                        '<ul class="modal-bullet-list">' + impBullets + '</ul>' +
+                    '</div>' +
+                    '<div class="modal-section">' +
+                        '<div class="modal-section-title title-threats">MAJOR THREATS</div>' +
+                        '<ul class="modal-bullet-list">' + thrBullets + '</ul>' +
+                    '</div>';
+                content.classList.add('ramsar-slide-up');
+            }
+        }
+        window.navigateRamsar = navigateRamsar;
 
         function openSite(id, event) {
             if (event && event.stopPropagation) {
@@ -1510,6 +1711,7 @@
                 return;
             }
             
+            currentRamsarId = id;
             const data = ramsarData[id];
             
             if (data) {
@@ -1565,7 +1767,13 @@
             }
             document.body.classList.remove("popup-active");
             const modal = document.getElementById("siteModal");
-            if (modal) modal.classList.remove("active");
+            if (modal) {
+                modal.classList.add("is-closing");
+                modal.classList.remove("active");
+                setTimeout(() => {
+                    modal.classList.remove("is-closing");
+                }, 380);
+            }
             if (document.activeElement && document.activeElement.blur) {
                 document.activeElement.blur();
             }

@@ -254,9 +254,30 @@
         .prose-text { font-size: 17px; line-height: 1.8; color: var(--text-main); opacity: 0.85; font-weight: 400; }
         .prose-text p { margin-bottom: 20px; }
 
-        /* Email link fixes */
-        .contact-mail-link { color: var(--text-main); font-weight: 500; text-decoration: none !important; border-bottom: 1px solid var(--panel-border); padding-bottom: 2px; transition: border-color 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium); }
-        .contact-mail-link:hover { opacity: 0.6; border-color: var(--text-main); }
+        /* Email link & reverse-muting panel hover effect */
+        .prose-text p {
+            margin-bottom: 20px;
+            transition: color 0.3s var(--ease-smooth), opacity 0.3s var(--ease-smooth);
+        }
+
+        .contact-mail-link {
+            color: var(--text-main);
+            font-weight: 500;
+            text-decoration: underline !important;
+            text-underline-offset: 4px;
+            transition: color 0.3s var(--ease-smooth), opacity 0.3s var(--ease-smooth);
+        }
+
+        /* When cursor touches the mail ID: mail ID stays normal, while other words in that panel become muted */
+        .capsule-panel:has(.contact-mail-link:hover) .prose-text p {
+            color: var(--text-muted);
+            opacity: 0.55;
+        }
+
+        .capsule-panel:has(.contact-mail-link:hover) .contact-mail-link {
+            color: var(--text-main) !important;
+            opacity: 1 !important;
+        }
 
         footer { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; flex-shrink: 0; }
         .footer-links-row { display: flex; justify-content: center; align-items: center; gap: 32px; flex-wrap: wrap; width: 100%; }
@@ -307,7 +328,7 @@
             <div class="card-parallax-content">
                 <div class="prose-text">
                     <p>If you have any questions, suggestions, or feedback, feel free to get in touch.</p>
-                    <p>Email: <a href="mailto:kadaveerasatyasai2@gmail.com" class="contact-mail-link">kadaveerasatyasai2@gmail.com</a></p>
+                    <p>Email: <a href="mailto:iminsathya@gmail.com" class="contact-mail-link">iminsathya@gmail.com</a></p>
                     <p>I will try to respond as soon as possible.</p>
                 </div>
             </div>
