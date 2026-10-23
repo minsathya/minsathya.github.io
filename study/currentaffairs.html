@@ -2212,8 +2212,10 @@
             }
 
             function applyNewContentAndSlideUp() {
-                container.innerHTML = newHtml;
-                attachCardListeners();
+                if (container.innerHTML !== newHtml) {
+                    container.innerHTML = newHtml;
+                    attachCardListeners();
+                }
                 container.classList.remove('ca-cards-slide-out', 'ca-cards-slide-up-run');
                 if (playSlideUp) {
                     void container.offsetWidth;
@@ -2628,14 +2630,22 @@
             const dirView = document.getElementById('organisedCaDirectoryView');
             const pageTitle = document.getElementById('pageTitleText');
 
+            if (window._caCardsTransitionTimer) {
+                clearTimeout(window._caCardsTransitionTimer);
+                window._caCardsTransitionTimer = null;
+            }
+
+            const container = document.getElementById('organisedCaCardsContainer');
+            if (container) {
+                container.classList.remove('ca-cards-slide-out', 'ca-cards-slide-up-run');
+            }
+
             if (artView) artView.classList.remove('is-active', 'article-slide-up-run');
             if (dirView) {
                 dirView.style.display = 'block';
-                dirView.classList.remove('article-slide-up-run');
+                dirView.classList.remove('article-slide-up-run', 'master-entrance-run');
                 void dirView.offsetWidth;
-                requestAnimationFrame(() => {
-                    dirView.classList.add('master-entrance-run', 'article-slide-up-run');
-                });
+                dirView.classList.add('article-slide-up-run');
             }
             if (pageTitle) pageTitle.textContent = 'Daily current affairs';
             try {
@@ -2652,7 +2662,7 @@
                 }
             }
 
-            renderDirectoryView(true);
+            renderDirectoryView(false);
         }
         window.closeCaArticleView = closeCaArticleView;
 
