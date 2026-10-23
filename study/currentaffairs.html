@@ -20,12 +20,11 @@
         const isLight = (activeTheme === 'light' || (!activeTheme && prefersLight));
         if (isLight) {
           document.documentElement.classList.add('light-mode');
-          document.documentElement.style.colorScheme = 'light';
+          document.documentElement.style.setProperty('color-scheme', 'light');
         } else {
           document.documentElement.classList.remove('light-mode');
-          document.documentElement.style.colorScheme = 'dark';
+          document.documentElement.style.setProperty('color-scheme', 'dark');
         }
-        document.documentElement.style.backgroundColor = isLight ? '#f5f5f7' : '#0b0b0b';
       })();
     </script>
 
@@ -66,28 +65,46 @@
 
     <style>
         /* Sleek scrollbar matching background with zero edge strip */
+        html,
+        body {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0;
+            background-color: var(--bg-color) !important;
+            transition: none !important;
+        }
+
         html {
             scrollbar-width: thin;
             scrollbar-color: rgba(255, 255, 255, 0.2) #0b0b0b;
-            background-color: var(--bg-color);
             color-scheme: dark;
         }
-        html.light-mode {
-            scrollbar-color: rgba(0, 0, 0, 0.22) #f5f5f7 !important;
+        html.light-mode,
+        html.light-mode body,
+        body.light-mode {
+            --bg-color: #f5f5f7 !important;
             background-color: #f5f5f7 !important;
             color-scheme: light !important;
+            scrollbar-color: rgba(0, 0, 0, 0.22) #f5f5f7 !important;
         }
-        body {
-            background-color: var(--bg-color);
+        html:not(.light-mode),
+        html:not(.light-mode) body,
+        body:not(.light-mode) {
+            --bg-color: #0b0b0b !important;
+            background-color: #0b0b0b !important;
+            color-scheme: dark !important;
         }
-        body.light-mode {
-            background-color: #f5f5f7 !important;
-        }
+
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background-color: #0b0b0b !important; }
-        html.light-mode ::-webkit-scrollbar-track, body.light-mode ::-webkit-scrollbar-track { background-color: #f5f5f7 !important; }
+        html.light-mode ::-webkit-scrollbar-track, 
+        html.light-mode body ::-webkit-scrollbar-track,
+        body.light-mode ::-webkit-scrollbar-track { background-color: #f5f5f7 !important; }
         ::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.2) !important; border-radius: 4px; }
-        html.light-mode ::-webkit-scrollbar-thumb, body.light-mode ::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.22) !important; }
+        html.light-mode ::-webkit-scrollbar-thumb, 
+        html.light-mode body ::-webkit-scrollbar-thumb,
+        body.light-mode ::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.22) !important; }
 
         /* Article Main Heading Panels (from Important Facts onwards) */
         .section-heading-panel {
@@ -171,22 +188,20 @@
         }
 
         html {
-            background-color: #0b0b0b;
-        }
-        html.light-mode {
-            background-color: #f5f5f7;
-        }
-        html {
-            background-color: var(--bg-color);
+            background-color: var(--bg-color) !important;
             color: var(--text-main);
             min-height: 100vh;
             min-height: 100dvh;
-            width: 100%;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
             overflow-y: auto;
+            transition: none !important;
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg-color) !important;
             color: var(--text-main);
             font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
@@ -194,22 +209,26 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 40px 24px 36px 24px;
-            max-width: 1240px;
-            margin: 0 auto;
-            width: 100%;
+            padding: 40px 24px 36px 24px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            box-sizing: border-box !important;
             -webkit-font-smoothing: antialiased;
             overflow-x: clip;
-            transition: background-color 0.4s var(--ease-smooth), color 0.4s var(--ease-smooth);
+            transition: none !important;
         }
 
         .page-wrapper {
             width: 100%;
+            max-width: 1240px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: calc(100vh - 76px);
             position: relative;
+            background: transparent !important;
         }
 
         /* TOP NAVIGATION */
@@ -362,6 +381,8 @@
 
         /* CONTENT CONTAINER - UNIFIED 1000PX WIDTH */
         .content-wrapper {
+            position: relative;
+            z-index: 100;
             width: 100%;
             max-width: 1000px;
             margin: 0 auto;
@@ -538,7 +559,7 @@
             width: 100vw;
             height: 100vh;
             background: transparent;
-            z-index: 90;
+            z-index: 80;
             opacity: 0;
             pointer-events: none;
             user-select: none;
@@ -584,7 +605,7 @@
             border-radius: 20px;
             padding: 8px 6px;
             box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
-            z-index: 120 !important;
+            z-index: 130 !important;
             display: none;
             box-sizing: border-box;
             user-select: none;
@@ -639,7 +660,7 @@
         .day-item-btn:hover,
         .day-item-btn:focus-visible,
         .day-item-btn:active {
-            background-color: rgba(255, 255, 255, 0.12);
+            background-color: rgba(255, 255, 255, 0.12) !important;
         }
         body.light-mode .day-item-btn:hover,
         body.light-mode .day-item-btn:focus-visible,
@@ -647,7 +668,7 @@
         html.light-mode .day-item-btn:hover,
         html.light-mode .day-item-btn:focus-visible,
         html.light-mode .day-item-btn:active {
-            background-color: rgba(0, 0, 0, 0.08);
+            background-color: rgba(0, 0, 0, 0.08) !important;
         }
         .day-item-btn.is-selected {
             background-color: var(--pill-selected-bg) !important;
@@ -731,7 +752,6 @@
             }
         }
 
-        .organised-ca-card:active,
         .organised-ca-card.is-card-pressed {
             transform: scale(0.978) translateY(2px) !important;
             transition: transform 0.12s cubic-bezier(0.25, 1, 0.5, 1) !important;
@@ -842,11 +862,11 @@
         @keyframes masterEntrance {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 28px, 0) scale(0.98);
+                transform: translate3d(0, 10px, 0);
             }
             100% {
                 opacity: 1;
-                transform: translate3d(0, 0, 0) scale(1);
+                transform: translate3d(0, 0, 0);
             }
         }
         @-webkit-keyframes articleSlideUpEntrance {
@@ -894,9 +914,9 @@
         }
 
         .ca-panel-thumb {
-            width: 220px;
-            height: 136px;
-            min-width: 220px;
+            width: 240px;
+            height: 148px;
+            min-width: 240px;
             border-radius: 20px;
             overflow: hidden;
             background: rgba(255, 255, 255, 0.04);
@@ -931,9 +951,9 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 14px;
+            gap: 16px;
             min-width: 0;
-            min-height: 136px;
+            min-height: 148px;
             box-sizing: border-box;
             padding: 2px 0;
         }
@@ -2032,20 +2052,20 @@
                     if (isNavigating) return;
                     isNavigating = true;
 
-                    // 1. Press down like a cushion spring
+                    // 1. Cushion down
                     card.classList.add('is-card-pressed');
 
-                    // 2. At 110ms, release spring back to default position
+                    // 2. At 100ms, release spring back to default position
                     setTimeout(() => {
                         card.classList.remove('is-card-pressed');
-                    }, 110);
+                    }, 100);
 
-                    // 3. At 250ms, after spring completes its return, navigate to article
+                    // 3. At 240ms, after spring completes its return, navigate to article
                     setTimeout(() => {
                         const title = decodeURIComponent(card.getAttribute('data-title'));
-                        openOrganisedCaArticle(title);
+                        openOrganisedCaArticle(title, true);
                         isNavigating = false;
-                    }, 250);
+                    }, 240);
                 });
             });
 
@@ -2327,11 +2347,15 @@
             if (catEl) catEl.innerHTML = 'Category : <strong>' + (topic.category || 'Current Affairs') + '</strong>';
 
             const dateEl = document.getElementById('orgDatePill');
-            if (dateEl) dateEl.innerHTML = 'Date : <strong>' + formatCaDateVerbose(topic.date) + '</strong>';
+            if (dateEl) dateEl.innerHTML = 'Date : <strong>' + (topic.dateStr || formatDisplayDate(topic.dateKey, topic.date)) + '</strong>';
 
-            const secContainer = document.getElementById('caArticleSections');
-            if (secContainer) {
-                secContainer.innerHTML = renderCaArticleSections(topic);
+            const detailedContainer = document.getElementById('orgDetailedContent');
+            if (detailedContainer) {
+                detailedContainer.innerHTML = renderCaArticleSections(topic);
+            }
+            const shortContainer = document.getElementById('orgShortContent');
+            if (shortContainer) {
+                shortContainer.innerHTML = renderCaShortRevision(topic);
             }
 
             const controls = document.getElementById('caControlsPanel');
@@ -2350,9 +2374,8 @@
             const readBtn = document.getElementById('orgReadActionBtn');
             if (readBtn) readBtn.textContent = 'Short';
 
-            const paneShort = document.getElementById('caPaneShort');
-            const paneFull = document.getElementById('caPaneFull');
-            const viewWindow = document.getElementById('caSwitcherViewWindow');
+            const paneShort = document.getElementById('pane-short');
+            const paneFull = document.getElementById('pane-full');
             if (paneShort) {
                 paneShort.classList.add('hidden-layout');
                 paneShort.classList.remove('active');
@@ -2360,9 +2383,6 @@
             if (paneFull) {
                 paneFull.classList.remove('hidden-layout');
                 paneFull.classList.add('active');
-            }
-            if (viewWindow) {
-                viewWindow.style.gridTemplateRows = '1fr';
             }
 
             window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -2395,7 +2415,7 @@
 
             if (updateHistory) {
                 if (window.location.hash) {
-                    history.pushState(null, '', window.location.pathname + window.location.search);
+                    history.replaceState(null, '', window.location.pathname + window.location.search);
                 }
             }
 
@@ -2428,8 +2448,8 @@
             if (artView && artView.classList.contains('is-active')) {
                 closeCaArticleView(true);
             } else {
-                if (window.history.length > 1 && document.referrer && document.referrer.includes(window.location.host)) {
-                    window.history.back();
+                if (window.history.length > 1 && document.referrer && document.referrer.includes(window.location.host) && !document.referrer.includes('/study/currentaffairs.html')) {
+                    window.location.href = document.referrer;
                 } else {
                     window.location.href = '/index.html';
                 }

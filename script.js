@@ -49,23 +49,32 @@
         }
 
         /* Universal sleek scrollbars matching theme background with zero edge strip */
+        html,
+        body {
+            background-color: var(--bg-color) !important;
+            transition: none !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
         html {
-            background-color: var(--bg-color);
-            color-scheme: dark;
             scrollbar-width: thin;
             scrollbar-color: rgba(255, 255, 255, 0.2) #0b0b0b;
         }
-        html.light-mode {
+        html.light-mode,
+        html.light-mode body,
+        body.light-mode {
+            --bg-color: #f5f5f7 !important;
             background-color: #f5f5f7 !important;
             color-scheme: light !important;
             scrollbar-color: rgba(0, 0, 0, 0.22) #f5f5f7 !important;
         }
-        body {
-            background-color: var(--bg-color);
-        }
-        body.light-mode {
-            background-color: #f5f5f7 !important;
-            color-scheme: light !important;
+        html:not(.light-mode),
+        html:not(.light-mode) body,
+        body:not(.light-mode) {
+            --bg-color: #0b0b0b !important;
+            background-color: #0b0b0b !important;
+            color-scheme: dark !important;
         }
         ::-webkit-scrollbar {
             width: 8px;
@@ -75,6 +84,7 @@
             background-color: #0b0b0b !important;
         }
         html.light-mode ::-webkit-scrollbar-track,
+        html.light-mode body ::-webkit-scrollbar-track,
         body.light-mode ::-webkit-scrollbar-track {
             background-color: #f5f5f7 !important;
         }
@@ -83,6 +93,7 @@
             border-radius: 4px;
         }
         html.light-mode ::-webkit-scrollbar-thumb,
+        html.light-mode body ::-webkit-scrollbar-thumb,
         body.light-mode ::-webkit-scrollbar-thumb {
             background-color: rgba(0, 0, 0, 0.22) !important;
         }
@@ -95,8 +106,7 @@
             font-size: 17px !important;
             background-color: var(--bg-color) !important;
             color: var(--text-main) !important;
-            transition: background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
-                        color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: none !important;
         }
 
         /* Headings & Brand: little bold (500) */
@@ -183,9 +193,17 @@
            STANDARDIZED PAGE WIDTH & CONTAINER ALIGNMENT (MATCHES HOMEPAGE)
            ------------------------------------------------------------- */
         body:not(.nutrition-workspace) {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 40px 24px 36px 24px !important;
+            box-sizing: border-box !important;
+            background-color: var(--bg-color) !important;
+        }
+
+        .page-wrapper {
             max-width: 1240px !important;
             margin: 0 auto !important;
-            padding: 40px 24px 36px 24px !important;
             width: 100% !important;
             box-sizing: border-box !important;
         }
@@ -286,10 +304,11 @@
         .subjects-header-row {
             display: flex !important;
             align-items: center !important;
-            gap: 14px !important;
+            gap: 12px !important;
             width: 100% !important;
-            max-width: 1200px !important;
+            max-width: 1000px !important;
             margin: 0 auto 24px auto !important;
+            position: relative;
         }
 
         .back-icon-btn {
@@ -339,30 +358,28 @@
 
         /* -------------------------------------------------------------
            MASTER ENTRANCE ANIMATION (GPU ACCELERATED & PREMIUM FLUID)
-           Uses slideUpFade: translate3d(0, 28px, 0) scale(0.98) -> (0,0,0) scale(1)
-           0.65s cubic-bezier(0.16, 1, 0.3, 1) with sequential wave stagger
+           Calm & gentle: translate3d(0, 10px, 0) -> (0,0,0)
+           0.6s cubic-bezier(0.16, 1, 0.3, 1) with zero jumping
            ------------------------------------------------------------- */
         @keyframes masterEntrance {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 28px, 0) scale(0.98);
+                transform: translate3d(0, 10px, 0);
             }
             100% {
                 opacity: 1;
-                transform: translate3d(0, 0, 0) scale(1);
+                transform: translate3d(0, 0, 0);
             }
         }
 
         /* Animation runner class */
         .master-entrance-run {
-            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            animation: masterEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
             will-change: transform, opacity;
         }
 
-        .top-nav-bar, 
-        .page-header-row,
-        .subjects-header-row {
-            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+        .top-nav-bar {
+            animation: masterEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
         }
 
         main, 
@@ -783,18 +800,16 @@ window.addEventListener('load', () => {
             if (isLight) {
                 document.documentElement.classList.add('light-mode');
                 document.documentElement.style.colorScheme = 'light';
-                document.documentElement.style.backgroundColor = '#f5f5f7';
                 if (document.body) {
                     document.body.classList.add('light-mode');
-                    document.body.style.backgroundColor = '#f5f5f7';
+                    document.body.style.colorScheme = 'light';
                 }
             } else {
                 document.documentElement.classList.remove('light-mode');
                 document.documentElement.style.colorScheme = 'dark';
-                document.documentElement.style.backgroundColor = '#0b0b0b';
                 if (document.body) {
                     document.body.classList.remove('light-mode');
-                    document.body.style.backgroundColor = '#0b0b0b';
+                    document.body.style.colorScheme = 'dark';
                 }
             }
         } catch(e) {}
@@ -976,7 +991,7 @@ window.triggerMasterEntrance = triggerMasterEntrance;
 
 function executeMasterEntrance() {
     const targets = document.querySelectorAll(
-        '.top-nav-bar, .page-header-row, .subjects-header-row, main, footer'
+        '.top-nav-bar, .subjects-header-row, main, footer'
     );
     targets.forEach(el => {
         triggerMasterEntrance(el);
