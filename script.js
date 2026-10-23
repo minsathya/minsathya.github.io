@@ -254,10 +254,21 @@
             margin: 0 0 24px 0 !important;
         }
 
+        /* Footer pages: Panel is centered, back button & page title follow panel left align */
+        body.footer-page .page-header-row,
+        body:has(.active-footer-page) .page-header-row {
+            width: 882px !important;
+            max-width: 100% !important;
+            margin: 0 auto 24px auto !important;
+            box-sizing: border-box !important;
+        }
+
+        body.footer-page main > .capsule-panel:not(.bento-card),
+        body:has(.active-footer-page) main > .capsule-panel:not(.bento-card),
         main > .capsule-panel:not(.bento-card) {
             width: 882px !important;
             max-width: 100% !important;
-            margin: 0 0 80px 0 !important;
+            margin: 0 auto 80px auto !important;
             box-sizing: border-box !important;
         }
 
