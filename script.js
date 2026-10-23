@@ -45,7 +45,32 @@
         }
 
         html {
-            scrollbar-gutter: stable;
+            overflow-y: auto;
+        }
+
+        /* Universal sleek scrollbars seamlessly matching theme with zero edge strip */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent !important;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2) !important;
+            border-radius: 4px;
+        }
+        html.light-mode ::-webkit-scrollbar-thumb,
+        body.light-mode ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2) !important;
+        }
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+        }
+        html.light-mode *,
+        body.light-mode * {
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
         }
 
         html, body, button, input, textarea, select, span, a, div, li, td, p, label {
@@ -715,6 +740,20 @@
         document.addEventListener('DOMContentLoaded', () => document.head.appendChild(style));
     }
 })();
+
+// Top-of-page scroll restoration on refresh
+try {
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+} catch(e) {}
+window.scrollTo(0, 0);
+window.addEventListener('pageshow', () => {
+    window.scrollTo(0, 0);
+});
+window.addEventListener('load', () => {
+    window.scrollTo(0, 0);
+});
 
 // 2. UNIVERSAL SYSTEM & USER THEME SYNCHRONIZATION
 (function initAutomaticSystemTheme() {

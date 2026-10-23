@@ -8,6 +8,13 @@
     <!-- Instant Theme Evaluation to Prevent Theme Flash on Reload -->
     <script>
       (function() {
+        try {
+          if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+          }
+        } catch(e) {}
+        window.scrollTo(0, 0);
+
         const activeTheme = localStorage.getItem('dashboard-theme') || sessionStorage.getItem('dashboard-theme');
         const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
         const isLight = (activeTheme === 'light' || (!activeTheme && prefersLight));
@@ -56,7 +63,7 @@
     <style>
         /* Sleek scrollbar matching background */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-track { background: transparent !important; }
         ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 4px; }
         html.light-mode ::-webkit-scrollbar-thumb, body.light-mode ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.18); }
         * { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.18) transparent; }
@@ -347,6 +354,8 @@
         /* CATEGORY & CONTROLS ROW                             */
         /* ---------------------------------------------------- */
         .category-row {
+            position: relative;
+            z-index: 105;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -366,6 +375,8 @@
         }
 
         .category-controls-cluster {
+            position: relative;
+            z-index: 110;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -458,7 +469,7 @@
         /* Category Dropdown Pill */
         .day-action-wrap {
             position: relative;
-            z-index: 110;
+            z-index: 120;
         }
 
         .day-action-btn {
@@ -500,31 +511,42 @@
             transform: rotate(180deg);
         }
 
-        /* Floating Backdrop for category menu (Transparent, no page blur) */
+        /* Floating Backdrop for category menu with smooth background blur */
         .floating-backdrop {
             position: fixed;
             inset: 0;
             width: 100vw;
             height: 100vh;
             background: transparent;
-            z-index: 100 !important;
+            z-index: 90;
             opacity: 0;
             pointer-events: none;
             user-select: none;
             -webkit-user-select: none;
         }
         .floating-backdrop.is-active {
-            pointer-events: auto;
-        }
-        body.category-menu-open .category-title-text,
-        body.category-menu-open .sort-action-wrap,
-        body.category-menu-open .cal-trigger-action-btn {
-            /* Zero blur */
-        }
-
-        .floating-backdrop.is-active {
             opacity: 1;
             pointer-events: auto;
+        }
+
+        body.category-menu-open .category-title-text,
+        body.category-menu-open .sort-action-wrap,
+        body.category-menu-open .cal-trigger-action-btn,
+        body.category-menu-open .today-action-btn,
+        body.category-menu-open .organised-ca-cards-list,
+        body.category-menu-open .page-header-row {
+            filter: blur(8px);
+            opacity: 0.55;
+            transition: filter 0.25s var(--ease-smooth), opacity 0.25s var(--ease-smooth);
+        }
+
+        .category-title-text,
+        .sort-action-wrap,
+        .cal-trigger-action-btn,
+        .today-action-btn,
+        .organised-ca-cards-list,
+        .page-header-row {
+            transition: filter 0.25s var(--ease-smooth), opacity 0.25s var(--ease-smooth);
         }
 
         /* Floating Category Dropdown Panel */
@@ -592,8 +614,18 @@
             -webkit-user-select: none;
             transition: background-color 0.18s ease, color 0.18s ease;
         }
-        .day-item-btn:hover {
-            background-color: var(--pill-bg);
+        .day-item-btn:hover,
+        .day-item-btn:focus-visible,
+        .day-item-btn:active {
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+        body.light-mode .day-item-btn:hover,
+        body.light-mode .day-item-btn:focus-visible,
+        body.light-mode .day-item-btn:active,
+        html.light-mode .day-item-btn:hover,
+        html.light-mode .day-item-btn:focus-visible,
+        html.light-mode .day-item-btn:active {
+            background-color: rgba(0, 0, 0, 0.08);
         }
         .day-item-btn.is-selected {
             background-color: var(--pill-selected-bg) !important;
@@ -623,6 +655,8 @@
         /* CARDS LIST & SINGLE COLUMN RESPONSIVE DIMENSIONS     */
         /* ---------------------------------------------------- */
         .organised-ca-cards-list {
+            position: relative;
+            z-index: 1;
             display: flex;
             flex-direction: column;
             gap: 14px;
@@ -828,10 +862,10 @@
         }
 
         .ca-panel-thumb {
-            width: 154px;
-            height: 104px;
-            min-width: 154px;
-            border-radius: 16px;
+            width: 178px;
+            height: 112px;
+            min-width: 178px;
+            border-radius: 18px;
             overflow: hidden;
             background: rgba(255, 255, 255, 0.04);
             display: flex;
@@ -845,7 +879,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 16px;
+            border-radius: 18px;
             display: block;
         }
 
@@ -865,8 +899,9 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             min-width: 0;
+            min-height: 112px;
             box-sizing: border-box;
             padding: 2px 0;
         }
@@ -2291,7 +2326,9 @@
                 viewWindow.style.gridTemplateRows = '1fr';
             }
 
-            window.scrollTo({ top: 0, behavior: 'instant' });
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
         }
         window.openOrganisedCaArticle = openOrganisedCaArticle;
 
@@ -2304,12 +2341,20 @@
             const dirView = document.getElementById('organisedCaDirectoryView');
             const pageTitle = document.getElementById('pageTitleText');
             if (artView) artView.classList.remove('is-active', 'article-slide-up-run');
-            if (dirView) dirView.style.display = 'block';
+            if (dirView) {
+                dirView.style.display = 'block';
+                dirView.classList.remove('article-slide-up-run');
+                void dirView.offsetWidth;
+                dirView.classList.add('article-slide-up-run');
+            }
             if (pageTitle) pageTitle.textContent = 'Daily Current Affairs';
             try {
                 document.title = 'Daily Current Affairs - sathya.';
             } catch(e) {}
-            renderDirectoryView(false);
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+            renderDirectoryView(true);
             if (updateHistory && window.location.hash) {
                 history.back();
             }
@@ -2480,19 +2525,19 @@
             return (
                 (data.whyInNews ? 
                     '<section class="note-section">' +
-                        '<h3 class="section-heading">Why in News?</h3>' +
+                        '<div class="section-heading-panel"><h3 class="panel-heading-title">Why in News?</h3></div>' +
                         '<p class="note-p">' + data.whyInNews + '</p>' +
                     '</section>' : '') +
 
                 (data.whatConcept ? 
                     '<section class="note-section">' +
-                        '<h3 class="section-heading">What / Concept</h3>' +
+                        '<div class="section-heading-panel"><h3 class="panel-heading-title">What / Concept</h3></div>' +
                         '<p class="note-p">' + data.whatConcept + '</p>' +
                     '</section>' : '') +
 
                 (orgRowsHtml ? 
                     '<section class="note-section">' +
-                        '<h3 class="section-heading">Who / Organisation</h3>' +
+                        '<div class="section-heading-panel"><h3 class="panel-heading-title">Who / Organisation</h3></div>' +
                         '<div class="info-callout">' + orgRowsHtml + '</div>' +
                     '</section>' : '') +
 
@@ -2529,6 +2574,9 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
             // Enable CSS :active state on touch devices (iPad / iOS Safari)
             document.addEventListener('touchstart', () => {}, { passive: true });
 
@@ -2557,7 +2605,12 @@
                 const matched = allTopics.find(t => t.topicTitle === savedTopic);
                 if (matched) {
                     openOrganisedCaArticle(savedTopic);
+                    requestAnimationFrame(() => {
+                        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                    });
                 }
+            } else {
+                window.scrollTo(0, 0);
             }
         });
 
