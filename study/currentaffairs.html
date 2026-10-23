@@ -716,7 +716,7 @@
             width: 100%;
         }
 
-        /* Card: Outer Panel (Previous sizes & gentle, calm tap animation) */
+        /* Card: Outer Panel (Panel pressing animation exactly like Today button) */
         .organised-ca-card {
             position: relative;
             background-color: var(--panel-bg);
@@ -736,25 +736,25 @@
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
 
-            will-change: transform, background-color, box-shadow;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-                        background-color 0.3s ease,
-                        box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-                        border-color 0.3s ease;
+            will-change: transform;
+            transition: transform 0.15s ease,
+                        background-color 0.25s ease,
+                        border-color 0.25s ease;
         }
 
         @media (hover: hover) {
             .organised-ca-card:hover {
-                transform: translateY(-3px) scale(1.01);
+                border-color: rgba(255, 255, 255, 0.12);
             }
-            .organised-ca-card:hover .organised-ca-card-left-thumb {
-                transform: scale(1.03);
+            body.light-mode .organised-ca-card:hover {
+                border-color: rgba(0, 0, 0, 0.12);
             }
         }
 
+        .organised-ca-card:active,
         .organised-ca-card.is-card-pressed {
-            transform: scale(0.978) translateY(2px) !important;
-            transition: transform 0.12s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            transform: scale(0.95) !important;
+            transition: transform 0.15s ease !important;
         }
 
         /* Left thumbnail / placeholder */
@@ -862,7 +862,7 @@
         @keyframes masterEntrance {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 10px, 0);
+                transform: translate3d(0, 26px, 0);
             }
             100% {
                 opacity: 1;
@@ -1110,15 +1110,13 @@
            Smoothly scales container height between content states dynamically.
         */
         .grid-animator {
-            display: grid;
-            grid-template-rows: 0fr; /* Adjusted by JS on initialization */
-            transition: grid-template-rows 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            display: block;
             width: 100%;
         }
 
         .grid-content {
-            overflow: hidden;
             width: 100%;
+            min-height: 100%;
         }
 
         /* Cross-fading View Panes */
@@ -1269,14 +1267,14 @@
         /* DRUM WHEEL DATE PICKER MODAL (TAP-TO-SELECT ENABLED) */
         /* ---------------------------------------------------- */
         .picker-backdrop {
-            position: fixed !important;
-            inset: 0 !important;
+            position: fixed;
             top: 0 !important;
             left: 0 !important;
             right: 0 !important;
             bottom: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            height: 100dvh !important;
             margin: 0 !important;
             background: rgba(0, 0, 0, 0.65) !important;
             backdrop-filter: blur(14px) !important;
@@ -1289,7 +1287,9 @@
             pointer-events: none;
             user-select: none;
             -webkit-user-select: none;
-            transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                        backdrop-filter 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                        -webkit-backdrop-filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
             padding: 20px;
             box-sizing: border-box;
         }
@@ -1307,13 +1307,16 @@
             border-radius: 28px;
             padding: 24px 20px 28px 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            transform: translate3d(0, 100vh, 0);
-            transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: transform;
+            opacity: 0;
+            transform: translate3d(0, 48px, 0) scale(0.97);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
             box-sizing: border-box;
         }
         .picker-backdrop.is-open .picker-card {
-            transform: translate3d(0, 0, 0) !important;
+            opacity: 1 !important;
+            transform: translate3d(0, 0, 0) scale(1) !important;
         }
         .picker-header {
             display: flex;
@@ -2032,11 +2035,10 @@
                 );
             }).join('');
 
-            // Attach click listeners to cards: gentle and calm tap animation before navigation
+            // Attach click listeners to cards: match Today button tap response exactly
             container.querySelectorAll('.organised-ca-card').forEach(card => {
                 let isNavigating = false;
 
-                // Gentle press-down feedback for touch and pointer
                 card.addEventListener('pointerdown', () => {
                     if (!isNavigating) card.classList.add('is-card-pressed');
                 });
@@ -2052,20 +2054,18 @@
                     if (isNavigating) return;
                     isNavigating = true;
 
-                    // 1. Cushion down
+                    // Tap feedback matches Today button
                     card.classList.add('is-card-pressed');
 
-                    // 2. At 100ms, release spring back to default position
                     setTimeout(() => {
                         card.classList.remove('is-card-pressed');
-                    }, 100);
+                    }, 110);
 
-                    // 3. At 240ms, after spring completes its return, navigate to article
                     setTimeout(() => {
                         const title = decodeURIComponent(card.getAttribute('data-title'));
                         openOrganisedCaArticle(title, true);
                         isNavigating = false;
-                    }, 240);
+                    }, 180);
                 });
             });
 
@@ -2277,14 +2277,18 @@
         function applyOrganisedCaDateFilter() {
             organisedCaSelectedDateKey = String(orgTempDay).padStart(2, '0') + '-' + String(orgTempMonth).padStart(2, '0') + '-' + orgTempYear;
             closeOrganisedCaDatePicker();
-            renderDirectoryView(true);
+            setTimeout(() => {
+                renderDirectoryView(true);
+            }, 120);
         }
         window.applyOrganisedCaDateFilter = applyOrganisedCaDateFilter;
 
         function clearOrganisedCaDateFilter() {
             organisedCaSelectedDateKey = null;
             closeOrganisedCaDatePicker();
-            renderDirectoryView(true);
+            setTimeout(() => {
+                renderDirectoryView(true);
+            }, 120);
         }
         window.clearOrganisedCaDateFilter = clearOrganisedCaDateFilter;
 
@@ -2349,6 +2353,10 @@
             const dateEl = document.getElementById('orgDatePill');
             if (dateEl) dateEl.innerHTML = 'Date : <strong>' + (topic.dateStr || formatDisplayDate(topic.dateKey, topic.date)) + '</strong>';
 
+            const viewWindow = document.getElementById('orgViewWindow');
+            if (viewWindow) {
+                viewWindow.style.display = 'block';
+            }
             const detailedContainer = document.getElementById('orgDetailedContent');
             if (detailedContainer) {
                 detailedContainer.innerHTML = renderCaArticleSections(topic);
@@ -2663,7 +2671,7 @@
             organisedCaSelectedCategory = 'All';
             organisedCaSortOrder = 'newest';
 
-            renderDirectoryView(false);
+            renderDirectoryView(true);
 
             // Deterministic URL Hash Routing on Refresh:
             // If URL has an article hash, open that article.

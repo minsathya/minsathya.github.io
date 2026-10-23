@@ -3120,12 +3120,23 @@
             });
         }
 
-        clearSearchBtn.addEventListener('click', () => {
-            searchCoreInput.value = "";
-            searchCoreInput.focus();
-        });
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+        if (clearSearchBtn) {
+            clearSearchBtn.addEventListener('click', () => {
+                const searchCoreInput = document.getElementById('searchCoreInput');
+                if (searchCoreInput) {
+                    searchCoreInput.value = "";
+                    searchCoreInput.focus();
+                }
+            });
+        }
 
-        closeSearchBtn.addEventListener('click', () => handleHeaderLeaveOrBlur(true));
+        const closeSearchBtn = document.getElementById('closeSearchBtn');
+        if (closeSearchBtn) {
+            closeSearchBtn.addEventListener('click', () => {
+                if (typeof handleHeaderLeaveOrBlur === 'function') handleHeaderLeaveOrBlur(true);
+            });
+        }
 
         const targetLinks = document.querySelectorAll('footer .footer-links-row a, .breadcrumb-nav a, .logo');
         targetLinks.forEach(link => {
