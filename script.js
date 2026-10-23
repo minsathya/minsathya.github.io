@@ -250,6 +250,12 @@
             box-sizing: border-box !important;
         }
 
+        body.dca-page,
+        body:has(#organisedCaDirectoryView),
+        body:has(.organised-ca-article-view) {
+            padding: 52px 24px 36px 24px !important;
+        }
+
         /* -------------------------------------------------------------
            TOP NAVIGATION: 's' BRANDMARK & ROUND TWINKLING STAR
            ------------------------------------------------------------- */
@@ -348,7 +354,7 @@
             align-items: center !important;
             gap: 14px !important;
             width: 100% !important;
-            margin: 0 0 24px 0 !important;
+            margin: 0 0 18px 0 !important;
         }
 
         /* Footer pages: Panel is centered, back button & page title follow panel left align */
@@ -407,7 +413,7 @@
         }
 
         .page-title {
-            font-size: 28px !important;
+            font-size: 25px !important;
             font-weight: 500 !important;
             letter-spacing: -0.6px !important;
             color: var(--text-main) !important;
@@ -815,6 +821,11 @@
         @media (max-width: 700px) {
             body {
                 padding: 28px 18px 24px 18px !important;
+            }
+            body.dca-page,
+            body:has(#organisedCaDirectoryView),
+            body:has(.organised-ca-article-view) {
+                padding: 48px 16px 20px 16px !important;
             }
             .brand-pill {
                 font-size: 36px !important;

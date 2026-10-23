@@ -151,7 +151,7 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 40px 24px 36px 24px;
+            padding: 52px 24px 36px 24px;
             max-width: 1240px;
             margin: 0 auto;
             width: 100%;
@@ -1961,7 +1961,7 @@
         }
 
         @media (max-width: 700px) {
-            body { padding: 30px 18px 24px 18px; }
+            body { padding: 48px 18px 24px 18px; }
             .breadcrumb-nav { padding-left: 8px; }
             header { height: 64px; border-radius: 24px; margin-bottom: 30px; }
             .header-inner-view { padding: 0 20px; }
@@ -2111,7 +2111,7 @@
         }
 
         .page-title {
-            font-size: 28px !important;
+            font-size: 25px !important;
             font-weight: 500 !important;
             letter-spacing: -0.6px !important;
             color: var(--text-main);
@@ -2319,7 +2319,7 @@
         }
     </style>
 </head>
-<body>
+<body class="dca-page">
 
     <!-- Apple-style Slim Global Top Navigation Bar -->
     <nav class="apple-global-nav" id="appleGlobalNav" aria-label="Global Navigation">
@@ -2337,7 +2337,7 @@
         <!-- Page Header Row: Title on Left, Calendar on Right End -->
         <div class="page-header-row">
             <div class="header-left-cluster">
-                <button type="button" class="back-icon-btn" onclick="if(window.history.length>1){window.history.back();}else{window.location.href='/index.html';}" aria-label="Go back">
+                <button type="button" class="back-icon-btn" onclick="window.location.href='/index.html';" aria-label="Go back">
                     <svg viewBox="0 0 24 24">
                         <line x1="19" y1="12" x2="5" y2="12"></line>
                         <polyline points="12 19 5 12 12 5"></polyline>
