@@ -753,7 +753,7 @@
 
         .organised-ca-card:active,
         .organised-ca-card.is-card-pressed {
-            transform: scale(0.95) !important;
+            transform: scale(0.988) !important;
             transition: transform 0.15s ease !important;
         }
 
@@ -1177,7 +1177,7 @@
             display: inline-block;
             width: 3.5px;
             height: 16px;
-            background-color: var(--heading-accent-bar, #8aafe8);
+            background-color: #8aafe8 !important;
             border-radius: 2px;
             flex-shrink: 0;
         }
@@ -1315,8 +1315,17 @@
             box-sizing: border-box;
         }
         .picker-backdrop.is-open .picker-card {
-            opacity: 1 !important;
-            transform: translate3d(0, 0, 0) scale(1) !important;
+            animation: calendarSlideUpEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+        }
+        @keyframes calendarSlideUpEntrance {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 48px, 0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
         }
         .picker-header {
             display: flex;
@@ -2603,22 +2612,22 @@
                 )).join('');
             }
 
-            return (
+                        return (
                 (data.whyInNews ? 
                     '<section class="note-section">' +
-                        '<div class="section-heading-panel"><h3 class="panel-heading-title">Why in News?</h3></div>' +
+                        '<h3 class="section-heading">Why in News?</h3>' +
                         '<p class="note-p">' + data.whyInNews + '</p>' +
                     '</section>' : '') +
 
                 (data.whatConcept ? 
                     '<section class="note-section">' +
-                        '<div class="section-heading-panel"><h3 class="panel-heading-title">What / Concept</h3></div>' +
+                        '<h3 class="section-heading">What / Concept</h3>' +
                         '<p class="note-p">' + data.whatConcept + '</p>' +
                     '</section>' : '') +
 
                 (orgRowsHtml ? 
                     '<section class="note-section">' +
-                        '<div class="section-heading-panel"><h3 class="panel-heading-title">Who / Organisation</h3></div>' +
+                        '<h3 class="section-heading">Who / Organisation</h3>' +
                         '<div class="info-callout">' + orgRowsHtml + '</div>' +
                     '</section>' : '') +
 
