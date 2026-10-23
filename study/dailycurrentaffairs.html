@@ -978,7 +978,7 @@
         @keyframes articleSlideUpEntrance {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 24px, 0);
+                transform: translate3d(0, 32px, 0);
             }
             100% {
                 opacity: 1;
@@ -988,7 +988,7 @@
         @-webkit-keyframes articleSlideUpEntrance {
             0% {
                 opacity: 0;
-                -webkit-transform: translate3d(0, 24px, 0);
+                -webkit-transform: translate3d(0, 32px, 0);
             }
             100% {
                 opacity: 1;
@@ -1283,10 +1283,15 @@
         }
 
         /* Fixed on empty space of both sides - never sits on content */
-        @media (min-width: 901px) {
+        @media (min-width: 1200px) {
             .side-nav-btn { display: flex !important; }
-            .side-nav-prev { left: 24px !important; right: auto !important; }
-            .side-nav-next { right: 24px !important; left: auto !important; }
+            .side-nav-prev { left: 54px !important; right: auto !important; }
+            .side-nav-next { right: 54px !important; left: auto !important; }
+        }
+        @media (max-width: 1199px) and (min-width: 901px) {
+            .side-nav-btn { display: flex !important; }
+            .side-nav-prev { left: 28px !important; right: auto !important; }
+            .side-nav-next { right: 28px !important; left: auto !important; }
         }
         @media (max-width: 900px) {
             .side-nav-btn { display: flex !important; width: 44px; height: 44px; }

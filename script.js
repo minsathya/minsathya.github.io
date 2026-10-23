@@ -361,21 +361,38 @@
            Calm & gentle: translate3d(0, 10px, 0) -> (0,0,0)
            0.6s cubic-bezier(0.16, 1, 0.3, 1) with zero jumping
            ------------------------------------------------------------- */
+                /* -------------------------------------------------------------
+           UNIVERSAL SLIDE-UP ENTRANCE TRANSITION (ALL PAGES)
+           Fluid 32px slide-up with opacity fade
+           ------------------------------------------------------------- */
         @keyframes masterEntrance {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 10px, 0);
+                transform: translate3d(0, 32px, 0);
             }
             100% {
                 opacity: 1;
                 transform: translate3d(0, 0, 0);
             }
         }
+        @-webkit-keyframes masterEntrance {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, 32px, 0);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0);
+            }
+        }
 
-        /* Animation runner class */
-        .master-entrance-run {
-            animation: masterEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+        /* Animation runner classes */
+        .master-entrance-run,
+        .article-slide-up-run {
+            animation: masterEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
             will-change: transform, opacity;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         .top-nav-bar {
@@ -383,6 +400,10 @@
         }
 
         main, 
+        .page-wrapper,
+        .directory-view,
+        #organisedCaDirectoryView,
+        #organisedCaCardsContainer,
         .contents-container,
         .date-topics-capsule,
         .workspace-animate-frame,
@@ -983,21 +1004,30 @@ document.addEventListener('DOMContentLoaded', () => {
 // 5. UNIVERSAL 120HZ BUTTERY SMOOTH MASTER ENTRANCE ON NAVIGATION & RETURN
 function triggerMasterEntrance(element) {
     if (!element) return;
-    element.classList.remove('master-entrance-run');
+    element.classList.remove('master-entrance-run', 'article-slide-up-run');
     void element.offsetWidth;
-    element.classList.add('master-entrance-run');
+    requestAnimationFrame(() => {
+        element.classList.add('master-entrance-run', 'article-slide-up-run');
+    });
 }
 window.triggerMasterEntrance = triggerMasterEntrance;
 
 function executeMasterEntrance() {
     const targets = document.querySelectorAll(
-        '.top-nav-bar, .subjects-header-row, main, footer'
+        '.top-nav-bar, .subjects-header-row, main, .page-wrapper, .directory-view, #organisedCaDirectoryView, #organisedCaCardsContainer, footer'
     );
     targets.forEach(el => {
         triggerMasterEntrance(el);
     });
 }
 window.executeMasterEntrance = executeMasterEntrance;
+
+// Auto-execute on DOMContentLoaded for all pages across site
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', executeMasterEntrance);
+} else {
+    executeMasterEntrance();
+}
 
 // Bulletproof JS helper for scoped sibling muting on word hover
 function initSiblingMuting() {

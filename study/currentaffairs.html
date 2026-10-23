@@ -1602,19 +1602,32 @@
             stroke-linejoin: round;
         }
 
-        /* Screen-centered positioning: Always locked to 50% screen height, fixed to screen sides */
+        /* Screen-centered positioning: Always locked to 50% screen height */
         body.in-article-view .side-nav-btn {
             display: flex !important;
         }
 
-        .side-nav-prev {
-            left: 24px !important;
-            right: auto !important;
+        /* Inset closer to article side on laptop/desktop */
+        @media (min-width: 1200px) {
+            .side-nav-prev {
+                left: 54px !important;
+                right: auto !important;
+            }
+            .side-nav-next {
+                right: 54px !important;
+                left: auto !important;
+            }
         }
 
-        .side-nav-next {
-            right: 24px !important;
-            left: auto !important;
+        @media (max-width: 1199px) and (min-width: 769px) {
+            .side-nav-prev {
+                left: 28px !important;
+                right: auto !important;
+            }
+            .side-nav-next {
+                right: 28px !important;
+                left: auto !important;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1622,8 +1635,14 @@
                 width: 44px;
                 height: 44px;
             }
-            .side-nav-prev { left: 14px !important; }
-            .side-nav-next { right: 14px !important; }
+            .side-nav-prev {
+                left: 16px !important;
+                right: auto !important;
+            }
+            .side-nav-next {
+                right: 16px !important;
+                left: auto !important;
+            }
         }
 
         .side-nav-btn:hover:not(.is-disabled) {
@@ -2520,14 +2539,18 @@
             const controls = document.getElementById('caControlsPanel');
             const stage = document.getElementById('caArticleFeedStage');
             if (controls) {
-                controls.classList.remove('article-slide-up-run');
+                controls.classList.remove('master-entrance-run', 'article-slide-up-run');
                 void controls.offsetWidth;
-                controls.classList.add('article-slide-up-run');
+                requestAnimationFrame(() => {
+                    controls.classList.add('master-entrance-run', 'article-slide-up-run');
+                });
             }
             if (stage) {
-                stage.classList.remove('article-slide-up-run');
+                stage.classList.remove('master-entrance-run', 'article-slide-up-run');
                 void stage.offsetWidth;
-                stage.classList.add('article-slide-up-run');
+                requestAnimationFrame(() => {
+                    stage.classList.add('master-entrance-run', 'article-slide-up-run');
+                });
             }
 
             const readBtn = document.getElementById('orgReadActionBtn');
@@ -2564,7 +2587,7 @@
                 dirView.classList.remove('article-slide-up-run');
                 void dirView.offsetWidth;
                 requestAnimationFrame(() => {
-                    dirView.classList.add('article-slide-up-run');
+                    dirView.classList.add('master-entrance-run', 'article-slide-up-run');
                 });
             }
             if (pageTitle) pageTitle.textContent = 'Daily current affairs';
