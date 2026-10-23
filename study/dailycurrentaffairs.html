@@ -1115,9 +1115,19 @@
             display: inline-block;
             width: 3.5px;
             height: 16px;
-            background-color: var(--heading-accent-bar, #8aafe8);
+            background-color: #8aafe8;
             border-radius: 2px;
             flex-shrink: 0;
+        }
+
+        html.light-mode .section-heading::before,
+        body.light-mode .section-heading::before {
+            background-color: #0064ff !important;
+        }
+
+        html:not(.light-mode) .section-heading::before,
+        body:not(.light-mode) .section-heading::before {
+            background-color: #8aafe8 !important;
         }
 
         .note-p {
@@ -1530,9 +1540,19 @@
             display: inline-block;
             width: 3.5px;
             height: 16px;
-            background-color: var(--heading-accent-bar, #8aafe8);
+            background-color: #8aafe8;
             border-radius: 2px;
             flex-shrink: 0;
+        }
+
+        html.light-mode .section-heading::before,
+        body.light-mode .section-heading::before {
+            background-color: #0064ff !important;
+        }
+
+        html:not(.light-mode) .section-heading::before,
+        body:not(.light-mode) .section-heading::before {
+            background-color: #8aafe8 !important;
         }
 
         .note-p {

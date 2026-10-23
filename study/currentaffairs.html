@@ -716,7 +716,7 @@
             width: 100%;
         }
 
-        /* Card: Outer Panel (Panel pressing animation exactly like Today button) */
+        /* Card: Outer Panel (Panel pressing animation matching Today button speed & smoothness) */
         .organised-ca-card {
             position: relative;
             background-color: var(--panel-bg);
@@ -736,24 +736,20 @@
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
 
-            will-change: transform;
-            transition: transform 0.15s ease,
-                        background-color 0.25s ease,
-                        border-color 0.25s ease;
+            transition: background-color 0.2s var(--ease-smooth),
+                        border-color 0.2s var(--ease-smooth),
+                        transform 0.15s ease;
         }
 
-        @media (hover: hover) {
-            .organised-ca-card:hover {
-                border-color: rgba(255, 255, 255, 0.12);
-            }
-            body.light-mode .organised-ca-card:hover {
-                border-color: rgba(0, 0, 0, 0.12);
-            }
+        .organised-ca-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+        body.light-mode .organised-ca-card:hover {
+            border-color: rgba(0, 0, 0, 0.12);
         }
 
-        .organised-ca-card:active,
-        .organised-ca-card.is-card-pressed {
-            transform: scale(0.988) !important;
+        .organised-ca-card:active {
+            transform: scale(0.975) !important;
             transition: transform 0.15s ease !important;
         }
 
@@ -853,8 +849,9 @@
             display: flex;
         }
 
-        .article-slide-up-run {
-            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+        .article-slide-up-run,
+        .master-entrance-run {
+            animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
@@ -862,7 +859,7 @@
         @keyframes masterEntrance {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 26px, 0);
+                transform: translate3d(0, 30px, 0);
             }
             100% {
                 opacity: 1;
@@ -1177,9 +1174,19 @@
             display: inline-block;
             width: 3.5px;
             height: 16px;
-            background-color: #8aafe8 !important;
+            background-color: #8aafe8;
             border-radius: 2px;
             flex-shrink: 0;
+        }
+
+        html.light-mode .section-heading::before,
+        body.light-mode .section-heading::before {
+            background-color: #0064ff !important;
+        }
+
+        html:not(.light-mode) .section-heading::before,
+        body:not(.light-mode) .section-heading::before {
+            background-color: #8aafe8 !important;
         }
 
         /* Matching Font Size for ALL content including Important Facts downwards */
@@ -1544,6 +1551,90 @@
             .ca-panel-thumb { width: 100%; height: 130px; min-width: 100%; }
         }
             @media (min-width: 769px) { .brand-pill { font-size: 36px; } }
+            /* FLOATING SIDE NAVIGATION ARROWS (Matches Current Affairs Page) */
+        .side-nav-btn {
+            display: none;
+            position: fixed !important;
+            top: 50% !important;
+            transform: translateY(-50%) translateZ(0) !important;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            color: var(--text-main) !important;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999 !important;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+            transition: opacity 0.28s var(--ease-smooth), 
+                        transform 0.28s var(--ease-smooth),
+                        background-color 0.4s var(--ease-smooth),
+                        border-color 0.4s var(--ease-smooth);
+            pointer-events: auto;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        body.light-mode .side-nav-btn { 
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12); 
+        }
+
+        .side-nav-btn svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            stroke-width: 2.3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        @media (min-width: 768px) {
+            body.in-article-view .side-nav-btn { display: flex !important; }
+            .side-nav-prev { left: max(20px, calc(50% - 500px - 70px)) !important; }
+            .side-nav-next { right: max(20px, calc(50% - 500px - 70px)) !important; }
+        }
+        @media (max-width: 767px) {
+            body.in-article-view .side-nav-btn {
+                display: flex !important;
+                width: 42px;
+                height: 42px;
+                top: auto !important;
+                bottom: 24px !important;
+                transform: none !important;
+            }
+            .side-nav-prev { left: 16px !important; }
+            .side-nav-next { right: 16px !important; }
+        }
+
+        .side-nav-btn:hover:not(.is-disabled) {
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-50%) scale(1.08) translateZ(0) !important;
+            color: var(--text-main) !important;
+        }
+        body.light-mode .side-nav-btn:hover:not(.is-disabled) {
+            border-color: rgba(0, 0, 0, 0.25);
+        }
+        .side-nav-btn:active:not(.is-disabled) {
+            transform: translateY(-50%) scale(0.94) translateZ(0) !important;
+            color: var(--text-main) !important;
+        }
+        @media (max-width: 767px) {
+            .side-nav-btn:hover:not(.is-disabled) {
+                transform: scale(1.08) !important;
+            }
+            .side-nav-btn:active:not(.is-disabled) {
+                transform: scale(0.94) !important;
+            }
+        }
+        .side-nav-btn.is-disabled { 
+            opacity: 0.15 !important; 
+            pointer-events: none !important; 
+            cursor: default !important; 
+        }
     </style>
 </head>
 <body>
@@ -1657,6 +1748,14 @@
         </main>
 
         <!-- Footer -->
+                <!-- FLOATING SIDE NAVIGATION ARROWS (Article View) -->
+        <button id="sidePrevBtn" class="side-nav-btn side-nav-prev" type="button" aria-label="Previous Topic" onclick="navigateOrganisedCaAdjacent(-1)">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button id="sideNextBtn" class="side-nav-btn side-nav-next" type="button" aria-label="Next Topic" onclick="navigateOrganisedCaAdjacent(1)">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+
         <footer>
             <div class="footer-links-row">
                 <a href="/study/Footer/about.html">About</a>
@@ -2044,37 +2143,14 @@
                 );
             }).join('');
 
-            // Attach click listeners to cards: match Today button tap response exactly
+            // Attach click listeners to cards: native CSS :active handles press with exact same speed and smoothness as Today button
             container.querySelectorAll('.organised-ca-card').forEach(card => {
-                let isNavigating = false;
-
-                card.addEventListener('pointerdown', () => {
-                    if (!isNavigating) card.classList.add('is-card-pressed');
-                });
-                const clearPress = () => {
-                    if (!isNavigating) card.classList.remove('is-card-pressed');
-                };
-                card.addEventListener('pointerup', clearPress);
-                card.addEventListener('pointercancel', clearPress);
-                card.addEventListener('pointerleave', clearPress);
-
                 card.addEventListener('click', (e) => {
                     e.preventDefault();
-                    if (isNavigating) return;
-                    isNavigating = true;
-
-                    // Tap feedback matches Today button
-                    card.classList.add('is-card-pressed');
-
+                    const title = decodeURIComponent(card.getAttribute('data-title'));
                     setTimeout(() => {
-                        card.classList.remove('is-card-pressed');
-                    }, 110);
-
-                    setTimeout(() => {
-                        const title = decodeURIComponent(card.getAttribute('data-title'));
                         openOrganisedCaArticle(title, true);
-                        isNavigating = false;
-                    }, 180);
+                    }, 120);
                 });
             });
 
@@ -2304,6 +2380,68 @@
         // ----------------------------------------------------
         // ARTICLE DETAIL VIEW LOGIC
         // ----------------------------------------------------
+                function getCurrentlyActiveTopicsList() {
+            const allTopics = getAllOrganisedCaTopics();
+            let filtered = allTopics;
+
+            if (organisedCaSelectedCategory !== 'All') {
+                filtered = filtered.filter(t => t.categories && t.categories.includes(organisedCaSelectedCategory));
+            }
+            if (organisedCaSelectedDateKey) {
+                filtered = filtered.filter(t => t.dateKey === organisedCaSelectedDateKey);
+            }
+            filtered.sort((a, b) => {
+                if (organisedCaSortOrder === 'newest') {
+                    return b.timestamp - a.timestamp;
+                } else {
+                    return a.timestamp - b.timestamp;
+                }
+            });
+            return filtered.length > 0 ? filtered : allTopics;
+        }
+
+        function updateSideNavArrows() {
+            const prevBtn = document.getElementById('sidePrevBtn');
+            const nextBtn = document.getElementById('sideNextBtn');
+            if (!prevBtn || !nextBtn) return;
+
+            const artView = document.getElementById('organisedCaArticleView');
+            const isArtActive = artView && artView.classList.contains('is-active');
+
+            if (!isArtActive || !organisedCaActiveTopic) {
+                document.body.classList.remove('in-article-view');
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+                return;
+            }
+
+            document.body.classList.add('in-article-view');
+            prevBtn.style.display = '';
+            nextBtn.style.display = '';
+
+            const list = getCurrentlyActiveTopicsList();
+            const curIdx = list.findIndex(t => t.topicTitle === organisedCaActiveTopic.topicTitle);
+
+            const isFirst = curIdx <= 0;
+            const isLast = curIdx >= list.length - 1 || curIdx === -1;
+
+            prevBtn.classList.toggle('is-disabled', isFirst);
+            nextBtn.classList.toggle('is-disabled', isLast);
+        }
+
+        function navigateOrganisedCaAdjacent(direction) {
+            const list = getCurrentlyActiveTopicsList();
+            if (!list || list.length === 0 || !organisedCaActiveTopic) return;
+
+            const curIdx = list.findIndex(t => t.topicTitle === organisedCaActiveTopic.topicTitle);
+            const targetIdx = curIdx + direction;
+
+            if (targetIdx >= 0 && targetIdx < list.length) {
+                openOrganisedCaArticle(list[targetIdx].topicTitle, true);
+            }
+        }
+        window.navigateOrganisedCaAdjacent = navigateOrganisedCaAdjacent;
+
         function openOrganisedCaArticle(topicTitle, updateHistory = true) {
             const allTopics = getAllOrganisedCaTopics();
             const topic = allTopics.find(t => t.topicTitle === topicTitle);
@@ -2402,6 +2540,7 @@
                 paneFull.classList.add('active');
             }
 
+            updateSideNavArrows();
             window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
             document.documentElement.scrollTop = 0;
             document.body.scrollTop = 0;
@@ -2410,6 +2549,7 @@
 
         function closeCaArticleView(updateHistory = true) {
             organisedCaActiveTopic = null;
+            updateSideNavArrows();
             const artView = document.getElementById('organisedCaArticleView');
             const dirView = document.getElementById('organisedCaDirectoryView');
             const pageTitle = document.getElementById('pageTitleText');
@@ -2418,8 +2558,6 @@
             if (dirView) {
                 dirView.style.display = 'block';
                 dirView.classList.remove('article-slide-up-run');
-                void dirView.offsetWidth;
-                dirView.classList.add('article-slide-up-run');
             }
             if (pageTitle) pageTitle.textContent = 'Daily current affairs';
             try {
