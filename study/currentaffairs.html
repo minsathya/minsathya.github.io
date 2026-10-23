@@ -54,6 +54,33 @@
     <script src="/study/study-data.js"></script>
 
     <style>
+        /* Sleek scrollbar matching background */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 4px; }
+        html.light-mode ::-webkit-scrollbar-thumb, body.light-mode ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.18); }
+        * { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.18) transparent; }
+        html.light-mode * { scrollbar-color: rgba(0, 0, 0, 0.18) transparent; }
+
+        /* Article Main Heading Panels (from Important Facts onwards) */
+        .section-heading-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        .panel-heading-title {
+            font-size: 19px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.3;
+        }
         :root {
             --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
             --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
@@ -128,8 +155,7 @@
             min-height: 100vh;
             min-height: 100dvh;
             width: 100%;
-            overflow-y: scroll;
-            scrollbar-gutter: stable;
+            overflow-y: auto;
         }
 
         body {
@@ -245,7 +271,7 @@
         .page-header-row {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             width: 100%;
             max-width: 1000px;
             margin: 0 auto 24px auto;
@@ -259,6 +285,7 @@
             outline: none;
             width: 38px;
             height: 38px;
+            min-width: 38px;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
@@ -287,15 +314,16 @@
         }
 
         .page-title {
-            font-size: 24px !important;
+            font-size: 28px !important;
             font-weight: 500 !important;
-            letter-spacing: -0.4px !important;
+            letter-spacing: -0.6px !important;
             color: var(--text-main);
             line-height: 1.25 !important;
             margin: 0;
             display: flex;
             align-items: center;
             flex: 1;
+            min-width: 0;
         }
 
         @media (max-width: 700px) {
@@ -309,7 +337,7 @@
         .content-wrapper {
             width: 100%;
             max-width: 1000px;
-            margin: 0 auto 60px auto;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
             flex: 1;
@@ -472,34 +500,26 @@
             transform: rotate(180deg);
         }
 
-        /* Floating Backdrop for category menu blur */
+        /* Floating Backdrop for category menu (Transparent, no page blur) */
         .floating-backdrop {
             position: fixed;
             inset: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.45);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: transparent;
             z-index: 100 !important;
             opacity: 0;
             pointer-events: none;
             user-select: none;
             -webkit-user-select: none;
-            transition: opacity 0.28s var(--ease-smooth);
+        }
+        .floating-backdrop.is-active {
+            pointer-events: auto;
         }
         body.category-menu-open .category-title-text,
         body.category-menu-open .sort-action-wrap,
         body.category-menu-open .cal-trigger-action-btn {
-            filter: blur(8px);
-            opacity: 0.55;
-            transition: filter 0.28s var(--ease-smooth), opacity 0.28s var(--ease-smooth);
-        }
-
-        .category-title-text,
-        .sort-action-wrap,
-        .cal-trigger-action-btn {
-            transition: filter 0.28s var(--ease-smooth), opacity 0.28s var(--ease-smooth);
+            /* Zero blur */
         }
 
         .floating-backdrop.is-active {
@@ -808,10 +828,10 @@
         }
 
         .ca-panel-thumb {
-            width: 96px;
-            height: 96px;
-            min-width: 96px;
-            border-radius: 18px;
+            width: 154px;
+            height: 104px;
+            min-width: 154px;
+            border-radius: 16px;
             overflow: hidden;
             background: rgba(255, 255, 255, 0.04);
             display: flex;
@@ -825,7 +845,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 18px;
+            border-radius: 16px;
             display: block;
         }
 
@@ -844,19 +864,19 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            min-height: 96px;
+            justify-content: center;
+            gap: 10px;
             min-width: 0;
             box-sizing: border-box;
-            padding: 4px 0;
+            padding: 2px 0;
         }
 
         .ca-panel-meta-row {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
             width: 100%;
-            gap: 12px;
         }
 
         .meta-pill {
@@ -1162,17 +1182,22 @@
         /* DRUM WHEEL DATE PICKER MODAL (TAP-TO-SELECT ENABLED) */
         /* ---------------------------------------------------- */
         .picker-backdrop {
-            position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.55);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
+            position: fixed !important;
+            inset: 0 !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0 !important;
+            background: rgba(0, 0, 0, 0.65) !important;
+            backdrop-filter: blur(14px) !important;
+            -webkit-backdrop-filter: blur(14px) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            z-index: 99999 !important;
             opacity: 0;
             pointer-events: none;
             user-select: none;
@@ -1182,13 +1207,14 @@
             box-sizing: border-box;
         }
         .picker-backdrop.is-open {
-            opacity: 1;
-            pointer-events: auto;
+            opacity: 1 !important;
+            pointer-events: auto !important;
         }
         .picker-card {
             position: relative;
             width: 100%;
             max-width: 420px;
+            margin: auto !important;
             background: var(--panel-bg);
             border: 1px solid var(--panel-border);
             border-radius: 28px;
@@ -1200,7 +1226,7 @@
             box-sizing: border-box;
         }
         .picker-backdrop.is-open .picker-card {
-            transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0) !important;
         }
         .picker-header {
             display: flex;
@@ -1348,8 +1374,8 @@
             flex-direction: column;
             align-items: center;
             gap: 16px;
-            margin-top: 60px;
-            padding-top: 12px;
+            margin-top: 36px;
+            padding-top: 6px;
             border-top: none !important;
         }
         .footer-links-row {
@@ -1375,7 +1401,15 @@
         }
 
         @media (max-width: 700px) {
-            body { padding: 24px 16px 28px 16px; }
+            body { padding: 24px 16px 20px 16px; }
+            .page-title {
+                font-size: 24px !important;
+                letter-spacing: -0.5px !important;
+            }
+            footer {
+                margin-top: 28px;
+                padding-top: 6px;
+            }
             .footer-links-row {
                 display: flex !important;
                 flex-wrap: nowrap !important;
@@ -1383,10 +1417,12 @@
                 align-items: center !important;
                 overflow-x: auto !important;
                 -webkit-overflow-scrolling: touch !important;
-                width: 100% !important;
-                max-width: 100% !important;
+                width: 100vw !important;
+                max-width: 100vw !important;
+                margin-left: -16px !important;
+                margin-right: -16px !important;
                 padding: 6px 16px !important;
-                gap: 24px !important;
+                gap: 20px !important;
                 scrollbar-width: none !important;
                 box-sizing: border-box !important;
             }
@@ -1397,9 +1433,7 @@
                 white-space: nowrap !important;
                 flex-shrink: 0 !important;
             }
-        }
             .brand-pill { font-size: 34px; }
-            /* .page-title consistent on all devices */
             .category-row { max-width: 100%; margin-bottom: 16px; }
             .organised-ca-card { padding: 12px 14px; min-height: 96px; gap: 12px; }
             .organised-ca-card-left-thumb { width: 70px; height: 70px; }
@@ -1407,6 +1441,8 @@
             .organised-ca-card-right-content { min-height: 70px; padding-right: 76px; }
             .organised-ca-card-title { font-size: 14.5px; }
             .note-p, .point-bullet-item, .info-callout-row, .point-subheading { font-size: 15.5px; }
+            .ca-panel-layout { flex-direction: column; align-items: flex-start; gap: 14px; }
+            .ca-panel-thumb { width: 100%; height: 130px; min-width: 100%; }
         }
             @media (min-width: 769px) { .brand-pill { font-size: 36px; } }
     </style>
@@ -1521,32 +1557,6 @@
             </div>
         </main>
 
-        <!-- 3. DRUM WHEEL DATE PICKER MODAL -->
-        <div class="picker-backdrop" id="orgPickerModal" onclick="if(event.target===this)closeOrganisedCaDatePicker()">
-            <div class="picker-card" onclick="event.stopPropagation()">
-                <div class="picker-header">
-                    <span class="picker-title">Select Date</span>
-                    <div class="picker-header-actions">
-                        <button type="button" class="picker-clear-btn" onclick="clearOrganisedCaDateFilter()">All Dates</button>
-                        <button type="button" class="picker-apply-btn" id="orgPickerApplyBtn" onclick="applyOrganisedCaDateFilter()">Apply</button>
-                    </div>
-                </div>
-
-                <div class="picker-col-headers">
-                    <div class="picker-col-hdr">Day</div>
-                    <div class="picker-col-hdr">Month</div>
-                    <div class="picker-col-hdr">Year</div>
-                </div>
-
-                <div class="picker-drum-stage">
-                    <div class="picker-center-capsule"></div>
-                    <div class="drum-column" id="orgDayCol"></div>
-                    <div class="drum-column" id="orgMonthCol"></div>
-                    <div class="drum-column" id="orgYearCol"></div>
-                </div>
-            </div>
-        </div>
-
         <!-- Footer -->
         <footer>
             <div class="footer-links-row">
@@ -1558,6 +1568,32 @@
             </div>
             <div class="copyright-tag">&copy; 2026 Sathya. All rights reserved.</div>
         </footer>
+    </div>
+
+    <!-- 3. DRUM WHEEL DATE PICKER MODAL (Mounted directly under body for perfect viewport centering) -->
+    <div class="picker-backdrop" id="orgPickerModal" onclick="if(event.target===this)closeOrganisedCaDatePicker()">
+        <div class="picker-card" onclick="event.stopPropagation()">
+            <div class="picker-header">
+                <span class="picker-title">Select Date</span>
+                <div class="picker-header-actions">
+                    <button type="button" class="picker-clear-btn" onclick="clearOrganisedCaDateFilter()">All Dates</button>
+                    <button type="button" class="picker-apply-btn" id="orgPickerApplyBtn" onclick="applyOrganisedCaDateFilter()">Apply</button>
+                </div>
+            </div>
+
+            <div class="picker-col-headers">
+                <div class="picker-col-hdr">Day</div>
+                <div class="picker-col-hdr">Month</div>
+                <div class="picker-col-hdr">Year</div>
+            </div>
+
+            <div class="picker-drum-stage">
+                <div class="picker-center-capsule"></div>
+                <div class="drum-column" id="orgDayCol"></div>
+                <div class="drum-column" id="orgMonthCol"></div>
+                <div class="drum-column" id="orgYearCol"></div>
+            </div>
+        </div>
     </div>
 
     <!-- MAIN ENGINE SCRIPT -->
@@ -1870,7 +1906,11 @@
             if (!container) return;
 
             if (filtered.length === 0) {
-                container.innerHTML = '<div style="padding: 48px 16px; text-align: center; color: var(--text-muted); font-size: 15px;">coming soon...</div>';
+                const now = new Date();
+                const todayKey = String(now.getDate()).padStart(2, '0') + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + now.getFullYear();
+                const isSearchingToday = (organisedCaSelectedDateKey === todayKey) || (window.isTodayActive);
+                const emptyMsg = isSearchingToday ? 'coming soon...' : 'No current affairs entries found for this selection.';
+                container.innerHTML = '<div style="padding: 48px 16px; text-align: center; color: var(--text-muted); font-size: 15px;">' + emptyMsg + '</div>';
                 return;
             }
 
@@ -2105,7 +2145,10 @@
         }
 
         function openOrganisedCaDatePicker() {
-            if (orgPickerModal) orgPickerModal.classList.add('is-open');
+            const modal = orgPickerModal || document.getElementById('orgPickerModal');
+            if (modal) modal.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
 
             if (organisedCaSelectedDateKey) {
                 const p = organisedCaSelectedDateKey.split('-');
@@ -2127,7 +2170,10 @@
         window.openOrganisedCaDatePicker = openOrganisedCaDatePicker;
 
         function closeOrganisedCaDatePicker() {
-            if (orgPickerModal) orgPickerModal.classList.remove('is-open');
+            const modal = orgPickerModal || document.getElementById('orgPickerModal');
+            if (modal) modal.classList.remove('is-open');
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
         }
         window.closeOrganisedCaDatePicker = closeOrganisedCaDatePicker;
 
@@ -2156,7 +2202,7 @@
             organisedCaActiveTopic = topic;
             try {
                 sessionStorage.setItem('oca_active_topic', topicTitle);
-                history.replaceState(null, '', '#' + encodeURIComponent(topicTitle));
+                history.pushState({ view: 'article', topic: topicTitle }, '', '#' + encodeURIComponent(topicTitle));
             } catch(e) {}
             orgImageDrawerOpen = false;
             orgMetaDrawerOpen = false;
@@ -2249,15 +2295,40 @@
         }
         window.openOrganisedCaArticle = openOrganisedCaArticle;
 
+        function closeCaArticleView(updateHistory = true) {
+            try {
+                sessionStorage.removeItem('oca_active_topic');
+            } catch(e) {}
+            organisedCaActiveTopic = null;
+            const artView = document.getElementById('organisedCaArticleView');
+            const dirView = document.getElementById('organisedCaDirectoryView');
+            const pageTitle = document.getElementById('pageTitleText');
+            if (artView) artView.classList.remove('is-active', 'article-slide-up-run');
+            if (dirView) dirView.style.display = 'block';
+            if (pageTitle) pageTitle.textContent = 'Daily Current Affairs';
+            try {
+                document.title = 'Daily Current Affairs - sathya.';
+            } catch(e) {}
+            renderDirectoryView(false);
+            if (updateHistory && window.location.hash) {
+                history.back();
+            }
+        }
+        window.closeCaArticleView = closeCaArticleView;
+
+        window.addEventListener('popstate', (e) => {
+            const artView = document.getElementById('organisedCaArticleView');
+            if (artView && artView.classList.contains('is-active')) {
+                if (!e.state || e.state.view !== 'article' || !location.hash) {
+                    closeCaArticleView(false);
+                }
+            }
+        });
+
         function handleOrganisedBack() {
             const artView = document.getElementById('organisedCaArticleView');
             if (artView && artView.classList.contains('is-active')) {
-                try {
-                    sessionStorage.removeItem('oca_active_topic');
-                    history.replaceState(null, '', window.location.pathname + window.location.search);
-                } catch(e) {}
-                renderDirectoryView(true);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                closeCaArticleView(true);
             } else {
                 if (window.history.length > 1) {
                     window.history.back();
@@ -2427,31 +2498,31 @@
 
                 (data.importantFacts && data.importantFacts.length > 0 ? 
                     '<section class="note-section">' +
-                        '<h3 class="section-heading">Important Facts ⭐</h3>' +
+                        '<div class="section-heading-panel"><h3 class="panel-heading-title">Important Facts ⭐</h3></div>' +
                         '<div class="note-items-wrapper">' + renderCaListBlock(data.importantFacts) + '</div>' +
                     '</section>' : '') +
 
                 (data.background && data.background.length > 0 ? 
                     '<section class="note-section">' +
-                        '<h3 class="section-heading">Background / Static Linkage</h3>' +
+                        '<div class="section-heading-panel"><h3 class="panel-heading-title">Background / Static Linkage</h3></div>' +
                         '<div class="note-items-wrapper">' + renderCaListBlock(data.background) + '</div>' +
                     '</section>' : '') +
 
                 (data.significance && data.significance.length > 0 ? 
                     '<section class="note-section">' +
-                        '<h3 class="section-heading">Significance</h3>' +
+                        '<div class="section-heading-panel"><h3 class="panel-heading-title">Significance</h3></div>' +
                         '<div class="note-items-wrapper">' + renderCaListBlock(data.significance) + '</div>' +
                     '</section>' : '') +
 
                 (data.challenges && data.challenges.length > 0 ? 
                     '<section class="note-section">' +
-                        '<h3 class="section-heading">Challenges / Concerns</h3>' +
+                        '<div class="section-heading-panel"><h3 class="panel-heading-title">Challenges / Concerns</h3></div>' +
                         '<div class="note-items-wrapper">' + renderCaListBlock(data.challenges) + '</div>' +
                     '</section>' : '') +
 
                 (data.wayForward && data.wayForward.length > 0 ? 
                     '<section class="note-section">' +
-                        '<h3 class="section-heading">Way Forward</h3>' +
+                        '<div class="section-heading-panel"><h3 class="panel-heading-title">Way Forward</h3></div>' +
                         '<div class="note-items-wrapper">' + renderCaListBlock(data.wayForward) + '</div>' +
                     '</section>' : '')
             );
