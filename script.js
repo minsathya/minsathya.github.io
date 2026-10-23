@@ -45,57 +45,7 @@
         }
 
         html {
-            overflow-y: auto;
-        }
-
-        /* Universal sleek scrollbars matching theme background with zero edge strip */
-        html,
-        body {
-            background-color: var(--bg-color) !important;
-            transition: none !important;
-            width: 100% !important;
-            max-width: 100% !important;
-        }
-
-        html {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255, 255, 255, 0.2) #0b0b0b;
-        }
-        html.light-mode,
-        html.light-mode body,
-        body.light-mode {
-            --bg-color: #f5f5f7 !important;
-            background-color: #f5f5f7 !important;
-            color-scheme: light !important;
-            scrollbar-color: rgba(0, 0, 0, 0.22) #f5f5f7 !important;
-        }
-        html:not(.light-mode),
-        html:not(.light-mode) body,
-        body:not(.light-mode) {
-            --bg-color: #0b0b0b !important;
-            background-color: #0b0b0b !important;
-            color-scheme: dark !important;
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background-color: #0b0b0b !important;
-        }
-        html.light-mode ::-webkit-scrollbar-track,
-        html.light-mode body ::-webkit-scrollbar-track,
-        body.light-mode ::-webkit-scrollbar-track {
-            background-color: #f5f5f7 !important;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.2) !important;
-            border-radius: 4px;
-        }
-        html.light-mode ::-webkit-scrollbar-thumb,
-        html.light-mode body ::-webkit-scrollbar-thumb,
-        body.light-mode ::-webkit-scrollbar-thumb {
-            background-color: rgba(0, 0, 0, 0.22) !important;
+            scrollbar-gutter: stable;
         }
 
         html, body, button, input, textarea, select, span, a, div, li, td, p, label {
@@ -106,7 +56,8 @@
             font-size: 17px !important;
             background-color: var(--bg-color) !important;
             color: var(--text-main) !important;
-            transition: none !important;
+            transition: background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                        color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         /* Headings & Brand: little bold (500) */
@@ -193,17 +144,9 @@
            STANDARDIZED PAGE WIDTH & CONTAINER ALIGNMENT (MATCHES HOMEPAGE)
            ------------------------------------------------------------- */
         body:not(.nutrition-workspace) {
-            width: 100% !important;
-            max-width: 100% !important;
-            margin: 0 !important;
-            padding: 40px 24px 36px 24px !important;
-            box-sizing: border-box !important;
-            background-color: var(--bg-color) !important;
-        }
-
-        .page-wrapper {
             max-width: 1240px !important;
             margin: 0 auto !important;
+            padding: 40px 24px 36px 24px !important;
             width: 100% !important;
             box-sizing: border-box !important;
         }
@@ -304,11 +247,10 @@
         .subjects-header-row {
             display: flex !important;
             align-items: center !important;
-            gap: 12px !important;
+            gap: 14px !important;
             width: 100% !important;
-            max-width: 1000px !important;
+            max-width: 1200px !important;
             margin: 0 auto 24px auto !important;
-            position: relative;
         }
 
         .back-icon-btn {
@@ -358,52 +300,33 @@
 
         /* -------------------------------------------------------------
            MASTER ENTRANCE ANIMATION (GPU ACCELERATED & PREMIUM FLUID)
-           Calm & gentle: translate3d(0, 10px, 0) -> (0,0,0)
-           0.6s cubic-bezier(0.16, 1, 0.3, 1) with zero jumping
-           ------------------------------------------------------------- */
-                /* -------------------------------------------------------------
-           UNIVERSAL SLIDE-UP ENTRANCE TRANSITION (ALL PAGES)
-           Fluid 32px slide-up with opacity fade
+           Uses slideUpFade: translate3d(0, 28px, 0) scale(0.98) -> (0,0,0) scale(1)
+           0.65s cubic-bezier(0.16, 1, 0.3, 1) with sequential wave stagger
            ------------------------------------------------------------- */
         @keyframes masterEntrance {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 32px, 0);
+                transform: translate3d(0, 28px, 0) scale(0.98);
             }
             100% {
                 opacity: 1;
-                transform: translate3d(0, 0, 0);
-            }
-        }
-        @-webkit-keyframes masterEntrance {
-            0% {
-                opacity: 0;
-                -webkit-transform: translate3d(0, 32px, 0);
-            }
-            100% {
-                opacity: 1;
-                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0) scale(1);
             }
         }
 
-        /* Animation runner classes */
-        .master-entrance-run,
-        .article-slide-up-run {
-            animation: masterEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+        /* Animation runner class */
+        .master-entrance-run {
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
             will-change: transform, opacity;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
         }
 
-        .top-nav-bar {
-            animation: masterEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+        .top-nav-bar, 
+        .page-header-row,
+        .subjects-header-row {
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
         }
 
         main, 
-        .page-wrapper,
-        .directory-view,
-        #organisedCaDirectoryView,
-        #organisedCaCardsContainer,
         .contents-container,
         .date-topics-capsule,
         .workspace-animate-frame,
@@ -494,30 +417,14 @@
             transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Mobile / Touch (iPad & Phone): Smooth gentle tactile press matching laptop */
+        /* Mobile / Touch: Stationary (NO LIFT / NO ZOOM) */
         @media (hover: none), (pointer: coarse) {
-            .bento-card,
-            .panel-card,
-            .capsule-panel,
-            .subjects-detail-panel,
-            .wide-capsule,
-            .organised-ca-card {
-                -webkit-touch-callout: none;
-                touch-action: manipulation;
-                -webkit-tap-highlight-color: transparent;
-                transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1),
-                            background-color 0.2s cubic-bezier(0.25, 1, 0.5, 1),
-                            border-color 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-            }
             .bento-card:active,
             .panel-card:active,
             .capsule-panel:active,
             .subjects-detail-panel:active,
-            .wide-capsule:not(.is-expanded):active,
-            .organised-ca-card:active {
-                transform: scale(0.978) translateZ(0) !important;
-                -webkit-transform: scale(0.978) translateZ(0) !important;
-                transition: transform 0.12s ease !important;
+            .wide-capsule:not(.is-expanded):active {
+                transform: none !important;
             }
         }
 
@@ -753,28 +660,39 @@
             }
         }
 
-        /* 2. UNIFIED SMOOTH PRESS PHYSICS (IPAD, PHONE & LAPTOP) */
+        /* 2. IPAD & PHONE (Touch coarse-pointer): Tap zooms up by the exact same length as laptop */
         @media (hover: none), (pointer: coarse) {
-            button:active,
-            .btn:active,
-            .meta-action-btn:active,
-            .action-pill-btn:active,
+            .footer-links-row a:active .nav-text,
+            .matrix-canvas a:active,
+            .matrix-canvas a:active .nav-text,
+            .bento-container a:active,
+            .bento-container a:active .nav-text,
+            .bento-container .list-item:active,
+            .document-list a:active,
+            .document-list a:active .nav-text,
+            .topics-column-grid a:active,
+            .topics-column-grid a:active .nav-text,
+            .topics-vertical-stack a:active,
+            .topics-vertical-stack a:active .nav-text,
+            .ncert-links a:active,
+            .site-name:active,
+            .sortable:active,
+            .meta-pill:active,
             .read-action-btn:active,
             .image-action-btn:active,
             .topic-num-btn:active,
-            .today-action-btn:active,
-            .category-pill:active,
-            .sort-order-btn:active,
-            .back-icon-btn:active,
-            .bento-card:active,
-            .panel-card:active,
-            .capsule-panel:active,
-            .subjects-detail-panel:active,
-            .wide-capsule:active,
-            .organised-ca-card:active {
-                transform: scale(0.975) translateZ(0) !important;
-                -webkit-transform: scale(0.975) translateZ(0) !important;
-                transition: transform 0.12s ease !important;
+            .subject-topic-link:active,
+            .subject-nav-item:active .subject-nav-name,
+            .subject-nav-item:active,
+            a:not(.brand-pill):not(.back-icon-btn):active {
+                transform: scale3d(1.028, 1.028, 1) !important;
+            }
+
+            a:has(> .nav-text):active {
+                transform: none !important;
+            }
+            a:active > .nav-text {
+                transform: scale3d(1.028, 1.028, 1) !important;
             }
         }
 
@@ -798,20 +716,6 @@
     }
 })();
 
-// Top-of-page scroll restoration on refresh
-try {
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-    }
-} catch(e) {}
-window.scrollTo(0, 0);
-window.addEventListener('pageshow', () => {
-    window.scrollTo(0, 0);
-});
-window.addEventListener('load', () => {
-    window.scrollTo(0, 0);
-});
-
 // 2. UNIVERSAL SYSTEM & USER THEME SYNCHRONIZATION
 (function initAutomaticSystemTheme() {
     function applyTheme() {
@@ -825,18 +729,10 @@ window.addEventListener('load', () => {
             }
             if (isLight) {
                 document.documentElement.classList.add('light-mode');
-                document.documentElement.style.colorScheme = 'light';
-                if (document.body) {
-                    document.body.classList.add('light-mode');
-                    document.body.style.colorScheme = 'light';
-                }
+                if (document.body) document.body.classList.add('light-mode');
             } else {
                 document.documentElement.classList.remove('light-mode');
-                document.documentElement.style.colorScheme = 'dark';
-                if (document.body) {
-                    document.body.classList.remove('light-mode');
-                    document.body.style.colorScheme = 'dark';
-                }
+                if (document.body) document.body.classList.remove('light-mode');
             }
         } catch(e) {}
     }
@@ -1009,46 +905,21 @@ document.addEventListener('DOMContentLoaded', () => {
 // 5. UNIVERSAL 120HZ BUTTERY SMOOTH MASTER ENTRANCE ON NAVIGATION & RETURN
 function triggerMasterEntrance(element) {
     if (!element) return;
-    element.classList.remove('master-entrance-run', 'article-slide-up-run');
+    element.classList.remove('master-entrance-run');
     void element.offsetWidth;
-    requestAnimationFrame(() => {
-        element.classList.add('master-entrance-run', 'article-slide-up-run');
-    });
+    element.classList.add('master-entrance-run');
 }
 window.triggerMasterEntrance = triggerMasterEntrance;
 
 function executeMasterEntrance() {
-    const dcaArt = document.getElementById('organisedCaArticleView');
-    const dcaDir = document.getElementById('organisedCaDirectoryView');
-    if (dcaArt && dcaArt.classList.contains('is-active')) {
-        triggerMasterEntrance(dcaArt);
-        return;
-    }
-    if (dcaDir && dcaDir.style.display !== 'none') {
-        triggerMasterEntrance(dcaDir);
-        return;
-    }
-    const main = document.querySelector('main') || document.querySelector('.page-wrapper');
-    if (main) {
-        triggerMasterEntrance(main);
-    }
-    const nav = document.querySelector('.top-nav-bar');
-    if (nav) triggerMasterEntrance(nav);
+    const targets = document.querySelectorAll(
+        '.top-nav-bar, .page-header-row, .subjects-header-row, main, footer'
+    );
+    targets.forEach(el => {
+        triggerMasterEntrance(el);
+    });
 }
 window.executeMasterEntrance = executeMasterEntrance;
-
-// iOS WebKit Smooth Active Release Engine: Clears stuck active states on touch devices
-if (typeof document !== 'undefined') {
-    document.addEventListener('touchend', () => {}, { passive: true });
-    document.addEventListener('touchcancel', () => {}, { passive: true });
-}
-
-// Auto-execute on DOMContentLoaded for all pages across site
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', executeMasterEntrance);
-} else {
-    executeMasterEntrance();
-}
 
 // Bulletproof JS helper for scoped sibling muting on word hover
 function initSiblingMuting() {
