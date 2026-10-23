@@ -704,7 +704,6 @@
             font-size: 15.5px;
             font-weight: 500;
             letter-spacing: -0.2px;
-            animation: masterEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .organised-ca-cards-list {
@@ -847,6 +846,65 @@
         }
         #organisedCaArticleView.is-active {
             display: flex;
+        }
+
+        
+        /* Smooth Slide Transitions for Cards Feed List Updating */
+        .ca-cards-slide-out {
+            animation: caCardsSlideOut 0.12s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+            -webkit-animation: caCardsSlideOut 0.12s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+            pointer-events: none;
+            will-change: opacity, transform;
+        }
+        @keyframes caCardsSlideOut {
+            0% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+            100% {
+                opacity: 0;
+                transform: translate3d(0, -10px, 0);
+            }
+        }
+        @-webkit-keyframes caCardsSlideOut {
+            0% {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0);
+            }
+            100% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -10px, 0);
+            }
+        }
+
+        .ca-cards-slide-up-run {
+            animation: caCardsSlideUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            -webkit-animation: caCardsSlideUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            will-change: opacity, transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+        @keyframes caCardsSlideUp {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 24px, 0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+        @-webkit-keyframes caCardsSlideUp {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, 24px, 0);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0);
+            }
         }
 
         .article-slide-up-run,
@@ -2108,62 +2166,76 @@
             const container = document.getElementById('organisedCaCardsContainer');
             if (!container) return;
 
+            let newHtml = '';
             if (filtered.length === 0) {
                 const now = new Date();
                 const todayKey = String(now.getDate()).padStart(2, '0') + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + now.getFullYear();
-                const isSearchingToday = (organisedCaSelectedDateKey === todayKey) || (window.isTodayActive);
+                const isSearchingToday = (organisedCaSelectedDateKey === todayKey) || isOrganisedCaTodayActive;
                 const emptyMsg = isSearchingToday ? 'coming soon...' : 'No current affairs entries found for this selection.';
-                container.innerHTML = '<div class="ca-empty-state-notice">' + emptyMsg + '</div>';
-                if (playSlideUp) {
-                    container.classList.remove('article-slide-up-run');
-                    void container.offsetWidth;
-                    container.classList.add('article-slide-up-run');
-                }
-                return;
+                newHtml = '<div class="ca-empty-state-notice">' + emptyMsg + '</div>';
+            } else {
+                newHtml = filtered.map(topic => {
+                    const hasThumb = topic.image && topic.image.url;
+                    const thumbHtml = hasThumb ? 
+                        '<img src="' + topic.image.url + '" alt="' + topic.topicTitle + '" class="ca-card-thumb-img" loading="lazy">' :
+                        ('<div class="ca-card-no-image">' +
+                            '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                                '<rect x="3" y="3" width="18" height="18" rx="4"></rect>' +
+                                '<circle cx="8.5" cy="8.5" r="1.5"></circle>' +
+                                '<polyline points="21 15 16 10 5 21"></polyline>' +
+                            '</svg>' +
+                            '<span class="ca-card-no-image-text">no image</span>' +
+                        '</div>');
+
+                    return (
+                        '<div class="organised-ca-card" data-title="' + encodeURIComponent(topic.topicTitle) + '">' +
+                            '<div class="organised-ca-card-left-thumb">' + thumbHtml + '</div>' +
+                            '<div class="organised-ca-card-right-content">' +
+                                '<h3 class="organised-ca-card-title">' + topic.topicTitle + '</h3>' +
+                            '</div>' +
+                            '<div class="organised-ca-card-footer">' +
+                                '<span class="note-card-date">' + topic.dateStr + '</span>' +
+                            '</div>' +
+                        '</div>'
+                    );
+                }).join('');
             }
 
-            container.innerHTML = filtered.map(topic => {
-                const hasThumb = topic.image && topic.image.url;
-                const thumbHtml = hasThumb ? 
-                    '<img src="' + topic.image.url + '" alt="' + topic.topicTitle + '" class="ca-card-thumb-img" loading="lazy">' :
-                    ('<div class="ca-card-no-image">' +
-                        '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
-                            '<rect x="3" y="3" width="18" height="18" rx="4"></rect>' +
-                            '<circle cx="8.5" cy="8.5" r="1.5"></circle>' +
-                            '<polyline points="21 15 16 10 5 21"></polyline>' +
-                        '</svg>' +
-                        '<span class="ca-card-no-image-text">no image</span>' +
-                    '</div>');
-
-                return (
-                    '<div class="organised-ca-card" data-title="' + encodeURIComponent(topic.topicTitle) + '">' +
-                        '<div class="organised-ca-card-left-thumb">' + thumbHtml + '</div>' +
-                        '<div class="organised-ca-card-right-content">' +
-                            '<h3 class="organised-ca-card-title">' + topic.topicTitle + '</h3>' +
-                        '</div>' +
-                        '<div class="organised-ca-card-footer">' +
-                            '<span class="note-card-date">' + topic.dateStr + '</span>' +
-                        '</div>' +
-                    '</div>'
-                );
-            }).join('');
-
-            // Attach click listeners to cards: native CSS :active handles press with exact same speed and smoothness as Today button
-            container.querySelectorAll('.organised-ca-card').forEach(card => {
-                card.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const title = decodeURIComponent(card.getAttribute('data-title'));
-                    openOrganisedCaArticle(title, true);
+            function attachCardListeners() {
+                container.querySelectorAll('.organised-ca-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const title = decodeURIComponent(card.getAttribute('data-title'));
+                        openOrganisedCaArticle(title, true);
+                    });
                 });
-            });
+            }
+
+            function applyNewContentAndSlideUp() {
+                container.innerHTML = newHtml;
+                attachCardListeners();
+                container.classList.remove('ca-cards-slide-out', 'ca-cards-slide-up-run');
+                if (playSlideUp) {
+                    void container.offsetWidth;
+                    container.classList.add('ca-cards-slide-up-run');
+                }
+            }
+
+            if (window._caCardsTransitionTimer) {
+                clearTimeout(window._caCardsTransitionTimer);
+                window._caCardsTransitionTimer = null;
+            }
 
             // Smooth slide-up transition animation on list change
-            if (playSlideUp) {
-                container.classList.remove('article-slide-up-run');
-                void container.offsetWidth;
-                requestAnimationFrame(() => {
-                    container.classList.add('article-slide-up-run');
-                });
+            if (playSlideUp && container.children.length > 0 && container.offsetHeight > 0) {
+                container.classList.remove('ca-cards-slide-up-run');
+                container.classList.add('ca-cards-slide-out');
+
+                window._caCardsTransitionTimer = setTimeout(() => {
+                    applyNewContentAndSlideUp();
+                }, 120);
+            } else {
+                applyNewContentAndSlideUp();
             }
         }
 
@@ -2364,19 +2436,26 @@
 
         function applyOrganisedCaDateFilter() {
             organisedCaSelectedDateKey = String(orgTempDay).padStart(2, '0') + '-' + String(orgTempMonth).padStart(2, '0') + '-' + orgTempYear;
+            const todayKey = getTodayDateKey();
+            isOrganisedCaTodayActive = (organisedCaSelectedDateKey === todayKey);
+            const todayBtn = document.getElementById('orgTodayBtn');
+            if (todayBtn) todayBtn.classList.toggle('is-active', isOrganisedCaTodayActive);
             closeOrganisedCaDatePicker();
             setTimeout(() => {
                 renderDirectoryView(true);
-            }, 120);
+            }, 60);
         }
         window.applyOrganisedCaDateFilter = applyOrganisedCaDateFilter;
 
         function clearOrganisedCaDateFilter() {
             organisedCaSelectedDateKey = null;
+            isOrganisedCaTodayActive = false;
+            const todayBtn = document.getElementById('orgTodayBtn');
+            if (todayBtn) todayBtn.classList.remove('is-active');
             closeOrganisedCaDatePicker();
             setTimeout(() => {
                 renderDirectoryView(true);
-            }, 120);
+            }, 60);
         }
         window.clearOrganisedCaDateFilter = clearOrganisedCaDateFilter;
 
