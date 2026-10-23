@@ -1285,11 +1285,13 @@
         /* Fixed on empty space of both sides - never sits on content */
         @media (min-width: 901px) {
             .side-nav-btn { display: flex !important; }
-            .side-nav-prev { left: max(20px, calc(50% - 500px - 70px)) !important; }
-            .side-nav-next { right: max(20px, calc(50% - 500px - 70px)) !important; }
+            .side-nav-prev { left: 24px !important; right: auto !important; }
+            .side-nav-next { right: 24px !important; left: auto !important; }
         }
         @media (max-width: 900px) {
-            .side-nav-btn { display: none !important; }
+            .side-nav-btn { display: flex !important; width: 44px; height: 44px; }
+            .side-nav-prev { left: 14px !important; right: auto !important; }
+            .side-nav-next { right: 14px !important; left: auto !important; }
         }
 
         /* Hover & active: subtle scale, absolutely NO green color changing */

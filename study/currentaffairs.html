@@ -851,7 +851,7 @@
 
         .article-slide-up-run,
         .master-entrance-run {
-            animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            animation: masterEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
@@ -859,11 +859,21 @@
         @keyframes masterEntrance {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 30px, 0);
+                transform: translate3d(0, 32px, 0);
             }
             100% {
                 opacity: 1;
                 transform: translate3d(0, 0, 0);
+            }
+        }
+        @-webkit-keyframes masterEntrance {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, 32px, 0);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0);
             }
         }
         @-webkit-keyframes articleSlideUpEntrance {
@@ -1551,7 +1561,7 @@
             .ca-panel-thumb { width: 100%; height: 130px; min-width: 100%; }
         }
             @media (min-width: 769px) { .brand-pill { font-size: 36px; } }
-            /* FLOATING SIDE NAVIGATION ARROWS (Matches Current Affairs Page) */
+            /* FLOATING SIDE NAVIGATION ARROWS (Screen-Centered Viewport Fixed) */
         .side-nav-btn {
             display: none;
             position: fixed !important;
@@ -1566,10 +1576,10 @@
             cursor: pointer;
             align-items: center;
             justify-content: center;
-            z-index: 9999 !important;
+            z-index: 99999 !important;
             box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
             transition: opacity 0.28s var(--ease-smooth), 
-                        transform 0.28s var(--ease-smooth),
+                        transform 0.2s var(--ease-smooth),
                         background-color 0.4s var(--ease-smooth),
                         border-color 0.4s var(--ease-smooth);
             pointer-events: auto;
@@ -1592,22 +1602,28 @@
             stroke-linejoin: round;
         }
 
-        @media (min-width: 768px) {
-            body.in-article-view .side-nav-btn { display: flex !important; }
-            .side-nav-prev { left: max(20px, calc(50% - 500px - 70px)) !important; }
-            .side-nav-next { right: max(20px, calc(50% - 500px - 70px)) !important; }
+        /* Screen-centered positioning: Always locked to 50% screen height, fixed to screen sides */
+        body.in-article-view .side-nav-btn {
+            display: flex !important;
         }
-        @media (max-width: 767px) {
-            body.in-article-view .side-nav-btn {
-                display: flex !important;
-                width: 42px;
-                height: 42px;
-                top: auto !important;
-                bottom: 24px !important;
-                transform: none !important;
+
+        .side-nav-prev {
+            left: 24px !important;
+            right: auto !important;
+        }
+
+        .side-nav-next {
+            right: 24px !important;
+            left: auto !important;
+        }
+
+        @media (max-width: 768px) {
+            .side-nav-btn {
+                width: 44px;
+                height: 44px;
             }
-            .side-nav-prev { left: 16px !important; }
-            .side-nav-next { right: 16px !important; }
+            .side-nav-prev { left: 14px !important; }
+            .side-nav-next { right: 14px !important; }
         }
 
         .side-nav-btn:hover:not(.is-disabled) {
@@ -1621,14 +1637,6 @@
         .side-nav-btn:active:not(.is-disabled) {
             transform: translateY(-50%) scale(0.94) translateZ(0) !important;
             color: var(--text-main) !important;
-        }
-        @media (max-width: 767px) {
-            .side-nav-btn:hover:not(.is-disabled) {
-                transform: scale(1.08) !important;
-            }
-            .side-nav-btn:active:not(.is-disabled) {
-                transform: scale(0.94) !important;
-            }
         }
         .side-nav-btn.is-disabled { 
             opacity: 0.15 !important; 
@@ -1748,13 +1756,6 @@
         </main>
 
         <!-- Footer -->
-                <!-- FLOATING SIDE NAVIGATION ARROWS (Article View) -->
-        <button id="sidePrevBtn" class="side-nav-btn side-nav-prev" type="button" aria-label="Previous Topic" onclick="navigateOrganisedCaAdjacent(-1)">
-            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </button>
-        <button id="sideNextBtn" class="side-nav-btn side-nav-next" type="button" aria-label="Next Topic" onclick="navigateOrganisedCaAdjacent(1)">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </button>
 
         <footer>
             <div class="footer-links-row">
@@ -2467,9 +2468,12 @@
 
             if (dirView) dirView.style.display = 'none';
             if (artView) {
-                artView.classList.remove('is-active', 'article-slide-up-run');
+                artView.classList.add('is-active');
+                artView.classList.remove('article-slide-up-run');
                 void artView.offsetWidth;
-                artView.classList.add('is-active', 'article-slide-up-run');
+                requestAnimationFrame(() => {
+                    artView.classList.add('article-slide-up-run');
+                });
             }
 
             if (pageTitle) {
@@ -2558,6 +2562,10 @@
             if (dirView) {
                 dirView.style.display = 'block';
                 dirView.classList.remove('article-slide-up-run');
+                void dirView.offsetWidth;
+                requestAnimationFrame(() => {
+                    dirView.classList.add('article-slide-up-run');
+                });
             }
             if (pageTitle) pageTitle.textContent = 'Daily current affairs';
             try {
@@ -2819,6 +2827,14 @@
             organisedCaSortOrder = 'newest';
 
             renderDirectoryView(true);
+            const initialDirView = document.getElementById('organisedCaDirectoryView');
+            if (initialDirView) {
+                initialDirView.classList.remove('article-slide-up-run');
+                void initialDirView.offsetWidth;
+                requestAnimationFrame(() => {
+                    initialDirView.classList.add('article-slide-up-run');
+                });
+            }
 
             // Deterministic URL Hash Routing on Refresh:
             // If URL has an article hash, open that article.
@@ -2846,6 +2862,15 @@
             }
         });
     </script>
+
+    <!-- FLOATING SIDE NAVIGATION ARROWS (Article View) - Fixed directly to Viewport Screen Center -->
+    <button id="sidePrevBtn" class="side-nav-btn side-nav-prev" type="button" aria-label="Previous Topic" onclick="navigateOrganisedCaAdjacent(-1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <button id="sideNextBtn" class="side-nav-btn side-nav-next" type="button" aria-label="Next Topic" onclick="navigateOrganisedCaAdjacent(1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+
     <script src="/script.js"></script>
 </body>
 </html>
