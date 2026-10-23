@@ -127,7 +127,7 @@
         }
 
         @keyframes masterEntrance {
-            0% { opacity: 0; transform: translate3d(0, 10px, 0); }
+            0% { opacity: 0; transform: translate3d(0, 30px, 0); }
             100% { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
@@ -225,8 +225,8 @@
             padding: 36px; 
             margin: 0 0 80px 0; 
             box-shadow: var(--shadow-base, var(--panel-shadow)); 
-            width: 100%;
-            max-width: 882px;
+            width: 882px;
+            max-width: 100%;
             box-sizing: border-box; 
             cursor: pointer;
             user-select: none;
@@ -509,7 +509,74 @@
             }
         });
 
-        const universalTargetLinks = document.querySelectorAll('.breadcrumbs a, .footer-links-row a, .logo');
+                function transitionToFooterPage(destination, pushHistory = true) {
+            const main = document.querySelector('main');
+            if (!main) {
+                window.location.href = destination;
+                return;
+            }
+
+            main.style.transition = 'transform 0.16s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.16s ease-out';
+            main.style.transform = 'translate3d(0, -16px, 0)';
+            main.style.opacity = '0';
+
+            fetch(destination)
+                .then(res => {
+                    if (!res.ok) throw new Error('Fetch failed');
+                    return res.text();
+                })
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newMain = doc.querySelector('main');
+                    if (!newMain) {
+                        window.location.href = destination;
+                        return;
+                    }
+
+                    document.title = doc.title;
+
+                    setTimeout(() => {
+                        main.innerHTML = newMain.innerHTML;
+
+                        document.querySelectorAll('.footer-links-row a').forEach(a => {
+                            const href = a.getAttribute('href');
+                            const isMatch = href && (destination.endsWith(href) || destination.endsWith(href.replace('/study/Footer/', '')));
+                            if (isMatch) {
+                                a.classList.add('active-footer-page');
+                            } else {
+                                a.classList.remove('active-footer-page');
+                            }
+                        });
+
+                        if (pushHistory) {
+                            history.pushState({ footerUrl: destination }, '', destination);
+                        }
+
+                        main.style.transition = 'none';
+                        main.style.transform = 'translate3d(0, 30px, 0)';
+                        main.style.opacity = '0';
+                        void main.offsetWidth;
+
+                        main.style.transition = 'transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1)';
+                        main.style.transform = 'translate3d(0, 0, 0)';
+                        main.style.opacity = '1';
+
+                        window.scrollTo(0, 0);
+                    }, 160);
+                })
+                .catch(() => {
+                    window.location.href = destination;
+                });
+        }
+
+        window.addEventListener('popstate', () => {
+            if (window.location.pathname.includes('/study/Footer/')) {
+                transitionToFooterPage(window.location.pathname, false);
+            }
+        });
+
+const universalTargetLinks = document.querySelectorAll('.breadcrumbs a, .footer-links-row a, .logo');
 
         universalTargetLinks.forEach(link => {
             if (!link.querySelector('.nav-text')) {
@@ -528,15 +595,12 @@
                 if (!destination || destination === '#' || this.classList.contains('active-footer-page')) return;
 
                 e.preventDefault();
-                sessionStorage.setItem('activeUniversalTargetUrl', this.href);
 
-                universalTargetLinks.forEach(l => l.classList.remove('is-wave-loading'));
-
-                this.classList.add('is-wave-loading');
-
-                setTimeout(() => {
+                if (destination.includes('/study/Footer/')) {
+                    transitionToFooterPage(destination, true);
+                } else {
                     window.location.href = destination;
-                }, 750);
+                }
             });
         });
 
@@ -580,6 +644,6 @@
             }
         });
     </script>
-    <script src="/script.js?v=20261023c"></script>
+    <script src="/script.js?v=20261023d"></script>
 </body>
 </html>

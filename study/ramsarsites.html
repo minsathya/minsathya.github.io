@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+        <!-- Instant Scroll Restoration to Top 0% on Reload -->
+    <script>
+      try {
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+      } catch(e) {}
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ramsar Sites - sathya.</title>
@@ -1916,6 +1926,16 @@
             }
         });
     </script>
-    <script src="/script.js?v=20261023c"></script>
+    <script src="/script.js?v=20261023d"></script>
+    <script>
+      window.addEventListener('pageshow', () => {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      });
+      window.addEventListener('beforeunload', () => {
+        window.scrollTo(0, 0);
+      });
+    </script>
 </body>
 </html>

@@ -1,3 +1,5 @@
+(function() { try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e){} })();
+
 /* ==========================================================================
    MINSATHYA - UNIVERSAL THEME, BRANDMARK & NAVIGATION ENGINE
    ========================================================================== */
@@ -253,8 +255,8 @@
         }
 
         main > .capsule-panel:not(.bento-card) {
-            max-width: 882px !important;
-            width: 100% !important;
+            width: 882px !important;
+            max-width: 100% !important;
             margin: 0 0 80px 0 !important;
             box-sizing: border-box !important;
         }
@@ -312,11 +314,11 @@
         @keyframes masterEntrance {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 28px, 0) scale(0.98);
+                transform: translate3d(0, 28px, 0);
             }
             100% {
                 opacity: 1;
-                transform: translate3d(0, 0, 0) scale(1);
+                transform: translate3d(0, 0, 0);
             }
         }
 
