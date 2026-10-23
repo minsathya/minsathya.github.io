@@ -20,6 +20,10 @@
         const isLight = (activeTheme === 'light' || (!activeTheme && prefersLight));
         if (isLight) {
           document.documentElement.classList.add('light-mode');
+          document.documentElement.style.colorScheme = 'light';
+        } else {
+          document.documentElement.classList.remove('light-mode');
+          document.documentElement.style.colorScheme = 'dark';
         }
         document.documentElement.style.backgroundColor = isLight ? '#f5f5f7' : '#0b0b0b';
       })();
@@ -61,13 +65,29 @@
     <script src="/study/study-data.js"></script>
 
     <style>
-        /* Sleek scrollbar matching background */
+        /* Sleek scrollbar matching background with zero edge strip */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.2) #0b0b0b;
+            background-color: var(--bg-color);
+            color-scheme: dark;
+        }
+        html.light-mode {
+            scrollbar-color: rgba(0, 0, 0, 0.22) #f5f5f7 !important;
+            background-color: #f5f5f7 !important;
+            color-scheme: light !important;
+        }
+        body {
+            background-color: var(--bg-color);
+        }
+        body.light-mode {
+            background-color: #f5f5f7 !important;
+        }
         ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: transparent !important; }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 4px; }
-        html.light-mode ::-webkit-scrollbar-thumb, body.light-mode ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.18); }
-        * { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.18) transparent; }
-        html.light-mode * { scrollbar-color: rgba(0, 0, 0, 0.18) transparent; }
+        ::-webkit-scrollbar-track { background-color: #0b0b0b !important; }
+        html.light-mode ::-webkit-scrollbar-track, body.light-mode ::-webkit-scrollbar-track { background-color: #f5f5f7 !important; }
+        ::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.2) !important; border-radius: 4px; }
+        html.light-mode ::-webkit-scrollbar-thumb, body.light-mode ::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.22) !important; }
 
         /* Article Main Heading Panels (from Important Facts onwards) */
         .section-heading-panel {
@@ -511,7 +531,7 @@
             transform: rotate(180deg);
         }
 
-        /* Floating Backdrop for category menu with smooth background blur */
+        /* Floating Backdrop for category menu blur (Restored to exact smooth behavior) */
         .floating-backdrop {
             position: fixed;
             inset: 0;
@@ -530,23 +550,25 @@
         }
 
         body.category-menu-open .category-title-text,
+        body.category-menu-open .sort-action-btn,
         body.category-menu-open .sort-action-wrap,
         body.category-menu-open .cal-trigger-action-btn,
         body.category-menu-open .today-action-btn,
-        body.category-menu-open .organised-ca-cards-list,
-        body.category-menu-open .page-header-row {
+        body.category-menu-open .page-header-row,
+        body.category-menu-open .organised-ca-cards-list {
             filter: blur(8px);
             opacity: 0.55;
-            transition: filter 0.25s var(--ease-smooth), opacity 0.25s var(--ease-smooth);
+            transition: filter 0.28s var(--ease-smooth), opacity 0.28s var(--ease-smooth);
         }
 
         .category-title-text,
+        .sort-action-btn,
         .sort-action-wrap,
         .cal-trigger-action-btn,
         .today-action-btn,
-        .organised-ca-cards-list,
-        .page-header-row {
-            transition: filter 0.25s var(--ease-smooth), opacity 0.25s var(--ease-smooth);
+        .page-header-row,
+        .organised-ca-cards-list {
+            transition: filter 0.28s var(--ease-smooth), opacity 0.28s var(--ease-smooth);
         }
 
         /* Floating Category Dropdown Panel */
@@ -654,6 +676,16 @@
         /* ---------------------------------------------------- */
         /* CARDS LIST & SINGLE COLUMN RESPONSIVE DIMENSIONS     */
         /* ---------------------------------------------------- */
+        .ca-empty-state-notice {
+            padding: 60px 16px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 15.5px;
+            font-weight: 500;
+            letter-spacing: -0.2px;
+            animation: masterEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
         .organised-ca-cards-list {
             position: relative;
             z-index: 1;
@@ -701,8 +733,8 @@
 
         .organised-ca-card:active,
         .organised-ca-card.is-card-pressed {
-            transform: scale(0.985) translateY(1px) !important;
-            transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            transform: scale(0.978) translateY(2px) !important;
+            transition: transform 0.12s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
         /* Left thumbnail / placeholder */
@@ -862,10 +894,10 @@
         }
 
         .ca-panel-thumb {
-            width: 178px;
-            height: 112px;
-            min-width: 178px;
-            border-radius: 18px;
+            width: 220px;
+            height: 136px;
+            min-width: 220px;
+            border-radius: 20px;
             overflow: hidden;
             background: rgba(255, 255, 255, 0.04);
             display: flex;
@@ -879,7 +911,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 18px;
+            border-radius: 20px;
             display: block;
         }
 
@@ -899,9 +931,9 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 12px;
+            gap: 14px;
             min-width: 0;
-            min-height: 112px;
+            min-height: 136px;
             box-sizing: border-box;
             padding: 2px 0;
         }
@@ -1945,7 +1977,12 @@
                 const todayKey = String(now.getDate()).padStart(2, '0') + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + now.getFullYear();
                 const isSearchingToday = (organisedCaSelectedDateKey === todayKey) || (window.isTodayActive);
                 const emptyMsg = isSearchingToday ? 'coming soon...' : 'No current affairs entries found for this selection.';
-                container.innerHTML = '<div style="padding: 48px 16px; text-align: center; color: var(--text-muted); font-size: 15px;">' + emptyMsg + '</div>';
+                container.innerHTML = '<div class="ca-empty-state-notice">' + emptyMsg + '</div>';
+                if (playSlideUp) {
+                    container.classList.remove('article-slide-up-run');
+                    void container.offsetWidth;
+                    container.classList.add('article-slide-up-run');
+                }
                 return;
             }
 
@@ -1995,15 +2032,20 @@
                     if (isNavigating) return;
                     isNavigating = true;
 
-                    // Ensure the gentle press cushion is visibly rendered
+                    // 1. Press down like a cushion spring
                     card.classList.add('is-card-pressed');
 
-                    // Gentle and calm transition into the article view
+                    // 2. At 110ms, release spring back to default position
                     setTimeout(() => {
                         card.classList.remove('is-card-pressed');
+                    }, 110);
+
+                    // 3. At 250ms, after spring completes its return, navigate to article
+                    setTimeout(() => {
                         const title = decodeURIComponent(card.getAttribute('data-title'));
                         openOrganisedCaArticle(title);
-                    }, 220);
+                        isNavigating = false;
+                    }, 250);
                 });
             });
 
@@ -2229,16 +2271,21 @@
         // ----------------------------------------------------
         // ARTICLE DETAIL VIEW LOGIC
         // ----------------------------------------------------
-        function openOrganisedCaArticle(topicTitle) {
+        function openOrganisedCaArticle(topicTitle, updateHistory = true) {
             const allTopics = getAllOrganisedCaTopics();
             const topic = allTopics.find(t => t.topicTitle === topicTitle);
             if (!topic) return;
 
             organisedCaActiveTopic = topic;
-            try {
-                sessionStorage.setItem('oca_active_topic', topicTitle);
-                history.pushState({ view: 'article', topic: topicTitle }, '', '#' + encodeURIComponent(topicTitle));
-            } catch(e) {}
+            
+            // Only update history hash if navigated via click or deep link
+            if (updateHistory) {
+                const targetHash = '#' + encodeURIComponent(topicTitle);
+                if (window.location.hash !== targetHash) {
+                    history.pushState({ view: 'article', topic: topicTitle }, '', targetHash);
+                }
+            }
+
             orgImageDrawerOpen = false;
             orgMetaDrawerOpen = false;
             orgViewMode = 'detailed';
@@ -2261,31 +2308,32 @@
                 document.title = topic.topicTitle + ' - sathya.';
             } catch(e) {}
 
-            // Populate Title if present in DOM
             const titleEl = document.getElementById('orgArticleTitle');
             if (titleEl) titleEl.textContent = topic.topicTitle;
 
-            // Populate Left Image (with rounded edges) or sleek placeholder
             const thumbWrap = document.getElementById('orgPanelThumb');
             if (thumbWrap) {
                 if (topic.image && topic.image.url) {
                     thumbWrap.innerHTML = '<img src="' + topic.image.url + '" alt="' + (topic.image.caption || 'Article graphic') + '" loading="lazy">';
                 } else {
-                    thumbWrap.innerHTML = '<div class="ca-thumb-placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>no image</span></div>';
+                    thumbWrap.innerHTML = '<div class="ca-thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>no image</span></div>';
                 }
             }
 
-            // Populate Metadata Pills
-            const gsVal = document.getElementById('orgGsPaperVal');
-            if (gsVal) gsVal.textContent = topic.gsPaper || 'General Studies';
+            const gsEl = document.getElementById('orgGsPaperPill');
+            if (gsEl) gsEl.innerHTML = 'GS Paper : <strong>' + (topic.gsPaper || 'GS-Current') + '</strong>';
 
-            const catVal = document.getElementById('orgCategoryVal');
-            if (catVal) catVal.textContent = topic.category || (topic.categories ? topic.categories.join(', ') : 'National');
+            const catEl = document.getElementById('orgCategoryPill');
+            if (catEl) catEl.innerHTML = 'Category : <strong>' + (topic.category || 'Current Affairs') + '</strong>';
 
-            const dateVal = document.getElementById('orgDateVal');
-            if (dateVal) dateVal.textContent = topic.dateStr;
+            const dateEl = document.getElementById('orgDatePill');
+            if (dateEl) dateEl.innerHTML = 'Date : <strong>' + formatCaDateVerbose(topic.date) + '</strong>';
 
-            // Trigger slide-up entrance animation on detail view & controls
+            const secContainer = document.getElementById('caArticleSections');
+            if (secContainer) {
+                secContainer.innerHTML = renderCaArticleSections(topic);
+            }
+
             const controls = document.getElementById('caControlsPanel');
             const stage = document.getElementById('caArticleFeedStage');
             if (controls) {
@@ -2299,24 +2347,15 @@
                 stage.classList.add('article-slide-up-run');
             }
 
-            // Populate Short & Detailed Panes
             const readBtn = document.getElementById('orgReadActionBtn');
             if (readBtn) readBtn.textContent = 'Short';
 
-            const shortContent = document.getElementById('orgShortContent');
-            if (shortContent) shortContent.innerHTML = renderCaShortRevision(topic);
-
-            const detailedContent = document.getElementById('orgDetailedContent');
-            if (detailedContent) detailedContent.innerHTML = renderCaArticleSections(topic);
-
-            orgViewMode = 'detailed';
-            const paneShort = document.getElementById('pane-short');
-            const paneFull = document.getElementById('pane-full');
-            const viewWindow = document.getElementById('orgViewWindow');
-
+            const paneShort = document.getElementById('caPaneShort');
+            const paneFull = document.getElementById('caPaneFull');
+            const viewWindow = document.getElementById('caSwitcherViewWindow');
             if (paneShort) {
-                paneShort.classList.remove('active');
                 paneShort.classList.add('hidden-layout');
+                paneShort.classList.remove('active');
             }
             if (paneFull) {
                 paneFull.classList.remove('hidden-layout');
@@ -2333,13 +2372,11 @@
         window.openOrganisedCaArticle = openOrganisedCaArticle;
 
         function closeCaArticleView(updateHistory = true) {
-            try {
-                sessionStorage.removeItem('oca_active_topic');
-            } catch(e) {}
             organisedCaActiveTopic = null;
             const artView = document.getElementById('organisedCaArticleView');
             const dirView = document.getElementById('organisedCaDirectoryView');
             const pageTitle = document.getElementById('pageTitleText');
+
             if (artView) artView.classList.remove('is-active', 'article-slide-up-run');
             if (dirView) {
                 dirView.style.display = 'block';
@@ -2347,35 +2384,51 @@
                 void dirView.offsetWidth;
                 dirView.classList.add('article-slide-up-run');
             }
-            if (pageTitle) pageTitle.textContent = 'Daily Current Affairs';
+            if (pageTitle) pageTitle.textContent = 'Daily current affairs';
             try {
                 document.title = 'Daily Current Affairs - sathya.';
             } catch(e) {}
+
             window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
             document.documentElement.scrollTop = 0;
             document.body.scrollTop = 0;
-            renderDirectoryView(true);
-            if (updateHistory && window.location.hash) {
-                history.back();
+
+            if (updateHistory) {
+                if (window.location.hash) {
+                    history.pushState(null, '', window.location.pathname + window.location.search);
+                }
             }
+
+            renderDirectoryView(true);
         }
         window.closeCaArticleView = closeCaArticleView;
 
-        window.addEventListener('popstate', (e) => {
-            const artView = document.getElementById('organisedCaArticleView');
-            if (artView && artView.classList.contains('is-active')) {
-                if (!e.state || e.state.view !== 'article' || !location.hash) {
+        function syncViewFromHash() {
+            const hash = window.location.hash;
+            if (!hash || hash === '#' || hash.length <= 1) {
+                const artView = document.getElementById('organisedCaArticleView');
+                if (artView && artView.classList.contains('is-active')) {
                     closeCaArticleView(false);
                 }
+            } else {
+                const topicTitle = decodeURIComponent(hash.substring(1));
+                const allTopics = getAllOrganisedCaTopics();
+                const matched = allTopics.find(t => t.topicTitle === topicTitle);
+                if (matched) {
+                    openOrganisedCaArticle(topicTitle, false);
+                }
             }
-        });
+        }
+
+        window.addEventListener('popstate', syncViewFromHash);
+        window.addEventListener('hashchange', syncViewFromHash);
 
         function handleOrganisedBack() {
             const artView = document.getElementById('organisedCaArticleView');
             if (artView && artView.classList.contains('is-active')) {
                 closeCaArticleView(true);
             } else {
-                if (window.history.length > 1) {
+                if (window.history.length > 1 && document.referrer && document.referrer.includes(window.location.host)) {
                     window.history.back();
                 } else {
                     window.location.href = '/index.html';
@@ -2592,35 +2645,29 @@
 
             renderDirectoryView(false);
 
-            // If page was refreshed while viewing an article, stay on that article!
-            let savedTopic = '';
-            if (window.location.hash && window.location.hash.length > 1) {
-                savedTopic = decodeURIComponent(window.location.hash.substring(1));
-            } else {
-                try { savedTopic = sessionStorage.getItem('oca_active_topic') || ''; } catch(e) {}
-            }
-
-            if (savedTopic) {
+            // Deterministic URL Hash Routing on Refresh:
+            // If URL has an article hash, open that article.
+            // If URL has NO hash, STAY on the DCA directory page!
+            const hash = window.location.hash;
+            if (hash && hash.length > 1) {
+                const topicTitle = decodeURIComponent(hash.substring(1));
                 const allTopics = getAllOrganisedCaTopics();
-                const matched = allTopics.find(t => t.topicTitle === savedTopic);
+                const matched = allTopics.find(t => t.topicTitle === topicTitle);
                 if (matched) {
-                    openOrganisedCaArticle(savedTopic);
-                    requestAnimationFrame(() => {
-                        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-                    });
+                    openOrganisedCaArticle(topicTitle, false);
                 }
-            } else {
-                window.scrollTo(0, 0);
             }
         });
 
         // Reset state freshly whenever navigating back
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
-                organisedCaSelectedDateKey = null;
-                organisedCaSelectedCategory = 'All';
-                organisedCaSortOrder = 'newest';
-                renderDirectoryView(false);
+                if (!window.location.hash || window.location.hash.length <= 1) {
+                    organisedCaSelectedDateKey = null;
+                    organisedCaSelectedCategory = 'All';
+                    organisedCaSortOrder = 'newest';
+                    renderDirectoryView(false);
+                }
             }
         });
     </script>

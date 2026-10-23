@@ -48,29 +48,43 @@
             overflow-y: auto;
         }
 
-        /* Universal sleek scrollbars seamlessly matching theme with zero edge strip */
+        /* Universal sleek scrollbars matching theme background with zero edge strip */
+        html {
+            background-color: var(--bg-color);
+            color-scheme: dark;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.2) #0b0b0b;
+        }
+        html.light-mode {
+            background-color: #f5f5f7 !important;
+            color-scheme: light !important;
+            scrollbar-color: rgba(0, 0, 0, 0.22) #f5f5f7 !important;
+        }
+        body {
+            background-color: var(--bg-color);
+        }
+        body.light-mode {
+            background-color: #f5f5f7 !important;
+            color-scheme: light !important;
+        }
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: transparent !important;
+            background-color: #0b0b0b !important;
+        }
+        html.light-mode ::-webkit-scrollbar-track,
+        body.light-mode ::-webkit-scrollbar-track {
+            background-color: #f5f5f7 !important;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2) !important;
+            background-color: rgba(255, 255, 255, 0.2) !important;
             border-radius: 4px;
         }
         html.light-mode ::-webkit-scrollbar-thumb,
         body.light-mode ::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.2) !important;
-        }
-        * {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
-        }
-        html.light-mode *,
-        body.light-mode * {
-            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+            background-color: rgba(0, 0, 0, 0.22) !important;
         }
 
         html, body, button, input, textarea, select, span, a, div, li, td, p, label {
@@ -768,10 +782,20 @@ window.addEventListener('load', () => {
             }
             if (isLight) {
                 document.documentElement.classList.add('light-mode');
-                if (document.body) document.body.classList.add('light-mode');
+                document.documentElement.style.colorScheme = 'light';
+                document.documentElement.style.backgroundColor = '#f5f5f7';
+                if (document.body) {
+                    document.body.classList.add('light-mode');
+                    document.body.style.backgroundColor = '#f5f5f7';
+                }
             } else {
                 document.documentElement.classList.remove('light-mode');
-                if (document.body) document.body.classList.remove('light-mode');
+                document.documentElement.style.colorScheme = 'dark';
+                document.documentElement.style.backgroundColor = '#0b0b0b';
+                if (document.body) {
+                    document.body.classList.remove('light-mode');
+                    document.body.style.backgroundColor = '#0b0b0b';
+                }
             }
         } catch(e) {}
     }
