@@ -1283,20 +1283,20 @@
         }
 
         /* Fixed on empty space of both sides - never sits on content */
+        /* Only show on laptop (>= 1200px with fine pointer mouse) */
         @media (min-width: 1200px) {
             .side-nav-btn { display: flex !important; }
             .side-nav-prev { left: 54px !important; right: auto !important; }
             .side-nav-next { right: 54px !important; left: auto !important; }
         }
-        @media (max-width: 1199px) and (min-width: 901px) {
-            .side-nav-btn { display: flex !important; }
-            .side-nav-prev { left: 28px !important; right: auto !important; }
-            .side-nav-next { right: 28px !important; left: auto !important; }
-        }
-        @media (max-width: 900px) {
-            .side-nav-btn { display: flex !important; width: 44px; height: 44px; }
-            .side-nav-prev { left: 14px !important; right: auto !important; }
-            .side-nav-next { right: 14px !important; left: auto !important; }
+
+        /* Strictly hidden on iPad & phone */
+        @media (max-width: 1199px) {
+            .side-nav-btn {
+                display: none !important;
+                visibility: hidden !important;
+                pointer-events: none !important;
+            }
         }
 
         /* Hover & active: subtle scale, absolutely NO green color changing */

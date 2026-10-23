@@ -851,10 +851,13 @@
 
         .article-slide-up-run,
         .master-entrance-run {
-            animation: masterEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            -webkit-animation: masterEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
         }
         @keyframes masterEntrance {
             0% {
@@ -1602,13 +1605,11 @@
             stroke-linejoin: round;
         }
 
-        /* Screen-centered positioning: Always locked to 50% screen height */
-        body.in-article-view .side-nav-btn {
-            display: flex !important;
-        }
-
-        /* Inset closer to article side on laptop/desktop */
+        /* Screen-centered positioning: LAPTOP ONLY (>= 1200px and fine pointer mouse) */
         @media (min-width: 1200px) {
+            body.in-article-view .side-nav-btn {
+                display: flex !important;
+            }
             .side-nav-prev {
                 left: 54px !important;
                 right: auto !important;
@@ -1619,29 +1620,13 @@
             }
         }
 
-        @media (max-width: 1199px) and (min-width: 769px) {
-            .side-nav-prev {
-                left: 28px !important;
-                right: auto !important;
-            }
-            .side-nav-next {
-                right: 28px !important;
-                left: auto !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .side-nav-btn {
-                width: 44px;
-                height: 44px;
-            }
-            .side-nav-prev {
-                left: 16px !important;
-                right: auto !important;
-            }
-            .side-nav-next {
-                right: 16px !important;
-                left: auto !important;
+        /* STRICTLY HIDDEN ON IPAD & PHONE (Screen not enough to place buttons) */
+        @media (max-width: 1199px) {
+            .side-nav-btn,
+            body.in-article-view .side-nav-btn {
+                display: none !important;
+                visibility: hidden !important;
+                pointer-events: none !important;
             }
         }
 
@@ -2168,9 +2153,7 @@
                 card.addEventListener('click', (e) => {
                     e.preventDefault();
                     const title = decodeURIComponent(card.getAttribute('data-title'));
-                    setTimeout(() => {
-                        openOrganisedCaArticle(title, true);
-                    }, 120);
+                    openOrganisedCaArticle(title, true);
                 });
             });
 
@@ -2536,22 +2519,7 @@
                 shortContainer.innerHTML = renderCaShortRevision(topic);
             }
 
-            const controls = document.getElementById('caControlsPanel');
-            const stage = document.getElementById('caArticleFeedStage');
-            if (controls) {
-                controls.classList.remove('master-entrance-run', 'article-slide-up-run');
-                void controls.offsetWidth;
-                requestAnimationFrame(() => {
-                    controls.classList.add('master-entrance-run', 'article-slide-up-run');
-                });
-            }
-            if (stage) {
-                stage.classList.remove('master-entrance-run', 'article-slide-up-run');
-                void stage.offsetWidth;
-                requestAnimationFrame(() => {
-                    stage.classList.add('master-entrance-run', 'article-slide-up-run');
-                });
-            }
+            // Single-layer GPU animation: artView parent smoothly slides up with all contents
 
             const readBtn = document.getElementById('orgReadActionBtn');
             if (readBtn) readBtn.textContent = 'Short';

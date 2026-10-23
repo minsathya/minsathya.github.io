@@ -494,14 +494,30 @@
             transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Mobile / Touch: Stationary (NO LIFT / NO ZOOM) */
+        /* Mobile / Touch (iPad & Phone): Smooth gentle tactile press matching laptop */
         @media (hover: none), (pointer: coarse) {
+            .bento-card,
+            .panel-card,
+            .capsule-panel,
+            .subjects-detail-panel,
+            .wide-capsule,
+            .organised-ca-card {
+                -webkit-touch-callout: none;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+                transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1),
+                            background-color 0.2s cubic-bezier(0.25, 1, 0.5, 1),
+                            border-color 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            }
             .bento-card:active,
             .panel-card:active,
             .capsule-panel:active,
             .subjects-detail-panel:active,
-            .wide-capsule:not(.is-expanded):active {
-                transform: none !important;
+            .wide-capsule:not(.is-expanded):active,
+            .organised-ca-card:active {
+                transform: scale(0.978) translateZ(0) !important;
+                -webkit-transform: scale(0.978) translateZ(0) !important;
+                transition: transform 0.12s ease !important;
             }
         }
 
@@ -737,39 +753,28 @@
             }
         }
 
-        /* 2. IPAD & PHONE (Touch coarse-pointer): Tap zooms up by the exact same length as laptop */
+        /* 2. UNIFIED SMOOTH PRESS PHYSICS (IPAD, PHONE & LAPTOP) */
         @media (hover: none), (pointer: coarse) {
-            .footer-links-row a:active .nav-text,
-            .matrix-canvas a:active,
-            .matrix-canvas a:active .nav-text,
-            .bento-container a:active,
-            .bento-container a:active .nav-text,
-            .bento-container .list-item:active,
-            .document-list a:active,
-            .document-list a:active .nav-text,
-            .topics-column-grid a:active,
-            .topics-column-grid a:active .nav-text,
-            .topics-vertical-stack a:active,
-            .topics-vertical-stack a:active .nav-text,
-            .ncert-links a:active,
-            .site-name:active,
-            .sortable:active,
-            .meta-pill:active,
+            button:active,
+            .btn:active,
+            .meta-action-btn:active,
+            .action-pill-btn:active,
             .read-action-btn:active,
             .image-action-btn:active,
             .topic-num-btn:active,
-            .subject-topic-link:active,
-            .subject-nav-item:active .subject-nav-name,
-            .subject-nav-item:active,
-            a:not(.brand-pill):not(.back-icon-btn):active {
-                transform: scale3d(1.028, 1.028, 1) !important;
-            }
-
-            a:has(> .nav-text):active {
-                transform: none !important;
-            }
-            a:active > .nav-text {
-                transform: scale3d(1.028, 1.028, 1) !important;
+            .today-action-btn:active,
+            .category-pill:active,
+            .sort-order-btn:active,
+            .back-icon-btn:active,
+            .bento-card:active,
+            .panel-card:active,
+            .capsule-panel:active,
+            .subjects-detail-panel:active,
+            .wide-capsule:active,
+            .organised-ca-card:active {
+                transform: scale(0.975) translateZ(0) !important;
+                -webkit-transform: scale(0.975) translateZ(0) !important;
+                transition: transform 0.12s ease !important;
             }
         }
 
@@ -1013,14 +1018,30 @@ function triggerMasterEntrance(element) {
 window.triggerMasterEntrance = triggerMasterEntrance;
 
 function executeMasterEntrance() {
-    const targets = document.querySelectorAll(
-        '.top-nav-bar, .subjects-header-row, main, .page-wrapper, .directory-view, #organisedCaDirectoryView, #organisedCaCardsContainer, footer'
-    );
-    targets.forEach(el => {
-        triggerMasterEntrance(el);
-    });
+    const dcaArt = document.getElementById('organisedCaArticleView');
+    const dcaDir = document.getElementById('organisedCaDirectoryView');
+    if (dcaArt && dcaArt.classList.contains('is-active')) {
+        triggerMasterEntrance(dcaArt);
+        return;
+    }
+    if (dcaDir && dcaDir.style.display !== 'none') {
+        triggerMasterEntrance(dcaDir);
+        return;
+    }
+    const main = document.querySelector('main') || document.querySelector('.page-wrapper');
+    if (main) {
+        triggerMasterEntrance(main);
+    }
+    const nav = document.querySelector('.top-nav-bar');
+    if (nav) triggerMasterEntrance(nav);
 }
 window.executeMasterEntrance = executeMasterEntrance;
+
+// iOS WebKit Smooth Active Release Engine: Clears stuck active states on touch devices
+if (typeof document !== 'undefined') {
+    document.addEventListener('touchend', () => {}, { passive: true });
+    document.addEventListener('touchcancel', () => {}, { passive: true });
+}
 
 // Auto-execute on DOMContentLoaded for all pages across site
 if (document.readyState === 'loading') {
