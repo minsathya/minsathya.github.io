@@ -2251,6 +2251,110 @@ window.RAW_STUDY_DATA = {
     }
   ],
   "dailyCurrentAffairsData": {
+    "24-10-2026": {
+      "dateStr": "24 October 2026",
+      "topics": [
+        {
+          "topicTitle": "Major Digital Platform Regulations in the European Union (The 6-Pillar Digital Rulebook)",
+          "gsPaper": "GS-2 & GS-3",
+          "category": "Economy & Governance / International Relations",
+          "comesUnder": "Prelims and Mains",
+          "location": "European Union (all 27 member states)",
+          "image": {
+            "url": "https://images.unsplash.com/photo-1658823276022-d6613757faa3?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+            "caption": "Source: Unsplash / European Union digital regulation"
+          },
+          "shortArticle": {
+            "category": "Economy & Governance / International Relations",
+            "gsPaper": "GS-2 & GS-3",
+            "whyInNews": "EU enforcing landmark penalties under DMA/DSA; Greece approved under-15 social media ban from Jan 2027 via KidsWallet (informing upcoming EU Kids Act).",
+            "whatConcept": "6-pillar digital architecture regulating data privacy, fair competition, online platform safety, AI risk levels, smart device (IoT) data, and cybersecurity.",
+            "whoOrg": [
+              {
+                "label": "Regulator",
+                "val": "European Commission; ENISA (cybersecurity agency)"
+              },
+              {
+                "label": "Targets",
+                "val": "Gatekeepers (Alphabet, Apple, Meta, Amazon, Microsoft, ByteDance, Booking.com) and VLOPs"
+              }
+            ],
+            "importantFacts": [
+              "<strong>GDPR (2018) :</strong> Data privacy; right to erasure; fines up to €20M / 4% global turnover.",
+              "<strong>DSA (2024) :</strong> VLOP rules (45M+ users); bans dark patterns & targeted ads to kids; fines up to 6%.",
+              "<strong>DMA (2023) :</strong> Gatekeeper rules (€7.5B EU revenue / €75B cap; 45M+ users); bans self-preferencing; mandates sideloading; fines 10%–20%.",
+              "<strong>AI Act (2024) :</strong> Outlaws unacceptable risks (social scoring); regulates high-risk AI; fines up to €35M / 7%.",
+              "<strong>Data Act (2025) :</strong> Unlocks connected product (IoT) data; eases cloud switching.",
+              "<strong>Cybersecurity Act (2019) :</strong> Strengthens ENISA and EU-wide ICT certifications.",
+              "<strong>Greece Under-15 Ban :</strong> Mandates zero-knowledge proof age verification (KidsWallet)."
+            ],
+            "background": [
+              "<strong>The \"Brussels Effect\" :</strong> EU laws setting de facto global compliance standards.",
+              "<strong>Indian Linkages :</strong> DPDP Act 2023, IT Rules 2021, and draft Digital Competition Bill (DCB)."
+            ],
+            "significance": [
+              "<strong>Curbs Monopolies :</strong> Opens digital markets to domestic startups and dismantles gatekeeper lock-in.",
+              "<strong>Protects Rights :</strong> Shields user privacy and minors from algorithmic manipulation and dark patterns.",
+              "<strong>Global Benchmark :</strong> Sets actionable ex-ante template for digital and AI governance."
+            ],
+            "challenges": [
+              "<strong>Compliance Burden :</strong> Heavy costs disproportionately burden smaller startups versus Big Tech.",
+              "<strong>Innovation Lag :</strong> Strict high-risk AI scrutiny risks delayed EU rollouts.",
+              "<strong>Surveillance Risk :</strong> Centralized age verification could compromise user privacy."
+            ],
+            "wayForward": [
+              "<strong>Pass India's DCB :</strong> Enact ex-ante competition rules against digital gatekeepers.",
+              "<strong>Privacy-First Tech :</strong> Mandate zero-knowledge proofs for child safety verification.",
+              "<strong>Regulatory Harmony :</strong> Align Indian and EU digital trade and competition standards."
+            ]
+          },
+          "whyInNews": "The European Union has accelerated enforcement across its landmark digital regulatory framework, penalizing Big Tech gatekeepers for fair-trade violations, while Greece passed legislation banning social media for children under 15 starting January 2027 to help shape the proposed EU-wide \"EU Kids Act\".",
+          "whatConcept": "The EU has built a comprehensive, 6-pillar legal rulebook to govern the modern internet economy. Instead of treating internet issues as isolated problems, the framework systematically regulates personal data privacy, anti-competitive Big Tech monopolies, online platform content moderation, artificial intelligence risks, smart device (IoT) data sharing, and cross-border cybersecurity.",
+          "whoOrg": [
+            {
+              "label": "Executive Regulator",
+              "val": "European Commission"
+            },
+            {
+              "label": "Cybersecurity Body",
+              "val": "European Union Agency for Cybersecurity (ENISA) — sets cybersecurity certification standards and coordinates emergency responses to major digital attacks."
+            },
+            {
+              "label": "Regulated Entities",
+              "val": "Very Large Online Platforms (VLOPs), Very Large Online Search Engines (VLOSEs), and designated \"Gatekeepers\" (Alphabet, Amazon, Apple, ByteDance, Meta, Microsoft, and Booking.com)."
+            }
+          ],
+          "importantFacts": [
+            "<strong>GDPR (General Data Protection Regulation - 2018) :</strong> Regulates personal data collection; establishes rights to access, data portability, and erasure (\"right to be forgotten\"); mandates 72-hour breach notification; fines up to €20 million or 4% of global annual turnover.",
+            "<strong>Digital Services Act (DSA - 2024) :</strong> Focuses on user safety and illegal content; bans manipulative design tricks (\"dark patterns\") and targeted ads to children; mandates \"Know Your Trader\" seller checks on marketplaces; requires platforms with over 45 million monthly active EU users (VLOPs/VLOSEs) to undergo independent risk audits; fines up to 6% of global turnover.",
+            "<strong>Digital Markets Act (DMA - 2023) :</strong> Focuses on fair market competition; regulates \"Gatekeepers\" (firms with €7.5B+ EU revenue or €75B market value, alongside 45M+ monthly users and 10,000+ yearly business users); bans self-preferencing search results; mandates app sideloading and interoperability; fines up to 10% of global turnover (20% for repeat offenses).",
+            "<strong>Artificial Intelligence Act (AI Act - 2024) :</strong> First comprehensive global AI law following a risk-based classification; <strong>Unacceptable Risk:</strong> Completely bans social credit scoring, behavioral manipulation, and untargeted scraping of facial images (fines up to €35M / 7% of global turnover); <strong>High Risk:</strong> Strict human oversight, testing, and cybersecurity for AI in healthcare, hiring, critical infrastructure, and policing; <strong>Limited/Minimal Risk:</strong> Basic transparency (e.g., chatbots must disclose they are AI).",
+            "<strong>Data Act (2025) :</strong> Gives consumers and businesses the legal right to access and share data generated by their connected smart products (IoT); bans unfair cloud switching fees.",
+            "<strong>Cybersecurity Act (2019) :</strong> Strengthens ENISA's permanent mandate; establishes an EU-wide cybersecurity certification system for ICT products and services.",
+            "<strong>Recent Child Safety Measure (Greece) :</strong> Greece approved an under-15 social media ban taking effect January 1, 2027, with no parental opt-outs; age verification will rely on a government \"KidsWallet\" using zero-knowledge proofs (verifying an age threshold cryptographically without revealing identity or exact birth date)."
+          ],
+          "background": [
+            "<strong>The \"Brussels Effect\" :</strong> International phenomenon where EU regulations become de facto global standards because multinational firms adopt one single strict compliance system worldwide (previously observed with GDPR).",
+            "<strong>Indian Policy Links :</strong> <strong>DPDP Act, 2023:</strong> India's data privacy law, sharing core consent and data principal rights with the EU GDPR; <strong>Draft Digital Competition Bill (DCB):</strong> Proposed law directly inspired by the EU DMA, targeting \"Systemically Significant Digital Enterprises\" (SSDEs) to prevent anti-competitive behavior; <strong>IT Rules, 2021:</strong> India's intermediary liability guidelines and grievance redressal mechanisms, paralleling the content safety aims of the DSA."
+          ],
+          "significance": [
+            "<strong>Dismantles Digital Monopolies :</strong> Stops dominant gatekeepers from locking in users and self-preferencing their own apps, giving local startups fair market access.",
+            "<strong>Safeguards Fundamental Rights :</strong> Creates clear legal guardrails against mass behavioral tracking, invasive advertising, dark patterns, and automated AI discrimination.",
+            "<strong>Global Regulatory Benchmark :</strong> Provides developing nations, including India, with a tested legal template to hold multinational Big Tech platforms accountable."
+          ],
+          "challenges": [
+            "<strong>High Compliance Burden :</strong> Complying with six overlapping laws creates massive legal costs, which may inadvertently entrench deep-pocketed tech giants while burdening smaller European tech startups.",
+            "<strong>Innovation & Deployment Delays :</strong> Stringent requirements on high-risk and general-purpose AI models risk causing global tech firms to delay launching advanced features in the European market.",
+            "<strong>Privacy Risks in Age Verification :</strong> Mandatory age checks for minors risk turning into widespread surveillance if platforms demand centralized government IDs rather than decentralized cryptographic proofs."
+          ],
+          "wayForward": [
+            "<strong>Pass India's Digital Competition Bill :</strong> Adopt an ex-ante competition framework in India to stop digital gatekeepers from killing startup innovation before damage occurs.",
+            "<strong>Incentivize Privacy-First Tech :</strong> Mandate privacy-preserving cryptographic tools, such as zero-knowledge proofs, for online child protection to eliminate identity tracking.",
+            "<strong>Establish Cross-Border Tech Standards :</strong> Deepen cooperation between Indian regulators (CCI, Data Protection Board) and the EU to align digital trade rules and avoid internet fragmentation."
+          ]
+        }
+      ]
+    },
     "05-10-2026": {
       "dateStr": "05 October 2026",
       "topics": [
