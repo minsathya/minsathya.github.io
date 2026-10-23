@@ -249,8 +249,14 @@
             align-items: center !important;
             gap: 14px !important;
             width: 100% !important;
-            max-width: 1200px !important;
-            margin: 0 auto 24px auto !important;
+            margin: 0 0 24px 0 !important;
+        }
+
+        main > .capsule-panel:not(.bento-card) {
+            max-width: 882px !important;
+            width: 100% !important;
+            margin: 0 0 80px 0 !important;
+            box-sizing: border-box !important;
         }
 
         .back-icon-btn {

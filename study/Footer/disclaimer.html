@@ -210,14 +210,24 @@
         .breadcrumbs .separator { color: var(--panel-border); font-weight: 400; user-select: none; }
         .breadcrumbs .current { color: var(--text-main); opacity: 0.9; }
 
+        .page-header-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            margin: 0 0 24px 0;
+        }
+
         .capsule-panel { 
             background-color: var(--panel-bg); 
             border: 1px solid var(--panel-border); 
             border-radius: 24px; 
             padding: 36px; 
-            margin-bottom: 80px; 
+            margin: 0 0 80px 0; 
             box-shadow: var(--shadow-base, var(--panel-shadow)); 
-            width: 100%; 
+            width: 100%;
+            max-width: 882px;
+            box-sizing: border-box; 
             cursor: pointer;
             user-select: none;
             transform: none !important;
@@ -530,6 +540,6 @@
             }
         });
     </script>
-    <script src="/script.js"></script>
+    <script src="/script.js?v=20261023c"></script>
 </body>
 </html>

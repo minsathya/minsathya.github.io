@@ -223,8 +223,7 @@
             align-items: center;
             gap: 14px;
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto 24px auto;
+            margin: 0 0 24px 0;
             animation: masterEntrance 0.52s var(--ease-premium) both;
             animation-delay: 0.04s;
         }
@@ -278,13 +277,13 @@
            SPLIT MASTER-DETAIL LAYOUT (LAPTOP & IPAD)
            ------------------------------------------------------------- */
         main.subjects-main-container {
+            flex-grow: 1;
+            width: 100%;
+            margin: 0 0 48px 0;
             display: flex;
             align-items: flex-start;
             gap: 40px;
-            width: 100%;
-            margin-top: 4px;
-            margin-bottom: 60px;
-            flex: 1;
+            padding-bottom: 48px;
         }
 
         /* Left Sidebar: Subjects List */
@@ -387,7 +386,7 @@
             flex: 1 !important;
             min-width: 0 !important;
             width: 100% !important;
-            min-height: 520px;
+            min-height: 560px;
             align-self: flex-start !important;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
@@ -1040,6 +1039,6 @@
             }
         });
     </script>
-    <script src="/script.js"></script>
+    <script src="/script.js?v=20261023c"></script>
 </body>
 </html>
