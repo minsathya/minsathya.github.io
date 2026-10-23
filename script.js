@@ -54,12 +54,109 @@
             font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
 
+        html, body {
+            background-color: var(--bg-color) !important;
+            transition: background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                        color 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+
         body {
             font-size: 17px !important;
-            background-color: var(--bg-color) !important;
             color: var(--text-main) !important;
-            transition: background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
-                        color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* -------------------------------------------------------------
+           APPLE-STYLE SLIM GLOBAL NAVIGATION BAR (100% WIDTH SCROLLABLE)
+           ------------------------------------------------------------- */
+        .apple-global-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 34px;
+            z-index: 1000;
+            background: rgba(11, 11, 11, 0.72);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            pointer-events: auto;
+            transition: background-color 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+        }
+
+        html.light-mode .apple-global-nav,
+        body.light-mode .apple-global-nav {
+            background: rgba(245, 245, 247, 0.78);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .apple-global-nav-track {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            box-sizing: border-box;
+        }
+
+        .apple-global-nav-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .apple-global-nav-content {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 20px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            box-sizing: border-box;
+        }
+
+        .apple-nav-link {
+            font-size: 13px !important;
+            font-weight: 400 !important;
+            color: rgba(255, 255, 255, 0.65) !important;
+            text-decoration: none !important;
+            letter-spacing: -0.01em;
+            transition: color 0.25s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease;
+            white-space: nowrap;
+            line-height: 1;
+            padding: 6px 4px;
+            flex-shrink: 0;
+        }
+
+        .apple-nav-link:hover {
+            color: #ffffff !important;
+            opacity: 1;
+        }
+
+        html.light-mode .apple-nav-link,
+        body.light-mode .apple-nav-link {
+            color: rgba(0, 0, 0, 0.62) !important;
+        }
+
+        html.light-mode .apple-nav-link:hover,
+        body.light-mode .apple-nav-link:hover {
+            color: #000000 !important;
+        }
+
+        @media (max-width: 600px) {
+            .apple-global-nav {
+                height: 32px;
+            }
+            .apple-global-nav-content {
+                gap: 22px;
+                padding: 0 16px;
+            }
+            .apple-nav-link {
+                font-size: 13px !important;
+            }
         }
 
         /* Headings & Brand: little bold (500) */
@@ -746,6 +843,7 @@
             } else {
                 isLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
             }
+            const nextBg = isLight ? '#f5f5f7' : '#0b0b0b';
             if (isLight) {
                 document.documentElement.classList.add('light-mode');
                 if (document.body) document.body.classList.add('light-mode');
@@ -753,10 +851,27 @@
                 document.documentElement.classList.remove('light-mode');
                 if (document.body) document.body.classList.remove('light-mode');
             }
+            document.documentElement.style.backgroundColor = nextBg;
+            if (document.body) document.body.style.backgroundColor = nextBg;
         } catch(e) {}
     }
 
     applyTheme();
+
+    // Universal MutationObserver for Theme Sync
+    try {
+        const themeObserver = new MutationObserver(() => {
+            const isLight = document.documentElement.classList.contains('light-mode');
+            const targetBg = isLight ? '#f5f5f7' : '#0b0b0b';
+            if (document.documentElement.style.backgroundColor !== targetBg) {
+                document.documentElement.style.backgroundColor = targetBg;
+            }
+            if (document.body && document.body.style.backgroundColor !== targetBg) {
+                document.body.style.backgroundColor = targetBg;
+            }
+        });
+        themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    } catch(e) {}
 
     if (window.matchMedia) {
         window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
