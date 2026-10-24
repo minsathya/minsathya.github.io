@@ -357,13 +357,26 @@
             margin: 0 0 18px 0 !important;
         }
 
-        /* Footer pages: Panel is centered, back button & page title follow panel left align */
+        /* Footer pages: Panel is centered, back button & page title centered between nav and panel following left align */
+        body.footer-page {
+            padding-top: 52px !important;
+        }
+
         body.footer-page .page-header-row,
         body:has(.active-footer-page) .page-header-row {
             width: 882px !important;
             max-width: 100% !important;
-            margin: 0 auto 24px auto !important;
+            margin: 26px auto 26px auto !important;
             box-sizing: border-box !important;
+        }
+
+        @media (max-width: 930px) {
+            body.footer-page .page-header-row,
+            body:has(.active-footer-page) .page-header-row {
+                width: 100% !important;
+                padding: 0 4px !important;
+                margin: 22px auto 22px auto !important;
+            }
         }
 
         body.footer-page main > .capsule-panel:not(.bento-card),
@@ -428,11 +441,11 @@
         @keyframes masterEntrance {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 28px, 0);
+                transform: translate3d(0, 28px, 0) scale(0.98);
             }
             100% {
                 opacity: 1;
-                transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0) scale(1);
             }
         }
 
@@ -457,13 +470,9 @@
             animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
         }
 
-        .bento-card,
-        .capsule-panel,
-        .wide-capsule,
-        .card:not(:has(table)):not(:has(.table-wrap)),
-        .subjects-detail-panel,
-        .topics-feed {
-            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.19s both;
+        /* Avoid compound nested transform lag on iPad: children do not animate separately if parent animates */
+        body.is-subpage .wide-capsule {
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
         }
 
         footer { 
@@ -782,6 +791,20 @@
             }
         }
 
+        /* Universal button touch responsiveness */
+        button, .button, .back-icon-btn, .organised-ca-card, .read-action-btn, .today-action-btn, 
+        .cal-trigger-action-btn, .sort-action-btn, .theme-toggle-btn, .ramsar-side-nav-btn, 
+        .ramsar-mobile-nav-btn, .nav-arrow-btn, .site-nav-pill {
+            touch-action: manipulation !important;
+            -webkit-tap-highlight-color: transparent !important;
+        }
+
+        button:active, .back-icon-btn:active, .today-action-btn:active, .sort-action-btn:active, 
+        .read-action-btn:active, .ramsar-side-nav-btn:active, .ramsar-mobile-nav-btn:active, 
+        .nav-arrow-btn:active {
+            transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+
         /* 2. IPAD & PHONE (Touch coarse-pointer) */
         @media (hover: none), (pointer: coarse) {
             /* Homescreen text clickables & footer contents (homepage + all pages): ONLY text flow (shimmer wave), NO scale/press animation */
@@ -1080,10 +1103,17 @@ function executeMasterEntrance() {
 window.executeMasterEntrance = executeMasterEntrance;
 
 // Bulletproof JS helper for scoped sibling muting on word hover
+let isTouchDetected = false;
+window.addEventListener('touchstart', () => { 
+    isTouchDetected = true; 
+    document.documentElement.classList.add('is-touch-device');
+    document.body.classList.add('is-touch-device');
+}, { passive: true, once: true });
+
 function initSiblingMuting() {
     // Only enable sibling muting on fine-pointer devices with hover (desktop/laptop)
     // Prevents touch taps on iPad/mobile from triggering mouseenter and blinking sibling text
-    if (window.matchMedia && !window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    if (isTouchDetected || (window.matchMedia && !window.matchMedia('(hover: hover) and (pointer: fine)').matches)) {
         return;
     }
     document.querySelectorAll('.list-wrapper, .document-list').forEach(container => {
@@ -1130,8 +1160,11 @@ window.addEventListener('pageshow', (event) => {
     resetMutedState();
     wrapClickableWords();
     initSiblingMuting();
-    // Trigger smooth slideup fade animation whenever visiting homescreen or any page
-    executeMasterEntrance();
+    // Only trigger master entrance on back/forward cache restore to avoid interrupting initial load
+    const isHomePage = window.location.pathname === '/' || window.location.pathname.endsWith('/index.html') || window.location.pathname === '';
+    if (!isHomePage && event.persisted) {
+        executeMasterEntrance();
+    }
 });
 
 // 7. UNIVERSAL POPUP DEPTH CENTERING (SCALES BACK SYMMETRICALLY WITHOUT SHIFTING DOWN)

@@ -1907,12 +1907,12 @@
             /* DCA directory card pressing smooth like laptop */
             .organised-ca-card:active {
                 transform: scale(0.975) !important;
-                transition: transform 0.15s ease !important;
+                transition: transform 0.08s ease !important;
             }
 
-            /* Article page title: smaller than now and mostly one-lined */
+            /* Article page title: slightly smaller to stay mostly 1-line on iPad */
             body.in-article-view .page-title {
-                font-size: 21px !important;
+                font-size: 19px !important;
                 letter-spacing: -0.4px !important;
                 line-height: 1.25 !important;
             }
@@ -1930,9 +1930,16 @@
                 order: -1 !important;
                 max-width: 100% !important;
                 width: fit-content !important;
+                overflow: visible !important;
+                text-overflow: unset !important;
+                white-space: normal !important;
+            }
+            .ca-panel-content #orgCategoryPill strong {
+                white-space: normal !important;
             }
             .ca-panel-content #orgGsPaperPill {
                 order: 1 !important;
+                max-width: 100% !important;
             }
         }
     </style>
@@ -2456,7 +2463,18 @@
                     card.addEventListener('click', (e) => {
                         e.preventDefault();
                         const title = decodeURIComponent(card.getAttribute('data-title'));
-                        openOrganisedCaArticle(title, true);
+                        const isCoarse = window.matchMedia('(hover: none), (pointer: coarse)').matches || ('ontouchstart' in window);
+                        if (isCoarse) {
+                            card.style.transform = 'scale(0.975)';
+                            card.style.transition = 'transform 0.08s ease';
+                            setTimeout(() => {
+                                card.style.transform = '';
+                                card.style.transition = '';
+                                openOrganisedCaArticle(title, true);
+                            }, 110);
+                        } else {
+                            openOrganisedCaArticle(title, true);
+                        }
                     });
                 });
             }
@@ -2857,6 +2875,10 @@
             }
 
             // Single-layer GPU animation: artView parent smoothly slides up with all contents
+            if (artView) {
+                void artView.offsetWidth; // Force layout after DOM update
+                artView.classList.add('article-slide-up-run');
+            }
 
             const readBtn = document.getElementById('orgReadActionBtn');
             if (readBtn) readBtn.textContent = 'Short';
@@ -3203,6 +3225,6 @@
         <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
     </button>
 
-    <script src="/script.js?v=20261024b"></script>
+    <script src="/script.js?v=20261024d"></script>
 </body>
 </html>

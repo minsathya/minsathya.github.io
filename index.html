@@ -360,14 +360,24 @@
 
         /* Sibling muting ONLY when hovering a specific link/word */
         @media (hover: hover) and (pointer: fine) {
-            .list-wrapper:has(.list-item:hover) .list-item:not(:hover) {
+            body:not(.is-touch-device) .list-wrapper:has(.list-item:hover) .list-item:not(:hover) {
                 opacity: 0.35 !important;
             }
 
-            .list-wrapper .list-item:hover {
+            body:not(.is-touch-device) .list-wrapper .list-item:hover {
                 opacity: 1 !important;
                 transform: scale(1.04) translateZ(0) !important;
                 color: var(--text-main) !important;
+            }
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            .list-wrapper:has(.list-item:hover) .list-item:not(:hover),
+            .list-wrapper .list-item:not(:hover) {
+                opacity: 0.85 !important;
+            }
+            .list-wrapper .list-item:hover {
+                transform: none !important;
             }
         }
 
@@ -656,8 +666,11 @@
             if (foot) foot.style.animation = 'masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both';
         }
 
+        document.addEventListener('touchstart', function() {}, { passive: true });
         window.addEventListener('pageshow', function(event) {
-            triggerHomepageEntrance();
+            if (event.persisted) {
+                triggerHomepageEntrance();
+            }
             targetLinks.forEach(l => l.classList.remove('is-wave-loading'));
             document.querySelectorAll('.list-item, a, .nav-text').forEach(el => {
                 el.style.opacity = '';
@@ -667,6 +680,6 @@
         });
 
     </script>
-    <script src="/script.js?v=20261024b"></script>
+    <script src="/script.js?v=20261024d"></script>
 </body>
 </html>

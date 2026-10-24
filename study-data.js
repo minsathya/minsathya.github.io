@@ -2255,7 +2255,7 @@ window.RAW_STUDY_DATA = {
       "dateStr": "24 October 2026",
       "topics": [
         {
-          "topicTitle": "Major Digital Platform Regulations in the European Union (The 6-Pillar Digital Rulebook)",
+          "topicTitle": "Major Digital Platform Regulations in the European Union",
           "gsPaper": "GS-2 & GS-3",
           "category": "Economy & Governance / International Relations",
           "comesUnder": "Prelims and Mains",
