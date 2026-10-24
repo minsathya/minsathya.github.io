@@ -371,10 +371,12 @@
             }
         }
 
+        /* Touch (iPad & Phone): Text clickables have ONLY text flow (shimmer wave), NO scale/press animation */
         @media (hover: none), (pointer: coarse) {
-            .list-wrapper .list-item:active {
-                opacity: 1 !important;
-                transform: scale(1.04) translateZ(0) !important;
+            .list-wrapper .list-item:active,
+            .matrix-canvas a:active,
+            .footer-links-row a:active {
+                transform: none !important;
             }
         }
 
@@ -665,6 +667,6 @@
         });
 
     </script>
-    <script src="/script.js"></script>
+    <script src="/script.js?v=20261024b"></script>
 </body>
 </html>

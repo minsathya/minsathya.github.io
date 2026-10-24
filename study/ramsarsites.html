@@ -627,21 +627,38 @@
             }
         }
 
-        /* Slide-up transition when changing Ramsar site */
-        .ramsar-slide-up {
-            animation: ramsarContentSlideUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-            will-change: transform, opacity;
+        /* Smooth Slide-Up Transition for Detail Content Panel (Exact Subjects Parity) */
+        @keyframes panelSlideOut {
+            0% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+            100% {
+                opacity: 0;
+                transform: translate3d(0, -12px, 0);
+            }
         }
 
-        @keyframes ramsarContentSlideUp {
+        @keyframes panelSlideUpEntrance {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 20px, 0);
+                transform: translate3d(0, 26px, 0);
             }
             100% {
                 opacity: 1;
                 transform: translate3d(0, 0, 0);
             }
+        }
+
+        .blip-exit {
+            animation: panelSlideOut 0.14s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+            pointer-events: none;
+            will-change: opacity, transform;
+        }
+
+        .blip-enter {
+            animation: panelSlideUpEntrance 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            will-change: opacity, transform;
         }
 
         /* iPad & All Devices exit animation fix: keep visible while sliding down */
@@ -1151,7 +1168,7 @@
 
     <main>
         <div class="page-header-row">
-            <button type="button" class="back-icon-btn" onclick="handleRamsarBack()" aria-label="Go back">
+            <button type="button" class="back-icon-btn" onclick="if(typeof handleRamsarBack==='function'){handleRamsarBack();}else{window.location.href='../index.html';}" aria-label="Go back">
                 <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
             </button>
             <h1 class="page-title">Ramsar Sites</h1>
@@ -1811,26 +1828,18 @@
             });
         }
 
-        function renderRamsarPopup(id, animate) {
-            const data = ramsarData[id];
-            if (!data) return;
+        function handleRamsarBack() {
+            window.location.href = '../index.html';
+        }
+        window.handleRamsarBack = handleRamsarBack;
 
-            const title = document.getElementById("modalTitle");
-            const content = document.getElementById("modalContent");
-            if (title) title.textContent = data.name;
-
+        function generateRamsarModalHtml(data) {
             const impPoints = (data.imp || '').split(',').map(s => s.trim()).filter(Boolean);
             const impBullets = impPoints.map(p => '<li>' + p + '</li>').join('');
             const thrPoints = (data.thr || '').split(',').map(s => s.trim()).filter(Boolean);
             const thrBullets = thrPoints.map(p => '<li>' + p + '</li>').join('');
 
-            if (content) {
-                if (animate) {
-                    content.classList.remove('ramsar-slide-up');
-                    void content.offsetWidth;
-                }
-                content.innerHTML = 
-                    '<div class="modal-pills-row">' +
+            return '<div class="modal-pills-row">' +
                         '<span class="modal-pill pill-state">' + data.state + '</span>' +
                         '<span class="modal-pill">year : <strong>' + data.year + '</strong></span>' +
                         '<span class="modal-pill">area : <strong>' + data.area + '</strong></span>' +
@@ -1844,8 +1853,40 @@
                         '<div class="modal-section-title title-threats">MAJOR THREATS</div>' +
                         '<ul class="modal-bullet-list">' + thrBullets + '</ul>' +
                     '</div>';
-                if (animate) {
-                    content.classList.add('ramsar-slide-up');
+        }
+
+        function renderRamsarPopup(id, animate) {
+            const data = ramsarData[id];
+            if (!data) return;
+
+            const title = document.getElementById("modalTitle");
+            const content = document.getElementById("modalContent");
+
+            if (animate && content) {
+                if (window._ramsarSwitchTimer) clearTimeout(window._ramsarSwitchTimer);
+                const animTargets = [title, content].filter(Boolean);
+                animTargets.forEach(el => {
+                    el.classList.remove('blip-enter');
+                    el.classList.add('blip-exit');
+                });
+                window._ramsarSwitchTimer = setTimeout(() => {
+                    if (title) title.textContent = data.name;
+                    content.innerHTML = generateRamsarModalHtml(data);
+                    animTargets.forEach(el => {
+                        el.classList.remove('blip-exit');
+                        el.classList.add('blip-enter');
+                    });
+                }, 140);
+            } else {
+                if (title) {
+                    title.textContent = data.name;
+                    title.classList.remove('blip-exit');
+                    title.classList.add('blip-enter');
+                }
+                if (content) {
+                    content.innerHTML = generateRamsarModalHtml(data);
+                    content.classList.remove('blip-exit');
+                    content.classList.add('blip-enter');
                 }
             }
         }
@@ -2036,7 +2077,7 @@
             }
         });
     </script>
-    <script src="/script.js?v=20261023e"></script>
+    <script src="/script.js?v=20261024b"></script>
     <script>
       window.addEventListener('pageshow', () => {
         window.scrollTo(0, 0);

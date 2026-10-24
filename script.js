@@ -782,39 +782,52 @@
             }
         }
 
-        /* 2. IPAD & PHONE (Touch coarse-pointer): Tap zooms up by the exact same length as laptop */
+        /* 2. IPAD & PHONE (Touch coarse-pointer) */
         @media (hover: none), (pointer: coarse) {
+            /* Homescreen text clickables & footer contents (homepage + all pages): ONLY text flow (shimmer wave), NO scale/press animation */
+            .footer-links-row a:active,
             .footer-links-row a:active .nav-text,
             .matrix-canvas a:active,
             .matrix-canvas a:active .nav-text,
             .bento-container a:active,
             .bento-container a:active .nav-text,
+            .bento-card a:active,
+            .bento-card a:active .nav-text,
+            .list-wrapper .list-item:active,
+            .list-wrapper .list-item:active .nav-text,
             .bento-container .list-item:active,
-            .document-list a:active,
-            .document-list a:active .nav-text,
-            .topics-column-grid a:active,
-            .topics-column-grid a:active .nav-text,
-            .topics-vertical-stack a:active,
-            .topics-vertical-stack a:active .nav-text,
-            .ncert-links a:active,
-            .site-name:active,
-            .sortable:active,
-            .meta-pill:active,
-            .read-action-btn:active,
-            .image-action-btn:active,
-            .topic-num-btn:active,
-            .subject-topic-link:active,
-            .subject-nav-item:active .subject-nav-name,
-            .subject-nav-item:active,
-            a:not(.brand-pill):not(.back-icon-btn):active {
-                transform: scale3d(1.028, 1.028, 1) !important;
-            }
-
-            a:has(> .nav-text):active {
+            .bento-container .list-item:active .nav-text {
                 transform: none !important;
             }
-            a:active > .nav-text {
-                transform: scale3d(1.028, 1.028, 1) !important;
+
+            /* Buttons retain standard smooth button pressing animations like laptop */
+            .organised-ca-card:active {
+                transform: scale(0.975) !important;
+                transition: transform 0.15s ease !important;
+            }
+
+            .read-action-btn:active {
+                transform: scale(0.93) !important;
+                opacity: 0.9 !important;
+                transition: transform 0.12s ease, opacity 0.12s ease !important;
+            }
+
+            .back-icon-btn:active,
+            .today-action-btn:active,
+            .cal-trigger-action-btn:active,
+            .nav-arrow-btn:active {
+                transform: scale(0.92) !important;
+            }
+
+            .document-list a:active,
+            .topics-column-grid a:active,
+            .topics-vertical-stack a:active,
+            .ncert-links a:active,
+            .site-name:active,
+            .subject-topic-link:active,
+            .subject-nav-item:active .subject-nav-name,
+            .subject-nav-item:active {
+                transform: scale3d(1.02, 1.02, 1) !important;
             }
         }
 
@@ -1068,6 +1081,11 @@ window.executeMasterEntrance = executeMasterEntrance;
 
 // Bulletproof JS helper for scoped sibling muting on word hover
 function initSiblingMuting() {
+    // Only enable sibling muting on fine-pointer devices with hover (desktop/laptop)
+    // Prevents touch taps on iPad/mobile from triggering mouseenter and blinking sibling text
+    if (window.matchMedia && !window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        return;
+    }
     document.querySelectorAll('.list-wrapper, .document-list').forEach(container => {
         const items = container.querySelectorAll('.list-item, a');
         items.forEach(item => {

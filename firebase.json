@@ -8,6 +8,28 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "rewrites": [
+      {
+        "source": "/study/footer/about.html",
+        "destination": "/study/Footer/about.html"
+      },
+      {
+        "source": "/study/footer/contact.html",
+        "destination": "/study/Footer/contact.html"
+      },
+      {
+        "source": "/study/footer/privacy.html",
+        "destination": "/study/Footer/privacy.html"
+      },
+      {
+        "source": "/study/footer/terms.html",
+        "destination": "/study/Footer/terms.html"
+      },
+      {
+        "source": "/study/footer/disclaimer.html",
+        "destination": "/study/Footer/disclaimer.html"
+      }
+    ],
     "headers": [
       {
         "source": "**",

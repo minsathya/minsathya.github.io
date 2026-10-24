@@ -558,7 +558,7 @@
             });
         }
 
-        toggleBtn.addEventListener('click', (e) => {
+        if (toggleBtn) toggleBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             const isCurrentlyLight = document.documentElement.classList.contains('light-mode') || (typeof bodyElement !== 'undefined' && bodyElement && bodyElement.classList.contains('light-mode'));
             if (isCurrentlyLight) {
@@ -574,23 +574,23 @@
             }
         });
 
-        openSearchBtn.addEventListener('click', () => {
+        if (openSearchBtn && masterHeader && searchCoreInput) openSearchBtn.addEventListener('click', () => {
             masterHeader.classList.remove('state-main');
             masterHeader.classList.add('state-search');
             searchCoreInput.focus({ preventScroll: true });
         });
 
-        clearSearchBtn.addEventListener('click', () => {
+        if (clearSearchBtn && searchCoreInput) clearSearchBtn.addEventListener('click', () => {
             searchCoreInput.value = "";
             searchCoreInput.focus();
         });
 
-        closeSearchBtn.addEventListener('click', () => {
+        if (closeSearchBtn && masterHeader) closeSearchBtn.addEventListener('click', () => {
             masterHeader.classList.remove('state-search');
             masterHeader.classList.add('state-main');
         });
 
-        searchCoreInput.addEventListener('keydown', (e) => {
+        if (searchCoreInput && masterHeader) searchCoreInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && searchCoreInput.value.trim() === "") {
                 masterHeader.classList.remove('state-search');
                 masterHeader.classList.add('state-main');
@@ -717,6 +717,6 @@ const universalTargetLinks = document.querySelectorAll('.breadcrumbs a, .footer-
             }
         });
     </script>
-    <script src="/script.js?v=20261023e"></script>
+    <script src="/script.js?v=20261024b"></script>
 </body>
 </html>

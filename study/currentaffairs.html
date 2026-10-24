@@ -1192,18 +1192,21 @@
             min-height: 100%;
         }
 
-        /* Cross-fading View Panes */
+        /* Cross-fading View Panes (Hardware-accelerated 120Hz smooth) */
         .view-pane {
             opacity: 0;
-            transform: translateY(4px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translate3d(0, 6px, 0);
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             width: 100%;
+            will-change: opacity, transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         /* Active Text State */
         .view-pane.active {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate3d(0, 0, 0);
         }
 
         /* Safe dynamic layout collapsing without layout snaps */
@@ -1804,6 +1807,134 @@
                 font-size: 13px !important;
             }
         }
+
+        /* Side-by-side Top Nav Article Arrows (iPad & Phone only in Article Mode) */
+        .apple-nav-article-arrows {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: none;
+            align-items: center;
+            gap: 6px;
+            z-index: 1002;
+        }
+
+        .nav-arrow-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-main);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0;
+            outline: none;
+            transition: background-color 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
+            touch-action: manipulation;
+        }
+
+        body.light-mode .nav-arrow-btn {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-arrow-btn:active {
+            transform: scale(0.9) !important;
+        }
+
+        .nav-arrow-btn.is-disabled {
+            opacity: 0.2 !important;
+            pointer-events: none !important;
+            cursor: default !important;
+        }
+
+        .nav-arrow-btn svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Strictly hidden on laptop & desktop */
+        @media (min-width: 1025px) {
+            .apple-nav-article-arrows {
+                display: none !important;
+            }
+        }
+
+        /* Visible on iPad & Mobile only when in article view */
+        @media (max-width: 1024px) {
+            body.in-article-view .apple-nav-article-arrows {
+                display: flex !important;
+            }
+            body.in-article-view .apple-global-nav-track {
+                padding-right: 76px !important;
+            }
+        }
+
+        /* Article header back button alignment: straight to first line if multi-line, centered if 1-line */
+        body.in-article-view .page-header-row {
+            align-items: flex-start !important;
+        }
+        body.in-article-view .page-header-row .back-icon-btn {
+            margin-top: -3px !important;
+        }
+
+        /* -------------------------------------------------------------
+           IPAD SPECIFIC OPTIMIZATIONS (601px to 1024px)
+           ------------------------------------------------------------- */
+        @media (min-width: 601px) and (max-width: 1024px) {
+            /* DCA directory card titles: truncate with ... before date badge */
+            .organised-ca-card-right-content {
+                padding-right: 120px !important;
+            }
+            .organised-ca-card-title {
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                display: block !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            /* DCA directory card pressing smooth like laptop */
+            .organised-ca-card:active {
+                transform: scale(0.975) !important;
+                transition: transform 0.15s ease !important;
+            }
+
+            /* Article page title: smaller than now and mostly one-lined */
+            body.in-article-view .page-title {
+                font-size: 21px !important;
+                letter-spacing: -0.4px !important;
+                line-height: 1.25 !important;
+            }
+            body.in-article-view .page-header-row .back-icon-btn {
+                margin-top: -5px !important;
+            }
+
+            /* Article view pills: category pill in place of GS Paper pill, GS Paper pill below */
+            .ca-panel-content .ca-panel-meta-row:first-child {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 8px !important;
+            }
+            .ca-panel-content #orgCategoryPill {
+                order: -1 !important;
+                max-width: 100% !important;
+                width: fit-content !important;
+            }
+            .ca-panel-content #orgGsPaperPill {
+                order: 1 !important;
+            }
+        }
     </style>
 </head>
 <body class="dca-page">
@@ -1816,6 +1947,15 @@
                 <a href="/study/currentaffairs.html" class="apple-nav-link">Current affairs</a>
                 <a href="/study/ramsarsites.html" class="apple-nav-link">Ramsar sites</a>
             </div>
+        </div>
+        <!-- Side-by-side Top Nav Article Arrows (iPad & Phone only in Article Mode) -->
+        <div class="apple-nav-article-arrows" id="appleNavArticleArrows" aria-label="Article navigation">
+            <button type="button" class="nav-arrow-btn" id="navPrevBtn" onclick="navigateOrganisedCaAdjacent(-1)" aria-label="Previous article">
+                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button type="button" class="nav-arrow-btn" id="navNextBtn" onclick="navigateOrganisedCaAdjacent(1)" aria-label="Next article">
+                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
         </div>
     </nav>
     <div class="page-wrapper" id="pageWrapper">
@@ -2621,6 +2761,11 @@
 
             prevBtn.classList.toggle('is-disabled', isFirst);
             nextBtn.classList.toggle('is-disabled', isLast);
+
+            const navPrevBtn = document.getElementById('navPrevBtn');
+            const navNextBtn = document.getElementById('navNextBtn');
+            if (navPrevBtn) navPrevBtn.classList.toggle('is-disabled', isFirst);
+            if (navNextBtn) navNextBtn.classList.toggle('is-disabled', isLast);
         }
 
         function navigateOrganisedCaAdjacent(direction) {
@@ -2631,6 +2776,7 @@
             const targetIdx = curIdx + direction;
 
             if (targetIdx >= 0 && targetIdx < list.length) {
+                window.scrollTo(0, 0);
                 openOrganisedCaArticle(list[targetIdx].topicTitle, true);
             }
         }
@@ -3057,6 +3203,6 @@
         <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
     </button>
 
-    <script src="/script.js"></script>
+    <script src="/script.js?v=20261024b"></script>
 </body>
 </html>
