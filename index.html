@@ -716,7 +716,9 @@
 
         document.addEventListener('touchstart', function() {}, { passive: true });
         window.addEventListener('pageshow', function(event) {
-            triggerHomepageEntrance();
+            if (event.persisted) {
+                triggerHomepageEntrance();
+            }
             targetLinks.forEach(l => l.classList.remove('is-wave-loading'));
             document.querySelectorAll('.list-item, a, .nav-text').forEach(el => {
                 el.style.opacity = '';
@@ -726,6 +728,6 @@
         });
 
     </script>
-    <script src="/script.js?v=20261102a"></script>
+    <script src="/script.js?v=20261102b"></script>
 </body>
 </html>

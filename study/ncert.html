@@ -132,11 +132,30 @@
         }
 
         /* 1. Keyframe definition (GPU accelerated with translate3d) */
+        @-webkit-keyframes masterEntrance {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, 26px, 0) scale(0.98);
+                transform: translate3d(0, 26px, 0) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0) scale(1);
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+        }
         @keyframes masterEntrance {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 28px, 0) scale(0.98);
+                -webkit-transform: translate3d(0, 26px, 0) scale(0.98);
+                transform: translate3d(0, 26px, 0) scale(0.98);
             }
+            100% {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0) scale(1);
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+        }
             100% {
                 opacity: 1;
                 transform: translate3d(0, 0, 0) scale(1);
@@ -224,6 +243,11 @@
            PAGE HEADER ROW & UNIFIED BACK BUTTON
            ------------------------------------------------------------- */
         .page-header-row {
+            -webkit-animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+            will-change: transform, opacity;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
             display: flex;
             align-items: center;
             gap: 14px;
@@ -1189,6 +1213,6 @@
             }
         });
     </script>
-    <script src="/script.js?v=20261102a"></script>
+    <script src="/script.js?v=20261102b"></script>
 </body>
 </html>

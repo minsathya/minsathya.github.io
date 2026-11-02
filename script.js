@@ -1176,9 +1176,13 @@ window.addEventListener('pageshow', (event) => {
     resetMutedState();
     wrapClickableWords();
     initSiblingMuting();
-    const isHomePage = window.location.pathname === '/' || window.location.pathname.endsWith('/index.html') || window.location.pathname === '';
-    if (!isHomePage) {
-        executeMasterEntrance();
+    // Only re-trigger master entrance when navigating via browser back/forward cache (event.persisted).
+    // On fresh page loads, native CSS animations in <head> run smoothly from frame 0 without layout jank.
+    if (event.persisted) {
+        const isHomePage = window.location.pathname === '/' || window.location.pathname.endsWith('/index.html') || window.location.pathname === '';
+        if (!isHomePage) {
+            executeMasterEntrance();
+        }
     }
 });
 

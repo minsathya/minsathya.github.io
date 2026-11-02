@@ -328,6 +328,11 @@
             margin: 0 auto 18px auto;
             position: relative;
             z-index: 5;
+            -webkit-animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+            will-change: transform, opacity;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
         }
 
         .back-icon-btn {
@@ -394,6 +399,11 @@
             display: flex;
             flex-direction: column;
             flex: 1;
+            -webkit-animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+            will-change: transform, opacity;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
         }
 
         /* ---------------------------------------------------- */
@@ -922,24 +932,28 @@
             -webkit-transform: translateZ(0);
             transform: translateZ(0);
         }
-        @keyframes masterEntrance {
-            0% {
-                opacity: 0;
-                transform: translate3d(0, 32px, 0);
-            }
-            100% {
-                opacity: 1;
-                transform: translate3d(0, 0, 0);
-            }
-        }
         @-webkit-keyframes masterEntrance {
             0% {
                 opacity: 0;
-                -webkit-transform: translate3d(0, 32px, 0);
+                -webkit-transform: translate3d(0, 26px, 0) scale(0.98);
+                transform: translate3d(0, 26px, 0) scale(0.98);
             }
             100% {
                 opacity: 1;
-                -webkit-transform: translate3d(0, 0, 0);
+                -webkit-transform: translate3d(0, 0, 0) scale(1);
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+        }
+        @keyframes masterEntrance {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, 26px, 0) scale(0.98);
+                transform: translate3d(0, 26px, 0) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0) scale(1);
+                transform: translate3d(0, 0, 0) scale(1);
             }
         }
         @-webkit-keyframes articleSlideUpEntrance {
@@ -1907,7 +1921,7 @@
             /* DCA directory card pressing smooth like laptop */
             .organised-ca-card:active {
                 transform: scale(0.975) !important;
-                transition: transform 0.08s ease !important;
+                transition: transform 0.15s ease !important;
             }
 
             /* Article page title: slightly smaller to stay mostly 1-line on iPad */
@@ -2463,18 +2477,7 @@
                     card.addEventListener('click', (e) => {
                         e.preventDefault();
                         const title = decodeURIComponent(card.getAttribute('data-title'));
-                        const isCoarse = window.matchMedia('(hover: none), (pointer: coarse)').matches || ('ontouchstart' in window);
-                        if (isCoarse) {
-                            card.style.transform = 'scale(0.975)';
-                            card.style.transition = 'transform 0.08s ease';
-                            setTimeout(() => {
-                                card.style.transform = '';
-                                card.style.transition = '';
-                                openOrganisedCaArticle(title, true);
-                            }, 110);
-                        } else {
-                            openOrganisedCaArticle(title, true);
-                        }
+                        openOrganisedCaArticle(title, true);
                     });
                 });
             }
@@ -3225,6 +3228,6 @@
         <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
     </button>
 
-    <script src="/script.js?v=20261102a"></script>
+    <script src="/script.js?v=20261102b"></script>
 </body>
 </html>

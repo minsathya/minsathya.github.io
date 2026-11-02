@@ -156,11 +156,30 @@
            ------------------------------------------------------------- */
         
         /* MASTER ENTRANCE ANIMATION - 0.65s SLIDE UP FADE */
+        @-webkit-keyframes masterEntrance {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, 26px, 0) scale(0.98);
+                transform: translate3d(0, 26px, 0) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0) scale(1);
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+        }
         @keyframes masterEntrance {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 28px, 0) scale(0.98);
+                -webkit-transform: translate3d(0, 26px, 0) scale(0.98);
+                transform: translate3d(0, 26px, 0) scale(0.98);
             }
+            100% {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0) scale(1);
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+        }
             100% {
                 opacity: 1;
                 transform: translate3d(0, 0, 0) scale(1);
@@ -1423,6 +1442,6 @@
             selectSubject(activeId, false);
         });
     </script>
-    <script src="/script.js?v=20261102a"></script>
+    <script src="/script.js?v=20261102b"></script>
 </body>
 </html>
