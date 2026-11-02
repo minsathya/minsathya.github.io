@@ -143,6 +143,18 @@
         /* -------------------------------------------------------------
            MASTER ENTRANCE ANIMATION (0.65s SLIDE UP FADE)
            ------------------------------------------------------------- */
+        @-webkit-keyframes masterEntrance {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, 28px, 0) scale(0.98);
+                transform: translate3d(0, 28px, 0) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0) scale(1);
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+        }
         @keyframes masterEntrance {
             0% {
                 opacity: 0;
@@ -159,9 +171,27 @@
             will-change: transform, opacity;
         }
 
-        .top-nav-bar { animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both; }
-        main { animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both; }
-        footer { animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both; }
+        .top-nav-bar {
+            -webkit-animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            will-change: transform, opacity;
+        }
+        main {
+            -webkit-animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            will-change: transform, opacity;
+        }
+        footer {
+            -webkit-animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both;
+            animation: masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            will-change: transform, opacity;
+        }
 
         /* -------------------------------------------------------------
            TOP NAVIGATION: 's' BRANDMARK WITH TWINKLING STAR
@@ -449,9 +479,13 @@
         }
 
         /* Fluid Wave Animation Shimmer */
+        @-webkit-keyframes fluidWave {
+            0% { -webkit-background-position: 200% 0; background-position: 200% 0; }
+            100% { -webkit-background-position: -200% 0; background-position: -200% 0; }
+        }
         @keyframes fluidWave {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+            0% { -webkit-background-position: 200% 0; background-position: 200% 0; }
+            100% { -webkit-background-position: -200% 0; background-position: -200% 0; }
         }
 
         a.is-wave-loading .nav-text {
@@ -461,7 +495,9 @@
             background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
             color: transparent !important;
+            -webkit-animation: fluidWave 0.75s infinite linear !important;
             animation: fluidWave 0.75s infinite linear !important;
+            will-change: background-position, -webkit-background-position !important;
             opacity: 1 !important;
         }
 
@@ -472,7 +508,9 @@
             background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
             color: transparent !important;
+            -webkit-animation: fluidWave 0.75s infinite linear !important;
             animation: fluidWave 0.75s infinite linear !important;
+            will-change: background-position, -webkit-background-position !important;
             opacity: 1 !important;
         }
 
@@ -647,7 +685,7 @@
 
                 setTimeout(() => {
                     window.location.href = destination;
-                }, 220);
+                }, 280);
             });
         });
 
@@ -657,20 +695,28 @@
             const foot = document.querySelector('footer');
             [nav, mainEl, foot].forEach(el => {
                 if (el) {
+                    el.style.webkitAnimation = 'none';
                     el.style.animation = 'none';
                     void el.offsetWidth;
                 }
             });
-            if (nav) nav.style.animation = 'masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both';
-            if (mainEl) mainEl.style.animation = 'masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both';
-            if (foot) foot.style.animation = 'masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both';
+            if (nav) {
+                nav.style.webkitAnimation = 'masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both';
+                nav.style.animation = 'masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both';
+            }
+            if (mainEl) {
+                mainEl.style.webkitAnimation = 'masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both';
+                mainEl.style.animation = 'masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both';
+            }
+            if (foot) {
+                foot.style.webkitAnimation = 'masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both';
+                foot.style.animation = 'masterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both';
+            }
         }
 
         document.addEventListener('touchstart', function() {}, { passive: true });
         window.addEventListener('pageshow', function(event) {
-            if (event.persisted) {
-                triggerHomepageEntrance();
-            }
+            triggerHomepageEntrance();
             targetLinks.forEach(l => l.classList.remove('is-wave-loading'));
             document.querySelectorAll('.list-item, a, .nav-text').forEach(el => {
                 el.style.opacity = '';
@@ -680,6 +726,6 @@
         });
 
     </script>
-    <script src="/script.js?v=20261024d"></script>
+    <script src="/script.js?v=20261102a"></script>
 </body>
 </html>

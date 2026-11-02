@@ -438,6 +438,18 @@
            Uses slideUpFade: translate3d(0, 28px, 0) scale(0.98) -> (0,0,0) scale(1)
            0.65s cubic-bezier(0.16, 1, 0.3, 1) with sequential wave stagger
            ------------------------------------------------------------- */
+        @-webkit-keyframes masterEntrance {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, 28px, 0) scale(0.98);
+                transform: translate3d(0, 28px, 0) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0) scale(1);
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+        }
         @keyframes masterEntrance {
             0% {
                 opacity: 0;
@@ -1087,7 +1099,11 @@ document.addEventListener('DOMContentLoaded', () => {
 function triggerMasterEntrance(element) {
     if (!element) return;
     element.classList.remove('master-entrance-run');
+    element.style.webkitAnimation = 'none';
+    element.style.animation = 'none';
     void element.offsetWidth;
+    element.style.webkitAnimation = '';
+    element.style.animation = '';
     element.classList.add('master-entrance-run');
 }
 window.triggerMasterEntrance = triggerMasterEntrance;
@@ -1160,9 +1176,8 @@ window.addEventListener('pageshow', (event) => {
     resetMutedState();
     wrapClickableWords();
     initSiblingMuting();
-    // Only trigger master entrance on back/forward cache restore to avoid interrupting initial load
     const isHomePage = window.location.pathname === '/' || window.location.pathname.endsWith('/index.html') || window.location.pathname === '';
-    if (!isHomePage && event.persisted) {
+    if (!isHomePage) {
         executeMasterEntrance();
     }
 });

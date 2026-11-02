@@ -457,37 +457,73 @@
         }
 
         /* Smooth Slide-Up Transition for Detail Content Panel */
-        @keyframes panelSlideOut {
+        @-webkit-keyframes panelSlideOut {
             0% {
                 opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0);
                 transform: translate3d(0, 0, 0);
             }
             100% {
                 opacity: 0;
+                -webkit-transform: translate3d(0, -12px, 0);
                 transform: translate3d(0, -12px, 0);
+            }
+        }
+
+        @keyframes panelSlideOut {
+            0% {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+            }
+            100% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -12px, 0);
+                transform: translate3d(0, -12px, 0);
+            }
+        }
+
+        @-webkit-keyframes panelSlideUpEntrance {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, 26px, 0);
+                transform: translate3d(0, 26px, 0);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
             }
         }
 
         @keyframes panelSlideUpEntrance {
             0% {
                 opacity: 0;
+                -webkit-transform: translate3d(0, 26px, 0);
                 transform: translate3d(0, 26px, 0);
             }
             100% {
                 opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0);
                 transform: translate3d(0, 0, 0);
             }
         }
 
         .blip-exit {
+            -webkit-animation: panelSlideOut 0.14s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
             animation: panelSlideOut 0.14s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
             pointer-events: none;
             will-change: opacity, transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         .blip-enter {
+            -webkit-animation: panelSlideUpEntrance 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
             animation: panelSlideUpEntrance 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
             will-change: opacity, transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         .panel-header-row {
@@ -1348,6 +1384,10 @@
                 currentStage.classList.add('blip-exit');
                 window._subjectsSwitchTimer = setTimeout(() => {
                     panel.innerHTML = newContent;
+                    const newStage = panel.querySelector('.card-parallax-content');
+                    if (newStage) {
+                        void newStage.offsetWidth; // Force layout reflow for 120Hz smooth WebKit transition
+                    }
                     if (typeof wrapClickableWords === 'function') wrapClickableWords();
                 }, 140);
             } else {
@@ -1383,6 +1423,6 @@
             selectSubject(activeId, false);
         });
     </script>
-    <script src="/script.js?v=20261024d"></script>
+    <script src="/script.js?v=20261102a"></script>
 </body>
 </html>
